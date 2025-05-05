@@ -11,66 +11,68 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "General",
         "groups": [
           {
             "group": "Get Started",
             "pages": [
-              "introduction",
-              "quickstart",
-              "development"
+              "general/get-started/what-is-gologin",
+              "general/get-started/key-concepts"
             ]
           },
           {
-            "group": "Essentials",
+            "group": "Anti-Detect Fundamentals",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/settings",
-              "essentials/navigation",
-              "essentials/reusable-snippets"
+              "general/fundamentals/how-browser-fingerprint-works",
+              "general/fundamentals/maintaining-trust-score"
             ]
           }
         ]
       },
       {
-        "tab": "API Reference",
+        "tab": "Application",
         "groups": [
           {
-            "group": "API Documentation",
+            "group": "Prerequisites",
             "pages": [
-              "api-reference/introduction"
+              "application/prerequisites/system-requirements",
+              "application/prerequisites/creating-account"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Automation & API",
+        "groups": [
+          {
+            "group": "Introduction",
+            "pages": [
+              "api-reference/introduction/how-to-automate",
+              "api-reference/introduction/how-to-automate-gologin"
             ]
           },
           {
-            "group": "Endpoint Examples",
+            "group": "SDKs",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "api-reference/sdks/nodejs-sdk",
+              "api-reference/sdks/python-sdk"
             ]
           }
         ]
       }
     ],
+    
     "global": {
       "anchors": [
         {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Community",
-          "href": "https://mintlify.com/community",
-          "icon": "slack"
-        },
-        {
           "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
+          "href": "https://gologin.com/blog/",
           "icon": "newspaper"
+        },
+        {
+          "anchor": "Download",
+          "href": "https://gologin.com/download",
+          "icon": "download"
         }
       ]
     }
@@ -80,17 +82,7 @@
     "dark": "/logo/dark.svg"
   },
   "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
-      }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
-    }
+  
   },
   "footer": {
     "socials": {

@@ -1,0 +1,41 @@
+---
+title: 'How to automate browser with Gologin'
+---
+
+Gologin provides open-source SDK that helps you to prepare secure profile and connect Orbita browser to automation tool
+<CardGroup cols={2}>
+  <Card
+    title="Node.js SDK"
+    icon="js"
+    href="https://github.com/gologinapp/gologin"
+  >
+    Cross-browser automation framework supporting multiple programming languages including Java, Python, C#, and JavaScript.
+  </Card>
+  <Card
+    title="Python SDK"
+    icon="python"
+    href="https://github.com/gologinapp/pygologin"
+  >
+    Node.js library that provides a high-level API to control Chrome or Chromium browsers programmatically.
+  </Card>
+</CardGroup>
+
+# How does it work?
+
+<Steps>
+  <Step title="Provide Credentials">
+    Give the SDK your developer token and the profile ID you want to run.
+  </Step>
+  <Step title="SDK Prepares Browser">
+    The SDK takes care of downloading, preparing your profile, and starting the browser with the correct configuration.
+  </Step>
+  <Step title="Get Connection URL">
+    SDK provides you with a websocket URL that automation tools can use to connect to the browser.
+  </Step>
+  <Step title="Connect Your Tool">
+    Take the websocket URL and connect it to your automation tool of choice: Puppeteer, Selenium, Playwright, etc.
+  </Step>
+  <Step title="Control Through Code">
+    The automation tool connects to the browser, allowing you to control it programmatically through your code.
+  </Step>
+</Steps>
