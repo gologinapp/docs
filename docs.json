@@ -11,52 +11,42 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "General",
-        "groups": [
-          {
-            "group": "Get Started",
-            "pages": [
-              "general/get-started/what-is-gologin",
-              "general/get-started/key-concepts"
-            ]
-          },
-          {
-            "group": "Anti-Detect Fundamentals",
-            "pages": [
-              "general/fundamentals/how-browser-fingerprint-works",
-              "general/fundamentals/maintaining-trust-score"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "Application",
-        "groups": [
-          {
-            "group": "Prerequisites",
-            "pages": [
-              "application/prerequisites/system-requirements",
-              "application/prerequisites/creating-account"
-            ]
-          }
-        ]
-      },
-      {
         "tab": "Automation & API",
         "groups": [
           {
-            "group": "Introduction",
+            "group": "Key Concepts",
             "pages": [
               "api-reference/introduction/how-to-automate",
-              "api-reference/introduction/how-to-automate-gologin"
+              "api-reference/introduction/how-to-automate-gologin",
+              "api-reference/introduction/cloud-browser"
             ]
           },
           {
-            "group": "SDKs",
+            "group": "Node.js SDK",
             "pages": [
               "api-reference/sdks/nodejs-sdk",
-              "api-reference/sdks/python-sdk"
+              "api-reference/sdks/nodejs-puppeteer-exmaple",
+              "api-reference/sdks/nodejs-cloud-puppeteer-example",
+              "api-reference/sdks/nodejs-changelog"
             ]
+          },
+          {
+            "group": "Python SDK",
+            "pages": [
+              "api-reference/sdks/python-sdk",
+              "api-reference/sdks/python-selenium-example",
+              "api-reference/sdks/python-changelog"
+            ]
+          },
+          {
+            "group": "Cloud Browser",
+            "pages": [
+              "api-reference/cloud-browser/getting-started"
+            ]
+          },
+          {
+            "group": "API Reference",
+            "openapi": "api-reference/openapi.json"
           }
         ]
       }
@@ -83,12 +73,5 @@
   },
   "navbar": {
   
-  },
-  "footer": {
-    "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
-    }
   }
 }

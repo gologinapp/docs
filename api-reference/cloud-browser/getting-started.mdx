@@ -1,0 +1,50 @@
+---
+title: 'Getting Started'
+---
+
+All you need to know about cloud browser is an url which you need to pass to your automation tool: <br />
+https://cloudbrowser.gologin.com/connect?token=${token}&profile=${params.profileId}
+
+It's a websocket url that will establish connection to control the browser
+You need to provide your dev token and profile id (optional). If you dont pass a profile id - it will create new profile
+
+# Example with Puppeteer
+
+```javascript
+const puppeteer = require('puppeteer-core');
+
+(async () => {
+  // Your GoLogin dev token
+  const token = 'your_token_here';
+  
+  // Optional: profileId (if you want to use an existing profile)
+  const profileId = 'your_profile_id'; // Remove this line if you want to create a new profile
+  
+  // Construct the cloud browser URL
+  const cloudBrowserUrl = `https://cloudbrowser.gologin.com/connect?token=${token}${profileId ? `&profile=${profileId}` : ''}`;
+  
+  // Connect to the browser
+  const browser = await puppeteer.connect({
+    browserWSEndpoint: cloudBrowserUrl,
+    defaultViewport: null
+  });
+  
+  // Create a new page
+  const page = await browser.newPage();
+  
+  // Navigate to a website
+  await page.goto('https://example.com');
+  
+  // Perform your automation tasks here
+  const title = await page.title();
+  console.log('Page title:', title);
+  
+  // Example: take a screenshot
+  await page.screenshot({ path: 'screenshot.png' });
+  
+  // Close the browser when done
+  await browser.close();
+})();
+
+
+
