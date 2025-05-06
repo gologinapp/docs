@@ -45,6 +45,12 @@
             ]
           },
           {
+            "group": "Limitations",
+            "pages": [
+              "api-reference/limitations/rate-limits"
+            ]
+          },
+          {
             "group": "API Reference",
             "openapi": "api-reference/openapi.json"
           }
