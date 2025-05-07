@@ -8,17 +8,37 @@
     "dark": "#15803D"
   },
   "favicon": "/favicon.svg",
+  "navbar": {
+    "links": [
+      {
+        "label": "Blog",
+        "href": "https://gologin.com/blog/"
+      },
+      {
+        "label": "Download",
+        "href": "https://gologin.com/download"
+      }
+    ]
+  },
   "navigation": {
     "tabs": [
       {
         "tab": "Automation & API",
         "groups": [
           {
-            "group": "Key Concepts",
+            "group": "Introduction",
             "pages": [
-              "api-reference/introduction/how-to-automate",
-              "api-reference/introduction/how-to-automate-gologin",
-              "api-reference/introduction/cloud-browser"
+              "api-reference/introduction/quickstart"
+            ]
+          },
+          {
+            "group": "API Reference",
+            "openapi": "api-reference/openapi.json"
+          },
+          {
+            "group": "Cloud Browser",
+            "pages": [
+              "api-reference/cloud-browser/getting-started"
             ]
           },
           {
@@ -39,45 +59,17 @@
             ]
           },
           {
-            "group": "Cloud Browser",
-            "pages": [
-              "api-reference/cloud-browser/getting-started"
-            ]
-          },
-          {
             "group": "Limitations",
             "pages": [
               "api-reference/limitations/rate-limits"
             ]
-          },
-          {
-            "group": "API Reference",
-            "openapi": "api-reference/openapi.json"
           }
         ]
       }
-    ],
-    
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Blog",
-          "href": "https://gologin.com/blog/",
-          "icon": "newspaper"
-        },
-        {
-          "anchor": "Download",
-          "href": "https://gologin.com/download",
-          "icon": "download"
-        }
-      ]
-    }
+    ]
   },
   "logo": {
     "light": "/logo/light.svg",
     "dark": "/logo/dark.svg"
-  },
-  "navbar": {
-  
   }
 }

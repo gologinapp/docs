@@ -1,0 +1,75 @@
+---
+title: 'Quickstart'
+---
+
+# Quickstart
+
+This guide will get you all set up and ready to use the GoLogin API. We'll cover how to get started using one of our API clients and how to make your first API request. We'll also look at where to go next to find all the information you need to take full advantage of our powerful REST API.
+
+
+<Note>
+  Before you can make requests to the GoLogin API, you will need to grab your
+  API key from your dashboard. You find it under [Settings &raquo; API](https://app.gologin.com/personalArea/TokenApi).
+</Note>
+
+
+## Making your first anonymous scrapping request
+
+<CodeGroup tag="iphey.com" label="Check trustworthiness status">
+
+```js
+import { GologinApi } from 'gologin';
+
+const token = process.env.GL_API_TOKEN;
+const gologin = GologinApi({ token });
+
+async function main() {
+  const { browser } = await gologin.launch();
+  const page = await browser.newPage();
+  await page.goto('https://iphey.com/', { waitUntil: 'networkidle2' });
+  const status = await page.$eval('.trustworthy-status:not(.hide)', 
+    (elt) => elt?.innerText?.trim()
+  );
+
+  return status; // Expecting 'Trustworthy'
+}
+
+main().catch(console.error).
+  then(console.info).finally(gologin.exit);
+```
+
+```python
+PYTHON
+
+```
+
+</CodeGroup>
+
+
+## What this script does, step by step
+1. Create GoLogin API instance
+2. On the first run, downloads Orbita anti-detect web browser 
+3. Create new anti-detect browser profile called **default-api-profile**
+4. Launch the web browser using the profile created
+5. Connect nodejs puppeteer library to the browser
+6. Navigates to the [iphey.com](https://iphey.com) page
+7. Scrapes trustworthiness status from the web page
+8. Print the status, which is expected to be **'Trustworthy'**
+
+## Running code yourself
+
+<CodeGroup tag="github.com" label="Run scrapping example">
+```bash
+git clone git@github.com:gologinapp/gologin.git
+cd gologin
+npm install
+
+GL_API_TOKEN=[YOUR_GOLOGIN_API_TOKEN] node examples/example-iphey.js
+```
+</CodeGroup>
+
+## What's next?
+
+Great, you're now set up with an API client and have made your first request to the API. Here are a few links that might be handy as you venture further into the GoLogin API:
+
+- [Grab your API key from the Settings > API](https://app.gologin.com/personalArea/TokenApi)
