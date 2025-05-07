@@ -19,13 +19,13 @@ This guide will get you all set up and ready to use the GoLogin API. We'll cover
 import { GologinApi } from 'gologin';
 
 const token = process.env.GL_API_TOKEN;
-const gologin = GologinApi({ token });
+const gologin = GologinApi({ token }); // pass profileId parameter if you want to run particular profile
 
 async function main() {
-  const { browser } = await gologin.launch();
+  const { browser } = await gologin.launch({ cloud: true });
   const page = await browser.newPage();
   await page.goto('https://iphey.com/', { waitUntil: 'networkidle2' });
-  const status = await page.$eval('.trustworthy-status:not(.hide)', 
+  const status = await page.$eval('.trustworthy:not(.hide)', 
     (elt) => elt?.innerText?.trim()
   );
 
