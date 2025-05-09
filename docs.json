@@ -28,7 +28,9 @@
           {
             "group": "Introduction",
             "pages": [
-              "api-reference/introduction/quickstart"
+              "api-reference/introduction/quickstart",
+              "api-reference/introduction/headless",
+              "api-reference/introduction/gologin-proxies"
             ]
           },
           {

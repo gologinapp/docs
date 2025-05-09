@@ -1,18 +1,20 @@
 ---
-title: 'Quickstart'
+title: 'Gologin proxies'
 ---
 
-This guide will get you all set up and ready to use the GoLogin API. We'll cover how to get started using one of our API clients and how to make your first API request. We'll also look at where to go next to find all the information you need to take full advantage of our powerful REST API.
+## GoLogin Proxies
 
+GoLogin provides high-quality proxies that can be programmatically created and managed with just a few lines of code. These proxies integrate seamlessly with browser profiles, ensuring reliable connections and consistent IP addresses for your automation needs.
 
-<Note>
-  Before you can make requests to the GoLogin API, you will need to grab your
-  API key from your dashboard. You find it under [Settings &raquo; API](https://app.gologin.com/personalArea/TokenApi).
-</Note>
+### Why Use GoLogin Proxies?
 
+- **Ease of Integration**: Add proxies to profiles with a single API call
+- **Global Coverage**: Access proxies from multiple locations worldwide
+- **Stability**: Enterprise-grade infrastructure ensures reliable connections
+- **Anti-Detection**: Properly configured proxies reduce fingerprinting risks
+- **Streamlined Workflow**: No need to manage separate proxy providers
 
-## Making your first anonymous scrapping request
-
+# Run profile with Gologin proxy
 <CodeGroup tag="iphey.com" label="Check trustworthiness status">
 
 ```js node.js
@@ -38,8 +40,6 @@ async function main() {
 
   await new Promise((resolve) => setTimeout(resolve, 10000));
   console.log('status', status);
-
-  await gologin.deleteProfile(profileId);
 
   return status;
 }
@@ -95,32 +95,3 @@ gl.stop()
 ```
 
 </CodeGroup>
-
-
-## What this script does, step by step
-1. Create GoLogin API instance
-2. On the first run, downloads Orbita anti-detect web browser 
-3. Create new anti-detect browser profile called **default-api-profile**
-4. Launch the web browser using the profile created
-5. Connect nodejs puppeteer library to the browser
-6. Navigates to the [iphey.com](https://iphey.com) page
-7. Scrapes trustworthiness status from the web page
-8. Print the status, which is expected to be **'Trustworthy'**
-
-## Running code yourself
-
-<CodeGroup tag="github.com" label="Run scrapping example">
-```bash
-git clone git@github.com:gologinapp/gologin.git
-cd gologin
-npm install
-
-GL_API_TOKEN=[YOUR_GOLOGIN_API_TOKEN] node examples/example-iphey.js
-```
-</CodeGroup>
-
-## What's next?
-
-Great, you're now set up with an API client and have made your first request to the API. Here are a few links that might be handy as you venture further into the GoLogin API:
-
-- [Grab your API key from the Settings > API](https://app.gologin.com/personalArea/TokenApi)
