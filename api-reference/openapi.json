@@ -465,7 +465,6 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "id of the version to make the last one which you can get from GET /browser/:id/history",
           "content": {
             "application/json": {
               "schema": {
@@ -649,6 +648,7 @@
         ],
         "requestBody": {
           "required": true,
+          "description": "list of cookies to add to profile",
           "content": {
             "application/json": {
               "schema": {
@@ -738,37 +738,6 @@
         ]
       }
     },
-    "/browser/import/dolphin": {
-      "post": {
-        "description": "Imports dolphin profiles to the gologin account",
-        "operationId": "BrowserController_importDolphinProfiles",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DolphinApiKeyValidation"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "summary": "Import dolphin profiles",
-        "tags": [
-          "Profile"
-        ]
-      }
-    },
     "/browser/quick": {
       "post": {
         "description": "It uses templates for profile parameters",
@@ -811,6 +780,7 @@
     },
     "/browser/custom": {
       "post": {
+        "description": "Creates a new profile - here you can specify particular parameters for the profile. Other parameters will be taken from random fingerprint",
         "operationId": "BrowserController_addCustomBrowser",
         "parameters": [
           {
@@ -852,7 +822,7 @@
             "bearer": []
           }
         ],
-        "summary": "Creates a new profile - here you can specify particular parameters for the profile. Other parameters will be taken from random fingerprint",
+        "summary": "Create profile with partial parameters",
         "tags": [
           "Profile"
         ]
@@ -860,6 +830,7 @@
     },
     "/browser/fingerprints": {
       "patch": {
+        "description": "Refreshes fingerprints for the profiles. It will change profile fingerprint with new random one or from template",
         "operationId": "BrowserController_updateFingerprints",
         "parameters": [],
         "requestBody": {
@@ -892,7 +863,7 @@
             "bearer": []
           }
         ],
-        "summary": "Refreshes fingerprints for the profiles. It will change profile fingerprint with new random one or from template",
+        "summary": "Refresh profile fingerprint",
         "tags": [
           "Profile"
         ]
@@ -1110,6 +1081,33 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/BrowserProxyCreateValidation"
+              },
+              "examples": {
+                "http/https": {
+                  "value": {
+                    "mode": "http",
+                    "host": "127.0.0.1",
+                    "port": 80,
+                    "username": "user",
+                    "password": "password"
+                  }
+                },
+                "socks5": {
+                  "value": {
+                    "mode": "socks5",
+                    "host": "127.0.0.1",
+                    "port": 80,
+                    "username": "user",
+                    "password": "password"
+                  }
+                },
+                "socks4": {
+                  "value": {
+                    "mode": "socks4",
+                    "host": "127.0.0.1",
+                    "port": 80
+                  }
+                }
               }
             }
           }
@@ -1214,6 +1212,7 @@
     },
     "/browser/{id}/resolution": {
       "patch": {
+        "description": "Accepts string like \"1920x1080\" or \"1024x768\"",
         "operationId": "BrowserController_patchBrowserResolution",
         "parameters": [
           {
@@ -1246,7 +1245,7 @@
             "bearer": []
           }
         ],
-        "summary": "Updates resolution parameter of the profile. Accepts string like \"1920x1080\" or \"1024x768\"",
+        "summary": "Update profile resolution",
         "tags": [
           "Profile"
         ]
@@ -1517,6 +1516,7 @@
     },
     "/workspaces/{wid}/members": {
       "post": {
+        "description": "This endpoint allows you to invite a member to a workspace by email. Recipient will receive an email with a link to join the workspace.",
         "operationId": "WorkspacesMembersController_inviteMember",
         "parameters": [
           {
@@ -1549,7 +1549,7 @@
             "bearer": []
           }
         ],
-        "summary": "This endpoint allows you to invite a member to a workspace by email. Recipient will receive an email with a link to join the workspace.",
+        "summary": "Add member to workspace",
         "tags": [
           "Workspace"
         ]
@@ -2823,7 +2823,7 @@
   ],
   "servers": [
     {
-      "url": "https://api.gologin.com"
+      "url": "http://localhost:3002"
     }
   ],
   "components": {
@@ -2839,29 +2839,48 @@
         "type": "object",
         "properties": {
           "userAgent": {
-            "type": "string"
+            "type": "string",
+            "description": "The most important parameter of the browser.It decides which browser version will be used. It is not recommended to change it by yourself",
+            "example": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.6998.36 Safari/537.36"
           },
           "resolution": {
-            "type": "string"
+            "type": "string",
+            "description": "Maximum resolution of the browser, should not exceed your system maximum resolution",
+            "example": "1920x1080"
           },
           "language": {
-            "type": "string"
+            "type": "string",
+            "description": "Language of the browser. If autoLang is enabled - this option will be ignored",
+            "example": "en-US"
           },
           "platform": {
-            "type": "string"
-          },
-          "doNotTrack": {
-            "type": "boolean",
-            "default": false
+            "type": "string",
+            "description": "It is internal browser parameter. \"Win32\", \"MacIntel\" - desktop, \"Linux armv81\", \"Linux aarch64\", \"Linux armv8l\", \"Linux armv7l\" - mobile. For mac os it is always \"MacIntel\" even for arm",
+            "enum": [
+              "Win32",
+              "MacIntel",
+              "Linux armv81",
+              "Linux aarch64",
+              "Linux x86_64",
+              "Linux armv8l",
+              "Linux armv7l"
+            ],
+            "example": "Win32"
           },
           "hardwareConcurrency": {
-            "type": "number"
+            "type": "number",
+            "description": "Number of processor cores of the system",
+            "example": 4
           },
           "deviceMemory": {
-            "type": "number"
+            "type": "number",
+            "description": "Number of operating system memory in gigabytes",
+            "example": 4
           },
           "maxTouchPoints": {
-            "type": "number"
+            "type": "number",
+            "description": "Maximum number of simultaneous touch contact points supported by the device. Its particularly relevant for touch - enabled devices like smartphones, tablets, and touchscreen laptops",
+            "example": 10
           }
         },
         "required": [
@@ -2982,13 +3001,19 @@
             "enum": [
               "mask",
               "off"
-            ]
+            ],
+            "description": "Controls the WebGL metadata mode. \"mask\" - Masks WebGL vendor and renderer information. \"off\" - Disables WebGL metadata masking.",
+            "example": "mask"
           },
           "vendor": {
-            "type": "string"
+            "type": "string",
+            "description": "The WebGL vendor string to use in the browser profile. This identifies the GPU vendor.",
+            "example": "Google Inc. (Intel)"
           },
           "renderer": {
-            "type": "string"
+            "type": "string",
+            "description": "The WebGL renderer string to use in the browser profile. This identifies the specific GPU model and rendering API.",
+            "example": "ANGLE (Intel, Intel(R) HD Graphics 630 Direct3D11 vs_5_0 ps_5_0, D3D11)"
           }
         }
       },
@@ -2996,6 +3021,12 @@
         "type": "object",
         "properties": {
           "families": {
+            "description": "Array that tells the browser which fonts it can use",
+            "example": [
+              "Arial",
+              "Helvetica",
+              "Verdana"
+            ],
             "type": "array",
             "items": {
               "type": "string"
@@ -3003,11 +3034,15 @@
           },
           "enableMasking": {
             "type": "boolean",
-            "default": true
+            "default": true,
+            "description": "A font fingerprinting protection feature that helps prevent websites from identifying users through font enumeration and detection",
+            "example": true
           },
           "enableDomRect": {
             "type": "boolean",
-            "default": true
+            "default": true,
+            "description": "A companion setting to enableMasking that specifically protects against a technique called \"DOM rect fingerprinting\"",
+            "example": true
           }
         },
         "required": [
@@ -3453,11 +3488,13 @@
           "autoLang"
         ]
       },
-      "ProxyModel": {
+      "BrowserProxyCreateValidation": {
         "type": "object",
         "properties": {
-          "_id": {
-            "type": "string"
+          "id": {
+            "type": "string",
+            "description": "You can specify particular proxy by its id or leave it empty to use default proxy",
+            "example": "6201422450e3b9cd602f24e1"
           },
           "mode": {
             "type": "string",
@@ -3495,6 +3532,9 @@
           },
           "torProxyRegion": {
             "type": "string"
+          },
+          "user": {
+            "type": "string"
           }
         },
         "required": [
@@ -3505,10 +3545,12 @@
         "type": "object",
         "properties": {
           "profileId": {
-            "type": "string"
+            "type": "string",
+            "example": "6200f55e7685342e170dc531",
+            "description": "Profile ID to update"
           },
           "proxy": {
-            "$ref": "#/components/schemas/ProxyModel"
+            "$ref": "#/components/schemas/BrowserProxyCreateValidation"
           }
         },
         "required": [
@@ -3521,6 +3563,7 @@
         "properties": {
           "proxies": {
             "description": "List of profiles with their proxies",
+           
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/ProfileProxy"
@@ -3535,24 +3578,40 @@
         "type": "object",
         "properties": {
           "profileIds": {
+            "description": "List of profile IDs to update",
+            "example": [
+              "6200f55e7685342e170dc531"
+            ],
             "type": "array",
             "items": {
               "type": "string"
             }
           },
           "chromeExtensionIds": {
+            "description": "List of chrome extension IDs (oficial ID from chrome store) that you want to add to the profiles",
+            "example": [
+              "nkbihfbeogaeaoehlefnkodbefgpgknn"
+            ],
             "type": "array",
             "items": {
               "type": "string"
             }
           },
           "customExtensionIds": {
+            "description": "Gologin allows you to add custom chrome extensions (not published in chrome store) to the profiles. If you want to upload your custome extension - you need to upload it in out application. Should be empty if you dont want to add any custom extensions.",
+            "example": [
+              "nkbihfbeogaeaoehlefnkodbefgpgknn"
+            ],
             "type": "array",
             "items": {
               "type": "string"
             }
           },
           "extensionsToRemove": {
+            "description": "List of chrome extension IDs that you want to remove from the profiles",
+            "example": [
+              "nkbihfbeogaeaoehlefnkodbefgpgknn"
+            ],
             "type": "array",
             "items": {
               "type": "string"
@@ -3575,10 +3634,13 @@
           },
           "type": {
             "type": "string",
-            "description": "Type of bookmark item, usually \"url\""
+            "description": "Type of bookmark item, usually \"url\"",
+            "example": "url"
           },
           "url": {
-            "type": "string"
+            "type": "string",
+            "description": "Bookmark URL",
+            "example": "https://www.google.com"
           }
         },
         "required": [
@@ -3610,7 +3672,23 @@
         "type": "object",
         "properties": {
           "BookmarkName": {
-            "$ref": "#/components/schemas/BookmarkFolder"
+            "description": "Bookmark object - it could be folder or bookmark item",
+            "example": {
+              "name": "Bookmark Name",
+              "type": "folder",
+              "children": [
+                {
+                  "name": "Bookmark Name",
+                  "type": "url",
+                  "url": "https://www.google.com"
+                }
+              ]
+            },
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BookmarkFolder"
+              }
+            ]
           }
         },
         "required": [
@@ -3621,6 +3699,10 @@
         "type": "object",
         "properties": {
           "profileIds": {
+            "description": "List of profile IDs to update",
+            "example": [
+              "6200f55e7685342e170dc531"
+            ],
             "type": "array",
             "items": {
               "type": "string"
@@ -3640,35 +3722,51 @@
         "properties": {
           "local": {
             "type": "boolean",
-            "default": true
+            "default": true,
+            "description": "If true, the browser will save local storage between sessions",
+            "example": true
           },
           "extensions": {
             "type": "boolean",
-            "default": true
+            "default": true,
+            "description": "If true, the browser will save extensions between sessions",
+            "example": true
           },
           "bookmarks": {
             "type": "boolean",
-            "default": true
+            "default": true,
+            "description": "If true, the browser will save bookmarks between sessions",
+            "example": true
           },
           "history": {
             "type": "boolean",
-            "default": true
+            "default": true,
+            "description": "If true, the browser will save history between sessions",
+            "example": true
           },
           "passwords": {
             "type": "boolean",
-            "default": true
+            "default": true,
+            "description": "If true, the browser will save passwords between sessions",
+            "example": true
           },
           "session": {
             "type": "boolean",
-            "default": true
+            "default": true,
+            "description": "If true, the browser will save session between sessions",
+            "example": true
           },
           "indexedDb": {
             "type": "boolean",
-            "default": false
+            "default": false,
+            "description": "If true, the browser will save indexedDb between sessions",
+            "example": false
           },
           "enableExternalExtensions": {
             "type": "boolean",
-            "default": false
+            "default": false,
+            "description": "If true, the browser will block external extensions that your system will try to add",
+            "example": false
           }
         }
       },
@@ -3694,11 +3792,13 @@
         "properties": {
           "enableVulnerable": {
             "type": "boolean",
-            "default": true
+            "default": true,
+            "description": "If true, the browser will use vulnerable plugins"
           },
           "enableFlash": {
             "type": "boolean",
-            "default": true
+            "default": true,
+            "description": "If true, the browser will use Flash"
           }
         }
       },
@@ -3707,14 +3807,18 @@
         "properties": {
           "enabled": {
             "type": "boolean",
-            "default": true
+            "default": true,
+            "description": "If true, the browser will use the timezone of the user"
           },
           "fillBasedOnIp": {
             "type": "boolean",
-            "default": true
+            "default": true,
+            "description": "If true, the browser will use the timezone of the user based on their IP address or proxy IP address if proxy is enabled"
           },
           "timezone": {
-            "type": "string"
+            "type": "string",
+            "description": "The timezone to use for the browser profile",
+            "example": "America/New_York"
           }
         }
       },
@@ -3727,19 +3831,40 @@
               "prompt",
               "block",
               "allow"
-            ]
+            ],
+            "description": "This setting controls how the browser handles      geolocation requests from websites. Prompt will ask the user       for permission to share their location, Block will block all        geolocation requests, Allow will allow all geolocation requests"
           },
           "enabled": {
             "type": "boolean",
-            "default": true
+            "default": true,
+            "description": "If true, the browser will use the geolocation"
           },
           "customize": {
             "type": "boolean",
-            "default": true
+            "default": true,
+            "description": "If true, user can customize the geolocation"
           },
           "fillBasedOnIp": {
             "type": "boolean",
-            "default": true
+            "default": true,
+            "description": "If true, the browser will use the geolocation based on the IP address"
+          },
+          "isCustomCoordinates": {
+            "type": "boolean",
+            "default": true,
+            "description": "If true, the browser will use the custom coordinates"
+          },
+          "latitude": {
+            "type": "number",
+            "description": "The latitude of the custom coordinates"
+          },
+          "longitude": {
+            "type": "number",
+            "description": "The longitude of the custom coordinates"
+          },
+          "accuracy": {
+            "type": "number",
+            "description": "The accuracy of the custom coordinates"
           }
         },
         "required": [
@@ -3755,10 +3880,14 @@
               "noise",
               "off"
             ],
-            "default": "off"
+            "default": "off",
+            "description": "When set to \"noise\", it applies a small randomization to audio processing.     When set to \"off\", audio fingerprinting protection is disabled",
+            "example": "noise"
           },
           "noise": {
-            "type": "number"
+            "type": "number",
+            "description": "A floating-point number that adds subtle variations to audio processing",
+            "example": 0.1
           }
         }
       },
@@ -3772,10 +3901,13 @@
               "noise",
               "off"
             ],
-            "default": "off"
+            "default": "off",
+            "description": "'block': Blocks canvas fingerprinting attempts completely     'noise': Applies a small randomization to canvas processing     'off': Disables canvas fingerprinting protection"
           },
           "noise": {
-            "type": "number"
+            "type": "number",
+            "description": "A floating-point number that adds subtle variations to canvas processing",
+            "example": 0.1
           }
         }
       },
@@ -3783,17 +3915,28 @@
         "type": "object",
         "properties": {
           "videoInputs": {
-            "type": "number"
+            "type": "number",
+            "description": "Specifies the number of video capture devices (cameras) that will be reported to websites through the MediaDevices API",
+            "example": 1
           },
           "audioInputs": {
-            "type": "number"
+            "type": "number",
+            "description": "Specifies the number of audio capture devices (microphones) that will be reported to websites through the MediaDevices API",
+            "example": 1
           },
           "audioOutputs": {
-            "type": "number"
+            "type": "number",
+            "description": "Specifies the number of audio output devices (speakers, headphones, etc.)      that will be reported to websites through the MediaDevices API",
+            "example": 1
           },
           "enableMasking": {
             "type": "boolean",
-            "default": false
+            "default": false,
+            "description": "When enabled, this prevents websites from obtaining the actual hardware identifiers of media devices"
+          },
+          "uid": {
+            "type": "string",
+            "description": "A unique identifier used to ensure consistent device IDs within a browser profile"
           }
         },
         "required": [
@@ -3807,11 +3950,15 @@
         "properties": {
           "enable": {
             "type": "boolean",
-            "default": true
+            "description": "Boolean toggle that determines if WebRTC is active",
+            "default": true,
+            "example": true
           },
           "isEmptyIceList": {
             "type": "boolean",
-            "default": true
+            "default": true,
+            "description": "Controls whether ICE candidates are empty or not",
+            "example": true
           },
           "mode": {
             "type": "string",
@@ -3821,32 +3968,9 @@
               "real",
               "public",
               "fake"
-            ]
-          },
-          "enabled": {
-            "type": "boolean",
-            "default": true
-          },
-          "customize": {
-            "type": "boolean",
-            "default": true
-          },
-          "localIpMasking": {
-            "type": "boolean",
-            "default": false
-          },
-          "fillBasedOnIp": {
-            "type": "boolean",
-            "default": true
-          },
-          "publicIp": {
-            "type": "string"
-          },
-          "localIps": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+            ],
+            "description": "Sets the WebRTC operating mode from the allowed values.      alerted - Allows WebRTC connections but notifies users before establishing connections.      disabled - Completely turns off WebRTC functionality.      real - Allows WebRTC connections and uses real IP addresses.      public - Allows WebRTC connections and uses public IP addresses.      fake - Allows WebRTC connections and uses fake IP addresses.",
+            "example": "off"
           }
         },
         "required": [
@@ -3862,13 +3986,19 @@
               "off",
               "noise"
             ],
-            "default": "noise"
+            "default": "noise",
+            "description": "Controls the WebGL rendering mode. off - Disables WebGL rendering. noise - Adds noise to the WebGL rendering.",
+            "example": "noise"
           },
           "getClientRectsNoise": {
-            "type": "number"
+            "type": "number",
+            "description": "Controls randomization of geometric calculations",
+            "example": 0.5
           },
           "noise": {
-            "type": "number"
+            "type": "number",
+            "description": "Sets the noise level for the WebGL rendering. The value ranges from 0 to 1, where 0 is no noise and 1 is maximum noise.",
+            "example": 0.5
           }
         }
       },
@@ -3881,10 +4011,15 @@
               "off",
               "noise"
             ],
-            "default": "noise"
+            "default": "noise",
+            "description": "Operating mode for client rects. Use \"off\" to disable or \"noise\" to add randomization.",
+            "example": "noise"
           },
           "noise": {
-            "type": "number"
+            "type": "number",
+            "description": "Amount of noise/randomization to apply to client rects (higher values = more randomization).",
+            "example": 0.5,
+            "minimum": 0
           }
         }
       },
@@ -3893,13 +4028,22 @@
         "properties": {
           "enabled": {
             "type": "boolean",
-            "default": true
+            "description": "Whether WebGL extensions are enabled for the browser profile",
+            "default": true,
+            "example": true
           },
           "preloadCustom": {
             "type": "boolean",
-            "default": true
+            "description": "Whether to preload custom WebGL extensions",
+            "default": true,
+            "example": true
           },
           "names": {
+            "description": "List of WebGL extension names to be supported",
+            "example": [
+              "WEBGL_debug_renderer_info",
+              "EXT_texture_filter_anisotropic"
+            ],
             "type": "array",
             "items": {
               "type": "string"
@@ -3998,7 +4142,7 @@
             "type": "string"
           },
           "proxy": {
-            "$ref": "#/components/schemas/ProxyModel"
+            "$ref": "#/components/schemas/BrowserProxyCreateValidation"
           },
           "archivedProxy": {
             "$ref": "#/components/schemas/BrowserArchivedProxyDTO"
@@ -4130,13 +4274,39 @@
       },
       "PatchUaToNewBrowserVValidation": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "updateUaToNewBrowserV": {
+            "type": "boolean",
+            "description": "should be true always true",
+            "example": true
+          },
+          "updateAllProfiles": {
+            "type": "boolean",
+            "description": "if true - updates all profiles that belongs to user",
+            "example": true
+          },
+          "browserIds": {
+            "description": "profile ids that you want to update",
+            "example": [
+              "6200f55e7685342e170dc531"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "browserIds"
+        ]
       },
       "DuplicateHistoryObjectValidation": {
         "type": "object",
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "description": "id of the version to make the last one which you can get from GET /browser/:id/history",
+            "example": "1234567-890"
           }
         },
         "required": [
@@ -4267,95 +4437,112 @@
           "name"
         ]
       },
-      "BrowserProxyCreateValidation": {
+      "WebGlParamsModel": {
         "type": "object",
         "properties": {
-          "_id": {
+          "glCanvas": {
             "type": "string",
-            "deprecated": true
+            "description": "Canvas element used for WebGL rendering",
+            "example": "webgl-canvas"
           },
-          "id": {
-            "type": "string"
+          "supportedFunctions": {
+            "description": "List of supported WebGL functions and their capabilities",
+            "example": [
+              {
+                "name": "drawElements",
+                "supported": true
+              }
+            ],
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
           },
-          "mode": {
+          "glParamValues": {
+            "description": "WebGL parameter values for the context",
+            "example": [
+              {
+                "name": "MAX_TEXTURE_SIZE",
+                "value": 16384
+              }
+            ],
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "antialiasing": {
+            "type": "boolean",
+            "description": "Whether antialiasing is enabled for the WebGL context",
+            "example": true
+          },
+          "textureMaxAnisotropyExt": {
+            "type": "number",
+            "description": "Maximum level of anisotropy filtering for textures",
+            "example": 16
+          },
+          "shaiderPrecisionFormat": {
             "type": "string",
-            "enum": [
-              "http",
-              "socks4",
-              "socks5",
-              "possh",
-              "geolocation",
-              "none",
-              "gologin",
-              "tor"
-            ]
+            "description": "Shader precision format used by the WebGL context",
+            "example": "mediump"
           },
-          "host": {
-            "type": "string"
-          },
-          "port": {
-            "type": "number"
-          },
-          "username": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          },
-          "changeIpUrl": {
-            "type": "string"
-          },
-          "customName": {
-            "type": "string"
-          },
-          "autoProxyRegion": {
-            "type": "string"
-          },
-          "torProxyRegion": {
-            "type": "string"
-          },
-          "user": {
-            "type": "string"
+          "extensions": {
+            "description": "List of WebGL extensions enabled for the context",
+            "example": [
+              "ANGLE_instanced_arrays",
+              "EXT_blend_minmax",
+              "EXT_color_buffer_half_float"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         },
         "required": [
-          "mode"
+          "supportedFunctions",
+          "glParamValues",
+          "extensions"
         ]
-      },
-      "WebGlParamsModel": {
-        "type": "object",
-        "properties": {}
       },
       "ICreateBrowserDTO": {
         "type": "object",
         "properties": {
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Profile name",
+            "example": "My Test Profile"
           },
           "notes": {
             "type": "string",
-            "default": ""
-          },
-          "facebookAccountData": {
-            "$ref": "#/components/schemas/ParsedFacebookDataDTO"
+            "description": "Here you can put some information about the profile that wil help you to navigate",
+            "example": "Temporary profile for testing"
           },
           "autoLang": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "If true, the browser will automatically change the language to the language of your location or proxy location if proxy is enabled",
+            "example": true
           },
           "bookmarks": {
-            "type": "object"
+            "$ref": "#/components/schemas/BookmarkFolders"
           },
           "isBookmarksSynced": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Indicates whether bookmarks are synchronized across devices",
+            "example": true
           },
           "launchArguments": {
-            "type": "string"
+            "type": "string",
+            "description": "Here you can put some additional arguments to the browser that will be applied on browser start",
+            "example": "--headless"
           },
           "browserType": {
             "type": "string",
             "enum": [
               "chrome"
-            ]
+            ],
+            "description": "Browser type. Now we support only chrome",
+            "example": "chrome"
           },
           "os": {
             "type": "string",
@@ -4364,170 +4551,9 @@
               "mac",
               "win",
               "android"
-            ]
-          },
-          "osSpec": {
-            "type": "string",
-            "enum": [
-              "lin",
-              "mac",
-              "win",
-              "android"
-            ]
-          },
-          "isM1": {
-            "type": "boolean"
-          },
-          "devicePixelRatio": {
-            "type": "number"
-          },
-          "startUrl": {
-            "type": "string"
-          },
-          "googleServicesEnabled": {
-            "type": "boolean",
-            "default": false
-          },
-          "lockEnabled": {
-            "type": "boolean",
-            "default": false
-          },
-          "debugMode": {
-            "type": "boolean",
-            "default": false
-          },
-          "navigator": {
-            "$ref": "#/components/schemas/NavigatorModel"
-          },
-          "geoProxyInfo": {
-            "type": "object"
-          },
-          "storage": {
-            "$ref": "#/components/schemas/StorageModel"
-          },
-          "proxyEnabled": {
-            "type": "boolean",
-            "default": false
-          },
-          "proxy": {
-            "$ref": "#/components/schemas/BrowserProxyCreateValidation"
-          },
-          "dns": {
-            "type": "string",
-            "default": ""
-          },
-          "plugins": {
-            "$ref": "#/components/schemas/PluginsModel"
-          },
-          "timezone": {
-            "$ref": "#/components/schemas/TimezoneModel"
-          },
-          "geolocation": {
-            "$ref": "#/components/schemas/GeolocationModel"
-          },
-          "audioContext": {
-            "$ref": "#/components/schemas/AudioContextModel"
-          },
-          "canvas": {
-            "$ref": "#/components/schemas/CanvasModel"
-          },
-          "fonts": {
-            "$ref": "#/components/schemas/FontsModel"
-          },
-          "mediaDevices": {
-            "$ref": "#/components/schemas/MediaDevicesModel"
-          },
-          "webRTC": {
-            "$ref": "#/components/schemas/WebRTCModel"
-          },
-          "webGL": {
-            "$ref": "#/components/schemas/WebGlModel"
-          },
-          "clientRects": {
-            "$ref": "#/components/schemas/ClientRectsModel"
-          },
-          "webGLMetadata": {
-            "$ref": "#/components/schemas/WebGlMetadataModel"
-          },
-          "webglParams": {
-            "$ref": "#/components/schemas/WebGlParamsModel"
-          },
-          "extensions": {
-            "$ref": "#/components/schemas/ExtensionsModel"
-          },
-          "profile": {
-            "type": "string"
-          },
-          "googleClientId": {
-            "type": "string"
-          },
-          "chromeExtensions": {
-            "default": [],
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "chromeExtensionsToAllProfiles": {
-            "default": [],
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "userChromeExtensions": {
-            "default": [],
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "folders": {
-            "default": [],
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        },
-        "required": [
-          "name",
-          "autoLang",
-          "bookmarks",
-          "isBookmarksSynced",
-          "browserType",
-          "os",
-          "isM1",
-          "devicePixelRatio",
-          "navigator"
-        ]
-      },
-      "DolphinApiKeyValidation": {
-        "type": "object",
-        "properties": {
-          "dolphinApiKey": {
-            "type": "string",
-            "description": "The dolphin api key"
-          }
-        },
-        "required": [
-          "dolphinApiKey"
-        ]
-      },
-      "CreateQuickProfileValidation": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "os": {
-            "type": "string",
-            "enum": [
-              "lin",
-              "mac",
-              "win",
-              "android"
-            ]
+            ],
+            "description": "OS type. It should be the same with the OS you want to run the browser on",
+            "example": "win"
           },
           "osSpec": {
             "type": "string",
@@ -4538,7 +4564,230 @@
               "M4",
               "win11",
               ""
+            ],
+            "description": "Here you can specify OS specification. For example chip version for macos or version of windows",
+            "example": "win11"
+          },
+          "devicePixelRatio": {
+            "type": "number",
+            "description": "Parameter of mobile devices, tablets and notebooks. If you not sure what to put - leave it empty",
+            "example": 1
+          },
+          "lockEnabled": {
+            "type": "boolean",
+            "default": false,
+            "description": "If enabled - other users will not be able to run this profile when its already running",
+            "example": false
+          },
+          "navigator": {
+            "$ref": "#/components/schemas/NavigatorModel"
+          },
+          "storage": {
+            "description": "Defines what data will be saved between browser sessions",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StorageModel"
+              }
             ]
+          },
+          "proxyEnabled": {
+            "type": "boolean",
+            "default": false,
+            "description": "If true, the browser will use proxy",
+            "example": true
+          },
+          "proxy": {
+            "description": "If you add proxy to your profile, the browser will make every request through it",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BrowserProxyCreateValidation"
+              }
+            ]
+          },
+          "dns": {
+            "type": "string",
+            "default": "",
+            "description": "Allows you to specify custom DNS (Domain Name System) settings for the browser profile.",
+            "example": "8.8.8.8"
+          },
+          "plugins": {
+            "description": "Plugins are additional software components that extend the browser's functionality. Here you can specify the plugins settings",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PluginsModel"
+              }
+            ]
+          },
+          "timezone": {
+            "description": "The timezone configuration is a setting that controls how the browser handles time and date information",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TimezoneModel"
+              }
+            ]
+          },
+          "geolocation": {
+            "description": "Geolocation in the browser is a feature that allows websites to access the user's geographical location",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/GeolocationModel"
+              }
+            ]
+          },
+          "audioContext": {
+            "description": "AudioContext is a configuration component that controls how Chromium handles the Web Audio API.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AudioContextModel"
+              }
+            ]
+          },
+          "canvas": {
+            "description": "Canvas is a browser feature that utilizes the HTML5 Canvas API for rendering 2D and 3D graphics in web browsers",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CanvasModel"
+              }
+            ]
+          },
+          "fonts": {
+            "description": "Fonts are a configuration component that controls how Chromium handles the Fonts API.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/FontsModel"
+              }
+            ]
+          },
+          "mediaDevices": {
+            "description": "A feature that provides access to connected media input and output devices like cameras, microphones, and speakers",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/MediaDevicesModel"
+              }
+            ]
+          },
+          "webRTC": {
+            "description": "WebRTC in browser configuration refers to settings that control how the browser handles real-time communication protocols",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/WebRTCModel"
+              }
+            ]
+          },
+          "webGL": {
+            "description": "WebGL (Web Graphics Library) is a JavaScript API in Chromium-based browsers that allows websites to render interactive 2D and 3D    graphics without requiring plugins. It provides direct access to the computer's GPU(Graphics Processing Unit) for accelerated rendering.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/WebGlModel"
+              }
+            ]
+          },
+          "clientRects": {
+            "description": "Controls whether the client rectangle values are randomized",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ClientRectsModel"
+              }
+            ]
+          },
+          "webGLMetadata": {
+            "description": "Controls WebGL metadata such as vendor and renderer information",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/WebGlMetadataModel"
+              }
+            ]
+          },
+          "webglParams": {
+            "description": "Configures WebGL parameters including canvas, functions, extensions and other settings",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/WebGlParamsModel"
+              }
+            ]
+          },
+          "extensions": {
+            "description": "Controls WebGL extensions settings including which WebGL extensions are enabled and supported",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ExtensionsModel"
+              }
+            ]
+          },
+          "chromeExtensions": {
+            "default": [],
+            "description": "List of Chrome extensions to be installed in the browser profile",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "chromeExtensionsToAllProfiles": {
+            "default": [],
+            "description": "If you add extensions to this array, they will be installed in all profiles that will be created after this one",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "userChromeExtensions": {
+            "default": [],
+            "description": "List of custom Chrome extensions to be installed in the browser profile",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "folders": {
+            "default": [],
+            "description": "List of folder identifiers associated with this browser profile for organization",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "autoLang",
+          "bookmarks",
+          "browserType",
+          "os",
+          "devicePixelRatio",
+          "navigator"
+        ]
+      },
+      "CreateQuickProfileValidation": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "name of the profile",
+            "example": "My Test Profile"
+          },
+          "os": {
+            "type": "string",
+            "enum": [
+              "lin",
+              "mac",
+              "win",
+              "android"
+            ],
+            "description": "OS type. It should be the same with the OS you want to run the browser on",
+            "example": "win"
+          },
+          "osSpec": {
+            "type": "string",
+            "enum": [
+              "M1",
+              "M2",
+              "M3",
+              "M4",
+              "win11",
+              ""
+            ],
+            "description": "Here you can specify OS specification. For example chip version for macos or version of windows",
+            "example": "win11"
           }
         },
         "required": [
@@ -4549,17 +4798,25 @@
         "type": "object",
         "properties": {
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Profile name",
+            "example": "My Test Profile"
           },
           "notes": {
             "type": "object",
-            "default": ""
+            "description": "Here you can put some information about the profile that wil help you to navigate",
+            "example": "Temporary profile for testing"
           },
           "autoLang": {
-            "type": "object"
+            "type": "object",
+            "description": "If true, the browser will automatically change the language to the language of your location or proxy location if proxy is enabled",
+            "example": true
           },
           "lockEnabled": {
-            "type": "object"
+            "type": "object",
+            "default": false,
+            "description": "If enabled - other users will not be able to run this profile when its already running",
+            "example": false
           },
           "folderName": {
             "type": "object"
@@ -4574,19 +4831,27 @@
               "mac",
               "win",
               "android"
-            ]
+            ],
+            "description": "OS type. It should be the same with the OS you want to run the browser on",
+            "example": "win"
           },
           "osSpec": {
             "type": "string",
             "enum": [
-              "lin",
-              "mac",
-              "win",
-              "android"
-            ]
+              "M1",
+              "M2",
+              "M3",
+              "M4",
+              "win11",
+              ""
+            ],
+            "description": "Here you can specify OS specification. For example chip version for macos or version of windows",
+            "example": "win11"
           },
           "devicePixelRatio": {
-            "type": "number"
+            "type": "number",
+            "description": "Parameter of mobile devices, tablets and notebooks. If you not sure what to put - leave it empty",
+            "example": 1
           },
           "navigator": {
             "$ref": "#/components/schemas/NavigatorModel"
@@ -4596,40 +4861,93 @@
           },
           "dns": {
             "type": "string",
-            "default": ""
+            "default": "",
+            "description": "Allows you to specify custom DNS (Domain Name System) settings for the browser profile.",
+            "example": "8.8.8.8"
           },
           "timezone": {
-            "$ref": "#/components/schemas/TimezoneModel"
+            "description": "The timezone configuration is a setting that controls how the browser handles time and date information",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TimezoneModel"
+              }
+            ]
           },
           "geolocation": {
-            "$ref": "#/components/schemas/GeolocationModel"
+            "description": "Geolocation in the browser is a feature that allows websites to access the user's geographical location",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/GeolocationModel"
+              }
+            ]
           },
           "audioContext": {
-            "$ref": "#/components/schemas/AudioContextModel"
+            "description": "AudioContext is a configuration component that controls how Chromium handles the Web Audio API.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AudioContextModel"
+              }
+            ]
           },
           "canvas": {
-            "$ref": "#/components/schemas/CanvasModel"
+            "description": "Canvas is a browser feature that utilizes the HTML5 Canvas API for rendering 2D and 3D graphics in web browsers",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CanvasModel"
+              }
+            ]
           },
           "fonts": {
-            "$ref": "#/components/schemas/FontsModel"
+            "description": "Fonts are a configuration component that controls how Chromium handles the Fonts API.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/FontsModel"
+              }
+            ]
           },
           "mediaDevices": {
-            "$ref": "#/components/schemas/MediaDevicesModel"
+            "description": "A feature that provides access to connected media input and output devices like cameras, microphones, and speakers",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/MediaDevicesModel"
+              }
+            ]
           },
           "webRTC": {
-            "$ref": "#/components/schemas/WebRTCModel"
+            "description": "WebRTC in browser configuration refers to settings that control how the browser handles real-time communication protocols",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/WebRTCModel"
+              }
+            ]
           },
           "webGL": {
-            "$ref": "#/components/schemas/WebGlModel"
+            "description": "WebGL (Web Graphics Library) is a JavaScript API in Chromium-based browsers that allows websites to render interactive 2D and 3D    graphics without requiring plugins. It provides direct access to the computer's GPU(Graphics Processing Unit) for accelerated rendering.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/WebGlModel"
+              }
+            ]
           },
           "clientRects": {
-            "$ref": "#/components/schemas/ClientRectsModel"
+            "description": "Controls whether the client rectangle values are randomized",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ClientRectsModel"
+              }
+            ]
           },
           "webGLMetadata": {
-            "$ref": "#/components/schemas/WebGlMetadataModel"
+            "description": "Controls WebGL metadata such as vendor and renderer information",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/WebGlMetadataModel"
+              }
+            ]
           },
           "chromeExtensions": {
             "default": [],
+            "description": "List of Chrome extensions to be installed in the browser profile",
             "type": "array",
             "items": {
               "type": "string"
@@ -4637,6 +4955,7 @@
           },
           "userChromeExtensions": {
             "default": [],
+            "description": "List of custom Chrome extensions to be installed in the browser profile",
             "type": "array",
             "items": {
               "type": "string"
@@ -4644,6 +4963,7 @@
           },
           "folders": {
             "default": [],
+            "description": "List of folder identifiers associated with this browser profile for organization",
             "type": "array",
             "items": {
               "type": "string"
