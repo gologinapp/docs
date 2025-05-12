@@ -28,7 +28,8 @@
           {
             "group": "Troubleshooting",
             "pages": [
-              "profile-proxy-team/troubleshooting/wrong-ip-my-ip-is-leaking"
+              "profile-proxy-team/troubleshooting/wrong-ip-my-ip-is-leaking",
+              "profile-proxy-team/troubleshooting/wrong-proxy-location"
             ]
           }
         ]
