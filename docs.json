@@ -79,6 +79,17 @@
             ]
           }
         ]
+      },
+      {
+        "tab": "Account, Migration & Support",
+        "groups": [
+          {
+            "group": "Account & Billing",
+            "pages": [
+              "account-migration-support/account-and-billing/google-auth-password-change-2fa"
+            ]
+          }
+        ]
       }
     ]
   },
