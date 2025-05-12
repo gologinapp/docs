@@ -1,0 +1,41 @@
+---
+title: "Wrong proxy location on a website or checker"
+description: "When the proxy shows the wrong geolocation for your third-party proxies"
+---
+
+## **Why and how does it work?**
+
+Different websites use various IP geolocation databases to determine the country of an IP address. These databases are not synchronized, leading to situations where the same IP is detected as belonging to multiple different locations.
+
+Another key factor is whether an IP is flagged as belonging to a Datacenter / VPN / any other service.\
+If an IP is recognized as a service, it can drastically lower its trust score, making it more likely to be flagged or blocked by websites.
+
+We do not recommend using proxies with the discrepancies listed above.
+
+## **How do I check my proxy?**
+
+1. Get the outgoing IP of your proxy here, just hover over the arrows icon
+
+   ![image (55).png](/images/image\(55\).png)
+2. There are more tools on the Internet, we usually use these two for consistent results:
+   - To check the IP geolocation: [<u>https://www.iplocation.net/ip-lookup</u>](https://www.iplocation.net/ip-lookup)
+
+     ❗It should display the same country on all checkers, ideally
+   - To check services on the IP: [<u>https://whatismyipaddress.com/ip/</u>](https://whatismyipaddress.com/ip/)
+
+     ❗It should not indicate any services on the IP
+
+   Examples to determine are below:
+
+   ![image.png](/images/image.png)
+
+## **How to avoid proxy issues**
+
+To minimize issues caused by incorrect proxy locations:
+
+- **Use reputable proxy providers** – High-quality providers ensure that their IPs are correctly categorized and registered. You can use GoLogin proxies or [<u>the proxies we recommend</u>](https://gologin.com/proxies/proxy-type/).
+- **Avoid data center proxies for sensitive tasks** – Residential or mobile proxies generally have higher trust scores.
+- **Test your proxy before using it** – Run it through multiple IP checkers to ensure consistency.
+- **Rotate IPs if needed** – If a particular IP is flagged incorrectly, switching to another IP may resolve the issue.
+
+By paying attention to these details, you can ensure a smoother and more reliable experience when using GoLogin.
