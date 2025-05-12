@@ -23,6 +23,17 @@
   "navigation": {
     "tabs": [
       {
+        "tab": "Profile, Proxy & Team Management",
+        "groups": [
+          {
+            "group": "Troubleshooting",
+            "pages": [
+              "profile-proxy-team/troubleshooting/wrong-ip-my-ip-is-leaking"
+            ]
+          }
+        ]
+      },
+      {
         "tab": "Automation & API",
         "groups": [
           {
