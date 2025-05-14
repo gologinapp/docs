@@ -23,6 +23,17 @@
   "navigation": {
     "tabs": [
       {
+        "tab": "Getting Started",
+        "groups": [
+          {
+            "group": "Setup",
+            "pages": [
+              "getting-started/setup/supported-platforms-installation"
+            ]
+          }
+        ]
+      },
+      {
         "tab": "Profile, Proxy & Team Management",
         "groups": [
           {
