@@ -47,7 +47,7 @@
           },
           {
             "group": "API Reference",
-            "openapi": "api-reference/openapi.json"
+            "openapi": "https://docs-download.gologin.com/openapi.json"
           },
           {
             "group": "Cloud Browser",
