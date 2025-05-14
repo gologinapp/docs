@@ -18,20 +18,31 @@ This guide will get you all set up and ready to use the GoLogin API. We'll cover
 ```js node.js
 import { GologinApi } from 'gologin';
 
+// Token can be passed here in code or from env 
 const token = process.env.GL_API_TOKEN || 'your dev token here';
 const gologin = GologinApi({
   token,
+  // If you want to run particular profile you need to pass profileId param
 });
 
 async function main() {
+  // This line of code creates new profile that will be run. If you want to run existed profile - delete this line of code
   const profile = await gologin.createProfileRandomFingerprint();
   const profileId = profile.id;
+
+  // This line of code adds gologin proxy to the profile.
   await gologin.addGologinProxyToProfile(profileId, 'US');
 
+  // This line of code starts the browser and return object that can be managed by puppeteer
   const { browser } = await gologin.launch({ profileId });
+
+  // Opens new page in browser
   const page = await browser.newPage();
 
+  // Goes to website and waits untill all parts of the website is loaded
   await page.goto('https://iphey.com/', { waitUntil: 'networkidle2' });
+
+  // Reads profile check result in website
   const status = await page.$eval('.trustworthy:not(.hide)',
     (elt) => elt?.innerText?.trim(),
   );
@@ -39,6 +50,7 @@ async function main() {
   await new Promise((resolve) => setTimeout(resolve, 10000));
   console.log('status', status);
 
+  // This line of code deletes used profile. If you dont want to delete used profie - remove this line
   await gologin.deleteProfile(profileId);
 
   return status;
@@ -58,7 +70,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 # Initialize GoLogin
 gl = GoLogin({
-	"token": "your dev token",
+	"token": os.environ.get('GL_API_TOKEN', 'your dev token'),
 	})
 profile = gl.createProfileRandomFingerprint({ "os": "win" })
 profile_id = profile.get('id')
@@ -97,25 +109,30 @@ gl.stop()
 </CodeGroup>
 
 
-## What this script does, step by step
-1. Create GoLogin API instance
-2. On the first run, downloads Orbita anti-detect web browser 
-3. Create new anti-detect browser profile called **default-api-profile**
-4. Launch the web browser using the profile created
-5. Connect nodejs puppeteer library to the browser
-6. Navigates to the [iphey.com](https://iphey.com) page
-7. Scrapes trustworthiness status from the web page
-8. Print the status, which is expected to be **'Trustworthy'**
-
-## Running code yourself
+## Running code yourself in Node.js
 
 <CodeGroup tag="github.com" label="Run scrapping example">
-```bash
-git clone git@github.com:gologinapp/gologin.git
-cd gologin
-npm install
+```bash bash
+// Install required packages
+npm i gologin
 
-GL_API_TOKEN=[YOUR_GOLOGIN_API_TOKEN] node examples/example-iphey.js
+// Run the code - change filename.js to your actual filename and add your token
+GL_API_TOKEN=[YOUR_GOLOGIN_API_TOKEN] node filename.js
+```
+</CodeGroup>
+
+## Running code yourself in Python
+
+<CodeGroup tag="github.com" label="Run scrapping example">
+```bash bash
+# create local env for the project
+python3 -m venv venv
+
+# Install required packages
+source venv/bin/activate && pip install gologin selenium webdriver-manager
+
+# Run the script. Your file should not be named gologin.py as it will cause conflict with import
+GL_API_TOKEN=[YOUR_GOLOGIN_API_TOKEN] python filename.py
 ```
 </CodeGroup>
 
