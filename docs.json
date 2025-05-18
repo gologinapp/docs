@@ -37,6 +37,16 @@
         "tab": "Profile, Proxy & Team Management",
         "groups": [
           {
+            "group": "Team collaboration",
+            "pages": [
+              "profile-proxy-team/team-collaboration/workspaces",
+              "profile-proxy-team/team-collaboration/workspace-roles-and-permissions",
+              "profile-proxy-team/team-collaboration/sharing-workspace-access",
+              "profile-proxy-team/team-collaboration/sharing-folders",
+              "profile-proxy-team/team-collaboration/accessing-shared-workspace-or-folders"
+            ]
+          },
+          {
             "group": "Troubleshooting",
             "pages": [
               "profile-proxy-team/troubleshooting/wrong-ip-my-ip-is-leaking",
