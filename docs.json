@@ -34,15 +34,14 @@
         ]
       },
       {
-        "tab": "Profile, Proxy & Team Management",
+        "tab": "Profile, Proxy & Team Collaboration",
         "groups": [
           {
             "group": "Team collaboration",
             "pages": [
               "profile-proxy-team/team-collaboration/workspaces",
               "profile-proxy-team/team-collaboration/workspace-roles-and-permissions",
-              "profile-proxy-team/team-collaboration/sharing-workspace-access",
-              "profile-proxy-team/team-collaboration/sharing-folder-access",
+              "profile-proxy-team/team-collaboration/sharing-workspace-or-folders",
               "profile-proxy-team/team-collaboration/accessing-shared-workspace-or-folders"
             ]
           },
