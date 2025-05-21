@@ -108,7 +108,8 @@
           {
             "group": "Account & Billing",
             "pages": [
-              "account-migration-support/account-and-billing/google-auth-password-change-2fa",
+              "account-migration-support/account-and-billing/changing-your-email-and-pass",
+              "account-migration-support/account-and-billing/two-factor-authentication",
               "account-migration-support/account-and-billing/promo-codes",
               "account-migration-support/account-and-billing/invoices",
               "account-migration-support/account-and-billing/faq-subscription"
