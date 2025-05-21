@@ -37,6 +37,12 @@
         "tab": "Profile, Proxy & Team Collaboration",
         "groups": [
           {
+            "group": "Profile management",
+            "pages": [
+              "profile-proxy-team/profile-management/creating-and-launching-profiles"
+            ]
+          },
+          {
             "group": "Team collaboration",
             "pages": [
               "profile-proxy-team/team-collaboration/workspaces",
