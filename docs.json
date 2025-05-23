@@ -39,8 +39,9 @@
           {
             "group": "Profile management",
             "pages": [
-              "profile-proxy-team/profile-management/creating-and-launching-profiles",
-              "profile-proxy-team/profile-management/profile-synchronization"
+              "profile-proxy-team/profile-management/creating-and-using-profiles",
+              "profile-proxy-team/profile-management/profile-synchronization",
+              "profile-proxy-team/profile-management/editing-profiles"
             ]
           },
           {
