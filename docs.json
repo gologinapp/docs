@@ -82,7 +82,8 @@
           {
             "group": "Cloud Browser",
             "pages": [
-              "api-reference/cloud-browser/getting-started"
+              "api-reference/cloud-browser/getting-started",
+              "api-reference/cloud-browser/scrapping"
             ]
           },
           {
