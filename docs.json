@@ -34,32 +34,48 @@
         ]
       },
       {
-        "tab": "Profile, Proxy & Team Collaboration",
+        "tab": "Browser Profiles",
         "groups": [
           {
             "group": "Profile management",
             "pages": [
-              "profile-proxy-team/profile-management/creating-and-launching-profiles",
-              "profile-proxy-team/profile-management/profile-synchronization",
-              "profile-proxy-team/profile-management/editing-profiles"
+              "browser-profiles/profile-management/creating-and-launching-profiles",
+              "browser-profiles/profile-management/profile-synchronization",
+              "browser-profiles/profile-management/editing-profiles"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Account, Migration & Support",
+        "groups": [
+          {
+            "group": "Account & Billing",
+            "pages": [
+              "general/account-and-billing/changing-your-email-and-pass",
+              "general/account-and-billing/two-factor-authentication",
+              "general/account-and-billing/payment-methods",
+              "general/account-and-billing/promo-codes",
+              "general/account-and-billing/invoices",
+              "general/account-and-billing/faq-subscription"
             ]
           },
           {
             "group": "Team collaboration",
             "pages": [
-              "profile-proxy-team/team-collaboration/workspaces",
-              "profile-proxy-team/team-collaboration/workspace-roles-and-permissions",
-              "profile-proxy-team/team-collaboration/sharing-workspace-or-folders",
-              "profile-proxy-team/team-collaboration/accessing-shared-workspace-or-folders",
-              "profile-proxy-team/team-collaboration/sharing-profiles",
-              "profile-proxy-team/team-collaboration/faq-team-collaboration"
+              "general/team-collaboration/workspaces",
+              "general/team-collaboration/workspace-roles-and-permissions",
+              "general/team-collaboration/sharing-workspace-or-folders",
+              "general/team-collaboration/accessing-shared-workspace-or-folders",
+              "general/team-collaboration/sharing-profiles",
+              "general/team-collaboration/faq-team-collaboration"
             ]
           },
           {
             "group": "Troubleshooting",
             "pages": [
-              "profile-proxy-team/troubleshooting/wrong-ip-my-ip-is-leaking",
-              "profile-proxy-team/troubleshooting/wrong-proxy-location"
+              "general/troubleshooting/wrong-ip-my-ip-is-leaking",
+              "general/troubleshooting/wrong-proxy-location"
             ]
           }
         ]
@@ -107,22 +123,6 @@
             "group": "Limitations",
             "pages": [
               "api-reference/limitations/rate-limits"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "Account, Migration & Support",
-        "groups": [
-          {
-            "group": "Account & Billing",
-            "pages": [
-              "account-migration-support/account-and-billing/changing-your-email-and-pass",
-              "account-migration-support/account-and-billing/two-factor-authentication",
-              "account-migration-support/account-and-billing/payment-methods",
-              "account-migration-support/account-and-billing/promo-codes",
-              "account-migration-support/account-and-billing/invoices",
-              "account-migration-support/account-and-billing/faq-subscription"
             ]
           }
         ]
