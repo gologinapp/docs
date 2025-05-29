@@ -47,6 +47,17 @@
         ]
       },
       {
+        "tab": "Proxy",
+        "groups": [
+          {
+            "group": "Introduction",
+            "pages": [
+              "proxy/introduction/quickstart"
+            ]
+          }
+        ]
+      },
+      {
         "tab": "General",
         "groups": [
           {
