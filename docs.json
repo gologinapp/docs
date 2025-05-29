@@ -58,6 +58,17 @@
         ]
       },
       {
+        "tab": "Fingerprint",
+        "groups": [
+          {
+            "group": "Introduction",
+            "pages": [
+              "fingerprint/introduction/quickstart"
+            ]
+          }
+        ]
+      },
+      {
         "tab": "General",
         "groups": [
           {
