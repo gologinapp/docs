@@ -47,19 +47,8 @@
         ]
       },
       {
-        "tab": "Account, Migration & Support",
+        "tab": "General",
         "groups": [
-          {
-            "group": "Account & Billing",
-            "pages": [
-              "general/account-and-billing/changing-your-email-and-pass",
-              "general/account-and-billing/two-factor-authentication",
-              "general/account-and-billing/payment-methods",
-              "general/account-and-billing/promo-codes",
-              "general/account-and-billing/invoices",
-              "general/account-and-billing/faq-subscription"
-            ]
-          },
           {
             "group": "Team collaboration",
             "pages": [
@@ -69,6 +58,17 @@
               "general/team-collaboration/accessing-shared-workspace-or-folders",
               "general/team-collaboration/sharing-profiles",
               "general/team-collaboration/faq-team-collaboration"
+            ]
+          },
+          {
+            "group": "Account & Billing",
+            "pages": [
+              "general/account-and-billing/changing-your-email-and-pass",
+              "general/account-and-billing/two-factor-authentication",
+              "general/account-and-billing/payment-methods",
+              "general/account-and-billing/promo-codes",
+              "general/account-and-billing/invoices",
+              "general/account-and-billing/faq-subscription"
             ]
           },
           {
