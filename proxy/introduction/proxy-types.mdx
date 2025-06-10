@@ -1,0 +1,60 @@
+---
+title: 'Proxy Types'
+description: ''
+---
+
+Proxies serve as intermediaries between a user's device and the internet, enhancing privacy, security, or access. They are categorized by several key factors:
+- Hosting Types
+- Access Models
+- Protocols
+- Rotation Frequency
+
+## Residential, Mobile or Datacenter
+
+✅ **Residential Proxies**
+These use IP addresses designated to real users, **making them harder to detect**. They are usually pricier but preferred for tasks like managing social media accounts.
+
+✅ **Mobile Proxies**
+Operating on mobile 4G\5G networks, these use IP addresses tied to mobile devices. They are **highly trusted by websites** due to their dynamic nature, ideal for social media management or ad verification.
+
+✅ **ISP Proxies**
+Provided by Internet Service Providers, these combine the speed of datacenter proxies with the legitimacy of residential IPs. They are less common but useful for tasks requiring high reliability and low detection risk, such as SEO monitoring or account management.
+
+🚩 **Datacenter Proxies**
+Hosted in data centers and are tied to Internet services. They are ideal for bulk tasks like web scraping but **may be flagged by websites** due to their non-residential IP addresses.
+
+## Private vs Shared
+
+✅ **Private Proxies**
+Assigned exclusively to one user, these offer better speed, reliability, and security. They are more expensive but **ideal for managing multiple accounts**.
+
+🚩 **Shared or Free Proxies**
+Multiple users share the same proxy IP. They are affordable but **may suffer from slower speeds or blacklisting** due to other users’ activities. Suitable for casual browsing or non-sensitive tasks.
+
+## Proxy Protocols
+
+Both HTTP/HTTPS and SOCKS protocols work for most websites, but for sites with advanced anti-bot measures, SOCKS5 proxies with UDP support are often preferred for their versatility.
+
+**HTTP and HTTPS**
+These are the most commonly used and popular proxies. Ideal for web browsing.
+HTTP proxies handle traffic specifically for the Hypertext Transfer Protocol.
+HTTPS is support secure connections via SSL/TLS encryption. They are suitable for tasks requiring secure data transmission, like online banking.
+
+**SOCKS4 and SOCKS5**
+SOCKS, unlike HTTP/HTTPS, don't moderate HTTP-header, and the servers will transmit data through themselves without altering a thing.
+They are very versatile and are able to handle different requests, including HTTP/HTTPS, SMTP POP3, and FTP. 
+SOCKS4 proxy servers only support TCP connections, while SOCKS5 supports UDP.
+
+## Static vs Dynamic proxies
+
+**Static Proxies**
+They use a fixed residential IP address assigned by an ISP.
+These are ideal for cases where you need to work with the same accounts or identities for extended periods of time.
+
+**Sticky Proxies**
+Sticky proxies often referred to as rotating with session persistence or session-based proxies, maintain the same IP address for a specific session duration, after which the IP may rotate or change. A session usually active for about 10-30 minutes.
+Good for web scraping tasks requiring short-term IP consistency to avoid detection.
+
+**Rotating Proxies**
+Rotating proxies assign a new IP address from a pool of available IPs. It may happen per request (each HTTP request), per session, or after a time interval (every 1–10 minutes).
+Ideal for high-volume, anonymity-focused tasks where frequent IP changes prevent blocks.
