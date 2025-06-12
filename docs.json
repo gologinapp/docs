@@ -60,7 +60,7 @@
           {
             "group": "Proxy Management",
             "pages": [
-              "proxy/introduction/adding-proxies"
+              "proxy/proxy-management/adding-proxies"
             ]
           }
         ]
