@@ -56,6 +56,12 @@
               "proxy/introduction/proxy-types",
               "proxy/introduction/best-proxy-for-your-case"
             ]
+          },
+          {
+            "group": "Proxy Management",
+            "pages": [
+              "proxy/introduction/Adding-proxies"
+            ]
           }
         ]
       },
