@@ -61,7 +61,15 @@
           {
             "group": "Proxy Management",
             "pages": [
-              "proxy/proxy-management/adding-proxies"
+              "proxy/proxy-management/adding-proxies",
+              {
+                "dropdown": "Proxy Manager",
+                "pages": ["proxy/proxy-management/proxy-manager/overview", "proxy/proxy-management/proxy-manager/navigation"]
+              },
+              {
+                "dropdown": "Proxies Page",
+                "pages": ["proxy/proxy-management/proxies-page/overview"]
+              }
             ]
           }
         ]
