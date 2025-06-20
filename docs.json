@@ -61,18 +61,18 @@
           {
             "group": "Proxy Management",
             "pages": [
-              "proxy/proxy-management/adding-proxies.mdx",
+              "proxy/proxy-management/adding-proxies",
               {
                 "group": "Built-in Proxy Manager",
                 "pages": [
-                  "prox/proxy-management/proxy-manager/overview.mdx",
-                  "prox/proxy-management/proxy-manager/navigation.mdx"
+                  "prox/proxy-management/proxy-manager/overview",
+                  "prox/proxy-management/proxy-manager/navigation"
                 ]
               },
               {
                 "group": "Proxies Page",
                 "pages": [
-                  "prox/proxy-management/proxies-page/overview.mdx"
+                  "prox/proxy-management/proxies-page/overview"
                 ]
               }
             ]
