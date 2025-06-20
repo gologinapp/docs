@@ -65,14 +65,14 @@
               {
                 "group": "Built-in Proxy Manager",
                 "pages": [
-                  "prox/proxy-management/proxy-manager/overview",
-                  "prox/proxy-management/proxy-manager/navigation"
+                  "proxy/proxy-management/proxy-manager/overview",
+                  "proxy/proxy-management/proxy-manager/navigation"
                 ]
               },
               {
                 "group": "Proxies Page",
                 "pages": [
-                  "prox/proxy-management/proxies-page/overview"
+                  "proxy/proxy-management/proxies-page/overview"
                 ]
               }
             ]
