@@ -140,6 +140,12 @@
             "openapi": "https://docs-download.gologin.com/openapi.json"
           },
           {
+            "group": "AI Integrations",
+            "pages": [
+              "api-reference/ai-integrations/mcp-server"
+            ]
+          },
+          {
             "group": "Cloud Browser",
             "pages": [
               "api-reference/cloud-browser/getting-started",
