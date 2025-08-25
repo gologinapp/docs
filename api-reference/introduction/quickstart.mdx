@@ -1,19 +1,17 @@
 ---
-title: 'Quickstart'
+title: "Quickstart"
 ---
 
 This guide will get you all set up and ready to use the GoLogin API. We'll cover how to get started using one of our API clients and how to make your first API request. We'll also look at where to go next to find all the information you need to take full advantage of our powerful REST API.
 
-
 <Note>
   Before you can make requests to the GoLogin API, you will need to grab your
-  API key from your dashboard. You find it under [Settings &raquo; API](https://app.gologin.com/personalArea/TokenApi).
+  API key from your dashboard. You find it under [Settings » API](https://app.gologin.com/personalArea/TokenApi).
 </Note>
-
 
 ## Making your first anonymous scrapping request
 
-<CodeGroup tag="iphey.com" label="Check trustworthiness status">
+<CodeGroup>
 
 ```js node.js
 import { GologinApi } from 'gologin';
@@ -60,8 +58,10 @@ main().catch(console.error)
   .finally(gologin.exit);
 ```
 
+
 ```python Python
 import time
+import os
 from gologin import GoLogin
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -103,15 +103,14 @@ time.sleep(10)
 gl.delete(profile_id)
 
 gl.stop()
-
 ```
 
 </CodeGroup>
 
-
 ## Running code yourself in Node.js
 
-<CodeGroup tag="github.com" label="Run scrapping example">
+<CodeGroup>
+
 ```bash bash
 # Install required packages
 npm i gologin
@@ -119,11 +118,13 @@ npm i gologin
 # Run the code - change filename.js to your actual filename and add your token
 GL_API_TOKEN=[YOUR_GOLOGIN_API_TOKEN] node filename.js
 ```
+
 </CodeGroup>
 
 ## Running code yourself in Python
 
-<CodeGroup tag="github.com" label="Run scrapping example">
+<CodeGroup>
+
 ```bash bash
 # create local env for the project
 python3 -m venv venv
@@ -134,10 +135,11 @@ source venv/bin/activate && pip install gologin selenium webdriver-manager
 # Run the script. Your file should not be named gologin.py as it will cause conflict with import
 GL_API_TOKEN=[YOUR_GOLOGIN_API_TOKEN] python3 filename.py
 ```
+
 </CodeGroup>
 
 ## What's next?
 
 Great, you're now set up with an API client and have made your first request to the API. Here are a few links that might be handy as you venture further into the GoLogin API:
 
-- [Grab your API key from the Settings > API](https://app.gologin.com/personalArea/TokenApi)
+- [Grab your API key from the Settings \> API](https://app.gologin.com/personalArea/TokenApi)
