@@ -8,9 +8,11 @@ https://cloudbrowser.gologin.com/connect?token=${token}&profile=${params.profile
 It's a websocket url that will establish connection to control the browser
 You need to provide your dev token and profile id (optional). If you dont pass a profile id - it will create new profile
 
-# Example with Puppeteer
+# Examples
 
-```javascript
+<CodeGroup>
+
+```javascript Puppeteer
 const puppeteer = require('puppeteer-core');
 
 (async () => {
@@ -45,6 +47,28 @@ const puppeteer = require('puppeteer-core');
   // Close the browser when done
   await browser.close();
 })();
+```
+
+```python Playwright
+import asyncio
+from playwright.async_api import async_playwright
+
+async def main():
+    url = 'wss://cloudbrowser.gologin.com/connect?token={token}&profile={profile id}'
+    async with async_playwright() as p:
+        browser = await p.chromium.connect_over_cdp(url)
+        
+        page = await browser.new_page()
+        await page.goto("http://playwright.dev")
+        print(await page.title())
+
+        await browser.close()
+
+if __name__ == "__main__":
+    asyncio.run(main())
+```
+
+</CodeGroup>
 
 
 
