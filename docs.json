@@ -34,7 +34,7 @@
         ]
       },
       {
-        "tab": "Browser Profiles",
+        "tab": "Profiles & Fingerprint",
         "groups": [
           {
             "group": "Profile management",
@@ -43,11 +43,17 @@
               "browser-profiles/profile-management/profile-synchronization",
               "browser-profiles/profile-management/editing-profiles"
             ]
+          },
+          {
+            "group": "Fingerprints",
+            "pages": [
+              "browser-profiles/fingerprint/what-is-a-fingerprint"
+            ]
           }
         ]
       },
       {
-        "tab": "Proxy",
+        "tab": "Proxies & Network",
         "groups": [
           {
             "group": "Introduction",
@@ -80,12 +86,12 @@
         ]
       },
       {
-        "tab": "Fingerprint",
+        "tab": "Best Practices",
         "groups": [
           {
-            "group": "Introduction",
+            "group": "Fundamentals",
             "pages": [
-              "fingerprint/introduction/quickstart"
+              "best-practices/fundamentals/how-fingerprinting-works"
             ]
           }
         ]
