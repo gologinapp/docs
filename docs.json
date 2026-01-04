@@ -26,6 +26,13 @@
         "tab": "Getting Started",
         "groups": [
           {
+            "group": "Introduction",
+            "pages": [
+              "getting-started/introduction/what-is-gologin-and-who-its-for",
+              "getting-started/introduction/quick-start-from-zero-to-your-first-profile"
+            ]
+          },
+          {
             "group": "Setup",
             "pages": [
               "getting-started/setup/supported-platforms-installation"
