@@ -60,9 +60,9 @@
                 "group": "Browser Extensions",
                 "expanded": true,
                 "pages": [
-                  "proxy/profile-features/browser-extensions/browser-extensions",
-                  "proxy/profile-features/browser-extensions/adding-browser-extensions",
-                  "proxy/profile-features/browser-extensions/installing-custom-extensions"
+                  "browser-profiles/profile-features/browser-extensions/browser-extensions",
+                  "browser-profiles/profile-features/browser-extensions/adding-browser-extensions",
+                  "browser-profiles/profile-features/browser-extensions/installing-custom-extensions"
                 ]
               }
             ]
