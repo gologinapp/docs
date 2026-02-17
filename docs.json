@@ -49,7 +49,7 @@
               "browser-profiles/profile-management/creating-and-launching-profiles",
               "browser-profiles/profile-management/profile-synchronization",
               "browser-profiles/profile-management/editing-profiles",
-              "browser-profiles/profile-management/profile-history",
+              "browser-profiles/profile-management/restore-browser-sessions",
               "browser-profiles/profile-management/restore-deleted-profiles"
             ]
           },
