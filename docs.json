@@ -44,11 +44,27 @@
         "tab": "Profiles & Fingerprint",
         "groups": [
           {
-            "group": "Profile management",
+            "group": "Profile Management",
             "pages": [
               "browser-profiles/profile-management/creating-and-launching-profiles",
               "browser-profiles/profile-management/profile-synchronization",
-              "browser-profiles/profile-management/editing-profiles"
+              "browser-profiles/profile-management/editing-profiles",
+              "browser-profiles/profile-management/profile-history",
+              "browser-profiles/profile-management/restore-deleted-profiles"
+            ]
+          },
+          {
+            "group": "Profile Features",
+            "pages": [
+              {
+                "group": "Browser Extensions",
+                "expanded": true,
+                "pages": [
+                  "proxy/profile-features/browser-extensions/browser-extensions",
+                  "proxy/profile-features/browser-extensions/adding-browser-extensions",
+                  "proxy/profile-features/browser-extensions/installing-custom-extensions"
+                ]
+              }
             ]
           },
           {
