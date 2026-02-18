@@ -64,6 +64,14 @@
                   "browser-profiles/profile-features/browser-extensions/adding-browser-extensions",
                   "browser-profiles/profile-features/browser-extensions/installing-custom-extensions"
                 ]
+              },
+              {
+                "group": "Browser Cookies",
+                "expanded": true,
+                "pages": [
+                  "browser-profiles/profile-features/browser-cookies/what-are-browser-cookies",
+                  "browser-profiles/profile-features/browser-cookies/cookies-import-and-export"
+                ]
               }
             ]
           },

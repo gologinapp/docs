@@ -1,0 +1,45 @@
+---
+title: "What are browser cookies"
+---
+
+**Cookies** are small data files created by websites and stored in your browser.
+
+Cookies usually include:
+- Login session tokens
+- “Remember me” authentication
+- Language and region settings
+- Shopping cart data
+- Tracking identifiers
+- Anti-fraud trust signals
+
+When working with multi-account setups, cookies often determine whether a website sees your session as trusted or suspicious.
+
+## How cookies work in Gologin
+
+Each Gologin profile:
+- Has its own isolated cookie storage
+- Does not share cookies with other profiles
+- Syncs cookies to the cloud when the profile is properly closed
+- Restores cookies when the profile is launched again
+
+This means every profile behaves like a separate physical device, as long as you use different proxies for each profile.
+
+## Proxy and Fingerprint consistency
+
+Cookies alone do not guarantee account access.
+
+For successful cookie import:
+- Use the same or geographically consistent proxy
+- Keep timezone aligned with IP
+- Avoid major fingerprint changes
+- Do not mix mobile cookies with desktop fingerprints
+
+If the IP country or device fingerprint changes drastically, websites may invalidate the session.
+
+## Best practices
+
+✅ Always close profiles properly to sync cookies\
+✅ Keep proxy geography consistent\
+✅ Export cookies before making major changes\
+✅ Test imports on non-critical accounts first\
+✅ Avoid frequent cookie swapping on established accounts
