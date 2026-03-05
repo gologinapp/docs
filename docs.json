@@ -233,7 +233,8 @@
             "group": "Scraping API & Web Unlocker",
             "pages": [
               "what-is-web-unlocker",
-              "web-unlocker-quick-start"
+              "web-unlocker-quick-start",
+              "web-unlocker-async"
             ]
           }
         ]

@@ -1,0 +1,239 @@
+---
+title: 'Web unlocker async'
+---
+
+# Async Mode
+
+Async mode lets you submit a scraping task and retrieve results later, without waiting for the request to finish. This is useful for complex or slow-loading sites, batch processing, and any workflow where you don't want to block on a single request.
+
+---
+
+## Sync vs async — when to use which
+
+| | Sync (default) | Async |
+|---|---|---|
+| **How it works** | Waits and returns results immediately | Returns a task ID; you poll for completion |
+| **Best for** | Simple scripts, single URLs, on-demand requests | Complex sites, batches, parallel processing |
+| **Timeout** | 295 seconds | No strict limit |
+| **Result delivery** | Inline in the response | Downloaded via separate API calls |
+
+If your sync request returns `status: "timeout"`, the task is still running — you can switch to polling with the `task_id` from that response.
+
+---
+
+## Async workflow
+
+```
+1. POST /tasks?async=true      → get task_id
+2. GET  /tasks/{task_id}/status → poll until "completed"
+3. GET  /results/{task_id}/html
+   GET  /results/{task_id}/screenshot
+   GET  /results/{task_id}/archive
+```
+
+---
+
+## Python example
+
+```python
+import requests
+import time
+
+API_URL = "https://api.webunlocker.gologin.com/api/parsing/v1"
+API_KEY = "YOUR_API_KEY"
+
+# Step 1: Create task
+response = requests.post(
+    f"{API_URL}/tasks?async=true",
+    headers={"X-API-Key": API_KEY},
+    json={"url": "https://example.com"}
+)
+task_id = response.json()["task_id"]
+print(f"Task created: {task_id}")
+
+# Step 2: Poll for completion
+while True:
+    status = requests.get(
+        f"{API_URL}/tasks/{task_id}/status",
+        headers={"X-API-Key": API_KEY}
+    ).json()["status"]
+
+    print(f"Status: {status}")
+
+    if status == "completed":
+        break
+    elif status in ("failed", "cancelled"):
+        raise Exception(f"Task {status}")
+
+    time.sleep(5)
+
+# Step 3: Download results
+html = requests.get(
+    f"{API_URL}/results/{task_id}/html",
+    headers={"X-API-Key": API_KEY}
+).text
+
+with open("page.html", "w") as f:
+    f.write(html)
+
+screenshot = requests.get(
+    f"{API_URL}/results/{task_id}/screenshot",
+    headers={"X-API-Key": API_KEY}
+).content
+
+with open("screenshot.png", "wb") as f:
+    f.write(screenshot)
+
+print("Done.")
+```
+
+---
+
+## JavaScript example
+
+```javascript
+import fs from "fs/promises";
+
+const API_URL = "https://api.webunlocker.gologin.com/api/parsing/v1";
+const API_KEY = "YOUR_API_KEY";
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// Step 1: Create task
+const createRes = await fetch(`${API_URL}/tasks?async=true`, {
+  method: "POST",
+  headers: { "X-API-Key": API_KEY, "Content-Type": "application/json" },
+  body: JSON.stringify({ url: "https://example.com" }),
+});
+const { task_id } = await createRes.json();
+console.log(`Task created: ${task_id}`);
+
+// Step 2: Poll for completion
+while (true) {
+  const { status } = await fetch(`${API_URL}/tasks/${task_id}/status`, {
+    headers: { "X-API-Key": API_KEY },
+  }).then((r) => r.json());
+
+  console.log(`Status: ${status}`);
+
+  if (status === "completed") break;
+  if (status === "failed" || status === "cancelled") {
+    throw new Error(`Task ${status}`);
+  }
+
+  await sleep(5000);
+}
+
+// Step 3: Download results
+const html = await fetch(`${API_URL}/results/${task_id}/html`, {
+  headers: { "X-API-Key": API_KEY },
+}).then((r) => r.text());
+
+await fs.writeFile("page.html", html, "utf-8");
+
+const screenshot = await fetch(`${API_URL}/results/${task_id}/screenshot`, {
+  headers: { "X-API-Key": API_KEY },
+}).then((r) => r.arrayBuffer());
+
+await fs.writeFile("screenshot.png", Buffer.from(screenshot));
+
+console.log("Done.");
+```
+
+---
+
+## Task statuses
+
+When polling `GET /tasks/{task_id}/status`, the response contains a `status` field:
+
+| Status | Meaning |
+|---|---|
+| `pending` | Task is queued, waiting to start |
+| `running` | Browser is loading the page |
+| `completed` | Done — results are ready to download |
+| `failed` | Could not scrape the page — check `error` field |
+| `cancelled` | Task was cancelled |
+
+Poll every 3–5 seconds. Most tasks complete in 10–30 seconds. Complex sites may take longer.
+
+---
+
+## Downloading results
+
+Once a task is `completed`, you have three download endpoints:
+
+```
+GET /results/{task_id}/html        → full rendered HTML
+GET /results/{task_id}/screenshot  → PNG screenshot
+GET /results/{task_id}/archive     → ZIP file with HAR network log
+```
+
+All three require the same `X-API-Key` header.
+
+**Note:** Async results are retained for **24 hours** after completion. Download what you need before they expire.
+
+---
+
+## Handling a sync timeout
+
+If a sync request returns `status: "timeout"`, the task is still running in the background. Use the `task_id` from the timeout response to continue polling:
+
+```python
+response = requests.post(f"{API_URL}/tasks", headers=..., json={"url": url})
+data = response.json()
+
+if data["status"] == "timeout":
+    task_id = data["task_id"]
+    # Continue polling as normal
+    while True:
+        status = requests.get(f"{API_URL}/tasks/{task_id}/status", ...).json()["status"]
+        if status == "completed":
+            break
+        time.sleep(5)
+```
+
+---
+
+## Batch processing
+
+To scrape multiple URLs concurrently, create all tasks first, then poll them together:
+
+```python
+import requests
+import time
+
+API_URL = "https://api.webunlocker.gologin.com/api/parsing/v1"
+API_KEY = "YOUR_API_KEY"
+HEADERS = {"X-API-Key": API_KEY}
+
+urls = [
+    "https://example.com",
+    "https://httpbin.org/html",
+    "https://quotes.toscrape.com",
+]
+
+# Create all tasks
+task_ids = []
+for url in urls:
+    res = requests.post(f"{API_URL}/tasks?async=true", headers=HEADERS, json={"url": url})
+    task_ids.append(res.json()["task_id"])
+    print(f"Created: {task_ids[-1]}")
+
+# Poll until all complete
+pending = set(task_ids)
+while pending:
+    for task_id in list(pending):
+        status = requests.get(f"{API_URL}/tasks/{task_id}/status", headers=HEADERS).json()["status"]
+        if status in ("completed", "failed", "cancelled"):
+            print(f"{task_id}: {status}")
+            pending.remove(task_id)
+    if pending:
+        time.sleep(5)
+
+# Download results
+for task_id in task_ids:
+    html = requests.get(f"{API_URL}/results/{task_id}/html", headers=HEADERS).text
+    with open(f"{task_id}.html", "w") as f:
+        f.write(html)
+
+print("All done.")
+```
