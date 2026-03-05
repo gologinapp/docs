@@ -1,13 +1,14 @@
 ---
 title: "Getting Started"
 ---
+
 Gologin Cloud Browser lets you run a browser session **in the cloud** and control it from your automation tool (Puppeteer / Playwright) using a single **connection URL**.
 
 ## Connection URL
 
 Use this URL in your automation library as a remote browser endpoint:
 
-https://cloudbrowser.gologin.com/connect?token=${token}&profile=${params.profileId}
+https://cloudbrowser.gologin.com/connect?token=\${token}&profile=\${params.profileId}
 
 - `token` — your Gologin **dev token**.
 - `profile` — **profile ID** (optional):
@@ -16,6 +17,10 @@ https://cloudbrowser.gologin.com/connect?token=${token}&profile=${params.profile
 
 > Note: This URL is used as a **WebSocket connection endpoint** by automation libraries (for example `browserWSEndpoint` in Puppeteer).\
 > Generate your token in the GoLogin dashboard: `Personal Area → API Token`.
+
+<Frame>
+  ![Screenshotat Mar0514 27 28](/images/ScreenshotatMar0514-27-28.png)
+</Frame>
 
 ## Managing profiles (proxy, fingerprint, etc.)
 
