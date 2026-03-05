@@ -278,6 +278,9 @@
   "integrations": {
     "intercom": {
       "appId": "izr1nygf"
+    },
+    "gtm": {
+      "tagId": "GTM-PCVDMBT"
     }
   }
 }
