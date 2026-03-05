@@ -1,12 +1,30 @@
 ---
-title: 'Getting Started'
+title: "Getting Started"
 ---
 
-All you need to know about cloud browser is an url which you need to pass to your automation tool: <br />
+Cloud Browser lets you run a Gologin browser session **in the cloud** and control it from your automation tool (Puppeteer / Playwright) using a single **connection URL**.
+
+## Connection URL
+
+Use this URL in your automation library as a remote browser endpoint:
+
 https://cloudbrowser.gologin.com/connect?token=${token}&profile=${params.profileId}
 
-It's a websocket url that will establish connection to control the browser
-You need to provide your dev token and profile id (optional). If you dont pass a profile id - it will create new profile
+- `token` — your Gologin **dev token**.
+- `profile` — **profile ID** (optional):
+  - if provided, Gologin will run this profile in the cloud;
+  - if omitted, Gologin will create a new profile for the session.
+
+> Note: This URL is used as a **WebSocket connection endpoint** by automation libraries (for example `browserWSEndpoint` in Puppeteer).  
+> Generate your token in the GoLogin dashboard: `Personal Area → API Token`.
+
+## Managing profiles (proxy, fingerprint, etc.)
+
+Cloud Browser is only the **connection layer** (remote browser session).  
+To **create/update profiles**, attach **proxies**, configure **fingerprint**, tags, and other profile settings, use the GoLogin **REST API**:
+
+- Profiles API: https://gologin.com/docs/api-reference/profile
+- Proxies API: https://gologin.com/docs/api-reference/proxy
 
 # Examples
 
@@ -49,6 +67,7 @@ const puppeteer = require('puppeteer-core');
 })();
 ```
 
+
 ```python Playwright
 import asyncio
 from playwright.async_api import async_playwright
@@ -69,6 +88,3 @@ if __name__ == "__main__":
 ```
 
 </CodeGroup>
-
-
-
