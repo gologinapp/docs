@@ -205,9 +205,9 @@
           {
             "group": "Cloud Browser",
             "pages": [
+              "api-reference/cloud-browser/what-is-gologin-cloud-browser",
               "api-reference/cloud-browser/getting-started",
-              "api-reference/cloud-browser/scrapping",
-              "api-reference/cloud-browser/what-is-gologin-cloud-browser"
+              "api-reference/cloud-browser/scrapping"
             ]
           },
           {
