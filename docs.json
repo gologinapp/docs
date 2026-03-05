@@ -77,6 +77,7 @@
           },
           {
             "group": "Fingerprints",
+            "hidden": true,
             "pages": [
               "browser-profiles/fingerprint/what-is-a-fingerprint"
             ]
@@ -126,6 +127,7 @@
               },
               {
                 "group": "Proxies Page",
+                "hidden": true,
                 "expanded": true,
                 "pages": [
                   "proxy/proxy-management/proxies-page/overview"
