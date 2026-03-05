@@ -208,14 +208,14 @@
             "group": "Cloud Browser",
             "pages": [
               "api-reference/cloud-browser/what-is-gologin-cloud-browser",
+              "api-reference/cloud-browser/what-is-headless-browser",
               "api-reference/cloud-browser/getting-started",
               "api-reference/cloud-browser/scraping",
               "api-reference/cloud-browser/live",
               "api-reference/cloud-browser/untitled-page",
               "api-reference/cloud-browser/untitled-page-1",
               "api-reference/cloud-browser/untitled-page-2",
-              "api-reference/cloud-browser/untitled-page-3",
-              "api-reference/cloud-browser/what-is-headless-browser"
+              "api-reference/cloud-browser/untitled-page-3"
             ]
           },
           {
