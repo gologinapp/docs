@@ -141,14 +141,10 @@
       {
         "tab": "Best Practices",
         "hidden": true,
-        "groups": [
-          {
-            "group": "Fundamentals",
-            "hidden": true,
-            "pages": [
-              "best-practices/fundamentals/how-fingerprinting-works"
-            ]
-          }
+        "pages": [
+          "best-practices-overview",
+          "reddit-account-best-practices",
+          "twitter-account-best-practices"
         ]
       },
       {
