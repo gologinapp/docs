@@ -1,0 +1,251 @@
+---
+title: 'Web unlocker use cases'
+---
+
+# Use Cases
+
+Web Unlocker is a scraping API — you send a URL, it returns the rendered HTML, screenshot, and network archive. This page shows the most common ways to put that to use.
+
+---
+
+## Scrape a page yourself
+
+The simplest use case: you need the content of a webpage that blocks regular HTTP requests.
+
+```python
+import requests
+
+API_URL = "https://api.webunlocker.gologin.com/api/parsing/v1"
+API_KEY = "YOUR_API_KEY"
+
+data = requests.post(
+    f"{API_URL}/tasks",
+    headers={"X-API-Key": API_KEY},
+    json={"url": "https://example.com/product/123"}
+).json()
+
+html = data["result"]["html"]
+print(html)
+```
+
+No browser to launch, no proxy to configure, no Cloudflare to fight. One call, you get the page.
+
+**Good for:**
+- Checking prices on a competitor's site
+- Pulling job listings, reviews, or product data
+- Monitoring pages for changes
+- One-off data collection scripts
+
+---
+
+## Feed content into an AI
+
+Web Unlocker returns raw HTML. Pass that into an LLM to extract structured data, summarize content, or answer questions about the page — no parsing logic needed.
+
+### Python + OpenAI example
+
+```python
+import requests
+from openai import OpenAI
+
+API_URL = "https://api.webunlocker.gologin.com/api/parsing/v1"
+API_KEY = "YOUR_API_KEY"
+
+# Step 1: scrape the page
+html = requests.post(
+    f"{API_URL}/tasks",
+    headers={"X-API-Key": API_KEY},
+    json={"url": "https://news.ycombinator.com"}
+).json()["result"]["html"]
+
+# Step 2: ask the LLM to extract data
+client = OpenAI()
+response = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[
+        {
+            "role": "user",
+            "content": f"Extract the top 5 story titles and their URLs from this HTML:\n\n{html[:8000]}"
+        }
+    ]
+)
+
+print(response.choices[0].message.content)
+```
+
+### JavaScript + Anthropic example
+
+```javascript
+import Anthropic from "@anthropic-ai/sdk";
+
+const API_URL = "https://api.webunlocker.gologin.com/api/parsing/v1";
+const API_KEY = "YOUR_API_KEY";
+
+// Step 1: scrape the page
+const { result } = await fetch(`${API_URL}/tasks`, {
+  method: "POST",
+  headers: { "X-API-Key": API_KEY, "Content-Type": "application/json" },
+  body: JSON.stringify({ url: "https://news.ycombinator.com" }),
+}).then((r) => r.json());
+
+// Step 2: ask the LLM to extract data
+const client = new Anthropic();
+const message = await client.messages.create({
+  model: "claude-opus-4-5",
+  max_tokens: 1024,
+  messages: [
+    {
+      role: "user",
+      content: `Extract the top 5 story titles and their URLs from this HTML:\n\n${result.html.slice(0, 8000)}`,
+    },
+  ],
+});
+
+console.log(message.content[0].text);
+```
+
+**Good for:**
+- Extracting structured data (prices, names, dates) without writing parsers
+- Summarizing articles or product pages
+- Comparing multiple pages and drawing conclusions
+- Building research or monitoring tools powered by AI
+
+---
+
+## Use it inside an AI agent
+
+Give your AI agent a `scrape` tool backed by Web Unlocker. The agent can then browse the web on its own — fetching pages, reading content, and taking action — without you writing any browsing logic.
+
+```python
+import requests
+import anthropic
+
+API_URL = "https://api.webunlocker.gologin.com/api/parsing/v1"
+WU_KEY = "YOUR_API_KEY"
+
+def scrape(url: str) -> str:
+    """Fetch a URL and return its rendered HTML."""
+    data = requests.post(
+        f"{API_URL}/tasks",
+        headers={"X-API-Key": WU_KEY},
+        json={"url": url}
+    ).json()
+    return data["result"]["html"]
+
+# Define the tool for the agent
+tools = [
+    {
+        "name": "scrape",
+        "description": "Fetch the rendered HTML of any URL, including JavaScript-heavy and protected sites.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "url": {"type": "string", "description": "The URL to scrape"}
+            },
+            "required": ["url"]
+        }
+    }
+]
+
+client = anthropic.Anthropic()
+
+messages = [
+    {"role": "user", "content": "What is the current price of the iPhone 16 Pro on apple.com?"}
+]
+
+# Agentic loop
+while True:
+    response = client.messages.create(
+        model="claude-opus-4-5",
+        max_tokens=1024,
+        tools=tools,
+        messages=messages
+    )
+
+    if response.stop_reason == "end_turn":
+        print(response.content[0].text)
+        break
+
+    # Handle tool calls
+    tool_results = []
+    for block in response.content:
+        if block.type == "tool_use" and block.name == "scrape":
+            html = scrape(block.input["url"])
+            tool_results.append({
+                "type": "tool_result",
+                "tool_use_id": block.id,
+                "content": html[:10000]  # trim for context window
+            })
+
+    messages.append({"role": "assistant", "content": response.content})
+    messages.append({"role": "user", "content": tool_results})
+```
+
+The agent decides when to scrape, what URL to fetch, and how to use the result. Web Unlocker handles the actual retrieval.
+
+**Good for:**
+- Research agents that browse the web autonomously
+- Price comparison or deal-finding bots
+- Competitive intelligence pipelines
+- Any agent that needs real-time web data
+
+---
+
+## Scrape many pages at once
+
+Use async mode to submit multiple URLs in parallel and collect results when they're ready.
+
+```python
+import requests
+import time
+
+API_URL = "https://api.webunlocker.gologin.com/api/parsing/v1"
+API_KEY = "YOUR_API_KEY"
+HEADERS = {"X-API-Key": API_KEY}
+
+urls = [
+    "https://example.com/page/1",
+    "https://example.com/page/2",
+    "https://example.com/page/3",
+]
+
+# Submit all tasks
+task_ids = [
+    requests.post(f"{API_URL}/tasks?async=true", headers=HEADERS, json={"url": url}).json()["task_id"]
+    for url in urls
+]
+
+# Wait for all to finish
+pending = set(task_ids)
+while pending:
+    for task_id in list(pending):
+        status = requests.get(f"{API_URL}/tasks/{task_id}/status", headers=HEADERS).json()["status"]
+        if status in ("completed", "failed", "cancelled"):
+            pending.remove(task_id)
+    if pending:
+        time.sleep(5)
+
+# Collect results
+for task_id in task_ids:
+    html = requests.get(f"{API_URL}/results/{task_id}/html", headers=HEADERS).text
+    with open(f"{task_id}.html", "w") as f:
+        f.write(html)
+```
+
+**Good for:**
+- Scraping entire product catalogs or listing pages
+- Bulk data collection for training datasets
+- Monitoring many pages simultaneously
+
+---
+
+## Summary
+
+| Use case | Mode | What you get |
+|---|---|---|
+| Scrape a single page | Sync | HTML inline in response |
+| Feed into an LLM | Sync | HTML → pass to model |
+| AI agent tool | Sync | Agent calls on demand |
+| Bulk scraping | Async | Download after completion |
+
+See [Quickstart](./web-unlocker-quickstart.md) to make your first request, or [Async Mode](./web-unlocker-async.md) for batch workflows.

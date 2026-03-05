@@ -207,6 +207,15 @@
             ]
           },
           {
+            "group": "Scraping API & Web Unlocker",
+            "pages": [
+              "what-is-web-unlocker",
+              "web-unlocker-quick-start",
+              "web-unlocker-async",
+              "web-unlocker-use-cases"
+            ]
+          },
+          {
             "group": "Node.js SDK",
             "pages": [
               "api-reference/sdks/nodejs-sdk",
@@ -227,14 +236,6 @@
             "group": "Limitations",
             "pages": [
               "api-reference/limitations/rate-limits"
-            ]
-          },
-          {
-            "group": "Scraping API & Web Unlocker",
-            "pages": [
-              "what-is-web-unlocker",
-              "web-unlocker-quick-start",
-              "web-unlocker-async"
             ]
           }
         ]
