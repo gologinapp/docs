@@ -20,7 +20,7 @@ Cloud Browser is the connection/execution layer; profile/proxy settings are mana
 
 1. Generate an API token.
 2. Optionally create/configure a profile (and proxy) via REST API.
-3. Build the connect URL with `token` and optional `profile`.
+3. Build the connect URL with `token` an optional `profile`.
 4. Connect from Puppeteer/Playwright and run extraction.
 5. Store output and close the browser session.
 
@@ -30,7 +30,7 @@ Cloud Browser is the connection/execution layer; profile/proxy settings are mana
 - Profiles API (recommended for controlled config): https://gologin.com/docs/api-reference/profile
 - Proxy API: https://gologin.com/docs/api-reference/proxy
 
-## Canonical connection endpoint
+## A canonical connection endpoint
 
 ```text
 https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}
