@@ -140,9 +140,11 @@
       },
       {
         "tab": "Best Practices",
+        "hidden": true,
         "groups": [
           {
             "group": "Fundamentals",
+            "hidden": true,
             "pages": [
               "best-practices/fundamentals/how-fingerprinting-works"
             ]
