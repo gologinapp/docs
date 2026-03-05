@@ -1,0 +1,57 @@
+---
+title: "What is a Headless Browser?"
+---
+
+A headless browser is a web browser controlled by code — it visits pages, clicks buttons, fills forms, and extracts data automatically, without a visible graphical interface.
+
+It works exactly like Chrome or Firefox, but runs on a server. No screen required.
+
+## How it works
+
+Modern browsers expose a control protocol called **Chrome DevTools Protocol (CDP)**. Automation libraries like Playwright and Puppeteer use CDP to send commands to the browser: navigate to this URL, click this element, read this text, take a screenshot.
+
+GoLogin Cloud Browser is built on top of this same protocol — your Puppeteer or Playwright code connects to a remote browser over CDP and controls it the same way it would a local one.
+
+## Why use a headless browser instead of a regular HTTP request?
+
+Many websites today load their content dynamically via JavaScript. A simple HTTP request fetches only the raw HTML — it misses everything rendered client-side.
+
+A headless browser executes JavaScript just like a real user's browser does, which means it can:
+
+- Wait for content to load after the page renders
+- Interact with dynamic elements (dropdowns, modals, infinite scroll)
+- Handle login flows, multi-step forms, and SPAs
+- Pass bot detection checks that HTTP clients cannot
+
+## Why run it in the cloud?
+
+Running a headless browser locally is straightforward. Running it reliably in production is not.
+
+Managing browser processes in production requires handling:
+
+- **Crashes and restarts** — browsers crash; infrastructure needs to recover automatically
+- **Concurrency** — multiple parallel sessions require resource isolation
+- **Scaling** — traffic spikes require spinning up more instances on demand
+- **Memory leaks** — long-running browser sessions accumulate memory
+
+GoLogin Cloud Browser handles all of this infrastructure so you connect to a ready session via a single URL and focus on your automation logic.
+
+## Why GoLogin specifically?
+
+A standard headless Chrome is detectable. Websites use browser fingerprinting to identify automation — checking canvas rendering, WebGL parameters, font lists, timezone, screen size, and dozens of other signals.
+
+GoLogin Cloud Browser runs a modified Chromium (Orbita) that manages these fingerprint signals to match a real user's browser profile. Combined with persistent cookies and proxy configuration baked into each profile, sessions look consistent and human across multiple visits.
+
+This matters for any automation targeting websites with antibot protection.
+
+## Common automation frameworks
+
+GoLogin Cloud Browser works with any library that supports CDP:
+
+| Library | Language | Notes |
+|---|---|---|
+| **Puppeteer** | Node.js | Google's CDP library, widely used |
+| **Playwright** | Node.js, Python, Java, .NET | Modern API, multi-browser support |
+| **Selenium** | Most languages | Oldest, broadest ecosystem |
+
+See [Getting Started](./getting-started) for connection examples.

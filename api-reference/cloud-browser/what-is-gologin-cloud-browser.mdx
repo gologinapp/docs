@@ -4,7 +4,7 @@ title: "What is Gologin Cloud Browser?"
 
 Gologin Cloud Browser lets you run a Gologin (Orbita) browser **in the cloud** and control it from your automation code (Puppeteer / Playwright) using a single **connection URL**.
 
-It is useful when you need scalable browser automation without maintaining your own servers, while still using Gologin profiles (cookies/storage, fingerprint settings, proxy routing).
+It is a [headless browser](./what-is-headless-browser) — a browser controlled entirely by code, without a graphical interface — hosted and managed by GoLogin, with built-in support for persistent profiles, fingerprint configuration, and proxy routing.
 
 ## What you can do with Cloud Browser
 
@@ -12,21 +12,61 @@ It is useful when you need scalable browser automation without maintaining your 
 - Automate with your existing stack (Puppeteer / Playwright)
 - Use Gologin **profiles** to keep persistent state (logins, cookies, storage)
 - Route traffic through **proxies** by configuring them on the profile
+- Use it with AI agents as a remote browser runtime
+
+## How it differs from a standard headless browser
+
+A standard headless Chrome is detectable. Websites use browser fingerprinting to identify automated traffic — checking canvas rendering, WebGL parameters, fonts, timezone, screen size, and dozens of other signals.
+
+Gologin Cloud Browser runs **Orbita** — a modified Chromium that manages fingerprint signals to match a consistent, realistic browser profile. Combined with persistent cookies and proxy configuration stored in each profile, your sessions look stable and human across repeated visits.
+
+## Why GoLogin Cloud Browser
+
+### Anti-detect built in — no plugins needed
+
+Standard headless Chrome is trivially detectable. Other cloud browser services run stock Chromium and require third-party stealth plugins to reduce fingerprint signals — with mixed results.
+
+Gologin Cloud Browser runs **Orbita**, a hardened Chromium build with fingerprint management at the core: canvas, WebGL, fonts, timezone, screen resolution, and more. Anti-detect is not a patch on top — it is the browser.
+
+### Persistent profiles — sessions that remember
+
+Most cloud browser services treat each session as stateless. Cookies and storage are discarded when the session closes.
+
+Gologin profiles persist. Log in once, close the session, reconnect later — the profile retains its cookies, local storage, and all configured settings. No re-authentication, no session warm-up.
+
+### Predictable pricing — billed by time, not by traffic
+
+| | GoLogin Cloud Browser | Typical alternative |
+|---|---|---|
+| **Session billing** | Hourly ($0.09–$0.048/h depending on plan) | Per session or per hour |
+| **Proxy traffic** | $1.99 / GB | Per MB (minimum per session) |
+| **ISP proxies** | $5 / IP, unlimited traffic | Per GB |
+| **Included hours** | 20–200 h/month depending on plan | Usually none |
+
+Proxy traffic at $1.99/GB with no per-session minimums makes costs predictable for long-running or high-volume workflows. ISP proxies at a flat $5/IP with unlimited traffic eliminate the risk of runaway proxy bills.
+
+### No vendor lock-in
+
+Gologin Cloud Browser is a standard CDP endpoint. Your Puppeteer or Playwright code connects to it the same way it would connect to any remote Chrome instance — no proprietary SDK, no custom API to learn. Switch in or out with a single URL change.
+
+### Parallel sessions that scale
+
+Plans include 1–4 parallel sessions out of the box. Need more — contact us for a custom plan.
 
 ## Common technical scenarios
 
 Cloud Browser is typically used for workflows where you:
 
-- log into a web account once and then keep the session persistent via a profile
+- log into a web account once and keep the session persistent via a profile
 - run repeated actions on the same websites across many profiles
 - need stable, long-running sessions without depending on a local machine
 
-Examples of such workflows include automating logged-in sessions for web apps, marketplaces, or social platforms where persistence (cookies/storage) and consistent profile settings matter.
+Examples include automating logged-in sessions for web apps, marketplaces, or social platforms where persistence and consistent profile settings matter.
 
 ## Core concepts
 
-- **Profile** — a reusable browser identity (cookies/storage + profile settings such as fingerprint and proxy).
-- **Cloud session** — a running instance of a profile in GoLogin’s cloud.
+- **Profile** — a reusable browser identity (cookies/storage + fingerprint and proxy settings).
+- **Cloud session** — a running instance of a profile in GoLogin's cloud.
 - **Connect URL** — the endpoint you pass to your automation tool to control the cloud session.
 
 ## How it works (high level)
@@ -34,13 +74,15 @@ Examples of such workflows include automating logged-in sessions for web apps, m
 1. (Recommended) Create and configure a profile via the Gologin REST API (proxy, fingerprint, etc.).
 2. Connect to Cloud Browser using your **dev token** and optional `profileId`.
 3. Automate the session with Puppeteer or Playwright.
-4. Close the connection when you’re done.
+4. Close the connection when you're done.
 
 ## Connection URL
 
 Use this URL as the remote browser endpoint:
 
+```
 https://cloudbrowser.gologin.com/connect?token=${token}&profile=${params.profileId}
+```
 
 - `token` — your Gologin **dev token** (generate it in the dashboard: `Personal Area → API Token`).
 - `profile` — **profile ID** (optional). If omitted, a new profile will be created for the session.
