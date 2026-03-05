@@ -2,7 +2,7 @@
 title: "What is Gologin Cloud Browser?"
 ---
 
-Gologin Cloud Browser lets you run a Gologin (Orbita) browser **in the cloud** and control it from your automation code (Puppeteer / Playwright) using a single **connection URL**.
+lGologin Cloud Browser lets you run a Gologin (Orbita) browser **in the cloud** and control it from your automation code (Puppeteer / Playwright) using a single **connection URL**.
 
 It is a [headless browser](./what-is-headless-browser) — a browser controlled entirely by code, without a graphical interface — hosted and managed by GoLogin, with built-in support for persistent profiles, fingerprint configuration, and proxy routing.
 
@@ -20,7 +20,7 @@ A standard headless Chrome is detectable. Websites use browser fingerprinting to
 
 Gologin Cloud Browser runs **Orbita** — a modified Chromium that manages fingerprint signals to match a consistent, realistic browser profile. Combined with persistent cookies and proxy configuration stored in each profile, your sessions look stable and human across repeated visits.
 
-## Why GoLogin Cloud Browser
+## Why Gologin Cloud Browser
 
 ### Anti-detect built in — no plugins needed
 
@@ -36,12 +36,12 @@ Gologin profiles persist. Log in once, close the session, reconnect later — th
 
 ### Predictable pricing — billed by time, not by traffic
 
-| | GoLogin Cloud Browser | Typical alternative |
-|---|---|---|
-| **Session billing** | Hourly ($0.09–$0.048/h depending on plan) | Per session or per hour |
-| **Proxy traffic** | $1.99 / GB | Per MB (minimum per session) |
-| **ISP proxies** | $5 / IP, unlimited traffic | Per GB |
-| **Included hours** | 20–200 h/month depending on plan | Usually none |
+|                     | GoLogin Cloud Browser               | Typical alternative          |
+| ------------------- | ----------------------------------- | ---------------------------- |
+| **Session billing** | Hourly ( 0.048/h depending on plan) | Per session or per hour      |
+| **Proxy traffic**   | \$1.99 / GB                         | Per MB (minimum per session) |
+| **ISP proxies**     | \$5 / IP, unlimited traffic         | Per GB                       |
+| **Included hours**  | 20–200 h/month depending on plan    | Usually none                 |
 
 ### No vendor lock-in
 
@@ -78,7 +78,7 @@ Examples include automating logged-in sessions for web apps, marketplaces, or so
 
 Use this URL as the remote browser endpoint:
 
-```
+```text
 https://cloudbrowser.gologin.com/connect?token=${token}&profile=${params.profileId}
 ```
 
