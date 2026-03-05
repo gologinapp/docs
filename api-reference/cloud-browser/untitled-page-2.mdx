@@ -1,0 +1,104 @@
+---
+title: "Manage a Browser Session"
+---
+
+## Closing a session
+
+Always close the session when your automation is done to free up cloud resources and avoid hitting concurrency limits.
+
+```javascript Puppeteer
+await browser.close();
+```
+
+```python Playwright
+await browser.close()
+```
+
+## Reusing a session across multiple operations
+
+Each `puppeteer.connect()` or `connect_over_cdp()` call starts a new session. If you run multiple operations sequentially (for example, in an agent workflow), reuse the same connection — otherwise cookies, local storage, and page state are lost between steps.
+
+**Recommended pattern — session singleton:**
+
+```javascript Puppeteer
+// session.js
+const puppeteer = require('puppeteer-core');
+
+let _browser = null;
+let _page = null;
+
+async function getSession(token, profileId) {
+  if (_browser && _browser.isConnected()) {
+    return { browser: _browser, page: _page };
+  }
+
+  const url = `https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}`;
+  _browser = await puppeteer.connect({ browserWSEndpoint: url, defaultViewport: null });
+  const pages = await _browser.pages();
+  _page = pages[0] || await _browser.newPage();
+
+  return { browser: _browser, page: _page };
+}
+
+async function closeSession() {
+  if (_browser) {
+    await _browser.close();
+    _browser = null;
+    _page = null;
+  }
+}
+
+module.exports = { getSession, closeSession };
+```
+
+```python Playwright
+# session.py
+from playwright.async_api import async_playwright, Browser, Page
+
+_browser: Browser | None = None
+_page: Page | None = None
+_playwright = None
+
+async def get_session(token: str, profile_id: str):
+    global _browser, _page, _playwright
+
+    if _browser and _browser.is_connected():
+        return _browser, _page
+
+    url = f'https://cloudbrowser.gologin.com/connect?token={token}&profile={profile_id}'
+    _playwright = await async_playwright().start()
+    _browser = await _playwright.chromium.connect_over_cdp(url)
+    pages = _browser.contexts[0].pages if _browser.contexts else []
+    _page = pages[0] if pages else await _browser.new_page()
+
+    return _browser, _page
+
+async def close_session():
+    global _browser, _page, _playwright
+    if _browser:
+        await _browser.close()
+    if _playwright:
+        await _playwright.stop()
+    _browser = None
+    _page = None
+    _playwright = None
+```
+
+## Handling disconnects
+
+Network interruptions or cloud-side timeouts can drop the connection. Check connectivity before each operation and reconnect if needed:
+
+```javascript Puppeteer
+if (!browser.isConnected()) {
+  // reconnect
+  const { browser: b, page: p } = await getSession(token, profileId);
+}
+```
+
+## Concurrency
+
+Each active session counts against your plan's concurrency limit. To avoid errors:
+- close sessions when done
+- do not connect to the same profile from multiple processes simultaneously
+
+See rate limits: https://gologin.com/docs/api-reference/limitations/rate-limits
