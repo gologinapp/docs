@@ -1,0 +1,58 @@
+---
+title: "What is Gologin Cloud Browser?"
+---
+
+Gologin Cloud Browser lets you run a GoLogin (Orbita) browser **in the cloud** and control it from your automation code (Puppeteer / Playwright) using a single **connection URL**.
+
+It is useful when you need scalable browser automation without maintaining your own servers, while still using GoLogin profiles (cookies/storage, fingerprint settings, proxy routing).
+
+## What you can do with Cloud Browser
+
+- Run multiple browser sessions in parallel in the cloud
+- Automate with your existing stack (Puppeteer / Playwright)
+- Use GoLogin **profiles** to keep persistent state (logins, cookies, storage)
+- Route traffic through **proxies** by configuring them on the profile
+
+## Common technical scenarios
+
+Cloud Browser is typically used for workflows where you:
+- log into a web account once and then keep the session persistent via a profile
+- run repeated actions on the same websites across many profiles
+- need stable, long-running sessions without depending on a local machine
+
+Examples of such workflows include automating logged-in sessions for web apps, marketplaces, or social platforms where persistence (cookies/storage) and consistent profile settings matter.
+
+## Core concepts
+
+- **Profile** — a reusable browser identity (cookies/storage + profile settings such as fingerprint and proxy).
+- **Cloud session** — a running instance of a profile in GoLogin’s cloud.
+- **Connect URL** — the endpoint you pass to your automation tool to control the cloud session.
+
+## How it works (high level)
+
+1) (Recommended) Create and configure a profile via the Gologin REST API (proxy, fingerprint, etc.).  
+2) Connect to Cloud Browser using your **dev token** and optional `profileId`.  
+3) Automate the session with Puppeteer or Playwright.  
+4) Close the connection when you’re done.
+
+## Connection URL
+
+Use this URL as the remote browser endpoint:
+
+https://cloudbrowser.gologin.com/connect?token=\${token}&profile=\${params.profileId}
+
+- `token` — your Gologin **dev token** (generate it in the dashboard: `Personal Area → API Token`).
+- `profile` — **profile ID** (optional). If omitted, a new profile will be created for the session.
+
+## Managing profiles (proxy, fingerprint, etc.)
+
+Cloud Browser is the **connection layer**.  
+To create/update profiles, attach proxies, and configure profile settings, use the Gologin REST API:
+
+- Profiles API: https://gologin.com/docs/api-reference/profile
+- Proxy API: https://gologin.com/docs/api-reference/proxy
+
+## Next steps
+
+- Getting Started: https://gologin.com/docs/api-reference/cloud-browser/getting-started
+- API Quickstart: https://gologin.com/docs/api-reference/introduction/quickstart
