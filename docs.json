@@ -228,6 +228,12 @@
             "pages": [
               "api-reference/limitations/rate-limits"
             ]
+          },
+          {
+            "group": "Scraping API & Web Unlocker",
+            "pages": [
+              "untitled-page"
+            ]
           }
         ]
       },

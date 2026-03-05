@@ -1,0 +1,104 @@
+---
+title: "What is Web Unlocker?"
+---
+
+Web Unlocker is a universal scraping API. Send any URL, get back fully rendered HTML, a screenshot, and a network archive — no infrastructure to manage, no blocks, no failed requests.
+
+It works as a complete replacement for your scraping stack: browser automation, proxy management, fingerprinting, CAPTCHA solving — all handled in a single API call. Whether you're scraping a simple static page or a heavily protected JavaScript-rendered site, the same endpoint handles it.
+
+---
+
+## What it solves
+
+Modern websites are hard to scrape. A plain `curl` or `requests` call often returns a challenge page, a blank response, or broken HTML because the content is loaded by JavaScript. Web Unlocker handles all of this automatically:
+
+- **JavaScript rendering** — pages are loaded in a real browser and fully executed before content is captured
+- **Anti-bot bypass** — Cloudflare, DataDome, PerimeterX and similar protections are handled automatically
+- **Smart IP rotation** — requests are routed through clean residential IPs with realistic browser fingerprints
+- **CAPTCHA solving** — common CAPTCHA challenges are resolved without manual intervention
+- **Price tier targeting** — routes requests through the appropriate proxy tier for the target site
+
+---
+
+## What you get back
+
+Every successful task returns three types of content:
+
+| Content        | Format           | Description                                            |
+| -------------- | ---------------- | ------------------------------------------------------ |
+| **HTML**       | Full HTML string | The complete rendered DOM of the page                  |
+| **Screenshot** | PNG image        | A screenshot of the page as it appeared in the browser |
+| **Archive**    | ZIP (HAR)        | Network log with all requests, headers, and resources  |
+
+---
+
+## Pricing
+
+Web Unlocker uses **success-based billing** — you are only charged when the request succeeds. Failed attempts are free.
+
+Pricing scales with volume:
+
+| Volume       | Price per successful request |
+| ------------ | ---------------------------- |
+| Growth       | \$0.98                       |
+| Professional | \$0.75                       |
+| Business     | \$0.60                       |
+| Premium      | \$0.45                       |
+
+For custom volume pricing, contact [**ermakova.t@gologin.com**](mailto:webunlocker@gologin.com)
+
+---
+
+## Web Unlocker vs. self-managed proxies
+
+Running your own proxy infrastructure is expensive and fragile. Web Unlocker handles everything as a managed service:
+
+|                        | Web Unlocker           | Self-managed proxies             |
+| ---------------------- | ---------------------- | -------------------------------- |
+| Setup                  | One API call           | Weeks of infrastructure work     |
+| CAPTCHA solving        | Built-in               | Build or buy separately          |
+| Browser fingerprinting | Built-in               | Build or buy separately          |
+| IP rotation            | Automatic              | Manual pool management           |
+| Maintenance            | None                   | Ongoing                          |
+| Billing                | Per successful request | Fixed cost regardless of success |
+
+---
+
+## Common use cases
+
+- **Price monitoring** — scrape e-commerce sites that block automated requests
+- **Lead generation** — extract contact data from directories and business listings
+- **Market research** — collect product data, reviews, or job listings at scale
+- **Content aggregation** — build news or data feeds from sites without an API
+- **AI pipelines** — feed rendered HTML into LLMs for extraction or summarization
+
+---
+
+## How it works
+
+Web Unlocker runs a real Chromium browser in the cloud for each task. When you send a URL:
+
+1. A browser is launched with a residential IP and realistic browser fingerprint
+2. The page is navigated, JavaScript is executed, and dynamic content is loaded
+3. Anti-bot challenges and CAPTCHAs are handled automatically
+4. The rendered HTML, a screenshot, and a network archive are captured and returned
+
+You never manage infrastructure. There are no browsers to spin up, no proxy lists to maintain, and no bypass logic to build. Web Unlocker effectively replaces an entire scraping stack — browser automation framework, proxy provider, anti-bot solution — with a single HTTP request.
+
+---
+
+## Two execution modes
+
+Web Unlocker supports two modes depending on your use case:
+
+**Synchronous (default)** — The API waits until the task completes and returns the full result in one response. Best for simple scripts and on-demand requests.
+
+**Asynchronous** — The API returns immediately with a task ID. You poll for status and download results when ready. Best for complex sites, batch processing, or when you need to handle many URLs in parallel.
+
+See [Async Mode](./web-unlocker-async.md) for details.
+
+---
+
+## Get access
+
+Web Unlocker is currently in early access. To get an API key, contact: [**ermakova.t@gologin.com**](mailto:ermakova.t@gologin.com)
