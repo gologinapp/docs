@@ -206,7 +206,8 @@
             "pages": [
               "what-is-web-unlocker",
               "web-unlocker-quick-start",
-              "web-unlocker-use-cases"
+              "web-unlocker-use-cases",
+              "scraping-api-sdk-and-cli"
             ]
           },
           {
