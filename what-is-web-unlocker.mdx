@@ -24,11 +24,11 @@ Modern websites are hard to scrape. A plain `curl` or `requests` call often retu
 
 Every successful task returns three types of content:
 
-| Content        | Format           | Description                                            |
-| -------------- | ---------------- | ------------------------------------------------------ |
-| **HTML**       | Full HTML string | The complete rendered DOM of the page                  |
-| **Screenshot** | PNG image        | A screenshot of the page as it appeared in the browser |
-| **Archive**    | ZIP (HAR)        | Network log with all requests, headers, and resources  |
+| Content | Format | Description |
+|---|---|---|
+| **HTML** | Full HTML string | The complete rendered DOM of the page |
+| **Screenshot** | PNG image | A screenshot of the page as it appeared in the browser |
+| **Archive** | ZIP (HAR) | Network log with all requests, headers, and resources |
 
 ---
 
@@ -38,14 +38,14 @@ Web Unlocker uses **success-based billing** — you are only charged when the re
 
 Pricing scales with volume:
 
-| Volume       | Price per request |
-| ------------ | ----------------- |
-| Growth       | \$0.98            |
-| Professional | \$0.75            |
-| Business     | \$0.60            |
-| Premium      | \$0.45            |
+| Volume | Price per request |
+|---|---|
+| Growth | $0.98 |
+| Professional | $0.75 |
+| Business | $0.60 |
+| Premium | $0.45 |
 
-For custom volume pricing, contact [**ermakova.t@gologin.com**](mailto:ermakova.t@gologin.com).
+For custom volume pricing, contact **webunlocker@gologin.com**.
 
 ---
 
@@ -53,14 +53,14 @@ For custom volume pricing, contact [**ermakova.t@gologin.com**](mailto:ermakova.
 
 Running your own proxy infrastructure is expensive and fragile. Web Unlocker handles everything as a managed service:
 
-|                        | Web Unlocker           | Self-managed proxies             |
-| ---------------------- | ---------------------- | -------------------------------- |
-| Setup                  | One API call           | Weeks of infrastructure work     |
-| CAPTCHA solving        | Built-in               | Build or buy separately          |
-| Browser fingerprinting | Built-in               | Build or buy separately          |
-| IP rotation            | Automatic              | Manual pool management           |
-| Maintenance            | None                   | Ongoing                          |
-| Billing                | Per successful request | Fixed cost regardless of success |
+| | Web Unlocker | Self-managed proxies |
+|---|---|---|
+| Setup | One API call | Weeks of infrastructure work |
+| CAPTCHA solving | Built-in | Build or buy separately |
+| Browser fingerprinting | Built-in | Build or buy separately |
+| IP rotation | Automatic | Manual pool management |
+| Maintenance | None | Ongoing |
+| Billing | Per successful request | Fixed cost regardless of success |
 
 ---
 
@@ -87,18 +87,19 @@ You never manage infrastructure. There are no browsers to spin up, no proxy list
 
 ---
 
-## Two execution modes
+## How to use it
 
-Web Unlocker supports two modes depending on your use case:
+Send a GET request with the target URL as a query parameter. The response is the fully rendered HTML.
 
-**Synchronous (default)** — The API waits until the task completes and returns the full result in one response. Best for simple scripts and on-demand requests.
+```bash
+curl "https://parsing.webunlocker.gologin.com/v1/scrape?url=https%3A%2F%2Fexample.com" \
+  -H "apikey: YOUR_API_KEY"
+```
 
-**Asynchronous** — The API returns immediately with a task ID. You poll for status and download results when ready. Best for complex sites, batch processing, or when you need to handle many URLs in parallel.
-
-See [Async Mode](./web-unlocker-async.md) for details.
+See the [Quickstart](./web-unlocker-quickstart.md) for examples in Python and JavaScript, or [Use Cases](./web-unlocker-use-cases.md) for common integration patterns.
 
 ---
 
 ## Get access
 
-Web Unlocker is currently in early access. To get an API key, contact: [**ermakova.t@gologin.com**](mailto:ermakova.t@gologin.com)
+Web Unlocker is currently in early access. To get an API key, contact: **ermakova.t@gologin.com**

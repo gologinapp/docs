@@ -2,9 +2,7 @@
 title: 'Web unlocker use cases'
 ---
 
-# Use Cases
-
-Web Unlocker is a scraping API — you send a URL, it returns the rendered HTML, screenshot, and network archive. This page shows the most common ways to put that to use.
+Web Unlocker is a scraping API — you send a URL, it returns the fully rendered HTML. This page shows the most common ways to put that to use.
 
 ---
 
@@ -12,20 +10,31 @@ Web Unlocker is a scraping API — you send a URL, it returns the rendered HTML,
 
 The simplest use case: you need the content of a webpage that blocks regular HTTP requests.
 
+### Python
+
 ```python
 import requests
 
-API_URL = "https://api.webunlocker.gologin.com/api/parsing/v1"
-API_KEY = "YOUR_API_KEY"
+response = requests.get(
+    "https://parsing.webunlocker.gologin.com/v1/scrape",
+    params={"url": "https://example.com/product/123"},
+    headers={"apikey": "YOUR_API_KEY"}
+)
 
-data = requests.post(
-    f"{API_URL}/tasks",
-    headers={"X-API-Key": API_KEY},
-    json={"url": "https://example.com/product/123"}
-).json()
-
-html = data["result"]["html"]
+html = response.text
 print(html)
+```
+
+### JavaScript
+
+```javascript
+const html = await fetch(
+  "https://parsing.webunlocker.gologin.com/v1/scrape?url=" +
+    encodeURIComponent("https://example.com/product/123"),
+  { headers: { apikey: "YOUR_API_KEY" } }
+).then((r) => r.text());
+
+console.log(html);
 ```
 
 No browser to launch, no proxy to configure, no Cloudflare to fight. One call, you get the page.
@@ -42,23 +51,18 @@ No browser to launch, no proxy to configure, no Cloudflare to fight. One call, y
 
 Web Unlocker returns raw HTML. Pass that into an LLM to extract structured data, summarize content, or answer questions about the page — no parsing logic needed.
 
-### Python + OpenAI example
+### Python + OpenAI
 
 ```python
 import requests
 from openai import OpenAI
 
-API_URL = "https://api.webunlocker.gologin.com/api/parsing/v1"
-API_KEY = "YOUR_API_KEY"
+html = requests.get(
+    "https://parsing.webunlocker.gologin.com/v1/scrape",
+    params={"url": "https://news.ycombinator.com"},
+    headers={"apikey": "YOUR_API_KEY"}
+).text
 
-# Step 1: scrape the page
-html = requests.post(
-    f"{API_URL}/tasks",
-    headers={"X-API-Key": API_KEY},
-    json={"url": "https://news.ycombinator.com"}
-).json()["result"]["html"]
-
-# Step 2: ask the LLM to extract data
 client = OpenAI()
 response = client.chat.completions.create(
     model="gpt-4o-mini",
@@ -73,22 +77,17 @@ response = client.chat.completions.create(
 print(response.choices[0].message.content)
 ```
 
-### JavaScript + Anthropic example
+### JavaScript + Anthropic
 
 ```javascript
 import Anthropic from "@anthropic-ai/sdk";
 
-const API_URL = "https://api.webunlocker.gologin.com/api/parsing/v1";
-const API_KEY = "YOUR_API_KEY";
+const html = await fetch(
+  "https://parsing.webunlocker.gologin.com/v1/scrape?url=" +
+    encodeURIComponent("https://news.ycombinator.com"),
+  { headers: { apikey: "YOUR_API_KEY" } }
+).then((r) => r.text());
 
-// Step 1: scrape the page
-const { result } = await fetch(`${API_URL}/tasks`, {
-  method: "POST",
-  headers: { "X-API-Key": API_KEY, "Content-Type": "application/json" },
-  body: JSON.stringify({ url: "https://news.ycombinator.com" }),
-}).then((r) => r.json());
-
-// Step 2: ask the LLM to extract data
 const client = new Anthropic();
 const message = await client.messages.create({
   model: "claude-opus-4-5",
@@ -96,7 +95,7 @@ const message = await client.messages.create({
   messages: [
     {
       role: "user",
-      content: `Extract the top 5 story titles and their URLs from this HTML:\n\n${result.html.slice(0, 8000)}`,
+      content: `Extract the top 5 story titles and their URLs from this HTML:\n\n${html.slice(0, 8000)}`,
     },
   ],
 });
@@ -120,19 +119,14 @@ Give your AI agent a `scrape` tool backed by Web Unlocker. The agent can then br
 import requests
 import anthropic
 
-API_URL = "https://api.webunlocker.gologin.com/api/parsing/v1"
-WU_KEY = "YOUR_API_KEY"
-
 def scrape(url: str) -> str:
     """Fetch a URL and return its rendered HTML."""
-    data = requests.post(
-        f"{API_URL}/tasks",
-        headers={"X-API-Key": WU_KEY},
-        json={"url": url}
-    ).json()
-    return data["result"]["html"]
+    return requests.get(
+        "https://parsing.webunlocker.gologin.com/v1/scrape",
+        params={"url": url},
+        headers={"apikey": "YOUR_API_KEY"}
+    ).text
 
-# Define the tool for the agent
 tools = [
     {
         "name": "scrape",
@@ -148,12 +142,10 @@ tools = [
 ]
 
 client = anthropic.Anthropic()
-
 messages = [
     {"role": "user", "content": "What is the current price of the iPhone 16 Pro on apple.com?"}
 ]
 
-# Agentic loop
 while True:
     response = client.messages.create(
         model="claude-opus-4-5",
@@ -166,7 +158,6 @@ while True:
         print(response.content[0].text)
         break
 
-    # Handle tool calls
     tool_results = []
     for block in response.content:
         if block.type == "tool_use" and block.name == "scrape":
@@ -174,14 +165,14 @@ while True:
             tool_results.append({
                 "type": "tool_result",
                 "tool_use_id": block.id,
-                "content": html[:10000]  # trim for context window
+                "content": html[:10000]
             })
 
     messages.append({"role": "assistant", "content": response.content})
     messages.append({"role": "user", "content": tool_results})
 ```
 
-The agent decides when to scrape, what URL to fetch, and how to use the result. Web Unlocker handles the actual retrieval.
+The agent decides when to scrape and what URL to fetch. Web Unlocker handles the actual retrieval.
 
 **Good for:**
 - Research agents that browse the web autonomously
@@ -193,15 +184,14 @@ The agent decides when to scrape, what URL to fetch, and how to use the result. 
 
 ## Scrape many pages at once
 
-Use async mode to submit multiple URLs in parallel and collect results when they're ready.
+Run requests concurrently to collect data from multiple URLs in parallel.
 
 ```python
 import requests
-import time
+from concurrent.futures import ThreadPoolExecutor
 
-API_URL = "https://api.webunlocker.gologin.com/api/parsing/v1"
+API_URL = "https://parsing.webunlocker.gologin.com/v1/scrape"
 API_KEY = "YOUR_API_KEY"
-HEADERS = {"X-API-Key": API_KEY}
 
 urls = [
     "https://example.com/page/1",
@@ -209,27 +199,19 @@ urls = [
     "https://example.com/page/3",
 ]
 
-# Submit all tasks
-task_ids = [
-    requests.post(f"{API_URL}/tasks?async=true", headers=HEADERS, json={"url": url}).json()["task_id"]
-    for url in urls
-]
+def scrape(url):
+    response = requests.get(
+        API_URL,
+        params={"url": url},
+        headers={"apikey": API_KEY}
+    )
+    return url, response.text
 
-# Wait for all to finish
-pending = set(task_ids)
-while pending:
-    for task_id in list(pending):
-        status = requests.get(f"{API_URL}/tasks/{task_id}/status", headers=HEADERS).json()["status"]
-        if status in ("completed", "failed", "cancelled"):
-            pending.remove(task_id)
-    if pending:
-        time.sleep(5)
+with ThreadPoolExecutor(max_workers=5) as executor:
+    results = list(executor.map(scrape, urls))
 
-# Collect results
-for task_id in task_ids:
-    html = requests.get(f"{API_URL}/results/{task_id}/html", headers=HEADERS).text
-    with open(f"{task_id}.html", "w") as f:
-        f.write(html)
+for url, html in results:
+    print(f"{url}: {len(html)} chars")
 ```
 
 **Good for:**
@@ -241,11 +223,11 @@ for task_id in task_ids:
 
 ## Summary
 
-| Use case | Mode | What you get |
+| Use case | What you do | What you get |
 |---|---|---|
-| Scrape a single page | Sync | HTML inline in response |
-| Feed into an LLM | Sync | HTML → pass to model |
-| AI agent tool | Sync | Agent calls on demand |
-| Bulk scraping | Async | Download after completion |
+| Scrape a single page | GET with URL param | Rendered HTML |
+| Feed into an LLM | Scrape → pass to model | Extracted data or summary |
+| AI agent tool | Agent calls on demand | Real-time web content |
+| Bulk scraping | Concurrent requests | HTML for each URL |
 
-See [Quickstart](./web-unlocker-quickstart.md) to make your first request, or [Async Mode](./web-unlocker-async.md) for batch workflows.
+See [Quickstart](./web-unlocker-quickstart.md) to make your first request.
