@@ -98,7 +98,8 @@
               "private-vs-shared",
               "proxy-protocols",
               "static-vs-dynamic-proxies",
-              "proxy/introduction/best-proxy-for-your-case"
+              "proxy/introduction/best-proxy-for-your-case",
+              "proxy/proxy-management/faq-proxies"
             ]
           },
           {
@@ -131,8 +132,7 @@
             "pages": [
               "proxy/proxy-management/proxy-manager/overview",
               "proxy/proxy-management/proxy-manager/navigation",
-              "proxy/proxy-management/proxy-testing-and-troubleshooting",
-              "proxy/proxy-management/faq-proxies"
+              "proxy/proxy-management/proxy-testing-and-troubleshooting"
             ]
           },
           {
