@@ -1,0 +1,103 @@
+---
+title: "Profile fingerprint settings"
+---
+
+Gologin allows you to configure fingerprint parameters when creating or editing a browser profile.
+
+These settings define how your browser profile appears to websites and anti-fraud systems.
+
+Websites collect multiple technical signals from the browser environment and combine them into a **browser fingerprint** used to identify devices.
+
+Fingerprint settings in Gologin are grouped into several categories.
+
+## Navigator fingerprint
+
+Navigator parameters describe the general browser and device environment.
+
+Websites read these values using JavaScript APIs such as `navigator.userAgent` and `navigator.platform`.
+
+Common navigator parameters include:
+
+- **User-Agent** – identifies the browser type, version, and operating system
+- **Orbita version** – the Chromium version used by the profile
+- **Screen resolution** – the screen size reported to websites
+- **Languages** – preferred browser languages
+- **Platform** – operating system platform
+- **CPU threads** – number of processor cores reported to the browser
+- **RAM** – available device memory
+- **DoNotTrack** – privacy preference signal
+
+These parameters help websites determine what type of device is being used.
+
+## Fonts
+
+Fonts installed in the browser environment are another fingerprint signal.
+
+Websites can detect fonts by measuring how text renders on the page. Different operating systems and devices have different font sets, which helps distinguish devices.
+
+Gologin can mask the fonts list to generate realistic combinations that match the selected operating system.
+
+## Media devices
+
+Media device settings define what cameras, microphones, and audio outputs are visible to websites.
+
+Websites can access this information using the `navigator.mediaDevices` API.
+
+Gologin allows you to mask:
+
+- video inputs
+- audio inputs
+- audio outputs
+
+This helps prevent websites from identifying your real hardware configuration.
+
+## Hardware fingerprint
+
+Hardware-related signals provide additional entropy for browser fingerprinting.
+
+These parameters include graphical and audio rendering characteristics.
+
+### Canvas
+
+The Canvas API allows websites to draw hidden images in the browser.\
+Because rendering differs slightly between devices, the resulting image can be converted into a hash and used for fingerprinting.
+
+### WebGL
+
+WebGL reveals information about the graphics hardware used by the device.
+
+Websites may inspect the WebGL report or render a hidden 3D object to generate a fingerprint.
+
+### AudioContext
+
+Audio fingerprinting uses differences in audio processing to generate a unique hash.
+
+### ClientRects
+
+This method measures how elements are positioned and rendered on the page.
+
+Gologin allows you to modify or mask these signals to generate a consistent but unique fingerprint for each profile.
+
+## WebRTC
+
+WebRTC is a technology used for real-time communication in browsers.
+
+However, it can expose local or real IP addresses to websites.
+
+GoLogin allows you to control WebRTC behavior:
+
+- **Based on IP** – WebRTC reports the proxy IP
+- **Off** – WebRTC is disabled
+
+This helps prevent IP leaks and keeps the fingerprint consistent with the proxy location.
+
+## Best practice
+
+To maintain stable browser identities:
+
+- keep fingerprint settings consistent after accounts are created
+- match timezone and language with the proxy location
+- avoid frequent changes to hardware-related parameters
+- use a dedicated proxy for each profile
+
+Stable fingerprints help websites recognize the profile as a consistent device.

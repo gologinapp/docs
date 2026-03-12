@@ -18,3 +18,19 @@ title: "Profile synchronization"
   While you can do it, it is not advised: only one of the concurrently launched profiles can be synced to the cloud servers. It may create discrepancies between what gets saved in the profile and what the website is expecting to see, which may lead to lowering your trust score.
 - **Do not close the profile while you don't have Internet connection.**\
   If the sync is not complete, you may lose the current progress and will have to recover data from the previous sessions.
+
+## How sync works
+
+When a profile is closed correctly, Gologin uploads the latest profile data to cloud servers. The next time the profile is launched, the saved state is restored. This ensures your session data, cookies, and browser state remain consistent.
+
+## Sync safety rules
+
+To ensure profile data remains intact, follow these rules:
+
+- Make sure the sync process is complete before shutting down the application
+- Wait until the profile status shows Ready
+- Always close profiles before shutting down your computer
+- Do not run the same profile on multiple devices simultaneously
+- Avoid closing profiles when your internet connection is unstable
+
+Running the same profile on different devices at the same time may create inconsistencies in stored session data.

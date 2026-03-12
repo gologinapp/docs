@@ -1,0 +1,48 @@
+---
+title: "Key concepts: profiles, fingerprints, proxies"
+---
+
+To use Gologin effectively, it is important to understand three core concepts that define how browser environments are separated and protected.
+
+These components work together to create independent browsing identities for each account.
+
+## Browser profiles
+
+A **browser profile** in Gologin is an isolated browser environment that simulates a separate device.
+
+Each profile contains its own:
+
+- browser fingerprint
+- cookies and session data
+- local storage and cache
+- browser extensions
+- proxy connection
+
+Because profiles are isolated from each other, websites treat them as different users or devices.
+
+This allows you to manage multiple accounts without sessions interfering with each other.
+
+## Browser fingerprints
+
+A **browser fingerprint** is a set of technical parameters that websites use to identify a device.
+
+These parameters may include:
+
+- operating system
+- browser version
+- screen resolution
+- installed fonts
+- graphics and WebGL data
+- timezone and language settings
+
+Gologin generates a unique fingerprint for each profile so that websites see every profile as a different device.
+
+## Proxies
+
+A **proxy** assigns a different IP address to a browser profile.
+
+Since websites track both browser fingerprints and IP addresses, using proxies helps separate network identities between profiles.
+
+With proxies, each profile can appear to connect from a different location or network.
+
+Using a proxy together with a unique browser fingerprint helps create a consistent and independent browsing identity.

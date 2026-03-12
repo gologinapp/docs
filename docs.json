@@ -29,69 +29,75 @@
             "group": "Introduction",
             "pages": [
               "getting-started/introduction/what-is-gologin-and-who-its-for",
+              "getting-started/introduction/key-concepts-profiles-fingerprints-proxies",
               "getting-started/introduction/quick-start-from-zero-to-your-first-profile"
             ]
           },
           {
             "group": "Setup",
             "pages": [
-              "getting-started/setup/supported-platforms-installation"
+              "getting-started/setup/supported-platforms-installation",
+              "getting-started/setup/untitled-page",
+              "getting-started/setup/first-time-checklist"
             ]
           }
         ]
       },
       {
-        "tab": "Profiles & Fingerprint",
+        "tab": "Profiles, Proxies & Teams",
         "groups": [
           {
             "group": "Profile Management",
             "pages": [
               "browser-profiles/profile-management/creating-and-launching-profiles",
-              "browser-profiles/profile-management/profile-synchronization",
               "browser-profiles/profile-management/editing-profiles",
+              "browser-profiles/profile-management/cloning-profiles",
+              "browser-profiles/profile-management/untitled-page",
+              "faq-profile-managment"
+            ]
+          },
+          {
+            "group": "Profile Sync & Recovery",
+            "pages": [
+              "browser-profiles/profile-management/profile-synchronization",
               "browser-profiles/profile-management/restore-browser-sessions",
               "browser-profiles/profile-management/restore-deleted-profiles"
             ]
           },
           {
-            "group": "Profile Features",
+            "group": "Browser Cookies",
+            "expanded": true,
             "pages": [
-              {
-                "group": "Browser Extensions",
-                "expanded": true,
-                "pages": [
-                  "browser-profiles/profile-features/browser-extensions/browser-extensions",
-                  "browser-profiles/profile-features/browser-extensions/adding-browser-extensions",
-                  "browser-profiles/profile-features/browser-extensions/installing-custom-extensions"
-                ]
-              },
-              {
-                "group": "Browser Cookies",
-                "expanded": true,
-                "pages": [
-                  "browser-profiles/profile-features/browser-cookies/what-are-browser-cookies",
-                  "browser-profiles/profile-features/browser-cookies/cookies-import-and-export"
-                ]
-              }
+              "browser-profiles/profile-features/browser-cookies/what-are-browser-cookies",
+              "browser-profiles/profile-features/browser-cookies/cookies-import-and-export",
+              "browser-profiles/profile-features/browser-cookies/untitled-page"
+            ]
+          },
+          {
+            "group": "Browser Extensions",
+            "expanded": true,
+            "pages": [
+              "browser-profiles/profile-features/browser-extensions/browser-extensions",
+              "browser-profiles/profile-features/browser-extensions/adding-browser-extensions",
+              "browser-profiles/profile-features/browser-extensions/installing-custom-extensions"
             ]
           },
           {
             "group": "Fingerprints",
-            "hidden": true,
             "pages": [
-              "browser-profiles/fingerprint/what-is-a-fingerprint"
+              "how-browser-fingerprints-work",
+              "profile-fingerprint-settings",
+              "whats-safe-to-change"
             ]
-          }
-        ]
-      },
-      {
-        "tab": "Proxies & Network",
-        "groups": [
+          },
           {
-            "group": "Introduction",
+            "group": "Proxy Management",
             "pages": [
               "proxy/introduction/what-is-a-proxy",
-              "proxy/introduction/proxy-types",
+              "residential-mobile-or-datacenter",
+              "private-vs-shared",
+              "proxy-protocols",
+              "static-vs-dynamic-proxies",
               "proxy/introduction/best-proxy-for-your-case"
             ]
           },
@@ -101,40 +107,56 @@
               "proxy/gologin-proxies/what-are-gologin-proxies",
               "proxy/gologin-proxies/how-gologin-proxies-work-and-what-they-offer",
               "proxy/gologin-proxies/website-compatibility-checker",
-              {
-                "group": "Gologin Proxy Management",
-                "expanded": true,
-                "pages": [
-                  "proxy/gologin-proxies/gologin-proxy-management/adding-your-first-proxy",
-                  "proxy/gologin-proxies/gologin-proxy-management/gologin-proxy-settings",
-                  "proxy/gologin-proxies/gologin-proxy-management/view-and-top-up-proxy-traffic"
-                ]
-              },
               "proxy/gologin-proxies/faq-gologin-proxies"
             ]
           },
           {
-            "group": "Proxy Management",
+            "group": "Managing Gologin Proxies",
             "pages": [
+              "proxy/gologin-proxies/gologin-proxy-management/adding-your-first-proxy",
+              "proxy/gologin-proxies/gologin-proxy-management/gologin-proxy-settings",
+              "proxy/gologin-proxies/gologin-proxy-management/view-and-top-up-proxy-traffic"
+            ]
+          },
+          {
+            "group": "External Proxies",
+            "pages": [
+              "proxy/proxy-management/gologin-vs-3rd-party-proxies",
               "proxy/proxy-management/adding-proxies",
-              {
-                "group": "Built-in Proxy Manager",
-                "expanded": true,
-                "pages": [
-                  "proxy/proxy-management/proxy-manager/overview",
-                  "proxy/proxy-management/proxy-manager/navigation"
-                ]
-              },
-              {
-                "group": "Proxies Page",
-                "hidden": true,
-                "expanded": true,
-                "pages": [
-                  "proxy/proxy-management/proxies-page/overview"
-                ]
-              },
               "proxy/proxy-management/recommended-proxy-providers"
             ]
+          },
+          {
+            "group": "Proxy Tools",
+            "pages": [
+              "proxy/proxy-management/proxy-manager/overview",
+              "proxy/proxy-management/proxy-manager/navigation",
+              "proxy/proxy-management/proxy-testing-and-troubleshooting",
+              "proxy/proxy-management/faq-proxies"
+            ]
+          },
+          {
+            "group": "Team Collaboration",
+            "pages": [
+              "general/team-collaboration/workspaces",
+              "general/team-collaboration/workspace-roles-and-permissions",
+              "general/team-collaboration/sharing-profiles",
+              "general/team-collaboration/accessing-shared-workspace-or-folders",
+              "general/team-collaboration/faq-team-collaboration"
+            ]
+          },
+          {
+            "group": "FAQ",
+            "pages": []
+          }
+        ]
+      },
+      {
+        "tab": "Proxy Management",
+        "groups": [
+          {
+            "group": "FAQ",
+            "pages": []
           }
         ]
       },
@@ -149,17 +171,6 @@
       {
         "tab": "General",
         "groups": [
-          {
-            "group": "Team collaboration",
-            "pages": [
-              "general/team-collaboration/workspaces",
-              "general/team-collaboration/workspace-roles-and-permissions",
-              "general/team-collaboration/sharing-workspace-or-folders",
-              "general/team-collaboration/accessing-shared-workspace-or-folders",
-              "general/team-collaboration/sharing-profiles",
-              "general/team-collaboration/faq-team-collaboration"
-            ]
-          },
           {
             "group": "Account & Billing",
             "pages": [

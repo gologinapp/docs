@@ -1,0 +1,31 @@
+---
+title: "How browser fingerprints work"
+---
+
+When you visit a website, the browser automatically shares certain technical information required for the page to function properly. Websites can access this information through HTTP headers and JavaScript APIs.
+
+Fingerprinting scripts collect multiple data points from the browser and device environment, such as:
+
+- browser and operating system information
+- screen resolution and display settings
+- installed fonts
+- language and timezone
+- hardware characteristics
+- graphics rendering data (Canvas and WebGL)
+- audio processing data
+- media devices available on the system
+
+These data points are combined and processed to generate a **browser fingerprint** — a unique identifier that represents the configuration of the device and browser.
+
+Websites store this fingerprint and compare it when the same user visits again. If the fingerprint matches a previously recorded configuration, the website can recognize the device even if cookies have been deleted.
+
+Fingerprinting is widely used by websites to:
+
+- detect suspicious login behavior
+- prevent fraud and automated traffic
+- identify returning visitors
+- link multiple sessions to the same device
+
+If the fingerprint changes significantly between sessions, the website may treat the browser as a new or potentially suspicious device.
+
+Gologin solves this by creating **isolated browser profiles**. Each profile has its own fingerprint configuration, allowing it to behave like a separate device. This makes it possible to manage multiple accounts while keeping their browser environments independent.

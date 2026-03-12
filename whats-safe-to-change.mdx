@@ -1,0 +1,62 @@
+---
+title: "What’s safe to change"
+---
+
+When managing accounts with GoLogin, maintaining a consistent browser fingerprint is important.\
+Websites often analyze changes in browser configuration to detect unusual activity.
+
+Some profile settings can be safely modified at any time, while others should remain stable once an account has started using the profile.
+
+## Safe to change
+
+The following settings can usually be changed without affecting the browser fingerprint or account trust:
+
+- profile name
+- notes
+- folders and tags
+- extensions
+- proxy credentials (if the proxy location stays consistent)
+
+These settings do not affect the core fingerprint signals used by websites.
+
+## Change carefully
+
+Some parameters may influence the browser environment and should be modified carefully.
+
+These include:
+
+- timezone
+- language settings
+- WebRTC mode
+- media devices configuration
+
+If changes are required, try to keep them consistent with the proxy location and device type.
+
+## Avoid changing after accounts are created
+
+Certain parameters form the core of the browser fingerprint.\
+Changing them frequently may cause websites to treat the browser as a new device.
+
+Avoid modifying these settings after accounts are logged into the profile:
+
+- operating system
+- user agent
+- screen resolution
+- fonts configuration
+- Canvas fingerprint
+- WebGL fingerprint
+- AudioContext fingerprint
+- CPU threads and RAM values
+
+Major changes to these parameters may trigger additional verification or login checks.
+
+## Best practice
+
+For the most stable results:
+
+- create a profile and configure its fingerprint before logging into accounts
+- keep fingerprint settings stable after accounts are added
+- use a dedicated proxy for each profile
+- avoid frequent changes to hardware-related parameters
+
+Maintaining a consistent fingerprint helps websites recognize the profile as a stable device.
