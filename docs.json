@@ -53,6 +53,7 @@
               "browser-profiles/profile-management/editing-profiles",
               "browser-profiles/profile-management/cloning-profiles",
               "browser-profiles/profile-management/untitled-page",
+              "human-typing-simulation",
               "faq-profile-managment"
             ]
           },
@@ -61,7 +62,8 @@
             "pages": [
               "browser-profiles/profile-management/profile-synchronization",
               "browser-profiles/profile-management/restore-browser-sessions",
-              "browser-profiles/profile-management/restore-deleted-profiles"
+              "browser-profiles/profile-management/restore-deleted-profiles",
+              "cloud-launch"
             ]
           },
           {
@@ -146,17 +148,28 @@
             ]
           },
           {
-            "group": "FAQ",
-            "pages": []
-          }
-        ]
-      },
-      {
-        "tab": "Proxy Management",
-        "groups": [
+            "group": "Android Anti-Detect",
+            "hidden": true,
+            "pages": [
+              "overview",
+              "mobile-vs-desktop",
+              "use-cases",
+              "limitations"
+            ]
+          },
           {
-            "group": "FAQ",
-            "pages": []
+            "group": "Cloud Browser",
+            "pages": [
+              "api-reference/cloud-browser/what-is-gologin-cloud-browser",
+              "api-reference/cloud-browser/what-is-headless-browser",
+              "api-reference/cloud-browser/getting-started",
+              "api-reference/cloud-browser/scraping",
+              "api-reference/cloud-browser/untitled-page-1",
+              "api-reference/cloud-browser/untitled-page-2",
+              "api-reference/cloud-browser/live",
+              "api-reference/cloud-browser/untitled-page-3",
+              "api-reference/cloud-browser/untitled-page"
+            ]
           }
         ]
       },
@@ -169,30 +182,10 @@
         ]
       },
       {
-        "tab": "General",
-        "groups": [
-          {
-            "group": "Account & Billing",
-            "pages": [
-              "general/account-and-billing/changing-your-email-and-pass",
-              "general/account-and-billing/two-factor-authentication",
-              "general/account-and-billing/payment-methods",
-              "general/account-and-billing/promo-codes",
-              "general/account-and-billing/invoices",
-              "general/account-and-billing/faq-subscription"
-            ]
-          },
-          {
-            "group": "Troubleshooting",
-            "pages": [
-              "general/troubleshooting/wrong-ip-my-ip-is-leaking",
-              "general/troubleshooting/wrong-proxy-location"
-            ]
-          }
-        ]
+        "tab": "Platform Guides & Templates"
       },
       {
-        "tab": "API",
+        "tab": "Automation & API",
         "groups": [
           {
             "group": "Introduction",
@@ -243,39 +236,28 @@
             "pages": [
               "api-reference/limitations/rate-limits"
             ]
+          },
+          {
+            "group": "Troubleshooting",
+            "pages": [
+              "general/troubleshooting/wrong-ip-my-ip-is-leaking",
+              "general/troubleshooting/wrong-proxy-location"
+            ]
           }
         ]
       },
       {
-        "tab": "Cloud Browser",
+        "tab": "Migration, Account & Support",
         "groups": [
           {
-            "group": "Overview",
+            "group": "Account & Billing",
             "pages": [
-              "api-reference/cloud-browser/what-is-gologin-cloud-browser",
-              "api-reference/cloud-browser/what-is-headless-browser"
-            ]
-          },
-          {
-            "group": "Getting Started",
-            "pages": [
-              "api-reference/cloud-browser/getting-started",
-              "api-reference/cloud-browser/scraping"
-            ]
-          },
-          {
-            "group": "Fundamentals",
-            "pages": [
-              "api-reference/cloud-browser/untitled-page-1",
-              "api-reference/cloud-browser/untitled-page-2",
-              "api-reference/cloud-browser/live",
-              "api-reference/cloud-browser/untitled-page-3"
-            ]
-          },
-          {
-            "group": "Guides",
-            "pages": [
-              "api-reference/cloud-browser/untitled-page"
+              "general/account-and-billing/changing-your-email-and-pass",
+              "general/account-and-billing/two-factor-authentication",
+              "general/account-and-billing/payment-methods",
+              "general/account-and-billing/promo-codes",
+              "general/account-and-billing/invoices",
+              "general/account-and-billing/faq-subscription"
             ]
           }
         ]
