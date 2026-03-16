@@ -160,21 +160,7 @@
         ]
       },
       {
-        "tab": "Cloud Browser",
-        "pages": [
-          "api-reference/cloud-browser/what-is-gologin-cloud-browser",
-          "api-reference/cloud-browser/what-is-headless-browser",
-          "api-reference/cloud-browser/getting-started",
-          "api-reference/cloud-browser/scraping",
-          "api-reference/cloud-browser/untitled-page-1",
-          "api-reference/cloud-browser/untitled-page-2",
-          "api-reference/cloud-browser/live",
-          "api-reference/cloud-browser/untitled-page-3",
-          "api-reference/cloud-browser/untitled-page"
-        ]
-      },
-      {
-        "tab": "Best Practices",
+        "tab": "Guides & Best Practices",
         "pages": [
           "best-practices-overview",
           "reddit-account-best-practices",
@@ -191,6 +177,17 @@
               "untitled-page"
             ]
           }
+        ]
+      },
+      {
+        "tab": "Account & Support",
+        "pages": [
+          "general/account-and-billing/changing-your-email-and-pass",
+          "general/account-and-billing/two-factor-authentication",
+          "general/account-and-billing/payment-methods",
+          "general/account-and-billing/promo-codes",
+          "general/account-and-billing/invoices",
+          "general/account-and-billing/faq-subscription"
         ]
       },
       {
@@ -256,14 +253,17 @@
         ]
       },
       {
-        "tab": "Account & Support",
+        "tab": "Cloud Browser",
         "pages": [
-          "general/account-and-billing/changing-your-email-and-pass",
-          "general/account-and-billing/two-factor-authentication",
-          "general/account-and-billing/payment-methods",
-          "general/account-and-billing/promo-codes",
-          "general/account-and-billing/invoices",
-          "general/account-and-billing/faq-subscription"
+          "api-reference/cloud-browser/what-is-gologin-cloud-browser",
+          "api-reference/cloud-browser/what-is-headless-browser",
+          "api-reference/cloud-browser/getting-started",
+          "api-reference/cloud-browser/scraping",
+          "api-reference/cloud-browser/untitled-page-1",
+          "api-reference/cloud-browser/untitled-page-2",
+          "api-reference/cloud-browser/live",
+          "api-reference/cloud-browser/untitled-page-3",
+          "api-reference/cloud-browser/untitled-page"
         ]
       }
     ]
