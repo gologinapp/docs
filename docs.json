@@ -51,6 +51,7 @@
             "pages": [
               {
                 "group": "Profile Management",
+                "expanded": true,
                 "pages": [
                   "browser-profiles/profile-management/creating-and-launching-profiles",
                   "browser-profiles/profile-management/editing-profiles",
@@ -60,6 +61,7 @@
               },
               {
                 "group": "Profile Sync & Recovery",
+                "expanded": true,
                 "pages": [
                   "browser-profiles/profile-management/profile-synchronization",
                   "browser-profiles/profile-management/restore-browser-sessions",
@@ -91,14 +93,6 @@
                 ]
               },
               "human-typing-simulation"
-            ]
-          },
-          {
-            "group": "Fingerprints",
-            "pages": [
-              "how-browser-fingerprints-work",
-              "profile-fingerprint-settings",
-              "whats-safe-to-change"
             ]
           },
           {
@@ -135,6 +129,7 @@
             "pages": [
               {
                 "group": "Gologin Proxy Basics",
+                "expanded": true,
                 "pages": [
                   "proxy/gologin-proxies/what-are-gologin-proxies",
                   "proxy/gologin-proxies/how-gologin-proxies-work-and-what-they-offer",
@@ -152,6 +147,14 @@
                 ]
               },
               "proxy/gologin-proxies/faq-gologin-proxies"
+            ]
+          },
+          {
+            "group": "Fingerprints",
+            "pages": [
+              "how-browser-fingerprints-work",
+              "profile-fingerprint-settings",
+              "whats-safe-to-change"
             ]
           },
           {
