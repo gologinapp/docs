@@ -48,9 +48,11 @@
         "groups": [
           {
             "group": "Browser Profiles",
+            "icon": "user",
             "pages": [
               {
                 "group": "Profile Management",
+                "icon": "wrench",
                 "expanded": true,
                 "pages": [
                   "browser-profiles/profile-management/creating-and-launching-profiles",
@@ -61,6 +63,7 @@
               },
               {
                 "group": "Profile Sync & Recovery",
+                "icon": "arrows-rotate",
                 "expanded": true,
                 "pages": [
                   "browser-profiles/profile-management/profile-synchronization",
@@ -73,9 +76,11 @@
           },
           {
             "group": "Browser Profile Features",
+            "icon": "aperture",
             "pages": [
               {
                 "group": "Browser Cookies",
+                "icon": "cookie-bite",
                 "expanded": true,
                 "pages": [
                   "browser-profiles/profile-features/browser-cookies/what-are-browser-cookies",
@@ -85,6 +90,7 @@
               },
               {
                 "group": "Browser Extensions",
+                "icon": "puzzle-piece",
                 "expanded": true,
                 "pages": [
                   "browser-profiles/profile-features/browser-extensions/browser-extensions",
@@ -97,9 +103,11 @@
           },
           {
             "group": "Proxies",
+            "icon": "network-wired",
             "pages": [
               {
                 "group": "Proxy Basics",
+                "icon": "circle-info",
                 "expanded": true,
                 "pages": [
                   "proxy/introduction/what-is-a-proxy",
@@ -112,6 +120,7 @@
               },
               {
                 "group": "Proxy Management",
+                "icon": "wrench",
                 "expanded": true,
                 "pages": [
                   "proxy/proxy-management/proxy-manager/overview",
@@ -126,9 +135,11 @@
           },
           {
             "group": "Gologin Proxies",
+            "icon": "g",
             "pages": [
               {
                 "group": "Gologin Proxy Basics",
+                "icon": "circle-info",
                 "expanded": true,
                 "pages": [
                   "proxy/gologin-proxies/what-are-gologin-proxies",
@@ -136,14 +147,15 @@
                   "proxy/proxy-management/gologin-vs-3rd-party-proxies"
                 ]
               },
-              "proxy/gologin-proxies/website-compatibility-checker",
               {
                 "group": "Managing Gologin Proxies",
+                "icon": "wrench",
                 "expanded": true,
                 "pages": [
                   "proxy/gologin-proxies/gologin-proxy-management/adding-your-first-proxy",
                   "proxy/gologin-proxies/gologin-proxy-management/gologin-proxy-settings",
-                  "proxy/gologin-proxies/gologin-proxy-management/view-and-top-up-proxy-traffic"
+                  "proxy/gologin-proxies/gologin-proxy-management/view-and-top-up-proxy-traffic",
+                  "proxy/gologin-proxies/website-compatibility-checker"
                 ]
               },
               "proxy/gologin-proxies/faq-gologin-proxies"
@@ -151,6 +163,7 @@
           },
           {
             "group": "Fingerprints",
+            "icon": "user-alien",
             "pages": [
               "how-browser-fingerprints-work",
               "profile-fingerprint-settings",
@@ -159,6 +172,7 @@
           },
           {
             "group": "Team Collaboration",
+            "icon": "users",
             "pages": [
               "general/team-collaboration/workspaces",
               "general/team-collaboration/workspace-roles-and-permissions",
