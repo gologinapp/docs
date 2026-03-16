@@ -97,14 +97,31 @@
             ]
           },
           {
-            "group": "Proxy Management",
+            "group": "Proxies",
             "pages": [
-              "proxy/introduction/what-is-a-proxy",
-              "residential-mobile-or-datacenter",
-              "private-vs-shared",
-              "proxy-protocols",
-              "static-vs-dynamic-proxies",
-              "proxy/introduction/best-proxy-for-your-case",
+              {
+                "group": "General info",
+                "expanded": true,
+                "pages": [
+                  "proxy/introduction/what-is-a-proxy",
+                  "residential-mobile-or-datacenter",
+                  "private-vs-shared",
+                  "proxy-protocols",
+                  "static-vs-dynamic-proxies",
+                  "proxy/introduction/best-proxy-for-your-case"
+                ]
+              },
+              {
+                "group": "Proxy Management",
+                "expanded": true,
+                "pages": [
+                  "proxy/proxy-management/proxy-manager/overview",
+                  "proxy/proxy-management/proxy-manager/navigation",
+                  "proxy/proxy-management/adding-proxies",
+                  "proxy/proxy-management/proxy-testing-and-troubleshooting"
+                ]
+              },
+              "proxy/proxy-management/recommended-proxy-providers",
               "proxy/proxy-management/faq-proxies"
             ]
           },
@@ -114,31 +131,17 @@
               "proxy/gologin-proxies/what-are-gologin-proxies",
               "proxy/gologin-proxies/how-gologin-proxies-work-and-what-they-offer",
               "proxy/gologin-proxies/website-compatibility-checker",
-              "proxy/gologin-proxies/faq-gologin-proxies"
-            ]
-          },
-          {
-            "group": "Managing Gologin Proxies",
-            "pages": [
-              "proxy/gologin-proxies/gologin-proxy-management/adding-your-first-proxy",
-              "proxy/gologin-proxies/gologin-proxy-management/gologin-proxy-settings",
-              "proxy/gologin-proxies/gologin-proxy-management/view-and-top-up-proxy-traffic"
-            ]
-          },
-          {
-            "group": "External Proxies",
-            "pages": [
               "proxy/proxy-management/gologin-vs-3rd-party-proxies",
-              "proxy/proxy-management/adding-proxies",
-              "proxy/proxy-management/recommended-proxy-providers"
-            ]
-          },
-          {
-            "group": "Proxy Tools",
-            "pages": [
-              "proxy/proxy-management/proxy-manager/overview",
-              "proxy/proxy-management/proxy-manager/navigation",
-              "proxy/proxy-management/proxy-testing-and-troubleshooting"
+              {
+                "group": "Managing Gologin Proxies",
+                "expanded": true,
+                "pages": [
+                  "proxy/gologin-proxies/gologin-proxy-management/adding-your-first-proxy",
+                  "proxy/gologin-proxies/gologin-proxy-management/gologin-proxy-settings",
+                  "proxy/gologin-proxies/gologin-proxy-management/view-and-top-up-proxy-traffic"
+                ]
+              },
+              "proxy/gologin-proxies/faq-gologin-proxies"
             ]
           },
           {
