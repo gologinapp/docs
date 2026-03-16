@@ -62,7 +62,6 @@
               },
               {
                 "group": "Profile Sync & Recovery",
-                "expanded": true,
                 "pages": [
                   "browser-profiles/profile-management/profile-synchronization",
                   "browser-profiles/profile-management/restore-browser-sessions",
