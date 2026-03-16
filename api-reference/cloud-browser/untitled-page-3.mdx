@@ -2,7 +2,7 @@
 title: "Using Proxies with Cloud Browser"
 ---
 
-Gologin Cloud Browser supports flexible proxy configuration for routing your browser session traffic. You can use GoLogin's built-in residential proxies or bring your own.
+Gologin Cloud Browser supports flexible proxy configuration for routing your browser session traffic. You can use Gologin's built-in residential proxies or bring your own.
 
 ## How proxies work in Gologin
 
@@ -10,7 +10,7 @@ Unlike session-based proxy configuration, **proxies in Gologin are attached to p
 
 When you connect to a Cloud Browser session with a profile ID, the proxy configured on that profile is applied automatically:
 
-```
+```text
 https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}
 ```
 
@@ -39,7 +39,7 @@ Common region codes: `us`, `gb`, `de`, `fr`, `nl`, `jp`, `au`, `ca`, `br`, `in`
 
 ### Your own proxy
 
-You can attach any third-party proxy to a profile. GoLogin supports `http`, `https`, and `socks5` proxies.
+You can attach any third-party proxy to a profile. Gologin supports `http`, `https`, and `socks5` proxies.
 
 Configure via the [Proxies API](https://gologin.com/docs/api-reference/proxy/):
 

@@ -1,0 +1,96 @@
+---
+title: "Proxy & Fingerprint Setup per Platform"
+---
+
+A guide to configuring proxies and browser fingerprints correctly for different platform types.
+
+Most modern websites analyze a combination of **IP address data and browser fingerprints** to determine whether sessions belong to real users. If these signals appear inconsistent or unrealistic, platforms may trigger additional verification checks or restrict account activity.
+
+When using Gologin, each browser profile creates a separate device environment. To maintain account stability, the **proxy configuration and fingerprint parameters must remain consistent and realistic for the target platform**.
+
+## Why Proxy and Fingerprint Consistency Matters
+
+Websites often combine several signals when evaluating sessions:
+
+- IP address and location
+- browser fingerprint parameters
+- session history and cookies
+- login patterns
+
+If these signals contradict each other, the platform may treat the session as suspicious.
+
+For example:
+
+- an IP located in one country while the browser timezone is set to another
+- frequent changes in device fingerprint parameters
+- multiple accounts sharing the same proxy
+
+Maintaining consistency between these signals helps platforms interpret the session as coming from a real device.
+
+## General Setup Principles
+
+When working with browser profiles, several baseline rules apply:
+
+- one account per browser profile
+- one proxy per profile
+- fixed proxy region
+- stable fingerprint configuration
+
+Each profile should behave like a separate physical device.
+
+Frequent changes to proxy location or fingerprint parameters may trigger platform security checks.
+
+## Recommended Proxy Types by Platform
+
+Different platforms often work best with different proxy types.
+
+| Platform type         | Recommended proxy              |
+| :-------------------- | :----------------------------- |
+| Social media          | residential or mobile          |
+| Advertising platforms | residential                    |
+| Marketplaces          | residential                    |
+| Crypto platforms      | residential                    |
+| Web scraping          | datacenter or rotating proxies |
+
+Residential proxies typically provide higher trust signals, while datacenter proxies are commonly used for scraping due to their speed.
+
+## Fingerprint Stability
+
+Browser fingerprint stability is critical for maintaining account trust.
+
+When using Gologin profiles:
+
+- avoid frequent changes to fingerprint settings
+- keep device parameters consistent between sessions
+- avoid switching between very different device types
+
+For example, switching between different operating systems or drastically changing screen resolution may appear suspicious to some platforms.
+
+## Proxy Location Alignment
+
+The proxy location should align with the profile configuration.
+
+Recommended alignment includes:
+
+- timezone matching proxy location
+- language settings consistent with region
+- realistic device environment
+
+Large mismatches between proxy location and browser settings may trigger additional verification.
+
+## Common Setup Mistakes
+
+The most common proxy and fingerprint configuration issues include:
+
+- using multiple accounts on the same proxy
+- frequently changing proxy regions
+- inconsistent fingerprint parameters
+- mismatched timezone and IP location
+
+Avoiding these issues significantly improves account stability across platforms.
+
+## General Principle
+
+Most platforms evaluate **device signals and network signals together**.
+
+When proxies and browser fingerprints remain stable and consistent, sessions appear more similar to real user behavior, which helps reduce verification checks and account restrictions.

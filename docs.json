@@ -156,21 +156,21 @@
               "use-cases",
               "limitations"
             ]
-          },
-          {
-            "group": "Cloud Browser",
-            "pages": [
-              "api-reference/cloud-browser/what-is-gologin-cloud-browser",
-              "api-reference/cloud-browser/what-is-headless-browser",
-              "api-reference/cloud-browser/getting-started",
-              "api-reference/cloud-browser/scraping",
-              "api-reference/cloud-browser/untitled-page-1",
-              "api-reference/cloud-browser/untitled-page-2",
-              "api-reference/cloud-browser/live",
-              "api-reference/cloud-browser/untitled-page-3",
-              "api-reference/cloud-browser/untitled-page"
-            ]
           }
+        ]
+      },
+      {
+        "tab": "Cloud Browser",
+        "pages": [
+          "api-reference/cloud-browser/what-is-gologin-cloud-browser",
+          "api-reference/cloud-browser/what-is-headless-browser",
+          "api-reference/cloud-browser/getting-started",
+          "api-reference/cloud-browser/scraping",
+          "api-reference/cloud-browser/untitled-page-1",
+          "api-reference/cloud-browser/untitled-page-2",
+          "api-reference/cloud-browser/live",
+          "api-reference/cloud-browser/untitled-page-3",
+          "api-reference/cloud-browser/untitled-page"
         ]
       },
       {
@@ -182,7 +182,16 @@
         ]
       },
       {
-        "tab": "Guides & Templates"
+        "tab": "Guides & Templates",
+        "hidden": true,
+        "groups": [
+          {
+            "group": "Platform-Specific Setups",
+            "pages": [
+              "untitled-page"
+            ]
+          }
+        ]
       },
       {
         "tab": "Automation & API",
