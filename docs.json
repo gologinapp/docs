@@ -53,7 +53,6 @@
               "browser-profiles/profile-management/editing-profiles",
               "browser-profiles/profile-management/cloning-profiles",
               "browser-profiles/profile-management/untitled-page",
-              "human-typing-simulation",
               "faq-profile-managment"
             ]
           },
@@ -66,21 +65,27 @@
             ]
           },
           {
-            "group": "Browser Cookies",
-            "expanded": true,
+            "group": "Browser Profile Features",
             "pages": [
-              "browser-profiles/profile-features/browser-cookies/what-are-browser-cookies",
-              "browser-profiles/profile-features/browser-cookies/cookies-import-and-export",
-              "browser-profiles/profile-features/browser-cookies/untitled-page"
-            ]
-          },
-          {
-            "group": "Browser Extensions",
-            "expanded": true,
-            "pages": [
-              "browser-profiles/profile-features/browser-extensions/browser-extensions",
-              "browser-profiles/profile-features/browser-extensions/adding-browser-extensions",
-              "browser-profiles/profile-features/browser-extensions/installing-custom-extensions"
+              {
+                "group": "Browser Cookies",
+                "expanded": true,
+                "pages": [
+                  "browser-profiles/profile-features/browser-cookies/what-are-browser-cookies",
+                  "browser-profiles/profile-features/browser-cookies/cookies-import-and-export",
+                  "browser-profiles/profile-features/browser-cookies/untitled-page"
+                ]
+              },
+              {
+                "group": "Browser Extensions",
+                "expanded": true,
+                "pages": [
+                  "browser-profiles/profile-features/browser-extensions/browser-extensions",
+                  "browser-profiles/profile-features/browser-extensions/adding-browser-extensions",
+                  "browser-profiles/profile-features/browser-extensions/installing-custom-extensions"
+                ]
+              },
+              "human-typing-simulation"
             ]
           },
           {
