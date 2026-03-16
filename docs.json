@@ -53,15 +53,15 @@
               "browser-profiles/profile-management/editing-profiles",
               "browser-profiles/profile-management/cloning-profiles",
               "browser-profiles/profile-management/untitled-page",
+              {
+                "group": "Profile Sync & Recovery",
+                "pages": [
+                  "browser-profiles/profile-management/profile-synchronization",
+                  "browser-profiles/profile-management/restore-browser-sessions",
+                  "browser-profiles/profile-management/restore-deleted-profiles"
+                ]
+              },
               "faq-profile-managment"
-            ]
-          },
-          {
-            "group": "Profile Sync & Recovery",
-            "pages": [
-              "browser-profiles/profile-management/profile-synchronization",
-              "browser-profiles/profile-management/restore-browser-sessions",
-              "browser-profiles/profile-management/restore-deleted-profiles"
             ]
           },
           {
