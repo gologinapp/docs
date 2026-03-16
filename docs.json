@@ -101,7 +101,6 @@
             "pages": [
               {
                 "group": "General info",
-                "expanded": true,
                 "pages": [
                   "proxy/introduction/what-is-a-proxy",
                   "residential-mobile-or-datacenter",
@@ -113,7 +112,6 @@
               },
               {
                 "group": "Proxy Management",
-                "expanded": true,
                 "pages": [
                   "proxy/proxy-management/proxy-manager/overview",
                   "proxy/proxy-management/proxy-manager/navigation",
@@ -134,7 +132,6 @@
               "proxy/proxy-management/gologin-vs-3rd-party-proxies",
               {
                 "group": "Managing Gologin Proxies",
-                "expanded": true,
                 "pages": [
                   "proxy/gologin-proxies/gologin-proxy-management/adding-your-first-proxy",
                   "proxy/gologin-proxies/gologin-proxy-management/gologin-proxy-settings",
