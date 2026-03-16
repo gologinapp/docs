@@ -47,12 +47,17 @@
         "tab": "Profiles, Proxies & Teams",
         "groups": [
           {
-            "group": "Profile Management",
+            "group": "Browser Profiles",
             "pages": [
-              "browser-profiles/profile-management/creating-and-launching-profiles",
-              "browser-profiles/profile-management/editing-profiles",
-              "browser-profiles/profile-management/cloning-profiles",
-              "browser-profiles/profile-management/untitled-page",
+              {
+                "group": "Profile Management",
+                "pages": [
+                  "browser-profiles/profile-management/creating-and-launching-profiles",
+                  "browser-profiles/profile-management/editing-profiles",
+                  "browser-profiles/profile-management/cloning-profiles",
+                  "browser-profiles/profile-management/untitled-page"
+                ]
+              },
               {
                 "group": "Profile Sync & Recovery",
                 "pages": [
@@ -100,7 +105,8 @@
             "group": "Proxies",
             "pages": [
               {
-                "group": "General info",
+                "group": "Proxy Basics",
+                "expanded": true,
                 "pages": [
                   "proxy/introduction/what-is-a-proxy",
                   "residential-mobile-or-datacenter",
@@ -112,6 +118,7 @@
               },
               {
                 "group": "Proxy Management",
+                "expanded": true,
                 "pages": [
                   "proxy/proxy-management/proxy-manager/overview",
                   "proxy/proxy-management/proxy-manager/navigation",
@@ -126,12 +133,18 @@
           {
             "group": "Gologin Proxies",
             "pages": [
-              "proxy/gologin-proxies/what-are-gologin-proxies",
-              "proxy/gologin-proxies/how-gologin-proxies-work-and-what-they-offer",
+              {
+                "group": "Gologin Proxy Basics",
+                "pages": [
+                  "proxy/gologin-proxies/what-are-gologin-proxies",
+                  "proxy/gologin-proxies/how-gologin-proxies-work-and-what-they-offer",
+                  "proxy/proxy-management/gologin-vs-3rd-party-proxies"
+                ]
+              },
               "proxy/gologin-proxies/website-compatibility-checker",
-              "proxy/proxy-management/gologin-vs-3rd-party-proxies",
               {
                 "group": "Managing Gologin Proxies",
+                "expanded": true,
                 "pages": [
                   "proxy/gologin-proxies/gologin-proxy-management/adding-your-first-proxy",
                   "proxy/gologin-proxies/gologin-proxy-management/gologin-proxy-settings",
