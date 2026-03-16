@@ -62,8 +62,7 @@
             "pages": [
               "browser-profiles/profile-management/profile-synchronization",
               "browser-profiles/profile-management/restore-browser-sessions",
-              "browser-profiles/profile-management/restore-deleted-profiles",
-              "cloud-launch"
+              "browser-profiles/profile-management/restore-deleted-profiles"
             ]
           },
           {
