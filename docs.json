@@ -78,7 +78,6 @@
             "pages": [
               {
                 "group": "Browser Cookies",
-                "expanded": true,
                 "pages": [
                   "browser-profiles/profile-features/browser-cookies/what-are-browser-cookies",
                   "browser-profiles/profile-features/browser-cookies/cookies-import-and-export",
@@ -87,7 +86,6 @@
               },
               {
                 "group": "Browser Extensions",
-                "expanded": true,
                 "pages": [
                   "browser-profiles/profile-features/browser-extensions/browser-extensions",
                   "browser-profiles/profile-features/browser-extensions/adding-browser-extensions",
@@ -103,7 +101,6 @@
             "pages": [
               {
                 "group": "Proxy Basics",
-                "expanded": true,
                 "pages": [
                   "proxy/introduction/what-is-a-proxy",
                   "residential-mobile-or-datacenter",
@@ -133,7 +130,6 @@
             "pages": [
               {
                 "group": "Gologin Proxy Basics",
-                "expanded": true,
                 "pages": [
                   "proxy/gologin-proxies/what-are-gologin-proxies",
                   "proxy/gologin-proxies/how-gologin-proxies-work-and-what-they-offer",
