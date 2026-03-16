@@ -52,7 +52,6 @@
             "pages": [
               {
                 "group": "Profile Management",
-                "icon": "wrench",
                 "expanded": true,
                 "pages": [
                   "browser-profiles/profile-management/creating-and-launching-profiles",
@@ -63,7 +62,6 @@
               },
               {
                 "group": "Profile Sync & Recovery",
-                "icon": "arrows-rotate",
                 "expanded": true,
                 "pages": [
                   "browser-profiles/profile-management/profile-synchronization",
@@ -80,7 +78,6 @@
             "pages": [
               {
                 "group": "Browser Cookies",
-                "icon": "cookie-bite",
                 "expanded": true,
                 "pages": [
                   "browser-profiles/profile-features/browser-cookies/what-are-browser-cookies",
@@ -90,7 +87,6 @@
               },
               {
                 "group": "Browser Extensions",
-                "icon": "puzzle-piece",
                 "expanded": true,
                 "pages": [
                   "browser-profiles/profile-features/browser-extensions/browser-extensions",
@@ -107,7 +103,6 @@
             "pages": [
               {
                 "group": "Proxy Basics",
-                "icon": "circle-info",
                 "expanded": true,
                 "pages": [
                   "proxy/introduction/what-is-a-proxy",
@@ -120,7 +115,6 @@
               },
               {
                 "group": "Proxy Management",
-                "icon": "wrench",
                 "expanded": true,
                 "pages": [
                   "proxy/proxy-management/proxy-manager/overview",
@@ -139,7 +133,6 @@
             "pages": [
               {
                 "group": "Gologin Proxy Basics",
-                "icon": "circle-info",
                 "expanded": true,
                 "pages": [
                   "proxy/gologin-proxies/what-are-gologin-proxies",
@@ -149,7 +142,6 @@
               },
               {
                 "group": "Managing Gologin Proxies",
-                "icon": "wrench",
                 "expanded": true,
                 "pages": [
                   "proxy/gologin-proxies/gologin-proxy-management/adding-your-first-proxy",
