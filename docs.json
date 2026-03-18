@@ -189,7 +189,10 @@
           {
             "group": "Fundamentals",
             "hidden": true,
-            "pages": []
+            "pages": [
+              "how-gologin-protects-your-identity",
+              "maintaining-trust-score"
+            ]
           },
           {
             "group": "Usage Patterns",
