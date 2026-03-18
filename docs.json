@@ -57,30 +57,24 @@
                   "browser-profiles/profile-management/creating-and-launching-profiles",
                   "browser-profiles/profile-management/editing-profiles",
                   "browser-profiles/profile-management/cloning-profiles",
-                  "browser-profiles/profile-management/untitled-page"
+                  "browser-profiles/profile-management/untitled-page",
+                  "browser-profiles/profile-management/bulk-actions"
                 ]
               },
               {
-                "group": "Profile Sync & Recovery",
+                "group": "Profile Settings",
+                "hidden": true,
                 "pages": [
-                  "browser-profiles/profile-management/profile-synchronization",
-                  "browser-profiles/profile-management/restore-browser-sessions",
-                  "browser-profiles/profile-management/restore-deleted-profiles"
+                  "profile-parameters",
+                  "default-profile-settings",
+                  "updating-your-browser-profile"
                 ]
               },
-              "faq-profile-managment"
-            ]
-          },
-          {
-            "group": "Browser Profile Features",
-            "icon": "aperture",
-            "pages": [
               {
                 "group": "Browser Cookies",
                 "pages": [
                   "browser-profiles/profile-features/browser-cookies/what-are-browser-cookies",
-                  "browser-profiles/profile-features/browser-cookies/cookies-import-and-export",
-                  "browser-profiles/profile-features/browser-cookies/untitled-page"
+                  "browser-profiles/profile-features/browser-cookies/cookies-import-and-export"
                 ]
               },
               {
@@ -91,6 +85,28 @@
                   "browser-profiles/profile-features/browser-extensions/installing-custom-extensions"
                 ]
               },
+              {
+                "group": "Profile Sync & Recovery",
+                "pages": [
+                  "browser-profiles/profile-management/profile-synchronization",
+                  "browser-profiles/profile-management/restore-browser-sessions",
+                  "browser-profiles/profile-management/restore-deleted-profiles"
+                ]
+              },
+              {
+                "group": "Profile Export & Import",
+                "hidden": true,
+                "pages": []
+              },
+              "faq-profile-managment"
+            ]
+          },
+          {
+            "group": "Profile Features",
+            "icon": "aperture",
+            "pages": [
+              "browser-profiles/profile-features/browser-cookies/untitled-page",
+              "run-with-sync",
               "human-typing-simulation"
             ]
           },
