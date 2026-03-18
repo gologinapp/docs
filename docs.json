@@ -213,7 +213,10 @@
           {
             "group": "Templates",
             "hidden": true,
-            "pages": []
+            "pages": [
+              "prebuilt-profiles",
+              "sample-team-setups"
+            ]
           }
         ]
       },
