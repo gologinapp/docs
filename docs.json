@@ -191,7 +191,10 @@
             "hidden": true,
             "pages": [
               "how-gologin-protects-your-identity",
-              "maintaining-trust-score"
+              "maintaining-trust-score",
+              "profile-hygiene-checklist",
+              "common-mistakes-to-avoid",
+              "facebook-meta-ads-1"
             ]
           },
           {
@@ -203,7 +206,7 @@
             "group": "Platform Guides",
             "hidden": true,
             "pages": [
-              "untitled-page",
+              "facebook-meta-ads",
               "tik-tok-ads",
               "google-ads-and-gmail",
               "amazon-e-bay-shopify",
