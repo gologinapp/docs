@@ -200,7 +200,9 @@
           {
             "group": "Usage Patterns",
             "hidden": true,
-            "pages": []
+            "pages": [
+              "untitled-page"
+            ]
           },
           {
             "group": "Platform Guides",
