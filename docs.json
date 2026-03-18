@@ -185,18 +185,26 @@
         "pages": [
           "best-practices-overview",
           "reddit-account-best-practices",
-          "twitter-account-best-practices"
-        ]
-      },
-      {
-        "tab": "Guides & Templates",
-        "hidden": true,
-        "groups": [
+          "twitter-account-best-practices",
           {
-            "group": "Platform-Specific Setups",
-            "pages": [
-              "untitled-page"
-            ]
+            "group": "Fundamentals",
+            "hidden": true,
+            "pages": []
+          },
+          {
+            "group": "Usage Patterns",
+            "hidden": true,
+            "pages": []
+          },
+          {
+            "group": "Platform Guides",
+            "hidden": true,
+            "pages": []
+          },
+          {
+            "group": "Templates",
+            "hidden": true,
+            "pages": []
           }
         ]
       },
