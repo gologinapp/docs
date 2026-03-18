@@ -200,7 +200,14 @@
             "group": "Platform Guides",
             "hidden": true,
             "pages": [
-              "untitled-page"
+              "untitled-page",
+              "tik-tok-ads",
+              "google-ads-and-gmail",
+              "amazon-e-bay-shopify",
+              "reddit-linked-in-quora",
+              "crypto-and-kyc",
+              "web-scraping-targets",
+              "proxy-and-fingerprint-setup-per-platform"
             ]
           },
           {
