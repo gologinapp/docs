@@ -2,75 +2,123 @@
 title: "Web scraping targets"
 ---
 
-A guide to running web scraping workflows while maintaining stable sessions and avoiding detection systems.
+A practical guide to running web scraping workflows with stable sessions and reduced detection risk.
 
-Many websites use automated protection systems to detect scraping activity. These systems analyze **IP reputation, request patterns, browser fingerprints, and session behavior** to identify non-human traffic.
+Many websites use protection systems that analyze:
 
-When scraping websites through a browser environment, maintaining **realistic browser behavior and stable technical parameters** helps reduce the likelihood of blocks or rate limits.
+- IP reputation
+- request patterns
+- browser fingerprints
+- session behavior
 
-Using Gologin browser profiles allows scraping workflows to run through isolated environments that resemble normal user sessions.
+When scraping through a browser, maintaining realistic behavior and stable environments is critical.
 
-## Technical Environment
+Gologin allows you to run scraping workflows through isolated browser profiles that resemble real users.
 
-Before running scraping tasks, prepare a stable environment.
+## Quick checklist
 
-Recommended baseline:
+Before you start:
 
-- one scraping session per browser profile
-- dedicated proxy per profile
-- consistent proxy region
-- stable browser fingerprint
+- 1 scraping session = 1 browser profile
+- 1 profile = 1 proxy
+- Choose proxy type based on target (DC or residential)
+- Keep fingerprint stable
+- Reuse sessions when possible
 
-Each profile should represent a separate browsing environment.
+## Step 1. Set up environment in Gologin
 
-Frequent changes in device parameters or proxy regions may trigger anti-bot protection systems.
+Prepare a stable and isolated environment.
 
-Datacenter proxies are commonly used for scraping tasks due to their speed, although residential proxies may provide higher success rates on protected websites.
+Recommended setup:
 
-## Session Management
+- Create a new browser profile
+- Assign a dedicated proxy
+- Keep fingerprint settings unchanged
+- Ensure stable connection
 
-Many websites track **session behavior**, not just IP addresses.
+Each profile should represent a separate browsing session.
 
-To maintain stable scraping sessions:
+Avoid:
 
-- reuse the same profile for repeated requests
+- frequent proxy changes within the same session
+- modifying fingerprint after start
+
+## Step 2. Choose proxy strategy
+
+Different targets require different proxy setups:
+
+- **Datacenter proxies** - faster, suitable for low-protection targets
+- **Residential proxies** - higher success rate on protected websites
+
+Choose based on:
+
+- target website protection level
+- request volume
+- tolerance for blocks
+
+## Step 3. Maintain session consistency
+
+Many websites track sessions, not just IP.
+
+To keep sessions stable:
+
+- reuse the same profile for repeated tasks
 - preserve cookies and session data
-- avoid restarting sessions too frequently
+- avoid restarting sessions frequently
 
-Maintaining persistent sessions helps websites interpret activity as coming from a consistent user.
+Persistent sessions help simulate real user behavior.
 
-## Request Patterns
+## Step 4. Control request patterns
 
-Scraping systems are often detected through unrealistic request patterns.
+Unrealistic request patterns are one of the main detection signals.
 
-Typical safe patterns include:
+To reduce risk:
 
-- spacing requests over time
-- avoiding rapid bursts of activity
-- varying browsing behavior
-- navigating between pages naturally
+- space requests over time
+- avoid rapid bursts
+- vary navigation paths
+- simulate natural browsing
 
-Large numbers of requests in very short time periods often trigger rate limits or automated protection systems.
+Avoid:
 
-## Proxy Rotation
+- sending many requests in seconds
+- identical timing patterns
+- direct repeated access to the same endpoints
 
-When scraping large volumes of data, rotating proxies may help distribute requests.
+## Step 5. Scale with proxy rotation
 
-Typical approaches include:
+For larger workloads, proxy rotation may be required.
+
+Common strategies:
 
 - rotating proxies per session
 - rotating proxies per request
-- assigning proxy pools across profiles
+- using proxy pools across multiple profiles
 
-The appropriate rotation strategy depends on the website being scraped and the volume of requests.
+The correct strategy depends on:
 
-## Common Detection Signals
+- target website
+- scraping volume
+- tolerance for failures
 
-Websites often detect scraping activity through signals such as:
+## Common detection signals
+
+Websites typically detect scraping through:
 
 - repeated requests from the same IP
-- unusual browser fingerprints
-- missing or inconsistent cookies
+- inconsistent or unrealistic fingerprints
+- missing or reset cookies
 - identical request timing
+- unnatural navigation patterns
 
-Maintaining realistic browser environments and request timing helps reduce these signals.
+## Key takeaway
+
+Scraping detection is based on patterns, not single actions.
+
+To maintain stable workflows:
+
+- keep environments consistent
+- control request speed and behavior
+- use appropriate proxy strategies
+
+Browser-based scraping that mimics real user behavior is less likely to be blocked.
