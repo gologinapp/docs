@@ -97,7 +97,7 @@
                 "group": "Profile Export & Import",
                 "hidden": true,
                 "pages": [
-                  "untitled-page"
+                  "profile-export-and-import"
                 ]
               },
               "faq-profile-managment"
@@ -220,8 +220,8 @@
             "group": "Usage Patterns",
             "hidden": true,
             "pages": [
-              "untitled-page",
-              "creating-new-accounts-safely"
+              "creating-new-accounts-safely",
+              "managing-existing-accounts"
             ]
           },
           {
