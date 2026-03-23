@@ -107,7 +107,8 @@
             "pages": [
               "browser-profiles/profile-features/browser-cookies/untitled-page",
               "run-with-sync",
-              "human-typing-simulation"
+              "human-typing-simulation",
+              "browser-profiles/profile-features/browser-cookies/run-in-cloud"
             ]
           },
           {
