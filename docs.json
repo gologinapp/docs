@@ -96,7 +96,9 @@
               {
                 "group": "Profile Export & Import",
                 "hidden": true,
-                "pages": []
+                "pages": [
+                  "untitled-page"
+                ]
               },
               "faq-profile-managment"
             ]
