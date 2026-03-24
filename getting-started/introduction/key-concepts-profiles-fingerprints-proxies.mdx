@@ -20,7 +20,8 @@ Each profile contains its own:
 
 Because profiles are isolated from each other, websites treat them as different users or devices.
 
-This allows you to manage multiple accounts without sessions interfering with each other.
+This allows you to manage multiple accounts without sessions interfering with each other, which becomes especially important when working with multiple accounts at scale, as described in \
+[Managing existing accounts](https://gologin.com/docs/managing-existing-accounts).
 
 ## Browser fingerprints
 
@@ -37,6 +38,8 @@ These parameters may include:
 
 Gologin generates a unique fingerprint for each profile so that websites see every profile as a different device.
 
+However, fingerprint uniqueness alone does not guarantee safety. Platforms also analyze consistency and behavior patterns, which are explained in [Maintaining trust score](https://gologin.com/docs/maintaining-trust-score).
+
 ## Proxies
 
 A **proxy** assigns a different IP address to a browser profile.
@@ -46,3 +49,5 @@ Since websites track both browser fingerprints and IP addresses, using proxies h
 With proxies, each profile can appear to connect from a different location or network.
 
 Using a proxy together with a unique browser fingerprint helps create a consistent and independent browsing identity.
+
+To configure this correctly and avoid mismatches, refer to [Proxy & fingerprint setup](https://gologin.com/docs/proxy-fingerprint-setup).
