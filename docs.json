@@ -237,7 +237,6 @@
           },
           {
             "group": "Templates",
-            "hidden": true,
             "pages": [
               "prebuilt-profiles",
               "sample-team-setups"
