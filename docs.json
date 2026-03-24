@@ -202,12 +202,12 @@
       {
         "tab": "Guides & Best Practices",
         "pages": [
-          "best-practices-overview",
           "reddit-account-best-practices",
           "twitter-account-best-practices",
           {
             "group": "Fundamentals",
             "pages": [
+              "best-practices-overview",
               "how-gologin-protects-your-identity",
               "maintaining-trust-score",
               "profile-hygiene-checklist",
