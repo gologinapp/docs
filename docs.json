@@ -207,7 +207,6 @@
           "twitter-account-best-practices",
           {
             "group": "Fundamentals",
-            "hidden": true,
             "pages": [
               "how-gologin-protects-your-identity",
               "maintaining-trust-score",
@@ -218,7 +217,6 @@
           },
           {
             "group": "Usage Patterns",
-            "hidden": true,
             "pages": [
               "creating-new-accounts-safely",
               "managing-existing-accounts"
@@ -226,7 +224,6 @@
           },
           {
             "group": "Platform Guides",
-            "hidden": true,
             "pages": [
               "facebook-meta-ads",
               "tik-tok-ads",
