@@ -17,7 +17,7 @@ This is where you create and configure your profile.
 - operating system
 - fingerprint (via **New Fingerprint**)
 
- This is the foundation of your digital identity.
+This is the foundation of your digital identity.
 
 <Frame>
   ![Screenshot 4](/images/Screenshot_4.png)
@@ -30,7 +30,7 @@ Defines your IP address and connection type.
 ### Options:
 
 - **Gologin proxy** - built-in
-- **Your proxy - **external provider
+- **Your proxy** - external provider
 - **Without proxy** - not recommended
 
 ### Proxy settings
@@ -45,6 +45,10 @@ Defines your IP address and connection type.
 
 Allows you to verify if the proxy is working correctly.
 
+<Frame>
+  ![Screenshot 7](/images/Screenshot_7-1.png)
+</Frame>
+
 ### Best practice:
 
 - Always use a proxy
@@ -58,7 +62,11 @@ Automatically sets your timezone based on your proxy IP.
 
 ### Manual timezone selection
 
-If disabled, you can manually choose a timezone from the list.
+You can manually choose a timezone from the list.
+
+<Frame>
+  ![Снимок Экрана 2026 03 25 161904](/images/Снимокэкрана2026-03-25161904.png)
+</Frame>
 
 ## Extensions
 
@@ -70,6 +78,10 @@ Add browser extensions to your profile.
 - automation tools
 - ad tools
 
+<Frame>
+  ![0319(20)](/images/0319\(20\).gif)
+</Frame>
+
 ## Bookmarks
 
 Preload websites for faster access.
@@ -80,30 +92,116 @@ Preload websites for faster access.
 - Business Manager
 - frequently used dashboards
 
+<Frame>
+  ![Screenshot 9](/images/Screenshot_9.png)
+</Frame>
+
 ## Geolocation
 
 Controls location access inside the browser.
 
 ### Modes:
 
-- **Prompt** (recommended)
-- Allow
-- Block
+- **Prompt (recommended)** — Ask every time. Best balance between control and consistency.
+- **Allow** — Always share location. Use when platforms require it.
+- **Block** — Never share location. Use if location is not needed.
+
+<Frame>
+  ![Screenshot 10](/images/Screenshot_10-1.png)
+</Frame>
 
 ## Advanced
 
-Advanced fingerprint settings.
+Advanced settings control your browser fingerprint and environment.\
+In most cases, you don’t need to change them.
 
-### Key parameters:
+### Navigator
 
-- User-Agent
-- browser version (Orbita)
-- screen resolution
-- platform
-- languages
+Defines how your browser identifies itself to websites.
+
+- **User-Agent** — browser and OS identity
+- **Orbita version** — browser version used in the profile
+- **Screen resolution** — screen size reported to websites
+- **Languages** — browser language (can match proxy IP)
+- **Platform** — OS type (Windows, Mac, etc.)
+- **CPU threads / RAM** — device performance parameters
+- **Do Not Track** — sends a “do not track” request
+
+<Tip>
+  Keep these consistent with your proxy and use case.
+</Tip>
+
+<Frame>
+  ![Screenshot 11](/images/Screenshot_11-2.png)
+</Frame>
+
+### Fonts & Media Devices
+
+Controls system-level fingerprint signals.
+
+- **Enable fonts list masking** — hides real fonts
+- **Browser profile fonts list** — predefined font set
+- **Mask media devices** — replaces real devices
+- **Video / Audio inputs & outputs** — number of devices
+
+👉 Keep masking enabled to avoid hardware leaks.
+
+<Frame>
+  ![Image](/images/image-4.png)
+</Frame>
+
+### Hardware fingerprint
+
+Controls how your browser is identified based on rendering behavior.
+
+These parameters affect how websites detect your device:
+
+- **Canvas** — image rendering
+- **Client Rects** — element rendering
+- **Audio Context** — audio processing
+- **WebGL Image / WebGL Metadata** — GPU behavior
+- **WebGL Vendor / WebGL Renderer** — graphics identity
+
+#### Modes
+
+- **Noise** — adds consistent variation to reduce tracking (recommended)
+- **Off** — no masking
+- **Block / Mask** — hides real values
+
+Use Noise or Mask for better privacy and stability.
+
+<Frame>
+  ![Image](/images/image-7.png)
+</Frame>
+
+### Storage, plugins & other
+
+Controls what data is stored in the profile and how the browser behaves during use.
+
+- **Enable Local Storage** — allows websites to store data (sessions, preferences).\
+  Recommended to keep enabled to avoid losing data between sessions or devices.
+- **Enable Extension storage** — allows extensions to store their data and settings.\
+  Enable if you use browser extensions.
+- **Enable potentially vulnerable plugins** — enables built-in plugins (AdobePDF, Widevine, Native Client). Disabled by default for safety. Enable only if required.
+- **Active session lock** — prevents launching the same profile on multiple devices at the same time.
+- **Enable Google services** — allows the browser to use Google services.\
+  Helps mimic normal browser behavior.
+- **Enable browser bookmark saving** — saves bookmarks inside the profile.
+- **Enable browser history saving** — saves browsing history.\
+  May increase profile size.
+- **Enable password saving** — stores and autofills login credentials.\
+  Data is securely encrypted.
+- **Enable session saving** — saves session state (open tabs, logins).
+- **Enable System Extensions** — installs OS-level extensions into the profile.\
+  May trigger extension prompts on launch.
+- **WebRTC** — controls IP exposure. Based on IP (recommended) matches proxy IP; Off disables WebRTC and may look unusual.
+
+<Frame>
+  ![Image](/images/image-9.png)
+</Frame>
 
 <Warning>
-  Do NOT change these after using the profile — it may break trust.
+  Avoid changing these after using the profile — it may break consistency and trust.
 </Warning>
 
 ## Cookies
@@ -115,17 +213,9 @@ Import session data into your profile.
 - log into accounts without password
 - transfer sessions
 
-## How to configure a profile (recommended flow)
-
-1. Create profile
-2. Select OS
-3. Click **New Fingerprint**
-4. Add proxy
-5. Enable:
-   - timezone based on IP
-   - geolocation based on IP
-6. (Optional) add extensions / cookies
-7. Launch profile
+<Frame>
+  ![Image](/images/image-10.png)
+</Frame>
 
 ## Best practices (very important)
 
