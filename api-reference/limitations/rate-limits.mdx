@@ -2,7 +2,32 @@
 title: 'Rate Limits'
 ---
 We don't allow user to send infinite quantity of requests to our API. So if you exceed our limitations - you need to cooldown <br />
-Our base limits: 
+Our base limits:
 - Free and trial plans: 300 requests per 1 minute
 - Other plans: 1200 requests per 1 minute
+
+### Token invalidation on rate limit
+
+<Warning>
+When you exceed the rate limit and receive an HTTP 429 response, your API token is automatically invalidated. This means your token becomes permanently unusable and you must generate a new one.
+
+This is not a temporary cooldown — the token is revoked. Plan your request rates carefully and implement exponential backoff to avoid this.
+</Warning>
+
+### Cloudflare protection errors
+
+If your server IP sends too many requests, GoLogin's Cloudflare CDN may block your IP entirely. When this happens, API responses will be HTML error pages instead of JSON, causing errors like:
+
+```
+SyntaxError: Unexpected token 'e', "error code: 1015" is not valid JSON
+```
+
+This is a Cloudflare 1015 rate limit response. It typically resolves on its own within minutes to hours. To avoid it:
+- Implement request rate limiting in your code
+- Use exponential backoff on failures
+- Avoid bursts of parallel API calls
+
+### Profile creation limits
+
+New accounts have a limit of approximately 300 profile creations per day. This limit may vary by plan. If you need higher limits, contact support.
 

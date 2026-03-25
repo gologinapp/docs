@@ -55,3 +55,26 @@ Proxies are used to separate accounts at the network level.  If you're not famil
 
 Once you understand these components, the next step is applying them when creating profiles. \
 See [Creating profiles](https://gologin.com/docs/browser-profiles/profile-management/creating-and-launching-profiles).
+
+## Profile OS must match your device OS
+
+The operating system set in your profile fingerprint should match the OS of the device you're using to open the profile. For example:
+- Opening a Windows profile on a Mac can create detectable mismatches
+- Sites like iphey.com and pixelscan.net will flag this as a fingerprint inconsistency
+- LinkedIn and other sensitive platforms may log you out immediately
+
+<Warning>
+If you work on a Mac, create Mac profiles. If you work on Windows, create Windows profiles. Cross-platform usage (creating on one OS, opening on another) can compromise your accounts.
+</Warning>
+
+## Default fingerprint settings are safe
+
+GoLogin automatically generates realistic fingerprint settings for each new profile. You do not need to customize WebGL, Canvas, Audio, or other fingerprint parameters unless you have a specific reason to do so.
+
+## How to verify your fingerprint
+
+After launching a profile, visit one of these checkers:
+- **iphey.com** -- shows an overall trust score and flags issues
+- **pixelscan.net** -- detailed fingerprint analysis
+
+A "green" or "trusted" result means your profile looks like a real browser to websites.

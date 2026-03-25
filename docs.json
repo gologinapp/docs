@@ -268,8 +268,19 @@
             "group": "Troubleshooting",
             "expanded": true,
             "pages": [
+              "general/troubleshooting/common-errors",
+              "general/troubleshooting/proxy-not-working",
+              "general/troubleshooting/profile-data-disappeared",
               "general/troubleshooting/wrong-ip-my-ip-is-leaking",
               "general/troubleshooting/wrong-proxy-location"
+            ]
+          },
+          {
+            "group": "General",
+            "pages": [
+              "general/storage-and-cache",
+              "general/migration-from-other-tools",
+              "general/gologin-web-and-mobile"
             ]
           }
         ]

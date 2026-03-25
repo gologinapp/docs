@@ -1,0 +1,181 @@
+---
+title: "Common Errors"
+description: "Reference guide for common GoLogin error messages, their causes, and how to fix them."
+---
+
+## "Container not found"
+
+**What it looks like:** You see "Container not found" when trying to launch a profile, especially in cloud mode.
+
+**Why it happens:** The profile data is corrupted, or the cloud container failed to start on GoLogin's servers.
+
+**How to fix it:**
+
+1. Restart the GoLogin app and try launching the profile again.
+2. Try launching the profile from the web version at [app.gologin.com](https://app.gologin.com).
+3. If the issue persists, contact support and provide your profile ID.
+
+---
+
+## "Couldn't prepare your profile, contact support"
+
+**What it looks like:** This error appears when GoLogin fails to prepare your profile for launch.
+
+**Why it happens:** This is typically caused by a profile sync issue, corrupted profile data, or a mismatch between your Orbita browser version and the expected version.
+
+**How to fix it:**
+
+1. Update the GoLogin desktop app to the latest version.
+2. Check your internet connection -- an unstable connection can interrupt profile sync.
+3. Try switching to a different network (for example, from WiFi to a mobile hotspot).
+4. If the error continues, contact support with your profile ID and app version.
+
+---
+
+## "The proxy is functional but not working on your device or network"
+
+**What it looks like:** GoLogin reports that the proxy passed its server-side check but cannot connect from your machine.
+
+**Why it happens:** Your local network or ISP is blocking the proxy connection. The proxy itself is working -- GoLogin verified it on their servers -- but the traffic cannot leave your device.
+
+**How to fix it:**
+
+1. Try enabling a VPN on your device, then launch the profile again.
+2. Switch to a different network (WiFi to mobile hotspot, or vice versa).
+3. Check your firewall or antivirus settings to ensure they are not blocking GoLogin or the proxy port.
+
+---
+
+## "You have exceeded your traffic limit" / "exceeded request limit"
+
+**What it looks like:** One of two related messages appears when launching a profile or performing actions.
+
+**Why it happens:** This error has two possible causes:
+
+- **Traffic limit:** Your GoLogin built-in proxy traffic (measured in GB) is exhausted for the current billing period.
+- **Request/IP rate limit:** You have hit an IP-based rate limit, usually triggered by creating too many accounts from the same IP address in a short period.
+
+**How to fix it:**
+
+- **For traffic limits:** Top up your proxy traffic in GoLogin settings or upgrade your plan.
+- **For IP rate limits:** Wait approximately 1 hour for the IP block to expire, then try again.
+
+---
+
+## "Run limit exceeded. Upgrade your plan"
+
+**What it looks like:** This error appears when trying to launch a profile in the cloud.
+
+**Why it happens:** You have reached the maximum number of concurrent cloud sessions allowed by your plan.
+
+The concurrent cloud session limits are:
+
+| Plan         | Concurrent Cloud Sessions |
+|--------------|--------------------------|
+| Professional | 1                        |
+| Business     | 2                        |
+| Enterprise   | 3                        |
+
+**How to fix it:**
+
+1. Close one or more running cloud profiles before launching a new one.
+2. Upgrade your plan if you need more concurrent cloud sessions.
+
+---
+
+## "Profile already deleted"
+
+**What it looks like:** You see a message saying your profile has been deleted, even though you did not delete it.
+
+**Why it happens:** This message is misleading. It does **not** mean your profile was actually deleted. It typically appears when you have reached the profile launch count limit on a trial or free plan.
+
+<Info>
+GoLogin stores profiles on its servers for up to 180 days after a subscription expires. Your profile data is not lost when you see this message.
+</Info>
+
+**How to fix it:**
+
+1. Upgrade to a paid plan or renew your subscription to restore access.
+2. If you believe this is an error, contact support with your account details.
+
+---
+
+## ECONNREFUSED 127.0.0.1
+
+**What it looks like:** An error containing `ECONNREFUSED 127.0.0.1` appears when trying to launch a profile locally.
+
+**Why it happens:** The Orbita browser failed to start on your machine. Common causes include:
+
+- Corrupted Orbita download
+- Proxy incompatibility preventing the browser from initializing
+- Outdated GoLogin app version
+
+**How to fix it:**
+
+1. Update the GoLogin desktop app to the latest version.
+2. Re-download Orbita: go to GoLogin settings and trigger a fresh Orbita download.
+3. Check your proxy settings -- try launching the profile without a proxy to isolate the issue.
+
+---
+
+## EBUSY: resource busy or locked (Windows)
+
+**What it looks like:** On Windows, you see an `EBUSY: resource busy or locked` error, often referencing a Cookies file.
+
+**Why it happens:** A previous Orbita process did not shut down cleanly and is still holding a lock on profile files.
+
+**How to fix it:**
+
+1. Open **Task Manager** (Ctrl+Shift+Esc) and end all processes named `orbita` or `browser`.
+2. Delete the temporary profile folder. You can find it at `C:\Users\<YourUser>\AppData\Local\GoLogin\browser\orbita\profiles\` -- delete the folder matching the affected profile ID.
+3. Restart GoLogin and try again.
+
+<Warning>
+Deleting the temporary profile folder only removes local cached data. Your profile data stored on GoLogin servers is not affected.
+</Warning>
+
+---
+
+## SyntaxError: Unexpected token 'e'
+
+**What it looks like:** A JavaScript-style error `SyntaxError: Unexpected token 'e'` appears, usually in the GoLogin app or API response.
+
+**Why it happens:** This occurs when Cloudflare returns a 1015 rate limit error page (HTML) instead of the expected JSON response from the GoLogin API. The JSON parser encounters the HTML and fails at the first unexpected character.
+
+**How to fix it:**
+
+1. Reduce the frequency of your API requests or profile launches.
+2. Wait a few minutes before retrying.
+3. If you are using the GoLogin API programmatically, implement exponential backoff in your request logic.
+
+---
+
+## "To install add-ons, you'll need the new Microsoft Edge"
+
+**What it looks like:** When trying to install a browser extension inside a GoLogin profile, you see a prompt about Microsoft Edge.
+
+**Why it happens:** The Orbita browser (based on Chromium) sometimes triggers this message when you attempt to install extensions from the Microsoft Edge Add-ons store or through an incompatible installation path.
+
+**How to fix it:**
+
+1. Install extensions from the [Chrome Web Store](https://chromewebstore.google.com/) instead of the Edge Add-ons store.
+2. Alternatively, use the GoLogin extension management UI to add extensions to your profile before launching it.
+
+---
+
+## Proxy authentication popup for geo.floppydata.com:10080
+
+**What it looks like:** A proxy authentication dialog box appears asking for credentials for `geo.floppydata.com:10080` when launching a profile.
+
+**Why it happens:** The GoLogin built-in proxy is requesting authentication unexpectedly. This can occur when the proxy configuration is not passed correctly to the browser, often due to a network or VPN conflict.
+
+**How to fix it:**
+
+1. Fully exit GoLogin (check your system tray to make sure it is closed).
+2. Enable a VPN on your device.
+3. Restart GoLogin.
+4. Launch the profile again.
+
+<Info>
+If the popup continues to appear, try switching to a different proxy provider or contact GoLogin support.
+</Info>
