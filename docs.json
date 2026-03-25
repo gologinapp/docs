@@ -94,7 +94,6 @@
               },
               {
                 "group": "Profile Export & Import",
-                "hidden": true,
                 "pages": [
                   "profile-export-and-import"
                 ]
@@ -335,6 +334,12 @@
           "api-reference/cloud-browser/live",
           "api-reference/cloud-browser/untitled-page-3",
           "api-reference/cloud-browser/untitled-page"
+        ]
+      },
+      {
+        "tab": "Untitled Tab",
+        "pages": [
+          "untitled-page"
         ]
       }
     ]
