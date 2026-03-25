@@ -136,6 +136,13 @@
                   "proxy/proxy-management/proxy-testing-and-troubleshooting"
                 ]
               },
+              {
+                "group": "Proxy Devices",
+                "hidden": true,
+                "pages": [
+                  "proxy-devices-overview"
+                ]
+              },
               "proxy/proxy-management/recommended-proxy-providers",
               "proxy/proxy-management/faq-proxies"
             ]
