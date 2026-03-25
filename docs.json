@@ -243,15 +243,29 @@
       },
       {
         "tab": "Account & Support",
-        "pages": [
-          "general/account-and-billing/changing-your-email-and-pass",
-          "general/account-and-billing/two-factor-authentication",
-          "general/account-and-billing/active-sessions",
-          "general/account-and-billing/payment-methods",
-          "general/account-and-billing/promo-codes",
-          "general/account-and-billing/affiliate-program",
-          "general/account-and-billing/invoices",
-          "general/account-and-billing/faq-subscription"
+        "groups": [
+          {
+            "group": "Account settings",
+            "expanded": true,
+            "pages": [
+              "general/account-and-billing/changing-your-email-and-pass",
+              "general/account-and-billing/two-factor-authentication",
+              "general/account-and-billing/active-sessions",
+              "general/account-and-billing/payment-methods",
+              "general/account-and-billing/promo-codes",
+              "general/account-and-billing/affiliate-program",
+              "general/account-and-billing/invoices",
+              "general/account-and-billing/faq-subscription"
+            ]
+          },
+          {
+            "group": "Troubleshooting",
+            "expanded": true,
+            "pages": [
+              "general/troubleshooting/wrong-ip-my-ip-is-leaking",
+              "general/troubleshooting/wrong-proxy-location"
+            ]
+          }
         ]
       },
       {
@@ -305,13 +319,6 @@
             "group": "Limitations",
             "pages": [
               "api-reference/limitations/rate-limits"
-            ]
-          },
-          {
-            "group": "Troubleshooting",
-            "pages": [
-              "general/troubleshooting/wrong-ip-my-ip-is-leaking",
-              "general/troubleshooting/wrong-proxy-location"
             ]
           }
         ]
