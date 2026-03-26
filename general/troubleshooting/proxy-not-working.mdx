@@ -1,0 +1,72 @@
+---
+title: "Proxy Not Working"
+description: "Step-by-step guide to diagnosing and fixing proxy connection issues in GoLogin."
+---
+
+## Step-by-step proxy troubleshooting
+
+If your proxy is not working in GoLogin, follow these steps in order to identify and resolve the issue.
+
+### 1. Read the full error message
+
+Hover over the error indicator (the red or yellow icon) next to the proxy field in your profile settings. GoLogin displays an expanded error message on hover that often contains specific details about why the connection failed.
+
+### 2. Verify the proxy works outside GoLogin
+
+Test your proxy independently to confirm it is functional:
+
+- Use an online proxy checker tool.
+- Configure the proxy in a regular browser (via a proxy extension like FoxyProxy) and try loading a website.
+
+If the proxy does not work outside GoLogin either, the issue is with the proxy itself -- contact your proxy provider.
+
+### 3. Switch your network
+
+Some networks block proxy traffic. Try one of the following:
+
+- Switch from WiFi to a mobile hotspot (or vice versa).
+- Enable a VPN on your device before launching the profile.
+
+If the proxy works on a different network, your original network is likely blocking the connection.
+
+### 4. Test on the web version
+
+Try launching the same profile on [app.gologin.com](https://app.gologin.com) (the web/cloud version). If the profile works there but not on the desktop app, the issue is specific to your local environment and not the proxy itself.
+
+### 5. Update GoLogin
+
+Make sure you are running the latest version of the GoLogin desktop app. Older versions may have compatibility issues with certain proxy protocols or configurations. Download the latest version from [gologin.com](https://gologin.com).
+
+### 6. Check DNS settings with SOCKS proxies
+
+If you have configured custom DNS settings in your profile, note that custom DNS only works with **SOCKS4** and **SOCKS5** proxy protocols.
+
+<Warning>
+Custom DNS settings are not supported with HTTP or HTTPS proxies. If you are using an HTTP/HTTPS proxy with custom DNS, remove the custom DNS configuration or switch to a SOCKS proxy.
+</Warning>
+
+### 7. Proxy works but location is wrong
+
+If your proxy connects successfully but certain websites (especially Google) show the wrong location or your real location:
+
+This happens because some sites use the browser's **Geolocation API** independently of your IP address. The Geolocation API can reveal your real location even when your IP shows a different one.
+
+**Fix:** Disable geolocation in your profile settings. In the profile configuration, find the Geolocation option and set it to **Blocked** or manually set coordinates matching your proxy location.
+
+### 8. GoLogin built-in proxy shows an error
+
+If you are using GoLogin's built-in proxy and it is not working:
+
+- Try selecting a different proxy location from the available options.
+- Check whether your GoLogin proxy traffic allowance is exhausted. You can see your remaining traffic in account settings.
+- If traffic is exhausted, top up or switch to an external proxy provider.
+
+---
+
+<Warning>
+If none of these steps work, contact support with the following information:
+
+- Your proxy credentials in `ip:port:login:password` format
+- A screenshot of the error message
+- Your GoLogin app version (found in Settings > About)
+</Warning>

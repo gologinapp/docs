@@ -1,5 +1,54 @@
 ---
-title: 'New file'
-description: 'Description of your new file.'
+title: "Profile Data Disappeared"
+description: "Why your GoLogin profile data may appear to be missing and how to recover it."
 ---
 
+## Why profile data might disappear
+
+There are several reasons why profile data may seem to be missing in GoLogin. In most cases, the data is not permanently lost.
+
+### After an Orbita update
+
+When Orbita (GoLogin's browser) receives a major version update, some local data may reset. This includes:
+
+- Browser history
+- Locally cached data
+- Some site-specific storage
+
+<Info>
+Cookies and session data are preserved if the profile was synced to GoLogin's servers before the update. Always ensure your profiles are synced before updating.
+</Info>
+
+### "Profile already deleted" message
+
+This message is misleading. In most cases, it does **not** mean your profile was actually deleted.
+
+This message typically appears when you have reached the profile launch limit on a trial or free plan. Your profile data still exists on GoLogin's servers.
+
+**Fix:** Upgrade to a paid plan or renew your subscription to regain access to your profiles.
+
+### Free plan data retention
+
+After your subscription expires, GoLogin stores your profile data on its servers for up to **180 days**. After that period, the data is permanently deleted and cannot be recovered.
+
+<Warning>
+If your subscription has been expired for a long time, renew it as soon as possible to avoid permanent data loss. Profiles are deleted 180 days after subscription expiration.
+</Warning>
+
+### After import/export
+
+When you export and re-import a profile, not all data is included in the export. The following data is **preserved** in exports:
+
+- Cookies
+- Proxy settings
+- Profile configuration (fingerprint, timezone, etc.)
+
+The following data is **not included** in exports:
+
+- Browser history
+- Local storage and IndexedDB data
+- Cached files and images
+
+<Info>
+If you need to preserve session data across devices, use GoLogin's built-in cloud sync instead of manual export/import. Cloud sync retains more profile data than the export file format.
+</Info>

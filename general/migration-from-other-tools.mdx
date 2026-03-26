@@ -1,0 +1,32 @@
+---
+title: "Migrating from Other Anti-Detect Browsers"
+description: "How to import profiles from Multilogin, Dolphin Anty, and other anti-detect browsers into GoLogin"
+---
+
+GoLogin supports importing profiles from other anti-detect browsers.
+
+## Supported migrations
+
+| Tool | Import supported | What transfers |
+|---|---|---|
+| Multilogin | Yes | Profiles, cookies, proxy settings |
+| Dolphin Anty | Yes | Profiles, cookies, proxy settings |
+| Incognition | Partial | Contact support for assistance |
+
+## How to import
+
+1. Open GoLogin desktop app
+2. Go to **Settings** > **Transfer Profiles**
+3. Select your previous tool
+4. Follow the import wizard
+
+## What to expect after migration
+
+- **Cookies and sessions**: Most sessions should remain active. Some sites may require re-login due to fingerprint differences between tools.
+- **Proxy settings**: Proxy configurations are transferred. Verify that your proxies still work after import.
+- **Extensions**: Browser extensions are NOT transferred. Re-install them after migration.
+- **Fingerprints**: GoLogin will assign new fingerprints to imported profiles. This may trigger verification on some platforms -- plan for a brief "warming" period.
+
+<Info>
+If you're migrating from a tool not listed above, you can manually export cookies from your old tool and import them into GoLogin profiles.
+</Info>
