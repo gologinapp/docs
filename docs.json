@@ -30,7 +30,8 @@
             "pages": [
               "getting-started/introduction/what-is-gologin-and-who-its-for",
               "getting-started/introduction/key-concepts-profiles-fingerprints-proxies",
-              "getting-started/introduction/quick-start-from-zero-to-your-first-profile"
+              "getting-started/introduction/quick-start-from-zero-to-your-first-profile",
+              "getting-started/introduction/untitled-page"
             ]
           },
           {
@@ -280,7 +281,9 @@
             "pages": [
               "general/storage-and-cache",
               "general/migration-from-other-tools",
-              "general/gologin-web-and-mobile"
+              "general/gologin-web-and-mobile",
+              "general/updating-the-gologin-app",
+              "general/data-safety"
             ]
           }
         ]

@@ -1,0 +1,13 @@
+---
+title: "Data Safety"
+---
+
+At Gologin, we implement industry-leading security practices to ensure the protection of user credentials and sensitive data.
+
+We utilize the **Argon2 key derivation function**, a modern and highly secure standard designed to resist brute-force and GPU-based attacks while maintaining strong performance. Each user password is processed into a unique cryptographic key that is never stored in its original form. Importantly, these keys are not accessible to us at any stage.
+
+Due to the one-way nature of cryptographic hash functions, it is mathematically infeasible to reconstruct the original password from its derived output. Only the hashed representations are stored on our servers, ensuring that plaintext credentials remain unknown and unrecoverable. For this reason, users are strongly encouraged to store their passwords securely.
+
+Within our Orbita browser, we employ **AES (Advanced Encryption Standard)** to securely encrypt stored data, including passwords and cookies. This ensures that sensitive information remains protected both at rest and during usage.
+
+Gologin is designed with a strict zero-access architecture: we do not have the ability to view, modify, or delete user profiles or personal data. Access can only be granted explicitly by the user through manual sharing or transfer.
