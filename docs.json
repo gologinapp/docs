@@ -58,8 +58,18 @@
                   "browser-profiles/profile-management/creating-and-launching-profiles",
                   "browser-profiles/profile-management/editing-profiles",
                   "browser-profiles/profile-management/cloning-profiles",
-                  "browser-profiles/profile-management/untitled-page",
                   "browser-profiles/profile-management/bulk-actions"
+                ]
+              },
+              {
+                "group": "Profile Organization",
+                "pages": [
+                  "browser-profiles/profile-management/untitled-page",
+                  "browser-profiles/profile-management/groups",
+                  "browser-profiles/profile-management/notes-and-tags",
+                  "browser-profiles/profile-management/tags",
+                  "browser-profiles/profile-management/profile-sorting",
+                  "browser-profiles/profile-management/add-more-info-columns"
                 ]
               },
               {
