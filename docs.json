@@ -115,7 +115,7 @@
             "group": "Profile Features",
             "icon": "aperture",
             "pages": [
-              "browser-profiles/profile-features/browser-cookies/untitled-page",
+              "browser-profiles/profile-features/cookie-bot",
               "run-with-sync",
               "human-typing-simulation",
               "browser-profiles/profile-features/browser-cookies/run-in-cloud"
