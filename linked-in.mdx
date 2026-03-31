@@ -1,0 +1,54 @@
+---
+title: "LinkedIn"
+hidden: true
+---
+
+A practical guide to managing LinkedIn accounts with Gologin — covering lead generation, outreach, farming, and team access. 
+
+LinkedIn is one of the most security-sensitive platforms in the Gologin ecosystem. It monitors login patterns, IP consistency, and device fingerprints more aggressively than most social networks. Accounts that show suspicious signals are restricted quickly, sometimes without warning.
+
+## Quick checklist
+
+Before you start:
+
+- 1 account = 1 browser profile
+- 1 profile = 1 static residential or mobile proxy
+- Never change the proxy on a profile that's been used
+- Match profile OS to your device OS
+- Don't open the same profile on two devices at the same time
+
+## Step 1. Choose the right proxy
+
+LinkedIn is highly sensitive to IP changes. Use a static residential proxy or static mobile proxy — one dedicated IP that stays the same across sessions.
+
+<Warning>
+  Do not use rotating proxies, datacenter proxies, or Gologin's built-in proxies for LinkedIn accounts you care about. A changing IP between sessions will trigger an immediate security review and often a session logout.
+</Warning>
+
+If you and your team member are in the same city, you can use the same country/city proxy location. If your team is distributed, each person should use a proxy that matches the geographic region of the LinkedIn account — not where the team member physically sits.
+
+Recommended proxy types for LinkedIn:
+
+-  Static residential (best for long-term account management)
+-  Mobile (good for new account creation and warmup)
+-  ISP proxies (stable, decent trust level)
+
+See [Recommended proxy providers](https://gologin.com/best-proxy-server-services/) for specific services.
+
+## Step 2. Set up your Gologin profile
+
+Create a new profile for each LinkedIn account.
+
+Recommended settings:
+
+-  **OS**: match your device (Windows if you're on Windows, Mac if you're on Mac)
+-  **Proxy**: assign your static proxy before the first login
+-  **Fingerprint**: leave defaults — do not customize WebGL, Canvas, or AudioContext unless you have a specific reason
+
+Once you've logged into LinkedIn in a profile, **do not change the proxy or fingerprint settings.** LinkedIn stores device information server-side. A fingerprint change looks like a completely new device attempting to access the account.
+
+## Step 3. Warm up new accounts
+
+New LinkedIn accounts that immediately send connection requests or messages get restricted fast. LinkedIn expects new accounts to behave like real users — browsing, reading, building a presence gradually.
+
+Warmup timeline:
