@@ -66,10 +66,9 @@
                 "pages": [
                   "browser-profiles/profile-management/untitled-page",
                   "browser-profiles/profile-management/groups",
+                  "browser-profiles/profile-management/add-more-info-columns",
                   "browser-profiles/profile-management/notes-and-tags",
-                  "browser-profiles/profile-management/tags",
-                  "browser-profiles/profile-management/profile-sorting",
-                  "browser-profiles/profile-management/add-more-info-columns"
+                  "browser-profiles/profile-management/profile-sorting"
                 ]
               },
               {
