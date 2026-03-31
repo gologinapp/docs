@@ -25,9 +25,9 @@ Depending on your plan and needs, Gologin may offer different proxy types, such 
 
 Each type fits different tasks and risk levels.
 
-## Important: GoLogin proxies are rotating
+## Important: Gologin proxies are rotating
 
-GoLogin residential proxies automatically rotate IP addresses every 5-30 minutes. This means your IP will change during a browsing session.
+Gologin residential proxies automatically rotate IP addresses every 5-30 minutes. This means your IP will change during a browsing session.
 
 **This is fine for:**
 
@@ -35,12 +35,52 @@ GoLogin residential proxies automatically rotate IP addresses every 5-30 minutes
 - Short browsing sessions
 - General research
 
-**This is NOT recommended for:**
-
-- LinkedIn, Facebook, and other social media accounts (IP changes trigger security checks)
-- Amazon, eBay, Etsy seller accounts (IP changes can link/ban accounts)
-- Any workflow requiring a stable, consistent IP
+**When NOT to use built-in proxies**
 
 <Warning>
-For account-based workflows, use a third-party static/ISP proxy. See [Recommended Proxy Providers](/proxy/proxy-management/recommended-proxy-providers).
+  Do not use built-in Gologin proxies for Amazon, eBay, Etsy, PayPal, or any marketplace that monitors account history. Rotating IPs are one of the fastest ways to get accounts linked and banned on these platforms.
 </Warning>
+
+- Amazon and eBay detect when the same account logs in from different IP addresses over time. They use this as a signal that an account is being managed by a third party or is part of a multi-account scheme. A rotating proxy changes your IP on every session — exactly the pattern they flag.
+- LinkedIn logs out sessions and triggers security reviews when it sees an IP change between sessions. Built-in proxies will cause frequent logouts and verification prompts.
+- Betting platforms require consistent IP addresses per account. An IP change is treated as suspicious login activity and often leads to account restriction.
+- PayPal and financial platforms flag IP changes as potential account compromise. They may freeze the account or require identity verification.
+
+## What to use instead
+
+For long-term account management on any sensitive platform, use a static residential proxy or static ISP proxy — one dedicated IP per account that never changes.
+
+| Platform | Recommended proxy type |
+| --- | --- |
+| Amazon / eBay / Etsy | Static residential or ISP |
+| LinkedIn | Static residential or mobile |
+| Facebook / Meta Ads | Static residential or mobile |
+| Betting sites | Mobile (static) |
+| Web scraping | Rotating residential or datacenter |
+| Testing / quick checks | Gologin built-in proxies are fine |
+
+See Best proxy for your case for a full breakdown, or Recommended proxy providers for specific services.
+
+## About the included traffic allowance
+
+Each Gologin plan includes a proxy traffic allowance measured in gigabytes. This is the data that passes through the proxy while your profiles browse — not storage.
+
+**Rough estimates:**
+
+-  Light browsing (checking feeds, reading pages): ~0.3–0.5 GB per profile per day
+-  Active work (loading media, running ads): ~1–2 GB per profile per day
+- 10 LinkedIn profiles used 2 hours/day: ~3–6 GB per month
+
+If you connect your own third-party proxy to a profile, it does not consume your Gologin traffic allowance — only traffic routed through Gologin's own proxy network counts.
+
+## See also
+
+VPN vs Proxy — what's the difference
+
+Static vs Rotating proxies — why static matters for account management
+
+Best proxy for your case
+
+Proxy traffic — how much do I need
+
+Recommended proxy providers
