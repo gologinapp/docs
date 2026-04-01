@@ -75,6 +75,7 @@
               {
                 "group": "Profile Settings",
                 "pages": [
+                  "profile-settings-overview",
                   "profile-parameters",
                   "default-profile-settings",
                   "updating-your-browser-profile"
