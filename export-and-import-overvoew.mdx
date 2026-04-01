@@ -1,0 +1,43 @@
+---
+title: "Export & Import overview"
+---
+
+CSV import/export is a simple way to manage multiple browser profiles at once. Instead of setting everything up manually, you can use a CSV file to copy configurations, create profiles in bulk, update settings like proxies, and move setups between workspaces. It’s especially useful when you’re working at scale or want consistency across profiles or team members.
+
+It’s important to understand that this feature only works with **profile configuration**, not actual browsing data. That means things like profile name, proxies, tags, folders, and basic environment settings are included — but cookies, sessions, login state, and full fingerprint identity are not. Any profile created from a CSV will behave like a brand-new environment with no prior activity.
+
+### What you can do with CSV
+
+- Create many profiles in one go
+- Copy and reuse profile setups
+- Update proxies and settings in bulk
+- Keep team configurations consistent
+- Move setups between workspaces
+
+### What’s included vs not included
+
+**Included:**
+
+- Profile name
+- Proxy settings
+- Folders and tags
+- Basic environment settings
+
+**Not included:**
+
+- Cookies
+- Sessions
+- Login state
+- Full fingerprint identity
+
+### Important to keep in mind
+
+- Profiles created via CSV start as **new, clean environments**
+- They are **not logged into any accounts**
+- Previous sessions and activity are **not preserved**
+- CSV import is **not a backup method**
+- Incorrect formatting can **break the import or create invalid profiles**
+
+### Key takeaway
+
+CSV import/export is best used for **scaling and managing profile setups**, not for transferring existing profiles, sessions, or identities.

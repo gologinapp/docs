@@ -1,107 +1,35 @@
 ---
-title: "Profile export and import"
+title: "Profile Export & Import"
 ---
 
 This guide explains how to export and import profiles in Gologin and when to use each method.
 
-Gologin supports profile import and export via CSV files.
-
-## What is profile export and import
-
-Profile export and import allow you to:
-
-- copy profile configurations
-- create multiple profiles at once
-- edit and update profiles in bulk
-- move profile setups between workspaces
-
-All operations are performed using a **CSV file (comma-separated values)**.
-
-## What is included
-
-CSV import/export works with profile configuration only.
-
-Included:
-
-- profile name
-- proxy settings
-- folders and tags
-- basic environment settings
-
-Not included:
-
-- cookies
-- sessions
-- login state
-- full fingerprint identity
+Gologin supports profile import and export via **CSV files**.
 
 ## How to export profiles
 
-1. Select one or more profiles
+1. **Select** one or more profiles from the All profiles page
 2. Click **Export profiles**
-3. Save the CSV file
+3. **Save** the CSV file
 
 <Frame>
-  ![Screenshot 2](/images/Screenshot_2-2.png)
+  ![Profile Export](/images/profile_export.gif)
 </Frame>
 
 ## How to import profiles
 
 Profiles can be imported from the workspace menu.
 
-1. Open the top-right menu
+1. **Click on the arrow** next to the Add profile button in the left menu
 2. Click **Import profiles**
 3. Upload a CSV file or paste CSV data
 4. Click **Import**
 
 <Frame>
-  ![0319(19)](/images/0319\(19\).gif)
+  ![Profile Import](/images/profile_import-2.gif)
 </Frame>
 
-## When to use CSV import/export
-
-Use this method if you need to:
-
-- create many profiles quickly
-- manage proxies across multiple profiles
-- standardize team setups
-- automate profile creation
-
-## Important limitations
-
-Profiles created via CSV:
-
-- do not contain previous sessions
-- are not logged in
-- behave like new environments
-
-### CSV is not a backup
-
-Exporting profiles does NOT include:
-
-- cookies
-- account logins
-- browsing history
-
-### CSV requires correct format
-
-Incorrect CSV structure may:
-
-- break import
-- create invalid profiles
-
-Use the template format when possible.
-
-## Common mistake
-
-CSV import/export is often confused with full profile transfer.
-
-It does NOT transfer:
-
-- logged-in accounts
-- cookies
-- full browser identity
-
-## Key takeaway
-
-CSV import/export is used for **profile setup and scaling**, not for transferring profile identity.
+<Warning>
+  If imported profiles are present in your All profiles list, they will just get updated. \
+  Duplicates will not be created.
+</Warning>
