@@ -170,7 +170,8 @@
                 "pages": [
                   "proxy/gologin-proxies/what-are-gologin-proxies",
                   "proxy/gologin-proxies/how-gologin-proxies-work-and-what-they-offer",
-                  "proxy/proxy-management/gologin-vs-3rd-party-proxies"
+                  "proxy/proxy-management/gologin-vs-3rd-party-proxies",
+                  "proxy/gologin-proxies/how-much-proxy-traffic-do-i-need"
                 ]
               },
               {
