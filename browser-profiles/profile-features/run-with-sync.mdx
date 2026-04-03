@@ -1,0 +1,89 @@
+---
+title: "Run with Sync"
+---
+
+Run with Sync launches multiple browser profiles simultaneously and mirrors your actions across all of them in real time. Whatever you do in the main window — clicking, typing, navigating to a URL — happens automatically in every other profile at the same time.
+
+This is useful for repetitive account work: warming up accounts, performing the same action across many profiles, or filling out identical forms. Instead of switching between windows and repeating the same steps, you do them once.
+
+<Warning>
+  Websites detect identical simultaneous behavior across accounts. Use Run with Sync only for tasks where identical actions are acceptable — warmup, initial setup, navigation to a URL — not for posting, messaging, or any activity where identical content would be suspicious.
+</Warning>
+
+## How to use it
+
+### Step 1 — Select profiles
+
+In the profile list, check the boxes next to the profiles you want to launch together.
+
+### Step 2 — Click Run with Sync
+
+The bulk action panel appears at the top of the screen. Click Run with Sync.
+
+All selected profiles open in separate browser windows.
+
+### Step 3 — Work in the leader window
+
+The first profile in your selected list becomes the leader. All your actions in its window — clicks, typing, navigation — are replicated to every other open profile in real time. The other profiles are followers: they mirror the leader but cannot control it.
+
+<Frame>
+  ![0331(1)](/images/0331\(1\).gif)
+</Frame>
+
+## Practical use cases
+
+**Account warmup:** Open 10–20 new accounts and browse the same pages together. Each profile browses independently (different fingerprint, different IP) while you only need to navigate once.
+
+**Identical setup across accounts:** Navigate to settings pages, toggle the same options, fill the same profile information fields. Useful when setting up many fresh accounts with identical starting configuration.
+
+**Navigating to a working:** URL When you need all profiles to open a specific page before you start working them individually, navigate once and all profiles land there simultaneously.
+
+**Testing fingerprint behavior across profiles:** Open checker sites ([iphey.com](http://iphey.com), [pixelscan.net](http://pixelscan.net)) across multiple profiles at once to compare results side by side.
+
+## What to avoid
+
+**Posting identical content:** If all profiles post the same text, image, or link at the same time, platforms will immediately link the accounts. Use Run with Sync only for actions where identical behavior is normal — browsing, clicking, navigation — not for content creation.
+
+**Messaging and outreach:** Sending identical messages to the same people from different accounts simultaneously is one of the fastest ways to trigger an automatic ban across all of them.
+
+**Login flows when accounts are new:** Each profile may have different 2FA prompts, CAPTCHAs, or verification steps during login. The synchronizer will replicate your input but can't handle divergent states — one profile may be on a CAPTCHA while another is already logged in. Handle logins individually before activating the synchronizer.
+
+## Stopping profiles
+
+To close all profiles launched with Run with Sync:
+
+1. Select all running profiles using the checkboxes
+2. Click **Stop profiles** in the bulk action panel
+
+<Frame>
+  ![0331(1)(1)](/images/0331\(1\)\(1\).gif)
+</Frame>
+
+Or close each browser window individually. Gologin will sync each profile's data as it closes.
+
+<Warning>
+  Wait for each profile to show **Ready** status in the Gologin app before closing the app itself. Closing Gologin while profiles are still syncing will cause data loss for those sessions.
+</Warning>
+
+## Differences from regular Run (bulk)
+
+|  | Run (bulk) | Run with Sync |
+| :-- | :-- | :-- |
+| ✅ | ✅ | ✅ |
+| Profiles act independently | ✅ | ❌ |
+| Actions mirror across windows | ✅ | ✅ |
+| Best for | Opening profiles to work separately | Repeating the same actions across all profiles |
+
+Use regular \*\*Run \*\*when you want to open many profiles and then work each one individually. Use **Run with Sync** when you want to perform the exact same actions in all of them at once.
+
+## See also
+
+[Bulk actions](https://gologin.com/docs/browser-profiles/profile-management/bulk-actions) — full list of bulk operations available in Gologin
+
+[Creating profiles](https://gologin.com/docs/browser-profiles/profile-management/creating-and-launching-profiles) — how to create and launch profiles individually
+
+[Common mistakes to avoid](https://gologin.com/docs/common-mistakes-to-avoid) — behavioral patterns that trigger platform bans
+
+[Maintaining trust score](https://gologin.com/docs/maintaining-trust-score) — how platforms evaluate account activity
+
+[Cookie Bot ](https://gologin.com/docs/browser-profiles/profile-features/cookie-bot)— automated cookie warming for new profiles

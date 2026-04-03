@@ -121,7 +121,8 @@
               "browser-profiles/profile-features/cookie-bot",
               "run-with-sync",
               "human-typing-simulation",
-              "browser-profiles/profile-features/browser-cookies/run-in-cloud"
+              "browser-profiles/profile-features/browser-cookies/run-in-cloud",
+              "browser-profiles/profile-features/run-with-sync"
             ]
           },
           {
