@@ -242,6 +242,134 @@ These commands use Cloud Browser. They maintain a stateful session through a loc
 
 ---
 
+## Use cases and examples
+
+### Scrape a competitor's pricing page
+
+```bash
+gologin-web-access scrape-json https://competitor.com/pricing
+```
+
+Returns title, description, headings, and links as structured JSON. If the page is behind a cookie wall or challenge, the outcome field tells you — and `nextActionHint` suggests switching to browser mode.
+
+### Build a research corpus from a docs site
+
+```bash
+# discover all pages
+gologin-web-access map https://docs.example.com --limit 200 --max-depth 3
+
+# crawl and extract main content as markdown
+gologin-web-access crawl https://docs.example.com \
+  --format markdown --limit 100 --max-depth 3 --only-main-content \
+  --output ./corpus.json
+```
+
+Feed the output into an LLM for summarization, Q&A, or fine-tuning.
+
+### Monitor pages for changes
+
+```bash
+# check if a page changed
+gologin-web-access change-track https://competitor.com/pricing --format markdown
+
+# track many pages at once
+gologin-web-access batch-change-track \
+  https://competitor.com/pricing \
+  https://competitor.com/features \
+  https://competitor.com/changelog \
+  --output ./changes.json
+```
+
+Run daily via cron. Compare diffs to detect pricing changes, new features, or removed content.
+
+### Extract structured data with a schema
+
+Define what you want to extract:
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "product_name": { "type": "string" },
+    "price": { "type": "string" },
+    "features": { "type": "array", "items": { "type": "string" } }
+  }
+}
+```
+
+Then extract:
+
+```bash
+gologin-web-access extract https://example.com/product/123 --schema ./product-schema.json
+```
+
+Works across many pages with `batch-extract`.
+
+### Search the web and scrape results
+
+```bash
+# search
+gologin-web-access search "best project management tools 2026" --limit 10
+
+# scrape the top results
+gologin-web-access batch-scrape url1 url2 url3 --format text --only-main-content --summary
+```
+
+### Log into a site and interact
+
+When scraping isn't enough — you need to click, type, navigate:
+
+```bash
+export GOLOGIN_TOKEN="gl_..."
+
+gologin-web-access open https://dashboard.example.com/login
+gologin-web-access snapshot
+gologin-web-access fill e3 "user@example.com"
+gologin-web-access fill e5 "password123"
+gologin-web-access click e7
+gologin-web-access wait 2000
+gologin-web-access snapshot          # verify you're logged in
+gologin-web-access screenshot ./dashboard.png
+gologin-web-access close
+```
+
+### Parse local documents
+
+Not just web pages — parse PDFs, Word docs, Excel files:
+
+```bash
+gologin-web-access parse-document ./report.pdf
+gologin-web-access parse-document ./data.xlsx
+gologin-web-access parse-document ./contract.docx
+```
+
+### Automate multi-step workflows with runbooks
+
+Define a sequence of steps in JSON and replay them:
+
+```json
+{
+  "variables": { "url": "https://example.com", "query": "gologin" },
+  "steps": [
+    { "command": "open", "args": ["${url}"] },
+    { "command": "wait", "args": [1000] },
+    { "command": "snapshot" },
+    { "command": "find", "args": ["search input"] },
+    { "command": "type", "args": ["@found", "${query}"] },
+    { "command": "press", "args": ["Enter"] },
+    { "command": "wait", "args": [2000] },
+    { "command": "screenshot", "args": ["./result.png"] },
+    { "command": "close" }
+  ]
+}
+```
+
+```bash
+gologin-web-access run ./search-runbook.json
+```
+
+---
+
 ## Source routing
 
 Commands that support `--source` can route through different backends:

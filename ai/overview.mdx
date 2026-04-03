@@ -77,6 +77,114 @@ All three share the same Gologin infrastructure: residential proxies, anti-detec
 
 ---
 
+## What people build with this
+
+### Research and competitive intelligence
+
+An AI agent that monitors competitor pricing, product launches, and content changes across dozens of websites — daily, automatically. The agent scrapes competitor pages through Web Unlocker, extracts structured data, compares with yesterday's snapshot, and produces a daily digest. No browser sessions needed, just stateless extraction at scale.
+
+```bash
+# scrape 20 competitor pricing pages and get structured output
+gologin-web-access batch-scrape \
+  https://competitor1.com/pricing \
+  https://competitor2.com/pricing \
+  https://competitor3.com/pricing \
+  --format json --summary --output ./today-prices.json
+
+# detect what changed since last check
+gologin-web-access batch-change-track \
+  https://competitor1.com/pricing \
+  https://competitor2.com/features \
+  --format markdown --output ./changes.json
+```
+
+### Lead generation and enrichment
+
+Scrape business directories, LinkedIn company pages, review sites — then feed the HTML into Claude to extract names, emails, phone numbers, company size, tech stack. Works as a tool inside an AI agent loop: the agent decides which pages to scrape, calls the tool, gets structured data back.
+
+```bash
+# search for leads
+gologin-web-access search "saas companies series A 2026" --limit 20
+
+# scrape and extract structured data from each result
+gologin-web-access extract https://example.com/company/123 --schema ./lead-schema.json
+```
+
+### Multi-account management
+
+Run 50+ social media accounts, ad accounts, or marketplace seller accounts — each with its own browser profile, fingerprint, proxy, and cookies. Local Agent Browser manages the profiles, warms them up with runbooks, and keeps sessions alive across agent calls.
+
+```bash
+# create profiles for each account
+gologin-local-agent-browser profile-create "FB Ads Account 1" --template ads
+gologin-local-agent-browser profile-create "FB Ads Account 2" --template ads
+
+# warm up profiles in batch
+gologin-local-agent-browser batch ./warmup-runbook.json \
+  --targets ./all-profiles.json --concurrency 5
+```
+
+### Automated form filling and data entry
+
+An AI agent that logs into internal dashboards, fills forms, submits reports, downloads exports — all through a real cloud browser session. The agent reads the page as a snapshot, finds the right fields by ref, types values, clicks submit, and verifies the result.
+
+```bash
+gologin-agent-browser open https://internal-dashboard.com/login --profile my_profile
+gologin-agent-browser snapshot
+gologin-agent-browser fill @e3 "username"
+gologin-agent-browser fill @e5 "password"
+gologin-agent-browser click @e7    # submit button
+gologin-agent-browser wait 2000
+gologin-agent-browser snapshot     # verify login success
+gologin-agent-browser screenshot ./logged-in.png
+```
+
+### Content monitoring and alerting
+
+Track changes on government regulation pages, competitor blogs, job boards, or any page that matters to your business. Run daily via cron or a scheduled agent, diff against previous version, alert on meaningful changes.
+
+```bash
+# track changes on key pages
+gologin-web-access change-track https://regulations.gov/new-rules --format markdown
+gologin-web-access batch-change-track \
+  https://competitor.com/blog \
+  https://competitor.com/changelog \
+  --output ./changes.json
+```
+
+### AI-powered web scraping pipelines
+
+Build an end-to-end pipeline: crawl a docs site, convert to markdown, feed into an LLM for summarization or Q&A. Use the CLI for extraction, and your own code for the LLM part.
+
+```bash
+# crawl an entire docs site
+gologin-web-access crawl https://docs.example.com \
+  --format markdown --limit 100 --max-depth 3 --only-main-content \
+  --output ./docs-corpus.json
+
+# or map the site first, then selectively scrape
+gologin-web-access map https://docs.example.com --limit 200
+gologin-web-access batch-scrape url1 url2 url3 --format text --output ./selected.json
+```
+
+### Geo-testing and localization QA
+
+Check how your website looks from different countries. Open the same URL through profiles configured with proxies in different geos, take screenshots, compare.
+
+```bash
+# create geo-specific profiles
+gologin-local-agent-browser profile-create "US Test" --template geo --proxy-country us
+gologin-local-agent-browser profile-create "DE Test" --template geo --proxy-country de
+gologin-local-agent-browser profile-create "JP Test" --template geo --proxy-country jp
+
+# screenshot from each location
+gologin-agent-browser open https://yoursite.com --profile us_profile_id
+gologin-agent-browser screenshot ./us-view.png
+gologin-agent-browser close
+```
+
+---
+
 ## Quick start examples
 
 ### Scrape a page (CLI)

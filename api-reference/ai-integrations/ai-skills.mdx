@@ -128,6 +128,71 @@ See [Local Agent Browser CLI reference](/cli-tools/local-agent-browser) for full
 
 ---
 
+## What you can ask your agent to do
+
+Once a skill is installed, you talk to Claude Code in natural language. Here's what each skill enables:
+
+### With Web Access Skill
+
+- "Read the pricing page at competitor.com and summarize the plans"
+- "Scrape these 15 URLs and extract the product name and price from each"
+- "Crawl the docs at docs.example.com and give me a summary of each section"
+- "Search for 'best CRM tools 2026' and scrape the top 5 results"
+- "Check if competitor.com/pricing changed since yesterday"
+- "Extract all blog article titles and URLs from this site"
+- "Open example.com in a browser, log in with these credentials, and screenshot the dashboard"
+
+### With Agent Browser Skill
+
+- "Open the admin dashboard, go to Settings, and screenshot the current config"
+- "Log into the staging environment and check if the new feature is deployed"
+- "Fill out the signup form on example.com with these test details"
+- "Navigate to the reports page, download the monthly export, and screenshot the summary"
+- "Check what iphey.com shows for this browser profile"
+
+### With Scraping Skill
+
+- "Scrape this URL and give me the text content"
+- "Get the title, description, and headings from these 10 pages"
+- "Fetch this page as markdown so I can analyze it"
+
+### With Local Agent Browser Skill
+
+- "Create a new LinkedIn profile with a US proxy and warm it up"
+- "Open my Reddit account, scroll through the feed, and close it"
+- "Run the warmup runbook across all 20 profiles with concurrency 5"
+- "Check the proxy health on my Facebook ad profiles"
+- "Log into this marketplace account and screenshot the seller dashboard"
+
+---
+
+## Example workflows
+
+### Competitive research (Web Access Skill)
+
+1. Agent searches for competitors: `search_web("saas project management tools")`
+2. Agent maps a competitor site: `map_site("https://competitor.com")`
+3. Agent batch-scrapes key pages: `batch_scrape(pricing, features, about)`
+4. Agent feeds content to Claude for analysis and comparison
+
+### Account warmup (Local Agent Browser Skill)
+
+1. Agent creates profiles: `profile-create "Account 1" --template linkedin`
+2. Agent runs warmup runbook: `batch ./warmup.json --targets ./profiles.json`
+3. Agent checks job results: `jobs --kind batch --status completed`
+4. Agent reports which profiles are ready
+
+### Dashboard monitoring (Agent Browser Skill)
+
+1. Agent opens dashboard: `open https://dashboard.example.com --profile saved_login`
+2. Agent reads the page: `snapshot`
+3. Agent navigates to metrics: `click @e5` (Reports link)
+4. Agent screenshots the report: `screenshot ./daily-metrics.png`
+5. Agent closes: `close`
+6. Agent summarizes the metrics from the snapshot data
+
+---
+
 ## Mandatory preflight
 
 Before running any task, skills classify the work:

@@ -111,6 +111,39 @@ Once connected, talk to your AI assistant naturally:
 
 ---
 
+## Real-world scenarios
+
+### Set up profiles for a new client
+
+You're onboarding a new client who needs 10 browser profiles for different regional ad accounts:
+
+> "Create 10 browser profiles named 'Client X - US', 'Client X - UK', 'Client X - DE' and so on. Set each one with a residential proxy from its respective country. Put them all in a folder called 'Client X'."
+
+Claude creates the profiles, configures proxies, and organizes them — all through natural language.
+
+### Audit your existing setup
+
+> "Show me all profiles that don't have a proxy configured. Also, which profiles haven't been used in the last 30 days?"
+
+Quick way to find misconfigured or abandoned profiles without clicking through the dashboard.
+
+### Prepare profiles before automation
+
+MCP Server handles the setup; CLI tools handle the execution:
+
+1. **MCP:** "Create 5 profiles with US proxies for scraping, put them in a 'Scraping' folder"
+2. **CLI:** `gologin-agent-browser open https://target.com --profile profile_1` to run automation
+3. **MCP:** "Delete all profiles in the 'Scraping' folder" when done
+
+### Team management
+
+> "How many active sessions are running right now? What's my plan's session limit?"
+> "Check my subscription — how many profiles do I have left?"
+
+Useful for team leads who need to monitor usage without opening the dashboard.
+
+---
+
 ## MCP Server vs CLI tools vs AI Skills
 
 | Tool | Best for | How it works |
