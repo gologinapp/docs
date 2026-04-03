@@ -1,0 +1,62 @@
+---
+title: "VPN vs Proxy"
+---
+
+People often confuse VPNs and proxies because both change your visible IP address. But they work differently, and for multi-account work the difference matters a lot.
+
+|  | VPN | Proxy |
+| :-- | :-- | :-- |
+| Changes your IP | ✅ | ✅ |
+| Changes browser fingerprint | ❌ | ❌ |
+| One IP for the whole device | ✅ | ❌ |
+| One IP per browser profile | ❌ | ✅ |
+| Works inside Gologin | ❌ | ✅ |
+| Detected by Facebook / LinkedIn | Often | Rarely (residential) |
+
+## How a VPN works
+
+A VPN encrypts all traffic from your device and routes it through a single server. Every app on your computer — browser, Slack, Spotify, everything — shares the same IP address.
+
+This is useful for privacy and bypassing geo-blocks. But it creates two problems for multi-account work:
+
+**Problem 1 — One IP for everything.** If you have 10 browser profiles, they all appear to come from the same IP address. Platforms like Facebook and LinkedIn see multiple accounts from one location and link them together.
+
+**Problem 2 — VPN doesn't change your browser fingerprint.** Platforms track much more than IP. They read your screen resolution, fonts, graphics card, timezone, and dozens of other signals. A VPN changes none of these. Gologin profiles change all of them.
+
+## How a proxy works
+
+A proxy is assigned to one specific browser profile. Traffic from that profile goes through the proxy — nothing else on your computer is affected.
+
+This means:
+
+- Profile A → Proxy in New York → looks like a real device in New York
+- Profile B → Proxy in London → looks like a completely different device in London
+- Your real computer → no proxy → your normal IP
+
+Each profile gets its own network identity. Combined with Gologin's unique fingerprint for each profile, platforms see genuinely separate devices.
+
+## Why VPNs don't work for multi-account management
+
+A VPN is also easier for platforms to detect than a residential proxy. VPN server IPs are well-known and appear on blocklists. Many platforms (Facebook, LinkedIn, PayPal, most betting sites) explicitly block or flag VPN IPs.
+
+## When a VPN is still useful
+
+A VPN is fine when you need to:
+
+- Access a website that's geo-blocked in your country
+- Protect your real IP on public Wi-Fi
+- Use a single account from a different country
+
+It's not a replacement for proxies in Gologin.
+
+## Setting up a proxy in Gologin
+
+See [Adding a proxy to a profile](https://gologin.com/docs/proxy/proxy-management/adding-proxies) for step-by-step instructions.
+
+Not sure which type of proxy to get? See [Best proxy for your case.](https://gologin.com/best-proxy-server-services/)
+
+## See also
+
+[What is a proxy](https://gologin.com/docs/proxy/introduction/what-is-a-proxy) — deeper explanation of how proxies work
+
+[Gologin built-in proxies — limitations](https://gologin.com/docs/proxy/gologin-proxies/what-are-gologin-proxies#important-gologin-proxies-are-rotating) — when not to use built-in proxies

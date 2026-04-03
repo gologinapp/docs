@@ -119,10 +119,9 @@
             "icon": "aperture",
             "pages": [
               "browser-profiles/profile-features/cookie-bot",
-              "run-with-sync",
+              "browser-profiles/profile-features/run-with-sync",
               "human-typing-simulation",
-              "browser-profiles/profile-features/browser-cookies/run-in-cloud",
-              "browser-profiles/profile-features/run-with-sync"
+              "browser-profiles/profile-features/browser-cookies/run-in-cloud"
             ]
           },
           {
@@ -138,7 +137,8 @@
                   "proxy-protocols",
                   "static-vs-dynamic-proxies",
                   "proxy/introduction/best-proxy-for-your-case",
-                  "proxy/introduction/untitled-page"
+                  "proxy/introduction/untitled-page",
+                  "proxy/introduction/vpn-vs-proxy"
                 ]
               },
               {
