@@ -2,150 +2,89 @@
 title: "Google Ads & Gmail"
 ---
 
-A practical guide to creating and managing Google accounts and Google Ads profiles with long-term stability.
-
-Google evaluates accounts based on:
-
-- device signals
-- login history
-- IP reputation
-- behavioral patterns
-
-Because Google services are interconnected (Gmail, Search, YouTube, Ads), activity across these products contributes to overall account trust.
-
-Maintaining a consistent environment and gradual activity development is essential.
+Google ties its services together — Gmail, Search, YouTube, Maps, and Ads all share account trust signals. An account that only uses Google Ads without any normal Gmail or Search activity looks automated. That's the core challenge.
 
 ## Quick checklist
 
-Before you start:
-
 - 1 account = 1 browser profile
-- 1 profile = 1 proxy
-- Use residential proxies
-- Keep proxy location stable
-- Do not change fingerprint after setup
+- 1 profile = 1 static residential proxy
+- Keep proxy location consistent across sessions
+- Match profile OS to your device OS
+- Use multiple Google services — not just Ads
+- Do not change proxy or fingerprint after first login
 
-## Step 1. Set up environment in Gologin
+## Step 1. Set up your Gologin profile
 
-Prepare a clean and stable environment before account creation.
+- **Proxy: **static residential — Google correlates login history with IP
+- **Fingerprint: **leave defaults — Google checks browser version consistency across services
 
-Recommended setup:
+## Step 2. Warm up the browser before registration
 
-- Create a new browser profile
-- Assign a dedicated proxy
-- Keep fingerprint settings unchanged
-- Ensure stable internet connection
+Before opening Google, browse other sites for 10–15 minutes. Then open [google.com](http://google.com) and search for a few things before creating an account. This ensures the profile doesn't look like it was created exclusively to run ads.
 
-**Google tracks device-level signals such as:**
+## Step 3. Create the Gmail account
 
-- browser version
-- OS
-- screen resolution
-- session history
+- Space registrations at least 30–60 minutes apart
+- Use a unique phone number per account for verification
+- Complete the account setup fully — recovery email, profile photo, account name
+- Avoid creating more than 2 accounts per day per proxy location
 
-**Avoid**:
+## Step 4. Build Google account history
 
-- frequent proxy changes
-- modifying fingerprint after use
+This step is what most people skip — and it's why Google Ads accounts get suspended.
 
-## Step 2. Prepare browser session
+Spend 1–2 weeks using the account as a normal Google user:
 
-Before registration:
+- Send and receive emails from the Gmail account (at least 5–10 per week)
+- Use Google Search regularly from within the profile
+- Watch YouTube for 15–20 minutes a few times
+- Open Google Maps, check a location
 
-- browse normal websites for 10–15 minutes
-- open multiple tabs
-- interact naturally
-
-This helps build cookies and browsing history, making the environment appear more realistic.
-
-## Step 3. Create account
-
-When creating Google accounts:
-
-- avoid creating multiple accounts simultaneously
-- space registrations 30–60 minutes apart
-- keep proxy location consistent
-
-**Be prepared for:**
-
-- phone verification
-- additional checks
-
-Unusual registration patterns may trigger verification.
-
-## Step 4. Set up Gmail account
-
-After account creation:
-
-- send and receive several emails
-- organize messages into folders or labels
-- browse Google services (YouTube, Search, etc.)
-
-Using multiple services helps build normal usage patterns.
-
-**Avoid:**
-
-- using the account only for ads
-- skipping basic activity setup
+Google evaluates cross-service activity. An account that jumps straight to Ads with no Gmail or Search history is flagged as suspicious.
 
 ## Step 5. Warm up the account
 
-Gradual activity is critical.
-
-### Suggested timeline
-
-| Period | Focus | Behavior |
+| **Period** | **Focus** | **What to do** |
 | :-- | :-- | :-- |
-| Day 0 | Registration | Account setup \+ browsing |
-| Days 1–7 | Exploration | Gmail usage, Google services |
-| Days 8–14 | Engagement | Emails, interactions |
-| Week 2\+ | Normal use | Ads setup, campaigns |
-
-Avoid immediate use for advertising.
+| Day 0 | Setup | Account creation \+ profile completion |
+| Days 1–7 | Gmail warmup | Send/receive emails, use Google Search, YouTube |
+| Days 8–14 | Cross-service use | Maps, Docs, Calendar — normal Google activity |
+| Week 3 | Ads preparation | Add billing, verify business info |
+| Week 4\+ | Campaigns | Start with small budgets (\$5–10/day) |
 
 ## Google Ads setup
 
-When preparing a Google Ads account:
+Only set up Google Ads after 2–3 weeks of normal account activity.
 
-1. Let the account age slightly
-2. Set up billing and payment methods
-3. Create campaigns gradually
-4. Increase budget step by step
+- Go to [ads.google.com](http://ads.google.com) — sign in with your warmed-up Google account
+- Set up billing — use a unique card per account
+- Verify your business information
+- Create one campaign with a small daily budget (\$5–10)
+- Increase budgets gradually, no more than 20–30% per week
 
-**Avoid:**
+<Warning>
+  Do not use the same credit card or billing address across multiple Google Ads accounts. Google links accounts through shared payment methods and will suspend all of them simultaneously. Use virtual cards (Revolut, Wise, Privacy.com) for each account.
+</Warning>
 
-- launching large campaigns immediately
-- aggressive budget scaling
+## Common ban triggers
 
-## Safe activity levels
+### Immediate suspensions
 
-| Action | Recommended level |
-| :-- | :-- |
-| Emails sent | A few per day |
-| Google services | Regular browsing |
-| Ads campaigns | Gradual launch |
-| Budget increases | Step-by-step |
+- Same card used across multiple ad accounts
+- No Gmail or Search activity before launching ads
+- Datacenter or VPN IP during account creation
+- Account created and ads launched same day
 
-These are general behavioral patterns, not strict limits.
+### Gradual restrictions
 
-## Common risk triggers
+- Budget spikes from \$10/day to \$500/day in one step
+- Ad copy that triggers automated policy review
+- Billing payment failures
 
-The most common causes of restrictions:
+## See also
 
-- frequent IP changes
-- logging in from different countries
-- rapid account creation
-- immediate large ad campaigns
-- repetitive or automated behavior
-
-## Key takeaway
-
-Google evaluates long-term behavioral patterns, not individual actions.
-
-To maintain stability:
-
-- keep your environment consistent
-- use multiple Google services naturally
-- grow activity gradually
-
-Accounts that develop realistic usage patterns are more likely to maintain long-term trust.
+- [Static vs Rotating proxies](https://gologin.com/docs/static-vs-dynamic-proxies)
+- [Best proxy for your case](https://gologin.com/docs/proxy/introduction/best-proxy-for-your-case)
+- [Facebook / Meta Ads](https://gologin.com/docs/facebook-meta-ads) — similar warmup logic
+- [Maintaining trust score](https://gologin.com/docs/maintaining-trust-score)
+- [Common mistakes to avoid](https://gologin.com/docs/common-mistakes-to-avoid)
