@@ -2,135 +2,78 @@
 title: "Crypto & KYC Platforms"
 ---
 
-A practical guide to managing accounts on cryptocurrency platforms with long-term stability.
-
-Crypto platforms and exchanges evaluate accounts based on:
-
-- device fingerprints
-- IP address history
-- login patterns
-- transaction behavior
-
-Due to compliance requirements, these platforms apply stricter verification systems than most others.
-
-Maintaining a stable environment and consistent behavior is critical for uninterrupted access.
+Crypto platforms split into two categories: exchanges and wallets (Binance, Coinbase, Kraken) where KYC ties the account to a real person, and airdrop/farming platforms (Galxe, Zealy, Layer3, Premint) where the goal is managing multiple accounts across campaigns.
 
 ## Quick checklist
 
-Before you start:
-
 - 1 account = 1 browser profile
-- 1 profile = 1 proxy
-- Use residential proxies
-- Keep proxy location stable
-- Do not change fingerprint after setup
+- 1 profile = 1 static residential proxy
+- Keep proxy location consistent — especially after KYC
+- Do not change fingerprint or proxy after identity verification
+- For farming: treat accounts as disposable — don't mix farming and real exchange accounts
 
-## Step 1. Set up environment in Gologin
+## Exchanges & KYC platforms
 
-Prepare a stable and isolated environment.
+After KYC, consistency is everything. A login from a new IP or a changed fingerprint triggers a security review, additional verification, or account freeze.
 
-Recommended setup:
+### Gologin profile setup
 
-- Create a new browser profile
-- Assign a dedicated proxy
-- Keep fingerprint settings unchanged
-- Ensure stable internet connection
+- **Proxy: **static residential — same IP for every session
+- **Proxy location: **match the country on your identity documents if possible
 
-Each profile should represent a separate device.
+<Warning>
+  Never change the proxy on a Gologin profile after completing KYC on a crypto exchange. The exchange stores your device environment at verification time. A different IP or fingerprint on the next login is treated as account takeover.
+</Warning>
 
-Avoid:
+## Warmup timeline
 
-- frequent location changes
-- modifying fingerprint after use
-
-## Step 2. Create account
-
-When registering:
-
-- use a consistent proxy location
-- complete all verification steps normally
-- avoid creating multiple accounts in parallel
-
-Typical verification includes:
-
-- email confirmation
-- phone verification
-- identity verification (KYC)
-
-## Step 3. Complete KYC verification
-
-KYC links the account to a specific identity.
-
-After completing verification:
-
-- keep login environment consistent
-- avoid switching devices or locations
-- do not change proxy region
-
-Large changes after KYC may trigger additional security reviews.
-
-## Step 4. Warm up the account
-
-Gradual activity helps establish trust.
-
-### Suggested timeline
-
-| Period | Focus | Behavior |
+| **Period** | **Focus** | **What to do** |
 | :-- | :-- | :-- |
-| Day 0 | Registration | Account setup \+ verification |
-| Days 1–3 | Exploration | Dashboard browsing |
-| Days 4–7 | Initial activity | Small actions or transactions |
-| Week 2\+ | Normal use | Regular activity |
+| Day 0 | Registration | Account creation \+ email verification |
+| Days 1–3 | KYC | Submit identity documents, complete verification |
+| Days 4–7 | Exploration | Browse the platform, explore trading interface |
+| Week 2 | Small transactions | Deposit a small amount, make 1–2 trades |
+| Week 3\+ | Normal use | Regular trading activity |
 
-Avoid sudden activity spikes.
+### Common ban triggers — exchanges
 
-## Safe behavior patterns
+- IP change after KYC (even same country, different city)
+- Device fingerprint mismatch between sessions
+- Large deposits immediately after account creation
+- Multiple accounts with same payment method or bank account
 
-Typical safe actions:
+## Airdrop & Points Farming
 
-- browsing the platform
-- exploring trading interfaces
-- reviewing account settings
-- performing gradual actions
+Airdrop farming involves managing multiple wallets across campaigns to maximize token allocations. Most platforms actively detect and disqualify Sybil behavior.
 
-Avoid:
+### Setup for farming
 
-- multiple sensitive actions at once
-- large transactions immediately
-- rapid changes in behavior
+- Create a separate Gologin profile for each farming account
+- Assign a unique static residential proxy to each profile
+- Use a fresh browser profile for each wallet — never mix wallets across profiles
+- Space out task completion — don't complete the same tasks within seconds of each other
 
-## KYC considerations
+### Wallet isolation
 
-After identity verification:
+<Warning>
+  Never send funds from one farming wallet directly to another farming wallet. Platforms track on-chain relationships. If two wallets receive funds from the same source wallet, they are immediately linked. Use a CEX withdrawal to separate funds.
+</Warning>
 
-- keep IP location consistent
-- maintain the same browser profile
-- avoid frequent device changes
+- Top up each farming wallet from a CEX withdrawal (CEX → wallet)
+- Use a different withdrawal address for each wallet
+- Do not transfer between farming wallets directly
 
-Crypto platforms are especially sensitive to:
+### Common Sybil detection signals
 
-- country changes
-- device inconsistencies
-- unusual login patterns
+- Multiple accounts completing identical tasks within a short time window
+- Wallets funded from the same source address
+- Same Discord or Twitter account linked to multiple farming accounts
+- IP or fingerprint overlap between accounts
+- Account creation dates all clustered on the same day
 
-## Common risk triggers
+## See also
 
-The most common causes of restrictions:
-
-- frequent IP changes
-- logging in from different countries
-- inconsistent device fingerprints
-- suspicious transaction patterns
-- sudden activity spikes
-
-## Key takeaway
-
-Crypto platforms evaluate both security signals and behavior over time.
-
-To maintain stable access:
-
-- keep your environment consistent
-- avoid changes after KYC
-- grow activity gradually
-
-Accounts with predictable behavior and stable environments are less likely to face additional verification or restrictions.
+- [Static vs Rotating proxies](https://gologin.com/docs/static-vs-dynamic-proxies)
+- [Best proxy for your case](https://gologin.com/docs/proxy/introduction/best-proxy-for-your-case)
+- [Maintaining trust score](https://gologin.com/docs/maintaining-trust-score)
+- [API Quickstart](https://gologin.com/docs/api-reference/introduction/quickstart) — for managing large numbers of farming profiles programmatically

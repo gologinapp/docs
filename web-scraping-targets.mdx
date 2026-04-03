@@ -2,123 +2,83 @@
 title: "Web scraping targets"
 ---
 
-A practical guide to running web scraping workflows with stable sessions and reduced detection risk.
-
-Many websites use protection systems that analyze:
-
-- IP reputation
-- request patterns
-- browser fingerprints
-- session behavior
-
-When scraping through a browser, maintaining realistic behavior and stable environments is critical.
-
-Gologin allows you to run scraping workflows through isolated browser profiles that resemble real users.
+Gologin works as a scraping browser — instead of a headless browser with a generic fingerprint, your scraper runs through isolated profiles that look like real users. This dramatically reduces detection rates on sites that fingerprint browsers, not just block IPs.
 
 ## Quick checklist
 
-Before you start:
-
 - 1 scraping session = 1 browser profile
-- 1 profile = 1 proxy
-- Choose proxy type based on target (DC or residential)
-- Keep fingerprint stable
-- Reuse sessions when possible
+- Choose proxy type based on target site protection level
+- Reuse profiles across sessions to preserve cookies and session state
+- Control request speed — scrapers get blocked by behavior, not just IP
+- For scale (50\+ concurrent): use the GoLogin API, not the desktop app
 
-## Step 1. Set up environment in Gologin
+## Choosing your setup
 
-Prepare a stable and isolated environment.
+### Manual scraping (Gologin desktop app)
 
-Recommended setup:
+Best for: small-scale data collection, sites that require login, manual-assisted workflows. Open profiles from the Gologin app and scrape inside the browser window.
 
-- Create a new browser profile
-- Assign a dedicated proxy
-- Keep fingerprint settings unchanged
-- Ensure stable connection
+### API-based scraping (Puppeteer / Playwright / Selenium)
 
-Each profile should represent a separate browsing session.
+Best for: automated workflows, 10\+ concurrent sessions, scheduled scraping. Gologin launches the profile and returns a WebSocket endpoint that your automation script connects to.
 
-Avoid:
+See API [Quickstart ](https://gologin.com/docs/api-reference/introduction/quickstart)for full setup.
 
-- frequent proxy changes within the same session
-- modifying fingerprint after start
+## Step 1. Choose proxy strategy
 
-## Step 2. Choose proxy strategy
+| **Target** | **Recommended proxy** | **Notes** |
+| :-- | :-- | :-- |
+| Low-protection sites | Datacenter rotating | Fast and cheap |
+| Medium-protection sites | Residential rotating | Better trust score |
+| High-protection (Cloudflare, PerimeterX) | Residential rotating | Required |
+| Sites requiring login / account state | Residential static | Keeps session consistent |
+| Price comparison, marketplaces | Residential rotating | Different IP per request |
 
-Different targets require different proxy setups:
+## Step 2. Manage sessions and cookies
 
-- **Datacenter proxies** - faster, suitable for low-protection targets
-- **Residential proxies** - higher success rate on protected websites
+Gologin profiles persist cookies automatically between sessions — you log in once, the profile stays authenticated. Avoid clearing cookies after every run — it breaks session continuity and looks like bot behavior.
 
-Choose based on:
+## Step 3. Control request patterns
 
-- target website protection level
-- request volume
-- tolerance for blocks
+Detection is mostly about behavior, not just IP. Practical timing guidelines:
 
-## Step 3. Maintain session consistency
+| **Scraping intensity** | **Delay between requests** |
+| :-- | :-- |
+| Light (avoid detection) | 3–8 seconds, randomized |
+| Medium | 1–3 seconds, randomized |
+| Aggressive (high block risk) | 0.5–1 second |
 
-Many websites track sessions, not just IP.
+Always randomize delays — a fixed interval is a detection signal.
 
-To keep sessions stable:
+## Step 4. Scale with multiple profiles
 
-- reuse the same profile for repeated tasks
-- preserve cookies and session data
-- avoid restarting sessions frequently
+For parallel scraping, launch multiple profiles via the API simultaneously. Check Rate Limits before launching many profiles — API limits apply.
 
-Persistent sessions help simulate real user behavior.
+### **Practical limits by plan**
 
-## Step 4. Control request patterns
+- Professional: up to ~10 concurrent profiles comfortably
+- Business: up to ~30 concurrent profiles
+- Enterprise: 100\+ concurrent profiles
 
-Unrealistic request patterns are one of the main detection signals.
+Hardware is also a constraint — each profile is a browser instance. 10 concurrent profiles requires ~8–16 GB RAM.
 
-To reduce risk:
+## Cloudflare and anti-bot systems
 
-- space requests over time
-- avoid rapid bursts
-- vary navigation paths
-- simulate natural browsing
-
-Avoid:
-
-- sending many requests in seconds
-- identical timing patterns
-- direct repeated access to the same endpoints
-
-## Step 5. Scale with proxy rotation
-
-For larger workloads, proxy rotation may be required.
-
-Common strategies:
-
-- rotating proxies per session
-- rotating proxies per request
-- using proxy pools across multiple profiles
-
-The correct strategy depends on:
-
-- target website
-- scraping volume
-- tolerance for failures
+Gologin handles browser fingerprint challenges (Canvas, WebGL, TLS fingerprint). It does not solve CAPTCHA automatically. If a target site uses Cloudflare with CAPTCHA, integrate a CAPTCHA solving service (2captcha, CapSolver, Anti-Captcha) into your scraping script.
 
 ## Common detection signals
 
-Websites typically detect scraping through:
+- Identical timing between requests
+- No scroll or mouse events before clicking
+- Direct navigation to deep URLs without referrer
+- Canvas or WebGL fingerprint that doesn't match the claimed OS/browser
 
-- repeated requests from the same IP
-- inconsistent or unrealistic fingerprints
-- missing or reset cookies
-- identical request timing
-- unnatural navigation patterns
+## See also
 
-## Key takeaway
+- [API Quickstart](https://gologin.com/docs/api-reference/introduction/quickstart)
+- [Headless mode](https://gologin.com/docs/api-reference/introduction/headless)
+- [Rate Limits](https://gologin.com/docs/api-reference/limitations/rate-limits)
+- [Best proxy for your case](https://gologin.com/docs/proxy/introduction/best-proxy-for-your-case)
+- [Static vs Rotating proxies](https://gologin.com/docs/static-vs-dynamic-proxies)
 
-Scraping detection is based on patterns, not single actions.
-
-To maintain stable workflows:
-
-- keep environments consistent
-- control request speed and behavior
-- use appropriate proxy strategies
-
-Browser-based scraping that mimics real user behavior is less likely to be blocked.
+\
