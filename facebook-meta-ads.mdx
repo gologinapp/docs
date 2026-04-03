@@ -2,159 +2,112 @@
 title: "Facebook / Meta Ads"
 ---
 
-A practical guide to creating and managing Facebook accounts and Meta Ads profiles with long-term stability.
-
-Facebook evaluates accounts based on a combination of:
-
-- device signals
-- login environment
-- behavioral patterns
-
-Unlike content-driven platforms, Facebook places strong emphasis on **environment consistency** — including IP address, browser fingerprint, and session history.
-
-To maintain account stability, both setup and behavior must remain consistent over time.
+Facebook is one of the most fingerprint-aware platforms. It cross-references IP address, device environment, behavioral patterns, and payment history to evaluate accounts. Inconsistencies between any of these signals trigger verification checks.
 
 ## Quick checklist
 
-Before you start:
-
 - 1 account = 1 browser profile
-- 1 profile = 1 proxy
-- Use residential or mobile proxies
-- Keep proxy location stable
-- Do not change fingerprint after setup
+- 1 profile = 1 static residential or mobile proxy
+- Never reuse a proxy across profiles
+- Match profile OS to your device OS
+- Do not change proxy or fingerprint after first login
 
-## Step 1. Set up environment in Gologin
+## Step 1. Set up your Gologin profile
 
-Create a clean and stable environment before account creation.
+Recommended settings:
 
-Recommended setup:
+- **Proxy: **static residential or mobile — assign before opening Facebook for the first time
+- **Fingerprint: **leave defaults — do not adjust Canvas, WebGL, or AudioContext manually
 
-- Create a new browser profile
-- Assign a dedicated proxy
-- Keep fingerprint settings unchanged
-- Ensure stable internet connection
+Once logged into Facebook in a profile, do not change proxy or fingerprint settings. Facebook stores device data server-side. A fingerprint change looks like a new device trying to access your account.
 
-Each profile should represent a separate device.
+## Step 2. Warm up the browser before registration
 
-Avoid:
+Before creating a new account, spend 10–15 minutes browsing normally inside the profile:
 
-- changing proxy location frequently
-- modifying fingerprint after use
+- Open 3–5 unrelated websites
+- Scroll, click, pause naturally
+- Do not go to Facebook yet
 
-## Step 2. Prepare browser session
+This builds session history and makes the environment look like a real device. A completely fresh browser with no history is a strong detection signal.
 
-Before creating an account:
+## Step 3. Create the account
 
-- browse normal websites for 10–15 minutes
-- open several pages
-- interact naturally (scroll, click, wait)
+- Space account registrations at least 30–60 minutes apart
+- Use a unique phone number for each account
+- Do not create more than 2–3 accounts per day per proxy location
+- Avoid identical registration flows across accounts
 
-This helps build cookies and session history, making the environment look more realistic.
+If Facebook asks for phone verification during registration — complete it. Do not skip or use the same number twice.
 
-## Step 3. Create account
+## Step 4. Complete the profile
 
-When creating accounts:
+- Upload a profile photo and cover photo
+- Fill in basic information (location, workplace, education)
+- Follow 5–10 pages related to your niche
+- Join 1–2 groups
 
-- space registrations 30–60 minutes apart
-- avoid identical behavior patterns
-- keep proxy locations consistent
-
-Avoid:
-
-- creating multiple accounts instantly
-- using identical flows across accounts
-
-## Step 4. Set up profile
-
-After registration, complete basic profile details:
-
-- add profile photo
-- add cover photo
-- fill basic information
-- follow pages
-- join a few groups
-
-Avoid promotional or aggressive actions at this stage.
+Do not post links, create events, or send friend requests in the first 24 hours.
 
 ## Step 5. Warm up the account
 
-Gradual activity is critical during the first days.
+Facebook evaluates new accounts heavily during the first 2–3 weeks.
 
-### Suggested timeline
+### Warmup timeline
 
-| Period | Focus | Behavior |
+| **Period** | **Focus** | **What to do** |
 | :-- | :-- | :-- |
-| Day 0 | Setup | Profile completion \+ browsing |
-| Days 1–7 | Exploration | Feed browsing, likes, follows |
-| Days 8–14 | Engagement | Comments, light interaction |
-| Week 2\+ | Normal use | Posts, groups, ads |
+| Day 0 | Setup | Profile completion \+ 15 min browsing |
+| Days 1–7 | Passive | Browse feed, watch videos, like posts |
+| Days 8–14 | Light interaction | Comments, page follows, 2–3 friend requests/day |
+| Week 3 | Normal use | Groups, more interactions, occasional posts |
+| Week 4\+ | Ads-ready | Business Manager \+ ad account setup |
 
-Avoid sudden spikes in activity.
+### Safe activity levels
 
-## Early activity guidelines
-
-During the first days:
-
-**Allowed actions:**
-
-- browsing feed
-- liking posts
-- watching videos
-- following pages
-- joining a few groups
-
-**Avoid:**
-
-- posting external links
-- sending many friend requests
-- creating ads immediately
-- joining many groups at once
-
-## Meta Ads setup
-
-For advertising:
-
-1. Warm up the personal profile first
-2. Create a Business Manager
-3. Add ad accounts gradually
-4. Add payment methods step by step
-
-Avoid:
-
-- launching large campaigns immediately
-- high spending from day one
-
-## Safe activity levels
-
-| Action | Recommended level |
+| **Action** | **Recommended level** |
 | :-- | :-- |
 | Friend requests | 5–10 / day |
 | Page follows | 5–10 / day |
-| Post likes | 10–20 / day |
-| Group joins | 1–3 / day |
-| Ads launch | After warm-up |
+| Post likes | 15–30 / day |
+| Group joins | 1–2 / day |
+| External link posts | After week 3 |
 
-These are general behavioral guidelines, not strict limits.
+## Meta Ads setup
+
+Only set up Meta Ads after the personal profile is warmed up — minimum 1–2 weeks of activity.
+
+- Create a Business Manager account ([business.facebook.com](http://business.facebook.com))
+- Add your personal profile as an admin
+- Create one ad account — start with one
+- Add a unique payment method
+- Launch a small test campaign (\$5–10/day)
+- Increase spend gradually over 1–2 weeks
+
+<Warning>
+  Do not add the same payment method to multiple ad accounts. Facebook links accounts through shared payment methods. Each ad account needs a unique payment source.
+</Warning>
 
 ## Common risk triggers
 
-The most common causes of restrictions:
+### Immediate bans
 
-- frequent proxy changes
-- logging in from different countries
-- multiple accounts sharing one environment
-- sudden spikes in activity
-- repetitive or automated actions
+- Logging in from a new IP after the account was already active
+- Same payment method across multiple ad accounts
+- Creating 5\+ accounts in one day from the same proxy location
+- Running ads before profile warmup
 
-## Key takeaway
+### Gradual restrictions
 
-Facebook evaluates behavior over time, not individual actions.
+- Posting the same content from multiple accounts
+- High friend request volume with low acceptance rate
+- Mass group joining in a short period
+- Unusual spending spikes in ads
 
-To maintain stability:
+## See also
 
-- keep your environment consistent
-- grow activity gradually
-- behave like a real user
-
-Building trust during the early phase is the most effective way to avoid verification checks and maintain long-term account access.
+- [Static vs Rotating proxies](https://gologin.com/docs/static-vs-dynamic-proxies)
+- [Best proxy for your case](https://gologin.com/docs/proxy/introduction/best-proxy-for-your-case)
+- [Common mistakes to avoid](https://gologin.com/docs/common-mistakes-to-avoid)
+- [Maintaining trust score](https://gologin.com/docs/maintaining-trust-score)
+- [Proxy & Fingerprint Setup per Platform](https://gologin.com/docs/proxy-and-fingerprint-setup-per-platform)
