@@ -106,14 +106,21 @@ Stable fingerprints help websites recognize the profile as a consistent device.
 
 After launching a profile, visit one of these sites to check your fingerprint:
 
-- **[iphey.com](https://iphey.com)** -- Shows an overall trust score. A green "Trusted" result means your profile looks like a real browser.
-- **[pixelscan.net](https://pixelscan.net)** -- Detailed breakdown of individual fingerprint parameters.
+- [**iphey.com**](https://iphey.com) -- Shows an overall trust score. A green "Trusted" result means your profile looks like a real browser.
+- [**pixelscan.net**](https://pixelscan.net) -- Detailed breakdown of individual fingerprint parameters.
 
 ### Common issues and what they mean
 
 | Issue | Meaning | Fix |
-|---|---|---|
+| --- | --- | --- |
 | OS mismatch | Profile OS doesn't match your real device OS | Create a new profile matching your actual OS |
 | WebGL mismatch | GPU information inconsistent with claimed hardware | Usually auto-configured correctly. If flagged, try a different WebGL mode in profile settings. |
 | Timezone mismatch | Timezone doesn't match proxy location | GoLogin auto-matches timezone to proxy IP. If wrong, check your proxy location. |
 | Canvas hash changed | Canvas fingerprint differs between sessions | Set Canvas to "Off" or "Block" instead of "Add Noise" for consistency across devices |
+
+See also
+
+- [What's safe to change](https://gologin.com/docs/whats-safe-to-change)
+- [How browser fingerprints work](https://gologin.com/docs/how-browser-fingerprints-work)
+- [Proxy & Fingerprint Setup per Platform](https://gologin.com/docs/proxy-and-fingerprint-setup-per-platform)
+- [Common mistakes to avoid](https://gologin.com/docs/common-mistakes-to-avoid)
