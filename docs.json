@@ -313,21 +313,6 @@
             "openapi": "https://docs-download.gologin.com/openapi.json"
           },
           {
-            "group": "AI Integrations",
-            "pages": [
-              "api-reference/ai-integrations/mcp-server",
-              "api-reference/ai-integrations/ai-skills"
-            ]
-          },
-          {
-            "group": "CLI Tools",
-            "pages": [
-              "cli-tools/web-access",
-              "cli-tools/agent-browser",
-              "cli-tools/local-agent-browser"
-            ]
-          },
-          {
             "group": "Scraping API & Web Unlocker",
             "pages": [
               "what-is-web-unlocker",
@@ -371,8 +356,40 @@
           "api-reference/cloud-browser/untitled-page-1",
           "api-reference/cloud-browser/untitled-page-2",
           "api-reference/cloud-browser/live",
-          "api-reference/cloud-browser/untitled-page-3",
-          "api-reference/cloud-browser/untitled-page"
+          "api-reference/cloud-browser/untitled-page-3"
+        ]
+      },
+      {
+        "tab": "AI & Agents",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "ai/overview"
+            ]
+          },
+          {
+            "group": "Connect",
+            "pages": [
+              "api-reference/ai-integrations/mcp-server",
+              "api-reference/ai-integrations/ai-skills"
+            ]
+          },
+          {
+            "group": "CLI Tools",
+            "pages": [
+              "cli-tools/web-access",
+              "cli-tools/agent-browser",
+              "cli-tools/local-agent-browser"
+            ]
+          },
+          {
+            "group": "Integration Guides",
+            "pages": [
+              "ai/cloud-browser-with-agents",
+              "ai/web-unlocker-with-agents"
+            ]
+          }
         ]
       }
     ]

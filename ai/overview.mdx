@@ -1,0 +1,127 @@
+---
+title: "Gologin for AI Agents"
+description: "Give your AI agents reliable web access — scraping, browser automation, and persistent sessions through Gologin"
+---
+
+Gologin gives AI agents three things they need to work with the web reliably:
+
+1. **Read the web** — scrape any page, even JS-heavy and protected sites, through Web Unlocker
+2. **Interact with the web** — open real browser sessions with clicks, typing, navigation, and persistent cookies through Cloud Browser
+3. **Stay undetected** — anti-detect fingerprinting, residential proxies, and profile-based identity management
+
+These capabilities are available at multiple integration levels — pick what fits your stack.
+
+---
+
+## Integration options
+
+<CardGroup cols={2}>
+  <Card title="MCP Server" icon="plug" href="/api-reference/ai-integrations/mcp-server">
+    Connect Gologin to Claude Desktop, Cursor, or any MCP client. Manage profiles and sessions through natural language.
+  </Card>
+  <Card title="AI Skills" icon="wand-magic-sparkles" href="/api-reference/ai-integrations/ai-skills">
+    Plug-and-play extensions for Claude Code. Install a skill and your agent gets web scraping and browser automation out of the box.
+  </Card>
+  <Card title="CLI Tools" icon="terminal" href="/cli-tools/web-access">
+    Shell commands that AI agents call directly. Scrape, browse, interact — no code to write. Three CLIs for different workflows.
+  </Card>
+  <Card title="SDKs + Cloud Browser API" icon="code" href="/api-reference/cloud-browser/getting-started">
+    Full programmatic control. Build custom agent tools with Puppeteer/Playwright connected to Gologin Cloud Browser.
+  </Card>
+</CardGroup>
+
+---
+
+## Which tool to choose
+
+| I want to... | Use |
+|---|---|
+| Manage profiles from Claude Desktop / Cursor | [MCP Server](/api-reference/ai-integrations/mcp-server) |
+| Give Claude Code web access with zero setup | [AI Skills](/api-reference/ai-integrations/ai-skills) |
+| Scrape pages, crawl sites, batch extract | [Web Access CLI](/cli-tools/web-access) |
+| Open a cloud browser, click, type, screenshot | [Agent Browser CLI](/cli-tools/agent-browser) |
+| Warm up local profiles, run login flows | [Local Agent Browser CLI](/cli-tools/local-agent-browser) |
+| Build custom tools with Puppeteer/Playwright | [Cloud Browser API](/api-reference/cloud-browser/getting-started) |
+| Call the scraping API from my own code | [Web Unlocker SDK](/scraping-api-sdk-and-cli) |
+
+---
+
+## How it all fits together
+
+```
+┌─────────────────────────────────────────────────┐
+│                  AI Agent                        │
+│         (Claude, Codex, custom agent)            │
+└──────┬──────────┬──────────┬────────────────────┘
+       │          │          │
+  MCP Server   AI Skills   CLI Tools / SDK
+       │          │          │
+       └──────────┴──────────┘
+                  │
+    ┌─────────────┴─────────────┐
+    │                           │
+Web Unlocker              Cloud Browser
+(stateless scraping)    (stateful sessions)
+    │                           │
+    └─────────────┬─────────────┘
+                  │
+          Gologin Infrastructure
+    (proxies, fingerprints, profiles)
+```
+
+- **Web Unlocker** handles stateless read/extraction — send a URL, get rendered HTML back
+- **Cloud Browser** handles stateful interaction — open a session, click, type, navigate, persist cookies
+- **Local Orbita** handles persistent local profiles — warmup, login flows, social/marketplace actions
+
+All three share the same Gologin infrastructure: residential proxies, anti-detect fingerprinting, and profile management.
+
+---
+
+## Quick start examples
+
+### Scrape a page (CLI)
+
+```bash
+npm install -g gologin-web-access
+export GOLOGIN_WEB_UNLOCKER_API_KEY="wu_..."
+
+gologin-web-access read https://example.com
+```
+
+### Open a cloud browser (CLI)
+
+```bash
+npm install -g gologin-agent-browser-cli
+export GOLOGIN_TOKEN='your_token'
+
+gologin-agent-browser open https://example.com
+gologin-agent-browser snapshot
+gologin-agent-browser click @e3
+gologin-agent-browser close
+```
+
+### Install an AI Skill (Claude Code)
+
+```bash
+npx skills add GologinLabs/gologin-web-access-skill
+```
+
+Then just ask Claude Code to scrape a page or interact with a site — the skill handles the rest.
+
+### Connect MCP (Claude Desktop)
+
+Add to `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "gologin-mcp": {
+      "command": "npx",
+      "args": ["gologin-mcp"],
+      "env": { "API_TOKEN": "your-token" }
+    }
+  }
+}
+```
+
+Then ask Claude: "Create a new browser profile with a US proxy."
