@@ -2,116 +2,31 @@
 title: "Amazon, eBay, Shopify"
 ---
 
-A practical guide to managing seller and marketplace accounts with long-term stability.
-
-E-commerce platforms such as Amazon, eBay, and Shopify evaluate accounts based on:
-
-- device signals
-- account history
-- transaction behavior
-
-These platforms are highly sensitive to **account linking**, where multiple accounts appear to originate from the same device or network.
-
-Maintaining isolated environments and stable configurations is critical.
-
-<Warning>
-**Do not use rotating proxies for Amazon seller accounts.** Amazon tracks IP addresses and links accounts that share IPs. If your proxy rotates, multiple accounts may appear connected, leading to suspension. Always use static/ISP proxies with one dedicated IP per account.
-</Warning>
+E-commerce marketplaces are the most aggressive at account linking. Amazon, eBay, and Shopify all maintain cross-account graphs — if two accounts share an IP, a payment method, a device fingerprint, or a shipping address, the platform will connect them. When one account is suspended, the linked accounts typically follow.
 
 ## Quick checklist
 
-Before you start:
-
 - 1 seller account = 1 browser profile
-- 1 profile = 1 proxy
-- Use residential proxies
-- Keep proxy region stable
-- Do not change fingerprint after setup
+- 1 profile = 1 static residential or ISP proxy
+- **Never use rotating proxies** — IP changes link accounts instantly
+- **Never use Gologin built-in proxies** — they are rotating by default
+- Unique payment method per account
+- Unique phone number and email per account
 
-## Step 1. Set up environment in Gologin
+## Step 1. Set up your Gologin profile
 
-Prepare a clean and isolated environment before working with accounts.
+- **Proxy: **static residential or ISP proxy — one dedicated IP per account, never shared
+- **Fingerprint: **leave defaults
 
-Recommended setup:
+## Step 2. Warm up the account
 
-- Create a new browser profile
-- Assign a dedicated proxy
-- Keep fingerprint settings unchanged
-- Ensure stable internet connection
-
-Each profile should represent a separate device.
-
-Avoid:
-
-- sharing proxies between accounts
-- frequent changes in location or device parameters
-
-## Step 2. Prepare browser session
-
-Before registration or login:
-
-- browse normal websites for a few minutes
-- open multiple pages
-- interact naturally
-
-This helps build cookies and browsing history, making the environment appear more realistic.
-
-## Step 3. Create or access account
-
-When creating or accessing accounts:
-
-- avoid creating multiple accounts in rapid succession
-- keep proxy location consistent
-- complete all verification steps normally
-
-Marketplace platforms often require:
-
-- identity verification
-- email and phone confirmation
-
-## Step 4. Set up seller account
-
-After account creation:
-
-- complete all account details
-- verify email and phone number
-- set up payment and payout information
-- explore the seller dashboard
-
-Avoid:
-
-- adding many products immediately
-- aggressive account actions early
-
-## Step 5. Warm up the account
-
-Gradual development is important for seller accounts.
-
-### Suggested timeline
-
-| Period | Focus | Behavior |
+| **Period** | **Focus** | **What to do** |
 | :-- | :-- | :-- |
-| Day 0 | Setup | Registration and verification |
-| Days 1–3 | Exploration | Dashboard browsing |
-| Days 4–7 | Preparation | Adding listings gradually |
-| Week 2\+ | Normal use | Managing orders and listings |
-
-Avoid sudden spikes in activity.
-
-## Marketplace behavior
-
-Typical safe actions:
-
-- gradually adding product listings
-- editing product descriptions
-- browsing seller dashboards
-- interacting with platform tools
-
-Avoid:
-
-- bulk listing products immediately
-- rapid repetitive actions
-- automation-like behavior
+| Day 0 | Setup | Registration \+ identity verification |
+| Days 1–3 | Exploration | Browse seller tools, read policies |
+| Days 4–7 | Light activity | Add 5–10 listings, set up shipping |
+| Week 2 | Normal use | Manage listings, respond to questions |
+| Week 3\+ | Scale | Increase listing volume gradually |
 
 ## Safe activity patterns
 
@@ -122,26 +37,60 @@ Avoid:
 | Dashboard activity | Regular browsing |
 | Order processing | Consistent handling |
 
-These are general behavior patterns, not strict limits.
+## Payment isolation
 
-## Common risk triggers
+This is the most common reason marketplace accounts get linked and suspended together.
 
-The most common causes of restrictions:
+Each account needs:
 
-- multiple accounts sharing the same environment
-- frequent proxy location changes
-- rapid listing of many products
-- inconsistent login environments
-- repetitive or automated behavior
+- A unique credit or debit card
+- A unique PayPal account (if used)
+- A unique billing address
 
-## Key takeaway
+Options that work: Revolut, Wise, N26 (multiple virtual cards), Privacy.com (US), prepaid debit cards.
 
-Marketplace platforms evaluate accounts over time.
+<Warning>
+  Sharing a card across Amazon seller accounts is treated as a Terms of Service violation. Amazon will suspend all linked accounts and hold funds for up to 90 days.
+</Warning>
 
-To maintain stability:
+## Platform-specific notes
 
-- keep environments isolated
-- use consistent proxies
-- grow activity gradually
+### Amazon
 
-Accounts that behave like real sellers and develop naturally are more likely to maintain long-term access.
+- IP changes between sessions trigger automatic account linking review
+- Appeals are hard — prevention is far easier than recovery
+- Business accounts require verified legal entity documents
+
+### eBay
+
+- Less strict than Amazon on IP, but still tracks device fingerprint
+- Each account needs separate bank details for eBay Managed Payments
+- Feedback score matters — new accounts have low buyer trust
+
+### Shopify
+
+- GoLogin is mainly used to manage multiple Shopify admin accounts or run operations from different locations
+- No cross-account detection like Amazon/eBay, but Shopify Payments has fraud detection on payouts
+
+## Common ban triggers
+
+### Amazon
+
+- Rotating or shared proxy IPs
+- Same payment method across accounts
+- Same device fingerprint on multiple seller logins
+- Related account suspension (Amazon bans by association)
+
+### eBay
+
+- Same IP or fingerprint as a previously suspended account
+- Listing the same items across multiple accounts simultaneously
+- Feedback manipulation patterns
+
+## See also
+
+- [Static vs Rotating proxies](https://gologin.com/docs/static-vs-dynamic-proxies)
+- [What are Gologin proxies](https://gologin.com/docs/proxy/gologin-proxies/what-are-gologin-proxies) — why built-in proxies aren't suitable for Amazon
+- [Best proxy for your case](https://gologin.com/docs/proxy/introduction/best-proxy-for-your-case)
+- [Migrating from other anti-detect browsers](https://gologin.com/docs/general/migration-from-other-tools)
+- [Common mistakes to avoid](https://gologin.com/docs/common-mistakes-to-avoid)
