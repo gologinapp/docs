@@ -12,7 +12,7 @@ They are recommended for long-term account management where a stable login locat
 
 Sticky proxies maintain the same IP address for a limited session period (usually 10–30 minutes) before rotating.
 
-They are useful when short-term session consistency is needed.
+They are useful when short-term session consistency is needed, also good for account management.
 
 ### Rotating proxies
 
@@ -24,17 +24,19 @@ Rotation may occur:
 - after a session ends
 - after a set time interval
 
-They are typically used for high-volume scraping or data collection.
+They are typically used for high-volume scraping or data collection. They generally can be used for account management if they keep the same IP during the session.
 
 ### Which type for which platform?
 
 | Platform | Recommended proxy type | Why |
-|---|---|---|
+| --- | --- | --- |
 | LinkedIn | Static residential or mobile | IP changes trigger immediate security review |
-| Facebook / Meta Ads | Static residential | Geo-consistency required for ad accounts |
+| Facebook / Meta Ads | Static residential or sticky | Geo-consistency required for ad accounts |
 | Amazon / eBay / Etsy | Static ISP | Rotating IPs link accounts and trigger bans |
 | TikTok (new accounts) | Mobile | Mobile IPs have highest trust for account creation |
 | Web scraping | Rotating residential or datacenter | Speed and volume matter more than consistency |
 | Betting platforms | Mobile | Highest trust level, platforms are aggressive against desktop fingerprints |
 
-<Warning>Using rotating proxies for Amazon seller accounts is a common mistake that leads to account bans. Amazon links accounts by IP -- if your IP rotates, multiple accounts may be flagged as connected.</Warning>
+<Warning>
+  Using rotating proxies for Amazon seller accounts is a common mistake that leads to account bans. Amazon links accounts by IP - if your IP rotates, multiple accounts may be flagged as connected.
+</Warning>

@@ -12,10 +12,10 @@ Choosing the right proxy type is critical for ensuring efficiency, security, and
 
 | **Platform / task** | **Proxy type** | **Static or rotating** | **Notes** |
 | :-- | :-- | :-- | :-- |
-| LinkedIn | Residential or mobile | **Static** | IP changes cause immediate session logout |
-| Facebook / Meta Ads | Residential or mobile | **Static** | Geo-consistency required for ad accounts |
-| Instagram | Mobile | **Static** | Mobile IPs have highest trust |
-| TikTok (new accounts) | Mobile | **Static** | Mobile-first platform, mobile IPs convert better |
+| LinkedIn | Residential or mobile | **Static or sticky rotating** | IP changes cause immediate session logout |
+| Facebook / Meta Ads | Residential or mobile | **Static or sticky rotating** | Geo-consistency required for ad accounts |
+| Instagram | Mobile | **Rotating** | Mobile IPs have highest trust |
+| TikTok (new accounts) | Mobile | **Rotating** | Mobile-first platform, mobile IPs convert better |
 | Amazon | Residential or ISP | **Static** | Rotating IPs link accounts — instant ban risk |
 | eBay | Residential or ISP | **Static** | Same as Amazon |
 | Etsy | Residential | **Static** |  |
@@ -32,9 +32,9 @@ Choosing the right proxy type is critical for ensuring efficiency, security, and
 
 **Residential proxies** use IP addresses registered to real homes and ISPs. Websites trust them the most because they look like genuine user connections. They're slower and more expensive than datacenter proxies, but essential for sensitive platforms.
 
-**Mobile proxies **route traffic through mobile carrier networks (4G/5G). Mobile IPs are shared by thousands of real users, which makes them very difficult for platforms to block without collateral damage. Best for social media and platforms that heavily target mobile users.
+**Mobile proxies** route traffic through mobile carrier networks (4G/5G). Mobile IPs are shared by thousands of real users, which makes them very difficult for platforms to block without collateral damage. Best for social media and platforms that heavily target mobile users.
 
-**ISP proxies **are hosted in data centers but registered through internet service providers. They combine the stability of datacenter proxies with better trust levels. Good for e-commerce marketplaces.
+**ISP proxies** are hosted in data centers but registered through internet service providers. They combine the stability of datacenter proxies with better trust levels. Good for e-commerce marketplaces.
 
 **Datacenter proxies** are fast and cheap, hosted on cloud servers. Platforms can detect them more easily than residential IPs, but they work fine for scraping and testing tasks where trust level is less critical.
 
