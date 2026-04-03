@@ -5,30 +5,6 @@ hidden: true
 
 Quick reference for choosing the right proxy type and fingerprint configuration for each platform. For detailed setup steps, see the individual platform guides.
 
-## **Proxy type by platform**
-
-| **Platform / task** | **Proxy type** | **Static or rotating** | **Notes** |
-| :-- | :-- | :-- | :-- |
-| LinkedIn | Residential or mobile | Static | IP change = immediate session logout |
-| Facebook / Meta Ads | Residential or mobile | Static | Geo-consistency required for ad accounts |
-| Instagram | Mobile | Static | Mobile IPs have highest trust |
-| TikTok (new accounts) | Mobile | Static | Mobile-first platform, mobile IPs perform better |
-| Google Ads | Residential | Static | Datacenter IPs flagged as high-risk for ad accounts |
-| Amazon | Residential or ISP | Static | Rotating IPs link accounts — instant suspension risk |
-| eBay | Residential or ISP | Static | Same as Amazon |
-| Etsy | Residential | Static | <br /> |
-| PayPal / financial | Residential | Static | IP change = suspected account compromise |
-| Betting platforms | Mobile | Static | Speed matters; mobile IPs are trusted |
-| Crypto / KYC exchanges | Residential | Static | KYC systems check IP consistency after verification |
-| Reddit | Residential | Static or sticky rotating | Less strict than LinkedIn/Facebook |
-| Quora | Residential | Static | Session consistency matters for account trust |
-| Web scraping (light) | Residential rotating | Rotating | Different IP per request reduces blocks |
-| Web scraping (heavy) | Datacenter rotating | Rotating | Faster and cheaper at scale |
-| Geo-testing / QA | GoLogin built-in | Rotating | Fine for one-off checks |
-
-\
-\
-
 A practical guide to configuring proxies and browser fingerprints for different platform types.
 
 Most modern websites evaluate sessions using a combination of:
