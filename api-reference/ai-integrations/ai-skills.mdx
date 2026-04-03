@@ -1,0 +1,148 @@
+---
+title: "AI Skills for Claude Code"
+description: "Plug-and-play skills that give Claude Code agents web scraping, browser automation, and local Orbita capabilities through Gologin"
+---
+
+Gologin AI Skills are plug-and-play extensions for [Claude Code](https://claude.ai/code) that give AI agents web scraping and browser automation capabilities. Each skill wraps a Gologin CLI tool and exposes it as a set of agent-callable functions.
+
+```
+agent → skill → Gologin CLI → Web Unlocker API / Cloud Browser / Local Orbita
+```
+
+---
+
+## Available skills
+
+<CardGroup cols={2}>
+  <Card title="Web Access Skill" icon="globe" href="https://github.com/GologinLabs/gologin-web-access-skill">
+    Default skill for known-site reading, extraction, crawling, monitoring, and hybrid scrape-then-browse tasks.
+  </Card>
+  <Card title="Agent Browser Skill" icon="browser" href="https://github.com/GologinLabs/gologin-agent-browser-skill">
+    Browser-only skill for live cloud sessions, ref-based interaction, screenshots, and PDFs.
+  </Card>
+  <Card title="Scraping Skill" icon="code" href="https://github.com/GologinLabs/gologin-scraping-skill">
+    Scraping-only skill wrapping the Web Unlocker SDK. Smallest footprint.
+  </Card>
+  <Card title="Local Agent Browser Skill" icon="desktop" href="https://github.com/GologinLabs/gologin-local-agent-browser-skill">
+    Local Orbita automation with persistent profiles, runbooks, and batch execution.
+  </Card>
+</CardGroup>
+
+---
+
+## Install
+
+```bash
+# install any skill
+npx skills add GologinLabs/gologin-web-access-skill
+npx skills add GologinLabs/gologin-agent-browser-skill
+npx skills add GologinLabs/gologin-scraping-skill
+npx skills add GologinLabs/gologin-local-agent-browser-skill
+```
+
+Each skill requires its underlying CLI to be installed:
+
+| Skill | Required CLI |
+|---|---|
+| Web Access Skill | `npm i -g gologin-web-access` |
+| Agent Browser Skill | `npm i -g gologin-agent-browser-cli` |
+| Scraping Skill | `npm i gologin-webunlocker` |
+| Local Agent Browser Skill | `npm i -g gologin-local-agent-browser-cli` |
+
+---
+
+## Which skill to use
+
+| Task | Skill |
+|---|---|
+| Read a docs page, article, or known URL | Web Access |
+| Scrape and extract structured data | Web Access |
+| Batch scrape many URLs | Web Access |
+| Crawl a site, map URLs | Web Access |
+| Monitor page changes | Web Access |
+| Read a page, then interact in browser | Web Access (hybrid mode) |
+| Open a live cloud browser session | Agent Browser |
+| Log into a dashboard, take screenshots | Agent Browser |
+| Fill forms, click through flows | Agent Browser |
+| Scraping only, no browser needed, Node.js app | Scraping |
+| Warm up local profiles | Local Agent Browser |
+| Account login flows with persistent cookies | Local Agent Browser |
+| Social / marketplace actions in local Orbita | Local Agent Browser |
+| Batch runbooks across many local profiles | Local Agent Browser |
+
+---
+
+## Web Access Skill
+
+**Install:** `npx skills add GologinLabs/gologin-web-access-skill`
+
+The default and most versatile skill. Delegates to `gologin-web-access` CLI.
+
+**Scraping tools:** `scrape_url`, `read_page`, `scrape_markdown`, `scrape_text`, `scrape_json`, `batch_scrape`, `batch_extract`, `search_web`, `map_site`, `crawl_site`, `crawl_site_async`, `extract_structured`, `track_changes`, `batch_track_changes`, `parse_document`
+
+**Browser tools:** `browser_open`, `browser_search`, `browser_snapshot`, `browser_click`, `browser_type`, `browser_screenshot`, `browser_close`, `browser_sessions`, `browser_current`
+
+**Built-in workflows:** browser-ref-loop, hybrid-read-then-interact, search-discover-and-scrape, lead-enrichment, competitive-monitoring, docs-ingestion, geo-testing, login-and-navigate-dashboard
+
+See [Web Access CLI reference](/cli-tools/web-access) for full command details.
+
+---
+
+## Agent Browser Skill
+
+**Install:** `npx skills add GologinLabs/gologin-agent-browser-skill`
+
+Browser-only skill for live cloud sessions. Use when you need interactive browsing without scraping.
+
+**Capabilities:** `doctor`, `open`, `sessions`, `current`, `snapshot`, `click`, `type`, `fill`, `find`, `get`, `tabs`, `tabopen`, `tabfocus`, `tabclose`, `cookies`, `cookies-import`, `storage-export`, `storage-import`, `eval`, `back`, `forward`, `reload`, `upload`, `screenshot`, `pdf`
+
+See [Agent Browser CLI reference](/cli-tools/agent-browser) for full command details.
+
+---
+
+## Scraping Skill
+
+**Install:** `npx skills add GologinLabs/gologin-scraping-skill`
+
+The smallest skill — scraping only through the Web Unlocker SDK. No browser session, no daemon.
+
+**Capabilities:** Raw HTML (`scrape`), text (`text`), markdown (`markdown`), structured metadata (`json`). SDK methods: `scrapeRaw()`, `scrape()`, `scrapeText()`, `scrapeMarkdown()`, `scrapeJSON()`, `batchScrape()`.
+
+Use when the task is scraping-only and you want a smaller dependency footprint.
+
+See [Web Unlocker SDK reference](/scraping-api-sdk-and-cli) for API details.
+
+---
+
+## Local Agent Browser Skill
+
+**Install:** `npx skills add GologinLabs/gologin-local-agent-browser-skill`
+
+For persistent local Orbita automation — warmup, login flows, social/marketplace actions.
+
+**Capabilities:** All browser interaction commands plus profile management (`profiles`, `profile-create`, `profile-import`, `profile-update`, `profile-sync`, `profile-delete`), runbooks (`run`, `batch`), jobs (`jobs`, `job`), and diagnostics (`doctor --use-case --check-proxy`).
+
+**Use-case templates:** `linkedin`, `ads`, `smm`, `scraping`, `geo`
+
+See [Local Agent Browser CLI reference](/cli-tools/local-agent-browser) for full command details.
+
+---
+
+## Mandatory preflight
+
+Before running any task, skills classify the work:
+
+1. **One known site or broad multi-source research?** — determines if scraping or search is needed
+2. **Read-only extraction, monitoring, or interactive browser work?** — determines scraping vs browser
+3. **Only Web Unlocker, or both Web Unlocker and Cloud Browser?** — determines credential needs
+4. **Geo-sensitive or blocked enough for Gologin end to end?** — determines proxy/profile requirements
+
+---
+
+## Related
+
+- [MCP Server](/api-reference/ai-integrations/mcp-server) — Gologin MCP server for AI agents
+- [Web Access CLI](/cli-tools/web-access) — underlying unified CLI
+- [Agent Browser CLI](/cli-tools/agent-browser) — underlying cloud browser CLI
+- [Local Agent Browser CLI](/cli-tools/local-agent-browser) — underlying local Orbita CLI
+- [Web Unlocker SDK](/scraping-api-sdk-and-cli) — underlying TypeScript SDK

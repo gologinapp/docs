@@ -107,3 +107,32 @@ if response.status_code == 200:
 else:
     print(f"Error {response.status_code}: {response.text}")
 ```
+
+---
+
+## Quick start with CLI
+
+You can also scrape pages using the Gologin CLI tools without writing code:
+
+### Web Unlocker CLI
+
+```bash
+npm install -g gologin-webunlocker
+
+GOLOGIN_WEBUNLOCKER_API_KEY=wu_... gologin-webunlocker scrape https://example.com
+GOLOGIN_WEBUNLOCKER_API_KEY=wu_... gologin-webunlocker text https://example.com
+GOLOGIN_WEBUNLOCKER_API_KEY=wu_... gologin-webunlocker markdown https://example.com
+```
+
+### Gologin Web Access CLI (unified)
+
+```bash
+npm install -g gologin-web-access
+
+export GOLOGIN_WEB_UNLOCKER_API_KEY="wu_..."
+gologin-web-access read https://example.com
+gologin-web-access scrape-json https://example.com
+gologin-web-access batch-scrape https://example.com/page/1 https://example.com/page/2 --format text
+```
+
+See [Web Unlocker SDK and CLI](/scraping-api-sdk-and-cli) and [Web Access CLI](/cli-tools/web-access) for full details.

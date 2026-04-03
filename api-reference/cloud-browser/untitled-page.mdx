@@ -95,7 +95,12 @@ All browser actions are performed by your code using an automation library such 
 
 ## Do I need to write these agent tools myself?
 
-Yes, but it's typically straightforward.
+Not necessarily. Gologin provides pre-built CLI tools and AI skills that wrap Cloud Browser for agent use:
+
+- **[Gologin Agent Browser CLI](/cli-tools/agent-browser)** — a ready-made CLI with `open`, `snapshot`, `click`, `type`, `fill`, `screenshot`, `close`, and 30+ more commands. Built for AI agent loops with a persistent daemon and ref-based interaction.
+- **[AI Skills for Claude Code](/api-reference/ai-integrations/ai-skills)** — plug-and-play skills that give Claude Code agents browser automation capabilities without any setup code.
+
+If you prefer full control, you can still write your own tools. It's typically straightforward.
 
 Most AI agent frameworks already support "tool calling" (functions the agent can invoke).
 You implement a small set of wrappers around Playwright/Puppeteer and expose them as tools.

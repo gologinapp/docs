@@ -230,4 +230,48 @@ for url, html in results:
 | AI agent tool | Agent calls on demand | Real-time web content |
 | Bulk scraping | Concurrent requests | HTML for each URL |
 
+---
+
+## Use it from the CLI
+
+Skip writing code entirely — use the Gologin Web Access CLI for common scraping workflows:
+
+```bash
+npm install -g gologin-web-access
+export GOLOGIN_WEB_UNLOCKER_API_KEY="wu_..."
+
+# batch scrape multiple pages
+gologin-web-access batch-scrape \
+  https://example.com/page/1 \
+  https://example.com/page/2 \
+  https://example.com/page/3 \
+  --format text --only-main-content --summary
+
+# crawl a site
+gologin-web-access crawl https://docs.example.com --format markdown --limit 50 --max-depth 2
+
+# monitor page changes
+gologin-web-access change-track https://example.com/pricing --format markdown
+
+# extract structured data with a schema
+gologin-web-access extract https://example.com/product/123 --schema ./product-schema.json
+
+# search the web
+gologin-web-access search "best antidetect browser 2026" --limit 10
+```
+
+See [Web Access CLI](/cli-tools/web-access) for the full command reference.
+
+---
+
+## Summary
+
+| Use case | What you do | What you get |
+|---|---|---|
+| Scrape a single page | GET with URL param | Rendered HTML |
+| Feed into an LLM | Scrape → pass to model | Extracted data or summary |
+| AI agent tool | Agent calls on demand | Real-time web content |
+| Bulk scraping | Concurrent requests | HTML for each URL |
+| CLI workflows | `gologin-web-access` commands | Text, markdown, JSON, batch results |
+
 See [Quickstart](./web-unlocker-quickstart.md) to make your first request.

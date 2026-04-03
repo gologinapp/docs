@@ -94,7 +94,27 @@ To create/update profiles, attach proxies, and configure profile settings, use t
 - Profiles API: https://gologin.com/docs/api-reference/profile
 - Proxy API: https://gologin.com/docs/api-reference/proxy
 
+## Use Cloud Browser from the CLI
+
+If you prefer shell commands over writing Puppeteer/Playwright code, Gologin provides agent-friendly CLI tools:
+
+- **[Gologin Agent Browser CLI](/cli-tools/agent-browser)** — cloud browser CLI with daemon, page snapshots, ref-based interaction. Built for AI agents.
+- **[Gologin Web Access CLI](/cli-tools/web-access)** — unified CLI combining Web Unlocker scraping with Cloud Browser interaction in one tool.
+
+```bash
+npm install -g gologin-agent-browser-cli
+export GOLOGIN_TOKEN='your_token'
+
+gologin-agent-browser open https://example.com
+gologin-agent-browser snapshot
+gologin-agent-browser click @e3
+gologin-agent-browser screenshot ./page.png
+gologin-agent-browser close
+```
+
 ## Next steps
 
-- Getting Started: https://gologin.com/docs/api-reference/cloud-browser/getting-started
-- API Quickstart: https://gologin.com/docs/api-reference/introduction/quickstart
+- [Getting Started](/api-reference/cloud-browser/getting-started) — Puppeteer/Playwright connection examples
+- [API Quickstart](/api-reference/introduction/quickstart) — REST API setup
+- [Agent Browser CLI](/cli-tools/agent-browser) — CLI for AI agents
+- [AI Skills](/api-reference/ai-integrations/ai-skills) — plug-and-play skills for Claude Code

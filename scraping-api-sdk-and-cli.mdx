@@ -183,8 +183,33 @@ GOLOGIN_WEBUNLOCKER_API_KEY=wu_live_xxx gologin-webunlocker json https://example
 - content aggregation and indexing
 - LLM ingestion and extraction workflows
 
+## Gologin Web Access CLI (unified)
+
+For a more powerful CLI that combines Web Unlocker with Cloud Browser in a single command surface, use `gologin-web-access`:
+
+```bash
+npm install -g gologin-web-access
+
+export GOLOGIN_WEB_UNLOCKER_API_KEY="wu_..."
+
+# all scraping commands from gologin-webunlocker, plus:
+gologin-web-access batch-scrape url1 url2 url3 --format text --summary
+gologin-web-access search "query" --limit 10
+gologin-web-access map https://example.com --limit 50
+gologin-web-access crawl https://docs.example.com --format markdown --limit 20
+gologin-web-access extract https://example.com --schema ./schema.json
+gologin-web-access change-track https://example.com --format markdown
+
+# plus cloud browser interaction (requires GOLOGIN_TOKEN)
+gologin-web-access open https://example.com
+gologin-web-access snapshot
+gologin-web-access click e3
+```
+
+See [Gologin Web Access CLI](/cli-tools/web-access) for the full reference.
+
 ## Source docs
 
-- https://gologin.com/docs/what-is-web-unlocker
-- https://gologin.com/docs/web-unlocker-quick-start
-- https://gologin.com/docs/web-unlocker-use-cases
+- [What is Web Unlocker](/what-is-web-unlocker)
+- [Web Unlocker Quick Start](/web-unlocker-quick-start)
+- [Web Unlocker Use Cases](/web-unlocker-use-cases)

@@ -2,21 +2,57 @@
 title: 'How to automate browser with Gologin'
 ---
 
-Gologin provides open-source SDK that helps you to prepare secure profile and connect Orbita browser to automation tool
+Gologin provides open-source SDKs and CLI tools that help you automate browsers with secure profiles.
+
+### SDKs (programmatic control)
+
 <CardGroup cols={2}>
   <Card
     title="Node.js SDK"
     icon="js"
     href="https://github.com/gologinapp/gologin"
   >
-    Cross-browser automation framework supporting multiple programming languages including Java, Python, C#, and JavaScript.
+    Launch and control Gologin profiles with Puppeteer or Playwright from Node.js.
   </Card>
   <Card
     title="Python SDK"
     icon="python"
     href="https://github.com/gologinapp/pygologin"
   >
-    Node.js library that provides a high-level API to control Chrome or Chromium browsers programmatically.
+    Launch and control Gologin profiles with Selenium from Python.
+  </Card>
+</CardGroup>
+
+### CLI tools (shell commands, built for AI agents)
+
+<CardGroup cols={2}>
+  <Card
+    title="Gologin Web Access CLI"
+    icon="terminal"
+    href="/cli-tools/web-access"
+  >
+    Unified CLI combining Web Unlocker scraping and Cloud Browser interaction. Batch scrape, crawl, search, extract, and interact.
+  </Card>
+  <Card
+    title="Agent Browser CLI"
+    icon="robot"
+    href="/cli-tools/agent-browser"
+  >
+    Cloud browser CLI with daemon, page snapshots, and ref-based interaction. Built for AI agent loops.
+  </Card>
+  <Card
+    title="Local Agent Browser CLI"
+    icon="desktop"
+    href="/cli-tools/local-agent-browser"
+  >
+    Local Orbita CLI with persistent profiles, runbooks, batch execution, and use-case templates.
+  </Card>
+  <Card
+    title="Web Unlocker SDK & CLI"
+    icon="code"
+    href="/scraping-api-sdk-and-cli"
+  >
+    Minimal TypeScript SDK and CLI for the Web Unlocker scraping API.
   </Card>
 </CardGroup>
 

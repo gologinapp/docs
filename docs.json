@@ -315,7 +315,16 @@
           {
             "group": "AI Integrations",
             "pages": [
-              "api-reference/ai-integrations/mcp-server"
+              "api-reference/ai-integrations/mcp-server",
+              "api-reference/ai-integrations/ai-skills"
+            ]
+          },
+          {
+            "group": "CLI Tools",
+            "pages": [
+              "cli-tools/web-access",
+              "cli-tools/agent-browser",
+              "cli-tools/local-agent-browser"
             ]
           },
           {
