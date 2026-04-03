@@ -18,8 +18,8 @@ After KYC, consistency is everything. A login from a new IP or a changed fingerp
 
 ### Gologin profile setup
 
-- **Proxy: **static residential — same IP for every session
-- **Proxy location: **match the country on your identity documents if possible
+- \*\*Proxy:\*\* static residential — same IP for every session
+- \*\*Proxy location:\*\* match the country on your identity documents if possible
 
 <Warning>
   Never change the proxy on a Gologin profile after completing KYC on a crypto exchange. The exchange stores your device environment at verification time. A different IP or fingerprint on the next login is treated as account takeover.
@@ -42,34 +42,44 @@ After KYC, consistency is everything. A login from a new IP or a changed fingerp
 - Large deposits immediately after account creation
 - Multiple accounts with same payment method or bank account
 
-## Airdrop & Points Farming
+## Airdrop & Points Farming (Galxe, Zealy, Premint, Layer3)
 
-Airdrop farming involves managing multiple wallets across campaigns to maximize token allocations. Most platforms actively detect and disqualify Sybil behavior.
+Web3 campaigns — airdrops, quests, points programs — often allow one entry per person. Gologin is used here to manage multiple legitimate accounts (for example, for a team where each member participates separately) while keeping those accounts technically isolated from each other.
 
-### Setup for farming
+### **SHow platforms detect linked accounts**
 
-- Create a separate Gologin profile for each farming account
-- Assign a unique static residential proxy to each profile
-- Use a fresh browser profile for each wallet — never mix wallets across profiles
-- Space out task completion — don't complete the same tasks within seconds of each other
+Platforms use two types of signals:
 
-### Wallet isolation
+Browser and network signals (what Gologin addresses):
 
-<Warning>
-  Never send funds from one farming wallet directly to another farming wallet. Platforms track on-chain relationships. If two wallets receive funds from the same source wallet, they are immediately linked. Use a CEX withdrawal to separate funds.
-</Warning>
+- Same IP address across multiple accounts
+- Same browser fingerprint
+- Accounts completing tasks at identical times from the same environment
 
-- Top up each farming wallet from a CEX withdrawal (CEX → wallet)
-- Use a different withdrawal address for each wallet
-- Do not transfer between farming wallets directly
+On-chain signals (outside Gologin's scope):
 
-### Common Sybil detection signals
+- Blockchains are public — all transactions are permanently visible
+- If multiple wallet addresses receive funds from the same source wallet, they are trivially linked on-chain
+- Platforms use tools like Nansen or Arkham to analyze wallet relationships before distributing tokens
 
-- Multiple accounts completing identical tasks within a short time window
-- Wallets funded from the same source address
-- Same Discord or Twitter account linked to multiple farming accounts
-- IP or fingerprint overlap between accounts
-- Account creation dates all clustered on the same day
+Gologin isolates the browser environment and IP. On-chain wallet relationships are a separate concern each user manages according to their own setup and the platform's rules.
+
+### Gologin setup for multi-account campaigns
+
+If you are managing accounts on behalf of multiple team members, each person should have:
+
+- A dedicated Gologin profile
+- A unique residential proxy
+- Their own connected wallet — not funded from a shared team wallet
+
+### Managing at scale
+
+For teams with 10\+ accounts across campaigns:
+
+- Organize profiles in Gologin folders by campaign or team member
+- Use tags to track status (active, completed, pending)
+- Use the Gologin API to launch and manage profiles programmatically
+- Keep a record of which profile corresponds to which team member and wallet
 
 ## See also
 
