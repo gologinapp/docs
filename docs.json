@@ -211,6 +211,16 @@
               "use-cases",
               "limitations"
             ]
+          },
+          {
+            "group": "Gologin Android App",
+            "icon": "mobile",
+            "pages": [
+              "overview-1",
+              "creating-and-managing-profiles",
+              "account-and-app-settings",
+              "faq"
+            ]
           }
         ]
       },
