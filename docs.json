@@ -75,6 +75,7 @@
               {
                 "group": "Profile Settings",
                 "pages": [
+                  "general/account-and-billing/active-sessions",
                   "profile-settings-overview",
                   "profile-parameters",
                   "default-profile-settings",
@@ -277,10 +278,15 @@
             "pages": [
               "general/account-and-billing/changing-your-email-and-pass",
               "general/account-and-billing/two-factor-authentication",
-              "general/account-and-billing/active-sessions",
+              "general/account-and-billing/affiliate-program",
+              "general/account-and-billing/active-sessions-1"
+            ]
+          },
+          {
+            "group": "Payments & Subscription",
+            "pages": [
               "general/account-and-billing/payment-methods",
               "general/account-and-billing/promo-codes",
-              "general/account-and-billing/affiliate-program",
               "general/account-and-billing/invoices",
               "general/account-and-billing/faq-subscription"
             ]
