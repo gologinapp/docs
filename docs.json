@@ -323,6 +323,7 @@
             "pages": [
               "api-reference/introduction/quickstart",
               "api-reference/introduction/headless",
+              "api-reference/introduction/cloud-launch-vs-local-launch",
               "api-reference/introduction/gologin-proxies"
             ]
           },
