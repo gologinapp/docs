@@ -74,6 +74,16 @@ Gologin for Linux is supplied as an **AppImage** file. It's a self-contained exe
     sudo apt install libfuse2
   ```
 
+**If profiles do not launch when you click Run**
+
+- go to the Terminal and enter the browser folder, for example the Orbita 145 version
+- set new permissions for **chrome-sandbox**
+  ```bash bash
+  cd ~/.gologin/browser/orbita-browser-145
+  sudo chown root:root chrome-sandbox
+  sudo chmod 4755 chrome-sandbox
+  ```
+
 ### Android
 
 To use Gologin on Android, you will need two apps installed on your phone: the **Gologin app** and **Orbita browser**. Both apps are available on the Google Play Store.
@@ -102,4 +112,4 @@ Gologin does **not** support the following platforms:
 - [Updating the Gologin app](https://gologin.com/docs/general/updating-the-gologin-app)
 
 \
-\
+\\
