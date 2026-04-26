@@ -215,50 +215,6 @@
         ]
       },
       {
-        "tab": "Guides & Best Practices",
-        "pages": [
-          {
-            "group": "Fundamentals",
-            "pages": [
-              "best-practices-overview",
-              "how-gologin-protects-your-identity",
-              "maintaining-trust-score",
-              "profile-hygiene-checklist",
-              "common-mistakes-to-avoid",
-              "facebook-meta-ads-1"
-            ]
-          },
-          {
-            "group": "Usage Patterns",
-            "pages": [
-              "creating-new-accounts-safely",
-              "managing-existing-accounts"
-            ]
-          },
-          {
-            "group": "Platform Guides",
-            "pages": [
-              "facebook-meta-ads",
-              "tik-tok-ads",
-              "google-ads-and-gmail",
-              "amazon-e-bay-shopify",
-              "reddit-quora",
-              "linkedin",
-              "crypto-and-kyc",
-              "web-scraping-targets",
-              "proxy-and-fingerprint-setup-per-platform"
-            ]
-          },
-          {
-            "group": "Templates",
-            "pages": [
-              "prebuilt-profiles",
-              "sample-team-setups"
-            ]
-          }
-        ]
-      },
-      {
         "tab": "Account & Collaboration",
         "pages": [
           {
@@ -268,6 +224,7 @@
               "general/team-collaboration/how-you-can-share-access",
               {
                 "group": "Access to Workspace and Folders",
+                "expanded": true,
                 "pages": [
                   "general/team-collaboration/team-members",
                   "general/team-collaboration/workspace-roles-and-permissions",
@@ -333,6 +290,50 @@
               "general/gologin-web-and-mobile",
               "general/updating-the-gologin-app",
               "general/data-safety"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Guides & Best Practices",
+        "pages": [
+          {
+            "group": "Fundamentals",
+            "pages": [
+              "best-practices-overview",
+              "how-gologin-protects-your-identity",
+              "maintaining-trust-score",
+              "profile-hygiene-checklist",
+              "common-mistakes-to-avoid",
+              "facebook-meta-ads-1"
+            ]
+          },
+          {
+            "group": "Usage Patterns",
+            "pages": [
+              "creating-new-accounts-safely",
+              "managing-existing-accounts"
+            ]
+          },
+          {
+            "group": "Platform Guides",
+            "pages": [
+              "facebook-meta-ads",
+              "tik-tok-ads",
+              "google-ads-and-gmail",
+              "amazon-e-bay-shopify",
+              "reddit-quora",
+              "linkedin",
+              "crypto-and-kyc",
+              "web-scraping-targets",
+              "proxy-and-fingerprint-setup-per-platform"
+            ]
+          },
+          {
+            "group": "Templates",
+            "pages": [
+              "prebuilt-profiles",
+              "sample-team-setups"
             ]
           }
         ]
