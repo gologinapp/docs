@@ -49,7 +49,7 @@
         "groups": [
           {
             "group": "Browser Profiles",
-            "icon": "user",
+            "icon": "window-flip",
             "pages": [
               {
                 "group": "Profile Management",
@@ -244,6 +244,7 @@
           },
           {
             "group": "Account settings",
+            "icon": "user",
             "expanded": true,
             "pages": [
               "general/account-and-billing/changing-your-email-and-pass",
@@ -253,26 +254,29 @@
             ]
           },
           {
-            "group": "Workspace settings & Payments",
+            "group": "Workspaces",
+            "icon": "list-dropdown",
             "pages": [
               "general/team-collaboration/workspaces",
-              "general/account-and-billing/workspace-settings",
-              "general/account-and-billing/change-plan",
-              "general/account-and-billing/payment-methods",
-              "general/account-and-billing/invoices",
-              "general/account-and-billing/promo-codes"
+              "general/account-and-billing/workspace-settings"
             ]
           },
           {
             "group": "Pricing & Subscription",
+            "icon": "money-bill",
             "pages": [
-              "general/account-and-billing/how-to-subscribe-to-gologin",
               "general/account-and-billing/pricing",
+              "general/account-and-billing/how-to-subscribe-to-gologin",
+              "general/account-and-billing/change-plan",
+              "general/account-and-billing/promo-codes",
+              "general/account-and-billing/payment-methods",
+              "general/account-and-billing/invoices",
               "general/account-and-billing/faq-subscription"
             ]
           },
           {
             "group": "Troubleshooting",
+            "icon": "wrench",
             "expanded": true,
             "pages": [
               "general/troubleshooting/common-errors",
