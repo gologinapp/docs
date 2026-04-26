@@ -45,7 +45,7 @@
         ]
       },
       {
-        "tab": "Profiles, Proxies & Teams",
+        "tab": "Profiles & Proxies",
         "groups": [
           {
             "group": "Browser Profiles",
@@ -193,17 +193,6 @@
             ]
           },
           {
-            "group": "Team Collaboration",
-            "icon": "users",
-            "pages": [
-              "general/team-collaboration/workspaces",
-              "general/team-collaboration/workspace-roles-and-permissions",
-              "general/team-collaboration/sharing-profiles",
-              "general/team-collaboration/accessing-shared-workspace-or-folders",
-              "general/team-collaboration/faq-team-collaboration"
-            ]
-          },
-          {
             "group": "Android Anti-Detect",
             "hidden": true,
             "pages": [
@@ -270,8 +259,32 @@
         ]
       },
       {
-        "tab": "Account & Support",
-        "groups": [
+        "tab": "Account & Collaboration",
+        "pages": [
+          {
+            "group": "Team Collaboration",
+            "icon": "users",
+            "pages": [
+              "general/team-collaboration/how-you-can-share-access",
+              {
+                "group": "Access to Workspace and Folders",
+                "pages": [
+                  "general/team-collaboration/team-members",
+                  "general/team-collaboration/workspace-roles-and-permissions",
+                  "general/team-collaboration/folder-access",
+                  "general/team-collaboration/workspace-access",
+                  "general/team-collaboration/accessing-shared-workspace-or-folders"
+                ]
+              },
+              {
+                "group": "Sharing Profiles",
+                "pages": [
+                  "general/team-collaboration/sharing-profiles"
+                ]
+              },
+              "general/team-collaboration/faq-team-collaboration"
+            ]
+          },
           {
             "group": "Account settings",
             "expanded": true,
@@ -283,12 +296,21 @@
             ]
           },
           {
-            "group": "Payments & Subscription",
+            "group": "Workspace settings & Payments",
             "pages": [
-              "general/account-and-billing/pricing",
+              "general/team-collaboration/workspaces",
+              "general/account-and-billing/workspace-settings",
+              "general/account-and-billing/change-plan",
               "general/account-and-billing/payment-methods",
-              "general/account-and-billing/promo-codes",
               "general/account-and-billing/invoices",
+              "general/account-and-billing/promo-codes"
+            ]
+          },
+          {
+            "group": "Pricing & Subscription",
+            "pages": [
+              "general/account-and-billing/how-to-subscribe-to-gologin",
+              "general/account-and-billing/pricing",
               "general/account-and-billing/faq-subscription"
             ]
           },
