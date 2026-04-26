@@ -227,14 +227,13 @@
                 "expanded": true,
                 "pages": [
                   "general/team-collaboration/team-members",
-                  "general/team-collaboration/workspace-roles-and-permissions",
-                  "general/team-collaboration/folder-access",
                   "general/team-collaboration/workspace-access",
                   "general/team-collaboration/accessing-shared-workspace-or-folders"
                 ]
               },
               {
                 "group": "Profile Sharing",
+                "expanded": true,
                 "pages": [
                   "general/team-collaboration/sharing-profiles"
                 ]
