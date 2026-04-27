@@ -235,7 +235,8 @@
                 "group": "Profile Sharing",
                 "expanded": true,
                 "pages": [
-                  "general/team-collaboration/sharing-profiles"
+                  "general/team-collaboration/sharing-profiles",
+                  "general/team-collaboration/accessing-shared-profiles"
                 ]
               },
               "general/team-collaboration/faq-team-collaboration"
