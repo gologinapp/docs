@@ -147,8 +147,9 @@
                 "expanded": true,
                 "pages": [
                   "proxy/proxy-management/proxy-manager/overview",
-                  "proxy/proxy-management/proxy-manager/navigation",
                   "proxy/proxy-management/adding-proxies",
+                  "proxy/proxy-management/proxy-manager/navigation",
+                  "proxy/proxy-management/proxy-manager/proxies-page",
                   "proxy/proxy-management/proxy-manager/proxy-archive",
                   "proxy/proxy-management/proxy-testing-and-troubleshooting"
                 ]
