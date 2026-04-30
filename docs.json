@@ -221,6 +221,7 @@
           {
             "group": "Team Collaboration",
             "icon": "users",
+            "expanded": true,
             "pages": [
               "general/team-collaboration/how-you-can-share-access",
               {
