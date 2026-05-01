@@ -1,234 +1,99 @@
 ---
-title: "Profile parameters"
+title: "Profile settings"
 ---
 
-Profile settings define how your browser profile behaves and how websites see it.
+Each browser profile in Gologin has its own set of settings that define how it looks to websites. These settings are organized across tabs at the top of the profile editor.
 
-In Gologin, each profile simulates a real device - including IP, fingerprint, location, and behavior.
+You can reach profile settings by clicking **3 dots on the profile** \> **Settings**.
 
 ## Overview
 
-This is where you create and configure your profile.
+This tab is where you set the operating system the profile will appear to run on and generate its core fingerprint.
 
-**What you set here:**
+**Operating system** - Choose between Windows 10, Windows 11, Mac Intel, Mac ARM, Linux, and Android. This determines the OS the profile reports to every website it visits.
 
-- profile name and folder
-- operating system
-- fingerprint (via **New Fingerprint**)
+<Warning>
+  The operating system can only be selected when creating a profile. Once a profile is saved, this option is locked and cannot be changed. If you need a different OS, create a new profile.
+</Warning>
 
-This is the foundation of your digital identity.
+**New Fingerprint** - Clicking this generates a fresh set of fingerprint values for the profile - things like screen resolution, fonts, graphics details, and other signals websites use to identify browsers. Use this if you want to reset the profile's identity. It does not change the OS, erase cookies or other browser data.
+
+The **Profile Summary** panel on the right updates as you make changes and gives you a quick overview of the profile's current fingerprint.
 
 <Frame>
-  ![Screenshot 4](/images/Screenshot_4.png)
+  ![Settings Overview](/images/settings_overview.png)
 </Frame>
 
 ## Proxy
 
-Defines your IP address and connection type.
+This tab controls which proxy the profile uses when browsing.
 
-### Options
-
-- **Gologin proxy** - built-in
-- **Your proxy** - external provider
-- **Without proxy** - not recommended
-
-### Proxy settings
-
-- **Country** — location of your IP
-- **Type**:
-  - Residential
-  - Mobile
-  - Datacenter
-
-### Check proxy
-
-Allows you to verify if the proxy is working correctly.
+- **Gologin proxy** - Use a proxy from Gologin's built-in proxy service.
+- **Your proxy** - Paste in your own proxy from an external provider.
+- **Without proxy** - The profile uses your real internet connection. The IP address visible to websites will be your actual IP.
 
 <Frame>
-  ![Screenshot 7](/images/Screenshot_7-1.png)
+  ![Settings Proxy](/images/settings_proxy.png)
 </Frame>
 
-**Best practice**
-
-- Always use a proxy
-- Match proxy country with your profile settings
+The proxy you assign here determines the IP address that websites see when this profile is running. It also affects timezone and geolocation if those are set to follow the IP automatically.
 
 ## Timezone
 
-Controls your system time inside the profile.
+This tab sets the timezone the profile reports to websites.
 
-Automatically sets your timezone based on your proxy IP.
+By default, the toggle **Fill timezone based on the external IP** is on, which means the profile automatically uses the timezone that matches its proxy's location. This keeps the profile internally consistent - a profile with a US proxy will report a US timezone, which is what a real user in that location would have.
 
-You can manually choose a timezone from the list.
+<Note>
+  It's recommended to leave this on auto and not change it manually. If the timezone doesn't match the proxy location, it can look suspicious to websites. Only change this if you have a specific reason to.
+</Note>
 
 <Frame>
-  ![Timezone](/images/timezone.png)
+  ![Settings Timezone](/images/settings_timezone.png)
 </Frame>
 
 ## Extensions
 
-Add browser extensions to your profile.
+This tab is where you install browser extensions into the profile. Each profile manages its own extensions separately - adding one here doesn't affect any other profile.
 
-**Use cases**
+Click **Add extensions** to browse and install extensions for this profile.
 
-- crypto wallets
-- automation tools
-- ad tools
+For a full walkthrough of how extensions work in Gologin profiles, see [Extensions](/browser-profiles/profile-features/browser-extensions/browser-extensions).
 
 <Frame>
-  ![0319(20)](/images/0319\(20\).gif)
+  ![Settings Extensions](/images/settings_extensions.png)
 </Frame>
 
 ## Bookmarks
 
-Preload websites for faster access.
+This tab lets you add bookmarks to the profile's bookmarks bar. Paste them into the text field using one of these formats:
 
-**Useful for:**
+- `folder::name::url` - creates a bookmark inside a named folder
+- `name::url` - creates a named bookmark directly on the bar
+- `url` - adds the URL directly with no custom name
 
-- Facebook Ads
-- Business Manager
-- frequently used dashboards
+Each line is a separate bookmark. They appear in the bookmarks bar inside Orbita when the profile is running.
 
 <Frame>
-  ![Screenshot 9](/images/Screenshot_9.png)
+  ![Settings Bookmarks](/images/settings_bookmarks.png)
 </Frame>
 
 ## Geolocation
 
-Controls location access inside the browser.
+This tab controls what happens when a website asks for your location - for example, a maps app asking "Allow this site to know your location?"
 
-**Modes:**
+There are three options:
 
-- **Prompt (recommended)** — Ask every time. Best balance between control and consistency.
-- **Allow** — Always share location. Use when platforms require it.
-- **Block** — Never share location. Use if location is not needed.
+- **Prompt** - The browser asks you each time a site requests location access. This is the default and mimics how a real browser behaves.
+- **Allow** - Location access is automatically granted to any site that requests it.
+- **Block** - All location requests are silently denied.
 
-<Frame>
-  ![Screenshot 10](/images/Screenshot_10-1.png)
-</Frame>
+The toggle **Fill geolocation based on the external IP** is on by default. When enabled, Gologin sets the profile's reported coordinates to match the proxy's location automatically.
 
-## Advanced
-
-Advanced settings control your browser fingerprint and environment.\
-In most cases, you don’t need to change them.
-
-<Warning>
-  We recommend keeping these settings default, as every new profile already comes set up with optimal settings for your hardware and will work with most websites.
-
-  Only make changes if you know what you're doing.
-</Warning>
-
-### Navigator
-
-Defines how your browser identifies itself to websites.
-
-- **User-Agent** — browser and OS identity
-- **Orbita version** — browser version used in the profile
-- **Screen resolution** — screen size reported to websites
-- **Languages** — browser language (can match proxy IP)
-- **Platform** — OS type (Windows, Mac, etc.)
-- **CPU threads / RAM** — device performance parameters
-- **Do Not Track** — sends a “do not track” request
-
-<Tip>
-  Keep these consistent with your proxy and use case.
-</Tip>
+<Note>
+  It's recommended to leave this toggle on. If you turn it off and the geolocation doesn't match the proxy IP, the mismatch can be a signal to detection systems. Only adjust this manually if you know what coordinates you want to use and why.
+</Note>
 
 <Frame>
-  ![Screenshot 11](/images/Screenshot_11-2.png)
+  ![Settings Geolocation](/images/settings_geolocation.png)
 </Frame>
-
-### Fonts & Media Devices
-
-Controls system-level fingerprint signals.
-
-- **Enable fonts list masking** — hides real fonts
-- **Browser profile fonts list** — predefined font set
-- **Mask media devices** — replaces real devices
-- **Video / Audio inputs & outputs** — number of devices
-
-👉 Keep masking enabled to avoid hardware leaks.
-
-<Frame>
-  ![Image](/images/image-4.png)
-</Frame>
-
-### Hardware fingerprint
-
-Controls how your browser is identified based on rendering behavior.
-
-These parameters affect how websites detect your device:
-
-- **Canvas** — image rendering
-- **Client Rects** — element rendering
-- **Audio Context** — audio processing
-- **WebGL Image / WebGL Metadata** — GPU behavior
-- **WebGL Vendor / WebGL Renderer** — graphics identity
-
-**Modes:**
-
-- **Noise** — adds consistent variation to reduce tracking (recommended)
-- **Off** — no masking
-- **Block / Mask** — hides real values
-
-Use Noise or Mask for better privacy and stability.
-
-<Frame>
-  ![Image](/images/image-7.png)
-</Frame>
-
-### Storage, plugins & other
-
-Controls what data is stored in the profile and how the browser behaves during use.
-
-- **Enable Local Storage** — allows websites to store data (sessions, preferences).\
-  Recommended to keep enabled to avoid losing data between sessions or devices.
-- **Enable Extension storage** — allows extensions to store their data and settings.\
-  Enable if you use browser extensions.
-- **Enable potentially vulnerable plugins** — enables built-in plugins (AdobePDF, Widevine, Native Client). Disabled by default for safety. Enable only if required.
-- **Active session lock** — prevents launching the same profile on multiple devices at the same time.
-- **Enable Google services** — allows the browser to use Google services.\
-  Helps mimic normal browser behavior.
-- **Enable browser bookmark saving** — saves bookmarks inside the profile.
-- **Enable browser history saving** — saves browsing history.\
-  May increase profile size.
-- **Enable password saving** — stores and autofills login credentials.\
-  Data is securely encrypted.
-- **Enable session saving** — saves session state (open tabs, logins).
-- **Enable System Extensions** — installs OS-level extensions into the profile.\
-  May trigger extension prompts on launch.
-- **WebRTC** — controls IP exposure. Based on IP (recommended) matches proxy IP; Off disables WebRTC and may look unusual.
-
-<Frame>
-  ![Image](/images/image-9.png)
-</Frame>
-
-<Warning>
-  Avoid changing these after using the profile — it may break consistency and trust.
-</Warning>
-
-## Cookies
-
-Import session data into your profile.
-
-**Why use it:**
-
-- log into accounts without password
-- transfer sessions
-
-<Frame>
-  ![Image](/images/image-10.png)
-</Frame>
-
-## Best practices
-
-- Do not change fingerprint after first use
-- Always use a proxy
-- Keep all settings consistent (IP, timezone, language)
-- One profile = one identity
-
-## Key takeaway
-
-Your profile is your identity.
-
-The more consistent it is — the more stable your accounts will be.

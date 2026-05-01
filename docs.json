@@ -82,11 +82,10 @@
               {
                 "group": "Profile Settings",
                 "pages": [
-                  "general/account-and-billing/active-sessions",
-                  "profile-settings-overview",
                   "profile-parameters",
                   "default-profile-settings",
-                  "updating-your-browser-profile"
+                  "updating-your-browser-profile",
+                  "general/account-and-billing/active-sessions"
                 ]
               },
               {
