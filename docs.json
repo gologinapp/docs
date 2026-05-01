@@ -52,6 +52,13 @@
             "icon": "window-flip",
             "pages": [
               {
+                "group": "Overview",
+                "pages": [
+                  "what-is-a-browser-profile",
+                  "orbita-browser"
+                ]
+              },
+              {
                 "group": "Profile Management",
                 "expanded": true,
                 "pages": [
@@ -249,6 +256,7 @@
             "icon": "user",
             "expanded": true,
             "pages": [
+              "general/account-and-billing/overview",
               "general/account-and-billing/changing-your-email-and-pass",
               "general/account-and-billing/two-factor-authentication",
               "general/account-and-billing/affiliate-program",

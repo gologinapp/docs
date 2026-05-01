@@ -1,0 +1,54 @@
+---
+title: "Orbita browser"
+---
+
+When you click **Run** on a profile in Gologin, a browser window opens. That browser is **Orbita**.
+
+It looks exactly like Google Chrome - same layout, same tabs, same menus. The difference is what happens behind the scenes when a website tries to identify you.
+
+<Frame>
+  ![Orbita Browser](/images/orbita_browser.png)
+</Frame>
+
+## Why we built our own browser
+
+Every browser has an identity problem. When you visit a website, the site can quietly ask your browser dozens of questions about the device it's running on: what GPU you have, what fonts are installed, what your screen resolution is, how your browser renders graphics, and more. The answers to these questions form a fingerprint that identifies you - even if you use a VPN or clear your cookies.
+
+Standard Chrome doesn't try to hide any of this. It answers every question truthfully, with your real device's data.
+
+## What Orbita actually changes
+
+When a website asks Orbita for information about the device it's running on, Orbita returns the profile's values, not your computer's real values. This covers things like:
+
+- The browser version and operating system reported to sites
+- Screen size and resolution
+- Graphics card details
+- The list of fonts available on the device
+- How the browser renders graphics and audio (used for fingerprinting)
+- Your timezone and language
+- Your IP exposure through video and audio features (WebRTC)
+- And some more things under the hood
+
+From the website's point of view, it's talking to whatever device the profile is configured to be - not your actual computer.
+
+## Each profile is fully isolated
+
+When you open two profiles, each one runs in a completely separate environment. Their cookies, saved logins, browsing history, and session data have nothing to do with each other. Closing a profile saves everything inside it, and it picks up exactly where it left off next time.
+
+This isolation is what makes Gologin useful for managing multiple accounts. The accounts don't share any information at the browser level.
+
+## Does it feel different to use?
+
+No. Orbita is built on the same open-source foundation as Chrome, so the experience is identical to using Chrome. Bookmarks, extensions, keyboard shortcuts, developer tools — all the same. The changes Orbita makes are invisible to the person browsing.
+
+## Keeping Orbita up to date
+
+Orbita tracks Chrome's version releases. This matters because a browser reporting an outdated version looks suspicious to websites. Gologin updates Orbita regularly, and you can update individual profiles to the latest browser version from the profile menu.
+
+<Tip>
+  If you have older profiles, it's worth checking that they're running the latest Orbita version. You can do this from the three-dot menu next to any profile.
+</Tip>
+
+## Orbita on Android
+
+Gologin also has an Android app that uses Orbita as its browser engine. On a phone, Orbita runs natively on the device - meaning the sensor data websites can detect (motion, battery, screen type) comes from the real phone hardware, not a simulation. This makes mobile profiles harder to distinguish from a genuine mobile user.

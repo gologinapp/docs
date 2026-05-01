@@ -1,0 +1,68 @@
+---
+title: "What is a browser profile"
+---
+
+A **browser profile** in Gologin is a self-contained virtual browser. It looks and behaves exactly like a real browser installed on a real computer - but it lives inside Gologin and can be created, saved, switched, or deleted in seconds.
+
+Each profile has its own:
+
+- Unique browser [fingerprint](/how-browser-fingerprints-work) (more on this below)
+- Cookies and local storage
+- Browsing history
+- Saved passwords and extensions
+- Proxy connection
+
+When you open a profile, websites see it as a completely separate person visiting from a different device. When you close it, everything is saved exactly as you left it.
+
+## Why does this matter? Understanding browser fingerprints
+
+Before diving deeper into profiles, you need to understand one concept: the **browser fingerprint**.
+
+Every time you visit a website, your browser quietly sends dozens of technical signals about your device and setup. Things like:
+
+- What browser you're using and its version
+- Your operating system
+- Screen resolution
+- The fonts installed on your computer
+- Your timezone and language
+- How your graphics card renders images
+- Whether you're using a touchscreen
+
+Websites collect all of these signals and combine them into a unique "fingerprint" that identifies you — even if you clear your cookies, use a VPN, or open an incognito window.
+
+<Note>
+  Incognito mode hides your browsing history from other people using the same computer. It does **not** hide your browser fingerprint from websites. Every incognito window still looks exactly like your regular browser to the outside world.
+</Note>
+
+This is why simply using multiple accounts in different tabs doesn't work. All those tabs share the same fingerprint, and websites can tell they all belong to the same person.
+
+## How a Gologin profile solves this
+
+When you create a browser profile in Gologin, the app builds a complete fake-but-believable browser identity from scratch.
+
+Gologin generates realistic values for every fingerprint parameter - a plausible screen size, a believable set of fonts, a consistent timezone, a matching user agent string, and so on. All of these values are stored inside the profile and presented to any website you visit while using it.
+
+## How profiles are stored
+
+Gologin stores your profiles in the cloud. This means:
+
+- You can open any profile from any computer where Gologin is installed
+- Profiles survive if your local machine crashes or is replaced
+- You can share profiles with teammates, who can use the same saved session without needing to log in again
+
+## The difference between a profile and an incognito window
+
+|  | Incognito Window | Gologin Profile |
+| --- | --- | --- |
+| Hides browsing history locally | ✅ | ✅ |
+| Clears cookies on close | ✅ | ❌ (cookies are saved) |
+| Changes your browser fingerprint | ❌ | ✅ |
+| Changes your IP address | ❌ | ✅ (with proxy) |
+| Can be saved and reopened | ❌ | ✅ |
+| Looks like a different device | ❌ | ✅ |
+
+Incognito is a privacy tool for your local device. A GoLogin profile is a full identity replacement for the internet.
+
+## Summary
+
+A browser profile in Gologin is a saved virtual browser with its own fingerprint, cookies, and proxy. Opening one makes you look like an entirely different person on a different device to any website you visit. Closing it saves your session so you can return to it anytime. This lets you manage multiple separate online identities from a single computer - cleanly, safely, and without the accounts being linked to each other or back to you.
