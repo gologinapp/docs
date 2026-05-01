@@ -83,6 +83,7 @@
                 "group": "Profile Settings",
                 "pages": [
                   "profile-parameters",
+                  "general/account-and-billing/advanced-profile-settings",
                   "default-profile-settings",
                   "updating-your-browser-profile",
                   "general/account-and-billing/active-sessions"
