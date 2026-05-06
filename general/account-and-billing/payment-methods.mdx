@@ -27,6 +27,29 @@ Currently, you cannot change the payment method without making a payment. Here's
 
 If you want to cancel the current subscription, you just need to remove your payment method from your account. Go to the **main menu at the top-right \>** **Settings & Members \> Billing Plans \> Payment Methods \> Cancel subscription.**
 
+## Available payment methods
+
+Gologin supports multiple payment methods for subscription and proxy traffic top-up.
+
+### Subscription
+
+Subscription payments can include add-ons for team members and proxy traffic. There are two types of subscription payments: **recurring** and **one-time**.
+
+**Recurring payments** are charged automatically before each new billing period starts. The following methods support recurring payments:
+
+- **Stripe** - credit and debit cards, Google Pay, Apple Pay
+- **PayPal**
+
+**One-time payments** are charged once at the time of purchase and do not renew automatically. The following methods support one-time payments:
+
+- **Stripe** - WeChat Pay, Pix, Cash App, Amazon Pay, US or SEPA bank account
+- **Cryptomus** - cryptocurrency payments
+
+### Proxy traffic top-up
+
+- **Paddle** - credit and debit cards only
+- **Cryptomus** - cryptocurrency payments
+
 ## Additional payment methods info
 
 ### Cryptocurrency payments
@@ -43,11 +66,20 @@ Gologin accepts cryptocurrency payments in the following coins:
   Only send ETH on the **ERC-20 network**. If you send crypto on the wrong network (e.g., TRC-20, BEP-20), the payment **will not arrive and cannot be recovered**. Always double-check the network before confirming your transaction.
 </Warning>
 
-After sending a crypto payment, allow some time for the transaction to be confirmed on the blockchain. If your subscription is not updated after the transaction has been confirmed, restart the GoLogin app and wait up to 24 hours. If the issue persists, contact support with your transaction hash.
+After sending a crypto payment, allow some time for the transaction to be confirmed on the blockchain. If your subscription is not updated after the transaction has been confirmed, restart the Gologin app and wait up to 24 hours. If the issue persists, contact support with your transaction hash.
 
-### US Bank account payments
+### Regional payment methods
 
-Gologin accepts US bank account payments via Stripe. This method works differently from cards - the payment is not instant.
+Some payment methods are only available in specific countries. For example:
+
+- **WeChat Pay** is available for users in China
+- **Pix** is available for users in Brazil
+
+To see these options on the checkout page, make sure you are connected with an IP address from the corresponding country - otherwise the option will not appear.
+
+### US and SEPA Bank account payments
+
+Gologin accepts US and SEPA bank account payments via Stripe. This method works differently from cards - the payment is not instant.
 
 After completing your payment, expect a **delay of 3–5 business days** before it is credited to your account. Your Gologin subscription or plan will not activate until the funds are confirmed.
 
@@ -57,8 +89,6 @@ Keep this in mind if you're on a deadline - for immediate access, use a card or 
 
 Some corporate or business credit cards may be declined by our payment processor. If your corporate card is not accepted:
 
-- Try using a **personal credit or debit card** instead.
-- Use **PayPal** as an alternative payment method.
-- Pay with **cryptocurrency** (see above).
-
-If you need an invoice for your organization, go to **main menu at the top-right \> Settings & Members \> Billing Plans \> Payment History \> Download receipt**.
+- Try using a **personal credit or debit card** instead
+- Use **PayPal** as an alternative payment method
+- Pay with **cryptocurrency** (see above)
