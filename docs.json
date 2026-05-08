@@ -176,17 +176,16 @@
                   "proxy/gologin-proxies/what-are-gologin-proxies",
                   "proxy/gologin-proxies/how-gologin-proxies-work-and-what-they-offer",
                   "proxy/proxy-management/gologin-vs-3rd-party-proxies",
-                  "proxy/gologin-proxies/how-much-proxy-traffic-do-i-need",
-                  "proxy/gologin-proxies/purchasing-gologin-proxies"
+                  "proxy/gologin-proxies/how-much-proxy-traffic-do-i-need"
                 ]
               },
               {
                 "group": "Managing Gologin Proxies",
                 "expanded": true,
                 "pages": [
+                  "proxy/gologin-proxies/purchasing-gologin-proxies",
                   "proxy/gologin-proxies/gologin-proxy-management/adding-your-first-proxy",
                   "proxy/gologin-proxies/gologin-proxy-management/gologin-proxy-settings",
-                  "proxy/gologin-proxies/gologin-proxy-management/view-and-top-up-proxy-traffic",
                   "proxy/gologin-proxies/website-compatibility-checker"
                 ]
               },
