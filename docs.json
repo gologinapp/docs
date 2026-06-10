@@ -295,7 +295,8 @@
               "general/troubleshooting/proxy-not-working",
               "general/troubleshooting/profile-data-disappeared",
               "general/troubleshooting/wrong-ip-my-ip-is-leaking",
-              "general/troubleshooting/wrong-proxy-location"
+              "general/troubleshooting/wrong-proxy-location",
+              "general/troubleshooting/payments-and-subscription"
             ]
           },
           {
