@@ -212,6 +212,15 @@
             ]
           },
           {
+            "group": "Gologin Web App",
+            "icon": "cloud",
+            "pages": [
+              "overview-2",
+              "key-things-to-note",
+              "downloading-and-uploading-files"
+            ]
+          },
+          {
             "group": "Gologin Android App",
             "icon": "mobile",
             "pages": [
