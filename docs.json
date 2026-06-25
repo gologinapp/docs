@@ -212,7 +212,7 @@
             ]
           },
           {
-            "group": "Gologin Web App",
+            "group": "Gologin Web app",
             "icon": "cloud",
             "pages": [
               "overview-2",
@@ -221,7 +221,7 @@
             ]
           },
           {
-            "group": "Gologin Android App",
+            "group": "Gologin Android app",
             "icon": "mobile",
             "pages": [
               "overview-1",
