@@ -116,7 +116,7 @@
               {
                 "group": "Profile Export & Import",
                 "pages": [
-                  "export-and-import-overvoew",
+                  "export-and-import-overview",
                   "profile-export-and-import"
                 ]
               },
@@ -212,7 +212,17 @@
             ]
           },
           {
-            "group": "Gologin Android App",
+            "group": "Gologin Web app",
+            "icon": "cloud",
+            "pages": [
+              "overview-2",
+              "key-things-to-note",
+              "downloading-and-uploading-files",
+              "faq-web-app-and-cloud-browser"
+            ]
+          },
+          {
+            "group": "Gologin Android app",
             "icon": "mobile",
             "pages": [
               "overview-1",
@@ -246,7 +256,8 @@
                 "expanded": true,
                 "pages": [
                   "general/team-collaboration/sharing-profiles",
-                  "general/team-collaboration/accessing-shared-profiles"
+                  "general/team-collaboration/accessing-shared-profiles",
+                  "general/team-collaboration/untitled-page"
                 ]
               },
               "general/team-collaboration/faq-team-collaboration"
@@ -294,7 +305,8 @@
               "general/troubleshooting/proxy-not-working",
               "general/troubleshooting/profile-data-disappeared",
               "general/troubleshooting/wrong-ip-my-ip-is-leaking",
-              "general/troubleshooting/wrong-proxy-location"
+              "general/troubleshooting/wrong-proxy-location",
+              "general/troubleshooting/payments-and-subscription"
             ]
           },
           {
