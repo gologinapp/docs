@@ -215,7 +215,7 @@
             "group": "Gologin Web app",
             "icon": "cloud",
             "pages": [
-              "overview-2",
+              "gologin-web-overview",
               "key-things-to-note",
               "downloading-and-uploading-files",
               "faq-web-app-and-cloud-browser"
@@ -225,7 +225,7 @@
             "group": "Gologin Android app",
             "icon": "mobile",
             "pages": [
-              "overview-1",
+              "gologin-android-overview",
               "creating-and-managing-profiles",
               "account-and-app-settings",
               "faq"
@@ -314,7 +314,7 @@
             "pages": [
               "general/storage-and-cache",
               "general/migration-from-other-tools",
-              "general/gologin-web-and-mobile",
+              "general/gologin-web-and-chrome-os",
               "general/updating-the-gologin-app",
               "general/data-safety"
             ]
