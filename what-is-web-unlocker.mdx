@@ -25,7 +25,7 @@ Modern websites are hard to scrape. A plain `curl` or `requests` call often retu
 Every successful task returns three types of content:
 
 | Content | Format | Description |
-|---|---|---|
+| --- | --- | --- |
 | **HTML** | Full HTML string | The complete rendered DOM of the page |
 | **Screenshot** | PNG image | A screenshot of the page as it appeared in the browser |
 | **Archive** | ZIP (HAR) | Network log with all requests, headers, and resources |
@@ -39,13 +39,13 @@ Web Unlocker uses **success-based billing** — you are only charged when the re
 Pricing scales with volume:
 
 | Plan | Price per 1,000 requests | Monthly price | Included requests | Overage per 1,000 |
-|---|---|---|---|---|
-| Growth | $0.98 | $49/mo | 50,000 | $1.20 |
-| Professional | $0.75 | $149/mo | 200,000 | $1.00 |
-| Business | $0.60 | $299/mo | 500,000 | $0.90 |
-| Premium | $0.45 | $899/mo | 2,000,000 | $0.70 |
+| --- | --- | --- | --- | --- |
+| Growth | \$0.98 | \$49/mo | 50,000 | \$1.20 |
+| Professional | \$0.75 | \$149/mo | 200,000 | \$1.00 |
+| Business | \$0.60 | \$299/mo | 500,000 | \$0.90 |
+| Premium | \$0.45 | \$899/mo | 2,000,000 | \$0.70 |
 
-For custom volume pricing, contact **webunlocker@gologin.com**.
+For custom volume pricing, contact [**webunlocker@gologin.com**](mailto:webunlocker@gologin.com).
 
 ---
 
@@ -53,8 +53,8 @@ For custom volume pricing, contact **webunlocker@gologin.com**.
 
 Running your own proxy infrastructure is expensive and fragile. Web Unlocker handles everything as a managed service:
 
-| | Web Unlocker | Self-managed proxies |
-|---|---|---|
+|  | Web Unlocker | Self-managed proxies |
+| --- | --- | --- |
 | Setup | One API call | Weeks of infrastructure work |
 | CAPTCHA solving | Built-in | Build or buy separately |
 | Browser fingerprinting | Built-in | Build or buy separately |
@@ -96,7 +96,7 @@ curl "https://parsing.webunlocker.gologin.com/v1/scrape?url=https%3A%2F%2Fexampl
   -H "apikey: YOUR_API_KEY"
 ```
 
-See the [Quickstart](./web-unlocker-quickstart.md) for examples in Python and JavaScript, or [Use Cases](./web-unlocker-use-cases.md) for common integration patterns.
+See the [Quickstart](/web-unlocker-quick-start) for examples in Python and JavaScript, or [Use Cases](./web-unlocker-use-cases.md) for common integration patterns.
 
 ---
 
@@ -104,10 +104,10 @@ See the [Quickstart](./web-unlocker-quickstart.md) for examples in Python and Ja
 
 In addition to the raw HTTP API, Gologin provides higher-level tools for working with Web Unlocker:
 
-- **[Web Unlocker SDK and CLI](/scraping-api-sdk-and-cli)** — minimal TypeScript SDK (`gologin-webunlocker`) with typed methods and a CLI for quick scraping
-- **[Gologin Web Access CLI](/cli-tools/web-access)** — unified CLI that combines Web Unlocker with Cloud Browser, adding batch scraping, crawling, search, change tracking, and structured extraction
-- **[AI Skills](/api-reference/ai-integrations/ai-skills)** — plug-and-play skills for Claude Code agents
+- [**Web Unlocker SDK and CLI**](/scraping-api-sdk-and-cli) — minimal TypeScript SDK (`gologin-webunlocker`) with typed methods and a CLI for quick scraping
+- [**Gologin Web Access CLI**](/cli-tools/web-access) — unified CLI that combines Web Unlocker with Cloud Browser, adding batch scraping, crawling, search, change tracking, and structured extraction
+- [**AI Skills**](/api-reference/ai-integrations/ai-skills) — plug-and-play skills for Claude Code agents
 
 ## Get access
 
-Web Unlocker is currently in early access. To get an API key, contact: **ermakova.t@gologin.com**
+Web Unlocker is currently in early access. To get an API key, contact: [**ermakova.t@gologin.com**](mailto:ermakova.t@gologin.com)

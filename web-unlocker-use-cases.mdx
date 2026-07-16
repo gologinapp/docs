@@ -1,5 +1,5 @@
 ---
-title: 'Web unlocker use cases'
+title: "Web unlocker use cases"
 ---
 
 Web Unlocker is a scraping API — you send a URL, it returns the fully rendered HTML. This page shows the most common ways to put that to use.
@@ -40,6 +40,7 @@ console.log(html);
 No browser to launch, no proxy to configure, no Cloudflare to fight. One call, you get the page.
 
 **Good for:**
+
 - Checking prices on a competitor's site
 - Pulling job listings, reviews, or product data
 - Monitoring pages for changes
@@ -51,7 +52,7 @@ No browser to launch, no proxy to configure, no Cloudflare to fight. One call, y
 
 Web Unlocker returns raw HTML. Pass that into an LLM to extract structured data, summarize content, or answer questions about the page — no parsing logic needed.
 
-### Python + OpenAI
+### Python \+ OpenAI
 
 ```python
 import requests
@@ -77,7 +78,7 @@ response = client.chat.completions.create(
 print(response.choices[0].message.content)
 ```
 
-### JavaScript + Anthropic
+### JavaScript \+ Anthropic
 
 ```javascript
 import Anthropic from "@anthropic-ai/sdk";
@@ -104,6 +105,7 @@ console.log(message.content[0].text);
 ```
 
 **Good for:**
+
 - Extracting structured data (prices, names, dates) without writing parsers
 - Summarizing articles or product pages
 - Comparing multiple pages and drawing conclusions
@@ -175,6 +177,7 @@ while True:
 The agent decides when to scrape and what URL to fetch. Web Unlocker handles the actual retrieval.
 
 **Good for:**
+
 - Research agents that browse the web autonomously
 - Price comparison or deal-finding bots
 - Competitive intelligence pipelines
@@ -215,6 +218,7 @@ for url, html in results:
 ```
 
 **Good for:**
+
 - Scraping entire product catalogs or listing pages
 - Bulk data collection for training datasets
 - Monitoring many pages simultaneously
@@ -224,7 +228,7 @@ for url, html in results:
 ## Summary
 
 | Use case | What you do | What you get |
-|---|---|---|
+| --- | --- | --- |
 | Scrape a single page | GET with URL param | Rendered HTML |
 | Feed into an LLM | Scrape → pass to model | Extracted data or summary |
 | AI agent tool | Agent calls on demand | Real-time web content |
@@ -267,11 +271,11 @@ See [Web Access CLI](/cli-tools/web-access) for the full command reference.
 ## Summary
 
 | Use case | What you do | What you get |
-|---|---|---|
+| --- | --- | --- |
 | Scrape a single page | GET with URL param | Rendered HTML |
 | Feed into an LLM | Scrape → pass to model | Extracted data or summary |
 | AI agent tool | Agent calls on demand | Real-time web content |
 | Bulk scraping | Concurrent requests | HTML for each URL |
 | CLI workflows | `gologin-web-access` commands | Text, markdown, JSON, batch results |
 
-See [Quickstart](./web-unlocker-quickstart.md) to make your first request.
+See [Quickstart](/web-unlocker-quick-start) to make your first request.

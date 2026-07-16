@@ -31,14 +31,14 @@
               "getting-started/introduction/what-is-gologin-and-who-its-for",
               "getting-started/introduction/key-concepts-profiles-fingerprints-proxies",
               "getting-started/introduction/quick-start-from-zero-to-your-first-profile",
-              "getting-started/introduction/untitled-page"
+              "getting-started/introduction/extra-faq"
             ]
           },
           {
             "group": "Setup",
             "pages": [
               "getting-started/setup/supported-platforms-installation",
-              "getting-started/setup/untitled-page",
+              "getting-started/setup/creating-gologin-account",
               "getting-started/setup/first-time-checklist"
             ]
           }
@@ -72,7 +72,7 @@
               {
                 "group": "Profile Organization",
                 "pages": [
-                  "browser-profiles/profile-management/untitled-page",
+                  "browser-profiles/profile-management/folders",
                   "browser-profiles/profile-management/groups",
                   "browser-profiles/profile-management/add-more-info-columns",
                   "browser-profiles/profile-management/notes-and-tags",
