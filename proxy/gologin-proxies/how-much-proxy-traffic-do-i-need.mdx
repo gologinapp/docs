@@ -13,7 +13,12 @@ Every time a GoLogin profile sends or receives data through the proxy, it uses t
 - Submitting forms
 - Running automation scripts
 
-Traffic is only counted when you use Gologin's own built-in proxy network. **If you connect a third-party proxy to a profile, that traffic does not count against your Gologin allowance.**
+Traffic is only counted when you use Gologin residential, mobile, or datacenter proxies.
+
+**What does not count against your allowance:**
+
+- **Dedicated IPs.** A Dedicated IP has no traffic limit. Anything routed through it is unlimited, no matter how much data you use.
+- **Third-party proxies.** If you connect a proxy from an external provider, that traffic is billed by that provider, not by Gologin.
 
 ## Rough estimates by use case
 
@@ -42,6 +47,17 @@ Examples:
 | 20 crypto wallets, occasional use | 20 | 0.2 GB | ~4 GB |
 | 30 e-commerce accounts | 30 | 1 GB | ~30 GB |
 
+## Traffic or a Dedicated IP?
+
+Some proxy providers sell traffic in GB (like Gologin does for residential, mobile, and datacenter proxies), while others sell by number of IP addresses or by time period. Gologin now offers both.
+
+- **Buy traffic** when you need many different IPs and don't care which one you get - scraping, research, short-lived sessions, testing.
+- **Buy a Dedicated IP** when one account needs to keep the same IP forever - Amazon, eBay, LinkedIn, Meta Ads, PayPal, betting sites, anything that reviews login history. A Dedicated IP costs \$5/month per IP and includes unlimited traffic, so a single heavily used account can work out cheaper on a Dedicated IP than on a GB plan.
+
+<Tip>
+  If you're doing the math for a mixed setup: count only the profiles on rotating proxies when estimating GB. Profiles on a Dedicated IP don't enter the calculation at all.
+</Tip>
+
 ## I bought GB-based proxies from another provider — what does that mean?
 
 Some proxy providers sell traffic in GB (like GoLogin does), while others sell by number of IP addresses or by time period. If you're used to buying IPs rather than GB, here's how to think about it:
@@ -56,9 +72,9 @@ When your Gologin proxy traffic allowance is used up, profiles that use Gologin'
 
 To avoid interruptions:
 
--  Monitor your usage in the Gologin dashboard
--  Top up your proxy balance before it runs out
--  Consider using third-party proxies for high-traffic accounts (they don't consume your Gologin allowance)
+- Monitor your usage in the Gologin dashboard
+- Top up your proxy balance before it runs out
+- Consider using third-party proxies for high-traffic accounts (they don't consume your Gologin allowance)
 
 ## Using third-party proxies instead
 
