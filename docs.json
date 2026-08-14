@@ -73,7 +73,6 @@
                 "group": "Profile Organization",
                 "pages": [
                   "browser-profiles/profile-management/folders",
-                  "browser-profiles/profile-management/groups",
                   "browser-profiles/profile-management/add-more-info-columns",
                   "browser-profiles/profile-management/notes-and-tags",
                   "browser-profiles/profile-management/profile-sorting",
@@ -86,8 +85,7 @@
                   "profile-parameters",
                   "general/account-and-billing/advanced-profile-settings",
                   "default-profile-settings",
-                  "updating-your-browser-profile",
-                  "general/account-and-billing/active-sessions"
+                  "updating-your-browser-profile"
                 ]
               },
               {
