@@ -63,3 +63,19 @@ To reduce this risk, keep proxy, fingerprint, and timezone settings consistent.
 ### Can I turn on background notifications from websites or extensions in my profiles?
 
 Orbita doesn't have a way of sending background notifications for now.
+
+### Why can't I expand the browser window to full screen?
+
+A profile's browser window can't be larger than the **Screen Resolution** set in its settings. This is intentional. Websites can see both the screen size a profile reports and the actual size of the browser window. On a real device, the window is never larger than the screen, so a mismatch can make the profile look suspicious.
+
+To make the window larger:
+
+1. Open the profile **Settings** > **Advanced**.
+2. In **Screen Resolution**, choose a value that matches your monitor's resolution or is slightly lower.
+3. Save the settings and relaunch the profile.
+
+If you're already logged into accounts in this profile, keep in mind that websites may treat a resolution change as a new device and ask for additional verification.
+
+To have new profiles open at the right size from the start, set the screen resolution in [Default profile settings](/default-profile-settings). It will apply to all profiles you create afterwards.
+
+See also: [Advanced profile settings](/general/account-and-billing/advanced-profile-settings), [What's safe to change](/whats-safe-to-change)
