@@ -1,0 +1,157 @@
+---
+title: "LinkedIn"
+---
+
+Um guia prático para gerenciar contas do LinkedIn com o Gologin, que cobre geração de leads, prospecção, aquecimento de contas e acesso da equipe.
+
+O LinkedIn é uma das plataformas mais sensíveis à segurança no ecossistema do Gologin. Ele monitora padrões de login, consistência de IP e impressões digitais de dispositivo de forma mais rigorosa do que a maioria das redes sociais. Contas que apresentam sinais suspeitos são restringidas rapidamente, às vezes sem aviso.
+
+## Checklist rápido
+
+Antes de começar:
+
+- 1 conta = 1 perfil de navegador
+- 1 perfil = 1 proxy residencial estático ou móvel
+- Nunca troque o proxy de um perfil que já foi usado
+- Escolha para o perfil o mesmo SO do seu dispositivo
+- Não abra o mesmo perfil em dois dispositivos ao mesmo tempo
+
+## Passo 1. Escolha o proxy certo
+
+O LinkedIn é muito sensível a mudanças de IP. Use um proxy residencial estático ou um proxy móvel estático, ou seja, um IP dedicado que se mantém o mesmo em todas as sessões.
+
+<Warning>
+  Não use proxies rotativos, proxies de datacenter nem os proxies integrados do Gologin em contas do LinkedIn que sejam importantes para você. Um IP que muda entre sessões gera uma revisão de segurança imediata e, com frequência, o encerramento da sessão.
+</Warning>
+
+Se você e o membro da sua equipe estiverem na mesma cidade, podem usar a mesma localização de proxy (país/cidade). Se a equipe for distribuída, cada pessoa deve usar um proxy compatível com a região geográfica da conta do LinkedIn, e não com o local onde o membro da equipe está fisicamente.
+
+Tipos de proxy recomendados para o LinkedIn:
+
+- Residencial estático (o melhor para o gerenciamento de contas a longo prazo)
+- Móvel (bom para a criação e o aquecimento de contas novas)
+- Proxies ISP (estáveis, com nível de confiança razoável)
+
+Consulte os [provedores de proxy recomendados](https://gologin.com/best-proxy-server-services/) para ver serviços específicos.
+
+## Passo 2. Configure seu perfil no Gologin
+
+Crie um novo perfil para cada conta do LinkedIn.
+
+Configurações recomendadas:
+
+- **SO**: escolha o mesmo do seu dispositivo (Windows se você usa Windows, Mac se você usa Mac)
+- **Procuração**: atribua seu proxy estático antes do primeiro login
+- **Impressão digital**: mantenha os valores padrão e não personalize WebGL, Canvas ou AudioContext, a menos que tenha um motivo específico
+
+Depois de fazer login no LinkedIn em um perfil, **não altere as configurações de proxy nem de impressão digital.** O LinkedIn armazena informações do dispositivo no servidor. Uma mudança de impressão digital parece um dispositivo totalmente novo tentando acessar a conta.
+
+## Passo 3. Aqueça as contas novas
+
+Contas novas do LinkedIn que enviam pedidos de conexão ou mensagens imediatamente são restringidas rápido. O LinkedIn espera que contas novas se comportem como usuários reais: navegando, lendo e construindo presença aos poucos.
+
+Cronograma de aquecimento:
+
+| Período | O que fazer |
+| :-- | :-- |
+| Dia 0 | Complete o perfil: foto, título, seção "Sobre" e histórico profissional |
+| Dia 1-7 | Navegue pelo feed, visite perfis e siga algumas empresas |
+| Dia 8-14 | Curta e comente publicações. Ainda sem prospecção |
+| Semana 3 | Envie de 5 a 10 pedidos de conexão para pessoas que você "conhece" |
+| Semana 4\+ | Comece a prospecção gradual. Aumente os limites devagar |
+
+Níveis seguros de atividade
+
+| **Ação** | **Nível recomendado** |
+| :-- | :-- |
+| Curtidas / votos | 10–20 / dia |
+| Comentários | 2–3 / dia |
+| Publicações / respostas | Ocasionalmente |
+| Entrada em comunidades | Gradual |
+
+Essas são estimativas conservadoras. Os limites reais do LinkedIn variam conforme a idade da conta, o histórico de atividade e o tipo de assinatura.
+
+## Passo 4. Evite os banimentos mais comuns
+
+Situações que geram restrições imediatas no LinkedIn:
+
+- Fazer login a partir de um novo IP depois que a conta já estava ativa (use proxies estáticos)
+- Abrir o mesmo perfil em dois dispositivos ao mesmo tempo
+- Enviar mensagens idênticas para muitas pessoas em um curto período
+- Criar várias contas no mesmo dia com o mesmo padrão de configuração de perfil
+- Usar ferramentas de automação que não mantêm uma sessão consistente (veja a seção de automação abaixo)
+
+Situações que geram restrições gradualmente:
+
+- Alto volume de pedidos de conexão sem taxa de aceitação
+- Muitas visualizações de perfis sem interação
+- Publicar o mesmo conteúdo em várias contas
+- Contas sem atividade por semanas e que de repente fazem prospecção em massa
+
+## Passo 5. Compartilhe o acesso com sua equipe
+
+Para permitir que um membro da equipe acesse uma conta do LinkedIn no Gologin:
+
+1. Compartilhe o perfil com ele usando o **Compartilhamento de perfil** (ele precisa de uma conta gratuita do Gologin)
+2. Atribua a função **Pode executar** se ele só precisar abrir o perfil e trabalhar nele
+3. Atribua **Pode editar** se ele também precisar alterar as configurações
+
+<Warning>
+  Apenas uma pessoa deve trabalhar em um perfil do LinkedIn por vez. O LinkedIn detecta sessões simultâneas de locais diferentes e encerra as duas sessões ou aciona uma verificação de segurança.
+</Warning>
+
+Veja [Compartilhamento de perfis](https://gologin.com/docs/general/team-collaboration/sharing-profiles) para instruções passo a passo.
+
+## Ferramentas de automação
+
+O Gologin é compatível com as ferramentas de automação mais comuns para LinkedIn. O requisito principal é que a automação seja executada dentro do perfil do Gologin, e não como uma extensão de navegador separada em uma janela comum do Chrome.
+
+Abordagem compatível:
+
+- Execute as ferramentas de automação como extensões do Chrome instaladas dentro do perfil do Gologin
+- Use a API do Gologin para iniciar o perfil e depois conecte a automação à sessão de navegador em execução
+
+Abordagem incompatível:
+
+- Executar a automação em uma janela comum do Chrome enquanto usa o Gologin (as sessões são separadas e podem entrar em conflito)
+- Usar ferramentas de automação que abrem o próprio navegador fora do Gologin
+
+A automação deve sempre respeitar os limites diários do LinkedIn. Automação em alto volume e sem aquecimento é o caminho mais rápido para a restrição da conta.
+
+## Migração de perfis de outro navegador antidetect
+
+Se você está migrando do Dolphin Anty, do Multilogin ou de outro navegador antidetect, os dados do perfil do navegador (cookies, sessões e armazenamento local) podem ser exportados e importados para o Gologin.
+
+Passos:
+
+1. Exporte os cookies do seu navegador antidetect atual (a maioria oferece exportação em JSON)
+2. No Gologin, abra o perfil de destino e acesse **Biscoitos**
+3. Importe o arquivo de cookies
+
+Isso preserva sua sessão do LinkedIn, e você não precisa fazer login de novo. A impressão digital será diferente (o Gologin gera a sua própria), mas, desde que o IP do proxy continue o mesmo, o LinkedIn normalmente aceita a sessão como sendo do mesmo dispositivo.
+
+## Por que o LinkedIn encerra as sessões
+
+Os encerramentos de sessão no LinkedIn quase sempre são causados por um destes motivos:
+
+- O IP do proxy mudou: até uma pequena mudança de IP aciona uma revisão de segurança
+- O perfil foi aberto em um SO diferente: inconsistência na impressão digital
+- O perfil foi aberto em dois dispositivos ao mesmo tempo: sessão simultânea detectada
+- Longa inatividade seguida de atividade repentina: parece um sequestro de conta
+- Automação detectada: padrões de ação incomuns, em velocidade não humana
+
+Se você está tendo encerramentos de sessão frequentes, verifique primeiro o proxy: estático versus rotativo é a causa mais comum.
+
+## Veja também
+
+[Proxies estáticos vs. rotativos](https://gologin.com/docs/static-vs-dynamic-proxies)
+
+[O melhor proxy para o seu caso](https://gologin.com/docs/proxy/introduction/best-proxy-for-your-case)
+
+[Como adicionar e gerenciar proxies](https://gologin.com/docs/proxy/proxy-management/adding-proxies)
+
+[Como compartilhar perfis com sua equipe](https://gologin.com/docs/general/team-collaboration/sharing-profiles)
+
+[Erros comuns a evitar](https://gologin.com/docs/common-mistakes-to-avoid)
+
+[Como manter o trust score](https://gologin.com/docs/maintaining-trust-score)

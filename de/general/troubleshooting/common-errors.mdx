@@ -1,0 +1,425 @@
+---
+title: "Häufige Fehler"
+description: "Nachschlagewerk zu häufigen Fehlermeldungen in Gologin, ihren Ursachen und den passenden Lösungen."
+---
+
+Suchen Sie Ihren Fehler auf dieser Seite mit **Ctrl+F** (Windows) oder **Cmd+F** (macOS) – die meisten Überschriften enthalten den genauen Fehlertext.
+
+## Bevor Sie beginnen
+
+- **Vollständigen Fehler anzeigen.** Fahren Sie in der Profilliste mit der Maus über den Status **Error** des Profils, um die vollständige Meldung zu sehen.
+- **App vollständig beenden.** Wenn Sie das Gologin-Fenster schließen, wird die App nur ausgeblendet und läuft im Hintergrund weiter. Zum Beenden klicken Sie auf das Gologin-Symbol im Infobereich der Taskleiste (unter Windows unten rechts, unter macOS in der Menüleiste) und wählen **Quit**.
+- **Gologin und den Browser aktualisieren.** Laden Sie die neueste Version von [gologin.com/download](https://gologin.com/download) herunter und installieren Sie sie über die aktuelle Version – Ihre Profile bleiben erhalten. Um den Browser eines Profils zu aktualisieren, klicken Sie auf die drei Punkte neben dem Profil und wählen **Update browser**.
+- **Sie wenden sich an den Support?** Geben Sie die Profil-ID (drei Punkte neben dem Profil → **Copy ID**) und einen Screenshot des Fehlers an.
+
+## Fehler beim Starten von Profilen
+
+### "The profile is being run by another user"
+
+**So sieht es aus:** Das Profil startet nicht und zeigt diese Meldung an, auch wenn es scheinbar niemand sonst verwendet.
+
+**Ursache:** Gologin lässt nicht zu, dass dasselbe Profil gleichzeitig auf mehreren Geräten läuft. So werden Synchronisierungskonflikte sowie Probleme mit Cookies und Sitzungen vermieden. Sie sehen diese Meldung, wenn:
+
+- jemand, für den Sie das Profil freigegeben haben, es gerade geöffnet hat;
+- die Gologin-App gerade ein Update installiert (oben in der App sehen Sie eine Fortschrittsleiste);
+- die vorherige Sitzung des Profils nicht korrekt beendet wurde.
+
+**So beheben Sie das Problem:**
+
+1. Stellen Sie sicher, dass niemand, für den Sie das Profil freigegeben haben, es geöffnet hat, und warten Sie, bis ein App-Update abgeschlossen ist.
+2. Klicken Sie oben links in der App auf das Gologin-Logo und starten Sie das Profil erneut.
+3. Beenden Sie Gologin über den Infobereich der Taskleiste vollständig, starten Sie die App neu und starten Sie das Profil.
+4. Wenn der Fehler weiterhin auftritt, klonen Sie das Profil (drei Punkte neben dem Profil → **Clone**) und starten Sie die Kopie.
+
+<a id="profile-is-stuck-on-downloading-or-archiving" />
+
+### Profil bleibt bei Downloading oder Archiving hängen
+
+**So sieht es aus:** Der Profilstatus bleibt beim Starten des Profils auf **Downloading** oder beim Beenden auf **Archiving** stehen.
+
+**Ursache:** Gologin kann das Laden oder Speichern der Profildaten nicht abschließen. Häufige Ursachen sind eine blockierte Verbindung zu den Gologin-Servern, Antivirensoftware oder beschädigte Browserdateien.
+
+**So beheben Sie das Problem:**
+
+1. Prüfen Sie Ihre Verbindung – siehe [Verbindungsfehler](#verbindungsfehler) weiter unten.
+2. Deaktivieren Sie Antivirensoftware von Drittanbietern oder fügen Sie Gologin zu deren Ausnahmen hinzu.
+3. Beenden Sie Gologin über den Infobereich der Taskleiste vollständig.
+4. Löschen Sie den Browserordner, damit Gologin den Browser erneut herunterlädt:
+   - **Windows:** `C:\Users\<YourUser>\.gologin\browser`
+   - **macOS:** `~/.gologin/browser` (im Terminal: `rm -r ~/.gologin/browser`)
+5. Starten Sie Gologin (unter Windows per Rechtsklick und **Run as administrator**), warten Sie, bis der Browser heruntergeladen ist, und starten Sie das Profil.
+6. Wenn nichts hilft, installieren Sie Gologin von [gologin.com/download](https://gologin.com/download) neu. Stellen Sie vor der Deinstallation der App sicher, dass keine Profile laufen – Ihre Profile bleiben in Ihrem Konto erhalten.
+
+### "Seems like you don't have installed browser"
+
+**So sieht es aus:** Die vollständige Meldung lautet "Seems like you don't have installed browser. We will try to install it. Please run the profile again after the installation is finished."
+
+**Ursache:** Orbita, der Browser, in dem Gologin-Profile laufen, wurde noch nicht vollständig heruntergeladen, oder seine Dateien wurden von Ihrem Computer entfernt.
+
+**So beheben Sie das Problem:**
+
+1. Warten Sie, bis der Browser-Download abgeschlossen ist, und starten Sie das Profil erneut.
+2. Wenn die Meldung immer wieder erscheint, prüfen Sie, ob Ihr Antivirenprogramm Orbita-Dateien entfernt – siehe [Antivirus- und Sicherheitssoftware](#antivirus-und-sicherheitssoftware) – und ob genügend freier Speicherplatz vorhanden ist.
+
+### "Seems like a GPU process has crashed"
+
+**So sieht es aus:** Die vollständige Meldung lautet "Seems like a GPU process has crashed. Please try to restart the profile or restart your system".
+
+**So beheben Sie das Problem:**
+
+1. Starten Sie das Profil erneut.
+2. Starten Sie Ihren Computer neu.
+3. Wenn der Fehler weiterhin auftritt, befolgen Sie die Schritte 2–5 für [ein Profil, das bei Downloading oder Archiving hängen bleibt](#profil-bleibt-bei-downloading-oder-archiving-h%C3%A4ngen).
+
+### "Your PC does not have enough memory or other system resource to run the browser"
+
+**Ursache:** Auf Ihrem Computer sind Arbeitsspeicher oder Speicherplatz erschöpft. Fehler, die `ENOSPC` oder `SQLITE_FULL` enthalten, bedeuten ebenfalls, dass die Festplatte voll ist.
+
+**So beheben Sie das Problem:**
+
+1. Schließen Sie Profile und Programme, die Sie nicht benötigen.
+2. Schaffen Sie Speicherplatz – Gologin speichert die Daten laufender Profile auf Ihrer Festplatte.
+3. Starten Sie Gologin neu und starten Sie das Profil erneut.
+
+### "Container not found"
+
+**So sieht es aus:** Sie sehen "Container not found", wenn Sie ein Profil starten, besonders im Cloud-Modus.
+
+**Ursache:** Die Profildaten sind beschädigt, oder der Cloud-Container konnte auf den Servern von Gologin nicht gestartet werden.
+
+**So beheben Sie das Problem:**
+
+1. Starten Sie die Gologin-App neu und versuchen Sie erneut, das Profil zu starten.
+2. Versuchen Sie, das Profil über die Webversion unter [app.gologin.com](https://app.gologin.com) zu starten.
+3. Wenn das Problem weiterhin besteht, wenden Sie sich mit Ihrer Profil-ID an den Support.
+
+### "Couldn't prepare your profile, contact support"
+
+**So sieht es aus:** Dieser Fehler erscheint, wenn Gologin Ihr Profil nicht für den Start vorbereiten kann.
+
+**Ursache:** Meist liegt ein Synchronisierungsproblem des Profils, beschädigte Profildaten oder eine Abweichung zwischen Ihrer Orbita-Browserversion und der erwarteten Version vor.
+
+**So beheben Sie das Problem:**
+
+1. Aktualisieren Sie die Gologin-Desktop-App auf die neueste Version.
+2. Prüfen Sie Ihre Internetverbindung – eine instabile Verbindung kann die Profilsynchronisierung unterbrechen.
+3. Wechseln Sie zu einem anderen Netzwerk (zum Beispiel von WLAN zu einem mobilen Hotspot).
+4. Wenn der Fehler weiterhin auftritt, wenden Sie sich mit Ihrer Profil-ID und der App-Version an den Support.
+
+### "Profile has been deleted"
+
+**So sieht es aus:** Sie sehen "Profile has been deleted" oder "Profile has been already deleted", obwohl Sie das Profil nicht gelöscht haben.
+
+**Ursache:** Diese Meldung ist irreführend. Sie bedeutet **nicht**, dass Ihr Profil tatsächlich gelöscht wurde. Sie erscheint in der Regel, wenn Sie bei einem Test- oder kostenlosen Tarif das Limit für Profilstarts erreicht haben.
+
+<Info>
+  Gologin speichert Profile nach Ablauf eines Abonnements bis zu 180 Tage lang auf seinen Servern. Ihre Profildaten gehen nicht verloren, wenn Sie diese Meldung sehen.
+</Info>
+
+**So beheben Sie das Problem:**
+
+1. Wechseln Sie zu einem kostenpflichtigen Tarif oder verlängern Sie Ihr Abonnement, um den Zugriff wiederherzustellen.
+2. Wenn Sie glauben, dass es sich um einen Fehler handelt, wenden Sie sich mit Ihren Kontodaten an den Support.
+
+### ECONNREFUSED 127.0.0.1
+
+**So sieht es aus:** Beim lokalen Starten eines Profils erscheint ein Fehler mit `ECONNREFUSED 127.0.0.1`.
+
+**Ursache:** Der Orbita-Browser konnte auf Ihrem Rechner nicht gestartet werden. Häufige Ursachen sind:
+
+- Ein beschädigter Orbita-Download
+- Eine Proxy-Inkompatibilität, die die Initialisierung des Browsers verhindert
+- Eine veraltete Version der Gologin-App
+
+**So beheben Sie das Problem:**
+
+1. Aktualisieren Sie die Gologin-Desktop-App auf die neueste Version.
+2. Laden Sie Orbita erneut herunter: Beenden Sie Gologin vollständig und löschen Sie den Browserordner, wie bei [einem Profil, das bei Downloading oder Archiving hängen bleibt](#profil-bleibt-bei-downloading-oder-archiving-h%C3%A4ngen) beschrieben.
+3. Prüfen Sie Ihre Proxy-Einstellungen – starten Sie das Profil zur Eingrenzung des Problems testweise ohne Proxy.
+
+### EBUSY: resource busy or locked (Windows)
+
+**So sieht es aus:** Unter Windows erscheint der Fehler `EBUSY: resource busy or locked`, oft mit Verweis auf eine Cookies-Datei.
+
+**Ursache:** Ein vorheriger Orbita-Prozess wurde nicht sauber beendet und sperrt weiterhin Profildateien.
+
+**So beheben Sie das Problem:**
+
+1. Öffnen Sie den **Task Manager** (Ctrl+Shift+Esc) und beenden Sie alle Prozesse mit dem Namen `orbita` oder `browser`.
+2. Löschen Sie die lokale Kopie des Profils. Öffnen Sie `C:\Users\<YourUser>\AppData\Roaming\GoLogin\profiles\` und löschen Sie den Ordner, der zur ID des betroffenen Profils passt.
+3. Starten Sie Gologin neu und versuchen Sie es erneut.
+
+<Warning>
+  Durch das Löschen dieses Ordners wird nur die lokale Kopie des Profils entfernt. Ihre auf den Gologin-Servern gespeicherten Profildaten bleiben unberührt.
+</Warning>
+
+<a id="connection-errors" />
+
+## Verbindungsfehler
+
+### "Timezone request error", "Profile loading error" und andere Verbindungsfehler
+
+**So sieht es aus:** Eine dieser Meldungen erscheint, oder die App zeigt statt des Ladevorgangs einen weißen oder grünen Bildschirm:
+
+- "Timezone request error"
+- "Profile loading error. Check internet connection."
+- "Error in profile request. Check your internet connection and try again."
+- "Error uploading profile. Please check your internet connection and try again."
+- "Retrying your request due to internet connectivity issues. Thank you for your patience."
+
+**Ursache:** Ihr Netzwerk oder Ihr Internetanbieter blockiert oder stört die Verbindung zwischen der Gologin-App und den Gologin-Servern. Andere Websites funktionieren über dieselbe Verbindung möglicherweise weiterhin normal.
+
+**So beheben Sie das Problem:**
+
+1. Wechseln Sie zu einem anderen Netzwerk – schalten Sie zum Beispiel das WLAN aus und geben Sie mobiles Internet von Ihrem Smartphone frei.
+2. Aktivieren Sie ein VPN auf Ihrem Computer. Wenn das erste VPN nicht hilft, probieren Sie einen anderen Anbieter – manchmal sind dafür mehrere Versuche nötig.
+3. Beenden Sie Gologin nach dem Wechsel des Netzwerks oder VPNs über den Infobereich der Taskleiste vollständig und starten Sie die App neu.
+
+<Tip>
+  Wenn Sie "SSL certificate error. Please check and adjust your system time or check your internet connection" sehen, stellen Sie zuerst sicher, dass Datum, Uhrzeit und Zeitzone auf Ihrem Computer automatisch eingestellt sind.
+</Tip>
+
+### "Something went wrong. Please try again later"
+
+**So sieht es aus:** Sie sehen "Something went wrong. Please try again later" oder eine Seite mit dem Text "Oops! Something went wrong…".
+
+**Ursache:** Eine Anfrage an die Gologin-Server ist fehlgeschlagen. Es handelt sich um einen allgemeinen Fehler mit vielen möglichen Ursachen.
+
+**So beheben Sie das Problem:**
+
+1. Drücken Sie **Ctrl+Shift+R** (Windows) oder **Cmd+Shift+R** (macOS), um neu zu laden. Das funktioniert sowohl in der Desktop-App als auch in der Webversion.
+2. Wenn der Fehler erneut auftritt, beenden Sie Gologin über den Infobereich der Taskleiste vollständig und starten Sie die App neu.
+3. Wenn er weiterhin auftritt, befolgen Sie die Schritte für [Verbindungsfehler](#verbindungsfehler).
+4. Wenn nichts hilft, installieren Sie Gologin von [gologin.com/download](https://gologin.com/download) neu oder wenden Sie sich mit einem Screenshot an den Support.
+
+### "Internal server error"
+
+**Ursache:** Ein vorübergehendes Problem auf Seiten von Gologin.
+
+**So beheben Sie das Problem:**
+
+1. Warten Sie einige Minuten und versuchen Sie es erneut.
+2. Aktualisieren Sie Gologin auf die neueste Version.
+3. Wenn der Fehler nicht verschwindet, wenden Sie sich an den Support.
+
+### "The proxy is functional but not working on your device or network"
+
+**So sieht es aus:** Gologin meldet, dass der Proxy die serverseitige Prüfung bestanden hat, sich aber von Ihrem Rechner aus nicht verbinden kann.
+
+**Ursache:** Ihr lokales Netzwerk oder Ihr Internetanbieter blockiert die Proxy-Verbindung. Der Proxy selbst funktioniert – Gologin hat ihn auf seinen Servern geprüft –, aber der Datenverkehr kann Ihr Gerät nicht verlassen.
+
+**So beheben Sie das Problem:**
+
+1. Aktivieren Sie ein VPN auf Ihrem Gerät und starten Sie das Profil erneut.
+2. Wechseln Sie zu einem anderen Netzwerk (von WLAN zu mobilem Hotspot oder umgekehrt).
+3. Prüfen Sie die Einstellungen Ihrer Firewall oder Ihres Antivirenprogramms und stellen Sie sicher, dass weder Gologin noch der Proxy-Port blockiert werden.
+
+### SyntaxError: Unexpected token 'e'
+
+**So sieht es aus:** Ein Fehler im JavaScript-Stil, `SyntaxError: Unexpected token 'e'`, erscheint, meist in der Gologin-App oder in einer API-Antwort.
+
+**Ursache:** Das passiert, wenn Cloudflare statt der erwarteten JSON-Antwort der Gologin-API eine Fehlerseite (HTML) zum Rate Limit 1015 zurückgibt. Der JSON-Parser trifft auf das HTML und scheitert am ersten unerwarteten Zeichen.
+
+**So beheben Sie das Problem:**
+
+1. Verringern Sie die Häufigkeit Ihrer API-Anfragen oder Profilstarts.
+2. Warten Sie einige Minuten, bevor Sie es erneut versuchen.
+3. Wenn Sie die Gologin-API programmatisch verwenden, implementieren Sie in Ihrer Anfragelogik ein exponentielles Backoff.
+
+## macOS-Fehler
+
+### "Your macOS version is not supported by Chromium Engine"
+
+**Ursache:** Orbita 151 und neuer unterstützen macOS 12 Monterey und ältere macOS-Versionen nicht.
+
+**So beheben Sie das Problem:**
+
+1. Aktualisieren Sie macOS auf eine neuere Version, **oder**
+2. Erstellen Sie ein neues Profil mit Orbita 150 oder älter: Klicken Sie auf **Add profile**, öffnen Sie den Tab **Advanced** und wählen Sie die Browserversion unter **Old versions**.
+
+<Note>
+  Die Browserversion eines bestehenden Profils kann nicht auf eine ältere Version zurückgesetzt werden – erstellen Sie stattdessen ein neues Profil.
+</Note>
+
+### "Current browser version is not supported for ARM processor architecture"
+
+**So sieht es aus:** Profile zeigen diesen Fehler an, oder Gologin ist auf Ihrem Mac sehr langsam oder friert ein.
+
+**Ursache:** Auf einem Mac mit Apple-Silicon-Chip (M1 oder neuer) ist die Intel-Version von Gologin installiert, oder das Profil verwendet eine alte Browserversion.
+
+**So beheben Sie das Problem:**
+
+1. Prüfen Sie Ihren Chip: Öffnen Sie das Apple-Menü → **About This Mac** und sehen Sie im Feld **Chip** nach.
+2. Handelt es sich um einen Apple-M-Chip, verschieben Sie Gologin aus **Applications** in den Papierkorb und installieren Sie die Apple-Silicon-Version von [gologin.com/download](https://gologin.com/download).
+3. Aktualisieren Sie den Browser des Profils: drei Punkte neben dem Profil → **Update browser**.
+
+### "Cannot update while running on a read-only volume"
+
+**So sieht es aus:** Gologin kann ein Update nicht installieren und zeigt "Cannot update while running on a read-only volume. The application is on a read-only volume. Please move the application and try again." an.
+
+**Ursache:** Gologin wird vom heruntergeladenen Disk-Image oder aus dem Ordner **Downloads** statt aus **Applications** ausgeführt.
+
+**So beheben Sie das Problem:**
+
+1. Beenden Sie Gologin.
+2. Ziehen Sie Gologin in den Ordner **Applications**.
+3. Öffnen Sie Gologin aus **Applications** und installieren Sie das Update.
+
+<Tip>
+  Wenn ein Update auf einem beliebigen System hängen bleibt, prüfen Sie Ihre [Verbindung](#verbindungsfehler) oder laden Sie die neueste Version von [gologin.com/download](https://gologin.com/download) herunter und installieren Sie sie über die aktuelle Version. Ihre Profile bleiben erhalten.
+</Tip>
+
+<a id="antivirus-and-security-software" />
+
+## Antivirus- und Sicherheitssoftware
+
+### "Seems like your antivirus is blocking access to the Orbita browser"
+
+**So sieht es aus:** Sie sehen eine dieser Meldungen:
+
+- "Seems like your antivirus is blocking access to the Orbita browser. Please adjust your antivirus and restart the profile"
+- "Seems like something is blocking application access to the system. Please check your antivirus or other security software."
+- "Seems like your browser files are damaged or missing (possibly deleted by antivirus software)…"
+- "Permission denied" beim Aktualisieren des Browsers
+
+**Ursache:** Ihr Antivirenprogramm oder eine andere Sicherheitssoftware blockiert Gologin oder Orbita oder hat deren Dateien in die Quarantäne verschoben.
+
+**So beheben Sie das Problem:**
+
+1. Öffnen Sie unter Windows **Windows Security** → **Virus & threat protection** → **Protection history** und suchen Sie nach blockierten oder unter Quarantäne gestellten Dateien von Gologin oder Orbita. Stellen Sie sie wieder her, falls Sie welche finden.
+2. Fügen Sie Gologin zu den Ausnahmen Ihres Antivirenprogramms hinzu oder schalten Sie das Antivirenprogramm aus.
+3. Starten Sie Gologin neu und starten Sie das Profil erneut – Gologin stellt fehlende Browserdateien automatisch wieder her.
+
+## Fehler zu Tarif und Limits
+
+### "The owner of this profile has run out of subscription time"
+
+**So sieht es aus:** Sie können ein Profil, das für Sie freigegeben wurde, nicht starten. Die vollständige Meldung lautet "The owner of this profile has run out of subscription time. To resume using this profile, the owner needs to renew their subscription."
+
+**Ursache:** Das Abonnement des Profilbesitzers ist abgelaufen.
+
+**So beheben Sie das Problem:** Bitten Sie den Profilbesitzer, sein Abonnement zu verlängern. Danach lässt sich das Profil wieder starten.
+
+### "The workspace subscription has ended. Please upgrade your plan to restore access"
+
+**Ursache:** Ihr Test- oder kostenpflichtiger Tarif ist abgelaufen.
+
+**So beheben Sie das Problem:** Wählen Sie einen Tarif unter **Settings & Members** → **Billing Plans** → **Change plan**. Um zum Tarif Forever Free zu wechseln, klicken Sie unten auf dieser Seite auf **Forever Free** – Ihr Workspace darf dafür höchstens 3 Profile enthalten.
+
+### "You've exceeded your workspace limits"
+
+**Ursache:** Im Tarif Forever Free können Sie bis zu 3 Profile gleichzeitig haben und bis zu 25 Profile pro Monat erstellen.
+
+**So beheben Sie das Problem:**
+
+1. Wenn Sie 3 Profile haben, löschen Sie eines, das Sie nicht benötigen. Durch das Löschen eines Profils wird keine Erstellung zurückgegeben.
+2. Wenn Sie alle 25 Erstellungen aufgebraucht haben, warten Sie, bis das Monatslimit zurückgesetzt wird, oder [wechseln Sie zu einem kostenpflichtigen Tarif](/de/general/account-and-billing/how-to-subscribe-to-gologin).
+
+Weitere Informationen finden Sie unter [Einschränkungen des kostenlosen Tarifs](/de/general/account-and-billing/pricing#free-plan-limitations).
+
+### "You've reached max shares number. To share more update your plan"
+
+**Ursache:** Sie haben alle in Ihrem Tarif enthaltenen Profilfreigaben aufgebraucht.
+
+**So beheben Sie das Problem:** Entfernen Sie nicht mehr benötigte Freigaben im Menü **Share** Ihrer Profile oder wechseln Sie zu einem höheren Tarif.
+
+### "You've reached max parallel cloud launches limit"
+
+**So sieht es aus:** Dieser Fehler oder "You've hit your parallel launch limit" erscheint, wenn Sie versuchen, ein Profil in der Cloud zu starten.
+
+**Ursache:** Sie haben die maximale Anzahl gleichzeitiger Cloud-Sitzungen erreicht, die Ihr Tarif erlaubt.
+
+Die Limits für gleichzeitige Cloud-Sitzungen sind:
+
+| Tarif        | Gleichzeitige Cloud-Sitzungen |
+|--------------|-------------------------------|
+| Professional | 1                             |
+| Business     | 2                             |
+| Enterprise   | 3                             |
+| Custom       | 4                             |
+
+**So beheben Sie das Problem:**
+
+1. Schließen Sie ein oder mehrere laufende Cloud-Profile, bevor Sie ein neues starten.
+2. Kaufen Sie weitere parallele Cloud-Starts: Klicken Sie oben links auf Ihren Kontonamen → **Settings & Members** → **Cloud Browser Usage** → **Buy more limits**.
+3. Starten Sie Profile in der Desktop-App – lokale Starts sind durch Ihren Tarif nicht begrenzt.
+
+<Note>
+  Zum Ausführen von Profilen in der Cloud ist ein kostenpflichtiger Tarif erforderlich.
+</Note>
+
+### "You've exceeded your traffic limit" / "exceeded request limit"
+
+**So sieht es aus:** Beim Starten eines Profils oder beim Ausführen von Aktionen erscheint eine von zwei zusammenhängenden Meldungen.
+
+**Ursache:** Dieser Fehler kann zwei Ursachen haben:
+
+- **Traffic-Limit:** Ihr Gologin-Proxy-Traffic (gemessen in GB) ist aufgebraucht. Ihr Abonnement und der Proxy-Traffic sind getrennt: Ein aktiver Tarif bedeutet nicht, dass noch Traffic übrig ist.
+- **Anfrage-/IP-Rate-Limit:** Sie haben ein IP-basiertes Rate Limit erreicht, das meist dadurch ausgelöst wird, dass in kurzer Zeit zu viele Konten von derselben IP-Adresse aus erstellt wurden.
+
+**So beheben Sie das Problem:**
+
+- **Bei Traffic-Limits:** Kaufen Sie mehr Traffic: Öffnen Sie links den Tab **Proxies**, wählen Sie den Proxy-Typ, klicken Sie auf **+**, wählen Sie die Menge in GB und bezahlen Sie.
+- **Wenn Sie gerade Traffic gekauft haben:** Stellen Sie sicher, dass Ihre Profile denselben Proxy-Typ verwenden wie der gekaufte Traffic. Wenn Sie beispielsweise Datacenter-Traffic gekauft haben, stellen Sie den Proxy des Profils in den Profileinstellungen von Residential auf Datacenter um.
+- **Bei IP-Rate-Limits:** Warten Sie etwa 1 Stunde, bis die IP-Sperre abläuft, und versuchen Sie es dann erneut.
+
+## Kontofehler
+
+### "Registration error. Please try again."
+
+**Ursache:** Es gab in kurzer Zeit zu viele Registrierungsversuche, oder ein Konto mit dieser E-Mail-Adresse existiert bereits.
+
+**So beheben Sie das Problem:**
+
+1. Warten Sie eine Weile und versuchen Sie es erneut.
+2. Wenn Sie sich bereits mit dieser E-Mail-Adresse registriert haben, klicken Sie stattdessen auf **Log in**. Wenn Sie Ihr Passwort nicht mehr wissen, verwenden Sie **Forgot password?**.
+
+<Note>
+  "Invalid input data. Check field - "email"" bedeutet, dass die E-Mail-Adresse nicht akzeptiert wurde. Verwenden Sie eine Adresse mit mindestens 3 Zeichen vor dem @. Adressen mit "+1", etwa name+1@gmail.com, werden nicht akzeptiert.
+</Note>
+
+### Anmeldung mit Google nicht möglich
+
+**So beheben Sie das Problem:**
+
+1. Klicken Sie auf dem Anmeldebildschirm auf **Forgot password?** und geben Sie die E-Mail-Adresse Ihres Gologin-Kontos ein.
+2. Geben Sie den Code aus der E-Mail ein und legen Sie ein Passwort fest.
+3. Melden Sie sich mit Ihrer E-Mail-Adresse und Ihrem Passwort an.
+
+## Fehler bei Cloud Android
+
+### "No available devices"
+
+**Ursache:** Alle Cloud-Smartphones sind im Moment belegt. Das hängt nicht von Ihrem Profil ab.
+
+**So beheben Sie das Problem:** Versuchen Sie es später erneut.
+
+## Browser- und Erweiterungsfehler
+
+### "To install add-ons, you'll need the new Microsoft Edge"
+
+**So sieht es aus:** Beim Versuch, eine Browsererweiterung in einem Gologin-Profil zu installieren, erscheint eine Aufforderung zu Microsoft Edge.
+
+**Ursache:** Der Orbita-Browser (auf Basis von Chromium) löst diese Meldung manchmal aus, wenn Sie versuchen, Erweiterungen aus dem Microsoft-Edge-Add-ons-Store oder über einen inkompatiblen Installationsweg zu installieren.
+
+**So beheben Sie das Problem:**
+
+1. Installieren Sie Erweiterungen stattdessen aus dem [Chrome Web Store](https://chromewebstore.google.com/) und nicht aus dem Edge-Add-ons-Store.
+2. Alternativ können Sie die Erweiterungsverwaltung von Gologin nutzen, um Erweiterungen zu Ihrem Profil hinzuzufügen, bevor Sie es starten.
+
+### Proxy-Authentifizierungs-Popup für geo.floppydata.com:10080
+
+**So sieht es aus:** Beim Starten eines Profils erscheint ein Proxy-Authentifizierungsdialog, der Zugangsdaten für `geo.floppydata.com:10080` verlangt.
+
+**Ursache:** Der in Gologin integrierte Proxy fordert unerwartet eine Authentifizierung an. Das kann passieren, wenn die Proxy-Konfiguration nicht korrekt an den Browser übergeben wird, oft wegen eines Konflikts mit dem Netzwerk oder einem VPN.
+
+**So beheben Sie das Problem:**
+
+1. Beenden Sie Gologin vollständig (prüfen Sie im Infobereich der Taskleiste, dass die App geschlossen ist).
+2. Aktivieren Sie ein VPN auf Ihrem Gerät.
+3. Starten Sie Gologin neu.
+4. Starten Sie das Profil erneut. Bei rotierenden Residential-Proxys erhalten Sie durch den Neustart des Profils außerdem eine neue IP.
+
+<Info>
+  Wenn das Popup weiterhin erscheint, starten Sie das Profil in der Webversion unter [app.gologin.com](https://app.gologin.com), probieren Sie einen anderen Proxy oder wenden Sie sich an den Gologin-Support.
+</Info>

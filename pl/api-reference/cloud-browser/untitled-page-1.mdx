@@ -1,0 +1,75 @@
+---
+title: "Korzystanie z sesji przeglądarki"
+---
+
+Po połączeniu z sesją Cloud Browser kontrolujesz ją w całości za pomocą swojej biblioteki do automatyzacji (Puppeteer lub Playwright). Gologin nie udostępnia wbudowanych metod wykonywania akcji — wszystkie interakcje z przeglądarką to standardowe wywołania biblioteki.
+
+## Nawigacja
+
+```javascript Puppeteer
+await page.goto('https://example.com', { waitUntil: 'domcontentloaded' });
+console.log(await page.title());
+console.log(page.url());
+```
+
+```python Playwright
+await page.goto('https://example.com', wait_until='domcontentloaded')
+print(await page.title())
+print(page.url)
+```
+
+## Klikanie i wpisywanie tekstu
+
+```javascript Puppeteer
+await page.click('#search-input');
+await page.type('#search-input', 'hello world');
+await page.click('#submit-button');
+```
+
+```python Playwright
+await page.click('#search-input')
+await page.type('#search-input', 'hello world')
+await page.click('#submit-button')
+```
+
+## Oczekiwanie na elementy
+
+```javascript Puppeteer
+await page.waitForSelector('.results', { timeout: 5000 });
+```
+
+```python Playwright
+await page.wait_for_selector('.results', timeout=5000)
+```
+
+## Pobieranie tekstu
+
+```javascript Puppeteer
+const text = await page.$eval('.price', el => el.innerText);
+```
+
+```python Playwright
+text = await page.locator('.price').inner_text()
+```
+
+## Wykonywanie zrzutu ekranu
+
+```javascript Puppeteer
+await page.screenshot({ path: 'screenshot.png' });
+```
+
+```python Playwright
+await page.screenshot(path='screenshot.png')
+```
+
+## Praca z wieloma stronami
+
+```javascript Puppeteer
+const page2 = await browser.newPage();
+await page2.goto('https://example.com/other');
+```
+
+```python Playwright
+page2 = await browser.new_page()
+await page2.goto('https://example.com/other')
+```

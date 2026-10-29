@@ -1,0 +1,40 @@
+---
+title: "Đồng bộ hồ sơ"
+---
+
+**Đồng bộ hồ sơ** trong Gologin cho phép các hồ sơ trình duyệt của bạn - bao gồm đầy đủ vân tay, cookie, bộ nhớ cục bộ (local storage) và tiện ích mở rộng - được tự động lưu lên đám mây. Điều này có nghĩa là:
+
+- Bạn có thể **truy cập cùng một hồ sơ từ web hoặc trên bất kỳ thiết bị nào** đã cài đặt Gologin
+- Các thành viên trong nhóm có thể **cộng tác trên các hồ sơ được chia sẻ**
+- Hồ sơ luôn **nhất quán**, dù được khởi chạy từ bất kỳ đâu
+
+## Cách đồng bộ hoạt động
+
+Khi một hồ sơ được đóng đúng cách, Gologin sẽ tải dữ liệu mới nhất của hồ sơ lên máy chủ đám mây. Lần tiếp theo hồ sơ được khởi chạy, trạng thái đã lưu sẽ được khôi phục. Nhờ vậy, dữ liệu phiên, cookie và trạng thái trình duyệt của bạn luôn nhất quán.
+
+## Cách sử dụng hồ sơ an toàn
+
+- **Hãy đảm bảo quá trình đồng bộ đã hoàn tất trước khi tắt máy.**\
+  Trạng thái phải hiển thị **sẵn sàng** và nút **Chạy** trên hồ sơ phải ở trạng thái khả dụng, nghĩa là dữ liệu hồ sơ đã được đồng bộ.
+- **Hãy đóng các hồ sơ trước khi tắt máy tính hoặc đóng ứng dụng.**\
+  Đóng hồ sơ bằng cách **đóng cửa sổ hồ sơ** hoặc nhấp vào **Dừng lại** trong ứng dụng để hoàn tất đồng bộ.
+- **Không sử dụng một hồ sơ trên nhiều thiết bị cùng lúc.**\
+  Mặc dù bạn có thể làm vậy, chúng tôi không khuyến nghị: chỉ một trong số các hồ sơ được khởi chạy đồng thời có thể được đồng bộ lên máy chủ đám mây. Điều này có thể gây ra sự chênh lệch giữa dữ liệu được lưu trong hồ sơ và những gì trang web mong đợi, từ đó có thể làm giảm điểm tin cậy (trust score) của bạn.
+- **Không đóng hồ sơ khi không có kết nối Internet.**\
+  Nếu quá trình đồng bộ chưa hoàn tất, bạn có thể mất tiến trình hiện tại và phải khôi phục dữ liệu từ các phiên trước đó.
+
+<Frame>
+  ![Chờ hồ sơ sẵn sàng khi đồng bộ](/images/profile_sync_wait_for_ready.gif)
+</Frame>
+
+## Quy tắc an toàn khi đồng bộ
+
+Để đảm bảo dữ liệu hồ sơ luôn nguyên vẹn, hãy tuân theo các quy tắc sau:
+
+- Đảm bảo quá trình đồng bộ đã hoàn tất trước khi tắt ứng dụng
+- Chờ đến khi trạng thái hồ sơ hiển thị sẵn sàng
+- Luôn đóng các hồ sơ trước khi tắt máy tính
+- Không chạy cùng một hồ sơ trên nhiều thiết bị cùng lúc
+- Tránh đóng hồ sơ khi kết nối Internet không ổn định
+
+Việc chạy cùng một hồ sơ trên nhiều thiết bị cùng lúc có thể gây ra sự không nhất quán trong dữ liệu phiên đã lưu.

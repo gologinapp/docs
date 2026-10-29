@@ -1,0 +1,235 @@
+---
+title: "AIエージェント向けGologin"
+description: "Gologinを通じて、スクレイピング、ブラウザ自動化、永続的なセッションなど、AIエージェントに安定したWebアクセスを提供します"
+---
+
+Gologinは、AIエージェントがWebを安定して扱うために必要な3つの機能を提供します。
+
+1. **Webを読み取る** — JavaScriptを多用したサイトや保護されたサイトを含め、あらゆるページをWeb Unlockerでスクレイピングできます
+2. **Webを操作する** — クリック、入力、ページ遷移、Cookieの永続化に対応した実際のブラウザセッションを、Cloud Browserで開けます
+3. **検出を回避する** — アンチディテクト・フィンガープリント、レジデンシャルプロキシ、プロフィールベースのID管理を利用できます
+
+これらの機能は複数の連携レベルで利用できます。お使いの環境に合ったものをお選びください。
+
+---
+
+## 連携オプション
+
+<CardGroup cols={2}>
+  <Card title="MCP Server" icon="plug" href="/ja/api-reference/ai-integrations/mcp-server">
+    GologinをClaude Desktop、Cursor、または任意のMCPクライアントに接続します。自然言語でプロフィールやセッションを管理できます。
+  </Card>
+  <Card title="AI Skills" icon="wand-magic-sparkles" href="/ja/api-reference/ai-integrations/ai-skills">
+    Claude Code向けのプラグアンドプレイ拡張機能です。スキルをインストールするだけで、エージェントがすぐにWebスクレイピングとブラウザ自動化を利用できます。
+  </Card>
+  <Card title="CLIツール" icon="terminal" href="/ja/cli-tools/web-access">
+    AIエージェントが直接呼び出せるシェルコマンドです。スクレイピング、ブラウジング、操作をコードを書かずに実行できます。用途に応じた3つのCLIを用意しています。
+  </Card>
+  <Card title="SDKとCloud Browser API" icon="code" href="/ja/api-reference/cloud-browser/getting-started">
+    プログラムから完全に制御できます。Puppeteer/PlaywrightをGologinのCloud Browserに接続して、独自のエージェントツールを構築できます。
+  </Card>
+</CardGroup>
+
+---
+
+## ツールの選び方
+
+| やりたいこと | 使用するもの |
+|---|---|
+| Claude Desktop / Cursorからプロフィールを管理する | [MCP Server](/ja/api-reference/ai-integrations/mcp-server) |
+| セットアップ不要でClaude CodeにWebアクセスを与える | [AI Skills](/ja/api-reference/ai-integrations/ai-skills) |
+| ページのスクレイピング、サイトのクロール、一括抽出を行う | [Web Access CLI](/ja/cli-tools/web-access) |
+| クラウドブラウザを開き、クリック、入力、スクリーンショットを行う | [Agent Browser CLI](/ja/cli-tools/agent-browser) |
+| ローカルプロフィールのウォームアップやログインフローを実行する | [Local Agent Browser CLI](/ja/cli-tools/local-agent-browser) |
+| Puppeteer/Playwrightで独自ツールを構築する | [Cloud Browser API](/ja/api-reference/cloud-browser/getting-started) |
+| 自分のコードからスクレイピングAPIを呼び出す | [Web Unlocker SDK](/ja/scraping-api-sdk-and-cli) |
+
+---
+
+## 全体の構成
+
+```
+┌─────────────────────────────────────────────────┐
+│                  AI Agent                        │
+│         (Claude, Codex, custom agent)            │
+└──────┬──────────┬──────────┬────────────────────┘
+       │          │          │
+  MCP Server   AI Skills   CLI Tools / SDK
+       │          │          │
+       └──────────┴──────────┘
+                  │
+    ┌─────────────┴─────────────┐
+    │                           │
+Web Unlocker              Cloud Browser
+(stateless scraping)    (stateful sessions)
+    │                           │
+    └─────────────┬─────────────┘
+                  │
+          Gologin Infrastructure
+    (proxies, fingerprints, profiles)
+```
+
+- **Web Unlocker** はステートレスな読み取り・抽出を担当します。URLを送信すると、レンダリング済みのHTMLが返されます
+- **Cloud Browser** はステートフルな操作を担当します。セッションを開き、クリック、入力、ページ遷移を行い、Cookieを保持します
+- **ローカルのOrbita** は永続的なローカルプロフィールを担当します。ウォームアップ、ログインフロー、SNSやマーケットプレイスでの操作などに使用します
+
+3つとも、レジデンシャルプロキシ、アンチディテクト・フィンガープリント、プロフィール管理といった同じGologinのインフラを共有しています。
+
+---
+
+## 活用例
+
+### リサーチと競合調査
+
+数十のWebサイトにわたる競合の価格、新製品の発表、コンテンツの変更を、毎日自動で監視するAIエージェントです。エージェントはWeb Unlockerで競合のページをスクレイピングして構造化データを抽出し、前日のスナップショットと比較して、日次のダイジェストを作成します。ブラウザセッションは不要で、大規模なステートレス抽出だけで実現できます。
+
+```bash
+# scrape 20 competitor pricing pages and get structured output
+gologin-web-access batch-scrape \
+  https://competitor1.com/pricing \
+  https://competitor2.com/pricing \
+  https://competitor3.com/pricing \
+  --format json --summary --output ./today-prices.json
+
+# detect what changed since last check
+gologin-web-access batch-change-track \
+  https://competitor1.com/pricing \
+  https://competitor2.com/features \
+  --format markdown --output ./changes.json
+```
+
+### リード獲得とデータ補完
+
+企業ディレクトリ、LinkedInの企業ページ、レビューサイトなどをスクレイピングし、そのHTMLをClaudeに渡して、氏名、メールアドレス、電話番号、企業規模、技術スタックを抽出します。AIエージェントのループ内でツールとして機能します。エージェントがスクレイピングするページを判断し、ツールを呼び出して、構造化データを受け取ります。
+
+```bash
+# search for leads
+gologin-web-access search "saas companies series A 2026" --limit 20
+
+# scrape and extract structured data from each result
+gologin-web-access extract https://example.com/company/123 --schema ./lead-schema.json
+```
+
+### 複数アカウントの管理
+
+50件以上のSNSアカウント、広告アカウント、マーケットプレイスの出品者アカウントを運用できます。各アカウントには専用のブラウザプロフィール、フィンガープリント、プロキシ、Cookieが割り当てられます。Local Agent Browserがプロフィールを管理し、ランブックでウォームアップを行い、エージェントの呼び出しをまたいでセッションを維持します。
+
+```bash
+# create profiles for each account
+gologin-local-agent-browser profile-create "FB Ads Account 1" --template ads
+gologin-local-agent-browser profile-create "FB Ads Account 2" --template ads
+
+# warm up profiles in batch
+gologin-local-agent-browser batch ./warmup-runbook.json \
+  --targets ./all-profiles.json --concurrency 5
+```
+
+### フォーム入力とデータ入力の自動化
+
+社内ダッシュボードへのログイン、フォームの入力、レポートの送信、エクスポートのダウンロードまでを、実際のクラウドブラウザセッションで行うAIエージェントです。エージェントはページをスナップショットとして読み取り、参照（ref）で適切なフィールドを見つけて値を入力し、送信ボタンをクリックして、結果を確認します。
+
+```bash
+gologin-agent-browser open https://internal-dashboard.com/login --profile my_profile
+gologin-agent-browser snapshot
+gologin-agent-browser fill @e3 "username"
+gologin-agent-browser fill @e5 "password"
+gologin-agent-browser click @e7    # submit button
+gologin-agent-browser wait 2000
+gologin-agent-browser snapshot     # verify login success
+gologin-agent-browser screenshot ./logged-in.png
+```
+
+### コンテンツの監視とアラート
+
+行政の規制ページ、競合のブログ、求人サイトなど、ビジネスに関わるあらゆるページの変更を追跡できます。cronやスケジュール実行のエージェントで毎日実行し、前回のバージョンとの差分を取って、重要な変更があればアラートを出します。
+
+```bash
+# track changes on key pages
+gologin-web-access change-track https://regulations.gov/new-rules --format markdown
+gologin-web-access batch-change-track \
+  https://competitor.com/blog \
+  https://competitor.com/changelog \
+  --output ./changes.json
+```
+
+### AIを活用したWebスクレイピングパイプライン
+
+エンドツーエンドのパイプラインを構築できます。ドキュメントサイトをクロールしてMarkdownに変換し、LLMに渡して要約やQ&Aを行います。抽出にはCLIを使い、LLM部分には独自のコードを使います。
+
+```bash
+# crawl an entire docs site
+gologin-web-access crawl https://docs.example.com \
+  --format markdown --limit 100 --max-depth 3 --only-main-content \
+  --output ./docs-corpus.json
+
+# or map the site first, then selectively scrape
+gologin-web-access map https://docs.example.com --limit 200
+gologin-web-access batch-scrape url1 url2 url3 --format text --output ./selected.json
+```
+
+### 地域別テストとローカライズQA
+
+国ごとにWebサイトの見え方を確認できます。異なる地域のプロキシを設定したプロフィールで同じURLを開き、スクリーンショットを撮って比較します。
+
+```bash
+# create geo-specific profiles
+gologin-local-agent-browser profile-create "US Test" --template geo --proxy-country us
+gologin-local-agent-browser profile-create "DE Test" --template geo --proxy-country de
+gologin-local-agent-browser profile-create "JP Test" --template geo --proxy-country jp
+
+# screenshot from each location
+gologin-agent-browser open https://yoursite.com --profile us_profile_id
+gologin-agent-browser screenshot ./us-view.png
+gologin-agent-browser close
+```
+
+---
+
+## クイックスタートの例
+
+### ページをスクレイピングする（CLI）
+
+```bash
+npm install -g gologin-web-access
+export GOLOGIN_WEB_UNLOCKER_API_KEY="wu_..."
+
+gologin-web-access read https://example.com
+```
+
+### クラウドブラウザを開く（CLI）
+
+```bash
+npm install -g gologin-agent-browser-cli
+export GOLOGIN_TOKEN='your_token'
+
+gologin-agent-browser open https://example.com
+gologin-agent-browser snapshot
+gologin-agent-browser click @e3
+gologin-agent-browser close
+```
+
+### AI Skillをインストールする（Claude Code）
+
+```bash
+npx skills add GologinLabs/gologin-web-access-skill
+```
+
+あとはClaude Codeにページのスクレイピングやサイトの操作を依頼するだけです。残りはスキルが処理します。
+
+### MCPを接続する（Claude Desktop）
+
+`claude_desktop_config.json` に次の内容を追加します。
+
+```json
+{
+  "mcpServers": {
+    "gologin-mcp": {
+      "command": "npx",
+      "args": ["gologin-mcp"],
+      "env": { "API_TOKEN": "your-token" }
+    }
+  }
+}
+```
+
+その後、Claudeに「米国のプロキシを使った新しいブラウザプロフィールを作成して」と依頼します。

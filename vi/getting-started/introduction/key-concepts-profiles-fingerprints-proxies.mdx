@@ -1,0 +1,86 @@
+---
+title: "Các khái niệm chính"
+---
+
+Để sử dụng Gologin hiệu quả, bạn cần hiểu ba khái niệm cốt lõi quyết định cách các môi trường trình duyệt được tách biệt và bảo vệ.
+
+Các thành phần này phối hợp với nhau để tạo ra danh tính duyệt web độc lập cho từng tài khoản.
+
+## Hồ sơ trình duyệt
+
+**Hồ sơ trình duyệt** trong Gologin là một môi trường trình duyệt được cô lập, mô phỏng một thiết bị riêng biệt.
+
+Mỗi hồ sơ có riêng:
+
+- vân tay trình duyệt
+- cookie và dữ liệu phiên
+- bộ nhớ cục bộ và bộ nhớ đệm
+- tiện ích mở rộng của trình duyệt
+- kết nối ủy quyền
+
+Vì các hồ sơ được cô lập với nhau, các trang web sẽ coi chúng là những người dùng hoặc thiết bị khác nhau.
+
+Nhờ đó, bạn có thể quản lý nhiều tài khoản mà các phiên không ảnh hưởng lẫn nhau. Điều này đặc biệt quan trọng khi làm việc với nhiều tài khoản ở quy mô lớn, như được mô tả trong <br />[Quản lý các tài khoản hiện có](https://gologin.com/docs/managing-existing-accounts).
+
+## Vân tay trình duyệt
+
+**Vân tay trình duyệt** là một tập hợp các thông số kỹ thuật mà các trang web dùng để nhận diện một thiết bị.
+
+Các thông số này có thể bao gồm:
+
+- hệ điều hành
+- phiên bản trình duyệt
+- độ phân giải màn hình
+- phông chữ đã cài đặt
+- dữ liệu đồ họa và WebGL
+- cài đặt múi giờ và ngôn ngữ
+
+Gologin tạo một vân tay duy nhất cho mỗi hồ sơ để các trang web thấy mỗi hồ sơ là một thiết bị khác nhau.
+
+Vân tay trình duyệt quyết định cách các trang web nhận diện thiết bị của bạn. Để tìm hiểu chi tiết, hãy xem <br />[Cách vân tay trình duyệt hoạt động](https://gologin.com/docs/how-browser-fingerprints-work).
+
+## Ủy quyền
+
+**Ủy quyền** (proxy) gán một địa chỉ IP khác nhau cho một hồ sơ trình duyệt.
+
+Vì các trang web theo dõi cả vân tay trình duyệt và địa chỉ IP, việc sử dụng ủy quyền giúp tách biệt danh tính mạng giữa các hồ sơ.
+
+Với ủy quyền, mỗi hồ sơ có thể xuất hiện như đang kết nối từ một vị trí hoặc mạng khác nhau.
+
+Sử dụng ủy quyền cùng với vân tay trình duyệt duy nhất giúp tạo ra danh tính duyệt web nhất quán và độc lập.
+
+Ủy quyền được dùng để tách biệt các tài khoản ở cấp độ mạng. Nếu bạn chưa quen với cách chúng hoạt động, hãy bắt đầu với [Proxy là gì](https://gologin.com/docs/proxy/introduction/what-is-a-proxy).
+
+Khi đã hiểu các thành phần này, bước tiếp theo là áp dụng chúng khi tạo hồ sơ. <br />Xem [Tạo hồ sơ](https://gologin.com/docs/browser-profiles/profile-management/creating-and-launching-profiles).
+
+## Hệ điều hành của hồ sơ phải khớp với hệ điều hành của thiết bị
+
+Hệ điều hành được đặt trong vân tay của hồ sơ nên khớp với hệ điều hành của thiết bị bạn dùng để mở hồ sơ đó. Ví dụ:
+
+- Mở một hồ sơ Windows trên máy Mac có thể tạo ra những điểm không khớp có thể bị phát hiện
+- Các trang như iphey.com và pixelscan.net sẽ đánh dấu đây là sự không nhất quán của vân tay
+- LinkedIn và các nền tảng nhạy cảm khác có thể đăng xuất bạn ngay lập tức
+
+<Warning>
+  Nếu bạn làm việc trên máy Mac, hãy tạo hồ sơ Mac. Nếu bạn làm việc trên Windows, hãy tạo hồ sơ Windows. Việc sử dụng chéo nền tảng (tạo trên hệ điều hành này, mở trên hệ điều hành khác) có thể gây nguy hại cho tài khoản của bạn.
+</Warning>
+
+## Cài đặt vân tay mặc định là an toàn
+
+Gologin tự động tạo các cài đặt vân tay thực tế cho mỗi hồ sơ mới. Bạn không cần tùy chỉnh WebGL, Canvas, Audio hoặc các thông số vân tay khác trừ khi có lý do cụ thể.
+
+## Cách kiểm tra vân tay của bạn
+
+Sau khi khởi chạy hồ sơ, hãy truy cập một trong các trang kiểm tra sau:
+
+- **iphey.com** -- hiển thị điểm tin cậy tổng thể và đánh dấu các vấn đề
+- **pixelscan.net** -- phân tích vân tay chi tiết
+
+Kết quả "xanh" hoặc "đáng tin cậy" có nghĩa là hồ sơ của bạn trông giống một trình duyệt thật đối với các trang web.
+
+## Xem thêm
+
+- [Bắt đầu nhanh: từ con số không đến hồ sơ đầu tiên của bạn](https://gologin.com/docs/getting-started/introduction/quick-start-from-zero-to-your-first-profile)
+- [Danh sách kiểm tra cho lần đầu sử dụng](https://gologin.com/docs/getting-started/setup/first-time-checklist)
+- [Proxy là gì](https://gologin.com/docs/proxy/introduction/what-is-a-proxy)
+- [Cài đặt vân tay của hồ sơ](https://gologin.com/docs/profile-fingerprint-settings)

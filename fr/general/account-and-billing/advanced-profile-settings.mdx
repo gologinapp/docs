@@ -1,0 +1,97 @@
+---
+title: "Paramètres avancés du profil"
+---
+
+L'onglet **Autre** vous donne un contrôle direct sur les paramètres d'empreinte individuels que Gologin gère pour chaque profil. La plupart des utilisateurs n'auront pas besoin d'y toucher : les profils fonctionnent bien avec les paramètres par défaut sur la majorité des sites.
+
+<Warning>
+  Ne modifiez ces paramètres que si vous avez une raison précise de le faire et que vous comprenez ce que vous ajustez. Certaines modifications peuvent améliorer l'apparence d'un profil aux yeux d'un site donné, mais des valeurs incorrectes peuvent aussi rendre un profil suspect ou empêcher le bon fonctionnement d'un site. Avant d'expérimenter ici, nous vous recommandons de vous renseigner d'abord sur les pratiques de multicomptes dans les forums et groupes communautaires spécialisés.
+</Warning>
+
+Vous pouvez accéder à l'onglet Autre en cliquant sur **les 3 points du profil** \> **Paramètres** \> **Autre**.
+
+## Navigateur
+
+Cette section contrôle les paramètres du navigateur et du système que le profil communique aux sites web.
+
+**Agent-utilisateur** - La chaîne qui identifie votre navigateur et votre système d'exploitation auprès de chaque site web que vous visitez. Si plusieurs profils utilisent le même système d'exploitation et la même version de navigateur, ils peuvent partager le même agent-utilisateur : c'est normal. Le nombre de combinaisons valides est limité, et Gologin différencie les profils grâce à d'autres paramètres d'empreinte.
+
+**Résolution d'écran** - La taille d'écran que le profil communique. Évitez de la définir à une valeur supérieure à la résolution réelle de votre moniteur, car cette incohérence peut être un signal détectable. La fenêtre du navigateur ne peut pas être agrandie au-delà de cette valeur ; si vous avez besoin d'une fenêtre plus grande, augmentez donc la résolution ici. Voir [Pourquoi ne puis-je pas agrandir la fenêtre du navigateur en plein écran ?](/fr/faq-profile-managment#why-cant-i-expand-the-browser-window-to-full-screen)
+
+**Langues** - La langue du système communiquée aux sites web. Lorsque ce paramètre est réglé sur **Basé sur l'IP**, il suit automatiquement la langue associée à l'emplacement du proxy. Si vous le définissez manuellement, notez que sur tous les systèmes sauf macOS, cela modifie également la langue de l'interface du navigateur ; sous macOS, le navigateur suit toujours les paramètres de langue réels du système.
+
+**Plateforme** - Communique le système d'exploitation aux sites web. Cette valeur correspond au système choisi lors de la création du profil et ne peut pas être modifiée sur un profil existant.
+
+**Les threads de CPU** et **RAM** - Ce sont les valeurs matérielles que le navigateur communique aux sites web. Les modifier n'a aucun effet sur les performances réelles du navigateur : il s'agit uniquement de ce qui est communiqué, et non de ce qui est utilisé.
+
+**Ne pas suivre** - Envoie un signal « Ne pas suivre » aux sites web. La plupart des sites ignorent ce signal, et l'activer peut en soi constituer un élément d'empreinte, car cette option est peu courante chez les utilisateurs ordinaires.
+
+## Polices
+
+Les sites web peuvent demander au navigateur quelles polices sont installées sur le système et utiliser la liste obtenue comme empreinte.
+
+**Activer le masquage de la liste des polices** - Lorsque cette option est activée, Gologin présente aux sites web la liste de polices propre au profil, au lieu des polices réellement installées sur votre machine. La liste actuelle s'affiche sous l'interrupteur et peut être modifiée manuellement via le bouton **Modifier**.
+
+Il est recommandé de laisser cette option activée. La désactiver expose vos polices système réelles à chaque site visité par le profil.
+
+## Masquer les dispositifs multimédia
+
+Les sites web et les applications web peuvent détecter le nombre de caméras, de microphones et de haut-parleurs connectés à votre appareil.
+
+**Masquer les dispositifs multimédia** - Lorsque cette option est activée, le profil communique un ensemble fixe de dispositifs multimédia à la place de vos dispositifs réels. Vous pouvez définir séparément le nombre d'**Entrées vidéo** (caméras), d'**Entrées audio** (microphones) et de **Sorties audio** (haut-parleurs) communiqué.
+
+La valeur par défaut est 1 pour chacun, ce qui correspond à une configuration typique à appareil unique.
+
+## Matériel
+
+Cette section contrôle la façon dont le profil réagit aux techniques d'empreinte qui sondent le rendu graphique et audio du navigateur. Les signaux concernés sont générés en exécutant de petites tâches dans le moteur de rendu du navigateur et en comparant le résultat : chaque appareil produit des résultats légèrement différents.
+
+<Note>
+  Les paramètres par défaut conviennent à la plupart des cas d'usage. Il s'agit de contrôles d'empreinte avancés, et les modifier de manière incorrecte risque davantage de rendre un profil inhabituel que de l'améliorer.
+</Note>
+
+**Canvas** - Contrôle la façon dont le profil gère l'empreinte canvas. Les options sont **Bruit** (ajoute de petites variations aléatoires au résultat du rendu), **Arrêter** (renvoie le résultat normal sans aucune modification) et **Bloquer** (empêche totalement l'accès à l'API canvas). Le blocage de canvas est détectable en soi et n'est pas recommandé.
+
+**Client Rects** - Similaire à canvas, mais cible la manière dont le navigateur mesure la position et la taille des éléments d'une page. **Bruit** ou **Arrêter**.
+
+**Contexte audio** - Contrôle l'empreinte du rendu audio. Le navigateur peut être invité à traiter de l'audio, et le résultat est légèrement unique pour chaque appareil. **Bruit** ajoute une légère variation ; **Arrêter** le laisse non modifié.
+
+**Image WebGL** - Contrôle le rendu visuel de WebGL, qui varie selon le GPU. **Bruit** ou **Arrêter**.
+
+**Métadonnées WebGL** - Contrôle les chaînes de fournisseur et de renderer du GPU communiquées par WebGL. **Masque** remplace les valeurs réelles par celles indiquées dans les champs **Fournisseur de WebGL** et **Renderer WebGL** ci-dessous. **Réel** transmet les informations réelles de votre GPU.
+
+## Options de stockage
+
+Ces interrupteurs contrôlent ce que chaque profil est autorisé à enregistrer entre les sessions.
+
+**Activer le stockage local** - Permet aux sites web de stocker des données dans le stockage local du navigateur. De nombreux sites s'en servent pour les sessions de connexion et les préférences. Le désactiver peut empêcher certaines applications web de fonctionner.
+
+**Activer indexedDB** - Permet aux sites web d'utiliser une base de données plus structurée côté navigateur. Elle est également utilisée par de nombreuses applications web modernes. Activez-la si vous rencontrez des problèmes de persistance de session.
+
+**Activer le stockage d’extension** - Permet aux extensions installées d'enregistrer leurs propres données d'une session à l'autre.
+
+## Plugins du navigateur
+
+**Activer les plugins potentiellement vulnérables** - Active des plugins de navigateur comme la visionneuse PDF d'Adobe et Widevine (utilisé pour les vidéos protégées par DRM). Ils sont désactivés par défaut, car les anciennes interfaces de plugins ont historiquement été des vecteurs d'empreinte. Activez cette option si vous avez besoin d'afficher des PDF ou de lire des vidéos protégées dans le profil.
+
+## Autre
+
+**Activer les services Google** - Permet au profil de se connecter en arrière-plan aux services de Google (correcteur orthographique, Navigation sécurisée, etc.). La plupart des utilisateurs peuvent laisser cette option activée.
+
+**Désactiver le chargement des images** et **Désactiver la lecture automatique des vidéos** - Lorsque ces options sont activées, le profil ne charge pas les images et ne lance pas automatiquement les vidéos sur les sites web. Cela réduit la quantité de trafic proxy utilisée par le profil, ce qui est utile pour le scraping, l'automatisation ou tout travail où vous n'avez pas besoin de voir les médias. Les deux sont désactivées par défaut. Disponible uniquement avec les offres payantes.
+
+**Activer l’enregistrement des signets du navigateur** - Détermine si les signets créés ou modifiés pendant une session sont enregistrés à la fermeture du profil.
+
+**Activer l’enregistrement de l’historique du navigateur** - Détermine si l'historique de navigation est conservé entre les sessions.
+
+**Activer l’enregistrement du mot de passe** - Détermine si le gestionnaire de mots de passe intégré du navigateur est actif dans ce profil.
+
+**Activer les extensions système** - Lorsque cette option est activée, les extensions installées sur votre système d'exploitation réel sont automatiquement importées dans le profil à son lancement. Cela déclenchera des invites d'installation au démarrage. Désactivée par défaut, et mieux vaut la laisser ainsi sauf si vous en avez précisément besoin.
+
+**URL de démarrage** - Ce que le navigateur ouvre au lancement du profil. Trois options : **Onglets précédemment ouverts** restaure ce qui était ouvert la dernière fois, **Ouvrir un nouvel onglet** repart de zéro, **Ouvrir les pages spécifiées** ouvre une URL que vous définissez.
+
+**Arguments de lancement** - Des options transmises au navigateur au démarrage, du même type que celles utilisées avec Chrome classique (par exemple `--disable-gpu` ou `--start-maximized`). Laissez ce champ vide si vous ne savez pas exactement ce dont vous avez besoin. Notez que certains arguments sont bloqués et n'auront aucun effet même s'ils sont saisis.
+
+**DNS personnalisé** - Vous permet de spécifier un serveur DNS pour ce profil. Cela fonctionne avec les proxys SOCKS, les connexions VPN et les connexions directes. Cela ne fonctionne pas avec les proxys HTTP ou HTTPS.
+
+**WebRTC** - Contrôle la façon dont le navigateur gère WebRTC, une technologie utilisée pour l'audio et la vidéo en temps réel, qui peut révéler votre adresse IP réelle même lorsqu'un proxy est actif. **Basé sur l'IP** aligne le comportement de WebRTC sur l'IP du proxy. **Arrêter** désactive entièrement WebRTC, alors que certains sites exigent qu'il soit activé pour fonctionner correctement.

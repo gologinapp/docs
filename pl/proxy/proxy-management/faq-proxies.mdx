@@ -1,0 +1,75 @@
+---
+title: "FAQ: Proxy"
+---
+
+### Czy potrzebuję proxy, aby korzystać z Gologin?
+
+Proxy jest zdecydowanie zalecane przy zarządzaniu wieloma kontami.
+
+Gologin tworzy osobne odciski przeglądarki (fingerprinty) dla każdego profilu, ale strony internetowe nadal mogą powiązać konta na podstawie tego samego adresu IP. Używanie innego proxy dla każdego profilu pomaga zachować izolację sesji.
+
+### Czy mogę używać własnego dostawcy proxy?
+
+Tak. Gologin obsługuje proxy od dowolnego zewnętrznego dostawcy.
+
+Zewnętrzne proxy możesz dodać ręcznie w ustawieniach profilu, zaimportować zbiorczo lub zarządzać nimi za pomocą **Proxy Manager**.
+
+### Jakiego typu proxy powinienem używać?
+
+W przypadku większości zadań związanych z zarządzaniem kontami zalecamy **proxy rezydencyjne**, ponieważ strony internetowe trudniej je wykryć.
+
+W zależności od zastosowania sprawdzić się mogą także inne typy proxy:
+
+- **Proxy mobilne** – wysoki poziom zaufania, często używane w serwisach społecznościowych
+- **Proxy z centrów danych (datacenter)** – szybsze, ale łatwiejsze do wykrycia przez strony internetowe
+
+### Czy mogę używać jednego proxy dla wielu profili?
+
+Technicznie tak, ale **nie jest to zalecane**.
+
+Używanie tego samego proxy w wielu profilach może zwiększyć ryzyko powiązania tych kont przez strony internetowe.
+
+Aby zapewnić lepszą izolację, przypisz **osobne proxy do każdego profilu**.
+
+### Dlaczego moje proxy nie działa?
+
+Najczęstsze przyczyny to:
+
+- nieprawidłowy adres IP, port, nazwa użytkownika lub hasło
+- serwer proxy nie odpowiada
+- zablokowane lub wygasłe proxy
+- niewystarczający limit transferu
+
+Połączenie z proxy możesz sprawdzić za pomocą **narzędzi do testowania proxy** w Gologin.
+
+### Czy mogę używać rozszerzeń VPN lub proxy w przeglądarce Orbita zamiast ustawień proxy w Gologin?
+
+Nie jest to zalecane i najprawdopodobniej nie przyniesie żadnych rezultatów. Podczas odwiedzania stron możesz napotkać błędy połączenia z internetem lub może zostać ujawniony Twój prawdziwy adres IP. Zmiana adresu IP za pomocą takich rozszerzeń rzadko się udaje, ponieważ zwykła przeglądarka Chrome i przeglądarka Orbita działają inaczej pod względem routingu sieciowego.
+
+### Czy mogę używać proxy HTTP i SOCKS w Gologin?
+
+Tak. Gologin obsługuje zarówno proxy **HTTP/HTTPS**, jak i **SOCKS5**.
+
+Większość dostawców proxy obsługuje te protokoły, a Gologin w wielu przypadkach potrafi automatycznie wykryć właściwy protokół.
+
+### Czy Gologin oferuje wbudowane proxy?
+
+Tak. Gologin oferuje zintegrowane proxy, które można przypisać bezpośrednio do profili przeglądarki bez dodatkowej konfiguracji.
+
+Jeśli potrzebujesz więcej lokalizacji lub opcji proxy, możesz również używać proxy zewnętrznych dostawców.
+
+### Co oznacza „2 GB proxy rezydencyjnego"?
+
+2 GB oznacza transfer danych (ruch), a nie miejsce na dysku ani pamięć RAM. Jest to ilość danych przechodzących przez proxy podczas przeglądania. Zwykłe przeglądanie zużywa średnio około 0.5-1 GB dziennie na jeden aktywny profil.
+
+### Czy jeśli używam własnego proxy, zużywam wliczone 2 GB ruchu Gologin?
+
+Nie. Wliczony ruch proxy Gologin jest zużywany tylko podczas korzystania z wbudowanych proxy Gologin. Własne proxy od zewnętrznych dostawców zużywają transfer u Twojego dostawcy proxy, a nie z limitu Gologin.
+
+### Ile ruchu proxy będę potrzebować?
+
+Przybliżone szacunki na jeden profil dziennie:
+
+- **Lekkie przeglądanie** (media społecznościowe, e-maile): 0.3-0.5 GB
+- **Aktywna praca** (zarządzanie reklamami, publikowanie treści): 0.5-1 GB
+- **Intensywne użycie** (rozmowy wideo, strony z dużą ilością multimediów): 1-3 GB

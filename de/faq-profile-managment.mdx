@@ -1,0 +1,81 @@
+---
+title: "FAQ: Profile"
+---
+
+### Kann ich mehrere Profile gleichzeitig ausführen?
+
+Ja. Gologin ermöglicht es dir, mehrere Browserprofile gleichzeitig auszuführen, abhängig von deinen Systemressourcen und deinem Abonnement.
+
+Jedes Profil läuft in einer isolierten Browserumgebung mit eigenem Fingerprint, eigenen Cookies und eigenen Proxy-Einstellungen.
+
+### Kann ich denselben Proxy für mehrere Profile verwenden?
+
+Technisch ja, es wird jedoch nicht empfohlen.
+
+Wenn du denselben Proxy für mehrere Profile verwendest, können Konten miteinander in Verbindung gebracht werden, und ihr Trust Score auf bestimmten Plattformen kann sinken.
+
+Für die besten Ergebnisse solltest du **für jedes Profil einen eigenen Proxy** verwenden.
+
+### Was passiert, wenn ich ein Profil nicht korrekt schließe?
+
+Wenn ein Profil geschlossen wird, bevor die Synchronisierung abgeschlossen ist, werden die neuesten Sitzungsdaten möglicherweise nicht gespeichert.
+
+Das kann zu Folgendem führen:
+
+- verlorene Cookies
+- verlorener Sitzungsstatus
+- Abmeldung von Websites
+
+Schließe Profile immer normal und warte, bis der Profilstatus wieder auf **Ready** steht.
+
+### Kann ich ein einzelnes Profil gleichzeitig auf mehreren Geräten starten?
+
+Das ist technisch möglich, wird aber nicht empfohlen.
+
+Wenn du dasselbe Profil gleichzeitig auf verschiedenen Geräten ausführst, kann es zu Synchronisierungskonflikten kommen, und das Risiko von Problemen mit dem Konto steigt.
+
+### Kann ich ein Profil kopieren oder duplizieren?
+
+Ja. Mit Gologin kannst du **Profile klonen**.
+
+Beim Klonen eines Profils werden seine Einstellungen, die Fingerprint-Konfiguration und die Umgebung kopiert. So kannst du schnell ähnliche Profile erstellen.
+
+### Kann ich mich über RDP, VNC oder andere Remote-Tools mit Profilen verbinden?
+
+Gologin-Profile werden nicht emuliert, sondern laufen lokal auf deinem Gerät oder in der Cloud. Sie haben kein eigenes zugrunde liegendes Betriebssystem, daher gibt es nichts, womit du dich verbinden könntest. Du kannst dich jedoch bei Bedarf per RDP mit einem Gerät verbinden, auf dem Gologin-Profile laufen.
+
+### Kann ich ein gelöschtes Profil wiederherstellen?
+
+Ja. Gelöschte Profile können für eine begrenzte Zeit im Bereich **Restore profiles** in Settings wiederhergestellt werden.
+
+Wenn das Profil noch nicht endgültig entfernt wurde, kann es mit allen Daten wiederhergestellt werden.
+
+### Warum wurde mein Konto nach dem Start eines Profils abgemeldet?
+
+Das kann passieren, wenn:
+
+- sich der Proxy-Standort geändert hat
+- sich der Fingerprint deutlich geändert hat
+- Cookies ungültig oder abgelaufen waren
+
+Um dieses Risiko zu verringern, halte Proxy-, Fingerprint- und Zeitzoneneinstellungen konsistent.
+
+### Kann ich Hintergrundbenachrichtigungen von Websites oder Erweiterungen in meinen Profilen aktivieren?
+
+Orbita kann derzeit keine Hintergrundbenachrichtigungen senden.
+
+### Warum kann ich das Browserfenster nicht auf Vollbild vergrößern?
+
+Das Browserfenster eines Profils kann nicht größer sein als die **Screen Resolution**, die in den Profileinstellungen festgelegt ist. Das ist beabsichtigt. Websites können sowohl die Bildschirmgröße sehen, die ein Profil meldet, als auch die tatsächliche Größe des Browserfensters. Auf einem echten Gerät ist das Fenster nie größer als der Bildschirm, daher kann eine Abweichung das Profil verdächtig erscheinen lassen.
+
+So machst du das Fenster größer:
+
+1. Öffne die **Settings** des Profils > **Advanced**.
+2. Wähle unter **Screen Resolution** einen Wert, der der Auflösung deines Monitors entspricht oder etwas niedriger ist.
+3. Speichere die Einstellungen und starte das Profil neu.
+
+Wenn du in diesem Profil bereits bei Konten angemeldet bist, beachte, dass Websites eine geänderte Auflösung möglicherweise als neues Gerät behandeln und eine zusätzliche Verifizierung verlangen.
+
+Damit neue Profile von Anfang an in der richtigen Größe geöffnet werden, lege die Bildschirmauflösung in den [Default profile settings](/de/default-profile-settings) fest. Sie gilt dann für alle Profile, die du danach erstellst.
+
+Siehe auch: [Advanced profile settings](/de/general/account-and-billing/advanced-profile-settings), [What's safe to change](/de/whats-safe-to-change)

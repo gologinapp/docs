@@ -1,0 +1,89 @@
+---
+title: "Korzystanie z proxy w Cloud Browser"
+---
+
+Gologin Cloud Browser umożliwia elastyczną konfigurację proxy do kierowania ruchu sesji przeglądarki. Możesz korzystać z wbudowanych proxy rezydencyjnych Gologin lub użyć własnych.
+
+## Jak działają proxy w Gologin
+
+W przeciwieństwie do konfiguracji proxy opartej na sesjach, **proxy w Gologin są przypisane do profili**, a nie do pojedynczych połączeń.
+
+Gdy łączysz się z sesją Cloud Browser za pomocą identyfikatora profilu, proxy skonfigurowane w tym profilu jest stosowane automatycznie:
+
+```text
+https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}
+```
+
+Oznacza to, że proxy konfigurujesz raz (przez REST API lub panel) i każda sesja korzystająca z tego profilu będzie konsekwentnie przechodzić przez to proxy. Nie musisz podawać danych logowania do proxy przy każdym połączeniu.
+
+> Jeśli proxy profilu jest nieosiągalne w chwili uruchomienia sesji, połączenie zakończy się błędem przekroczenia czasu proxy. Przed uruchomieniem automatyzacji upewnij się, że proxy działa.
+
+## Opcje proxy
+
+### Wbudowane proxy Gologin
+
+Gologin udostępnia własną sieć proxy rezydencyjnych z kontrolą geolokalizacji. Wbudowane proxy to najprostsza opcja, ponieważ nie potrzebujesz zewnętrznego dostawcy proxy.
+
+Aby przypisać proxy Gologin do profilu, użyj [Proxies API](https://gologin.com/docs/api-reference/proxy/), aby utworzyć proxy i przypisać je do profilu.
+
+Wbudowane proxy obsługują targetowanie geolokalizacji według kraju i regionu. Podczas tworzenia proxy ustaw `autoProxyRegion` na odpowiedni kod kraju:
+
+```json
+{
+  "mode": "geolocation",
+  "autoProxyRegion": "us"
+}
+```
+
+Popularne kody regionów: `us`, `gb`, `de`, `fr`, `nl`, `jp`, `au`, `ca`, `br`, `in`
+
+### Własne proxy
+
+Do profilu możesz przypisać dowolne proxy zewnętrzne. Gologin obsługuje proxy `http`, `https` i `socks5`.
+
+Skonfiguruj je za pomocą [Proxies API](https://gologin.com/docs/api-reference/proxy/):
+
+```json
+{
+  "mode": "http",
+  "host": "your.proxy.host",
+  "port": 10000,
+  "username": "user",
+  "password": "pass"
+}
+```
+
+Proxy jest weryfikowane podczas uruchamiania sesji. Jeśli jest nieosiągalne, sesja nie zostanie uruchomiona.
+
+### Brak proxy
+
+Aby uruchomić sesję bez proxy, ustaw tryb proxy profilu na `none`:
+
+```json
+{
+  "mode": "none"
+}
+```
+
+Jest to przydatne podczas testowania lub w przepływach pracy, w których wystarczy adres IP serwera automatyzacji.
+
+## Zarządzanie proxy przez API
+
+Pełne zarządzanie proxy (tworzenie, aktualizacja, usuwanie, wyświetlanie listy, sprawdzanie ruchu) jest dostępne przez REST API:
+
+- [Dokumentacja Proxies API](https://gologin.com/docs/api-reference/proxy/)
+
+## Sprawdzanie statusu proxy przed połączeniem
+
+Ponieważ uszkodzone proxy uniemożliwia uruchomienie sesji, warto zweryfikować je przed uruchomieniem automatyzacji, zwłaszcza w środowisku produkcyjnym:
+
+```javascript
+const profileRes = await fetch(`https://api.gologin.com/browser/${profileId}`, {
+  headers: { Authorization: `Bearer ${token}` },
+});
+const profile = await profileRes.json();
+
+if (profile.proxy?.mode !== 'none') {
+  // optionally verify proxy reachability here before connecting
+}
+```

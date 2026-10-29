@@ -1,0 +1,68 @@
+---
+title: "Czym jest profil przeglądarki"
+---
+
+**Profil przeglądarki** w Gologin to samodzielna, wirtualna przeglądarka. Wygląda i działa dokładnie tak, jak prawdziwa przeglądarka zainstalowana na prawdziwym komputerze - ale istnieje wewnątrz Gologin i można ją utworzyć, zapisać, przełączyć lub usunąć w kilka sekund.
+
+Każdy profil ma własne:
+
+- Unikalny [fingerprint](/pl/how-browser-fingerprints-work) przeglądarki (więcej na ten temat poniżej)
+- Pliki cookie i pamięć lokalną
+- Historię przeglądania
+- Zapisane hasła i rozszerzenia
+- Połączenie proxy
+
+Gdy otwierasz profil, strony internetowe widzą w nim zupełnie inną osobę, która odwiedza je z innego urządzenia. Gdy go zamykasz, wszystko zostaje zapisane dokładnie w takim stanie, w jakim je zostawiłeś.
+
+## Dlaczego to ważne? Czym są fingerprinty przeglądarki
+
+Zanim przejdziemy do szczegółów dotyczących profili, trzeba zrozumieć jedno pojęcie: **fingerprint przeglądarki**.
+
+Za każdym razem, gdy odwiedzasz stronę internetową, Twoja przeglądarka po cichu wysyła dziesiątki sygnałów technicznych o Twoim urządzeniu i jego konfiguracji. Są to na przykład:
+
+- z jakiej przeglądarki korzystasz i jaka to wersja,
+- jaki masz system operacyjny,
+- jaka jest rozdzielczość ekranu,
+- jakie czcionki są zainstalowane na Twoim komputerze,
+- jaką masz strefę czasową i jaki język,
+- w jaki sposób Twoja karta graficzna renderuje obrazy,
+- czy używasz ekranu dotykowego.
+
+Strony internetowe zbierają wszystkie te sygnały i łączą je w unikalny „fingerprint", który Cię identyfikuje — nawet jeśli wyczyścisz pliki cookie, użyjesz VPN-u lub otworzysz okno incognito.
+
+<Note>
+  Tryb incognito ukrywa historię przeglądania przed innymi osobami korzystającymi z tego samego komputera. **Nie** ukrywa natomiast fingerprintu Twojej przeglądarki przed stronami internetowymi. Każde okno incognito nadal wygląda dla świata zewnętrznego dokładnie tak samo jak Twoja zwykła przeglądarka.
+</Note>
+
+Dlatego samo używanie wielu kont w różnych kartach nie działa. Wszystkie te karty mają ten sam fingerprint, więc strony internetowe widzą, że należą do tej samej osoby.
+
+## Jak profil Gologin rozwiązuje ten problem
+
+Gdy tworzysz profil przeglądarki w Gologin, aplikacja od podstaw buduje kompletną, fałszywą, ale wiarygodną tożsamość przeglądarki.
+
+Gologin generuje realistyczne wartości dla każdego parametru fingerprintu - prawdopodobny rozmiar ekranu, wiarygodny zestaw czcionek, spójną strefę czasową, pasujący ciąg user agent i tak dalej. Wszystkie te wartości są przechowywane w profilu i udostępniane każdej stronie, którą odwiedzasz podczas jego używania.
+
+## Jak przechowywane są profile
+
+Gologin przechowuje Twoje profile w chmurze. Oznacza to, że:
+
+- możesz otworzyć dowolny profil na dowolnym komputerze, na którym zainstalowano Gologin,
+- profile przetrwają awarię lub wymianę Twojego komputera,
+- możesz udostępniać profile członkom zespołu, którzy mogą korzystać z tej samej zapisanej sesji bez konieczności ponownego logowania się.
+
+## Różnica między profilem a oknem incognito
+
+|  | Okno incognito | Profil Gologin |
+| --- | --- | --- |
+| Ukrywa historię przeglądania lokalnie | ✅ | ✅ |
+| Czyści pliki cookie po zamknięciu | ✅ | ❌ (pliki cookie są zapisywane) |
+| Zmienia fingerprint Twojej przeglądarki | ❌ | ✅ |
+| Zmienia Twój adres IP | ❌ | ✅ (z proxy) |
+| Można go zapisać i ponownie otworzyć | ❌ | ✅ |
+| Wygląda jak inne urządzenie | ❌ | ✅ |
+
+Tryb incognito to narzędzie do ochrony prywatności na Twoim lokalnym urządzeniu. Profil Gologin to pełna zamiana tożsamości w internecie.
+
+## Podsumowanie
+
+Profil przeglądarki w Gologin to zapisana wirtualna przeglądarka z własnym fingerprintem, plikami cookie i proxy. Po jego otwarciu dla każdej odwiedzanej strony wyglądasz jak zupełnie inna osoba korzystająca z innego urządzenia. Zamknięcie profilu zapisuje sesję, dzięki czemu możesz do niej wrócić w dowolnym momencie. Dzięki temu możesz zarządzać wieloma oddzielnymi tożsamościami online z jednego komputera - w czysty i bezpieczny sposób, bez ryzyka, że konta zostaną powiązane ze sobą lub z Tobą.

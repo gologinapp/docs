@@ -1,0 +1,235 @@
+---
+title: "Gologin para agentes de IA"
+description: "Dê aos seus agentes de IA acesso confiável à web — scraping, automação de navegador e sessões persistentes com o Gologin"
+---
+
+O Gologin oferece aos agentes de IA três recursos de que eles precisam para trabalhar com a web de forma confiável:
+
+1. **Ler a web** — faça scraping de qualquer página, mesmo de sites com muito JavaScript e protegidos, com o Web Unlocker
+2. **Interagir com a web** — abra sessões reais de navegador com cliques, digitação, navegação e cookies persistentes por meio do Navegador na nuvem
+3. **Não ser detectado** — fingerprinting anti-detecção, proxies residenciais e gerenciamento de identidade baseado em perfis
+
+Esses recursos estão disponíveis em vários níveis de integração — escolha o que combina com a sua stack.
+
+---
+
+## Opções de integração
+
+<CardGroup cols={2}>
+  <Card title="Servidor MCP" icon="plug" href="/pt/api-reference/ai-integrations/mcp-server">
+    Conecte o Gologin ao Claude Desktop, ao Cursor ou a qualquer cliente MCP. Gerencie perfis e sessões em linguagem natural.
+  </Card>
+  <Card title="AI Skills" icon="wand-magic-sparkles" href="/pt/api-reference/ai-integrations/ai-skills">
+    Extensões plug-and-play para o Claude Code. Instale uma skill e seu agente ganha scraping e automação de navegador sem configuração extra.
+  </Card>
+  <Card title="Ferramentas CLI" icon="terminal" href="/pt/cli-tools/web-access">
+    Comandos de shell que os agentes de IA chamam diretamente. Faça scraping, navegue e interaja — sem escrever código. Três CLIs para fluxos de trabalho diferentes.
+  </Card>
+  <Card title="SDKs + API do Navegador na nuvem" icon="code" href="/pt/api-reference/cloud-browser/getting-started">
+    Controle programático completo. Crie ferramentas personalizadas para agentes com Puppeteer/Playwright conectados ao Navegador na nuvem do Gologin.
+  </Card>
+</CardGroup>
+
+---
+
+## Qual ferramenta escolher
+
+| Eu quero... | Use |
+|---|---|
+| Gerenciar perfis pelo Claude Desktop / Cursor | [Servidor MCP](/pt/api-reference/ai-integrations/mcp-server) |
+| Dar acesso à web ao Claude Code sem configuração | [AI Skills](/pt/api-reference/ai-integrations/ai-skills) |
+| Fazer scraping de páginas, rastrear sites e extrair dados em lote | [CLI Web Access](/pt/cli-tools/web-access) |
+| Abrir um navegador na nuvem, clicar, digitar e tirar capturas de tela | [CLI Agent Browser](/pt/cli-tools/agent-browser) |
+| Aquecer perfis locais e executar fluxos de login | [CLI Local Agent Browser](/pt/cli-tools/local-agent-browser) |
+| Criar ferramentas personalizadas com Puppeteer/Playwright | [API do Navegador na nuvem](/pt/api-reference/cloud-browser/getting-started) |
+| Chamar a API de scraping a partir do meu próprio código | [SDK do Web Unlocker](/pt/scraping-api-sdk-and-cli) |
+
+---
+
+## Como tudo se conecta
+
+```
+┌─────────────────────────────────────────────────┐
+│                  AI Agent                        │
+│         (Claude, Codex, custom agent)            │
+└──────┬──────────┬──────────┬────────────────────┘
+       │          │          │
+  MCP Server   AI Skills   CLI Tools / SDK
+       │          │          │
+       └──────────┴──────────┘
+                  │
+    ┌─────────────┴─────────────┐
+    │                           │
+Web Unlocker              Cloud Browser
+(stateless scraping)    (stateful sessions)
+    │                           │
+    └─────────────┬─────────────┘
+                  │
+          Gologin Infrastructure
+    (proxies, fingerprints, profiles)
+```
+
+- O **Web Unlocker** cuida da leitura e extração sem estado — envie uma URL e receba o HTML renderizado
+- O **Navegador na nuvem** cuida da interação com estado — abra uma sessão, clique, digite, navegue e mantenha os cookies
+- O **Orbita local** cuida de perfis locais persistentes — aquecimento, fluxos de login e ações em redes sociais e marketplaces
+
+Os três compartilham a mesma infraestrutura do Gologin: proxies residenciais, fingerprinting anti-detecção e gerenciamento de perfis.
+
+---
+
+## O que as pessoas criam com isso
+
+### Pesquisa e inteligência competitiva
+
+Um agente de IA que monitora preços de concorrentes, lançamentos de produtos e mudanças de conteúdo em dezenas de sites — todos os dias, de forma automática. O agente faz scraping das páginas dos concorrentes com o Web Unlocker, extrai dados estruturados, compara com o snapshot de ontem e gera um resumo diário. Sem sessões de navegador, apenas extração sem estado em escala.
+
+```bash
+# scrape 20 competitor pricing pages and get structured output
+gologin-web-access batch-scrape \
+  https://competitor1.com/pricing \
+  https://competitor2.com/pricing \
+  https://competitor3.com/pricing \
+  --format json --summary --output ./today-prices.json
+
+# detect what changed since last check
+gologin-web-access batch-change-track \
+  https://competitor1.com/pricing \
+  https://competitor2.com/features \
+  --format markdown --output ./changes.json
+```
+
+### Geração e enriquecimento de leads
+
+Faça scraping de diretórios de empresas, páginas de empresas no LinkedIn e sites de avaliações — depois envie o HTML ao Claude para extrair nomes, e-mails, telefones, porte da empresa e stack de tecnologia. Funciona como ferramenta dentro do loop de um agente de IA: o agente decide quais páginas coletar, chama a ferramenta e recebe os dados estruturados de volta.
+
+```bash
+# search for leads
+gologin-web-access search "saas companies series A 2026" --limit 20
+
+# scrape and extract structured data from each result
+gologin-web-access extract https://example.com/company/123 --schema ./lead-schema.json
+```
+
+### Gerenciamento de várias contas
+
+Gerencie mais de 50 contas de redes sociais, contas de anúncios ou contas de vendedores em marketplaces — cada uma com seu próprio perfil de navegador, fingerprint, proxy e cookies. O Local Agent Browser gerencia os perfis, os aquece com runbooks e mantém as sessões ativas entre as chamadas do agente.
+
+```bash
+# create profiles for each account
+gologin-local-agent-browser profile-create "FB Ads Account 1" --template ads
+gologin-local-agent-browser profile-create "FB Ads Account 2" --template ads
+
+# warm up profiles in batch
+gologin-local-agent-browser batch ./warmup-runbook.json \
+  --targets ./all-profiles.json --concurrency 5
+```
+
+### Preenchimento automático de formulários e entrada de dados
+
+Um agente de IA que faz login em painéis internos, preenche formulários, envia relatórios e baixa exportações — tudo por meio de uma sessão real em um navegador na nuvem. O agente lê a página como um snapshot, encontra os campos certos por ref, digita os valores, clica em enviar e verifica o resultado.
+
+```bash
+gologin-agent-browser open https://internal-dashboard.com/login --profile my_profile
+gologin-agent-browser snapshot
+gologin-agent-browser fill @e3 "username"
+gologin-agent-browser fill @e5 "password"
+gologin-agent-browser click @e7    # submit button
+gologin-agent-browser wait 2000
+gologin-agent-browser snapshot     # verify login success
+gologin-agent-browser screenshot ./logged-in.png
+```
+
+### Monitoramento de conteúdo e alertas
+
+Acompanhe mudanças em páginas de regulamentação governamental, blogs de concorrentes, sites de vagas ou qualquer página importante para o seu negócio. Execute diariamente via cron ou com um agente agendado, compare com a versão anterior e receba alertas sobre mudanças relevantes.
+
+```bash
+# track changes on key pages
+gologin-web-access change-track https://regulations.gov/new-rules --format markdown
+gologin-web-access batch-change-track \
+  https://competitor.com/blog \
+  https://competitor.com/changelog \
+  --output ./changes.json
+```
+
+### Pipelines de scraping com IA
+
+Crie um pipeline completo: rastreie um site de documentação, converta o conteúdo para markdown e envie a um LLM para resumo ou perguntas e respostas. Use a CLI para a extração e o seu próprio código para a parte do LLM.
+
+```bash
+# crawl an entire docs site
+gologin-web-access crawl https://docs.example.com \
+  --format markdown --limit 100 --max-depth 3 --only-main-content \
+  --output ./docs-corpus.json
+
+# or map the site first, then selectively scrape
+gologin-web-access map https://docs.example.com --limit 200
+gologin-web-access batch-scrape url1 url2 url3 --format text --output ./selected.json
+```
+
+### Testes de geolocalização e QA de localização
+
+Verifique como o seu site aparece em diferentes países. Abra a mesma URL com perfis configurados com proxies em diferentes regiões, tire capturas de tela e compare.
+
+```bash
+# create geo-specific profiles
+gologin-local-agent-browser profile-create "US Test" --template geo --proxy-country us
+gologin-local-agent-browser profile-create "DE Test" --template geo --proxy-country de
+gologin-local-agent-browser profile-create "JP Test" --template geo --proxy-country jp
+
+# screenshot from each location
+gologin-agent-browser open https://yoursite.com --profile us_profile_id
+gologin-agent-browser screenshot ./us-view.png
+gologin-agent-browser close
+```
+
+---
+
+## Exemplos de início rápido
+
+### Fazer scraping de uma página (CLI)
+
+```bash
+npm install -g gologin-web-access
+export GOLOGIN_WEB_UNLOCKER_API_KEY="wu_..."
+
+gologin-web-access read https://example.com
+```
+
+### Abrir um navegador na nuvem (CLI)
+
+```bash
+npm install -g gologin-agent-browser-cli
+export GOLOGIN_TOKEN='your_token'
+
+gologin-agent-browser open https://example.com
+gologin-agent-browser snapshot
+gologin-agent-browser click @e3
+gologin-agent-browser close
+```
+
+### Instalar uma AI Skill (Claude Code)
+
+```bash
+npx skills add GologinLabs/gologin-web-access-skill
+```
+
+Depois, é só pedir ao Claude Code para fazer scraping de uma página ou interagir com um site — a skill cuida do resto.
+
+### Conectar o MCP (Claude Desktop)
+
+Adicione ao arquivo `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "gologin-mcp": {
+      "command": "npx",
+      "args": ["gologin-mcp"],
+      "env": { "API_TOKEN": "your-token" }
+    }
+  }
+}
+```
+
+Depois, peça ao Claude: "Crie um novo perfil de navegador com um proxy dos EUA."

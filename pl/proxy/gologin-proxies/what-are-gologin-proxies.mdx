@@ -1,0 +1,86 @@
+---
+title: "Czym są proxy Gologin"
+---
+
+Proxy Gologin to adresy IP **zintegrowane bezpośrednio z przeglądarką Gologin**. Gdy proxy jest przypisane do profilu przeglądarki, określa, **skąd pochodzi Twój ruch internetowy**, i sprawia, że strony widzą każdy profil jako **osobnego, prawdziwego użytkownika**.
+
+Dzięki temu strony i platformy nie mogą **łączyć ze sobą wielu kont** na podstawie danych o adresie IP, a ryzyko blokad, ograniczeń lub dodatkowych weryfikacji bezpieczeństwa jest mniejsze.
+
+## Proxy wbudowane a własne
+
+Gologin umożliwia **dwa sposoby korzystania z proxy**, w zależności od Twoich potrzeb i doświadczenia.
+
+- **Proxy wbudowane** – są **dostarczane i zarządzane przez Gologin**. Są gotowe do użycia, nie wymagają zewnętrznej konfiguracji i bezproblemowo współpracują z naszym systemem fingerprintingu przeglądarki. To najlepszy wybór, jeśli zależy Ci na **prostej, stabilnej i szybkiej konfiguracji** bez korzystania z usług firm trzecich.
+- **Proxy własne** – są **kupowane od zewnętrznych dostawców** i ręcznie dodawane do Gologin. Daje to większą swobodę w wyborze dostawców, lokalizacji i formatów proxy. To rozwiązanie lepiej sprawdza się u **zaawansowanych użytkowników**, którzy potrzebują większej kontroli nad swoją infrastrukturą proxy.
+
+Proxy wbudowane są idealne, gdy liczy się **prostota i niezawodność**, a proxy własne zapewniają **większą kontrolę** w zaawansowanych konfiguracjach.
+
+## Rodzaje proxy Gologin
+
+W zależności od planu i potrzeb Gologin może oferować różne rodzaje proxy, takie jak:
+
+- **Proxy rezydencyjne** – adresy IP prawdziwych użytkowników, odpowiednie dla większości platform
+- **Proxy mobilne** – adresy IP z sieci komórkowych, przydatne tam, gdzie liczy się wyższy poziom zaufania
+- **Proxy datacenter** – szybsze i tańsze, ale łatwiejsze do wykrycia
+- **Dedicated IP** – jeden adres IP zarezerwowany wyłącznie dla Ciebie. Nigdy się nie zmienia, pochodzi od prawdziwego dostawcy internetu i nie ma limitu ruchu.
+
+Za proxy rezydencyjne, mobilne i datacenter płaci się według ruchu (w gigabajtach). Dedicated IP jest płatny osobno, w formie subskrypcji za \$5/miesiąc za każdy adres IP, i jest dostępny w planach płatnych.
+
+<Note>
+  **Dedicated IP**, **ISP proxy** i **static proxy** oznaczają to samo. W aplikacji Gologin ta opcja nazywa się **Buy dedicated IP** i właśnie tego określenia używamy w całej dokumentacji.
+</Note>
+
+## Informacje o rotujących proxy
+
+Rezydencyjne i mobilne proxy Gologin automatycznie zmieniają adresy IP co 5–30 minut. Oznacza to, że Twój adres IP zmieni się w trakcie sesji przeglądania.
+
+**Rotacja sprawdzi się w przypadku:**
+
+- web scrapingu
+- krótkich sesji przeglądania
+- ogólnego researchu **Kiedy nie używać rotujących proxy**
+
+<Warning>
+  Nie używaj rotujących proxy w serwisach Amazon, eBay, Etsy, PayPal ani na żadnym marketplace, który monitoruje historię konta. Rotujące adresy IP to jeden z najszybszych sposobów na powiązanie kont i ich zablokowanie na tych platformach. Do takich kont używaj zamiast tego Dedicated IP.
+</Warning>
+
+- Amazon i eBay wykrywają, gdy to samo konto loguje się z różnych adresów IP w czasie. Traktują to jako sygnał, że kontem zarządza osoba trzecia lub że jest ono częścią schematu wielu kont. Rotujące proxy zmienia adres IP w każdej sesji – dokładnie ten wzorzec jest oznaczany jako podejrzany.
+- LinkedIn wylogowuje sesje i uruchamia kontrole bezpieczeństwa, gdy widzi zmianę adresu IP między sesjami. Rotujące proxy będą powodować częste wylogowania i prośby o weryfikację.
+- Platformy bukmacherskie wymagają stałych adresów IP dla każdego konta. Zmiana IP jest traktowana jako podejrzana aktywność logowania i często prowadzi do ograniczenia konta.
+- PayPal i platformy finansowe traktują zmiany IP jako potencjalne przejęcie konta. Mogą zamrozić konto lub wymagać weryfikacji tożsamości.
+
+## Co wybrać zamiast tego
+
+Do długoterminowego zarządzania kontami na każdej wrażliwej platformie potrzebujesz jednego adresu IP na konto, który nigdy się nie zmienia. W Gologin jest to **Dedicated IP**.
+
+| Platforma | Zalecany rodzaj proxy |
+| --- | --- |
+| Amazon / eBay / Etsy | Dedicated IP |
+| LinkedIn | Dedicated IP |
+| Facebook / Meta Ads | Dedicated IP lub statyczne proxy mobilne |
+| Strony bukmacherskie | Statyczne proxy mobilne |
+| Web scraping | Rotujące proxy rezydencyjne lub datacenter |
+| Testy / szybkie sprawdzenia | Rotujące proxy Gologin w zupełności wystarczą |
+
+Zobacz [Najlepsze proxy do Twojego zastosowania](https://gologin.com/docs/proxy/introduction/best-proxy-for-your-case), aby poznać pełne zestawienie, lub [Polecani dostawcy proxy](https://gologin.com/best-proxy-server-services/), aby zobaczyć konkretne usługi.
+
+## Informacje o wliczonym limicie ruchu
+
+Każdy plan Gologin zawiera limit ruchu proxy mierzony w gigabajtach. To dane, które przechodzą przez proxy podczas przeglądania w Twoich profilach – a nie miejsce na dysku.
+
+**Orientacyjne szacunki:**
+
+- Lekkie przeglądanie (sprawdzanie feedów, czytanie stron): ok. 0,3–0,5 GB na profil dziennie
+- Aktywna praca (ładowanie multimediów, prowadzenie reklam): ok. 1–2 GB na profil dziennie
+- 10 profili LinkedIn używanych po 2 godziny dziennie: ok. 3–6 GB miesięcznie
+
+Jeśli podłączysz do profilu własne proxy zewnętrznego dostawcy, nie zużywa ono limitu ruchu Gologin – wliczany jest tylko ruch przechodzący przez własną sieć proxy Gologin.
+
+## Zobacz także
+
+- [Proxy Gologin a proxy zewnętrznych dostawców](https://gologin.com/docs/proxy/proxy-management/gologin-vs-3rd-party-proxies)
+- [Jak działają proxy Gologin](https://gologin.com/docs/proxy/gologin-proxies/how-gologin-proxies-work-and-what-they-offer)
+- [Ile ruchu proxy potrzebuję?](https://gologin.com/docs/proxy/gologin-proxies/how-much-proxy-traffic-do-i-need)
+- [VPN a proxy](https://gologin.com/docs/proxy/introduction/vpn-vs-proxy) — jaka jest różnica
+- [Proxy statyczne a rotujące](https://gologin.com/docs/static-vs-dynamic-proxies) — dlaczego statyczne proxy są ważne przy zarządzaniu kontami
+- [Dodawanie pierwszego proxy](https://gologin.com/docs/proxy/gologin-proxies/gologin-proxy-management/adding-your-first-proxy)

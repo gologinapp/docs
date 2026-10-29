@@ -1,0 +1,54 @@
+---
+title: "Dados do perfil desapareceram"
+description: "Por que os dados do seu perfil do Gologin podem parecer ausentes e como recuperá-los."
+---
+
+## Por que os dados do perfil podem desaparecer
+
+Há vários motivos pelos quais os dados de um perfil podem parecer ausentes no Gologin. Na maioria dos casos, os dados não foram perdidos de forma permanente.
+
+### Após uma atualização do Orbita
+
+Quando o Orbita (o navegador do Gologin) recebe uma atualização de versão principal, alguns dados locais podem ser redefinidos. Isso inclui:
+
+- Histórico de navegação
+- Dados armazenados em cache localmente
+- Parte do armazenamento específico de sites
+
+<Info>
+Cookies e dados de sessão são preservados se o perfil tiver sido sincronizado com os servidores do Gologin antes da atualização. Sempre confirme que seus perfis estão sincronizados antes de atualizar.
+</Info>
+
+### Mensagem "Perfil já excluído"
+
+Essa mensagem é enganosa. Na maioria dos casos, ela **não** significa que seu perfil foi realmente excluído.
+
+Normalmente, essa mensagem aparece quando você atingiu o limite de inicialização de perfis em um plano de teste ou gratuito. Os dados do seu perfil continuam nos servidores do Gologin.
+
+**Solução:** faça upgrade para um plano pago ou renove sua assinatura para recuperar o acesso aos seus perfis.
+
+### Retenção de dados no plano gratuito
+
+Depois que sua assinatura expira, o Gologin armazena os dados dos seus perfis em seus servidores por até **180 dias**. Após esse período, os dados são excluídos permanentemente e não podem ser recuperados.
+
+<Warning>
+Se sua assinatura está expirada há muito tempo, renove-a o quanto antes para evitar a perda permanente de dados. Os perfis são excluídos 180 dias após a expiração da assinatura.
+</Warning>
+
+### Após importar/exportar
+
+Ao exportar e importar novamente um perfil, nem todos os dados são incluídos na exportação. Os dados a seguir são **preservados** nas exportações:
+
+- Cookies
+- Configurações de proxy
+- Configuração do perfil (fingerprint, fuso horário etc.)
+
+Os dados a seguir **não são incluídos** nas exportações:
+
+- Histórico de navegação
+- Dados de armazenamento local (Local Storage) e IndexedDB
+- Arquivos e imagens em cache
+
+<Info>
+Se você precisa preservar os dados de sessão entre dispositivos, use a sincronização na nuvem integrada do Gologin em vez da exportação/importação manual. A sincronização na nuvem mantém mais dados do perfil do que o formato do arquivo de exportação.
+</Info>

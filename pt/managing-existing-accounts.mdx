@@ -1,0 +1,78 @@
+---
+title: "Gerenciando contas existentes"
+---
+
+O gerenciamento de contas existentes no Gologin se baseia em um princípio fundamental: consistência.
+
+Diferentemente das contas novas, as contas existentes já têm um histórico, que inclui ambiente de login, padrões de comportamento e dados de sessão. As plataformas esperam que esse padrão permaneça estável ao longo do tempo.
+
+O Gologin ajuda a preservar essa consistência mantendo cada conta em um perfil de navegador dedicado.
+
+## Usando o mesmo perfil
+
+Cada conta deve ser sempre acessada pelo mesmo perfil do Gologin.
+
+O perfil armazena:
+
+• fingerprint\
+• cookies e dados de sessão\
+• armazenamento local e estado do navegador
+
+Isso permite que as plataformas reconheçam a conta como a de um usuário que está retornando.
+
+Trocar de perfil ou criar um novo para uma conta existente pode quebrar essa continuidade e acionar verificações de segurança.
+
+## Mantendo o proxy e a localização estáveis
+
+O proxy usado em um perfil deve permanecer consistente.
+
+Evite alterações frequentes de:
+
+- endereço IP
+- país
+- região
+
+Se for necessário trocar o proxy, faça isso com cuidado, de preferência dentro da mesma região e sem mudanças bruscas.
+
+## Preservando os dados de sessão
+
+O Gologin salva os dados de sessão automaticamente quando os perfis são fechados corretamente.
+
+Isso inclui cookies e estados de login que ajudam a manter a confiança na conta.
+
+Para evitar problemas:
+
+- Sempre feche os perfis corretamente
+- Aguarde a conclusão da sincronização
+- Evite limpar dados sem necessidade
+
+Fazer login do zero repetidamente pode reduzir a confiança na conta e acionar verificações adicionais.
+
+## Mantendo o comportamento anterior
+
+As contas existentes devem continuar se comportando de acordo com o seu histórico.
+
+Evite:
+
+- aumentos repentinos de atividade
+- padrões de uso novos ou inconsistentes
+- mudanças rápidas demais nos fluxos de trabalho
+
+O Gologin oferece um ambiente estável, mas a consistência de comportamento é igualmente importante.
+
+## Principais conclusões
+
+O Gologin oferece um ambiente controlado e consistente para cada conta.
+
+Para manter a estabilidade:
+
+- use sempre o mesmo perfil
+- mantenha a configuração do proxy consistente
+- evite mudanças bruscas de comportamento ou de ambiente
+
+Veja também
+
+- [Criando novas contas com segurança](https://gologin.com/docs/creating-new-accounts-safely)
+- [Lista de verificação de higiene do perfil](https://gologin.com/docs/profile-hygiene-checklist)
+- [Migrando de outros navegadores antidetect](https://gologin.com/docs/general/migration-from-other-tools)
+- [Erros comuns a evitar](https://gologin.com/docs/common-mistakes-to-avoid)

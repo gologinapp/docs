@@ -1,0 +1,63 @@
+---
+title: "Dodawanie proxy i zarządzanie nimi"
+---
+
+W przeglądarce Gologin możesz podłączyć własne proxy na kilka sposobów. W tym artykule omówimy je wszystkie, od najprostszych po bardziej zaawansowane.
+
+Zewnętrzni dostawcy proxy zazwyczaj udostępniają **IP, port, nazwę użytkownika i hasło** jako dane punktu końcowego do połączenia. Możesz wkleić te dane niemal w dowolnym miejscu w ustawieniach proxy, a nowe proxy zostanie dodane do Twojej listy proxy.
+
+Obsługujemy następujące formaty wklejania proxy:
+
+```text
+192.168.0.1:8000:login:password
+​﻿http://192.168.0.1:8000:login:password:name
+﻿socks5://login:password@192.168.0.1:8000:name
+﻿socks5://login:password@192.168.0.1:8000[https://change-my-ip.com]:name
+​﻿http://192.168.0.1:8000:login
+​﻿http://192.168.0.1:8000:myproxy:pass[https://change-my-ip.com] 
+​﻿http://192.168.0.1:8000:myproxy:pass[https://change-my-ip.com]:name4
+```
+
+## Najprostszy sposób
+
+1. Na stronie **All profiles** znajdź kolumnę **Location** i kliknij przycisk **\+** przy profilu, do którego chcesz dodać proxy.
+2. W otwartym oknie kliknij **ikonę komputera** i wpisz **IP, port, nazwę użytkownika** oraz **hasło**. 
+   - Protokół HTTP lub SOCKS zostanie wybrany automatycznie na podstawie dostępności, możesz go później zmienić.
+3. Kliknij **Connect** – proxy zostało dodane do Twojego profilu!
+4. Gologin od razu sprawdzi Twoje proxy. Jeśli proxy działa prawidłowo, zobaczysz zielony wskaźnik, a jeśli nie – czerwony.
+
+<Frame>
+  ![Add Proxy Simple](/images/add_proxy_simple.gif)
+</Frame>
+
+Na tej samej stronie możesz wklejać proxy pojedynczo lub hurtowo. Skopiuj kilka proxy i wklej je naraz do kolumny Location. Użyj **skrótów klawiszowych** systemu lub przycisku **Paste proxies**. Nowe proxy będziesz mógł później przenosić między profilami.
+
+<Frame>
+  ![Adding Proxy](/images/adding_proxy-1.gif)
+</Frame>
+
+## Inne sposoby dodawania jednego lub wielu proxy
+
+### Na stronie Proxies
+
+Przejdź do strony **Proxies** w menu po lewej stronie \> **Import proxies** \> wklej proxy i kliknij **Import proxies**.
+
+<Frame>
+  ![Import Proxies Page](/images/import_proxies_page.gif)
+</Frame>
+
+### Za pomocą zbiorczego zaznaczania profili
+
+**Zaznacz kilka profili przeglądarki** \> kliknij **Proxy** w wierszu akcji zbiorczych \> **wpisz proxy** w nowym oknie \> kliknij **Update proxy.**
+
+<Frame>
+  ![Bulk Proxy Update](/images/bulk_proxy_update.gif)
+</Frame>
+
+### W ustawieniach profilu
+
+Kliknij **3 kropki przy profilu** \> **Settings** \> **Proxy** \> **Your proxy**
+
+<Frame>
+  ![Proxy Profile Settings](/images/proxy_profile_settings.gif)
+</Frame>

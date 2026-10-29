@@ -1,0 +1,68 @@
+---
+title: "O que é seguro alterar"
+---
+
+Ao gerenciar contas com o Gologin, manter uma impressão digital do navegador consistente é importante.\
+Os sites costumam analisar mudanças na configuração do navegador para detectar atividades incomuns.
+
+Algumas configurações do perfil podem ser modificadas com segurança a qualquer momento, enquanto outras devem permanecer estáveis depois que uma conta começa a usar o perfil.
+
+## Seguro para alterar
+
+As configurações a seguir normalmente podem ser alteradas sem afetar a impressão digital do navegador nem a confiança da conta:
+
+- nome do perfil
+- notas
+- pastas e tags
+- extensões
+- credenciais do proxy (se a localização do proxy permanecer a mesma)
+
+Essas configurações não afetam os principais sinais de impressão digital usados pelos sites.
+
+## Altere com cuidado
+
+Alguns parâmetros podem influenciar o ambiente do navegador e devem ser modificados com cuidado.
+
+Entre eles:
+
+- fuso horário
+- configurações de idioma
+- modo do WebRTC
+- configuração de dispositivos de mídia
+
+Se for necessário fazer alterações, tente mantê-las consistentes com a localização do proxy e o tipo de dispositivo.
+
+## Evite alterar depois que as contas forem criadas
+
+Certos parâmetros formam o núcleo da impressão digital do navegador.\
+Alterá-los com frequência pode fazer com que os sites tratem o navegador como um dispositivo novo.
+
+Evite modificar estas configurações depois que as contas já tiverem feito login no perfil:
+
+- sistema operacional
+- user agent
+- resolução de tela
+- configuração de fontes
+- impressão digital de Canvas
+- impressão digital de WebGL
+- impressão digital de AudioContext
+- valores de threads de CPU e RAM
+
+Mudanças significativas nesses parâmetros podem acionar verificações adicionais ou checagens de login.
+
+## Boas práticas
+
+Para obter resultados mais estáveis:
+
+- crie um perfil e configure sua impressão digital antes de fazer login nas contas
+- mantenha as configurações de impressão digital estáveis depois que as contas forem adicionadas
+- use um proxy dedicado para cada perfil
+- evite alterações frequentes nos parâmetros relacionados ao hardware
+
+Manter uma impressão digital consistente ajuda os sites a reconhecerem o perfil como um dispositivo estável.
+
+Veja também
+
+- [Configurações de impressão digital do perfil](https://gologin.com/docs/profile-fingerprint-settings)
+- [Como funcionam as impressões digitais do navegador](https://gologin.com/docs/how-browser-fingerprints-work)
+- [Lista de verificação de higiene do perfil](https://gologin.com/docs/profile-hygiene-checklist)

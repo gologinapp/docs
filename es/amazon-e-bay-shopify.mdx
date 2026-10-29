@@ -1,0 +1,96 @@
+---
+title: "Amazon, eBay, Shopify"
+---
+
+Los marketplaces de comercio electrónico son los más agresivos a la hora de vincular cuentas. Amazon, eBay y Shopify mantienen gráficos de relaciones entre cuentas: si dos cuentas comparten una IP, un método de pago, una huella digital del dispositivo o una dirección de envío, la plataforma las conectará. Cuando se suspende una cuenta, las cuentas vinculadas suelen correr la misma suerte.
+
+## Lista de verificación rápida
+
+- 1 cuenta de vendedor = 1 perfil de navegador
+- 1 perfil = 1 proxy residencial estático o ISP
+- **Nunca uses proxies rotativos**: los cambios de IP vinculan las cuentas al instante
+- **Nunca uses los proxies integrados de Gologin**: son rotativos por defecto
+- Un método de pago único por cuenta
+- Un número de teléfono y un correo electrónico únicos por cuenta
+
+## Paso 1. Configura tu perfil de Gologin
+
+- **Proxy: **proxy residencial estático o ISP: una IP dedicada por cuenta, nunca compartida
+- **Fingerprint: **deja los valores predeterminados
+
+## Paso 2. Calienta la cuenta
+
+| **Periodo** | **Enfoque** | **Qué hacer** |
+| :-- | :-- | :-- |
+| Día 0 | Configuración | Registro \+ verificación de identidad |
+| Días 1–3 | Exploración | Explora las herramientas para vendedores y lee las políticas |
+| Días 4–7 | Actividad ligera | Añade entre 5 y 10 anuncios y configura los envíos |
+| Semana 2 | Uso normal | Gestiona los anuncios y responde a las preguntas |
+| Semana 3\+ | Escalado | Aumenta el volumen de anuncios de forma gradual |
+
+## Patrones de actividad seguros
+
+| Acción | Enfoque recomendado |
+| :-- | :-- |
+| Publicación de productos | Añádelos de forma gradual |
+| Ediciones de la cuenta | Actualizaciones ocasionales |
+| Actividad en el panel | Navegación regular |
+| Procesamiento de pedidos | Gestión constante |
+
+## Aislamiento de pagos
+
+Esta es la causa más común de que las cuentas de marketplaces se vinculen y se suspendan juntas.
+
+Cada cuenta necesita:
+
+- Una tarjeta de crédito o débito única
+- Una cuenta de PayPal única (si la usas)
+- Una dirección de facturación única
+
+Opciones que funcionan: Revolut, Wise, N26 (varias tarjetas virtuales), Privacy.com (EE. UU.) y tarjetas de débito prepago.
+
+<Warning>
+  Compartir una tarjeta entre cuentas de vendedor de Amazon se considera una violación de los Términos de servicio. Amazon suspenderá todas las cuentas vinculadas y retendrá los fondos hasta 90 días.
+</Warning>
+
+## Notas específicas por plataforma
+
+### Amazon
+
+- Los cambios de IP entre sesiones activan una revisión automática de vinculación de cuentas
+- Las apelaciones son difíciles: prevenir es mucho más fácil que recuperar una cuenta
+- Las cuentas de empresa requieren documentos verificados de la entidad legal
+
+### eBay
+
+- Es menos estricto que Amazon con la IP, pero también rastrea la huella digital del dispositivo
+- Cada cuenta necesita datos bancarios independientes para eBay Managed Payments
+- La puntuación de comentarios es importante: las cuentas nuevas inspiran poca confianza a los compradores
+
+### Shopify
+
+- Gologin se utiliza principalmente para gestionar varias cuentas de administrador de Shopify o para realizar operaciones desde distintas ubicaciones
+- No hay una detección entre cuentas como en Amazon/eBay, pero Shopify Payments tiene detección de fraude en los desembolsos
+
+## Causas comunes de bloqueo
+
+### Amazon
+
+- IP de proxy rotativas o compartidas
+- El mismo método de pago en varias cuentas
+- La misma huella digital del dispositivo en varios inicios de sesión de vendedor
+- Suspensión de cuentas relacionadas (Amazon bloquea por asociación)
+
+### eBay
+
+- La misma IP o huella digital que una cuenta suspendida anteriormente
+- Publicar los mismos artículos en varias cuentas al mismo tiempo
+- Patrones de manipulación de comentarios
+
+## Ver también
+
+- [Proxies estáticos vs. rotativos](https://gologin.com/docs/static-vs-dynamic-proxies)
+- [Qué son los proxies de Gologin](https://gologin.com/docs/proxy/gologin-proxies/what-are-gologin-proxies): por qué los proxies integrados no son adecuados para Amazon
+- [El mejor proxy para tu caso](https://gologin.com/docs/proxy/introduction/best-proxy-for-your-case)
+- [Migración desde otros navegadores antidetección](https://gologin.com/docs/general/migration-from-other-tools)
+- [Errores comunes que debes evitar](https://gologin.com/docs/common-mistakes-to-avoid)

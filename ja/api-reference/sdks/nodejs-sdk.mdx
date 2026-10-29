@@ -1,0 +1,116 @@
+---
+title: "Node.js SDK"
+description: "Node.js SDK を使って Gologin プロファイルをプログラムから実行します"
+---
+
+### インストール
+
+```bash
+npm i gologin
+```
+
+### 基本的な使い方
+
+```javascript
+import GoLogin from 'gologin';
+
+const GL = new GoLogin({
+  token: 'your-api-token',
+  profile_id: 'your-profile-id',
+});
+
+const { status, wsUrl } = await GL.start();
+// Connect Puppeteer or Playwright using wsUrl
+// ... your automation code ...
+await GL.stop();
+```
+
+### 主なパラメーター
+
+| パラメーター | デフォルト | 説明 |
+|---|---|---|
+| `token` | 必須 | Gologin の API トークン |
+| `profile_id` | 必須 | 起動するプロファイルの ID |
+| `executablePath` | 自動 | Orbita ブラウザのバイナリのパス |
+| `uploadCookiesToServer` | `false` | プロファイルの停止時に Cookie をクラウドにアップロードします。デバイス間でセッションを維持する必要がある場合は `true` に設定してください。 |
+| `checkBrowserUpdate` | `true` | 起動時に、このプロファイルのバージョンに対する Orbita の更新を確認します。現在のバージョンに固定する場合は `false` に設定してください。 |
+| `autoUpdateBrowser` | `true` | 新しい Orbita バージョンを自動でダウンロードします。予期しない更新を防ぐには `false` に設定してください。 |
+| `extra_params` | `[]` | ブラウザに渡す追加の Chromium フラグ |
+
+### プロファイルの停止
+
+```javascript
+// Stop and sync to cloud (default)
+await GL.stop();
+
+// Stop without syncing any data to cloud
+await GL.stop({ posting: false });
+```
+
+注: `posting: false` を指定すると、プロファイルデータが Gologin のサーバーにアップロードされなくなります。クラウド同期を行いたくないサーバー上で実行する場合に使用してください。
+
+### Orbita ブラウザのバージョン管理
+
+```javascript
+import { checkAndDownloadBrowserByOpts } from 'gologin';
+
+// Pre-download the latest Orbita version
+await checkAndDownloadBrowserByOpts({ lastActualCount: 1 });
+
+// Pre-download specific versions
+await checkAndDownloadBrowserByOpts({ majorVersions: [142, 143] });
+```
+
+プロファイルを並列で起動する前に `checkAndDownloadBrowserByOpts` を使用すると、複数のダウンロードが同時に発生するのを避けられます。
+
+### 100 個以上のプロファイルを並列実行する
+
+サーバー上で多数のプロファイルを同時に実行する場合:
+
+```javascript
+// Use a queue to limit concurrent launches
+const CONCURRENCY = 10;
+const queue = [...profileIds];
+const active = new Set();
+
+async function launchProfile(profileId) {
+  const gl = new GoLogin({ token, profile_id: profileId });
+  try {
+    const { wsUrl } = await gl.start();
+    // ... your automation ...
+  } finally {
+    await gl.stop();
+  }
+}
+
+async function processQueue() {
+  while (queue.length > 0) {
+    while (active.size >= CONCURRENCY) {
+      await new Promise(r => setTimeout(r, 1000));
+    }
+    const id = queue.shift();
+    active.add(id);
+    launchProfile(id).finally(() => active.delete(id));
+  }
+}
+```
+
+**サーバーでの重要なポイント:**
+- プロファイルの同時起動数を制限してください(最初は 10〜20 を推奨)
+- 起動前に Orbita のバージョンをあらかじめダウンロードしておいてください
+- Linux では、Xvfb をインストールして `DISPLAY=:99` を設定してください
+- ファイルディスクリプタの上限を引き上げてください: `ulimit -n 65536`
+- RAM を監視してください。各プロファイルは約 300〜500 MB を使用します
+
+### デバッグ
+
+詳細なログを出力するには、環境変数を設定します。
+
+```bash
+DEBUG=gologin node your-script.js
+```
+
+### GitHub と変更履歴
+
+- ソースコード: https://github.com/gologinapp/gologin
+- [変更履歴](/ja/api-reference/sdks/nodejs-changelog)

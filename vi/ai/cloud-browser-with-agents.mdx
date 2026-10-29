@@ -1,0 +1,206 @@
+---
+title: "Sử dụng Cloud Browser với AI Agent"
+description: "Cách sử dụng Gologin Cloud Browser làm môi trường chạy trình duyệt từ xa cho AI agent với Puppeteer/Playwright"
+---
+
+Gologin Cloud Browser có thể được dùng làm **môi trường chạy trình duyệt từ xa** cho AI agent.
+Một agent (Claude, Codex hoặc bất kỳ agent nào hỗ trợ gọi công cụ) có thể kích hoạt mã của bạn để kết nối với một phiên Cloud Browser và thực hiện các thao tác trình duyệt thực tế như điều hướng, nhấp chuột, nhập liệu và trích xuất dữ liệu.
+
+Điều này cho phép xây dựng các quy trình agent cần đến:
+- Hiển thị JavaScript và các tương tác thực của người dùng (nhấp chuột, cuộn trang, điền biểu mẫu)
+- Phiên làm việc được lưu giữ (cookie/storage) thông qua profile
+- Định tuyến proxy và cấu hình trình duyệt có thể lặp lại
+
+<Tip>
+  **Không muốn viết công cụ từ đầu?** Hãy dùng [Agent Browser CLI](/vi/cli-tools/agent-browser) hoặc [AI Skills](/vi/api-reference/ai-integrations/ai-skills) để có sẵn các khả năng cho agent — không cần viết mã Puppeteer/Playwright.
+</Tip>
+
+> Lưu ý: Trang này mô tả một mô hình tích hợp kỹ thuật. Nó không thay đổi quy định của các trang web đích và không đảm bảo quyền truy cập.
+
+## Mô hình tích hợp tổng quan
+
+AI agent thường không "kết nối trực tiếp với trình duyệt". Thay vào đó, chúng:
+
+1. lập kế hoạch cho bước tiếp theo
+2. gọi các công cụ/hàm mà bạn cung cấp (tool calling)
+3. đọc kết quả có cấu trúc và tiếp tục
+
+Với Gologin Cloud Browser, các công cụ/hàm của bạn sẽ:
+
+1. kết nối với một phiên trên đám mây (token + profile tùy chọn)
+2. thực hiện các thao tác trình duyệt (điều hướng, nhấp chuột, trích xuất, chụp ảnh màn hình)
+3. trả kết quả có cấu trúc về cho agent
+
+## Kiến trúc khuyến nghị
+
+**AI agent (Claude / Codex / khác)**
+-> gọi **tool server** của bạn (dịch vụ Node/Python của bạn)
+-> tool server dùng **Playwright/Puppeteer**
+-> kết nối với **Gologin Cloud Browser** (endpoint từ xa)
+-> trả kết quả (văn bản/JSON/tham chiếu ảnh chụp màn hình) về cho agent
+
+Lý do nên dùng mô hình này:
+- token Gologin của bạn luôn nằm ở phía máy chủ
+- bạn có thể áp dụng giới hạn tốc độ, thử lại, ghi log và kiểm tra an toàn
+- bạn có thể tái sử dụng profile và proxy một cách nhất quán
+
+## Điều kiện tiên quyết
+
+### 1) API token (phía máy chủ)
+
+Tạo token của bạn trong bảng điều khiển:
+`Khu vực cá nhân -> Token API`
+https://app.gologin.com/personalArea/TokenApi
+
+> Hãy coi token như thông tin bí mật. Không để lộ token trong mã phía client.
+
+### 2) (Khuyến nghị) Profile và proxy qua REST API
+
+Cloud Browser là lớp thực thi/chạy. Để quản lý profile (tạo/cập nhật) và cấu hình proxy, hãy dùng REST API:
+- Profiles API: https://gologin.com/docs/api-reference/profile
+- Proxy API: https://gologin.com/docs/api-reference/proxy
+
+> **Quan trọng:** Nếu một profile có proxy được cấu hình sai hoặc không thể truy cập, phiên Cloud Browser sẽ không khởi động được và báo lỗi hết thời gian chờ proxy. Hãy kiểm tra proxy có thể truy cập được trước khi kết nối, hoặc đặt chế độ proxy là `none` khi thử nghiệm.
+
+## Hai URL — hiểu rõ sự khác biệt
+
+Gologin cung cấp hai URL khác nhau cho Cloud Browser. Chúng phục vụ các mục đích khác nhau:
+
+| URL | Mục đích | Dùng cho |
+|-----|----------|---------|
+| `https://cloudbrowser.gologin.com/connect?token=...&profile=...` | Endpoint CDP | Tự động hóa bằng Puppeteer/Playwright |
+| `https://cloudbrowser.gologin.com/browsers/{profileId}/{sessionId}/` | Giao diện web streaming (Live View) | Chỉ dùng để gỡ lỗi trực quan |
+
+**Chỉ endpoint `/connect` hoạt động với Puppeteer/Playwright.** URL Live View trả về giao diện streaming HTML và không thể dùng làm `browserWSEndpoint`.
+
+## Kết nối với một phiên trên đám mây
+
+Hãy dùng endpoint chuẩn của Cloud Browser:
+
+```
+https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}
+```
+
+- `token` — API token Gologin của bạn
+- `profile` — ID của profile (tùy chọn)
+  - Dùng `profileId` khi bạn muốn có phiên làm việc được lưu giữ và cấu hình được kiểm soát
+  - Nếu bỏ qua `profile`, một profile mới có thể được tạo cho phiên đó
+
+Endpoint `/connect` tự động khởi động phiên trình duyệt — không cần gọi API riêng trước khi kết nối.
+
+Ví dụ triển khai (Puppeteer/Playwright):
+https://gologin.com/docs/api-reference/cloud-browser/getting-started
+
+## Công cụ CLI dựng sẵn so với công cụ tùy chỉnh
+
+Bạn có hai lựa chọn để cấp cho agent quyền truy cập trình duyệt:
+
+### Lựa chọn A: Dùng các công cụ CLI của Gologin (khuyến nghị cho hầu hết trường hợp)
+
+- **[Agent Browser CLI](/vi/cli-tools/agent-browser)** — CLI dựng sẵn với các lệnh `open`, `snapshot`, `click`, `type`, `fill`, `screenshot`, `close` và hơn 30 lệnh khác. Có daemon chạy liên tục, tương tác dựa trên ref và đầu ra gọn nhẹ được thiết kế cho vòng lặp của agent.
+- **[Web Access CLI](/vi/cli-tools/web-access)** — CLI hợp nhất kết hợp thu thập dữ liệu (Web Unlocker) và tương tác trình duyệt trong một công cụ.
+- **[AI Skills](/vi/api-reference/ai-integrations/ai-skills)** — các skill cắm là chạy cho Claude Code, tự động xử lý mọi thứ.
+
+### Lựa chọn B: Xây dựng công cụ tùy chỉnh với Puppeteer/Playwright
+
+Nếu cần toàn quyền kiểm soát, hãy triển khai một bộ nhỏ các hàm bao quanh Playwright/Puppeteer và cung cấp chúng dưới dạng công cụ.
+
+Thông thường một bộ tối thiểu là đủ:
+- `open_url(url)`
+- `click(selector)`
+- `type(selector, text)`
+- `wait_for(selector | timeout)`
+- `extract_text(selector | page)`
+- `screenshot()`
+- `close_session()`
+
+Đây không phải là các API đặc biệt của Gologin — chúng chỉ là lớp bao mỏng quanh các lệnh Playwright/Puppeteer tiêu chuẩn, được thực thi trên một phiên Cloud Browser.
+
+## Quan trọng: quản lý phiên giữa các lần gọi công cụ
+
+Đây là vấn đề kiến trúc quan trọng nhất đối với các quy trình agent.
+
+AI agent gọi các công cụ tuần tự qua nhiều bước. Mỗi lần gọi công cụ phải tái sử dụng **cùng một kết nối trình duyệt** — nếu bạn tạo `puppeteer.connect()` mới ở mỗi lần gọi công cụ, bạn sẽ mất cookie, local storage và trạng thái trang giữa các bước.
+
+**Mô hình khuyến nghị:** duy trì một session singleton trên tool server của bạn.
+
+```js
+// session.js — shared browser/page instance
+let _browser = null;
+let _page = null;
+
+const TOKEN = process.env.GOLOGIN_TOKEN;
+const PROFILE_ID = process.env.GOLOGIN_PROFILE_ID;
+
+async function getSession() {
+  if (_browser && _browser.isConnected()) {
+    return { browser: _browser, page: _page };
+  }
+
+  const cloudBrowserUrl = `https://cloudbrowser.gologin.com/connect?token=${TOKEN}&profile=${PROFILE_ID}`;
+  _browser = await puppeteer.connect({
+    browserWSEndpoint: cloudBrowserUrl,
+    defaultViewport: null,
+  });
+
+  const pages = await _browser.pages();
+  _page = pages[0] || await _browser.newPage();
+
+  return { browser: _browser, page: _page };
+}
+
+async function closeSession() {
+  if (_browser) {
+    await _browser.close();
+    _browser = null;
+    _page = null;
+  }
+}
+
+module.exports = { getSession, closeSession };
+```
+
+Sau đó, mỗi công cụ gọi `getSession()` để lấy instance dùng chung:
+
+```js
+// tools.js
+const { getSession } = require('./session');
+
+async function open_url(url) {
+  const { page } = await getSession();
+  await page.goto(url, { waitUntil: 'domcontentloaded' });
+  return { url: page.url(), title: await page.title() };
+}
+
+async function extract_text(selector) {
+  const { page } = await getSession();
+  const el = await page.$(selector);
+  if (!el) return { found: false };
+  return { found: true, text: await el.evaluate(e => e.innerText) };
+}
+```
+
+## Công cụ nên trả về gì cho agent?
+
+Hãy trả về các kết quả nhỏ gọn, có cấu trúc để agent có thể tiếp tục một cách ổn định, ví dụ:
+- URL hiện tại
+- văn bản/JSON đã trích xuất
+- phần tử có được tìm thấy hay không
+- tham chiếu ảnh chụp màn hình (nếu bạn lưu trữ)
+- loại lỗi (hết thời gian chờ, lỗi điều hướng, v.v.)
+
+## Lưu ý vận hành
+
+- **Bảo mật:** giữ token ở phía máy chủ; không bao giờ nhúng token vào ứng dụng client.
+- **Quản lý phiên:** đóng phiên khi hoàn tất để tránh chạm giới hạn đồng thời. Gọi `closeSession()` khi quy trình của agent kết thúc.
+- **Độ ổn định:** thêm cơ chế thử lại/backoff cho các lỗi tạm thời (hết thời gian chờ, lỗi điều hướng).
+- **Khả năng quan sát:** để gỡ lỗi, bạn có thể mở Live View khi có sẵn. Định dạng URL ví dụ:
+  `https://cloudbrowser.gologin.com/browsers/{profileId}/{sessionId-or-view-token}/`
+
+## Hạn chế
+
+- Kết quả phụ thuộc vào trang web đích và cấu hình của bạn.
+- Các trang web có thể chặn tự động hóa; Cloud Browser là một môi trường chạy, không phải là sự đảm bảo.
+- Kết nối với cùng một profile từ nhiều phiên đồng thời có thể gây xung đột — hãy dùng một kết nối cho mỗi profile tại một thời điểm.
+- Áp dụng hạn mức và giới hạn tốc độ:
+  https://gologin.com/docs/api-reference/limitations/rate-limits

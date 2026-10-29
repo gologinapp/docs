@@ -1,0 +1,54 @@
+---
+title: "Profildaten verschwunden"
+description: "Warum Ihre Gologin-Profildaten möglicherweise fehlen und wie Sie sie wiederherstellen können."
+---
+
+## Warum Profildaten verschwinden können
+
+Es gibt mehrere Gründe, warum Profildaten in Gologin scheinbar fehlen. In den meisten Fällen sind die Daten nicht dauerhaft verloren.
+
+### Nach einem Orbita-Update
+
+Wenn Orbita (der Browser von Gologin) ein größeres Versionsupdate erhält, können einige lokale Daten zurückgesetzt werden. Dazu gehören:
+
+- Browserverlauf
+- Lokal zwischengespeicherte Daten
+- Einige websitespezifische Speicherdaten
+
+<Info>
+Cookies und Sitzungsdaten bleiben erhalten, wenn das Profil vor dem Update mit den Servern von Gologin synchronisiert wurde. Stellen Sie daher immer sicher, dass Ihre Profile synchronisiert sind, bevor Sie ein Update durchführen.
+</Info>
+
+### Meldung „Profile already deleted"
+
+Diese Meldung ist irreführend. In den meisten Fällen bedeutet sie **nicht**, dass Ihr Profil tatsächlich gelöscht wurde.
+
+Die Meldung erscheint in der Regel, wenn Sie das Limit für Profilstarts in einem Testzeitraum oder in einem kostenlosen Tarif erreicht haben. Ihre Profildaten sind weiterhin auf den Servern von Gologin vorhanden.
+
+**Lösung:** Wechseln Sie zu einem kostenpflichtigen Tarif oder verlängern Sie Ihr Abonnement, um wieder auf Ihre Profile zuzugreifen.
+
+### Datenspeicherung im kostenlosen Tarif
+
+Nach Ablauf Ihres Abonnements speichert Gologin Ihre Profildaten bis zu **180 Tage** lang auf seinen Servern. Danach werden die Daten endgültig gelöscht und können nicht wiederhergestellt werden.
+
+<Warning>
+Wenn Ihr Abonnement schon seit Längerem abgelaufen ist, verlängern Sie es so schnell wie möglich, um einen dauerhaften Datenverlust zu vermeiden. Profile werden 180 Tage nach Ablauf des Abonnements gelöscht.
+</Warning>
+
+### Nach Import/Export
+
+Wenn Sie ein Profil exportieren und erneut importieren, sind nicht alle Daten im Export enthalten. Die folgenden Daten bleiben im Export **erhalten**:
+
+- Cookies
+- Proxy-Einstellungen
+- Profilkonfiguration (Fingerprint, Zeitzone usw.)
+
+Die folgenden Daten sind im Export **nicht enthalten**:
+
+- Browserverlauf
+- Local Storage und IndexedDB-Daten
+- Zwischengespeicherte Dateien und Bilder
+
+<Info>
+Wenn Sie Sitzungsdaten geräteübergreifend beibehalten möchten, nutzen Sie die integrierte Cloud-Synchronisierung von Gologin statt eines manuellen Exports und Imports. Die Cloud-Synchronisierung behält mehr Profildaten bei als das Exportdateiformat.
+</Info>

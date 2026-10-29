@@ -1,0 +1,97 @@
+---
+title: "Cài đặt nâng cao của hồ sơ"
+---
+
+Tab **Nâng cao** cho phép bạn kiểm soát trực tiếp từng thông số vân tay mà Gologin quản lý cho mỗi hồ sơ. Hầu hết người dùng không cần chỉnh bất kỳ mục nào ở đây - hồ sơ hoạt động tốt với cài đặt mặc định trên đa số các trang web.
+
+<Warning>
+  Chỉ thay đổi các cài đặt này khi bạn có lý do cụ thể và hiểu rõ mình đang điều chỉnh điều gì. Một số thay đổi có thể giúp hồ sơ trông phù hợp hơn với một trang web nhất định, nhưng giá trị không chính xác cũng có thể khiến hồ sơ trông đáng ngờ hoặc làm hỏng chức năng của trang web. Trước khi thử nghiệm tại đây, chúng tôi khuyên bạn nên tìm hiểu trước về các phương pháp quản lý nhiều tài khoản trên các diễn đàn và nhóm cộng đồng liên quan.
+</Warning>
+
+Bạn có thể truy cập tab nâng cao bằng cách nhấp vào **3 dấu chấm trên hồ sơ** \> **Cài đặt** \> **Nâng cao**.
+
+## Điều hướng
+
+Phần này kiểm soát các thông số trình duyệt và hệ thống mà hồ sơ báo cáo cho các trang web.
+
+**Đại lý người dùng** - Chuỗi dùng để nhận diện trình duyệt và hệ điều hành của bạn với mọi trang web bạn truy cập. Nếu bạn có nhiều hồ sơ dùng cùng hệ điều hành và cùng phiên bản trình duyệt, chúng có thể có cùng user-agent - điều này hoàn toàn bình thường. Số lượng tổ hợp hợp lệ có hạn, và Gologin phân biệt các hồ sơ thông qua các thông số vân tay khác.
+
+**Độ phân giải màn hình** - Kích thước màn hình mà hồ sơ báo cáo. Hãy tránh đặt giá trị này cao hơn độ phân giải thực tế của màn hình bạn, vì sự không khớp này có thể bị phát hiện. Cửa sổ trình duyệt không thể được phóng to vượt quá giá trị này, nên nếu cần cửa sổ lớn hơn, hãy tăng độ phân giải tại đây. Xem [Tại sao tôi không thể mở rộng cửa sổ trình duyệt ra toàn màn hình?](/vi/faq-profile-managment#why-cant-i-expand-the-browser-window-to-full-screen)
+
+**Ngôn ngữ** - Ngôn ngữ hệ thống được báo cáo cho các trang web. Khi đặt là **Dựa trên IP**, ngôn ngữ sẽ tự động theo vị trí của proxy. Nếu bạn đặt thủ công, lưu ý rằng trên tất cả các hệ thống ngoại trừ macOS, thao tác này cũng thay đổi ngôn ngữ giao diện của trình duyệt - trên macOS, trình duyệt luôn theo cài đặt ngôn ngữ thực tế của hệ thống.
+
+**Nền tảng** - Báo cáo hệ điều hành cho các trang web. Giá trị này phản ánh hệ điều hành được chọn khi tạo hồ sơ và không thể thay đổi trên hồ sơ đã có.
+
+**Chủ đề CPU** và **ĐẬP** - Đây là các giá trị phần cứng mà trình duyệt báo cáo cho các trang web. Việc thay đổi chúng không ảnh hưởng đến hiệu suất thực tế của trình duyệt - chúng chỉ là giá trị được báo cáo, không phải giá trị được sử dụng.
+
+**Không theo dõi** - Gửi tín hiệu "Không theo dõi" đến các trang web. Hầu hết các trang web đều bỏ qua tín hiệu này, và việc bật nó có thể trở thành một điểm dữ liệu để nhận dạng vân tay vì không phổ biến ở người dùng thông thường.
+
+## Phông chữ
+
+Các trang web có thể hỏi trình duyệt về những phông chữ được cài đặt trên hệ thống và dùng danh sách thu được làm vân tay.
+
+**Bật tính năng che danh sách phông chữ** - Khi bật, Gologin sẽ hiển thị danh sách phông chữ riêng được chọn lọc của hồ sơ cho các trang web, thay vì các phông chữ thực sự được cài đặt trên máy của bạn. Danh sách hiện tại được hiển thị bên dưới nút bật/tắt và có thể được chỉnh sửa thủ công qua nút **Chỉnh sửa**.
+
+Bạn nên để tùy chọn này luôn bật. Tắt nó sẽ làm lộ các phông chữ thực của hệ thống với mọi trang web mà hồ sơ truy cập.
+
+## Mặt nạ thiết bị phương tiện
+
+Các trang web và ứng dụng web có thể phát hiện có bao nhiêu camera, micrô và loa đang được kết nối với thiết bị của bạn.
+
+**Mặt nạ thiết bị phương tiện** - Khi được bật, hồ sơ sẽ báo cáo một bộ thiết bị phương tiện cố định thay vì các thiết bị thật của bạn. Bạn có thể đặt riêng số lượng **Đầu vào video** (camera), **Đầu vào âm thanh** (micrô) và **Đầu ra âm thanh** (loa) được báo cáo.
+
+Giá trị mặc định là 1 cho mỗi loại, tương ứng với cấu hình một thiết bị thông thường.
+
+## Phần cứng
+
+Phần này kiểm soát cách hồ sơ phản hồi với các kỹ thuật nhận dạng vân tay dò xét khả năng kết xuất đồ họa và âm thanh của trình duyệt. Các tín hiệu ở đây được tạo ra bằng cách chạy những tác vụ nhỏ qua công cụ kết xuất của trình duyệt và so sánh kết quả đầu ra - mỗi thiết bị cho ra kết quả hơi khác nhau.
+
+<Note>
+  Cài đặt mặc định ở đây an toàn cho hầu hết các trường hợp sử dụng. Đây là các tùy chọn kiểm soát vân tay nâng cao, và việc thay đổi sai cách nhiều khả năng sẽ khiến hồ sơ trông bất thường hơn là cải thiện nó.
+</Note>
+
+**Tranh sơn dầu** - Kiểm soát cách hồ sơ xử lý việc nhận dạng vân tay bằng canvas. Các tùy chọn gồm **Tiếng ồn** (thêm các biến thể ngẫu nhiên nhỏ vào kết quả kết xuất), **Tắt** (trả về kết quả bình thường, không chỉnh sửa) và **Khối** (chặn hoàn toàn quyền truy cập canvas API). Việc chặn canvas tự nó có thể bị phát hiện và không được khuyến nghị.
+
+**Khách hàng Rects** - Tương tự như canvas nhưng nhắm đến cách trình duyệt đo vị trí và kích thước của các phần tử trên trang. Chọn **Tiếng ồn** hoặc **Tắt**.
+
+**Bối cảnh âm thanh** - Kiểm soát vân tay kết xuất âm thanh. Trình duyệt có thể được yêu cầu xử lý âm thanh và kết quả đầu ra hơi khác biệt trên mỗi thiết bị. **Tiếng ồn** thêm biến thể nhỏ; **Tắt** giữ nguyên không chỉnh sửa.
+
+**Hình ảnh WebGL** - Kiểm soát kết quả hình ảnh của quá trình kết xuất WebGL, vốn thay đổi tùy theo GPU. Chọn **Tiếng ồn** hoặc **Tắt**.
+
+**Siêu dữ liệu WebGL** - Kiểm soát chuỗi nhà cung cấp GPU và trình kết xuất GPU được WebGL báo cáo. **Mặt nạ** thay thế các giá trị thật bằng những giá trị được chỉ định trong các trường **nhà cung cấp WebGL** và **Trình kết xuất WebGL** bên dưới. **Có thật** chuyển tiếp thông tin GPU thực tế của bạn.
+
+## Tùy chọn lưu trữ
+
+Các nút bật/tắt này kiểm soát những gì mỗi hồ sơ được phép lưu giữa các phiên.
+
+**Bật lưu trữ cục bộ** - Cho phép các trang web lưu dữ liệu trong bộ nhớ cục bộ của trình duyệt. Nhiều trang web dựa vào tính năng này để duy trì phiên đăng nhập và lưu tùy chọn. Việc tắt nó có thể làm hỏng một số ứng dụng web.
+
+**Bật IndexedDB** - Cho phép các trang web sử dụng cơ sở dữ liệu có cấu trúc hơn ngay trên trình duyệt. Cũng được nhiều ứng dụng web hiện đại sử dụng. Hãy bật nếu bạn gặp vấn đề với việc duy trì phiên.
+
+**Bật bộ nhớ của Tiện ích mở rộng** - Cho phép các tiện ích mở rộng đã cài đặt lưu dữ liệu riêng của chúng qua các phiên.
+
+## Plugin trình duyệt
+
+**Bật các plugin có thể dễ bị tấn công** - Bật các plugin trình duyệt như trình xem PDF của Adobe và Widevine (dùng cho video được bảo vệ bản quyền DRM). Các plugin này bị tắt theo mặc định vì các giao diện plugin cũ trước đây từng là nguồn để nhận dạng vân tay. Hãy bật nếu bạn cần xem PDF hoặc phát video được bảo vệ trong hồ sơ.
+
+## Khác
+
+**Bật các dịch vụ của Google** - Cho phép hồ sơ kết nối với các dịch vụ của Google ở chế độ nền (kiểm tra chính tả, Duyệt web an toàn, v.v.). Hầu hết người dùng có thể để tùy chọn này bật.
+
+**Tắt tính năng tải hình ảnh** và **Tắt tính năng tự động phát video.** - Khi bật, hồ sơ sẽ không tải hình ảnh hoặc tự động phát video trên các trang web. Điều này giảm lượng lưu lượng proxy mà hồ sơ sử dụng, hữu ích cho việc thu thập dữ liệu, tự động hóa hoặc bất kỳ công việc nào mà bạn không cần xem nội dung đa phương tiện. Cả hai đều tắt theo mặc định. Chỉ có trên các gói trả phí.
+
+**Bật tính năng lưu dấu trang của trình duyệt** - Quy định việc các dấu trang được tạo hoặc thay đổi trong một phiên có được lưu khi hồ sơ đóng hay không.
+
+**Bật tính năng lưu lịch sử trình duyệt** - Quy định việc lịch sử duyệt web có được lưu giữa các phiên hay không.
+
+**Bật tính năng lưu mật khẩu** - Quy định việc trình quản lý mật khẩu tích hợp của trình duyệt có hoạt động trong hồ sơ này hay không.
+
+**Bật tiện ích mở rộng hệ thống** - Khi bật, các tiện ích mở rộng được cài đặt trên hệ điều hành thực của bạn sẽ tự động được nhập vào hồ sơ khi hồ sơ khởi chạy. Điều này sẽ kích hoạt các lời nhắc cài đặt khi khởi động. Mặc định là tắt và nên giữ nguyên như vậy trừ khi bạn thực sự cần.
+
+**URL bắt đầu** - Nội dung trình duyệt mở ra khi hồ sơ khởi chạy. Có ba tùy chọn: **Các tab đã mở trước đó** khôi phục những gì đã mở lần trước, **Mở trang tab mới** bắt đầu với trang tab mới, **Mở các trang được chỉ định** mở một URL do bạn xác định.
+
+**Ra mắt các đối số** - Các cờ được truyền cho trình duyệt khi khởi động, giống loại được dùng với Chrome thông thường (ví dụ `--disable-gpu` hoặc `--start-maximized`). Hãy để trống trừ khi bạn biết mình cần gì. Lưu ý rằng một số đối số bị chặn và sẽ không có hiệu lực ngay cả khi được nhập.
+
+**DNS tùy chỉnh** - Cho phép bạn chỉ định máy chủ DNS cho hồ sơ này. Tính năng này hoạt động với proxy SOCKS, kết nối VPN và kết nối trực tiếp. Nó không hoạt động với proxy HTTP hoặc HTTPS.
+
+**WebRTC** - Kiểm soát cách trình duyệt xử lý WebRTC, một công nghệ dùng cho âm thanh và video theo thời gian thực, có thể làm lộ địa chỉ IP thật của bạn ngay cả khi proxy đang hoạt động. **Dựa trên IP** đồng bộ hành vi của WebRTC với IP của proxy. **Tắt** vô hiệu hóa hoàn toàn WebRTC, nhưng một số trang web yêu cầu bật WebRTC để hoạt động chính xác.

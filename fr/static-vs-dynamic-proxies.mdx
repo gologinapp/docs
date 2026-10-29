@@ -1,0 +1,49 @@
+---
+title: "Proxys statiques vs proxys rotatifs"
+---
+
+### Proxys statiques
+
+Les proxys statiques utilisent une adresse IP fixe qui reste la même au fil du temps.
+
+Ils sont recommandés pour la gestion de comptes sur le long terme, lorsqu'un lieu de connexion stable est nécessaire.
+
+### Proxys sticky
+
+Les proxys sticky conservent la même adresse IP pendant une durée de session limitée (généralement 10 à 30 minutes), puis changent d'adresse.
+
+Ils sont utiles lorsque la cohérence d'une session de courte durée est nécessaire, et conviennent également à la gestion de comptes.
+
+### Proxys rotatifs
+
+Les proxys rotatifs attribuent automatiquement une nouvelle adresse IP issue d'un pool de proxys.
+
+La rotation peut avoir lieu :
+
+- à chaque requête
+- à la fin d'une session
+- après un intervalle de temps défini
+
+Ils sont généralement utilisés pour le scraping ou la collecte de données à grande échelle. Ils peuvent généralement servir à la gestion de comptes s'ils conservent la même IP pendant toute la session.
+
+### Quel type de proxy pour quelle plateforme ?
+
+| Plateforme | Type de proxy recommandé | Pourquoi |
+| --- | --- | --- |
+| LinkedIn | Résidentiel statique ou mobile | Un changement d'IP déclenche immédiatement un contrôle de sécurité |
+| Facebook / Meta Ads | Résidentiel statique ou sticky | Une cohérence géographique est exigée pour les comptes publicitaires |
+| Amazon / eBay / Etsy | ISP statique | Les IP rotatives lient les comptes entre eux et entraînent des bannissements |
+| TikTok (nouveaux comptes) | Mobile | Les IP mobiles bénéficient du niveau de confiance le plus élevé pour la création de comptes |
+| Web scraping | Résidentiel rotatif ou datacenter | La rapidité et le volume comptent plus que la cohérence |
+| Plateformes de paris | Mobile | Niveau de confiance le plus élevé ; ces plateformes sont très strictes envers les empreintes de navigateurs de bureau |
+
+<Warning>
+  Utiliser des proxys rotatifs pour des comptes vendeur Amazon est une erreur courante qui conduit au bannissement des comptes. Amazon lie les comptes par leur IP : si votre IP change, plusieurs comptes risquent d'être signalés comme étant connectés entre eux.
+</Warning>
+
+Voir aussi
+
+- [Que sont les proxys Gologin ?](https://gologin.com/docs/proxy/gologin-proxies/what-are-gologin-proxies) — les proxys intégrés de Gologin sont rotatifs par défaut
+- [Le meilleur proxy pour votre cas](https://gologin.com/docs/proxy/introduction/best-proxy-for-your-case)
+- [Amazon, eBay, Shopify](https://gologin.com/docs/amazon-e-bay-shopify) — les comptes de places de marché nécessitent des proxys statiques
+- [LinkedIn](https://gologin.com/docs/linkedin) — LinkedIn exige des proxys statiques

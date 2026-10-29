@@ -1,0 +1,48 @@
+---
+title: "Was sind Browser-Cookies"
+---
+
+**Cookies** sind kleine Dateien mit Daten, die von Websites erstellt und in Ihrem Browser gespeichert werden.
+
+Cookies enthalten in der Regel:
+
+- Token für Login-Sitzungen
+- Authentifizierung über „Angemeldet bleiben“
+- Sprach- und Regionseinstellungen
+- Warenkorbdaten
+- Tracking-Kennungen
+- Vertrauenssignale zur Betrugsprävention
+
+Bei der Arbeit mit mehreren Konten entscheiden Cookies oft darüber, ob eine Website Ihre Sitzung als vertrauenswürdig oder verdächtig einstuft.
+
+## So funktionieren Cookies in Gologin
+
+Jedes Gologin-Profil:
+
+- Hat einen eigenen, isolierten Cookie-Speicher
+- Teilt keine Cookies mit anderen Profilen
+- Synchronisiert Cookies mit der Cloud, wenn das Profil ordnungsgemäß geschlossen wird
+- Stellt Cookies wieder her, wenn das Profil erneut gestartet wird
+
+Das bedeutet, dass sich jedes Profil wie ein eigenes physisches Gerät verhält, solange Sie für jedes Profil unterschiedliche Proxys verwenden.
+
+## Konsistenz von Proxy und Fingerprint
+
+Cookies allein garantieren keinen Zugriff auf ein Konto.
+
+Für einen erfolgreichen Cookie-Import gilt:
+
+- Verwenden Sie denselben oder einen geografisch passenden Proxy
+- Stellen Sie die Zeitzone passend zur IP-Adresse ein
+- Vermeiden Sie größere Änderungen am Fingerprint
+- Kombinieren Sie keine mobilen Cookies mit Desktop-Fingerprints
+
+Wenn sich das Land der IP-Adresse oder der Geräte-Fingerprint drastisch ändert, können Websites die Sitzung ungültig machen.
+
+## Bewährte Vorgehensweisen
+
+- Schließen Sie Profile immer ordnungsgemäß, damit die Cookies synchronisiert werden
+- Halten Sie die geografische Lage des Proxys konsistent
+- Exportieren Sie Cookies, bevor Sie größere Änderungen vornehmen
+- Testen Sie Importe zuerst mit unkritischen Konten
+- Vermeiden Sie es, bei etablierten Konten häufig Cookies auszutauschen

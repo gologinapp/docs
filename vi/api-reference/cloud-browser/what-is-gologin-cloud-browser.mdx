@@ -1,0 +1,120 @@
+---
+title: "Gologin Cloud Browser là gì"
+keywords: ["cloud browser", "headless browser"]
+---
+
+Gologin Cloud Browser cho phép bạn chạy trình duyệt Gologin (Orbita) **trên đám mây** và điều khiển nó từ mã tự động hóa (Puppeteer / Playwright) chỉ bằng một **URL kết nối** duy nhất.
+
+Đây là một [headless browser](./what-is-headless-browser) — trình duyệt được điều khiển hoàn toàn bằng mã, không có giao diện đồ họa — do Gologin lưu trữ và quản lý, với hỗ trợ tích hợp cho hồ sơ lưu trữ lâu dài, cấu hình vân tay trình duyệt (fingerprint) và định tuyến proxy.
+
+## Bạn có thể làm gì với Cloud Browser
+
+- Chạy song song nhiều phiên trình duyệt trên đám mây
+- Tự động hóa với bộ công cụ hiện có của bạn (Puppeteer / Playwright)
+- Dùng **hồ sơ** Gologin để lưu trạng thái lâu dài (đăng nhập, cookie, bộ nhớ lưu trữ)
+- Định tuyến lưu lượng qua **proxy** bằng cách cấu hình proxy trong hồ sơ
+- Dùng làm môi trường trình duyệt từ xa cho các AI agent
+
+## Khác biệt so với headless browser thông thường
+
+Headless Chrome thông thường rất dễ bị phát hiện. Các trang web dùng kỹ thuật nhận dạng vân tay trình duyệt để xác định lưu lượng tự động — kiểm tra kết xuất canvas, tham số WebGL, phông chữ, múi giờ, kích thước màn hình và hàng chục tín hiệu khác.
+
+Gologin Cloud Browser chạy **Orbita** — một bản Chromium được tùy biến để quản lý các tín hiệu vân tay sao cho khớp với một hồ sơ trình duyệt nhất quán và chân thực. Kết hợp với cookie được lưu lâu dài và cấu hình proxy lưu trong từng hồ sơ, các phiên của bạn trông ổn định và giống người dùng thật qua các lần truy cập lặp lại.
+
+## Vì sao nên chọn Gologin Cloud Browser
+
+### Tích hợp sẵn anti-detect — không cần plugin
+
+Headless Chrome tiêu chuẩn rất dễ bị phát hiện. Các dịch vụ cloud browser khác chạy Chromium nguyên bản và cần plugin chống phát hiện (stealth) của bên thứ ba để giảm tín hiệu vân tay — với kết quả không ổn định.
+
+Gologin Cloud Browser chạy **Orbita**, một bản dựng Chromium được gia cố với cơ chế quản lý vân tay ở cốt lõi: canvas, WebGL, phông chữ, múi giờ, độ phân giải màn hình và nhiều thứ khác. Anti-detect không phải là bản vá chồng lên — mà chính là trình duyệt.
+
+### Hồ sơ lưu trữ lâu dài — phiên làm việc biết "ghi nhớ"
+
+Hầu hết dịch vụ cloud browser coi mỗi phiên là không lưu trạng thái. Cookie và bộ nhớ lưu trữ bị xóa khi phiên đóng lại.
+
+Hồ sơ Gologin thì được lưu giữ. Đăng nhập một lần, đóng phiên, kết nối lại sau đó — hồ sơ vẫn giữ nguyên cookie, local storage và mọi cài đặt đã cấu hình. Không cần xác thực lại, không cần "làm nóng" phiên.
+
+### Giá cả dễ dự đoán — tính theo thời gian, không theo lưu lượng
+
+|                     | Gologin Cloud Browser                    | Dịch vụ thay thế thông thường |
+| ------------------- | ---------------------------------------- | ----------------------------- |
+| **Tính phí phiên**  | Theo giờ ( 0.048/h tùy theo gói)         | Theo phiên hoặc theo giờ      |
+| **Lưu lượng proxy** | \$1.99 / GB                              | Theo MB (có mức tối thiểu mỗi phiên) |
+| **Proxy ISP**       | \$5 / IP, không giới hạn lưu lượng       | Theo GB                       |
+| **Số giờ đi kèm**   | 20–200 giờ/tháng tùy theo gói            | Thường không có               |
+
+### Không bị phụ thuộc nhà cung cấp
+
+Gologin Cloud Browser là một endpoint CDP chuẩn. Mã Puppeteer hoặc Playwright của bạn kết nối đến nó theo cùng cách như kết nối đến bất kỳ phiên bản Chrome từ xa nào — không cần SDK độc quyền, không phải học API riêng. Chuyển sang hoặc rời đi chỉ bằng việc đổi một URL.
+
+### Phiên song song có thể mở rộng
+
+Các gói đã bao gồm sẵn 1–4 phiên song song. Cần nhiều hơn — hãy liên hệ với chúng tôi để có gói tùy chỉnh.
+
+## Các tình huống kỹ thuật phổ biến
+
+Cloud Browser thường được dùng cho các quy trình mà bạn:
+
+- đăng nhập vào tài khoản web một lần và giữ phiên lâu dài thông qua hồ sơ
+- thực hiện lặp đi lặp lại các thao tác trên cùng các trang web qua nhiều hồ sơ
+- cần các phiên ổn định, chạy lâu dài mà không phụ thuộc vào máy cục bộ
+
+Ví dụ gồm việc tự động hóa các phiên đã đăng nhập cho ứng dụng web, sàn thương mại điện tử hoặc nền tảng mạng xã hội, nơi tính lưu trữ lâu dài và cài đặt hồ sơ nhất quán là yếu tố quan trọng.
+
+## Các khái niệm cốt lõi
+
+- **Hồ sơ** — một danh tính trình duyệt có thể tái sử dụng (cookie/bộ nhớ lưu trữ cùng cài đặt vân tay và proxy).
+- **Phiên đám mây** — một phiên bản đang chạy của hồ sơ trên đám mây của Gologin.
+- **URL kết nối** — endpoint bạn truyền cho công cụ tự động hóa để điều khiển phiên đám mây.
+
+## Cách hoạt động (tổng quan)
+
+1. (Khuyến nghị) Tạo và cấu hình hồ sơ qua Gologin REST API (proxy, vân tay, v.v.).
+2. Kết nối với Cloud Browser bằng **dev token** của bạn và `profileId` tùy chọn.
+3. Tự động hóa phiên bằng Puppeteer hoặc Playwright.
+4. Đóng kết nối khi bạn làm xong.
+
+## URL kết nối
+
+Dùng URL này làm endpoint trình duyệt từ xa:
+
+```text
+https://cloudbrowser.gologin.com/connect?token=${token}&profile=${params.profileId}
+```
+
+- `token` — **dev token** Gologin của bạn (tạo trong dashboard: `Khu vực cá nhân → Token API`).
+- `profile` — **ID hồ sơ** (tùy chọn). Nếu bỏ qua, một hồ sơ mới sẽ được tạo cho phiên.
+
+## Quản lý hồ sơ (proxy, vân tay, v.v.)
+
+Cloud Browser là **lớp kết nối**.\
+Để tạo/cập nhật hồ sơ, gắn proxy và cấu hình các cài đặt của hồ sơ, hãy dùng Gologin REST API:
+
+- Profiles API: https://gologin.com/docs/api-reference/profile
+- Proxy API: https://gologin.com/docs/api-reference/proxy
+
+## Dùng Cloud Browser từ CLI
+
+Nếu bạn thích dùng lệnh shell hơn là viết mã Puppeteer/Playwright, Gologin cung cấp các công cụ CLI thân thiện với agent:
+
+- **[Gologin Agent Browser CLI](/vi/cli-tools/agent-browser)** — CLI cloud browser với daemon, ảnh chụp nhanh trang (snapshot), tương tác dựa trên ref. Được xây dựng cho các AI agent.
+- **[Gologin Web Access CLI](/vi/cli-tools/web-access)** — CLI hợp nhất, kết hợp thu thập dữ liệu bằng Web Unlocker với tương tác Cloud Browser trong một công cụ.
+
+```bash
+npm install -g gologin-agent-browser-cli
+export GOLOGIN_TOKEN='your_token'
+
+gologin-agent-browser open https://example.com
+gologin-agent-browser snapshot
+gologin-agent-browser click @e3
+gologin-agent-browser screenshot ./page.png
+gologin-agent-browser close
+```
+
+## Các bước tiếp theo
+
+- [Bắt đầu](/vi/api-reference/cloud-browser/getting-started) — ví dụ kết nối Puppeteer/Playwright
+- [API Quickstart](/vi/api-reference/introduction/quickstart) — thiết lập REST API
+- [Agent Browser CLI](/vi/cli-tools/agent-browser) — CLI cho AI agent
+- [AI Skills](/vi/api-reference/ai-integrations/ai-skills) — các skill cắm-và-chạy cho Claude Code

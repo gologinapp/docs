@@ -1,0 +1,51 @@
+---
+title: "会话实时查看"
+---
+
+会话实时查看（Session Live View）可让您在普通浏览器标签页中打开正在运行的云端浏览器会话，用于确认会话处于活动状态，并实时查看该配置文件正在执行的操作。
+
+您可以通过以下两种方式启动云端会话：
+
+- 通过自动化代码（Puppeteer / Playwright），或
+- 直接在 Gologin 界面中（Cloud Browser 标签页）启动。
+
+## 从 Gologin 界面启动会话
+
+1. 在 Gologin 网页版应用中打开**配置文件分区**（Profile sections）- [https://app.gologin.com/profileList](https://app.gologin.com/profileList)
+2. 选择一个配置文件。
+3. 点击**运行**。
+
+会话启动后，您可以打开实时查看来观察正在运行的浏览器。
+
+<video src="/videos/0305.mp4" controls={true} />
+
+## 实时查看 URL 格式
+
+正在运行的会话可以通过如下格式的 URL 打开：
+
+`https://cloudbrowser.gologin.com/browsers/<profileId>/<sessionId-or-view-token>/`
+
+- `<profileId>` — 该会话所使用的配置文件
+- `<sessionId-or-view-token>` — 该运行中会话的唯一标识符（会话 ID 或查看令牌）
+
+> 会话处于活动状态期间，请将此 URL 视为敏感信息妥善保管。
+
+## 何时使用实时查看
+
+- 调试自动化流程（页面跳转、点击、选择器、超时等）
+- 确认云端会话是否确实已启动
+- 在网站出现异常行为时观察浏览器界面
+- 确认正在运行的会话所使用的配置文件
+
+## 注意事项
+
+- 实时查看仅在会话运行期间可用。
+- 关闭自动化连接可能会结束会话（取决于您的工作流程和套餐限制）。
+- 如需可重复使用的配置（代理、指纹等），请通过 REST API 配置配置文件：
+  - Profiles API：[https://gologin.com/docs/api-reference/profile](https://gologin.com/docs/api-reference/profile)
+  - Proxy API：[https://gologin.com/docs/api-reference/proxy](https://gologin.com/docs/api-reference/proxy)
+
+## 后续步骤
+
+- Cloud Browser → 快速入门：[https://gologin.com/docs/api-reference/cloud-browser/getting-started](https://gologin.com/docs/api-reference/cloud-browser/getting-started)
+- 抓取解决方案：[https://gologin.com/docs/api-reference/cloud-browser/scraping](https://gologin.com/docs/api-reference/cloud-browser/scraping)

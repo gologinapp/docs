@@ -1,0 +1,70 @@
+---
+title: "Appareils proxy"
+hidden: true
+---
+
+**Appareils proxy** vous permet de faire passer le trafic de votre profil de navigateur par votre propre téléphone Android au lieu d'un serveur proxy classique.
+
+En clair, votre téléphone devient la connexion internet de votre profil.
+
+## Pourquoi l'utiliser ?
+
+Cette fonctionnalité est utile si vous souhaitez :
+
+- Une **véritable adresse IP mobile** (au lieu de proxys de centre de données ou résidentiels)
+- Une IP **plus fiable** aux yeux des sites web
+- Réduire votre dépendance envers des fournisseurs de proxys tiers
+- Apparaître comme un **véritable utilisateur mobile** depuis le réseau de votre appareil
+
+## Comment ça marche ?
+
+- Vous installez une application complémentaire sur votre appareil Android
+- L'application partage la connexion internet de votre téléphone
+- Votre profil se connecte à cet appareil en tant que proxy
+- Tout le trafic passe par l'IP de votre téléphone
+
+<Warning>
+  N'utilisez pas le même appareil proxy sur plusieurs profils en même temps. L'IP sera identique, ce qui paraît suspect aux yeux des sites web.
+</Warning>
+
+## Guide de configuration
+
+### Installer l'application mobile Gologin Devices
+
+1. **Téléchargez et installez** l'application Gologin Devices depuis Google Play sur votre téléphone Android
+2. **Se connecter** à votre compte Gologin
+3. Appuyez sur **Démarrer le proxy**
+
+<Columns cols={4}>
+  <Column>
+    <Frame>
+      ![Gologin Devices Google Play](/images/gologin_devices_google_play.jpg)
+    </Frame>
+  </Column>
+  <Column>
+    <Frame>
+      ![Gologin Devices Log In](/images/gologin_devices_log_in-3.jpg)
+    </Frame>
+  </Column>
+  <Column>
+    <Frame>
+      ![Gologin Devices Logged In](/images/gologin_devices_logged_in.jpg)
+    </Frame>
+  </Column>
+  <Column>
+    <Frame>
+      ![Gologin Devices Proxy Running](/images/gologin_devices_proxy_running-1.jpg)
+    </Frame>
+  </Column>
+</Columns>
+
+### Continuer dans l'application de bureau Gologin
+
+1. Dans l'application Gologin, **accédez à Appareils proxy** et vérifiez que le nouvel appareil est apparu après votre connexion sur Android
+   <Frame>
+     ![Proxy Devices Tab](/images/proxy_devices_tab.png)
+   </Frame>
+2. Allez dans **Tous les profils** \> cliquez sur **Proxy et emplacement** sur votre profil \> choisissez votre nouvel appareil proxy dans la liste des proxys
+   <Frame>
+     ![Choosing A Proxy Device](/images/choosing_a_proxy_device.gif)
+   </Frame>

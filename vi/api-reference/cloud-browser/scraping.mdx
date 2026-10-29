@@ -1,0 +1,102 @@
+---
+title: "Giải pháp Scraping"
+---
+
+## Tổng quan
+
+Gologin Cloud Browser có thể được dùng như một trình duyệt từ xa được quản lý cho các quy trình scraping và trích xuất dữ liệu. Mã tự động hóa của bạn (Puppeteer) kết nối với một phiên trình duyệt từ xa thông qua endpoint WebSocket, sau đó chạy logic điều hướng và trích xuất dữ liệu thông thường.
+
+Cloud Browser là lớp kết nối/thực thi; các thiết lập hồ sơ/proxy được quản lý qua REST API. Cách thiết lập này có thể giảm chi phí hạ tầng và giúp hạn chế những trở ngại khi scraping, nhưng kết quả còn phụ thuộc vào hành vi và cơ chế kiểm soát của trang web mục tiêu.
+
+## Bạn nhận được gì
+
+- Các phiên trình duyệt từ xa cho kết nối Puppeteer.
+- Hiển thị JavaScript cho các trang động.
+- Mở rộng quy mô mà không cần tự vận hành hạ tầng trình duyệt.
+- Cấu hình hồ sơ và proxy được quản lý qua API.
+- Một endpoint kết nối chuẩn duy nhất để khởi động phiên.
+
+## Quy trình thông thường
+
+1. Tạo token API.
+2. Tùy chọn tạo/cấu hình hồ sơ (và proxy) qua REST API.
+3. Tạo URL kết nối với `token` và `profile` (không bắt buộc).
+4. Kết nối từ Puppeteer/Playwright và chạy trích xuất dữ liệu.
+5. Lưu kết quả đầu ra và đóng phiên trình duyệt.
+
+## Điều kiện tiên quyết
+
+- Tạo token: https://app.gologin.com/personalArea/TokenApi
+- Profiles API (khuyến nghị để kiểm soát cấu hình): https://gologin.com/docs/api-reference/profile
+- Proxy API: https://gologin.com/docs/api-reference/proxy
+
+## Endpoint kết nối chuẩn
+
+```text
+https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}
+```
+
+- `token` là bắt buộc.
+- `profile` là không bắt buộc.
+- Nếu bỏ qua `profile`, một hồ sơ mới sẽ được tạo cho phiên.
+
+## Ví dụ Puppeteer tối giản
+
+```javascript
+const puppeteer = require('puppeteer-core');
+
+(async () => {
+
+
+  const token = 'your_token_here';
+  const profileId = 'your_profile_id'; // Remove this line if you want to create a new profile
+  const cloudBrowserUrl = `https://cloudbrowser.gologin.com/connect?token=${token}${profileId ? `&profile=${profileId}` : ''}`;
+  const browser = await puppeteer.connect({
+  
+    browserWSEndpoint: cloudBrowserUrl,
+    defaultViewport: null
+  
+  });
+
+  const page = await browser.newPage();
+  await page.goto('https://example.com');
+  const title = await page.title();
+  console.log('Page title:', title);
+  await page.screenshot({ path: 'screenshot.png' });
+  await browser.close();
+
+})();
+```
+
+## Các bước tiếp theo
+
+- Bắt đầu với Cloud Browser: https://gologin.com/docs/api-reference/cloud-browser/getting-started
+- Profiles API: https://gologin.com/docs/api-reference/profile
+- Proxy API: https://gologin.com/docs/api-reference/proxy
+
+## Thực hành tốt nhất
+
+- Ưu tiên dùng chờ tường minh thay vì thời gian chờ cố định.
+- Triển khai logic thử lại với backoff có giới hạn và jitter.
+- Lưu kết quả trích xuất có cấu trúc (URL, các trường dữ liệu, dấu thời gian, trạng thái).
+- Cấu hình hồ sơ/proxy trước khi kết nối để đảm bảo khả năng tái lập.
+- Luôn đóng phiên và xử lý dọn dẹp khi xảy ra lỗi.
+- Điều chỉnh hành vi yêu cầu/phiên theo các ràng buộc của từng trang web mục tiêu.
+
+## Giới hạn và hạn mức
+
+Xem các giới hạn và hạn mức hiện tại: https://gologin.com/docs/api-reference/limitations/rate-limits
+
+## Câu hỏi thường gặp
+
+### Tôi có cần hồ sơ không?
+
+Không. Tham số `profile` là không bắt buộc. Nếu bỏ qua, một hồ sơ mới sẽ được tạo cho phiên. Hãy dùng hồ sơ khi bạn cần cấu hình được kiểm soát và có thể lặp lại.
+
+### Tôi cấu hình proxy ở đâu?
+
+Hãy cấu hình proxy thông qua Proxy API (và các thiết lập hồ sơ liên quan qua REST API): https://gologin.com/docs/api-reference/proxy
+
+### Giải pháp này có khác với Cloud Browser không?
+
+Không. Đây là trang hướng dẫn sử dụng Cloud Browser cho scraping/trích xuất dữ liệu. Cloud Browser đảm nhiệm việc kết nối/thực thi, còn các thiết lập hồ sơ/proxy được quản lý qua REST API.

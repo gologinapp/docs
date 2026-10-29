@@ -1,0 +1,89 @@
+---
+title: "Platformy kryptowalutowe i KYC"
+---
+
+Platformy kryptowalutowe dzielą się na dwie kategorie: giełdy i portfele (Binance, Coinbase, Kraken), gdzie KYC wiąże konto z konkretną osobą, oraz platformy airdropów i farmingu (Galxe, Zealy, Layer3, Premint), gdzie celem jest zarządzanie wieloma kontami w różnych kampaniach.
+
+## Szybka lista kontrolna
+
+- 1 konto = 1 profil przeglądarki
+- 1 profil = 1 statyczne proxy rezydencyjne
+- Utrzymuj spójną lokalizację proxy — zwłaszcza po KYC
+- Nie zmieniaj fingerprintu ani proxy po weryfikacji tożsamości
+- W przypadku farmingu: traktuj konta jako jednorazowe — nie łącz kont farmingowych z prawdziwymi kontami giełdowymi
+
+## Giełdy i platformy KYC
+
+Po przejściu KYC najważniejsza jest spójność. Logowanie z nowego adresu IP lub ze zmienionym fingerprintem uruchamia kontrolę bezpieczeństwa, dodatkową weryfikację lub zamrożenie konta.
+
+### Konfiguracja profilu Gologin
+
+- \*\*Proxy:\*\* statyczne proxy rezydencyjne — ten sam adres IP w każdej sesji
+- \*\*Proxy location:\*\* jeśli to możliwe, dopasuj ją do kraju widniejącego w dokumentach tożsamości
+
+<Warning>
+  Nigdy nie zmieniaj proxy w profilu Gologin po zakończeniu KYC na giełdzie kryptowalut. Giełda zapisuje środowisko urządzenia z momentu weryfikacji. Inny adres IP lub fingerprint przy kolejnym logowaniu jest traktowany jako przejęcie konta.
+</Warning>
+
+## Harmonogram rozgrzewania konta
+
+| **Okres** | **Cel** | **Co zrobić** |
+| :-- | :-- | :-- |
+| Dzień 0 | Rejestracja | Utworzenie konta \+ weryfikacja adresu e-mail |
+| Dni 1–3 | KYC | Prześlij dokumenty tożsamości, dokończ weryfikację |
+| Dni 4–7 | Zapoznawanie się z platformą | Przeglądaj platformę, poznaj interfejs handlowy |
+| Tydzień 2 | Małe transakcje | Wpłać niewielką kwotę, wykonaj 1–2 transakcje |
+| Tydzień 3\+ | Normalne korzystanie | Regularna aktywność handlowa |
+
+### Najczęstsze przyczyny blokad — giełdy
+
+- Zmiana IP po KYC (nawet w tym samym kraju, ale w innym mieście)
+- Niezgodność fingerprintu urządzenia między sesjami
+- Duże wpłaty zaraz po założeniu konta
+- Wiele kont powiązanych z tą samą metodą płatności lub tym samym kontem bankowym
+
+## Airdropy i farming punktów (Galxe, Zealy, Premint, Layer3)
+
+Kampanie Web3 — airdropy, questy, programy punktowe — często pozwalają na jedno zgłoszenie na osobę. Gologin służy tu do zarządzania wieloma legalnymi kontami (na przykład w zespole, w którym każdy członek bierze udział osobno), przy zachowaniu technicznej izolacji tych kont od siebie.
+
+### **Jak platformy wykrywają powiązane konta**
+
+Platformy korzystają z dwóch rodzajów sygnałów:
+
+Sygnały przeglądarki i sieci (tym zajmuje się Gologin):
+
+- Ten sam adres IP używany przez wiele kont
+- Ten sam fingerprint przeglądarki
+- Konta wykonujące zadania w identycznych godzinach z tego samego środowiska
+
+Sygnały on-chain (poza zakresem Gologin):
+
+- Blockchainy są publiczne — wszystkie transakcje są trwale widoczne
+- Jeśli kilka adresów portfeli otrzymuje środki z tego samego portfela źródłowego, można je bez trudu powiązać on-chain
+- Platformy używają narzędzi takich jak Nansen czy Arkham do analizy powiązań między portfelami przed dystrybucją tokenów
+
+Gologin izoluje środowisko przeglądarki i adres IP. Powiązania między portfelami on-chain to osobna kwestia, którą każdy użytkownik zarządza zgodnie z własną konfiguracją i zasadami platformy.
+
+### Konfiguracja Gologin dla kampanii wielokontowych
+
+Jeśli zarządzasz kontami w imieniu kilku członków zespołu, każda osoba powinna mieć:
+
+- Osobny profil Gologin
+- Unikalne proxy rezydencyjne
+- Własny podłączony portfel — niefinansowany ze wspólnego portfela zespołu
+
+### Zarządzanie na dużą skalę
+
+Dla zespołów z 10\+ kontami w różnych kampaniach:
+
+- Porządkuj profile w folderach Gologin według kampanii lub członka zespołu
+- Używaj tagów do śledzenia statusu (aktywne, zakończone, oczekujące)
+- Używaj API Gologin do programowego uruchamiania profili i zarządzania nimi
+- Prowadź zapis tego, który profil odpowiada któremu członkowi zespołu i portfelowi
+
+## Zobacz także
+
+- [Proxy statyczne a rotacyjne](https://gologin.com/docs/static-vs-dynamic-proxies)
+- [Najlepsze proxy do Twojego zastosowania](https://gologin.com/docs/proxy/introduction/best-proxy-for-your-case)
+- [Utrzymywanie wskaźnika zaufania](https://gologin.com/docs/maintaining-trust-score)
+- [Szybki start z API](https://gologin.com/docs/api-reference/introduction/quickstart) — do programowego zarządzania dużą liczbą profili farmingowych

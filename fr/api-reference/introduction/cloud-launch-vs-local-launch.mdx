@@ -1,0 +1,20 @@
+---
+title: "Lancement dans le cloud et lancement en local"
+hidden: true
+---
+
+Lorsque vous automatisez des tâches avec Gologin, le navigateur peut s'exécuter à deux endroits : sur votre machine ou sur les serveurs de Gologin. Ce choix détermine où le binaire Orbita s'exécute, comment vous vous y connectez et de quelle infrastructure vous avez besoin.
+
+## Vue d'ensemble
+
+|  | Lancement local | Cloud Browser |
+| --- | --- | --- |
+| Le navigateur s'exécute sur | Votre machine | Les serveurs de Gologin |
+| Application de bureau requise | Oui | Non |
+| Fenêtre visible | Facultative (headless) | Non |
+| Matériel nécessaire | De la RAM par profil (~300–500 MB chacun) | Aucun |
+| Idéal pour | L'automatisation sur votre propre machine ou VPS | Les scripts côté serveur, sans configuration locale |
+
+## Lancement local
+
+Le navigateur s'exécute sur votre machine. Le SDK télécharge automatiquement le binaire Orbita lors de la première exécution, le lance en local et renvoie un point de terminaison WebSocket auquel Puppeteer ou Playwright se connecte.

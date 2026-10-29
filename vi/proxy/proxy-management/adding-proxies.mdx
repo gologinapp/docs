@@ -1,0 +1,63 @@
+---
+title: "Thêm và quản lý proxy"
+---
+
+Có nhiều cách để kết nối proxy của bạn trong trình duyệt Gologin. Bài viết này sẽ hướng dẫn tất cả các cách đó, từ cách dễ thấy nhất đến những cách nâng cao hơn.
+
+Các nhà cung cấp proxy bên thứ ba thường cung cấp **IP, cổng, tên người dùng và mật khẩu** làm điểm kết nối. Bạn có thể dán các thông tin này ở hầu hết mọi nơi trong phần cài đặt proxy, và một proxy mới sẽ được thêm vào danh sách proxy của bạn.
+
+Chúng tôi hỗ trợ các định dạng dán proxy sau:
+
+```text
+192.168.0.1:8000:login:password
+​﻿http://192.168.0.1:8000:login:password:name
+﻿socks5://login:password@192.168.0.1:8000:name
+﻿socks5://login:password@192.168.0.1:8000[https://change-my-ip.com]:name
+​﻿http://192.168.0.1:8000:login
+​﻿http://192.168.0.1:8000:myproxy:pass[https://change-my-ip.com] 
+​﻿http://192.168.0.1:8000:myproxy:pass[https://change-my-ip.com]:name4
+```
+
+## Cách đơn giản nhất
+
+1. Tại trang **Tất cả hồ sơ**, tìm cột **Vị trí** và nhấp vào nút **\+** ở hồ sơ mà bạn muốn thêm proxy.
+2. Trong cửa sổ vừa mở, nhấp vào **biểu tượng máy tính** rồi nhập **IP, cổng, tên người dùng** và **Mật khẩu**. 
+   - Giao thức HTTP hoặc SOCKS sẽ được chọn tự động tùy theo khả năng khả dụng, bạn có thể thay đổi sau.
+3. Nhấp **Kết nối**, proxy đã được thêm vào hồ sơ của bạn!
+4. Gologin sẽ kiểm tra proxy của bạn ngay lập tức. Bạn sẽ thấy chỉ báo màu xanh lá nếu proxy hoạt động bình thường, hoặc màu đỏ nếu proxy không hoạt động.
+
+<Frame>
+  ![Thêm proxy đơn giản](/images/add_proxy_simple.gif)
+</Frame>
+
+Bạn có thể dán từng proxy một hoặc dán hàng loạt ngay tại trang này. Hãy sao chép nhiều proxy rồi dán tất cả cùng lúc vào cột Vị trí. Bạn có thể dùng **phím tắt** của hệ thống hoặc nút **Dán proxy**. Sau đó, bạn có thể sắp xếp lại các proxy mới giữa các hồ sơ.
+
+<Frame>
+  ![Thêm proxy](/images/adding_proxy-1.gif)
+</Frame>
+
+## Các cách khác để thêm một hoặc nhiều proxy
+
+### Tại trang proxy
+
+Vào trang **proxy** ở menu bên trái \> **Nhập khẩu proxy** \> Dán proxy và nhấp **Nhập khẩu proxy**.
+
+<Frame>
+  ![Trang nhập proxy](/images/import_proxies_page.gif)
+</Frame>
+
+### Sử dụng tính năng chọn hàng loạt hồ sơ
+
+**Chọn một vài hồ sơ trình duyệt** \> nhấp **Ủy quyền** trong hàng thao tác hàng loạt \> **nhập proxy** trong cửa sổ mới \> nhấp **Cập nhật proxy.**
+
+<Frame>
+  ![Cập nhật proxy hàng loạt](/images/bulk_proxy_update.gif)
+</Frame>
+
+### Trong phần cài đặt hồ sơ
+
+Nhấp **3 dấu chấm trên hồ sơ** \> **Cài đặt** \> **Ủy quyền** \> **Proxy của bạn**
+
+<Frame>
+  ![Cài đặt proxy của hồ sơ](/images/proxy_profile_settings.gif)
+</Frame>

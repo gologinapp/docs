@@ -1,0 +1,99 @@
+---
+title: "Configurações do perfil"
+---
+
+Cada perfil de navegador no Gologin tem o seu próprio conjunto de configurações que definem como ele aparece para os sites. Essas configurações estão organizadas em abas na parte superior do editor de perfil.
+
+Você pode acessar as configurações do perfil clicando em **3 pontos no perfil** \> **Configurações**.
+
+## Visão geral
+
+Nesta aba, você define o sistema operacional em que o perfil vai aparentar estar sendo executado e gera a impressão digital principal dele.
+
+**Sistema operacional** - Escolha entre Windows 10, Windows 11, Mac Intel, Mac ARM, Linux e Android. Essa opção determina o sistema operacional que o perfil informa a todos os sites que visita.
+
+<Warning>
+  O sistema operacional só pode ser selecionado ao criar um perfil. Depois que o perfil é salvo, essa opção fica bloqueada e não pode ser alterada. Se você precisar de outro sistema operacional, crie um novo perfil.
+</Warning>
+
+**Nova impressão digital** - Ao clicar nessa opção, é gerado um novo conjunto de valores de impressão digital para o perfil, como resolução de tela, fontes, detalhes de gráficos e outros sinais que os sites usam para identificar navegadores. Use essa opção se quiser redefinir a identidade do perfil. Ela não altera o sistema operacional nem apaga cookies ou outros dados do navegador.
+
+O painel **Resumo do Perfil**, à direita, é atualizado conforme você faz alterações e oferece uma visão rápida da impressão digital atual do perfil.
+
+<Frame>
+  ![Configurações — Visão geral](/images/settings_overview.png)
+</Frame>
+
+## Proxy
+
+Esta aba controla qual proxy o perfil usa ao navegar.
+
+- **Proxy Gologin** - Use um proxy do serviço de proxy integrado do Gologin.
+- **Seu proxy** - Cole o seu próprio proxy, de um provedor externo.
+- **Sem proxy** - O perfil usa a sua conexão real de internet. O endereço IP visível para os sites será o seu IP verdadeiro.
+
+<Frame>
+  ![Configurações — Proxy](/images/settings_proxy.png)
+</Frame>
+
+O proxy que você atribui aqui determina o endereço IP que os sites veem quando este perfil está em execução. Ele também afeta o fuso horário e a geolocalização, caso estejam configurados para seguir o IP automaticamente.
+
+## Fuso horário
+
+Esta aba define o fuso horário que o perfil informa aos sites.
+
+Por padrão, a opção **Preencha o fuso horário com base no IP externo** vem ativada, o que significa que o perfil usa automaticamente o fuso horário correspondente à localização do proxy. Isso mantém o perfil coerente: um perfil com proxy dos EUA informará um fuso horário dos EUA, como faria um usuário real nesse local.
+
+<Note>
+  Recomendamos deixar essa opção no automático e não alterá-la manualmente. Se o fuso horário não corresponder à localização do proxy, isso pode parecer suspeito para os sites. Altere apenas se tiver um motivo específico.
+</Note>
+
+<Frame>
+  ![Configurações — Fuso horário](/images/settings_timezone.png)
+</Frame>
+
+## Extensões
+
+Nesta aba, você instala extensões de navegador no perfil. Cada perfil gerencia suas próprias extensões separadamente: adicionar uma aqui não afeta nenhum outro perfil.
+
+Clique em **Adicionar extensões** para procurar e instalar extensões neste perfil.
+
+Para um passo a passo completo de como as extensões funcionam nos perfis do Gologin, consulte [Extensões](/pt/browser-profiles/profile-features/browser-extensions/browser-extensions).
+
+<Frame>
+  ![Configurações — Extensões](/images/settings_extensions.png)
+</Frame>
+
+## Favoritos
+
+Esta aba permite adicionar favoritos à barra de favoritos do perfil. Cole-os no campo de texto usando um destes formatos:
+
+- `folder::name::url` - cria um favorito dentro de uma pasta com nome
+- `name::url` - cria um favorito com nome diretamente na barra
+- `url` - adiciona a URL diretamente, sem nome personalizado
+
+Cada linha é um favorito separado. Eles aparecem na barra de favoritos dentro do Orbita quando o perfil está em execução.
+
+<Frame>
+  ![Configurações — Favoritos](/images/settings_bookmarks.png)
+</Frame>
+
+## Geolocalização
+
+Esta aba controla o que acontece quando um site pede a sua localização, por exemplo, quando um aplicativo de mapas pergunta "Permitir que este site saiba sua localização?"
+
+Há três opções:
+
+- **Pronto** - O navegador pergunta a você sempre que um site solicita acesso à localização. Esse é o padrão e imita o comportamento de um navegador real.
+- **Permitir** - O acesso à localização é concedido automaticamente a qualquer site que o solicite.
+- **Bloquear** - Todas as solicitações de localização são negadas silenciosamente.
+
+A opção **Preencher a geolocalização com base no IP externo** vem ativada por padrão. Quando está ativada, o Gologin define as coordenadas informadas pelo perfil para corresponderem automaticamente à localização do proxy.
+
+<Note>
+  Recomendamos deixar essa opção ativada. Se você a desativar e a geolocalização não corresponder ao IP do proxy, a divergência pode servir de sinal para sistemas de detecção. Ajuste manualmente apenas se souber quais coordenadas quer usar e por quê.
+</Note>
+
+<Frame>
+  ![Configurações — Geolocalização](/images/settings_geolocation.png)
+</Frame>

@@ -1,0 +1,89 @@
+---
+title: "Utiliser des proxys avec Cloud Browser"
+---
+
+Gologin Cloud Browser permet de configurer les proxys de manière flexible pour acheminer le trafic de vos sessions de navigateur. Vous pouvez utiliser les proxys résidentiels intégrés de Gologin ou apporter les vôtres.
+
+## Fonctionnement des proxys dans Gologin
+
+Contrairement à une configuration de proxy par session, **les proxys dans Gologin sont associés aux profils**, et non à des connexions individuelles.
+
+Lorsque vous vous connectez à une session Cloud Browser avec un identifiant de profil, le proxy configuré sur ce profil est appliqué automatiquement :
+
+```text
+https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}
+```
+
+Vous configurez donc le proxy une seule fois (via l'API REST ou le tableau de bord), et chaque session utilisant ce profil passera systématiquement par ce proxy. Inutile de transmettre les identifiants du proxy à chaque connexion.
+
+> Si le proxy du profil est inaccessible au démarrage de la session, la connexion échouera avec une erreur de délai d'attente du proxy. Vérifiez que votre proxy fonctionne avant de lancer l'automatisation.
+
+## Options de proxy
+
+### Proxys intégrés de Gologin
+
+Gologin propose son propre réseau de proxys résidentiels avec contrôle de la géolocalisation. Les proxys intégrés sont l'option la plus simple : aucun fournisseur de proxy externe n'est nécessaire.
+
+Pour associer un proxy Gologin à un profil, utilisez l'[API Proxies](https://gologin.com/docs/api-reference/proxy/) afin de créer un proxy et de l'affecter au profil.
+
+Les proxys intégrés permettent de cibler la géolocalisation par pays et par région. Lors de la création d'un proxy, définissez `autoProxyRegion` avec le code du pays souhaité :
+
+```json
+{
+  "mode": "geolocation",
+  "autoProxyRegion": "us"
+}
+```
+
+Codes de région courants : `us`, `gb`, `de`, `fr`, `nl`, `jp`, `au`, `ca`, `br`, `in`
+
+### Votre propre proxy
+
+Vous pouvez associer n'importe quel proxy tiers à un profil. Gologin prend en charge les proxys `http`, `https` et `socks5`.
+
+Configurez-le via l'[API Proxies](https://gologin.com/docs/api-reference/proxy/) :
+
+```json
+{
+  "mode": "http",
+  "host": "your.proxy.host",
+  "port": 10000,
+  "username": "user",
+  "password": "pass"
+}
+```
+
+Le proxy est validé au démarrage de la session. S'il est inaccessible, la session ne démarrera pas.
+
+### Aucun proxy
+
+Pour exécuter une session sans proxy, définissez le mode de proxy du profil sur `none` :
+
+```json
+{
+  "mode": "none"
+}
+```
+
+C'est utile pour les tests ou pour les workflows où l'adresse IP du serveur d'automatisation suffit.
+
+## Gérer les proxys via l'API
+
+La gestion complète des proxys (création, mise à jour, suppression, liste, consultation du trafic) est disponible via l'API REST :
+
+- [Référence de l'API Proxies](https://gologin.com/docs/api-reference/proxy/)
+
+## Vérifier l'état du proxy avant de se connecter
+
+Comme un proxy défaillant empêche la session de démarrer, il est recommandé de le valider avant de lancer l'automatisation, en particulier dans les workflows en production :
+
+```javascript
+const profileRes = await fetch(`https://api.gologin.com/browser/${profileId}`, {
+  headers: { Authorization: `Bearer ${token}` },
+});
+const profile = await profileRes.json();
+
+if (profile.proxy?.mode !== 'none') {
+  // optionally verify proxy reachability here before connecting
+}
+```

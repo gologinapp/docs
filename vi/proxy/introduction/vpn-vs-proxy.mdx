@@ -1,0 +1,63 @@
+---
+title: "Tại sao không nên dùng VPN cho profile?"
+---
+
+Nhiều người thường nhầm lẫn giữa VPN và proxy vì cả hai đều thay đổi địa chỉ IP hiển thị của bạn. Nhưng chúng hoạt động khác nhau, và với công việc quản lý nhiều tài khoản thì sự khác biệt này rất quan trọng.
+
+|  | VPN | Proxy |
+| :-- | :-- | :-- |
+| Thay đổi IP của bạn | ✅ | ✅ |
+| Thay đổi vân tay trình duyệt | ❌ | ❌ |
+| Một IP cho toàn bộ thiết bị | ✅ | ❌ |
+| Một IP cho mỗi profile trình duyệt | ❌ | ✅ |
+| Hoạt động trong Gologin | ❌ | ✅ |
+| Bị Facebook / LinkedIn phát hiện | Thường xuyên | Hiếm khi (proxy dân cư) |
+
+## VPN hoạt động như thế nào
+
+VPN mã hóa toàn bộ lưu lượng từ thiết bị của bạn và định tuyến qua một máy chủ duy nhất. Mọi ứng dụng trên máy tính — trình duyệt, Slack, Spotify, tất cả — đều dùng chung một địa chỉ IP.
+
+Cách này hữu ích để bảo vệ quyền riêng tư và vượt qua các giới hạn theo vị trí địa lý. Tuy nhiên, nó gây ra hai vấn đề khi quản lý nhiều tài khoản:
+
+**Vấn đề 1 — Một IP cho tất cả.** Nếu bạn có 10 profile trình duyệt, tất cả đều xuất hiện như đến từ cùng một địa chỉ IP. Các nền tảng như Facebook và LinkedIn sẽ thấy nhiều tài khoản đến từ một vị trí và liên kết chúng với nhau.
+
+**Vấn đề 2 — VPN không thay đổi vân tay trình duyệt.** Các nền tảng theo dõi nhiều hơn IP rất nhiều. Họ đọc độ phân giải màn hình, phông chữ, card đồ họa, múi giờ và hàng chục tín hiệu khác của bạn. VPN không thay đổi bất kỳ thông tin nào trong số này. Các profile Gologin thay đổi tất cả.
+
+## Proxy hoạt động như thế nào
+
+Proxy được gán cho một profile trình duyệt cụ thể. Lưu lượng từ profile đó đi qua proxy — những ứng dụng khác trên máy tính của bạn không bị ảnh hưởng.
+
+Điều này có nghĩa là:
+
+- Profile A → Proxy ở New York → trông như một thiết bị thật ở New York
+- Profile B → Proxy ở London → trông như một thiết bị hoàn toàn khác ở London
+- Máy tính thật của bạn → không dùng proxy → IP bình thường của bạn
+
+Mỗi profile có danh tính mạng riêng. Kết hợp với vân tay độc nhất của Gologin cho từng profile, các nền tảng sẽ thấy đó là những thiết bị thực sự tách biệt.
+
+## Tại sao VPN không phù hợp để quản lý nhiều tài khoản
+
+Các nền tảng cũng phát hiện VPN dễ hơn so với proxy dân cư. IP của máy chủ VPN được biết đến rộng rãi và nằm trong các danh sách chặn. Nhiều nền tảng (Facebook, LinkedIn, PayPal, hầu hết các trang cá cược) chủ động chặn hoặc gắn cờ IP của VPN.
+
+## Khi nào VPN vẫn hữu ích
+
+VPN phù hợp khi bạn cần:
+
+- Truy cập một trang web bị chặn theo vị trí địa lý ở quốc gia của bạn
+- Bảo vệ IP thật của bạn khi dùng Wi-Fi công cộng
+- Sử dụng một tài khoản duy nhất từ một quốc gia khác
+- Gặp sự cố khi kết nối với các dịch vụ Gologin hoặc proxy từ mạng của bạn
+
+VPN không thể thay thế proxy trong Gologin.
+
+## Thiết lập proxy trong Gologin
+
+Xem [Thêm proxy vào profile](https://gologin.com/docs/proxy/proxy-management/adding-proxies) để biết hướng dẫn từng bước.
+
+Chưa biết nên chọn loại proxy nào? Xem [Proxy tốt nhất cho trường hợp của bạn.](https://gologin.com/best-proxy-server-services/)
+
+## Xem thêm
+
+[Proxy là gì](https://gologin.com/docs/proxy/introduction/what-is-a-proxy) — giải thích chi tiết hơn về cách proxy hoạt động
+
+[Proxy tích hợp của Gologin — các hạn chế](https://gologin.com/docs/proxy/gologin-proxies/what-are-gologin-proxies#important-gologin-proxies-are-rotating) — khi nào không nên dùng proxy tích hợp

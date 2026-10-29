@@ -1,0 +1,51 @@
+---
+title: "Session Live View"
+---
+
+Mit Session Live View öffnest du eine laufende Cloud-Browser-Sitzung in einem normalen Browser-Tab. So kannst du prüfen, ob die Sitzung aktiv ist, und in Echtzeit sehen, was das Profil gerade macht.
+
+Cloud-Sitzungen kannst du auf zwei Arten starten:
+
+- aus deinem Automatisierungscode (Puppeteer / Playwright) oder
+- direkt in der Gologin-Oberfläche (Tab Cloud Browser).
+
+## Sitzung in der Gologin-Oberfläche starten
+
+1. Öffne in der Gologin-Webapp den Bereich **Profile sections** - [https://app.gologin.com/profileList](https://app.gologin.com/profileList)
+2. Wähle ein Profil aus.
+3. Klicke auf **Run**.
+
+Sobald die Sitzung gestartet ist, kannst du Live View öffnen, um den laufenden Browser zu beobachten.
+
+<video src="/videos/0305.mp4" controls={true} />
+
+## Format der Live-View-URL
+
+Eine laufende Sitzung lässt sich über eine URL in folgendem Format öffnen:
+
+`https://cloudbrowser.gologin.com/browsers/<profileId>/<sessionId-or-view-token>/`
+
+- `<profileId>` — das Profil, das für die Sitzung verwendet wird
+- `<sessionId-or-view-token>` — eine eindeutige Kennung für diese laufende Sitzung (Sitzungs-ID oder View-Token)
+
+> Behandle diese URL vertraulich, solange die Sitzung aktiv ist.
+
+## Wann Live View sinnvoll ist
+
+- Debugging von Automatisierungsabläufen (Navigation, Klicks, Selektoren, Timeouts)
+- Überprüfen, ob die Cloud-Sitzung tatsächlich gestartet wurde
+- Beobachten der Browseroberfläche, wenn sich eine Website unerwartet verhält
+- Bestätigen, welches Profil in der laufenden Sitzung verwendet wird
+
+## Hinweise
+
+- Live View ist nur verfügbar, solange die Sitzung läuft.
+- Wenn du die Automatisierungsverbindung schließt, kann die Sitzung beendet werden (abhängig von deinem Workflow und den Limits deines Tarifs).
+- Für eine wiederholbare Konfiguration (Proxy, Fingerprint usw.) richte das Profil über die REST API ein:
+  - Profiles API: [https://gologin.com/docs/api-reference/profile](https://gologin.com/docs/api-reference/profile)
+  - Proxy API: [https://gologin.com/docs/api-reference/proxy](https://gologin.com/docs/api-reference/proxy)
+
+## Nächste Schritte
+
+- Cloud Browser → Getting Started: [https://gologin.com/docs/api-reference/cloud-browser/getting-started](https://gologin.com/docs/api-reference/cloud-browser/getting-started)
+- Scraping Solution: [https://gologin.com/docs/api-reference/cloud-browser/scraping](https://gologin.com/docs/api-reference/cloud-browser/scraping)

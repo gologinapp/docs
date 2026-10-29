@@ -1,0 +1,86 @@
+---
+title: "Conceptos clave"
+---
+
+Para usar Gologin de forma eficaz, es importante entender tres conceptos fundamentales que definen cómo se separan y se protegen los entornos de navegador.
+
+Estos componentes trabajan juntos para crear identidades de navegación independientes para cada cuenta.
+
+## Perfiles de navegador
+
+Un **perfil de navegador** en Gologin es un entorno de navegador aislado que simula un dispositivo independiente.
+
+Cada perfil contiene sus propios:
+
+- huella digital del navegador
+- cookies y datos de sesión
+- almacenamiento local y caché
+- extensiones del navegador
+- conexión proxy
+
+Como los perfiles están aislados entre sí, los sitios web los tratan como usuarios o dispositivos distintos.
+
+Esto te permite gestionar varias cuentas sin que las sesiones interfieran entre sí, algo que resulta especialmente importante cuando trabajas con muchas cuentas a gran escala, como se describe en <br />[Gestión de cuentas existentes](https://gologin.com/docs/managing-existing-accounts).
+
+## Huellas digitales del navegador
+
+Una **huella digital del navegador** es un conjunto de parámetros técnicos que los sitios web usan para identificar un dispositivo.
+
+Estos parámetros pueden incluir:
+
+- sistema operativo
+- versión del navegador
+- resolución de pantalla
+- fuentes instaladas
+- datos de gráficos y WebGL
+- configuración de zona horaria e idioma
+
+Gologin genera una huella digital única para cada perfil, de modo que los sitios web vean cada perfil como un dispositivo diferente.
+
+La huella digital del navegador determina cómo los sitios web identifican tu dispositivo. Para entenderlo en detalle, consulta <br />[Cómo funcionan las huellas digitales del navegador](https://gologin.com/docs/how-browser-fingerprints-work).
+
+## Proxies
+
+Un **proxy** asigna una dirección IP diferente a un perfil de navegador.
+
+Dado que los sitios web rastrean tanto las huellas digitales del navegador como las direcciones IP, usar proxies ayuda a separar las identidades de red entre perfiles.
+
+Con proxies, cada perfil puede parecer que se conecta desde una ubicación o red diferente.
+
+Usar un proxy junto con una huella digital única del navegador ayuda a crear una identidad de navegación coherente e independiente.
+
+Los proxies se usan para separar las cuentas a nivel de red. Si no sabes cómo funcionan, empieza por [Qué es un proxy](https://gologin.com/docs/proxy/introduction/what-is-a-proxy).
+
+Una vez que entiendas estos componentes, el siguiente paso es aplicarlos al crear perfiles. <br />Consulta [Creación de perfiles](https://gologin.com/docs/browser-profiles/profile-management/creating-and-launching-profiles).
+
+## El sistema operativo del perfil debe coincidir con el de tu dispositivo
+
+El sistema operativo configurado en la huella digital de tu perfil debe coincidir con el del dispositivo que usas para abrirlo. Por ejemplo:
+
+- Abrir un perfil de Windows en un Mac puede generar incoherencias detectables
+- Sitios como iphey.com y pixelscan.net lo marcarán como una inconsistencia en la huella digital
+- LinkedIn y otras plataformas sensibles pueden cerrar tu sesión de inmediato
+
+<Warning>
+  Si trabajas en un Mac, crea perfiles de Mac. Si trabajas en Windows, crea perfiles de Windows. El uso multiplataforma (crear el perfil en un sistema operativo y abrirlo en otro) puede poner en riesgo tus cuentas.
+</Warning>
+
+## La configuración de huella digital predeterminada es segura
+
+Gologin genera automáticamente una configuración de huella digital realista para cada perfil nuevo. No es necesario que personalices WebGL, Canvas, Audio u otros parámetros de la huella digital, a menos que tengas un motivo específico para hacerlo.
+
+## Cómo verificar tu huella digital
+
+Después de iniciar un perfil, visita uno de estos verificadores:
+
+- **iphey.com** -- muestra una puntuación general de confianza y señala problemas
+- **pixelscan.net** -- análisis detallado de la huella digital
+
+Un resultado "verde" o "de confianza" significa que tu perfil parece un navegador real para los sitios web.
+
+## Véase también
+
+- [Inicio rápido: de cero a tu primer perfil](https://gologin.com/docs/getting-started/introduction/quick-start-from-zero-to-your-first-profile)
+- [Lista de comprobación para el primer uso](https://gologin.com/docs/getting-started/setup/first-time-checklist)
+- [Qué es un proxy](https://gologin.com/docs/proxy/introduction/what-is-a-proxy)
+- [Configuración de la huella digital del perfil](https://gologin.com/docs/profile-fingerprint-settings)

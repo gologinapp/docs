@@ -1,0 +1,99 @@
+---
+title: "Cài đặt hồ sơ"
+---
+
+Mỗi hồ sơ trình duyệt trong Gologin có bộ cài đặt riêng, quyết định cách hồ sơ hiển thị với các trang web. Các cài đặt này được chia thành nhiều tab ở phía trên cùng của trình chỉnh sửa hồ sơ.
+
+Bạn có thể mở cài đặt hồ sơ bằng cách nhấp vào **3 dấu chấm trên hồ sơ** \> **Cài đặt**.
+
+## Tổng quan
+
+Tại tab này, bạn chọn hệ điều hành mà hồ sơ sẽ hiển thị là đang chạy và tạo vân tay cốt lõi cho hồ sơ.
+
+**Hệ điều hành** - Chọn giữa Windows 10, Windows 11, Mac Intel, Mac ARM, Linux và Android. Lựa chọn này quyết định hệ điều hành mà hồ sơ báo cho mọi trang web mà nó truy cập.
+
+<Warning>
+  Bạn chỉ có thể chọn hệ điều hành khi tạo hồ sơ. Sau khi hồ sơ được lưu, tùy chọn này sẽ bị khóa và không thể thay đổi. Nếu cần một hệ điều hành khác, hãy tạo hồ sơ mới.
+</Warning>
+
+**Vân tay mới** - Nhấp vào nút này để tạo một bộ giá trị vân tay mới cho hồ sơ, bao gồm độ phân giải màn hình, phông chữ, thông tin đồ họa và các tín hiệu khác mà trang web dùng để nhận diện trình duyệt. Hãy dùng tùy chọn này nếu bạn muốn đặt lại danh tính của hồ sơ. Tùy chọn này không thay đổi hệ điều hành, không xóa cookie hay dữ liệu trình duyệt khác.
+
+Bảng **Tóm tắt hồ sơ** ở bên phải sẽ cập nhật khi bạn thay đổi và cho bạn cái nhìn nhanh về vân tay hiện tại của hồ sơ.
+
+<Frame>
+  ![Settings Overview](/images/settings_overview.png)
+</Frame>
+
+## Proxy
+
+Tab này kiểm soát proxy mà hồ sơ sử dụng khi duyệt web.
+
+- **Proxy Gologin** - Sử dụng proxy từ dịch vụ proxy tích hợp sẵn của Gologin.
+- **Proxy của bạn** - Dán proxy của riêng bạn từ nhà cung cấp bên ngoài.
+- **Không có proxy** - Hồ sơ sử dụng kết nối internet thật của bạn. Địa chỉ IP mà các trang web nhìn thấy sẽ là IP thực của bạn.
+
+<Frame>
+  ![Settings Proxy](/images/settings_proxy.png)
+</Frame>
+
+Proxy bạn chọn ở đây quyết định địa chỉ IP mà các trang web thấy khi hồ sơ này đang chạy. Proxy cũng ảnh hưởng đến múi giờ và vị trí địa lý nếu các mục đó được đặt để tự động theo IP.
+
+## Múi giờ
+
+Tab này đặt múi giờ mà hồ sơ báo cho các trang web.
+
+Theo mặc định, nút bật/tắt **Điền vào múi giờ dựa trên IP bên ngoài** được bật, nghĩa là hồ sơ sẽ tự động dùng múi giờ phù hợp với vị trí của proxy. Điều này giúp hồ sơ nhất quán bên trong - hồ sơ dùng proxy Mỹ sẽ báo múi giờ của Mỹ, giống như một người dùng thật ở vị trí đó.
+
+<Note>
+  Bạn nên để chế độ tự động và không thay đổi thủ công. Nếu múi giờ không khớp với vị trí của proxy, trang web có thể thấy điều đó đáng ngờ. Chỉ thay đổi khi bạn có lý do cụ thể.
+</Note>
+
+<Frame>
+  ![Settings Timezone](/images/settings_timezone.png)
+</Frame>
+
+## Tiện ích mở rộng
+
+Tại tab này, bạn cài đặt các tiện ích mở rộng của trình duyệt vào hồ sơ. Mỗi hồ sơ quản lý tiện ích mở rộng riêng - việc thêm tiện ích ở đây không ảnh hưởng đến bất kỳ hồ sơ nào khác.
+
+Nhấp vào **Thêm tiện ích mở rộng** để duyệt và cài đặt tiện ích mở rộng cho hồ sơ này.
+
+Để xem hướng dẫn đầy đủ về cách tiện ích mở rộng hoạt động trong hồ sơ Gologin, hãy xem [Tiện ích mở rộng](/vi/browser-profiles/profile-features/browser-extensions/browser-extensions).
+
+<Frame>
+  ![Settings Extensions](/images/settings_extensions.png)
+</Frame>
+
+## Dấu trang
+
+Tại tab này, bạn có thể thêm dấu trang vào thanh dấu trang của hồ sơ. Hãy dán chúng vào ô văn bản theo một trong các định dạng sau:
+
+- `folder::name::url` - tạo một dấu trang bên trong một thư mục có tên
+- `name::url` - tạo một dấu trang có tên trực tiếp trên thanh
+- `url` - thêm trực tiếp URL mà không đặt tên tùy chỉnh
+
+Mỗi dòng là một dấu trang riêng. Các dấu trang sẽ xuất hiện trên thanh dấu trang bên trong Orbita khi hồ sơ đang chạy.
+
+<Frame>
+  ![Settings Bookmarks](/images/settings_bookmarks.png)
+</Frame>
+
+## Vị trí địa lý
+
+Tab này kiểm soát điều xảy ra khi một trang web yêu cầu vị trí của bạn - ví dụ, một ứng dụng bản đồ hỏi "Cho phép trang web này biết vị trí của bạn?"
+
+Có ba tùy chọn:
+
+- **Lời nhắc** - Trình duyệt hỏi bạn mỗi khi một trang web yêu cầu quyền truy cập vị trí. Đây là mặc định và mô phỏng cách một trình duyệt thật hoạt động.
+- **Cho phép** - Quyền truy cập vị trí được tự động cấp cho mọi trang web yêu cầu.
+- **Khối** - Mọi yêu cầu vị trí đều bị từ chối một cách âm thầm.
+
+Nút bật/tắt **Điền vào vị trí địa lý dựa trên IP bên ngoài** được bật theo mặc định. Khi được bật, Gologin sẽ tự động đặt tọa độ mà hồ sơ báo cáo khớp với vị trí của proxy.
+
+<Note>
+  Bạn nên để nút này luôn bật. Nếu bạn tắt nó và vị trí địa lý không khớp với IP của proxy, sự không khớp này có thể là tín hiệu cho các hệ thống phát hiện. Chỉ điều chỉnh thủ công khi bạn biết rõ mình muốn dùng tọa độ nào và vì sao.
+</Note>
+
+<Frame>
+  ![Settings Geolocation](/images/settings_geolocation.png)
+</Frame>

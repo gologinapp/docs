@@ -1,0 +1,213 @@
+---
+title: "AI Skills cho Claude Code"
+description: "Các skill cắm là chạy giúp agent Claude Code có khả năng thu thập dữ liệu web, tự động hóa trình duyệt và dùng Orbita cục bộ thông qua Gologin"
+---
+
+Gologin AI Skills là các tiện ích mở rộng cắm là chạy dành cho [Claude Code](https://claude.ai/code), giúp các AI agent có khả năng thu thập dữ liệu web và tự động hóa trình duyệt. Mỗi skill đóng gói một công cụ Gologin CLI và cung cấp công cụ đó dưới dạng một tập hàm mà agent có thể gọi.
+
+```
+agent → skill → Gologin CLI → Web Unlocker API / Cloud Browser / Local Orbita
+```
+
+---
+
+## Các skill hiện có
+
+<CardGroup cols={2}>
+  <Card title="Web Access Skill" icon="globe" href="https://github.com/GologinLabs/gologin-web-access-skill">
+    Skill mặc định cho các tác vụ đọc trang, trích xuất dữ liệu, crawl, giám sát trên các trang web đã biết, và các tác vụ kết hợp: thu thập dữ liệu trước rồi duyệt web sau.
+  </Card>
+  <Card title="Agent Browser Skill" icon="browser" href="https://github.com/GologinLabs/gologin-agent-browser-skill">
+    Skill chỉ dành cho trình duyệt: phiên đám mây trực tiếp, tương tác dựa trên ref, chụp ảnh màn hình và xuất PDF.
+  </Card>
+  <Card title="Scraping Skill" icon="code" href="https://github.com/GologinLabs/gologin-scraping-skill">
+    Skill chỉ dành cho thu thập dữ liệu, đóng gói Web Unlocker SDK. Có dung lượng nhỏ nhất.
+  </Card>
+  <Card title="Local Agent Browser Skill" icon="desktop" href="https://github.com/GologinLabs/gologin-local-agent-browser-skill">
+    Tự động hóa Orbita cục bộ với hồ sơ lưu trữ lâu dài, runbook và thực thi hàng loạt.
+  </Card>
+</CardGroup>
+
+---
+
+## Cài đặt
+
+```bash
+# install any skill
+npx skills add GologinLabs/gologin-web-access-skill
+npx skills add GologinLabs/gologin-agent-browser-skill
+npx skills add GologinLabs/gologin-scraping-skill
+npx skills add GologinLabs/gologin-local-agent-browser-skill
+```
+
+Mỗi skill yêu cầu phải cài đặt CLI tương ứng bên dưới:
+
+| Skill | CLI bắt buộc |
+|---|---|
+| Web Access Skill | `npm i -g gologin-web-access` |
+| Agent Browser Skill | `npm i -g gologin-agent-browser-cli` |
+| Scraping Skill | `npm i gologin-webunlocker` |
+| Local Agent Browser Skill | `npm i -g gologin-local-agent-browser-cli` |
+
+---
+
+## Nên dùng skill nào
+
+| Tác vụ | Skill |
+|---|---|
+| Đọc một trang tài liệu, bài viết hoặc URL đã biết | Web Access |
+| Thu thập và trích xuất dữ liệu có cấu trúc | Web Access |
+| Thu thập hàng loạt nhiều URL | Web Access |
+| Crawl một trang web, lập bản đồ URL | Web Access |
+| Giám sát thay đổi của trang | Web Access |
+| Đọc một trang, sau đó tương tác trong trình duyệt | Web Access (chế độ kết hợp) |
+| Mở một phiên trình duyệt đám mây trực tiếp | Agent Browser |
+| Đăng nhập vào bảng điều khiển, chụp ảnh màn hình | Agent Browser |
+| Điền biểu mẫu, thao tác qua các luồng nhiều bước | Agent Browser |
+| Chỉ thu thập dữ liệu, không cần trình duyệt, ứng dụng Node.js | Scraping |
+| Làm nóng (warm up) hồ sơ cục bộ | Local Agent Browser |
+| Luồng đăng nhập tài khoản với cookie được lưu lâu dài | Local Agent Browser |
+| Thao tác trên mạng xã hội / sàn thương mại điện tử trong Orbita cục bộ | Local Agent Browser |
+| Chạy runbook hàng loạt trên nhiều hồ sơ cục bộ | Local Agent Browser |
+
+---
+
+## Web Access Skill
+
+**Cài đặt:** `npx skills add GologinLabs/gologin-web-access-skill`
+
+Skill mặc định và linh hoạt nhất. Skill này ủy quyền cho CLI `gologin-web-access`.
+
+**Công cụ thu thập dữ liệu:** `scrape_url`, `read_page`, `scrape_markdown`, `scrape_text`, `scrape_json`, `batch_scrape`, `batch_extract`, `search_web`, `map_site`, `crawl_site`, `crawl_site_async`, `extract_structured`, `track_changes`, `batch_track_changes`, `parse_document`
+
+**Công cụ trình duyệt:** `browser_open`, `browser_search`, `browser_snapshot`, `browser_click`, `browser_type`, `browser_screenshot`, `browser_close`, `browser_sessions`, `browser_current`
+
+**Quy trình có sẵn:** browser-ref-loop, hybrid-read-then-interact, search-discover-and-scrape, lead-enrichment, competitive-monitoring, docs-ingestion, geo-testing, login-and-navigate-dashboard
+
+Xem [tài liệu tham khảo Web Access CLI](/vi/cli-tools/web-access) để biết chi tiết đầy đủ về các lệnh.
+
+---
+
+## Agent Browser Skill
+
+**Cài đặt:** `npx skills add GologinLabs/gologin-agent-browser-skill`
+
+Skill chỉ dành cho trình duyệt, dùng cho các phiên đám mây trực tiếp. Dùng khi bạn cần duyệt web tương tác mà không cần thu thập dữ liệu.
+
+**Chức năng:** `doctor`, `open`, `sessions`, `current`, `snapshot`, `click`, `type`, `fill`, `find`, `get`, `tabs`, `tabopen`, `tabfocus`, `tabclose`, `cookies`, `cookies-import`, `storage-export`, `storage-import`, `eval`, `back`, `forward`, `reload`, `upload`, `screenshot`, `pdf`
+
+Xem [tài liệu tham khảo Agent Browser CLI](/vi/cli-tools/agent-browser) để biết chi tiết đầy đủ về các lệnh.
+
+---
+
+## Scraping Skill
+
+**Cài đặt:** `npx skills add GologinLabs/gologin-scraping-skill`
+
+Skill nhỏ gọn nhất — chỉ thu thập dữ liệu thông qua Web Unlocker SDK. Không có phiên trình duyệt, không có daemon.
+
+**Chức năng:** HTML thô (`scrape`), văn bản (`text`), markdown (`markdown`), siêu dữ liệu có cấu trúc (`json`). Các phương thức SDK: `scrapeRaw()`, `scrape()`, `scrapeText()`, `scrapeMarkdown()`, `scrapeJSON()`, `batchScrape()`.
+
+Dùng khi tác vụ chỉ cần thu thập dữ liệu và bạn muốn giảm thiểu các phụ thuộc.
+
+Xem [tài liệu tham khảo Web Unlocker SDK](/vi/scraping-api-sdk-and-cli) để biết chi tiết về API.
+
+---
+
+## Local Agent Browser Skill
+
+**Cài đặt:** `npx skills add GologinLabs/gologin-local-agent-browser-skill`
+
+Dùng cho tự động hóa Orbita cục bộ lâu dài — làm nóng hồ sơ, luồng đăng nhập, thao tác trên mạng xã hội/sàn thương mại điện tử.
+
+**Chức năng:** Tất cả các lệnh tương tác với trình duyệt, cùng với quản lý hồ sơ (`profiles`, `profile-create`, `profile-import`, `profile-update`, `profile-sync`, `profile-delete`), runbook (`run`, `batch`), công việc (`jobs`, `job`) và chẩn đoán (`doctor --use-case --check-proxy`).
+
+**Mẫu theo trường hợp sử dụng:** `linkedin`, `ads`, `smm`, `scraping`, `geo`
+
+Xem [tài liệu tham khảo Local Agent Browser CLI](/vi/cli-tools/local-agent-browser) để biết chi tiết đầy đủ về các lệnh.
+
+---
+
+## Bạn có thể yêu cầu agent làm gì
+
+Sau khi cài đặt một skill, bạn trò chuyện với Claude Code bằng ngôn ngữ tự nhiên. Dưới đây là những gì mỗi skill có thể thực hiện:
+
+### Với Web Access Skill
+
+- "Đọc trang bảng giá tại competitor.com và tóm tắt các gói"
+- "Thu thập 15 URL này và trích xuất tên sản phẩm cùng giá của từng sản phẩm"
+- "Crawl tài liệu tại docs.example.com và tóm tắt từng phần cho tôi"
+- "Tìm kiếm 'best CRM tools 2026' và thu thập dữ liệu 5 kết quả đầu tiên"
+- "Kiểm tra xem competitor.com/pricing có thay đổi so với hôm qua không"
+- "Trích xuất tất cả tiêu đề và URL bài viết blog từ trang web này"
+- "Mở example.com trong trình duyệt, đăng nhập bằng các thông tin này và chụp ảnh màn hình bảng điều khiển"
+
+### Với Agent Browser Skill
+
+- "Mở bảng điều khiển quản trị, vào Cài đặt và chụp ảnh màn hình cấu hình hiện tại"
+- "Đăng nhập vào môi trường staging và kiểm tra xem tính năng mới đã được triển khai chưa"
+- "Điền biểu mẫu đăng ký trên example.com bằng các thông tin thử nghiệm này"
+- "Vào trang báo cáo, tải xuống bản xuất hằng tháng và chụp ảnh màn hình phần tóm tắt"
+- "Kiểm tra iphey.com hiển thị gì cho hồ sơ trình duyệt này"
+
+### Với Scraping Skill
+
+- "Thu thập URL này và cho tôi nội dung văn bản"
+- "Lấy tiêu đề, mô tả và các heading từ 10 trang này"
+- "Tải trang này dưới dạng markdown để tôi phân tích"
+
+### Với Local Agent Browser Skill
+
+- "Tạo hồ sơ LinkedIn mới với proxy Mỹ và làm nóng hồ sơ đó"
+- "Mở tài khoản Reddit của tôi, cuộn qua bảng tin rồi đóng lại"
+- "Chạy runbook làm nóng trên tất cả 20 hồ sơ với mức đồng thời là 5"
+- "Kiểm tra tình trạng proxy trên các hồ sơ quảng cáo Facebook của tôi"
+- "Đăng nhập vào tài khoản sàn thương mại điện tử này và chụp ảnh màn hình bảng điều khiển người bán"
+
+---
+
+## Ví dụ quy trình
+
+### Nghiên cứu đối thủ cạnh tranh (Web Access Skill)
+
+1. Agent tìm kiếm các đối thủ: `search_web("saas project management tools")`
+2. Agent lập bản đồ trang web của đối thủ: `map_site("https://competitor.com")`
+3. Agent thu thập hàng loạt các trang chính: `batch_scrape(pricing, features, about)`
+4. Agent đưa nội dung cho Claude để phân tích và so sánh
+
+### Làm nóng tài khoản (Local Agent Browser Skill)
+
+1. Agent tạo các hồ sơ: `profile-create "Account 1" --template linkedin`
+2. Agent chạy runbook làm nóng: `batch ./warmup.json --targets ./profiles.json`
+3. Agent kiểm tra kết quả công việc: `jobs --kind batch --status completed`
+4. Agent báo cáo những hồ sơ nào đã sẵn sàng
+
+### Giám sát bảng điều khiển (Agent Browser Skill)
+
+1. Agent mở bảng điều khiển: `open https://dashboard.example.com --profile saved_login`
+2. Agent đọc trang: `snapshot`
+3. Agent chuyển đến phần số liệu: `click @e5` (liên kết Báo cáo)
+4. Agent chụp ảnh màn hình báo cáo: `screenshot ./daily-metrics.png`
+5. Agent đóng phiên: `close`
+6. Agent tóm tắt các số liệu từ dữ liệu snapshot
+
+---
+
+## Bước kiểm tra bắt buộc trước khi chạy
+
+Trước khi chạy bất kỳ tác vụ nào, các skill sẽ phân loại công việc:
+
+1. **Một trang web đã biết hay nghiên cứu rộng từ nhiều nguồn?** — xác định có cần thu thập dữ liệu hoặc tìm kiếm hay không
+2. **Chỉ trích xuất đọc dữ liệu, giám sát, hay làm việc tương tác trên trình duyệt?** — xác định dùng thu thập dữ liệu hay trình duyệt
+3. **Chỉ cần Web Unlocker, hay cần cả Web Unlocker và Cloud Browser?** — xác định thông tin xác thực cần có
+4. **Có nhạy cảm về vị trí địa lý hoặc bị chặn đến mức cần dùng Gologin từ đầu đến cuối không?** — xác định yêu cầu về proxy/hồ sơ
+
+---
+
+## Liên quan
+
+- [MCP Server](/vi/api-reference/ai-integrations/mcp-server) — máy chủ MCP của Gologin dành cho AI agent
+- [Web Access CLI](/vi/cli-tools/web-access) — CLI hợp nhất bên dưới
+- [Agent Browser CLI](/vi/cli-tools/agent-browser) — CLI trình duyệt đám mây bên dưới
+- [Local Agent Browser CLI](/vi/cli-tools/local-agent-browser) — CLI Orbita cục bộ bên dưới
+- [Web Unlocker SDK](/vi/scraping-api-sdk-and-cli) — SDK TypeScript bên dưới

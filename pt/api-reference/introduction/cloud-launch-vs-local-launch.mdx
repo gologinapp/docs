@@ -1,0 +1,20 @@
+---
+title: "Inicialização na nuvem vs. inicialização local "
+hidden: true
+---
+
+Ao automatizar com o Gologin, o navegador pode ser executado em dois lugares: na sua máquina ou nos servidores do Gologin. Essa escolha determina onde o binário do Orbita é executado, como você se conecta a ele e de qual infraestrutura você precisa.
+
+## Visão geral
+
+|  | Inicialização local | Cloud Browser |
+| --- | --- | --- |
+| O navegador é executado em | Sua máquina | Servidores do Gologin |
+| Exige o aplicativo desktop | Sim | Não |
+| Janela visível | Opcional (headless) | Não |
+| Hardware necessário | RAM por perfil (~300–500 MB cada) | Nenhum |
+| Ideal para | Automação na sua própria máquina ou VPS | Scripts do lado do servidor, sem configuração local |
+
+## Inicialização local
+
+O navegador é executado na sua máquina. O SDK baixa o binário do Orbita automaticamente na primeira execução, inicia o navegador localmente e retorna um endpoint WebSocket ao qual o Puppeteer ou o Playwright se conecta.

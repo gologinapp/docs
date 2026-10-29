@@ -1,0 +1,72 @@
+---
+title: "Le proxy ne fonctionne pas"
+description: "Guide pas à pas pour diagnostiquer et résoudre les problèmes de connexion proxy dans Gologin."
+---
+
+## Dépannage du proxy pas à pas
+
+Si votre proxy ne fonctionne pas dans Gologin, suivez ces étapes dans l'ordre pour identifier et résoudre le problème.
+
+### 1. Lire le message d'erreur complet
+
+Passez le curseur sur l'indicateur d'erreur (l'icône rouge ou jaune) à côté du champ du proxy dans les paramètres de votre profil. Gologin affiche un message d'erreur détaillé au survol, qui contient souvent des informations précises sur la cause de l'échec de la connexion.
+
+### 2. Vérifier que le proxy fonctionne en dehors de Gologin
+
+Testez votre proxy de façon indépendante pour confirmer qu'il est opérationnel :
+
+- Utilisez un outil de vérification de proxy en ligne.
+- Configurez le proxy dans un navigateur classique (via une extension de proxy comme FoxyProxy) et essayez de charger un site web.
+
+Si le proxy ne fonctionne pas non plus en dehors de Gologin, le problème vient du proxy lui-même : contactez votre fournisseur de proxy.
+
+### 3. Changer de réseau
+
+Certains réseaux bloquent le trafic des proxys. Essayez l'une des solutions suivantes :
+
+- Passez du Wi-Fi à un point d'accès mobile (ou inversement).
+- Activez un VPN sur votre appareil avant de lancer le profil.
+
+Si le proxy fonctionne sur un autre réseau, votre réseau d'origine bloque probablement la connexion.
+
+### 4. Tester sur la version web
+
+Essayez de lancer le même profil sur [app.gologin.com](https://app.gologin.com) (la version web/cloud). Si le profil fonctionne là-bas mais pas dans l'application de bureau, le problème est lié à votre environnement local et non au proxy lui-même.
+
+### 5. Mettre à jour Gologin
+
+Assurez-vous d'utiliser la dernière version de l'application de bureau Gologin. Les anciennes versions peuvent présenter des problèmes de compatibilité avec certains protocoles ou configurations de proxy. Téléchargez la dernière version depuis [gologin.com](https://gologin.com).
+
+### 6. Vérifier les paramètres DNS avec les proxys SOCKS
+
+Si vous avez configuré des paramètres DNS personnalisés dans votre profil, notez que le DNS personnalisé ne fonctionne qu'avec les protocoles proxy **SOCKS4** et **SOCKS5**.
+
+<Warning>
+Les paramètres DNS personnalisés ne sont pas pris en charge avec les proxys HTTP ou HTTPS. Si vous utilisez un proxy HTTP/HTTPS avec un DNS personnalisé, supprimez la configuration DNS personnalisée ou passez à un proxy SOCKS.
+</Warning>
+
+### 7. Le proxy fonctionne mais la localisation est incorrecte
+
+Si votre proxy se connecte correctement, mais que certains sites web (en particulier Google) affichent une mauvaise localisation ou votre véritable position :
+
+Cela se produit parce que certains sites utilisent l'**API de géolocalisation** du navigateur indépendamment de votre adresse IP. L'API de géolocalisation peut révéler votre position réelle même si votre IP indique un autre emplacement.
+
+**Solution :** désactivez la géolocalisation dans les paramètres de votre profil. Dans la configuration du profil, repérez l'option Géolocalisation et réglez-la sur **Bloqué**, ou définissez manuellement des coordonnées correspondant à l'emplacement de votre proxy.
+
+### 8. Le proxy intégré de Gologin affiche une erreur
+
+Si vous utilisez le proxy intégré de Gologin et qu'il ne fonctionne pas :
+
+- Essayez de sélectionner un autre emplacement de proxy parmi les options disponibles.
+- Vérifiez que votre quota de trafic proxy Gologin n'est pas épuisé. Vous pouvez consulter votre trafic restant dans les paramètres du compte.
+- Si le trafic est épuisé, rechargez votre quota ou passez à un fournisseur de proxy externe.
+
+---
+
+<Warning>
+Si aucune de ces étapes ne fonctionne, contactez le support en fournissant les informations suivantes :
+
+- Les identifiants de votre proxy au format `ip:port:login:password`
+- Une capture d'écran du message d'erreur
+- La version de votre application Gologin (disponible dans Paramètres > À propos)
+</Warning>

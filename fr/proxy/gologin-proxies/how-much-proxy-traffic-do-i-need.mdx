@@ -1,0 +1,93 @@
+---
+title: "De combien de trafic proxy ai-je besoin ?"
+---
+
+Les forfaits Gologin incluent un quota de trafic proxy mesuré en gigaoctets (Go). Il s'agit du volume de données qui transite par le proxy pendant la navigation de vos profils, et non de l'espace disque ou de la mémoire RAM.
+
+## Ce qui est comptabilisé comme trafic
+
+Chaque fois qu'un profil Gologin envoie ou reçoit des données via le proxy, il consomme du trafic. Cela comprend :
+
+- Le chargement de pages web et d'images
+- La lecture de vidéos ou d'autres contenus
+- L'envoi de formulaires
+- L'exécution de scripts d'automatisation
+
+Le trafic n'est comptabilisé que lorsque vous utilisez les proxys résidentiels, mobiles ou datacenter de Gologin.
+
+**Ce qui n'est pas décompté de votre quota :**
+
+- **Les IP dédiées.** Une IP dédiée n'a aucune limite de trafic. Tout ce qui passe par elle est illimité, quel que soit le volume de données utilisé.
+- **Les proxys tiers.** Si vous connectez un proxy d'un fournisseur externe, ce trafic est facturé par ce fournisseur, et non par Gologin.
+
+## Estimations approximatives selon l'usage
+
+| Cas d'usage | Trafic estimé par profil |
+| --- | --- |
+| Navigation et prospection sur LinkedIn (2 h/jour) | 0,3–0,5 Go / mois |
+| Navigation sur Facebook / Instagram (2 h/jour) | 0,5–1 Go / mois |
+| Gestion de Facebook Ads (travail actif) | 1–2 Go / mois |
+| Plateformes crypto, interactions avec des portefeuilles | 0,1–0,3 Go / mois |
+| Web scraping (léger, pages textuelles uniquement) | 0,5–2 Go / mois |
+| Web scraping (pages riches en médias) | 2–5 Go / mois |
+| E-commerce (navigation sur Amazon, eBay) | 0,5–1,5 Go / mois |
+
+Il s'agit d'estimations. La consommation réelle dépend du temps d'activité des profils, du poids des médias sur les sites visités et de l'exécution ou non d'automatisations.
+
+## Calcul rapide
+
+Formule : nombre de profils × Go par profil et par mois = total de Go nécessaires
+
+Exemples :
+
+| Scénario | Profils | Go/profil/mois | Total nécessaire |
+| --- | --- | --- | --- |
+| 5 comptes LinkedIn, usage léger | 5 | 0,4 Go | ~2 Go |
+| 10 comptes Facebook Ads | 10 | 1,5 Go | ~15 Go |
+| 20 portefeuilles crypto, usage occasionnel | 20 | 0,2 Go | ~4 Go |
+| 30 comptes e-commerce | 30 | 1 Go | ~30 Go |
+
+## Comment consommer moins de trafic
+
+Les images et les vidéos représentent généralement la plus grande part du trafic utilisé par un profil. Si vous n'avez pas besoin de voir les médias pendant votre travail (par exemple lors du scraping ou d'une automatisation), vous pouvez activer **Désactiver le chargement des images** et **Désactiver la lecture automatique des vidéos** dans les paramètres du profil. Consultez [Paramètres avancés du profil](/fr/general/account-and-billing/advanced-profile-settings#autre).
+
+Vous pouvez également activer ces options dans les [Paramètres de profil par défaut](/fr/default-profile-settings) afin que tous les nouveaux profils consomment moins de trafic dès le départ.
+
+Ces options sont disponibles uniquement avec les forfaits payants.
+
+## Trafic ou IP dédiée ?
+
+Certains fournisseurs de proxys vendent le trafic en Go (comme Gologin pour les proxys résidentiels, mobiles et datacenter), tandis que d'autres vendent par nombre d'adresses IP ou par durée. Gologin propose désormais les deux.
+
+- **Choisissez d'acheter du trafic** lorsque vous avez besoin de nombreuses IP différentes sans vous soucier de laquelle vous obtenez : scraping, recherche, sessions de courte durée, tests. Utilisez pour cela l'option **Acheter du trafic**.
+- **Achetez une IP dédiée** lorsqu'un compte doit conserver la même IP en permanence : Amazon, eBay, LinkedIn, Meta Ads, PayPal, sites de paris, et tout service qui examine l'historique de connexion. Une IP dédiée coûte \$5/mois par IP et inclut un trafic illimité. Un compte très sollicité peut donc revenir moins cher avec une IP dédiée qu'avec un forfait en Go.
+
+<Tip>
+  Si vous faites le calcul pour une configuration mixte : ne comptez que les profils qui utilisent des proxys rotatifs pour estimer les Go. Les profils sur une IP dédiée n'entrent pas du tout dans le calcul.
+</Tip>
+
+## J'ai acheté des proxys facturés en Go chez un autre fournisseur : qu'est-ce que cela signifie ?
+
+Certains fournisseurs de proxys vendent le trafic en Go (comme Gologin), tandis que d'autres vendent par nombre d'adresses IP ou par durée. Si vous avez l'habitude d'acheter des IP plutôt que des Go, voici comment il faut voir les choses :
+
+Un proxy facturé en Go vous donne un volume de données fixe à utiliser sur n'importe quelle IP du pool. Vous payez pour de la bande passante, et non pour une adresse précise.
+
+Si vous avez besoin d'une IP fixe qui ne change jamais (indispensable pour Amazon, eBay, LinkedIn et la plupart des plateformes financières), il vous faut un proxy statique, généralement vendu sous forme d'abonnement mensuel par IP, et non au Go.
+
+## Que se passe-t-il lorsque le trafic est épuisé ?
+
+Lorsque votre quota de trafic proxy Gologin est épuisé, les profils qui utilisent les proxys intégrés de Gologin ne pourront plus se connecter via ces proxys. Vous verrez une erreur de connexion.
+
+Pour éviter toute interruption :
+
+- Surveillez votre consommation dans le tableau de bord Gologin
+- Rechargez votre solde de proxy avant qu'il ne soit épuisé
+- Envisagez d'utiliser des proxys tiers pour les comptes à fort trafic (ils ne consomment pas votre quota Gologin)
+
+## Utiliser des proxys tiers à la place
+
+Si vous gérez des comptes qui nécessitent des IP dédiées et constantes, ou si vous avez besoin de plus de trafic que celui inclus dans votre forfait, connectez votre propre proxy auprès d'un fournisseur tiers.
+
+Les proxys tiers s'ajoutent dans les paramètres du profil et n'ont aucun effet sur votre solde de trafic Gologin.
+
+Consultez [Ajouter un proxy à un profil](https://gologin.com/docs/proxy/proxy-management/adding-proxies) et [Fournisseurs de proxys recommandés.](https://gologin.com/best-proxy-server-services/)

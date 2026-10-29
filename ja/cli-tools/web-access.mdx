@@ -1,0 +1,411 @@
+---
+title: "Gologin Web Access CLI"
+description: "Gologin の Web Unlocker と Cloud Browser を使って、Web の読み取りと操作を行う統合 CLI"
+---
+
+Gologin Web Access は、2 つの Gologin 製品を 1 つのコマンド体系にまとめた統合 CLI です。
+
+- **Web Unlocker** — ステートレスな読み取りと抽出。ブラウザセッションを維持せずに、ページの内容をすばやく取得したい場合に最適です。
+- **Cloud Browser** — ステートフルな操作。ナビゲーション、クリック、入力、スクリーンショット、コマンドをまたいで状態を保持する複数ステップのフローが必要な場合に最適です。
+
+どちらのモードも、同じ設定モデルと同じ認証情報のセットアップを共有します。エージェントがタスクの途中でキーの不足を確認するために止まらないよう、両方の認証情報を最初にまとめて設定しておくことをおすすめします。
+
+---
+
+## インストール
+
+```bash
+npm install -g gologin-web-access
+```
+
+Node.js 18.17 以上が必要です。
+
+---
+
+## 認証情報
+
+2 つのモードは、それぞれ異なる Gologin の認証情報で動作します。
+
+| 変数 | 必要となる場面 | 説明 |
+|---|---|---|
+| `GOLOGIN_WEB_UNLOCKER_API_KEY` | スクレイピング / 読み取りコマンド | Web Unlocker の API キー |
+| `GOLOGIN_TOKEN` | ブラウザ / 操作コマンド | Gologin の API トークン |
+| `GOLOGIN_DEFAULT_PROFILE_ID` | 任意 | デフォルトのブラウザプロファイル |
+| `GOLOGIN_DAEMON_PORT` | 任意 | ローカルデーモンのポート |
+
+### 設定ファイル
+
+認証情報は `~/.gologin-web-access/config.json` に保存します。
+
+```json
+{
+  "webUnlockerApiKey": "wu_...",
+  "cloudToken": "gl_...",
+  "defaultProfileId": "profile_123",
+  "daemonPort": 4590
+}
+```
+
+対話形式で設定を初期化するには、次のコマンドを実行します。
+
+```bash
+gologin-web-access config init --web-unlocker-api-key wu_... --token gl_...
+```
+
+---
+
+## クイックスタート — ページを読み取る
+
+```bash
+export GOLOGIN_WEB_UNLOCKER_API_KEY="wu_..."
+
+# rendered HTML
+gologin-web-access scrape https://example.com
+
+# readable text with metadata
+gologin-web-access read https://docs.example.com/features
+
+# plain text
+gologin-web-access scrape-text https://example.com/pricing
+
+# markdown
+gologin-web-access scrape-markdown https://example.com/docs
+
+# structured JSON (title, description, headings, links)
+gologin-web-access scrape-json https://example.com
+
+# search the web
+gologin-web-access search "gologin antidetect browser" --limit 5
+```
+
+## クイックスタート — サイトを操作する
+
+```bash
+export GOLOGIN_TOKEN="gl_..."
+export GOLOGIN_DEFAULT_PROFILE_ID="profile_123"
+
+gologin-web-access open https://example.com
+gologin-web-access snapshot
+gologin-web-access click e3
+gologin-web-access type e5 "search terms"
+gologin-web-access screenshot ./page.png
+gologin-web-access close
+```
+
+---
+
+## コマンドリファレンス — スクレイピング / 読み取り
+
+これらのコマンドは Web Unlocker を使用します。ステートレスで、ブラウザセッションは維持されません。
+
+### 単一ページ
+
+| コマンド | 説明 |
+|---|---|
+| `scrape <url>` | レンダリング済みの生の HTML を取得 |
+| `read <url>` | 形式を指定して読みやすいコンテンツを取得 |
+| `scrape-text <url>` | プレーンテキストを抽出 |
+| `scrape-markdown <url>` | Markdown を抽出 |
+| `scrape-json <url>` | 構造化されたメタデータ(タイトル、説明、見出し、リンク)を取得 |
+| `extract <url> --schema <file>` | JSON スキーマに一致するデータを抽出 |
+| `parse-document <url-or-path>` | PDF、DOCX、XLSX、HTML ファイルを解析 |
+
+**共通オプション:** `--format text|markdown|html`、`--source auto|unlocker|browser`、`--fallback none|browser`
+
+### バッチ操作
+
+| コマンド | 説明 |
+|---|---|
+| `batch-scrape <url...>` | 複数の URL を一括でスクレイピング |
+| `batch-extract <url...> --schema <file>` | 複数の URL から構造化データを抽出 |
+| `batch-change-track <url...>` | 複数ページの変更を監視 |
+
+**バッチオプション:** `--format`、`--source`、`--only-main-content`、`--retry <n>`、`--backoff-ms <ms>`、`--summary`、`--output <path>`、`--strict`
+
+デフォルトでは、`batch-scrape` は一部のみ成功した場合でも終了コード 0 を返します。エラーが 1 件でもあれば失敗として扱うには、`--strict` を追加してください。
+
+### 検索と探索
+
+| コマンド | 説明 |
+|---|---|
+| `search <query>` | 構造化された結果を返す Web 検索 |
+| `map <url>` | サイト上の URL を探索 |
+| `crawl <url>` | 複数ページをクロールしてコンテンツを抽出 |
+
+**オプション:** `--limit <n>`、`--max-depth <n>`、`--concurrency <n>`、`--only-main-content`
+
+### 非同期クロールジョブ
+
+| コマンド | 説明 |
+|---|---|
+| `crawl-start <url> ...` | 非同期クロールジョブを開始 |
+| `crawl-status <jobId>` | ジョブのステータスを確認 |
+| `crawl-result <jobId>` | クロール結果を取得 |
+| `crawl-errors <jobId>` | クロールのエラーを取得 |
+
+### 変更の追跡
+
+| コマンド | 説明 |
+|---|---|
+| `change-track <url>` | ページの変更を検出 |
+| `batch-change-track <url...>` | 複数ページの変更を追跡 |
+
+### ランブック
+
+| コマンド | 説明 |
+|---|---|
+| `run <runbook.json>` | ランブック(ステップの連続)を実行 |
+| `batch <runbook.json> --targets <file>` | 複数のターゲットに対してランブックを実行 |
+| `jobs` | 実行中 / 完了済みのジョブを一覧表示 |
+| `job <jobId>` | ジョブの詳細を取得 |
+
+---
+
+## コマンドリファレンス — ブラウザ / 操作
+
+これらのコマンドは Cloud Browser を使用します。ローカルデーモンを通じて、ステートフルなセッションを維持します。
+
+### セッション管理
+
+| コマンド | 説明 |
+|---|---|
+| `open <url>` | クラウドブラウザのセッションで URL を開く |
+| `search-browser <query>` | 検索を行い、結果をブラウザで開く |
+| `close` | 現在のセッションを閉じる |
+| `sessions` | アクティブなセッションを一覧表示 |
+| `current` | 現在のセッション情報を表示 |
+
+**オプション:** `--profile <id>` を指定すると、特定の Gologin プロファイルを使用できます。
+
+### ページの読み取り
+
+| コマンド | 説明 |
+|---|---|
+| `snapshot` | 要素の参照付きのコンパクトなテキストスナップショット |
+| `scrape-screenshot <url> [path]` | ブラウザ経由でスクリーンショットを取得 |
+| `screenshot <path>` | 現在のページのスクリーンショットを保存 |
+| `pdf <path>` | ページを PDF として保存 |
+| `get <kind> [target]` | ページのプロパティを取得 |
+
+### 操作
+
+| コマンド | 説明 |
+|---|---|
+| `click <ref>` | 参照を指定して要素をクリック |
+| `dblclick <ref>` | 要素をダブルクリック |
+| `type <ref> <text>` | 要素にテキストを入力 |
+| `fill <ref> <text>` | 入力フィールドに値を入力 |
+| `hover <ref>` | 要素にマウスオーバー |
+| `select <ref> <value>` | ドロップダウンの値を選択 |
+| `check <ref>` / `uncheck <ref>` | チェックボックスのオン / オフを切り替え |
+| `focus <ref>` | 要素にフォーカス |
+| `press <key> [target]` | キーボードのキーを押す |
+| `scroll <direction> [pixels]` | ページをスクロール |
+| `scrollintoview <ref>` | 要素が見える位置までスクロール |
+| `find ...` | セマンティックな要素検索 |
+
+### ナビゲーション
+
+| コマンド | 説明 |
+|---|---|
+| `back` | 戻る |
+| `forward` | 進む |
+| `reload` | ページを再読み込み |
+| `wait <target\|ms>` | 要素の出現またはタイムアウトまで待機 |
+
+### タブ
+
+| コマンド | 説明 |
+|---|---|
+| `tabs` | 開いているタブを一覧表示 |
+| `tabopen [url]` | 新しいタブを開く |
+| `tabfocus <index>` | タブを切り替え |
+| `tabclose [index]` | タブを閉じる |
+
+### Cookie とストレージ
+
+| コマンド | 説明 |
+|---|---|
+| `cookies` | Cookie をエクスポート |
+| `cookies-import <file>` | Cookie をインポート |
+| `cookies-clear` | Cookie を削除 |
+| `storage-export [path]` | localStorage をエクスポート |
+| `storage-import <file>` | localStorage をインポート |
+| `storage-clear` | localStorage を削除 |
+
+### 高度な操作
+
+| コマンド | 説明 |
+|---|---|
+| `eval <expression>` | ページ内で JavaScript を評価 |
+| `upload <ref> <file...>` | ファイル入力にファイルをアップロード |
+
+---
+
+## ユースケースと例
+
+### 競合他社の料金ページをスクレイピングする
+
+```bash
+gologin-web-access scrape-json https://competitor.com/pricing
+```
+
+タイトル、説明、見出し、リンクを構造化 JSON で返します。ページが Cookie ウォールやチャレンジの背後にある場合は、outcome フィールドで判別でき、`nextActionHint` でブラウザモードへの切り替えが提案されます。
+
+### ドキュメントサイトから調査用コーパスを作成する
+
+```bash
+# discover all pages
+gologin-web-access map https://docs.example.com --limit 200 --max-depth 3
+
+# crawl and extract main content as markdown
+gologin-web-access crawl https://docs.example.com \
+  --format markdown --limit 100 --max-depth 3 --only-main-content \
+  --output ./corpus.json
+```
+
+出力を LLM に渡して、要約、Q&A、ファインチューニングに活用できます。
+
+### ページの変更を監視する
+
+```bash
+# check if a page changed
+gologin-web-access change-track https://competitor.com/pricing --format markdown
+
+# track many pages at once
+gologin-web-access batch-change-track \
+  https://competitor.com/pricing \
+  https://competitor.com/features \
+  https://competitor.com/changelog \
+  --output ./changes.json
+```
+
+cron で毎日実行し、差分を比較することで、料金の変更、新機能、削除されたコンテンツを検出できます。
+
+### スキーマを使って構造化データを抽出する
+
+まず、抽出したい内容を定義します。
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "product_name": { "type": "string" },
+    "price": { "type": "string" },
+    "features": { "type": "array", "items": { "type": "string" } }
+  }
+}
+```
+
+次に、抽出を実行します。
+
+```bash
+gologin-web-access extract https://example.com/product/123 --schema ./product-schema.json
+```
+
+`batch-extract` を使えば、複数のページに対して同様に抽出できます。
+
+### Web を検索して結果をスクレイピングする
+
+```bash
+# search
+gologin-web-access search "best project management tools 2026" --limit 10
+
+# scrape the top results
+gologin-web-access batch-scrape url1 url2 url3 --format text --only-main-content --summary
+```
+
+### サイトにログインして操作する
+
+スクレイピングだけでは足りず、クリック、入力、ページ遷移が必要な場合は次のようにします。
+
+```bash
+export GOLOGIN_TOKEN="gl_..."
+
+gologin-web-access open https://dashboard.example.com/login
+gologin-web-access snapshot
+gologin-web-access fill e3 "user@example.com"
+gologin-web-access fill e5 "password123"
+gologin-web-access click e7
+gologin-web-access wait 2000
+gologin-web-access snapshot          # verify you're logged in
+gologin-web-access screenshot ./dashboard.png
+gologin-web-access close
+```
+
+### ローカルのドキュメントを解析する
+
+Web ページだけでなく、PDF、Word ドキュメント、Excel ファイルも解析できます。
+
+```bash
+gologin-web-access parse-document ./report.pdf
+gologin-web-access parse-document ./data.xlsx
+gologin-web-access parse-document ./contract.docx
+```
+
+### ランブックで複数ステップのワークフローを自動化する
+
+ステップの連続を JSON で定義して、繰り返し実行できます。
+
+```json
+{
+  "variables": { "url": "https://example.com", "query": "gologin" },
+  "steps": [
+    { "command": "open", "args": ["${url}"] },
+    { "command": "wait", "args": [1000] },
+    { "command": "snapshot" },
+    { "command": "find", "args": ["search input"] },
+    { "command": "type", "args": ["@found", "${query}"] },
+    { "command": "press", "args": ["Enter"] },
+    { "command": "wait", "args": [2000] },
+    { "command": "screenshot", "args": ["./result.png"] },
+    { "command": "close" }
+  ]
+}
+```
+
+```bash
+gologin-web-access run ./search-runbook.json
+```
+
+---
+
+## ソースのルーティング
+
+`--source` に対応するコマンドでは、利用するバックエンドを切り替えられます。
+
+| 値 | 動作 |
+|---|---|
+| `auto`(デフォルト) | まず Web Unlocker を試し、必要に応じて Cloud Browser にフォールバック |
+| `unlocker` | Web Unlocker のみを使用 |
+| `browser` | Cloud Browser のみを使用 |
+
+---
+
+## 構造化出力
+
+`scrape-json` は、次のような豊富なメタデータを返します。
+
+- `title`、`description`、`headings`、`headingsByLevel`、`links`
+- **結果の分類:** `ok`、`empty`、`incomplete`、`authwall`、`challenge`、`blocked`、`cookie_wall`
+- `nextActionHint` — ページに完全にアクセスできない場合に、次に取るべき手順を提案
+
+`search` は、`requestedLimit`、`returnedCount`、`warnings`、`cacheTtlMs`、および各結果の `position` を返します。
+
+---
+
+## 関連情報
+
+- [Web Unlocker SDK](/ja/scraping-api-sdk-and-cli) — プログラムから利用するための TypeScript SDK
+- [Web Unlocker とは](/ja/what-is-web-unlocker) — 製品の概要
+- [Agent Browser CLI](/ja/cli-tools/agent-browser) — AI エージェント向けのブラウザ専用 CLI
+- [Local Agent Browser CLI](/ja/cli-tools/local-agent-browser) — ローカルの Orbita CLI
+- [AI Skills](/ja/api-reference/ai-integrations/ai-skills) — Claude Code 向けのプラグアンドプレイのスキル
+
+<Card title="npm パッケージ" icon="npm" href="https://www.npmjs.com/package/gologin-web-access">
+  gologin-web-access
+</Card>
+
+<Card title="ソースコード" icon="github" href="https://github.com/GologinLabs/gologin-web-access">
+  GologinLabs/gologin-web-access
+</Card>

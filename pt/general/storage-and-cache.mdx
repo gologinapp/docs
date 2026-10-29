@@ -1,0 +1,33 @@
+---
+title: "Gerenciamento de armazenamento e cache"
+description: "Como gerenciar o armazenamento local, os arquivos de cache e o uso de disco do Gologin"
+---
+
+O Gologin armazena localmente os dados do navegador de cada perfil que você executa. Com o tempo, isso pode ocupar bastante espaço em disco.
+
+## Onde o Gologin armazena os dados
+
+- **Windows**: `C:\Users\<username>\AppData\Local\Temp\gologin_profile_*`
+- **macOS**: `/tmp/gologin_profile_*`
+- **Linux**: `/tmp/gologin_profile_*`
+
+Os binários do navegador Orbita são armazenados separadamente e podem ocupar de 500 MB a 2 GB por versão.
+
+## É seguro excluir os arquivos de cache?
+
+Sim, você pode excluir com segurança as pastas temporárias de perfil quando nenhum perfil estiver em execução. Essas pastas são recriadas quando você inicia um perfil.
+
+**Antes de excluir:**
+1. Verifique se todos os perfis do Gologin estão fechados
+2. Feche o aplicativo desktop do Gologin
+3. Exclua as pastas que correspondem a `gologin_profile_*` no seu diretório temporário
+
+<Warning>
+Não exclua arquivos enquanto houver perfis em execução. Isso pode causar erros "EBUSY: resource busy" no Windows ou corromper sessões ativas.
+</Warning>
+
+## Como reduzir o uso de disco
+
+- Feche os perfis quando terminar de usá-los (não deixe perfis abertos durante a noite)
+- Desinstale as versões não utilizadas do navegador Orbita pelas configurações do Gologin
+- Limpe periodicamente as pastas temporárias de perfil

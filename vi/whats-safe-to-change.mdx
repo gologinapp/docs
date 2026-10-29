@@ -1,0 +1,68 @@
+---
+title: "Những thiết lập có thể thay đổi an toàn"
+---
+
+Khi quản lý tài khoản bằng Gologin, việc duy trì vân tay trình duyệt nhất quán là rất quan trọng.\
+Các website thường phân tích những thay đổi trong cấu hình trình duyệt để phát hiện hoạt động bất thường.
+
+Một số thiết lập của profile có thể thay đổi bất cứ lúc nào mà không gặp vấn đề, trong khi một số khác nên được giữ ổn định sau khi tài khoản đã bắt đầu sử dụng profile.
+
+## Có thể thay đổi an toàn
+
+Các thiết lập sau thường có thể được thay đổi mà không ảnh hưởng đến vân tay trình duyệt hoặc độ tin cậy của tài khoản:
+
+- tên profile
+- ghi chú
+- thư mục và thẻ
+- tiện ích mở rộng
+- thông tin đăng nhập proxy (nếu vị trí proxy không đổi)
+
+Những thiết lập này không ảnh hưởng đến các tín hiệu vân tay cốt lõi mà website sử dụng.
+
+## Thay đổi cẩn thận
+
+Một số tham số có thể ảnh hưởng đến môi trường trình duyệt và cần được thay đổi một cách cẩn thận.
+
+Bao gồm:
+
+- múi giờ
+- thiết lập ngôn ngữ
+- chế độ WebRTC
+- cấu hình thiết bị đa phương tiện
+
+Nếu bắt buộc phải thay đổi, hãy cố gắng giữ cho các thiết lập này nhất quán với vị trí proxy và loại thiết bị.
+
+## Tránh thay đổi sau khi đã tạo tài khoản
+
+Một số tham số tạo nên phần cốt lõi của vân tay trình duyệt.\
+Việc thay đổi chúng thường xuyên có thể khiến website coi trình duyệt là một thiết bị mới.
+
+Hãy tránh chỉnh sửa các thiết lập sau khi tài khoản đã được đăng nhập vào profile:
+
+- hệ điều hành
+- user agent
+- độ phân giải màn hình
+- cấu hình phông chữ
+- vân tay Canvas
+- vân tay WebGL
+- vân tay AudioContext
+- số luồng CPU và dung lượng RAM
+
+Những thay đổi lớn đối với các tham số này có thể kích hoạt thêm bước xác minh hoặc kiểm tra đăng nhập.
+
+## Thực hành tốt nhất
+
+Để đạt kết quả ổn định nhất:
+
+- tạo profile và cấu hình vân tay trước khi đăng nhập vào tài khoản
+- giữ ổn định các thiết lập vân tay sau khi đã thêm tài khoản
+- dùng một proxy riêng cho mỗi profile
+- tránh thay đổi thường xuyên các tham số liên quan đến phần cứng
+
+Việc duy trì vân tay nhất quán giúp website nhận diện profile như một thiết bị ổn định.
+
+Xem thêm
+
+- [Thiết lập vân tay của profile](https://gologin.com/docs/profile-fingerprint-settings)
+- [Cách vân tay trình duyệt hoạt động](https://gologin.com/docs/how-browser-fingerprints-work)
+- [Danh sách kiểm tra vệ sinh profile](https://gologin.com/docs/profile-hygiene-checklist)

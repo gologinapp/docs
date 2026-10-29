@@ -1,0 +1,20 @@
+---
+title: "Cloud Launch vs. Local Launch"
+hidden: true
+---
+
+Bei der Automatisierung mit Gologin kann der Browser an zwei Orten laufen: auf Ihrem eigenen Rechner oder auf den Servern von Gologin. Davon hängt ab, wo die Orbita-Binärdatei ausgeführt wird, wie Sie sich mit ihr verbinden und welche Infrastruktur Sie benötigen.
+
+## Überblick
+
+|  | Local launch | Cloud Browser |
+| --- | --- | --- |
+| Browser läuft auf | Ihrem Rechner | Den Servern von Gologin |
+| Desktop-App erforderlich | Ja | Nein |
+| Sichtbares Fenster | Optional (Headless) | Nein |
+| Benötigte Hardware | RAM pro Profil (ca. 300–500 MB je Profil) | Keine |
+| Am besten geeignet für | Automatisierung auf dem eigenen Rechner oder VPS | Serverseitige Skripte ohne lokale Einrichtung |
+
+## Local launch
+
+Der Browser läuft auf Ihrem Rechner. Das SDK lädt die Orbita-Binärdatei beim ersten Start automatisch herunter, startet sie lokal und gibt einen WebSocket-Endpunkt zurück, mit dem sich Puppeteer oder Playwright verbinden.

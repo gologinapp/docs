@@ -1,0 +1,138 @@
+---
+title: "Быстрый старт"
+---
+
+В этом руководстве показано, как получить данные с первого URL с помощью Web Unlocker.
+
+---
+
+## Что понадобится
+
+- API-ключ Web Unlocker (чтобы его получить, напишите на **ermakova.t@gologin.com**)
+- Python 3.x, Node.js или любой HTTP-клиент
+
+---
+
+## Аутентификация
+
+Во всех запросах нужно передавать ваш API-ключ в заголовке `apikey`:
+
+```
+apikey: YOUR_API_KEY
+```
+
+Базовый URL для всех запросов к API:
+
+```
+https://parsing.webunlocker.gologin.com/v1
+```
+
+---
+
+## Отправьте первый запрос
+
+Отправьте GET-запрос, передав целевой URL в параметре запроса. В ответе вы получите полностью отрендеренный HTML-код страницы.
+
+### cURL
+
+```bash
+curl "https://parsing.webunlocker.gologin.com/v1/scrape?url=https%3A%2F%2Fexample.com" \
+  -H "apikey: YOUR_API_KEY"
+```
+
+### Python
+
+```python
+import requests
+
+response = requests.get(
+    "https://parsing.webunlocker.gologin.com/v1/scrape",
+    params={"url": "https://example.com"},
+    headers={"apikey": "YOUR_API_KEY"}
+)
+
+print(response.text)
+```
+
+### JavaScript (Node.js / Browser)
+
+```javascript
+const response = await fetch(
+  "https://parsing.webunlocker.gologin.com/v1/scrape?url=" +
+    encodeURIComponent("https://example.com"),
+  { headers: { apikey: "YOUR_API_KEY" } }
+);
+
+const html = await response.text();
+console.log(html);
+```
+
+---
+
+## Что вы получите в ответ
+
+Тело ответа — это необработанный отрендеренный HTML страницы, тот же контент, который вы увидели бы, открыв URL в браузере. Ответ не оборачивается в JSON и не требует дополнительного разбора.
+
+```html
+<!DOCTYPE html>
+<html>
+  <head><title>Example Domain</title></head>
+  <body>...</body>
+</html>
+```
+
+---
+
+## Обработка ошибок
+
+Перед обработкой ответа проверьте код состояния HTTP:
+
+| Статус | Значение |
+|---|---|
+| `200` | Успешно — тело ответа содержит HTML страницы |
+| `401` | Неверный или отсутствующий API-ключ |
+| `422` | Неверный или отсутствующий параметр URL |
+| `429` | Превышен лимит запросов |
+| `500` / `503` | Ошибка сервера — повторите запрос с увеличивающимися интервалами |
+
+```python
+response = requests.get(
+    "https://parsing.webunlocker.gologin.com/v1/scrape",
+    params={"url": "https://example.com"},
+    headers={"apikey": "YOUR_API_KEY"}
+)
+
+if response.status_code == 200:
+    html = response.text
+else:
+    print(f"Error {response.status_code}: {response.text}")
+```
+
+---
+
+## Быстрый старт через CLI
+
+Вы также можете получать данные со страниц с помощью CLI-инструментов Gologin, не написав ни строчки кода:
+
+### Web Unlocker CLI
+
+```bash
+npm install -g gologin-webunlocker
+
+GOLOGIN_WEBUNLOCKER_API_KEY=wu_... gologin-webunlocker scrape https://example.com
+GOLOGIN_WEBUNLOCKER_API_KEY=wu_... gologin-webunlocker text https://example.com
+GOLOGIN_WEBUNLOCKER_API_KEY=wu_... gologin-webunlocker markdown https://example.com
+```
+
+### Gologin Web Access CLI (единый инструмент)
+
+```bash
+npm install -g gologin-web-access
+
+export GOLOGIN_WEB_UNLOCKER_API_KEY="wu_..."
+gologin-web-access read https://example.com
+gologin-web-access scrape-json https://example.com
+gologin-web-access batch-scrape https://example.com/page/1 https://example.com/page/2 --format text
+```
+
+Подробнее читайте в разделах [Web Unlocker SDK и CLI](/ru/scraping-api-sdk-and-cli) и [Web Access CLI](/ru/cli-tools/web-access).

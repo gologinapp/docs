@@ -1,0 +1,70 @@
+---
+title: "Thiết bị proxy"
+hidden: true
+---
+
+**Thiết bị proxy** cho phép bạn định tuyến lưu lượng truy cập của hồ sơ trình duyệt qua chính điện thoại Android của bạn thay vì dùng máy chủ proxy truyền thống.
+
+Nói đơn giản, điện thoại của bạn sẽ trở thành kết nối internet cho hồ sơ.
+
+## Tại sao nên dùng?
+
+Tính năng này hữu ích khi bạn muốn:
+
+- Có **địa chỉ IP di động thật** (thay vì proxy trung tâm dữ liệu hoặc proxy dân cư)
+- Có IP **đáng tin cậy hơn** đối với các trang web
+- Giảm sự phụ thuộc vào các nhà cung cấp proxy bên thứ ba
+- Xuất hiện như một **người dùng di động thật** từ mạng của thiết bị bạn
+
+## Cách hoạt động
+
+- Bạn cài đặt một ứng dụng đi kèm trên thiết bị Android
+- Ứng dụng chia sẻ kết nối internet của điện thoại
+- Hồ sơ của bạn kết nối đến thiết bị đó như một proxy
+- Toàn bộ lưu lượng truy cập đi qua IP của điện thoại
+
+<Warning>
+  Không dùng cùng một thiết bị proxy cho nhiều hồ sơ khác nhau cùng lúc. IP sẽ giống nhau, điều này có thể gây nghi ngờ đối với các trang web.
+</Warning>
+
+## Hướng dẫn thiết lập
+
+### Cài đặt ứng dụng di động Gologin Devices
+
+1. **Tải xuống và cài đặt** ứng dụng Gologin Devices từ Google Play trên điện thoại Android của bạn
+2. **Đăng nhập** vào tài khoản Gologin của bạn
+3. Nhấn **Bắt đầu proxy**
+
+<Columns cols={4}>
+  <Column>
+    <Frame>
+      ![Gologin Devices trên Google Play](/images/gologin_devices_google_play.jpg)
+    </Frame>
+  </Column>
+  <Column>
+    <Frame>
+      ![Đăng nhập Gologin Devices](/images/gologin_devices_log_in-3.jpg)
+    </Frame>
+  </Column>
+  <Column>
+    <Frame>
+      ![Gologin Devices đã đăng nhập](/images/gologin_devices_logged_in.jpg)
+    </Frame>
+  </Column>
+  <Column>
+    <Frame>
+      ![Proxy của Gologin Devices đang chạy](/images/gologin_devices_proxy_running-1.jpg)
+    </Frame>
+  </Column>
+</Columns>
+
+### Tiếp tục trong ứng dụng Gologin trên máy tính
+
+1. Trong ứng dụng Gologin, **vào mục Thiết bị proxy** và kiểm tra xem thiết bị mới đã xuất hiện sau khi bạn đăng nhập trên Android hay chưa
+   <Frame>
+     ![Tab Thiết bị proxy](/images/proxy_devices_tab.png)
+   </Frame>
+2. Vào **Tất cả hồ sơ** \> nhấp vào **Ủy quyền & Vị trí** trên hồ sơ của bạn \> chọn Thiết bị proxy mới của bạn trong danh sách proxy
+   <Frame>
+     ![Chọn thiết bị proxy](/images/choosing_a_proxy_device.gif)
+   </Frame>

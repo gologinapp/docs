@@ -1,0 +1,126 @@
+---
+title: "Configuración de la huella digital del perfil"
+---
+
+Gologin te permite configurar los parámetros de la huella digital al crear o editar un perfil de navegador.
+
+Estos ajustes definen cómo se muestra tu perfil de navegador ante los sitios web y los sistemas antifraude.
+
+Los sitios web recopilan numerosas señales técnicas del entorno del navegador y las combinan en una **huella digital del navegador** (browser fingerprint) que se utiliza para identificar dispositivos.
+
+Los ajustes de huella digital en Gologin se agrupan en varias categorías.
+
+## Navigator fingerprint
+
+Los parámetros de Navigator describen el entorno general del navegador y del dispositivo.
+
+Los sitios web leen estos valores mediante API de JavaScript como `navigator.userAgent` y `navigator.platform`.
+
+Los parámetros de Navigator más habituales son:
+
+- **User-Agent** – identifica el tipo de navegador, su versión y el sistema operativo
+- **Orbita version** – la versión de Chromium que utiliza el perfil
+- **Screen resolution** – el tamaño de pantalla que se comunica a los sitios web
+- **Languages** – idiomas preferidos del navegador
+- **Platform** – plataforma del sistema operativo
+- **CPU threads** – número de núcleos del procesador que se comunica al navegador
+- **RAM** – memoria disponible del dispositivo
+- **DoNotTrack** – señal de preferencia de privacidad
+
+Estos parámetros ayudan a los sitios web a determinar qué tipo de dispositivo se está utilizando.
+
+## Fonts
+
+Las fuentes instaladas en el entorno del navegador son otra señal de la huella digital.
+
+Los sitios web pueden detectar las fuentes midiendo cómo se renderiza el texto en la página. Cada sistema operativo y cada dispositivo tienen conjuntos de fuentes distintos, lo que ayuda a diferenciar los dispositivos.
+
+Gologin puede enmascarar la lista de fuentes para generar combinaciones realistas que coincidan con el sistema operativo seleccionado.
+
+## Media devices
+
+Los ajustes de dispositivos multimedia definen qué cámaras, micrófonos y salidas de audio son visibles para los sitios web.
+
+Los sitios web pueden acceder a esta información mediante la API `navigator.mediaDevices`.
+
+Gologin te permite enmascarar:
+
+- entradas de vídeo
+- entradas de audio
+- salidas de audio
+
+Así se evita que los sitios web identifiquen la configuración real de tu hardware.
+
+## Hardware fingerprint
+
+Las señales relacionadas con el hardware aportan entropía adicional a la huella digital del navegador.
+
+Estos parámetros incluyen las características de renderizado gráfico y de audio.
+
+### Canvas
+
+La API de Canvas permite a los sitios web dibujar imágenes ocultas en el navegador.\
+Como el renderizado varía ligeramente entre dispositivos, la imagen resultante puede convertirse en un hash y utilizarse para crear una huella digital.
+
+### WebGL
+
+WebGL revela información sobre el hardware gráfico que utiliza el dispositivo.
+
+Los sitios web pueden inspeccionar el informe de WebGL o renderizar un objeto 3D oculto para generar una huella digital.
+
+### AudioContext
+
+La huella digital de audio aprovecha las diferencias en el procesamiento de audio para generar un hash único.
+
+### ClientRects
+
+Este método mide cómo se posicionan y se renderizan los elementos en la página.
+
+Gologin te permite modificar o enmascarar estas señales para generar una huella digital coherente pero única para cada perfil.
+
+## WebRTC
+
+WebRTC es una tecnología que se utiliza para la comunicación en tiempo real en los navegadores.
+
+Sin embargo, puede exponer direcciones IP locales o reales a los sitios web.
+
+Gologin te permite controlar el comportamiento de WebRTC:
+
+- **Based on IP** – WebRTC comunica la IP del proxy
+- **Off** – WebRTC está desactivado
+
+Esto ayuda a evitar filtraciones de IP y mantiene la huella digital coherente con la ubicación del proxy.
+
+## Mejores prácticas
+
+Para mantener identidades de navegador estables:
+
+- mantén los ajustes de huella digital sin cambios una vez creadas las cuentas
+- haz coincidir la zona horaria y el idioma con la ubicación del proxy
+- evita cambiar con frecuencia los parámetros relacionados con el hardware
+- usa un proxy dedicado para cada perfil
+
+Las huellas digitales estables ayudan a que los sitios web reconozcan el perfil como un dispositivo coherente.
+
+## Cómo verificar tu huella digital
+
+Después de iniciar un perfil, visita uno de estos sitios para comprobar tu huella digital:
+
+- [**iphey.com**](https://iphey.com) -- Muestra una puntuación general de confianza. Un resultado "Trusted" en verde significa que tu perfil parece un navegador real.
+- [**pixelscan.net**](https://pixelscan.net) -- Desglose detallado de cada parámetro de la huella digital.
+
+### Problemas comunes y su significado
+
+| Problema | Significado | Solución |
+| --- | --- | --- |
+| Discrepancia de SO | El sistema operativo del perfil no coincide con el de tu dispositivo real | Crea un perfil nuevo que coincida con tu sistema operativo real |
+| Discrepancia de WebGL | La información de la GPU no es coherente con el hardware declarado | Normalmente se configura correctamente de forma automática. Si aparece una advertencia, prueba otro modo de WebGL en los ajustes del perfil. |
+| Discrepancia de zona horaria | La zona horaria no coincide con la ubicación del proxy | Gologin ajusta automáticamente la zona horaria según la IP del proxy. Si es incorrecta, revisa la ubicación de tu proxy. |
+| El hash de Canvas ha cambiado | La huella digital de Canvas es distinta entre sesiones | Configura Canvas en "Off" o "Block" en lugar de "Add Noise" para mantener la coherencia entre dispositivos |
+
+Véase también
+
+- [Qué se puede cambiar de forma segura](https://gologin.com/docs/whats-safe-to-change)
+- [Cómo funcionan las huellas digitales del navegador](https://gologin.com/docs/how-browser-fingerprints-work)
+- [Configuración del proxy y de la huella digital por plataforma](https://gologin.com/docs/proxy-and-fingerprint-setup-per-platform)
+- [Errores comunes que debes evitar](https://gologin.com/docs/common-mistakes-to-avoid)

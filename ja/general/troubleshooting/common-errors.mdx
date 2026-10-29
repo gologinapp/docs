@@ -1,0 +1,425 @@
+---
+title: "よくあるエラー"
+description: "Gologin のよくあるエラーメッセージについて、原因と対処方法をまとめたリファレンスガイドです。"
+---
+
+このページでエラーを探すには、**Ctrl+F**（Windows）または **Cmd+F**（macOS）を使用してください。ほとんどの見出しにはエラーメッセージの文言がそのまま使われています。
+
+## はじめに
+
+- **エラーの全文を確認する。** プロフィール一覧で、プロフィールの **エラー** ステータスにカーソルを合わせると、メッセージの全文が表示されます。
+- **アプリを完全に終了する。** Gologin のウィンドウを閉じても非表示になるだけで、アプリはバックグラウンドで動作し続けます。終了するには、システムトレイ（Windows では右下、macOS ではメニューバー）の Gologin アイコンをクリックし、**終了** を選択してください。
+- **Gologin とブラウザを更新する。** [gologin.com/download](https://gologin.com/download) から最新バージョンをダウンロードし、現在のバージョンに上書きインストールします。プロフィールはそのまま保持されます。プロフィールのブラウザを更新するには、プロフィール横の三点アイコンをクリックし、**ブラウザの更新** を選択してください。
+- **サポートに問い合わせる場合。** プロフィール ID（プロフィール横の三点アイコン → **IDをコピー**）とエラーのスクリーンショットを添えてください。
+
+## プロフィール起動エラー
+
+### "The profile is being run by another user"
+
+**症状:** 他に誰も使っていないように見えても、プロフィールが起動せず、このメッセージが表示されます。
+
+**原因:** Gologin では、同じプロフィールを複数のデバイスで同時に実行することはできません。これは、同期の競合や、Cookie・セッションの問題を防ぐためです。このメッセージは次のような場合に表示されます。
+
+- プロフィールをシェアした相手が、現在そのプロフィールを開いている
+- Gologin アプリが更新をインストール中である（アプリ上部に進行状況バーが表示されます）
+- プロフィールの前回のセッションが正しく終了しなかった
+
+**対処方法:**
+
+1. プロフィールをシェアした相手がそのプロフィールを開いていないことを確認し、アプリの更新が完了するまで待ちます。
+2. アプリ左上の Gologin ロゴをクリックし、もう一度プロフィールを実行します。
+3. システムトレイから Gologin を完全に終了し、再起動してプロフィールを実行します。
+4. エラーが解消しない場合は、プロフィールをクローンし（プロフィール横の三点アイコン → **クローン**）、コピーを実行してください。
+
+<a id="profile-is-stuck-on-downloading-or-archiving" />
+
+### プロフィールが「ダウンロード中」または「アーカイブ中」のまま止まる
+
+**症状:** プロフィールの起動時にステータスが **ダウンロード中** のまま、または停止時に **アーカイブ中** のまま変わりません。
+
+**原因:** Gologin がプロフィールデータの読み込みまたは保存を完了できていません。主な原因は、Gologin サーバーへの接続がブロックされていること、ウイルス対策ソフト、ブラウザファイルの破損です。
+
+**対処方法:**
+
+1. 接続を確認します。下記の[接続エラー](#%E6%8E%A5%E7%B6%9A%E3%82%A8%E3%83%A9%E3%83%BC)を参照してください。
+2. サードパーティ製のウイルス対策ソフトを無効にするか、Gologin を除外設定に追加します。
+3. システムトレイから Gologin を完全に終了します。
+4. Gologin がブラウザを再ダウンロードするように、ブラウザフォルダを削除します。
+   - **Windows:** `C:\Users\<YourUser>\.gologin\browser`
+   - **macOS:** `~/.gologin/browser`（ターミナルでは `rm -r ~/.gologin/browser`）
+5. Gologin を起動し（Windows では右クリックして **管理者として実行** を選択）、ブラウザのダウンロードが完了するのを待ってからプロフィールを実行します。
+6. それでも解決しない場合は、[gologin.com/download](https://gologin.com/download) から Gologin を再インストールしてください。アンインストールする前に、実行中のプロフィールがないことを確認してください。プロフィールはアカウントに残ります。
+
+### "Seems like you don't have installed browser"
+
+**症状:** メッセージの全文は「Seems like you don't have installed browser. We will try to install it. Please run the profile again after the installation is finished.」です。
+
+**原因:** Gologin のプロフィールが動作するブラウザである Orbita のダウンロードがまだ完了していないか、そのファイルがコンピューターから削除されています。
+
+**対処方法:**
+
+1. ブラウザのダウンロードが完了するまで待ってから、もう一度プロフィールを実行します。
+2. メッセージが繰り返し表示される場合は、ウイルス対策ソフトが Orbita のファイルを削除していないか（[ウイルス対策・セキュリティソフト](#%E3%82%A6%E3%82%A4%E3%83%AB%E3%82%B9%E5%AF%BE%E7%AD%96%E3%83%BB%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3%E3%82%BD%E3%83%95%E3%83%88)を参照）、また、ディスクの空き容量があるかを確認してください。
+
+### "Seems like a GPU process has crashed"
+
+**症状:** メッセージの全文は「Seems like a GPU process has crashed. Please try to restart the profile or restart your system」です。
+
+**対処方法:**
+
+1. もう一度プロフィールを実行します。
+2. コンピューターを再起動します。
+3. 繰り返し発生する場合は、[「ダウンロード中」または「アーカイブ中」のまま止まるプロフィール](#%E3%83%97%E3%83%AD%E3%83%95%E3%82%A3%E3%83%BC%E3%83%AB%E3%81%8C%E3%80%8C%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%E4%B8%AD%E3%80%8D%E3%81%BE%E3%81%9F%E3%81%AF%E3%80%8C%E3%82%A2%E3%83%BC%E3%82%AB%E3%82%A4%E3%83%96%E4%B8%AD%E3%80%8D%E3%81%AE%E3%81%BE%E3%81%BE%E6%AD%A2%E3%81%BE%E3%82%8B)の手順 2〜5 を実行してください。
+
+### "Your PC does not have enough memory or other system resource to run the browser"
+
+**原因:** コンピューターのメモリまたはディスク容量が不足しています。`ENOSPC` や `SQLITE_FULL` を含むエラーも、ディスクがいっぱいであることを示しています。
+
+**対処方法:**
+
+1. 不要なプロフィールやプログラムを閉じます。
+2. ディスクの空き容量を確保します。Gologin は実行中のプロフィールのデータをディスクに保存します。
+3. Gologin を再起動し、もう一度プロフィールを実行します。
+
+### "Container not found"
+
+**症状:** 特にクラウドモードで、プロフィールを起動しようとすると「Container not found」と表示されます。
+
+**原因:** プロフィールデータが破損しているか、Gologin サーバー上でクラウドコンテナの起動に失敗しました。
+
+**対処方法:**
+
+1. Gologin アプリを再起動し、もう一度プロフィールを起動します。
+2. [app.gologin.com](https://app.gologin.com) の Web 版からプロフィールを起動してみます。
+3. 問題が解消しない場合は、プロフィール ID を添えてサポートにお問い合わせください。
+
+### "Couldn't prepare your profile, contact support"
+
+**症状:** Gologin がプロフィールの起動準備に失敗すると、このエラーが表示されます。
+
+**原因:** 通常は、プロフィールの同期の問題、プロフィールデータの破損、または Orbita ブラウザのバージョンと想定されるバージョンの不一致が原因です。
+
+**対処方法:**
+
+1. Gologin デスクトップアプリを最新バージョンに更新します。
+2. インターネット接続を確認します。接続が不安定だと、プロフィールの同期が中断されることがあります。
+3. 別のネットワークに切り替えてみます（例: Wi-Fi からモバイルホットスポットへ）。
+4. エラーが続く場合は、プロフィール ID とアプリのバージョンを添えてサポートにお問い合わせください。
+
+### "Profile has been deleted"
+
+**症状:** プロフィールを削除していないのに、「Profile has been deleted」または「Profile has been already deleted」と表示されます。
+
+**原因:** このメッセージは誤解を招く表現です。プロフィールが実際に削除されたという意味では**ありません**。通常は、トライアルプランまたは無料プランでプロフィールの起動回数の上限に達したときに表示されます。
+
+<Info>
+  Gologin では、サブスクリプションの期限が切れた後も、最大 180 日間プロフィールをサーバーに保存します。このメッセージが表示されても、プロフィールデータは失われません。
+</Info>
+
+**対処方法:**
+
+1. 有料プランにアップグレードするか、サブスクリプションを更新してアクセスを復元します。
+2. エラーだと思われる場合は、アカウント情報を添えてサポートにお問い合わせください。
+
+### ECONNREFUSED 127.0.0.1
+
+**症状:** プロフィールをローカルで起動しようとすると、`ECONNREFUSED 127.0.0.1` を含むエラーが表示されます。
+
+**原因:** お使いのコンピューターで Orbita ブラウザを起動できませんでした。主な原因は次のとおりです。
+
+- Orbita のダウンロードファイルの破損
+- プロキシの非互換により、ブラウザを初期化できない
+- Gologin アプリのバージョンが古い
+
+**対処方法:**
+
+1. Gologin デスクトップアプリを最新バージョンに更新します。
+2. Orbita を再ダウンロードします。Gologin を完全に終了し、[「ダウンロード中」または「アーカイブ中」のまま止まるプロフィール](#%E3%83%97%E3%83%AD%E3%83%95%E3%82%A3%E3%83%BC%E3%83%AB%E3%81%8C%E3%80%8C%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%E4%B8%AD%E3%80%8D%E3%81%BE%E3%81%9F%E3%81%AF%E3%80%8C%E3%82%A2%E3%83%BC%E3%82%AB%E3%82%A4%E3%83%96%E4%B8%AD%E3%80%8D%E3%81%AE%E3%81%BE%E3%81%BE%E6%AD%A2%E3%81%BE%E3%82%8B)の説明に従ってブラウザフォルダを削除します。
+3. プロキシの設定を確認します。プロキシなしでプロフィールを起動して、問題の原因を切り分けてみてください。
+
+### EBUSY: resource busy or locked (Windows)
+
+**症状:** Windows で `EBUSY: resource busy or locked` エラーが表示されます。多くの場合、Cookies ファイルに関するメッセージが含まれます。
+
+**原因:** 以前の Orbita プロセスが正常に終了せず、プロフィールのファイルをロックしたままになっています。
+
+**対処方法:**
+
+1. **タスクマネージャー**（Ctrl+Shift+Esc）を開き、`orbita` または `browser` という名前のプロセスをすべて終了します。
+2. プロフィールのローカルコピーを削除します。`C:\Users\<YourUser>\AppData\Roaming\GoLogin\profiles\` を開き、対象のプロフィール ID に一致するフォルダを削除します。
+3. Gologin を再起動して、もう一度お試しください。
+
+<Warning>
+  このフォルダを削除しても、プロフィールのローカルコピーが削除されるだけです。Gologin サーバーに保存されているプロフィールデータには影響しません。
+</Warning>
+
+<a id="connection-errors" />
+
+## 接続エラー
+
+### "Timezone request error"、"Profile loading error" などの接続エラー
+
+**症状:** 次のいずれかのメッセージが表示される、またはアプリが読み込まれず白または緑の画面が表示されます。
+
+- "Timezone request error"
+- "Profile loading error. Check internet connection."
+- "Error in profile request. Check your internet connection and try again."
+- "Error uploading profile. Please check your internet connection and try again."
+- "Retrying your request due to internet connectivity issues. Thank you for your patience."
+
+**原因:** ネットワークまたはインターネットプロバイダーが、Gologin アプリと Gologin サーバー間の接続をブロックまたは妨害しています。同じ接続でも、他の Web サイトは通常どおり表示されることがあります。
+
+**対処方法:**
+
+1. 別のネットワークに切り替えます。たとえば、Wi-Fi をオフにして、スマートフォンのモバイル回線を共有します。
+2. コンピューターで VPN をオンにします。最初の VPN で解決しない場合は、別のプロバイダーを試してください。複数試す必要がある場合もあります。
+3. ネットワークまたは VPN を切り替えた後、システムトレイから Gologin を完全に終了し、再起動します。
+
+<Tip>
+  「SSL certificate error. Please check and adjust your system time or check your internet connection」と表示された場合は、まずコンピューターの日付、時刻、タイムゾーンが自動設定になっていることを確認してください。
+</Tip>
+
+### "Something went wrong. Please try again later"
+
+**症状:** 「Something went wrong. Please try again later」というメッセージ、または「Oops! Something went wrong…」というページが表示されます。
+
+**原因:** Gologin サーバーへのリクエストが失敗しました。さまざまな原因が考えられる一般的なエラーです。
+
+**対処方法:**
+
+1. **Ctrl+Shift+R**（Windows）または **Cmd+Shift+R**（macOS）を押して再読み込みします。デスクトップアプリでも Web 版でも使えます。
+2. エラーが繰り返される場合は、システムトレイから Gologin を完全に終了し、再起動します。
+3. それでも発生する場合は、[接続エラー](#%E6%8E%A5%E7%B6%9A%E3%82%A8%E3%83%A9%E3%83%BC)の手順を実行します。
+4. 解決しない場合は、[gologin.com/download](https://gologin.com/download) から Gologin を再インストールするか、スクリーンショットを添えてサポートにお問い合わせください。
+
+### "Internal server error"
+
+**原因:** Gologin 側の一時的な問題です。
+
+**対処方法:**
+
+1. 数分待ってから、もう一度お試しください。
+2. Gologin を最新バージョンに更新します。
+3. エラーが解消しない場合は、サポートにお問い合わせください。
+
+### "The proxy is functional but not working on your device or network"
+
+**症状:** プロキシがサーバー側のチェックには合格したものの、お使いのコンピューターからは接続できないと Gologin が通知します。
+
+**原因:** ローカルネットワークまたは ISP がプロキシへの接続をブロックしています。プロキシ自体は正常に動作しており（Gologin がサーバー上で確認済み）、トラフィックがお使いのデバイスから外に出られない状態です。
+
+**対処方法:**
+
+1. デバイスで VPN を有効にしてから、もう一度プロフィールを起動します。
+2. 別のネットワークに切り替えます（Wi-Fi からモバイルホットスポット、またはその逆）。
+3. ファイアウォールやウイルス対策ソフトの設定を確認し、Gologin やプロキシのポートがブロックされていないことを確認します。
+
+### SyntaxError: Unexpected token 'e'
+
+**症状:** JavaScript 形式のエラー `SyntaxError: Unexpected token 'e'` が、通常は Gologin アプリまたは API のレスポンスに表示されます。
+
+**原因:** Gologin API から想定される JSON レスポンスの代わりに、Cloudflare が 1015 レート制限のエラーページ（HTML）を返した場合に発生します。JSON パーサーが HTML を受け取り、最初の予期しない文字で失敗します。
+
+**対処方法:**
+
+1. API リクエストやプロフィール起動の頻度を下げます。
+2. 数分待ってから再試行します。
+3. Gologin API をプログラムから利用している場合は、リクエスト処理に指数バックオフを実装してください。
+
+## macOS のエラー
+
+### "Your macOS version is not supported by Chromium Engine"
+
+**原因:** Orbita 151 以降は、macOS 12 Monterey 以前の macOS バージョンをサポートしていません。
+
+**対処方法:**
+
+1. macOS を新しいバージョンに更新する、**また**
+2. Orbita 150 以前で新しいプロフィールを作成します。**プロフィール追加** をクリックし、**高度** タブを開いて、**旧バージョン** からブラウザのバージョンを選択します。
+
+<Note>
+  既存のプロフィールのブラウザバージョンをダウングレードすることはできません。新しいプロフィールを作成してください。
+</Note>
+
+### "Current browser version is not supported for ARM processor architecture"
+
+**症状:** プロフィールにこのエラーが表示される、または Mac で Gologin が非常に遅くなったりフリーズしたりします。
+
+**原因:** Apple Silicon チップ（M1 以降）搭載の Mac に Intel 版の Gologin がインストールされているか、プロフィールが古いブラウザバージョンを使用しています。
+
+**対処方法:**
+
+1. チップを確認します。Apple メニュー → **この Mac について** を開き、**チップ** の欄を確認します。
+2. Apple M シリーズのチップの場合は、Gologin を **アプリケーション** からゴミ箱に移動し、[gologin.com/download](https://gologin.com/download) から Apple Silicon 版をインストールします。
+3. プロフィールのブラウザを更新します。プロフィール横の三点アイコン → **ブラウザの更新** を選択してください。
+
+### "Cannot update while running on a read-only volume"
+
+**症状:** Gologin が更新をインストールできず、「Cannot update while running on a read-only volume. The application is on a read-only volume. Please move the application and try again.」と表示されます。
+
+**原因:** Gologin が **アプリケーション** フォルダではなく、ダウンロードしたディスクイメージまたは **ダウンロード** フォルダから実行されています。
+
+**対処方法:**
+
+1. Gologin を終了します。
+2. Gologin を **アプリケーション** フォルダにドラッグします。
+3. **アプリケーション** から Gologin を開き、更新をインストールします。
+
+<Tip>
+  どの環境でも更新が止まってしまう場合は、[接続](#%E6%8E%A5%E7%B6%9A%E3%82%A8%E3%83%A9%E3%83%BC)を確認するか、[gologin.com/download](https://gologin.com/download) から最新バージョンをダウンロードして、現在のバージョンに上書きインストールしてください。プロフィールは保持されます。
+</Tip>
+
+<a id="antivirus-and-security-software" />
+
+## ウイルス対策・セキュリティソフト
+
+### "Seems like your antivirus is blocking access to the Orbita browser"
+
+**症状:** 次のいずれかのメッセージが表示されます。
+
+- "Seems like your antivirus is blocking access to the Orbita browser. Please adjust your antivirus and restart the profile"
+- "Seems like something is blocking application access to the system. Please check your antivirus or other security software."
+- "Seems like your browser files are damaged or missing (possibly deleted by antivirus software)…"
+- ブラウザの更新時に "Permission denied"
+
+**原因:** ウイルス対策ソフトやその他のセキュリティソフトが Gologin や Orbita をブロックしているか、それらのファイルを隔離しています。
+
+**対処方法:**
+
+1. Windows では、**Windows セキュリティ** → **ウイルスと脅威の防止** → **保護の履歴** を開き、ブロックまたは隔離された Gologin や Orbita のファイルがないか確認します。見つかった場合は復元してください。
+2. ウイルス対策ソフトの除外設定に Gologin を追加するか、ウイルス対策ソフトをオフにします。
+3. Gologin を再起動し、もう一度プロフィールを実行します。不足しているブラウザファイルは Gologin が自動的に復元します。
+
+## プランと上限に関するエラー
+
+### "The owner of this profile has run out of subscription time"
+
+**症状:** シェアされたプロフィールを実行できません。メッセージの全文は「The owner of this profile has run out of subscription time. To resume using this profile, the owner needs to renew their subscription.」です。
+
+**原因:** プロフィールの所有者のサブスクリプションが終了しています。
+
+**対処方法:** プロフィールの所有者にサブスクリプションを更新してもらってください。更新後、プロフィールを再び実行できます。
+
+### "The workspace subscription has ended. Please upgrade your plan to restore access"
+
+**原因:** トライアルまたは有料プランが終了しています。
+
+**対処方法:** **設定とメンバー** → **請求プラン** → **プラン変更** でプランを選択します。Forever Free プランに切り替えるには、そのページの下部にある **Forever Free** をクリックします。ワークスペースのプロフィール数が 3 件以下である必要があります。
+
+### "You've exceeded your workspace limits"
+
+**原因:** Forever Free プランでは、同時に最大 3 件のプロフィールを保持でき、1 か月に最大 25 件のプロフィールを作成できます。
+
+**対処方法:**
+
+1. プロフィールが 3 件ある場合は、不要なものを 1 件削除します。プロフィールを削除しても、作成回数は戻りません。
+2. 25 件の作成をすべて使い切った場合は、月間上限がリセットされるまで待つか、[有料プランにアップグレード](/ja/general/account-and-billing/how-to-subscribe-to-gologin)してください。
+
+詳細は[無料プランの制限](/ja/general/account-and-billing/pricing#free-plan-limitations)をご覧ください。
+
+### "You've reached max shares number. To share more update your plan"
+
+**原因:** ご利用のプランに含まれるプロフィールのシェア数をすべて使い切っています。
+
+**対処方法:** プロフィールの **シェア** メニューで不要になったシェアを削除するか、プランをアップグレードしてください。
+
+### "You've reached max parallel cloud launches limit"
+
+**症状:** クラウドでプロフィールを起動しようとすると、このエラー、または「You've hit your parallel launch limit」が表示されます。
+
+**原因:** ご利用のプランで許可されている同時クラウドセッション数の上限に達しています。
+
+同時クラウドセッション数の上限は次のとおりです。
+
+| プラン       | 同時クラウドセッション数 |
+|--------------|---------------------------|
+| Professional | 1                         |
+| Business     | 2                         |
+| Enterprise   | 3                         |
+| Custom       | 4                         |
+
+**対処方法:**
+
+1. 新しいプロフィールを起動する前に、実行中のクラウドプロフィールを 1 つ以上閉じます。
+2. 並列クラウド起動数を追加購入します。左上のアカウント名をクリック → **設定とメンバー** → **Cloud Browser の利用状況** → **購入上限を増やす** を選択します。
+3. デスクトップアプリでプロフィールを実行します。ローカル起動はプランによる制限を受けません。
+
+<Note>
+  クラウドでプロフィールを実行するには、有料プランが必要です。
+</Note>
+
+### "You've exceeded your traffic limit" / "exceeded request limit"
+
+**症状:** プロフィールの起動時や操作の実行時に、関連する 2 種類のメッセージのいずれかが表示されます。
+
+**原因:** このエラーには 2 つの原因が考えられます。
+
+- **トラフィック上限:** Gologin のプロキシトラフィック（GB 単位）を使い切っています。サブスクリプションとプロキシトラフィックは別々に管理されており、プランが有効でもトラフィックが残っているとは限りません。
+- **リクエスト/IP のレート制限:** IP ベースのレート制限に達しています。通常は、同じ IP アドレスから短期間に多数のアカウントを作成した場合に発生します。
+
+**対処方法:**
+
+- **トラフィック上限の場合:** トラフィックを追加購入します。左側の **代理人** タブを開き、プロキシの種類を選択して **+** をクリックし、GB 数を選択して支払います。
+- **トラフィックを購入した直後の場合:** プロフィールが、購入したトラフィックと同じ種類のプロキシを使用していることを確認してください。たとえば、Datacenter のトラフィックを購入した場合は、プロフィール設定でプロキシを Residential から Datacenter に切り替えます。
+- **IP のレート制限の場合:** IP のブロックが解除されるまで約 1 時間待ってから、もう一度お試しください。
+
+## アカウントのエラー
+
+### "Registration error. Please try again."
+
+**原因:** 短時間に登録の試行が多すぎたか、このメールアドレスのアカウントがすでに存在しています。
+
+**対処方法:**
+
+1. しばらく待ってから、もう一度お試しください。
+2. このメールアドレスで以前に登録したことがある場合は、代わりに **ログイン** をクリックしてください。パスワードを覚えていない場合は、**パスワードをお忘れですか？** を使用します。
+
+<Note>
+  「Invalid input data. Check field - "email"」は、メールアドレスが受け付けられなかったことを意味します。@ の前が 3 文字以上のアドレスを使用してください。name+1@gmail.com のように「+1」を含むアドレスは使用できません。
+</Note>
+
+### Google でサインインできない
+
+**対処方法:**
+
+1. サインイン画面で **パスワードをお忘れですか？** をクリックし、Gologin アカウントのメールアドレスを入力します。
+2. メールに届いたコードを入力し、パスワードを設定します。
+3. メールアドレスとパスワードでサインインします。
+
+## Cloud Android のエラー
+
+### "No available devices"
+
+**原因:** 現在、すべてのクラウドフォンが使用中です。これはお使いのプロフィールとは関係ありません。
+
+**対処方法:** しばらくしてから、もう一度お試しください。
+
+## ブラウザと拡張機能のエラー
+
+### "To install add-ons, you'll need the new Microsoft Edge"
+
+**症状:** Gologin のプロフィール内でブラウザ拡張機能をインストールしようとすると、Microsoft Edge に関するメッセージが表示されます。
+
+**原因:** Microsoft Edge アドオンストアから、または互換性のないインストール経路で拡張機能をインストールしようとすると、Orbita ブラウザ（Chromium ベース）でこのメッセージが表示されることがあります。
+
+**対処方法:**
+
+1. Edge アドオンストアではなく、[Chrome ウェブストア](https://chromewebstore.google.com/)から拡張機能をインストールします。
+2. または、プロフィールを起動する前に、Gologin の拡張機能管理画面から拡張機能をプロフィールに追加します。
+
+### geo.floppydata.com:10080 のプロキシ認証ポップアップ
+
+**症状:** プロフィールの起動時に、`geo.floppydata.com:10080` の認証情報を求めるプロキシ認証ダイアログが表示されます。
+
+**原因:** Gologin 内蔵のプロキシが、予期せず認証を要求しています。プロキシの設定がブラウザに正しく渡されていない場合に発生することがあり、多くはネットワークや VPN の競合が原因です。
+
+**対処方法:**
+
+1. Gologin を完全に終了します（システムトレイで終了していることを確認してください）。
+2. デバイスで VPN を有効にします。
+3. Gologin を再起動します。
+4. もう一度プロフィールを起動します。ローテーション式のレジデンシャルプロキシでは、プロフィールを再起動すると新しい IP も取得できます。
+
+<Info>
+  ポップアップが引き続き表示される場合は、[app.gologin.com](https://app.gologin.com) の Web 版でプロフィールを実行するか、別のプロキシを試すか、Gologin サポートにお問い合わせください。
+</Info>

@@ -1,0 +1,281 @@
+---
+title: "Web Unlocker のユースケース"
+---
+
+Web Unlocker はスクレイピング API です。URL を送信すると、完全にレンダリングされた HTML が返されます。このページでは、その代表的な活用方法を紹介します。
+
+---
+
+## 自分でページをスクレイピングする
+
+最もシンプルなユースケースです。通常の HTTP リクエストをブロックするウェブページのコンテンツを取得したい場合に使います。
+
+### Python
+
+```python
+import requests
+
+response = requests.get(
+    "https://parsing.webunlocker.gologin.com/v1/scrape",
+    params={"url": "https://example.com/product/123"},
+    headers={"apikey": "YOUR_API_KEY"}
+)
+
+html = response.text
+print(html)
+```
+
+### JavaScript
+
+```javascript
+const html = await fetch(
+  "https://parsing.webunlocker.gologin.com/v1/scrape?url=" +
+    encodeURIComponent("https://example.com/product/123"),
+  { headers: { apikey: "YOUR_API_KEY" } }
+).then((r) => r.text());
+
+console.log(html);
+```
+
+ブラウザの起動もプロキシの設定も不要で、Cloudflare と格闘する必要もありません。1 回の呼び出しでページを取得できます。
+
+**こんな用途に最適:**
+
+- 競合サイトの価格チェック
+- 求人情報、レビュー、商品データの取得
+- ページの変更の監視
+- 単発のデータ収集スクリプト
+
+---
+
+## コンテンツを AI に渡す
+
+Web Unlocker は生の HTML を返します。これを LLM に渡せば、パース処理を書かなくても、構造化データの抽出、コンテンツの要約、ページに関する質問への回答ができます。
+
+### Python \+ OpenAI
+
+```python
+import requests
+from openai import OpenAI
+
+html = requests.get(
+    "https://parsing.webunlocker.gologin.com/v1/scrape",
+    params={"url": "https://news.ycombinator.com"},
+    headers={"apikey": "YOUR_API_KEY"}
+).text
+
+client = OpenAI()
+response = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[
+        {
+            "role": "user",
+            "content": f"Extract the top 5 story titles and their URLs from this HTML:\n\n{html[:8000]}"
+        }
+    ]
+)
+
+print(response.choices[0].message.content)
+```
+
+### JavaScript \+ Anthropic
+
+```javascript
+import Anthropic from "@anthropic-ai/sdk";
+
+const html = await fetch(
+  "https://parsing.webunlocker.gologin.com/v1/scrape?url=" +
+    encodeURIComponent("https://news.ycombinator.com"),
+  { headers: { apikey: "YOUR_API_KEY" } }
+).then((r) => r.text());
+
+const client = new Anthropic();
+const message = await client.messages.create({
+  model: "claude-opus-4-5",
+  max_tokens: 1024,
+  messages: [
+    {
+      role: "user",
+      content: `Extract the top 5 story titles and their URLs from this HTML:\n\n${html.slice(0, 8000)}`,
+    },
+  ],
+});
+
+console.log(message.content[0].text);
+```
+
+**こんな用途に最適:**
+
+- パーサーを書かずに、価格、名前、日付などの構造化データを抽出する
+- 記事や商品ページを要約する
+- 複数のページを比較して結論を導き出す
+- AI を活用したリサーチツールや監視ツールを構築する
+
+---
+
+## AI エージェント内で使う
+
+Web Unlocker を利用した `scrape` ツールを AI エージェントに与えます。すると、ブラウジング用のロジックを自分で書かなくても、エージェントが自律的にウェブを閲覧し、ページの取得、コンテンツの読み取り、アクションの実行を行えるようになります。
+
+```python
+import requests
+import anthropic
+
+def scrape(url: str) -> str:
+    """Fetch a URL and return its rendered HTML."""
+    return requests.get(
+        "https://parsing.webunlocker.gologin.com/v1/scrape",
+        params={"url": url},
+        headers={"apikey": "YOUR_API_KEY"}
+    ).text
+
+tools = [
+    {
+        "name": "scrape",
+        "description": "Fetch the rendered HTML of any URL, including JavaScript-heavy and protected sites.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "url": {"type": "string", "description": "The URL to scrape"}
+            },
+            "required": ["url"]
+        }
+    }
+]
+
+client = anthropic.Anthropic()
+messages = [
+    {"role": "user", "content": "What is the current price of the iPhone 16 Pro on apple.com?"}
+]
+
+while True:
+    response = client.messages.create(
+        model="claude-opus-4-5",
+        max_tokens=1024,
+        tools=tools,
+        messages=messages
+    )
+
+    if response.stop_reason == "end_turn":
+        print(response.content[0].text)
+        break
+
+    tool_results = []
+    for block in response.content:
+        if block.type == "tool_use" and block.name == "scrape":
+            html = scrape(block.input["url"])
+            tool_results.append({
+                "type": "tool_result",
+                "tool_use_id": block.id,
+                "content": html[:10000]
+            })
+
+    messages.append({"role": "assistant", "content": response.content})
+    messages.append({"role": "user", "content": tool_results})
+```
+
+スクレイピングするタイミングと取得する URL はエージェントが判断し、実際の取得は Web Unlocker が担当します。
+
+**こんな用途に最適:**
+
+- ウェブを自律的に閲覧するリサーチエージェント
+- 価格比較やお得な商品を探すボット
+- 競合インテリジェンスのパイプライン
+- リアルタイムのウェブデータを必要とするあらゆるエージェント
+
+---
+
+## 多数のページを一度にスクレイピングする
+
+リクエストを並列で実行して、複数の URL からデータを同時に収集します。
+
+```python
+import requests
+from concurrent.futures import ThreadPoolExecutor
+
+API_URL = "https://parsing.webunlocker.gologin.com/v1/scrape"
+API_KEY = "YOUR_API_KEY"
+
+urls = [
+    "https://example.com/page/1",
+    "https://example.com/page/2",
+    "https://example.com/page/3",
+]
+
+def scrape(url):
+    response = requests.get(
+        API_URL,
+        params={"url": url},
+        headers={"apikey": API_KEY}
+    )
+    return url, response.text
+
+with ThreadPoolExecutor(max_workers=5) as executor:
+    results = list(executor.map(scrape, urls))
+
+for url, html in results:
+    print(f"{url}: {len(html)} chars")
+```
+
+**こんな用途に最適:**
+
+- 商品カタログや一覧ページ全体のスクレイピング
+- 学習用データセットのための大量データ収集
+- 多数のページの同時監視
+
+---
+
+## まとめ
+
+| ユースケース | 操作 | 取得できるもの |
+| --- | --- | --- |
+| 単一ページのスクレイピング | URL パラメータを指定して GET | レンダリング済みの HTML |
+| LLM への入力 | スクレイピング → モデルに渡す | 抽出されたデータまたは要約 |
+| AI エージェントのツール | エージェントが必要に応じて呼び出す | リアルタイムのウェブコンテンツ |
+| 大量スクレイピング | 並列リクエスト | 各 URL の HTML |
+
+---
+
+## CLI から使う
+
+コードを書かなくても、Gologin Web Access CLI を使えば、よく使うスクレイピングのワークフローを実行できます。
+
+```bash
+npm install -g gologin-web-access
+export GOLOGIN_WEB_UNLOCKER_API_KEY="wu_..."
+
+# batch scrape multiple pages
+gologin-web-access batch-scrape \
+  https://example.com/page/1 \
+  https://example.com/page/2 \
+  https://example.com/page/3 \
+  --format text --only-main-content --summary
+
+# crawl a site
+gologin-web-access crawl https://docs.example.com --format markdown --limit 50 --max-depth 2
+
+# monitor page changes
+gologin-web-access change-track https://example.com/pricing --format markdown
+
+# extract structured data with a schema
+gologin-web-access extract https://example.com/product/123 --schema ./product-schema.json
+
+# search the web
+gologin-web-access search "best antidetect browser 2026" --limit 10
+```
+
+コマンドの詳細は [Web Access CLI](/ja/cli-tools/web-access) をご覧ください。
+
+---
+
+## まとめ
+
+| ユースケース | 操作 | 取得できるもの |
+| --- | --- | --- |
+| 単一ページのスクレイピング | URL パラメータを指定して GET | レンダリング済みの HTML |
+| LLM への入力 | スクレイピング → モデルに渡す | 抽出されたデータまたは要約 |
+| AI エージェントのツール | エージェントが必要に応じて呼び出す | リアルタイムのウェブコンテンツ |
+| 大量スクレイピング | 並列リクエスト | 各 URL の HTML |
+| CLI ワークフロー | `gologin-web-access` コマンド | テキスト、Markdown、JSON、一括処理の結果 |
+
+最初のリクエストを送信するには、[クイックスタート](/ja/web-unlocker-quick-start)をご覧ください。

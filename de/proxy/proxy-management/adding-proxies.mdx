@@ -1,0 +1,63 @@
+---
+title: "Proxys hinzufügen und verwalten"
+---
+
+Es gibt mehrere Möglichkeiten, Ihre Proxys im Gologin-Browser zu verbinden. In diesem Artikel stellen wir Ihnen alle vor – von der einfachsten bis zur anspruchsvolleren Variante.
+
+Drittanbieter von Proxys stellen in der Regel **IP, Port, Benutzernamen und Passwort** als Endpunkt für Ihre Verbindung bereit. Sie können diese Zugangsdaten an fast jeder Stelle in den verschiedenen Proxy-Einstellungen einfügen, und ein neuer Proxy wird Ihrer Proxy-Liste hinzugefügt.
+
+Wir unterstützen die folgenden Formate zum Einfügen von Proxys:
+
+```text
+192.168.0.1:8000:login:password
+​﻿http://192.168.0.1:8000:login:password:name
+﻿socks5://login:password@192.168.0.1:8000:name
+﻿socks5://login:password@192.168.0.1:8000[https://change-my-ip.com]:name
+​﻿http://192.168.0.1:8000:login
+​﻿http://192.168.0.1:8000:myproxy:pass[https://change-my-ip.com] 
+​﻿http://192.168.0.1:8000:myproxy:pass[https://change-my-ip.com]:name4
+```
+
+## Der einfachste Weg
+
+1. Suchen Sie auf der Seite **All profiles** die Spalte **Location** und klicken Sie bei dem Profil, dem Sie einen Proxy hinzufügen möchten, auf die Schaltfläche **\+**.
+2. Klicken Sie im geöffneten Fenster auf das **Computer-Symbol** und geben Sie **IP, Port, Benutzernamen** und **Passwort** ein. 
+   - Das HTTP- oder SOCKS-Protokoll wird automatisch je nach Verfügbarkeit ausgewählt. Sie können es später ändern.
+3. Klicken Sie auf **Connect** – der Proxy ist nun Ihrem Profil hinzugefügt!
+4. Gologin überprüft Ihren Proxy sofort. Sie sehen eine grüne Anzeige, wenn der Proxy ordnungsgemäß funktioniert, oder eine rote, wenn er nicht funktioniert.
+
+<Frame>
+  ![Einfaches Hinzufügen eines Proxys](/images/add_proxy_simple.gif)
+</Frame>
+
+Sie können Proxys auf derselben Seite einzeln oder gesammelt einfügen. Kopieren Sie mehrere Proxys und fügen Sie sie alle auf einmal in die Spalte Location ein. Verwenden Sie dafür die **Tastenkombinationen** Ihres Systems oder die Schaltfläche **Paste proxies**. Die neuen Proxys können Sie später zwischen den Profilen neu verteilen.
+
+<Frame>
+  ![Proxy hinzufügen](/images/adding_proxy-1.gif)
+</Frame>
+
+## Weitere Möglichkeiten, einen oder mehrere Proxys hinzuzufügen
+
+### Auf der Seite „Proxies“
+
+Öffnen Sie im linken Menü die Seite **Proxies** \> **Import proxies** \> fügen Sie die Proxys ein und klicken Sie auf **Import proxies**.
+
+<Frame>
+  ![Seite zum Importieren von Proxys](/images/import_proxies_page.gif)
+</Frame>
+
+### Über die Mehrfachauswahl von Profilen
+
+**Wählen Sie mehrere Browser-Profile aus** \> klicken Sie in der Zeile für Sammelaktionen auf **Proxy** \> **geben Sie die Proxys** in einem neuen Fenster **ein** \> klicken Sie auf **Update proxy.**
+
+<Frame>
+  ![Proxys gesammelt aktualisieren](/images/bulk_proxy_update.gif)
+</Frame>
+
+### In den Profileinstellungen
+
+Klicken Sie auf die **3 Punkte beim Profil** \> **Settings** \> **Proxy** \> **Your proxy**
+
+<Frame>
+  ![Proxy-Einstellungen im Profil](/images/proxy_profile_settings.gif)
+</Frame>

@@ -1,0 +1,33 @@
+---
+title: "存储与缓存管理"
+description: "如何管理 Gologin 的本地存储、缓存文件和磁盘占用"
+---
+
+Gologin 会在本地为您运行的每个配置文件存储浏览器数据。时间一长，这些数据可能会占用大量磁盘空间。
+
+## Gologin 的数据存储位置
+
+- **Windows**：`C:\Users\<username>\AppData\Local\Temp\gologin_profile_*`
+- **Mac**：`/tmp/gologin_profile_*`
+- **Linux**：`/tmp/gologin_profile_*`
+
+Orbita 浏览器程序文件单独存放，每个版本可能占用 500 MB--2 GB。
+
+## 可以安全删除缓存文件吗？
+
+可以。在没有任何配置文件运行时，您可以放心删除临时配置文件文件夹。启动配置文件时，这些文件夹会自动重新创建。
+
+**删除之前：**
+1. 确保所有 Gologin 配置文件都已关闭
+2. 关闭 Gologin 桌面应用
+3. 在临时目录中删除名称匹配 `gologin_profile_*` 的文件夹
+
+<Warning>
+请勿在配置文件运行时删除文件。这可能会在 Windows 上导致 "EBUSY: resource busy" 错误，或损坏正在使用的会话。
+</Warning>
+
+## 如何减少磁盘占用
+
+- 用完后及时关闭配置文件（不要让它们整夜保持运行）
+- 在 Gologin 设置中卸载不再使用的 Orbita 浏览器版本
+- 定期清理临时配置文件文件夹

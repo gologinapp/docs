@@ -1,0 +1,88 @@
+---
+title: "Run with Sync"
+---
+
+Run with Sync uruchamia jednocześnie wiele profili przeglądarki i odtwarza Twoje działania we wszystkich z nich w czasie rzeczywistym. Wszystko, co zrobisz w głównym oknie — kliknięcie, wpisanie tekstu, przejście pod wskazany adres URL — dzieje się automatycznie w każdym pozostałym profilu w tym samym czasie.
+
+To przydatne przy powtarzalnej pracy na kontach: rozgrzewaniu kont, wykonywaniu tej samej czynności w wielu profilach czy wypełnianiu identycznych formularzy. Zamiast przełączać się między oknami i powtarzać te same kroki, robisz je tylko raz.
+
+<Warning>
+  Strony internetowe potrafią wykryć identyczne, jednoczesne zachowanie na różnych kontach. Używaj Run with Sync tylko do zadań, w których identyczne działania są akceptowalne — rozgrzewania kont, wstępnej konfiguracji, przechodzenia pod wskazany adres URL — a nie do publikowania, wysyłania wiadomości ani żadnej aktywności, w której identyczna treść wzbudziłaby podejrzenia.
+</Warning>
+
+## Jak z tego korzystać
+
+### Krok 1 — Wybierz profile
+
+Na liście profili zaznacz pola wyboru obok profili, które chcesz uruchomić razem.
+
+### Krok 2 — Kliknij Run with Sync
+
+U góry ekranu pojawi się panel akcji zbiorczych. Kliknij Run with Sync.
+
+Wszystkie wybrane profile otworzą się w osobnych oknach przeglądarki.
+
+### Krok 3 — Pracuj w oknie lidera
+
+Pierwszy profil na liście zaznaczonych profili zostaje liderem. Wszystkie Twoje działania w jego oknie — kliknięcia, wpisywanie tekstu, nawigacja — są w czasie rzeczywistym odtwarzane we wszystkich pozostałych otwartych profilach. Pozostałe profile są obserwatorami: odzwierciedlają działania lidera, ale nie mogą nim sterować.
+
+<Frame>
+  ![0331(1)](/images/0331\(1\).gif)
+</Frame>
+
+## Praktyczne zastosowania
+
+**Rozgrzewanie kont:** Otwórz 10–20 nowych kont i wspólnie przeglądaj te same strony. Każdy profil przegląda niezależnie (inny fingerprint, inny adres IP), a Ty musisz nawigować tylko raz.
+
+**Identyczna konfiguracja na wielu kontach:** Przejdź do stron ustawień, przełącz te same opcje, wypełnij te same pola informacji profilowych. Przydaje się to przy konfigurowaniu wielu świeżych kont z identyczną konfiguracją początkową.
+
+**Przechodzenie pod roboczy adres URL:** Gdy chcesz, aby wszystkie profile otworzyły konkretną stronę, zanim zaczniesz pracować w każdym z nich osobno, przejdź pod ten adres raz, a wszystkie profile znajdą się tam jednocześnie.
+
+**Testowanie zachowania fingerprintów w różnych profilach:** Otwórz strony do sprawdzania ([iphey.com](http://iphey.com), [pixelscan.net](http://pixelscan.net)) jednocześnie w wielu profilach, aby porównać wyniki obok siebie.
+
+## Czego unikać
+
+**Publikowania identycznych treści:** Jeśli wszystkie profile opublikują ten sam tekst, obraz lub link w tym samym czasie, platformy natychmiast powiążą te konta ze sobą. Używaj Run with Sync tylko do działań, w których identyczne zachowanie jest normalne — przeglądania, klikania, nawigacji — a nie do tworzenia treści.
+
+**Wysyłania wiadomości i kontaktu z odbiorcami:** Jednoczesne wysyłanie identycznych wiadomości do tych samych osób z różnych kont to jeden z najszybszych sposobów na wywołanie automatycznej blokady wszystkich z nich.
+
+**Logowania, gdy konta są nowe:** Każdy profil może podczas logowania wyświetlać inne monity 2FA, CAPTCHA lub kroki weryfikacji. Synchronizator odtworzy Twoje działania, ale nie poradzi sobie z rozbieżnymi stanami — jeden profil może być na ekranie CAPTCHA, a inny może już być zalogowany. Zaloguj się indywidualnie w każdym profilu, zanim włączysz synchronizator.
+
+## Zatrzymywanie profili
+
+Aby zamknąć wszystkie profile uruchomione za pomocą Run with Sync:
+
+1. Zaznacz wszystkie uruchomione profile za pomocą pól wyboru
+2. Kliknij **Stop profiles** w panelu akcji zbiorczych
+
+<Frame>
+  ![0331(1)(1)](/images/0331\(1\)\(1\).gif)
+</Frame>
+
+Możesz też zamknąć każde okno przeglądarki osobno. Gologin zsynchronizuje dane każdego profilu w momencie jego zamknięcia.
+
+<Warning>
+  Zanim zamkniesz samą aplikację, poczekaj, aż każdy profil wyświetli w aplikacji Gologin status **Ready**. Zamknięcie Gologin, gdy profile nadal się synchronizują, spowoduje utratę danych z tych sesji.
+</Warning>
+
+## Różnice w porównaniu ze zwykłym Run (bulk)
+
+|  | Run (bulk) | Run with Sync |
+| :-- | :-- | :-- |
+| Profile działają niezależnie | ✅ | ❌ |
+| Działania są odtwarzane w różnych oknach | ❌ | ✅ |
+| Najlepsze do | Otwierania profili w celu osobnej pracy | Powtarzania tych samych działań we wszystkich profilach |
+
+Używaj zwykłego \*\*Run \*\*, gdy chcesz otworzyć wiele profili, a potem pracować w każdym z nich osobno. Używaj **Run with Sync**, gdy chcesz wykonać dokładnie te same działania we wszystkich profilach naraz.
+
+## Zobacz także
+
+[Bulk actions](https://gologin.com/docs/browser-profiles/profile-management/bulk-actions) — pełna lista operacji zbiorczych dostępnych w Gologin
+
+[Creating profiles](https://gologin.com/docs/browser-profiles/profile-management/creating-and-launching-profiles) — jak tworzyć i uruchamiać profile pojedynczo
+
+[Common mistakes to avoid](https://gologin.com/docs/common-mistakes-to-avoid) — wzorce zachowań, które prowadzą do blokad na platformach
+
+[Maintaining trust score](https://gologin.com/docs/maintaining-trust-score) — jak platformy oceniają aktywność kont
+
+[Cookie Bot ](https://gologin.com/docs/browser-profiles/profile-features/cookie-bot)— automatyczne rozgrzewanie plików cookie w nowych profilach

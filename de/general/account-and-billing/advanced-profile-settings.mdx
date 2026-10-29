@@ -1,0 +1,97 @@
+---
+title: "Erweiterte Profileinstellungen"
+---
+
+Auf der Registerkarte **Advanced** können Sie die einzelnen Fingerprint-Parameter, die Gologin für jedes Profil verwaltet, direkt steuern. Die meisten Nutzer müssen hier nichts ändern – Profile funktionieren auf den meisten Websites mit den Standardeinstellungen gut.
+
+<Warning>
+  Ändern Sie diese Einstellungen nur, wenn Sie einen konkreten Grund dafür haben und wissen, was Sie anpassen. Manche Änderungen können verbessern, wie ein Profil auf einer bestimmten Website erscheint, aber falsche Werte können ein Profil auch verdächtig wirken lassen oder Funktionen einer Website beeinträchtigen. Bevor Sie hier experimentieren, empfehlen wir Ihnen, sich zunächst in einschlägigen Foren und Community-Gruppen über bewährte Vorgehensweisen beim Multiaccounting zu informieren.
+</Warning>
+
+Sie erreichen die erweiterten Einstellungen über **3 dots on the profile** \> **Settings** \> **Advanced**.
+
+## Navigator
+
+Dieser Bereich steuert die Browser- und Systemparameter, die das Profil an Websites meldet.
+
+**User-Agent** - Die Zeichenfolge, die Ihren Browser und Ihr Betriebssystem gegenüber jeder besuchten Website identifiziert. Wenn Sie mehrere Profile mit demselben Betriebssystem und derselben Browserversion haben, können diese denselben User-Agent verwenden – das ist normal. Es gibt nur eine begrenzte Anzahl gültiger Kombinationen, und Gologin unterscheidet Profile anhand anderer Fingerprint-Parameter.
+
+**Screen Resolution** - Die Bildschirmgröße, die das Profil meldet. Vermeiden Sie es, einen höheren Wert als die tatsächliche Auflösung Ihres Monitors einzustellen, da die Abweichung ein erkennbares Signal sein kann. Das Browserfenster lässt sich nicht über diesen Wert hinaus vergrößern. Wenn Sie ein größeres Fenster benötigen, erhöhen Sie hier die Auflösung. Siehe [Warum kann ich das Browserfenster nicht auf Vollbild vergrößern?](/de/faq-profile-managment#why-cant-i-expand-the-browser-window-to-full-screen)
+
+**Languages** - Die Systemsprache, die an Websites gemeldet wird. Bei der Einstellung **Based on IP** wird automatisch die Sprache verwendet, die zum Standort des Proxys passt. Wenn Sie die Sprache manuell festlegen, beachten Sie: Auf allen Systemen außer macOS ändert sich dadurch auch die Oberflächensprache des Browsers – unter macOS folgt der Browser immer den tatsächlichen Spracheinstellungen des Systems.
+
+**Platform** - Meldet das Betriebssystem an Websites. Dieser Wert entspricht dem Betriebssystem, das beim Erstellen des Profils gewählt wurde, und kann bei einem bestehenden Profil nicht geändert werden.
+
+**CPU Threads** und **RAM** - Dies sind die Hardwarewerte, die der Browser an Websites meldet. Eine Änderung hat keinen Einfluss auf die tatsächliche Leistung des Browsers – es sind reine Meldewerte, keine tatsächlich genutzten Ressourcen.
+
+**DoNotTrack** - Sendet ein „Do Not Track“-Signal an Websites. Die meisten Websites ignorieren dieses Signal, und wenn es aktiviert ist, kann es selbst ein Fingerprinting-Merkmal sein, da es bei normalen Nutzern nicht üblich ist.
+
+## Fonts
+
+Websites können den Browser abfragen, welche Schriftarten auf dem System installiert sind, und die resultierende Liste als Fingerprint verwenden.
+
+**Enable fonts list masking** - Wenn aktiviert, übermittelt Gologin an Websites die eigene, zusammengestellte Schriftartenliste des Profils anstelle der tatsächlich auf Ihrem Rechner installierten Schriftarten. Die aktuelle Liste wird unter dem Schalter angezeigt und kann über die Schaltfläche **Edit** manuell bearbeitet werden.
+
+Wir empfehlen, diese Option aktiviert zu lassen. Wenn Sie sie deaktivieren, werden Ihre echten Systemschriftarten jeder Website offengelegt, die das Profil besucht.
+
+## Mask Media Devices
+
+Websites und Webanwendungen können erkennen, wie viele Kameras, Mikrofone und Lautsprecher an Ihr Gerät angeschlossen sind.
+
+**Mask Media Devices** - Wenn aktiviert, meldet das Profil eine feste Anzahl von Mediengeräten anstelle Ihrer echten Geräte. Sie können die gemeldete Anzahl von **Video Inputs** (Kameras), **Audio Inputs** (Mikrofone) und **Audio Outputs** (Lautsprecher) unabhängig voneinander festlegen.
+
+Der Standardwert ist jeweils 1, was einer typischen Einzelgeräte-Konfiguration entspricht.
+
+## Hardware
+
+Dieser Bereich steuert, wie das Profil auf Fingerprinting-Techniken reagiert, die das Grafik- und Audio-Rendering des Browsers prüfen. Die Signale entstehen, indem kleine Aufgaben von der Rendering-Engine des Browsers ausgeführt und die Ergebnisse verglichen werden – jedes Gerät liefert leicht unterschiedliche Resultate.
+
+<Note>
+  Die Standardeinstellungen sind hier für die meisten Anwendungsfälle sicher. Es handelt sich um erweiterte Fingerprinting-Steuerungen, und falsche Änderungen lassen ein Profil eher ungewöhnlich wirken, als dass sie es verbessern.
+</Note>
+
+**Canvas** - Steuert, wie das Profil mit Canvas-Fingerprinting umgeht. Die Optionen sind **Noise** (fügt der Rendering-Ausgabe kleine zufällige Abweichungen hinzu), **Off** (liefert die normale Ausgabe ohne Änderung) und **Block** (verhindert den Zugriff auf die Canvas-API vollständig). Das Blockieren von Canvas ist für sich genommen erkennbar und wird nicht empfohlen.
+
+**Client Rects** - Ähnlich wie Canvas, zielt aber darauf ab, wie der Browser Position und Größe von Elementen auf einer Seite misst. **Noise** oder **Off**.
+
+**Audio Context** - Steuert den Fingerprint des Audio-Renderings. Der Browser kann aufgefordert werden, Audio zu verarbeiten, und die Ausgabe ist von Gerät zu Gerät leicht unterschiedlich. **Noise** fügt geringfügige Abweichungen hinzu; **Off** lässt die Ausgabe unverändert.
+
+**WebGL Image** - Steuert die visuelle Ausgabe des WebGL-Renderings, die je nach GPU variiert. **Noise** oder **Off**.
+
+**WebGL Metadata** - Steuert die von WebGL gemeldeten Zeichenfolgen für GPU-Hersteller und Renderer. **Mask** ersetzt die echten Werte durch die Werte aus den unten stehenden Feldern **WebGL Vendor** und **WebGL Renderer**. **Real** gibt Ihre tatsächlichen GPU-Informationen weiter.
+
+## Storage Options
+
+Diese Schalter legen fest, was jedes Profil zwischen Sitzungen speichern darf.
+
+**Enable Local Storage** - Erlaubt Websites, Daten im lokalen Speicher des Browsers abzulegen. Viele Websites nutzen dies für Login-Sitzungen und Einstellungen. Wenn Sie es deaktivieren, funktionieren bestimmte Webanwendungen möglicherweise nicht mehr.
+
+**Enable IndexedDB** - Erlaubt Websites, eine strukturiertere browserseitige Datenbank zu verwenden. Wird ebenfalls von vielen modernen Webanwendungen genutzt. Aktivieren Sie die Option, wenn Sie Probleme mit der Beibehaltung von Sitzungen haben.
+
+**Enable Extension storage** - Erlaubt installierten Erweiterungen, ihre eigenen Daten über Sitzungen hinweg zu speichern.
+
+## Browser Plugins
+
+**Enable potentially vulnerable plugins** - Aktiviert Browser-Plugins wie den Adobe-PDF-Viewer und Widevine (wird für DRM-geschützte Videos verwendet). Diese sind standardmäßig deaktiviert, weil ältere Plugin-Schnittstellen in der Vergangenheit als Fingerprinting-Vektoren dienten. Aktivieren Sie die Option, wenn Sie im Profil PDFs ansehen oder geschützte Videos abspielen müssen.
+
+## Other
+
+**Enable Google services** - Erlaubt dem Profil, im Hintergrund eine Verbindung zu Google-Diensten herzustellen (Rechtschreibprüfung, Safe Browsing usw.). Die meisten Nutzer können diese Option aktiviert lassen.
+
+**Disable image loading** und **Disable video autoplay** - Wenn aktiviert, lädt das Profil auf Websites keine Bilder und spielt Videos nicht automatisch ab. Das verringert den vom Profil verursachten Proxy-Traffic, was für Scraping, Automatisierung oder jede Arbeit nützlich ist, bei der Sie keine Medien sehen müssen. Beide Optionen sind standardmäßig deaktiviert. Nur in kostenpflichtigen Tarifen verfügbar.
+
+**Enable browser bookmark saving** - Legt fest, ob während einer Sitzung erstellte oder geänderte Lesezeichen beim Schließen des Profils gespeichert werden.
+
+**Enable browser history saving** - Legt fest, ob der Browserverlauf zwischen Sitzungen gespeichert wird.
+
+**Enable password saving** - Legt fest, ob der integrierte Passwortmanager des Browsers in diesem Profil aktiv ist.
+
+**Enable System Extensions** - Wenn aktiviert, werden auf Ihrem tatsächlichen Betriebssystem installierte Erweiterungen beim Start des Profils automatisch in das Profil importiert. Dadurch werden beim Start Installationsaufforderungen ausgelöst. Standardmäßig deaktiviert, und das sollten Sie am besten beibehalten, es sei denn, Sie benötigen die Funktion ausdrücklich.
+
+**Start URL** - Was der Browser beim Start des Profils öffnet. Es gibt drei Optionen: **Previously opened tabs** stellt wieder her, was zuletzt geöffnet war, **Open new tab page** startet mit einer neuen Tab-Seite, **Open specified pages** öffnet eine von Ihnen festgelegte URL.
+
+**Launch arguments** - Flags, die beim Start an den Browser übergeben werden, dieselben wie beim normalen Chrome (zum Beispiel `--disable-gpu` oder `--start-maximized`). Lassen Sie das Feld leer, wenn Sie nicht genau wissen, was Sie benötigen. Beachten Sie, dass einige Argumente blockiert sind und auch dann nicht wirksam werden, wenn Sie sie eingeben.
+
+**Custom DNS** - Ermöglicht es, einen DNS-Server für dieses Profil festzulegen. Das funktioniert mit SOCKS-Proxys, VPN-Verbindungen und direkten Verbindungen. Mit HTTP- oder HTTPS-Proxys funktioniert es nicht.
+
+**WebRTC** - Steuert, wie der Browser WebRTC behandelt, eine Technologie für Audio und Video in Echtzeit, die Ihre echte IP-Adresse auch bei aktivem Proxy preisgeben kann. **Based on IP** gleicht das WebRTC-Verhalten an die IP des Proxys an. **Off** deaktiviert WebRTC vollständig; manche Websites benötigen jedoch aktiviertes WebRTC, um korrekt zu funktionieren.

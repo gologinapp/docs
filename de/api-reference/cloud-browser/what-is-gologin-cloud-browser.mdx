@@ -1,0 +1,120 @@
+---
+title: "Was ist Gologin Cloud Browser"
+keywords: ["cloud browser", "headless browser"]
+---
+
+Mit Gologin Cloud Browser führen Sie einen Gologin-Browser (Orbita) **in der Cloud** aus und steuern ihn über eine einzige **Connection URL** aus Ihrem Automatisierungscode (Puppeteer / Playwright).
+
+Es handelt sich um einen [Headless-Browser](./what-is-headless-browser) – einen Browser, der vollständig per Code gesteuert wird und keine grafische Oberfläche hat. Er wird von Gologin gehostet und verwaltet und bietet integrierte Unterstützung für persistente Profile, Fingerprint-Konfiguration und Proxy-Routing.
+
+## Was Sie mit Cloud Browser tun können
+
+- Mehrere Browser-Sitzungen parallel in der Cloud ausführen
+- Mit Ihrem bestehenden Stack automatisieren (Puppeteer / Playwright)
+- Gologin-**Profile** nutzen, um einen persistenten Zustand zu behalten (Logins, Cookies, Storage)
+- Den Datenverkehr über **Proxys** leiten, die Sie im Profil konfigurieren
+- Cloud Browser als Remote-Browser-Laufzeitumgebung für KI-Agenten verwenden
+
+## Worin sich Cloud Browser von einem Standard-Headless-Browser unterscheidet
+
+Ein standardmäßiger Headless-Chrome ist erkennbar. Websites nutzen Browser-Fingerprinting, um automatisierten Datenverkehr zu identifizieren – dabei prüfen sie Canvas-Rendering, WebGL-Parameter, Schriftarten, Zeitzone, Bildschirmgröße und Dutzende weitere Signale.
+
+Gologin Cloud Browser läuft mit **Orbita** – einem modifizierten Chromium, das Fingerprint-Signale so verwaltet, dass sie zu einem konsistenten, realistischen Browserprofil passen. In Kombination mit persistenten Cookies und der in jedem Profil gespeicherten Proxy-Konfiguration wirken Ihre Sitzungen bei wiederholten Besuchen stabil und menschlich.
+
+## Warum Gologin Cloud Browser
+
+### Anti-Detect integriert – keine Plugins nötig
+
+Ein Standard-Headless-Chrome ist problemlos erkennbar. Andere Cloud-Browser-Dienste setzen auf Standard-Chromium und benötigen Stealth-Plugins von Drittanbietern, um Fingerprint-Signale zu reduzieren – mit gemischten Ergebnissen.
+
+Gologin Cloud Browser läuft mit **Orbita**, einem gehärteten Chromium-Build, in dessen Kern die Fingerprint-Verwaltung steht: Canvas, WebGL, Schriftarten, Zeitzone, Bildschirmauflösung und mehr. Anti-Detect ist hier kein nachträglicher Patch – es ist der Browser selbst.
+
+### Persistente Profile – Sitzungen mit Gedächtnis
+
+Die meisten Cloud-Browser-Dienste behandeln jede Sitzung als zustandslos. Cookies und Storage werden verworfen, sobald die Sitzung endet.
+
+Gologin-Profile bleiben bestehen. Melden Sie sich einmal an, schließen Sie die Sitzung und verbinden Sie sich später erneut – das Profil behält seine Cookies, den Local Storage und alle konfigurierten Einstellungen. Keine erneute Authentifizierung, kein Aufwärmen der Sitzung.
+
+### Planbare Preise – Abrechnung nach Zeit, nicht nach Datenverkehr
+
+|                          | Gologin Cloud Browser                      | Typische Alternative          |
+| ------------------------ | ------------------------------------------ | ----------------------------- |
+| **Sitzungsabrechnung**   | Stündlich ( 0.048/h je nach Tarif)         | Pro Sitzung oder pro Stunde   |
+| **Proxy-Datenverkehr**   | \$1.99 / GB                                | Pro MB (Minimum pro Sitzung)  |
+| **ISP-Proxys**           | \$5 / IP, unbegrenzter Datenverkehr        | Pro GB                        |
+| **Inkludierte Stunden**  | 20–200 h/Monat je nach Tarif               | Meist keine                   |
+
+### Kein Vendor-Lock-in
+
+Gologin Cloud Browser ist ein Standard-CDP-Endpunkt. Ihr Puppeteer- oder Playwright-Code verbindet sich damit genauso wie mit jeder anderen Remote-Chrome-Instanz – ohne proprietäres SDK und ohne eine eigene API, die Sie erst lernen müssen. Der Wechsel hinein oder hinaus gelingt mit einer einzigen URL-Änderung.
+
+### Parallele Sitzungen, die mitwachsen
+
+Die Tarife enthalten von Haus aus 1–4 parallele Sitzungen. Sie brauchen mehr? Kontaktieren Sie uns für einen individuellen Tarif.
+
+## Typische technische Szenarien
+
+Cloud Browser wird üblicherweise für Workflows eingesetzt, in denen Sie:
+
+- sich einmal in ein Webkonto einloggen und die Sitzung über ein Profil dauerhaft behalten
+- wiederholte Aktionen auf denselben Websites über viele Profile hinweg ausführen
+- stabile, langlaufende Sitzungen benötigen, ohne von einem lokalen Rechner abhängig zu sein
+
+Beispiele sind die Automatisierung angemeldeter Sitzungen bei Web-Apps, Marktplätzen oder Social-Media-Plattformen, bei denen Persistenz und konsistente Profileinstellungen wichtig sind.
+
+## Grundkonzepte
+
+- **Profil** – eine wiederverwendbare Browser-Identität (Cookies/Storage sowie Fingerprint- und Proxy-Einstellungen).
+- **Cloud-Sitzung** – eine laufende Instanz eines Profils in der Gologin-Cloud.
+- **Connect URL** – der Endpunkt, den Sie an Ihr Automatisierungstool übergeben, um die Cloud-Sitzung zu steuern.
+
+## So funktioniert es (Überblick)
+
+1. (Empfohlen) Erstellen und konfigurieren Sie ein Profil über die Gologin REST API (Proxy, Fingerprint usw.).
+2. Verbinden Sie sich mit Cloud Browser über Ihren **Dev-Token** und optional eine `profileId`.
+3. Automatisieren Sie die Sitzung mit Puppeteer oder Playwright.
+4. Beenden Sie die Verbindung, wenn Sie fertig sind.
+
+## Connection URL
+
+Verwenden Sie diese URL als Endpunkt des Remote-Browsers:
+
+```text
+https://cloudbrowser.gologin.com/connect?token=${token}&profile=${params.profileId}
+```
+
+- `token` – Ihr Gologin-**Dev-Token** (Sie können ihn im Dashboard generieren: `Personal Area → API Token`).
+- `profile` – **Profil-ID** (optional). Wenn sie weggelassen wird, wird für die Sitzung ein neues Profil erstellt.
+
+## Profile verwalten (Proxy, Fingerprint usw.)
+
+Cloud Browser ist die **Verbindungsschicht**.\
+Um Profile zu erstellen oder zu aktualisieren, Proxys zuzuweisen und Profileinstellungen zu konfigurieren, nutzen Sie die Gologin REST API:
+
+- Profiles API: https://gologin.com/docs/api-reference/profile
+- Proxy API: https://gologin.com/docs/api-reference/proxy
+
+## Cloud Browser über die CLI verwenden
+
+Wenn Sie Shell-Befehle dem Schreiben von Puppeteer-/Playwright-Code vorziehen, bietet Gologin agentenfreundliche CLI-Tools:
+
+- **[Gologin Agent Browser CLI](/de/cli-tools/agent-browser)** – Cloud-Browser-CLI mit Daemon, Seiten-Snapshots und referenzbasierter Interaktion. Entwickelt für KI-Agenten.
+- **[Gologin Web Access CLI](/de/cli-tools/web-access)** – einheitliche CLI, die Web Unlocker-Scraping und Cloud Browser-Interaktion in einem Tool vereint.
+
+```bash
+npm install -g gologin-agent-browser-cli
+export GOLOGIN_TOKEN='your_token'
+
+gologin-agent-browser open https://example.com
+gologin-agent-browser snapshot
+gologin-agent-browser click @e3
+gologin-agent-browser screenshot ./page.png
+gologin-agent-browser close
+```
+
+## Nächste Schritte
+
+- [Getting Started](/de/api-reference/cloud-browser/getting-started) – Verbindungsbeispiele für Puppeteer/Playwright
+- [API Quickstart](/de/api-reference/introduction/quickstart) – Einrichtung der REST API
+- [Agent Browser CLI](/de/cli-tools/agent-browser) – CLI für KI-Agenten
+- [AI Skills](/de/api-reference/ai-integrations/ai-skills) – Plug-and-play-Skills für Claude Code

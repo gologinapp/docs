@@ -1,0 +1,61 @@
+---
+title: "Android 上的 User-Agent"
+description: "无论你选择哪个版本，Android 配置文件的 User-Agent 中始终显示 Android 10; K。本文说明出现这种情况的原因，以及为什么这是正常现象。"
+---
+
+如果你在 Gologin 中创建了一个 Android 配置文件并查看其 User-Agent，会发现它始终显示 `Android 10; K`，即使配置文件设置的是 Android 14、15 或 16 也是如此。该字符串大致如下：
+
+```text
+Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/... Mobile Safari/537.36
+```
+
+这是正常行为，并不是 bug。**Android 上所有基于 Chrome 的现代浏览器都会报告相同的内容。**
+
+## 为什么会这样
+
+从 2023 年初的 Chrome 110 开始，Google 引入了一项名为 **User-Agent Reduction（User-Agent 精简）** 的改动。为了让浏览器更难被追踪和识别指纹，Chrome 不再在 User-Agent 中提供真实的 Android 版本和设备型号，而是对所有用户发送固定的占位值：
+
+- Android 版本被固定为 `Android 10`
+- 设备型号被替换为字母 `K`
+- Chrome 的次要版本号被设置为 `0.0.0`
+
+只有 Chrome 的主版本号仍会随每次发布而更新。该部分字符串中的其他内容对所有设备都保持不变。
+
+Gologin 的 Android 浏览器基于 Chromium，因此遵循同样的标准。Chrome、Edge、Opera 和 Samsung Internet 也都显示 `Android 10; K`。这并非 Gologin 独有，而是现代移动网络的通行做法。
+
+<Info>
+  `K` 既不是 Android 版本，也不是拼写错误。它是 Chrome 现在用来代替真实设备型号的占位符。
+</Info>
+
+## 为什么这对你其实是好事
+
+由于全球几乎所有 Android Chrome 用户现在都报告 `Android 10; K`，你的配置文件可以混入大众之中。如果 Gologin 报告真实的 Android 版本，你的配置文件就会在正常流量中显得突出，在网站看来也会很异常。对于需要看起来像普通访客的浏览器配置文件来说，与标准行为保持一致正是你需要的。
+
+<Check>
+  显示 `Android 10; K` 的 Android 配置文件运行正常，看起来就像一台典型的真实 Android 设备。
+</Check>
+
+确实需要知道真实 Android 版本或设备型号的网站，现在会通过一种更新、对隐私更友好的方式（称为 Client Hints）来请求这些信息，而不是从 User-Agent 中读取。因此，即使 User-Agent 显示的是 `Android 10`，也不会丢失任何信息，你所选择的 Android 版本仍会在关键之处生效。
+
+## 如何自行测试
+
+你可以在任意一台真实的 Android 设备上，将 Gologin 配置文件与日常使用的 Chrome 浏览器并排对比，来验证这一点。
+
+在日常使用的 Chrome 浏览器中打开 [iphey.com](https://iphey.com) 或任何其他可信的指纹检测网站，并切换到 **浏览器** 标签页。然后在 Gologin 的 Android 配置文件中打开同一页面，查看两者的 **用户代理** 一行。
+
+你会看到两个浏览器中显示完全相同的 `Android 10; K` 值，即使它们运行在现代 Android 设备上也是如此。唯一的区别是 Chrome 版本号，它只是反映了各浏览器自身的发布版本。
+
+由于两个浏览器报告的内容相同，这种并排对比是最简单的方式，可以让你看到 Gologin 的表现与普通 Chrome 浏览器完全一致。
+
+<Columns cols={2}>
+  <Column>
+    <Frame>
+      ![Android 上的 Chrome](/images/UA_chrome_android_app-1.jpg "Android 上的 Chrome")
+    </Frame>
+  </Column>
+  <Column>
+    <Frame>
+      ![Gologin Android 应用](/images/UA_gologin_android_app.jpg "Gologin Android 应用")
+    </Frame>
+  </Column>
+</Columns>

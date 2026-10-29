@@ -1,0 +1,120 @@
+---
+title: "支持的平台与安装"
+description: "Gologin 系统要求和安装流程"
+---
+
+您可以通过下方链接下载适用于任何受支持系统的 Gologin 应用:
+
+👉 [**下载 Gologin**](https://gologin.com/download/)
+
+## 硬件要求
+
+- **内存:** 至少 4GB
+- **可用磁盘空间:** 至少 1 GB
+
+## 支持的操作系统
+
+### **Windows**
+
+- Windows 11
+- Windows 10
+- Windows Server 2016
+
+### Mac OS(M 系列、Mac Neo 和 Intel 芯片)
+
+- macOS 27 Golden Gate
+- macOS 26 Tahoe
+- macOS 15 Sequoia **(浏览器版本 122 及以上)**
+- macOS 14 Sonoma
+- macOS 13 Ventura
+- macOS 12 Monterey
+
+### Linux
+
+- Ubuntu
+- Mint
+
+### Android
+
+- Android 10.0 及以上
+- 3\+ GB 内存
+
+### iOS
+
+- 搭载 iOS 17 及以上版本的 iPhone 或 iPad
+
+## 安装流程
+
+### Windows
+
+1. 从[这里](https://gologin.com/download/)下载应用安装程序
+2. 打开**下载**文件夹
+3. 双击下载的文件,然后按照安装提示操作
+
+### Mac OS
+
+1. 从[这里](https://gologin.com/download/)下载应用安装程序
+2. 打开**下载**文件夹
+3. 双击该文件,然后按照提示操作
+
+### Linux(以 Ubuntu 为例)
+
+适用于 Linux 的 Gologin 以 **AppImage** 文件形式提供。它是一个独立的可执行文件,无需传统的安装过程。您随时可以通过该文件打开应用。
+
+1. 通过此[链接](https://gologin.com/download)下载 AppImage 文件
+2. 打开**下载**文件夹
+3. 右键单击 `gologin.tar` \> **解压**
+4. 进入 **gologin** 文件夹 \> 双击启动 Gologin
+
+**如果应用无法打开**
+
+- 如果系统将该应用识别为文本文件,请通过终端使用 --no-sandbox 参数启动一次
+  ```bash bash
+  cd ~/Downloads/gologin
+  ./<filename> --no-sandbox
+  ```
+- 您可能需要将该文件设为可执行。请在终端中粘贴以下命令:
+  ```bash bash
+  cd ~/Downloads/gologin
+  chmod +x <filename>
+  ```
+  将 `<filename>` 替换为实际的文件名
+- 在较新的系统上,您可能需要安装 **libfuse2** 软件包。请在终端中粘贴以下命令,然后再次尝试启动应用。
+  ```bash bash
+    sudo apt install libfuse2
+  ```
+
+**如果点击“运行”后配置文件无法启动**
+
+- 打开终端并进入浏览器文件夹,例如 Orbita 145 版本
+- 为 **chrome-sandbox** 设置新的权限
+  ```bash bash
+  cd ~/.gologin/browser/orbita-browser-145
+  sudo chown root:root chrome-sandbox
+  sudo chmod 4755 chrome-sandbox
+  ```
+
+### Android
+
+要在 Android 上使用 Gologin,您只需从 **Google Play 商店**安装 **Gologin 应用**。
+
+1. 在手机上打开 **Google Play 商店**
+2. 在顶部找到搜索栏,输入 **Gologin** \> **安装应用**
+
+应用安装完成后,即可直接使用,内置浏览器已包含在内。
+
+## 不支持的环境
+
+Gologin **不**支持以下平台:
+
+- 任何 32 位系统
+- Windows 7、8、8.1、Server 2012(任何版本)或更低版本
+- macOS El Captain、Sierra、High-Sierra、Mojave、Catalina、Big Sur 或更低版本
+- Chrome OS(您可以使用 [Gologin 网页版](/zh/gologin-web-overview))
+
+## 另请参阅
+
+- [首次使用检查清单](https://gologin.com/docs/getting-started/setup/first-time-checklist)
+- [Gologin 网页版,Chrome OS](https://gologin.com/docs/general/gologin-web-and-mobile)
+- [核心概念](https://gologin.com/docs/getting-started/introduction/key-concepts-profiles-fingerprints-proxies)
+- [更新 Gologin 应用](https://gologin.com/docs/general/updating-the-gologin-app)

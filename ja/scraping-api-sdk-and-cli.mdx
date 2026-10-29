@@ -1,0 +1,215 @@
+---
+title: 'Scraping API SDK と CLI'
+---
+
+Gologin Web Unlocker は、JavaScript を多用するサイトや保護されたサイト向けの**シングルエンドポイントの Scraping API** です。
+
+URL を送信すると、レンダリング済みのページ HTML/テキストが返されます。取得した内容は、お使いの抽出パイプラインで処理できます。
+
+## Scraping API として使う理由
+
+- あらゆる対象 URL に対応する 1 つのエンドポイント
+- API キー認証のみで、ブラウザのオーケストレーションは不要
+- 既存のパーサーにそのまま組み込める HTML ベースのレスポンス
+- ETL、モニタリング、AI へのデータ取り込み、データパイプラインに最適
+
+## エンドポイント
+
+`GET https://parsing.webunlocker.gologin.com/v1/scrape?url={encoded_url}`
+
+## 認証
+
+API キーをヘッダーで送信します。
+
+```http
+apikey: <API_KEY>
+```
+
+## リクエストモデル
+
+| 名前 | 場所 | 型 | 必須 | 説明 |
+|---|---|---|---|---|
+| `url` | クエリ | string (絶対 URL) | はい | スクレイピング対象の URL |
+
+## クイックスタート
+
+### cURL
+
+```bash
+curl "https://parsing.webunlocker.gologin.com/v1/scrape?url=https%3A%2F%2Fexample.com" \
+  -H "apikey: YOUR_API_KEY"
+```
+
+### Python
+
+```python
+import requests
+
+response = requests.get(
+    "https://parsing.webunlocker.gologin.com/v1/scrape",
+    params={"url": "https://example.com"},
+    headers={"apikey": "YOUR_API_KEY"}
+)
+
+print(response.status_code)
+print(response.text[:500])
+```
+
+### JavaScript (fetch)
+
+```js
+const response = await fetch(
+  "https://parsing.webunlocker.gologin.com/v1/scrape?url=" +
+    encodeURIComponent("https://example.com"),
+  { headers: { apikey: "YOUR_API_KEY" } }
+);
+
+const html = await response.text();
+console.log(response.status, html.slice(0, 500));
+```
+
+## レスポンスの動作
+
+現在のレスポンスボディは、**レンダリング済みの生の HTML/テキスト**です。
+
+- `200` -> 成功。ボディにページの HTML/テキストが含まれます
+- `401` / `403` -> API キーが無効、または指定されていません
+- `422` -> `url` が無効、または指定されていません
+- `429` -> レート制限
+- `500+` -> サーバー側の一時的なエラー
+
+## リトライの推奨事項
+
+次の場合は、指数バックオフでリトライしてください。
+
+- ネットワークエラー
+- `408`、`429`、`500`、`502`、`503`、`504`
+
+## 対応範囲に関する注意
+
+現在の公開エンドポイントは HTML を中心としたものです。スクリーンショット、クロール、検索、使用量取得などの追加のバックエンドエンドポイントは、ドキュメントに明記され、お使いのアカウントで有効化されている場合を除き、利用できるものと想定しないでください。
+
+## 公式 Node.js SDK
+
+インストール:
+
+```bash
+npm i gologin-webunlocker
+```
+
+### SDK クイックスタート
+
+```ts
+import { WebUnlocker } from "gologin-webunlocker";
+
+const client = new WebUnlocker({
+  apiKey: process.env.GOLOGIN_WEBUNLOCKER_API_KEY!
+});
+
+const result = await client.scrape("https://example.com");
+console.log(result.status);
+console.log(result.content.slice(0, 500));
+```
+
+### コンストラクターのオプション
+
+```ts
+new WebUnlocker({
+  apiKey: "wu_live_xxx",
+  baseUrl: "https://parsing.webunlocker.gologin.com",
+  timeoutMs: 15000,
+  maxRetries: 2
+});
+```
+
+### SDK の主なメソッド
+
+- `scrape(url)` -> 正規化されたレスポンスオブジェクト
+- `scrapeRaw(url)` -> ネイティブの `Response`
+- `buildScrapeUrl(url)` -> 完全なリクエスト URL
+
+### SDK 側で生成されるメソッド (返された HTML から生成)
+
+これらは**独立したバックエンドエンドポイントではありません**。API から返された HTML をもとに SDK 側で生成されます。
+
+- `scrapeText(url)` -> プレーンテキスト
+- `scrapeMarkdown(url)` -> Markdown
+- `scrapeJSON(url)` -> 構造化されたメタデータ (`title`、`meta`、`links`、`headings`)
+- `batchScrape(urls, { concurrency })` -> 複数のスクレイピング呼び出しをまとめて行うヘルパー
+
+### 型付きエラー
+
+- `WebUnlockerError`
+- `AuthenticationError`
+- `RateLimitError`
+- `APIError`
+- `TimeoutError`
+- `NetworkError`
+
+対応関係:
+
+- `401` / `403` -> `AuthenticationError`
+- `429` -> `RateLimitError`
+- `500+` -> `APIError`
+- タイムアウト/中断 -> `TimeoutError`
+- fetch/ネットワーク障害 -> `NetworkError`
+
+## CLI
+
+```bash
+gologin-webunlocker <command> <url> [options]
+```
+
+コマンド:
+
+- `scrape` (生の HTML/テキスト)
+- `text` (生成されたテキスト)
+- `markdown` (生成された Markdown)
+- `json` (生成されたメタデータ)
+
+例:
+
+```bash
+gologin-webunlocker scrape https://example.com --api-key wu_live_xxx
+GOLOGIN_WEBUNLOCKER_API_KEY=wu_live_xxx gologin-webunlocker text https://example.com
+GOLOGIN_WEBUNLOCKER_API_KEY=wu_live_xxx gologin-webunlocker json https://example.com
+```
+
+## スクレイピングの主なユースケース
+
+- 価格やカタログのモニタリング
+- リードやディレクトリ情報の拡充
+- マーケットインテリジェンスのパイプライン
+- コンテンツの集約とインデックス作成
+- LLM へのデータ取り込みと抽出ワークフロー
+
+## Gologin Web Access CLI (統合版)
+
+Web Unlocker と Cloud Browser を 1 つのコマンド体系にまとめた、より強力な CLI が必要な場合は、`gologin-web-access` を使用してください。
+
+```bash
+npm install -g gologin-web-access
+
+export GOLOGIN_WEB_UNLOCKER_API_KEY="wu_..."
+
+# all scraping commands from gologin-webunlocker, plus:
+gologin-web-access batch-scrape url1 url2 url3 --format text --summary
+gologin-web-access search "query" --limit 10
+gologin-web-access map https://example.com --limit 50
+gologin-web-access crawl https://docs.example.com --format markdown --limit 20
+gologin-web-access extract https://example.com --schema ./schema.json
+gologin-web-access change-track https://example.com --format markdown
+
+# plus cloud browser interaction (requires GOLOGIN_TOKEN)
+gologin-web-access open https://example.com
+gologin-web-access snapshot
+gologin-web-access click e3
+```
+
+詳しいリファレンスは [Gologin Web Access CLI](/ja/cli-tools/web-access) をご覧ください。
+
+## 関連ドキュメント
+
+- [Web Unlocker とは](/ja/what-is-web-unlocker)
+- [Web Unlocker クイックスタート](/ja/web-unlocker-quick-start)
+- [Web Unlocker のユースケース](/ja/web-unlocker-use-cases)

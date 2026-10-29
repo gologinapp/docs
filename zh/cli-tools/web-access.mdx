@@ -1,0 +1,411 @@
+---
+title: "Gologin Web Access CLI"
+description: "统一的命令行工具,通过 Gologin Web Unlocker 和云浏览器读取网页内容并与网页交互"
+---
+
+Gologin Web Access 是一个统一的 CLI,将两款 Gologin 产品整合到同一套命令中:
+
+- **Web Unlocker** — 无状态的读取与提取。适合无需维护浏览器会话、只想快速获取页面内容的场景。
+- **云浏览器** — 有状态的交互。适合需要导航、点击、输入、截图,或需要在多条命令之间保持状态的多步骤流程。
+
+两种模式共用同一套配置模型和凭证设置。建议提前配置好两种凭证,这样智能体在执行任务的过程中就不会因为缺少密钥而中途停下来询问。
+
+---
+
+## 安装
+
+```bash
+npm install -g gologin-web-access
+```
+
+需要 Node.js >= 18.17。
+
+---
+
+## 凭证
+
+两种模式分别使用两种不同的 Gologin 凭证:
+
+| 变量 | 适用场景 | 说明 |
+|---|---|---|
+| `GOLOGIN_WEB_UNLOCKER_API_KEY` | 抓取 / 读取命令 | Web Unlocker API 密钥 |
+| `GOLOGIN_TOKEN` | 浏览器 / 交互命令 | Gologin API 令牌 |
+| `GOLOGIN_DEFAULT_PROFILE_ID` | 可选 | 默认浏览器配置文件 |
+| `GOLOGIN_DAEMON_PORT` | 可选 | 本地守护进程端口 |
+
+### 配置文件
+
+将凭证保存在 `~/.gologin-web-access/config.json` 中:
+
+```json
+{
+  "webUnlockerApiKey": "wu_...",
+  "cloudToken": "gl_...",
+  "defaultProfileId": "profile_123",
+  "daemonPort": 4590
+}
+```
+
+以交互方式初始化配置:
+
+```bash
+gologin-web-access config init --web-unlocker-api-key wu_... --token gl_...
+```
+
+---
+
+## 快速开始 — 读取页面
+
+```bash
+export GOLOGIN_WEB_UNLOCKER_API_KEY="wu_..."
+
+# rendered HTML
+gologin-web-access scrape https://example.com
+
+# readable text with metadata
+gologin-web-access read https://docs.example.com/features
+
+# plain text
+gologin-web-access scrape-text https://example.com/pricing
+
+# markdown
+gologin-web-access scrape-markdown https://example.com/docs
+
+# structured JSON (title, description, headings, links)
+gologin-web-access scrape-json https://example.com
+
+# search the web
+gologin-web-access search "gologin antidetect browser" --limit 5
+```
+
+## 快速开始 — 与网站交互
+
+```bash
+export GOLOGIN_TOKEN="gl_..."
+export GOLOGIN_DEFAULT_PROFILE_ID="profile_123"
+
+gologin-web-access open https://example.com
+gologin-web-access snapshot
+gologin-web-access click e3
+gologin-web-access type e5 "search terms"
+gologin-web-access screenshot ./page.png
+gologin-web-access close
+```
+
+---
+
+## 命令参考 — 抓取 / 读取
+
+这些命令使用 Web Unlocker。它们是无状态的,不会维护浏览器会话。
+
+### 单个页面
+
+| 命令 | 说明 |
+|---|---|
+| `scrape <url>` | 原始渲染后的 HTML |
+| `read <url>` | 可读内容,支持格式控制 |
+| `scrape-text <url>` | 纯文本提取 |
+| `scrape-markdown <url>` | Markdown 提取 |
+| `scrape-json <url>` | 结构化元数据(页面标题、描述、各级标题、链接) |
+| `extract <url> --schema <file>` | 按 JSON schema 提取数据 |
+| `parse-document <url-or-path>` | 解析 PDF、DOCX、XLSX、HTML 文件 |
+
+**常用选项:** `--format text|markdown|html`、`--source auto|unlocker|browser`、`--fallback none|browser`
+
+### 批量操作
+
+| 命令 | 说明 |
+|---|---|
+| `batch-scrape <url...>` | 一次抓取多个 URL |
+| `batch-extract <url...> --schema <file>` | 从多个 URL 中提取结构化数据 |
+| `batch-change-track <url...>` | 监控多个页面的变化 |
+
+**批量选项:** `--format`、`--source`、`--only-main-content`、`--retry <n>`、`--backoff-ms <ms>`、`--summary`、`--output <path>`、`--strict`
+
+默认情况下,`batch-scrape` 在部分成功时返回退出码 0。添加 `--strict` 后,任何错误都会导致失败。
+
+### 搜索与发现
+
+| 命令 | 说明 |
+|---|---|
+| `search <query>` | 网页搜索,返回结构化结果 |
+| `map <url>` | 发现网站上的 URL |
+| `crawl <url>` | 爬取多个页面并提取内容 |
+
+**选项:** `--limit <n>`、`--max-depth <n>`、`--concurrency <n>`、`--only-main-content`
+
+### 异步爬取任务
+
+| 命令 | 说明 |
+|---|---|
+| `crawl-start <url> ...` | 启动异步爬取任务 |
+| `crawl-status <jobId>` | 查看任务状态 |
+| `crawl-result <jobId>` | 获取爬取结果 |
+| `crawl-errors <jobId>` | 获取爬取错误 |
+
+### 变化追踪
+
+| 命令 | 说明 |
+|---|---|
+| `change-track <url>` | 检测页面变化 |
+| `batch-change-track <url...>` | 追踪多个页面的变化 |
+
+### Runbook
+
+| 命令 | 说明 |
+|---|---|
+| `run <runbook.json>` | 执行 runbook(一系列步骤) |
+| `batch <runbook.json> --targets <file>` | 对多个目标运行同一个 runbook |
+| `jobs` | 列出运行中 / 已完成的任务 |
+| `job <jobId>` | 获取任务详情 |
+
+---
+
+## 命令参考 — 浏览器 / 交互
+
+这些命令使用云浏览器,并通过本地守护进程维护有状态的会话。
+
+### 会话管理
+
+| 命令 | 说明 |
+|---|---|
+| `open <url>` | 在云浏览器会话中打开 URL |
+| `search-browser <query>` | 搜索并在浏览器中打开结果 |
+| `close` | 关闭当前会话 |
+| `sessions` | 列出活动会话 |
+| `current` | 显示当前会话信息 |
+
+**选项:** 使用 `--profile <id>` 指定要使用的 Gologin 配置文件。
+
+### 页面读取
+
+| 命令 | 说明 |
+|---|---|
+| `snapshot` | 带元素引用的精简文本快照 |
+| `scrape-screenshot <url> [path]` | 通过浏览器截图 |
+| `screenshot <path>` | 保存当前页面的截图 |
+| `pdf <path>` | 将页面保存为 PDF |
+| `get <kind> [target]` | 获取页面属性 |
+
+### 交互
+
+| 命令 | 说明 |
+|---|---|
+| `click <ref>` | 按引用点击元素 |
+| `dblclick <ref>` | 双击元素 |
+| `type <ref> <text>` | 向元素中输入文本 |
+| `fill <ref> <text>` | 填写输入框 |
+| `hover <ref>` | 悬停在元素上 |
+| `select <ref> <value>` | 选择下拉菜单的值 |
+| `check <ref>` / `uncheck <ref>` | 切换复选框 |
+| `focus <ref>` | 聚焦元素 |
+| `press <key> [target]` | 按下键盘按键 |
+| `scroll <direction> [pixels]` | 滚动页面 |
+| `scrollintoview <ref>` | 将元素滚动到可见区域 |
+| `find ...` | 语义化元素搜索 |
+
+### 导航
+
+| 命令 | 说明 |
+|---|---|
+| `back` | 后退 |
+| `forward` | 前进 |
+| `reload` | 重新加载页面 |
+| `wait <target\|ms>` | 等待元素出现或超时 |
+
+### 标签页
+
+| 命令 | 说明 |
+|---|---|
+| `tabs` | 列出已打开的标签页 |
+| `tabopen [url]` | 打开新标签页 |
+| `tabfocus <index>` | 切换到指定标签页 |
+| `tabclose [index]` | 关闭标签页 |
+
+### Cookie 与存储
+
+| 命令 | 说明 |
+|---|---|
+| `cookies` | 导出 Cookie |
+| `cookies-import <file>` | 导入 Cookie |
+| `cookies-clear` | 清除 Cookie |
+| `storage-export [path]` | 导出 localStorage |
+| `storage-import <file>` | 导入 localStorage |
+| `storage-clear` | 清除 localStorage |
+
+### 高级
+
+| 命令 | 说明 |
+|---|---|
+| `eval <expression>` | 在页面中执行 JavaScript |
+| `upload <ref> <file...>` | 向文件输入框上传文件 |
+
+---
+
+## 使用场景与示例
+
+### 抓取竞品的价格页面
+
+```bash
+gologin-web-access scrape-json https://competitor.com/pricing
+```
+
+以结构化 JSON 返回页面标题、描述、各级标题和链接。如果页面被 Cookie 同意墙或验证挑战拦截,outcome 字段会告诉你,同时 `nextActionHint` 会建议切换到浏览器模式。
+
+### 基于文档站点构建研究语料库
+
+```bash
+# discover all pages
+gologin-web-access map https://docs.example.com --limit 200 --max-depth 3
+
+# crawl and extract main content as markdown
+gologin-web-access crawl https://docs.example.com \
+  --format markdown --limit 100 --max-depth 3 --only-main-content \
+  --output ./corpus.json
+```
+
+可将输出内容交给 LLM,用于摘要、问答或微调。
+
+### 监控页面变化
+
+```bash
+# check if a page changed
+gologin-web-access change-track https://competitor.com/pricing --format markdown
+
+# track many pages at once
+gologin-web-access batch-change-track \
+  https://competitor.com/pricing \
+  https://competitor.com/features \
+  https://competitor.com/changelog \
+  --output ./changes.json
+```
+
+可通过 cron 每天运行,并对比差异,以发现价格变动、新功能或被移除的内容。
+
+### 使用 schema 提取结构化数据
+
+先定义你想提取的内容:
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "product_name": { "type": "string" },
+    "price": { "type": "string" },
+    "features": { "type": "array", "items": { "type": "string" } }
+  }
+}
+```
+
+然后执行提取:
+
+```bash
+gologin-web-access extract https://example.com/product/123 --schema ./product-schema.json
+```
+
+使用 `batch-extract` 可对多个页面执行同样的提取。
+
+### 搜索网页并抓取结果
+
+```bash
+# search
+gologin-web-access search "best project management tools 2026" --limit 10
+
+# scrape the top results
+gologin-web-access batch-scrape url1 url2 url3 --format text --only-main-content --summary
+```
+
+### 登录网站并进行交互
+
+当仅靠抓取还不够,需要点击、输入、导航时:
+
+```bash
+export GOLOGIN_TOKEN="gl_..."
+
+gologin-web-access open https://dashboard.example.com/login
+gologin-web-access snapshot
+gologin-web-access fill e3 "user@example.com"
+gologin-web-access fill e5 "password123"
+gologin-web-access click e7
+gologin-web-access wait 2000
+gologin-web-access snapshot          # verify you're logged in
+gologin-web-access screenshot ./dashboard.png
+gologin-web-access close
+```
+
+### 解析本地文档
+
+不仅限于网页,还可以解析 PDF、Word 文档和 Excel 文件:
+
+```bash
+gologin-web-access parse-document ./report.pdf
+gologin-web-access parse-document ./data.xlsx
+gologin-web-access parse-document ./contract.docx
+```
+
+### 使用 runbook 自动化多步骤工作流
+
+用 JSON 定义一系列步骤,即可重复执行:
+
+```json
+{
+  "variables": { "url": "https://example.com", "query": "gologin" },
+  "steps": [
+    { "command": "open", "args": ["${url}"] },
+    { "command": "wait", "args": [1000] },
+    { "command": "snapshot" },
+    { "command": "find", "args": ["search input"] },
+    { "command": "type", "args": ["@found", "${query}"] },
+    { "command": "press", "args": ["Enter"] },
+    { "command": "wait", "args": [2000] },
+    { "command": "screenshot", "args": ["./result.png"] },
+    { "command": "close" }
+  ]
+}
+```
+
+```bash
+gologin-web-access run ./search-runbook.json
+```
+
+---
+
+## 来源路由
+
+支持 `--source` 的命令可以通过不同的后端处理请求:
+
+| 值 | 行为 |
+|---|---|
+| `auto`(默认) | 优先尝试 Web Unlocker,必要时回退到云浏览器 |
+| `unlocker` | 仅使用 Web Unlocker |
+| `browser` | 仅使用云浏览器 |
+
+---
+
+## 结构化输出
+
+`scrape-json` 会返回丰富的元数据,包括:
+
+- `title`、`description`、`headings`、`headingsByLevel`、`links`
+- **结果分类:** `ok`、`empty`、`incomplete`、`authwall`、`challenge`、`blocked`、`cookie_wall`
+- `nextActionHint` — 当页面无法完全访问时建议的下一步操作
+
+`search` 会返回 `requestedLimit`、`returnedCount`、`warnings`、`cacheTtlMs`,以及每条结果的 `position`。
+
+---
+
+## 相关内容
+
+- [Web Unlocker SDK](/zh/scraping-api-sdk-and-cli) — 可用于编程调用的 TypeScript SDK
+- [什么是 Web Unlocker](/zh/what-is-web-unlocker) — 产品概览
+- [Agent Browser CLI](/zh/cli-tools/agent-browser) — 面向 AI 智能体的纯浏览器 CLI
+- [Local Agent Browser CLI](/zh/cli-tools/local-agent-browser) — 本地 Orbita CLI
+- [AI Skills](/zh/api-reference/ai-integrations/ai-skills) — 适用于 Claude Code 的即插即用技能
+
+<Card title="npm 包" icon="npm" href="https://www.npmjs.com/package/gologin-web-access">
+  gologin-web-access
+</Card>
+
+<Card title="源代码" icon="github" href="https://github.com/GologinLabs/gologin-web-access">
+  GologinLabs/gologin-web-access
+</Card>

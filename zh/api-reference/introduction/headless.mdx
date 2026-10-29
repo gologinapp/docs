@@ -1,0 +1,107 @@
+---
+title: '无头模式'
+---
+
+无头浏览器是没有图形用户界面（GUI）的网络浏览器。它在后台运行，通过代码或命令行界面以编程方式进行控制。无头浏览器可以执行所有标准的浏览器操作，例如渲染网页、执行 JavaScript 和处理 Cookie，但不会显示任何可视化组件。
+
+## 常见使用场景
+
+- 网页抓取和数据提取
+- Web 应用的自动化测试
+- 截取网页截图或生成网页 PDF
+- 性能监控和测试
+- 重复性网页任务的自动化
+
+## 优势
+
+- 资源消耗更低（无需渲染 GUI）
+- 执行速度比完整浏览器实例更快
+- 非常适合没有显示功能的服务器环境
+- 非常适合 CI/CD 流水线和自动化工作流
+
+无头浏览器常用于开发者工具、测试框架和自动化服务中，以编程方式与网页内容进行交互。
+
+# 无头模式示例
+<CodeGroup tag="iphey.com" label="检查可信度状态">
+
+```js Node.js
+// SDK will prepare the browser and will start it on your machine then you can control it with puppeteer
+import { GologinApi } from 'gologin';
+
+const token = process.env.GL_API_TOKEN || 'your dev token here';
+const gologin = GologinApi({
+  token,
+});
+
+async function main() {
+  const { browser } = await gologin.launch({
+    extra_params: ['--headless'],
+    // pass profileId parameter if you want to run particular profile
+    // profileId: 'your profileId here',
+  });
+
+  const page = await browser.newPage();
+
+  await page.goto('https://iphey.com/', { waitUntil: 'networkidle2' });
+  const status = await page.$eval('.trustworthy:not(.hide)',
+    (elt) => elt?.innerText?.trim(),
+  );
+
+  await new Promise((resolve) => setTimeout(resolve, 10000));
+  console.log('status', status);
+
+  return status;
+}
+
+main().catch(console.error)
+  .finally(gologin.exit);
+```
+
+```python Python
+import time
+from gologin import GoLogin
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+
+
+# Initialize GoLogin
+gl = GoLogin({
+	"token": "your dev token",
+  "extra_params": ["--headless"]
+})
+profile = gl.createProfileRandomFingerprint({ "os": "win" })
+profile_id = profile.get('id')
+gl.setProfileId(profile_id)
+# Add proxy to the profile
+gl.addGologinProxyToProfile(profile_id, "us")
+
+# Start Browser and get websocket url
+debugger_address = gl.start()
+
+# Get Chromium version for webdriver
+chromium_version = gl.get_chromium_version()
+
+
+# Install webdriver
+service = Service(ChromeDriverManager(driver_version=chromium_version).install())
+
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_experimental_option("debuggerAddress", debugger_address)
+
+driver = webdriver.Chrome(service=service, options=chrome_options)
+
+# Give command to Selenium to open the page
+driver.get("http://www.python.org")
+
+time.sleep(30)
+driver.quit()
+time.sleep(10)
+
+gl.delete(profile_id)
+
+gl.stop()
+
+```
+
+</CodeGroup>

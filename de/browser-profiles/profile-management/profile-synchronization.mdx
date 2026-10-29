@@ -1,0 +1,40 @@
+---
+title: "Profilsynchronisierung"
+---
+
+Mit der **Profilsynchronisierung** in Gologin werden Ihre Browserprofile – inklusive aller Fingerprints, Cookies, lokalem Speicher (Local Storage) und Erweiterungen – automatisch in der Cloud gespeichert. Das bedeutet:
+
+- Sie können **über das Web oder auf jedem Gerät auf dasselbe Profil zugreifen**, auf dem Gologin installiert ist
+- Ihre Teammitglieder können **gemeinsam an geteilten Profilen arbeiten**
+- Profile bleiben **konsistent**, egal von wo aus sie gestartet werden
+
+## So funktioniert die Synchronisierung
+
+Wenn ein Profil ordnungsgemäß geschlossen wird, lädt Gologin die aktuellen Profildaten auf Cloud-Server hoch. Beim nächsten Start des Profils wird der gespeicherte Zustand wiederhergestellt. So bleiben Ihre Sitzungsdaten, Cookies und der Browserzustand konsistent.
+
+## So verwenden Sie Ihre Profile sicher
+
+- **Stellen Sie sicher, dass die Synchronisierung abgeschlossen ist, bevor Sie herunterfahren.**\
+  Der Status sollte **ready** anzeigen und die Schaltfläche **Run** beim Profil sollte aktiv sein. Dann sind die Profildaten synchronisiert.
+- **Schließen Sie die Profile, bevor Sie den Computer herunterfahren oder die App beenden.**\
+  Schließen Sie Profile, indem Sie das **Profilfenster schließen** oder in der App auf **Stop** klicken, damit die Synchronisierung abgeschlossen wird.
+- **Verwenden Sie ein Profil nicht gleichzeitig auf verschiedenen Geräten.**\
+  Das ist zwar möglich, wird aber nicht empfohlen: Nur eines der gleichzeitig gestarteten Profile kann mit den Cloud-Servern synchronisiert werden. Dadurch können Abweichungen zwischen den im Profil gespeicherten Daten und den Daten entstehen, die die Website erwartet. Das kann Ihren Trust Score senken.
+- **Schließen Sie das Profil nicht, solange keine Internetverbindung besteht.**\
+  Ist die Synchronisierung nicht abgeschlossen, können Sie den aktuellen Fortschritt verlieren und müssen Daten aus früheren Sitzungen wiederherstellen.
+
+<Frame>
+  ![Profile Sync Wait For Ready](/images/profile_sync_wait_for_ready.gif)
+</Frame>
+
+## Sicherheitsregeln für die Synchronisierung
+
+Damit Ihre Profildaten unversehrt bleiben, beachten Sie diese Regeln:
+
+- Stellen Sie sicher, dass die Synchronisierung abgeschlossen ist, bevor Sie die Anwendung beenden
+- Warten Sie, bis der Profilstatus Ready anzeigt
+- Schließen Sie Profile immer, bevor Sie den Computer herunterfahren
+- Führen Sie dasselbe Profil nicht gleichzeitig auf mehreren Geräten aus
+- Schließen Sie Profile nicht, wenn Ihre Internetverbindung instabil ist
+
+Wenn dasselbe Profil gleichzeitig auf verschiedenen Geräten ausgeführt wird, kann es zu Inkonsistenzen in den gespeicherten Sitzungsdaten kommen.

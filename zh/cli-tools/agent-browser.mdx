@@ -1,0 +1,378 @@
+---
+title: "Gologin Agent Browser CLI"
+description: "专为 AI 智能体打造的云浏览器自动化 CLI，支持快照、引用（ref）和常驻守护进程"
+---
+
+Gologin Agent Browser CLI 将 Gologin Cloud Browser 变成适用于 AI 智能体的持久化、可脚本化运行环境。它提供精简的页面快照、基于 ref 的交互、会话记忆以及便于 Shell 使用的输出。
+
+与从零开始编写 Puppeteer/Playwright 代码不同，这个 CLI 为智能体提供了一套现成的浏览器自动化命令，无需样板代码，也无需编写会话管理代码。
+
+---
+
+## 为什么选择云浏览器
+
+本地浏览器自动化在智能体工作流中存在明显的局限：
+
+- 本地浏览器更容易被检测
+- 没有基于配置文件的指纹
+- 没有持久化的云端浏览器配置文件
+- 没有内置的代理层
+- 难以在不同智能体和环境之间实现标准化
+
+Agent Browser CLI 采用了相反的思路：
+
+- 使用云浏览器运行环境，而不是本地进程
+- 以 Gologin 配置文件作为会话身份层
+- 支持代理的会话
+- 继承 Gologin 的反检测能力
+- 常驻守护进程可在多次 CLI 调用之间保持会话不中断
+
+---
+
+## 安装
+
+```bash
+npm install -g gologin-agent-browser-cli
+```
+
+或者无需全局安装，直接运行：
+
+```bash
+npx gologin-agent-browser-cli --help
+```
+
+需要 Node.js >= 18。
+
+---
+
+## 凭据
+
+| 变量 | 是否必需 | 说明 |
+|---|---|---|
+| `GOLOGIN_TOKEN` | 是（用于 `open`） | Gologin API 令牌 |
+| `GOLOGIN_PROFILE_ID` | 可选 | 默认配置文件 ID |
+| `GOLOGIN_DAEMON_PORT` | 可选 | 守护进程端口（默认：`44777`） |
+| `GOLOGIN_CONNECT_BASE` | 可选 | Cloud Browser 端点 |
+
+### 获取令牌
+
+1. 在 [gologin.com](https://gologin.com) 注册或登录
+2. 在控制台中打开 **API & MCP**
+3. 打开 **API** 标签页
+4. 点击 **新代币**
+5. 复制生成的访问令牌
+
+```bash
+export GOLOGIN_TOKEN='your_gologin_token'
+```
+
+### 配置文件
+
+`~/.gologin-agent-browser/config.json`
+
+---
+
+## 架构
+
+由两部分组成：
+
+1. **`gologin-agent-browser` CLI**：解析命令，自动启动守护进程，输出精简结果
+2. **常驻本地守护进程**：管理运行中的浏览器会话，通过 Playwright 的 `connectOverCDP` 连接到 Gologin Cloud Browser，在内存中保存当前活动页面，生成快照，解析 ref，并跟踪会话元数据
+
+传输方式仅限本地：
+- Unix socket，位于 `${TMPDIR:-/tmp}/gologin-agent-browser.sock`
+- 本地主机 HTTP，地址为 `127.0.0.1:${GOLOGIN_DAEMON_PORT:-44777}`
+
+如果不提供配置文件 ID，守护进程会通过 API 创建一个临时的 Gologin 云端配置文件。
+
+---
+
+## ref 的工作方式
+
+`snapshot` 会输出精简的页面视图，并为可交互元素分配 `@e1`、`@e2`、`@e3` 这样的 ref。你可以直接对它们进行操作：
+
+```bash
+gologin-agent-browser snapshot
+# output shows page content with refs like @e1, @e2, @e3...
+
+gologin-agent-browser click @e3
+gologin-agent-browser type @e5 "search query"
+gologin-agent-browser fill @e7 "username"
+```
+
+ref 为尽力而为（best-effort）的机制，在页面导航或 DOM 发生重大变化后应重新生成。在动态页面上，通常使用 `find` 比使用已失效的 ref 更可靠。
+
+---
+
+## 快速开始
+
+```bash
+export GOLOGIN_TOKEN='your_token'
+
+# open a page in cloud browser
+gologin-agent-browser open https://example.com
+
+# read the page as a compact snapshot
+gologin-agent-browser snapshot
+
+# interact with elements
+gologin-agent-browser click @e3
+gologin-agent-browser type @e5 "hello world"
+
+# take a screenshot
+gologin-agent-browser screenshot ./page.png
+
+# close the session
+gologin-agent-browser close
+```
+
+---
+
+## 智能体循环示例
+
+典型的 AI 智能体循环：
+
+```
+1. open <url>
+2. snapshot          → agent reads page content
+3. click/type/fill   → agent acts on refs
+4. snapshot          → agent reads result
+5. repeat 3-4 as needed
+6. screenshot        → save artifact
+7. close
+```
+
+---
+
+## 完整命令参考
+
+### 诊断
+
+| 命令 | 说明 |
+|---|---|
+| `doctor` | 检查守护进程的运行状况和连接情况 |
+
+### 会话管理
+
+| 命令 | 说明 |
+|---|---|
+| `open <url>` | 在云浏览器会话中打开 URL |
+| `close` | 关闭当前会话 |
+| `sessions` | 列出活动会话 |
+| `current` | 显示当前会话信息 |
+
+### 页面读取
+
+| 命令 | 说明 |
+|---|---|
+| `snapshot` | 带元素 ref 的精简文本快照 |
+| `screenshot <path>` | 保存页面截图 |
+| `pdf <path>` | 将页面保存为 PDF |
+| `get <kind> [target]` | 获取页面属性 |
+
+### 交互
+
+| 命令 | 说明 |
+|---|---|
+| `click <ref>` | 点击元素 |
+| `dblclick <ref>` | 双击 |
+| `type <ref> <text>` | 输入文本（追加） |
+| `fill <ref> <text>` | 填写输入框（替换） |
+| `hover <ref>` | 悬停在元素上 |
+| `select <ref> <value>` | 选择下拉菜单的值 |
+| `check <ref>` / `uncheck <ref>` | 切换复选框 |
+| `focus <ref>` | 聚焦元素 |
+| `find ...` | 语义化元素搜索 |
+
+### 键盘与滚动
+
+| 命令 | 说明 |
+|---|---|
+| `press <key> [target]` | 按下键盘按键 |
+| `scroll <direction> [pixels]` | 滚动页面 |
+| `scrollintoview <ref>` | 将元素滚动到可见区域 |
+
+### 导航
+
+| 命令 | 说明 |
+|---|---|
+| `back` | 后退 |
+| `forward` | 前进 |
+| `reload` | 重新加载页面 |
+| `wait <target\|ms>` | 等待元素出现或超时 |
+
+### 标签页
+
+| 命令 | 说明 |
+|---|---|
+| `tabs` | 列出已打开的标签页 |
+| `tabopen [url]` | 打开新标签页 |
+| `tabfocus <index>` | 切换到某个标签页 |
+| `tabclose [index]` | 关闭标签页 |
+
+### Cookie 与存储
+
+| 命令 | 说明 |
+|---|---|
+| `cookies` | 导出 Cookie |
+| `cookies-import <file>` | 导入 Cookie |
+| `cookies-clear` | 清除 Cookie |
+| `storage-export [path]` | 导出 localStorage |
+| `storage-import <file>` | 导入 localStorage |
+| `storage-clear` | 清除 localStorage |
+
+### 高级
+
+| 命令 | 说明 |
+|---|---|
+| `eval <expression>` | 在页面中执行 JavaScript |
+| `upload <ref> <file...>` | 上传文件 |
+
+### 别名
+
+| 别名 | 对应命令 |
+|---|---|
+| `goto`, `navigate` | `open` |
+| `tabnew` | `tabopen` |
+| `tabswitch` | `tabfocus` |
+| `js` | `eval` |
+| `key` | `press` |
+| `scrollinto` | `scrollintoview` |
+| `quit`, `exit` | `close` |
+
+---
+
+## 使用场景与示例
+
+### 检查你的网站能否通过反检测测试
+
+```bash
+gologin-agent-browser open https://iphey.com/ --profile your_profile_id
+gologin-agent-browser wait 3000
+gologin-agent-browser snapshot     # read the trust score
+gologin-agent-browser screenshot ./iphey-result.png
+gologin-agent-browser close
+```
+
+### 登录 Web 应用并提取仪表盘数据
+
+```bash
+gologin-agent-browser open https://app.example.com/login
+gologin-agent-browser snapshot
+
+# agent reads snapshot, finds login form
+gologin-agent-browser fill @e4 "user@company.com"
+gologin-agent-browser fill @e6 "password"
+gologin-agent-browser click @e8
+
+gologin-agent-browser wait 3000
+gologin-agent-browser snapshot     # agent reads dashboard content
+
+# navigate to the report page
+gologin-agent-browser click @e12   # "Reports" link
+gologin-agent-browser wait 2000
+gologin-agent-browser snapshot     # agent extracts report data
+gologin-agent-browser screenshot ./report.png
+gologin-agent-browser close
+```
+
+### 填写多步骤表单
+
+```bash
+gologin-agent-browser open https://forms.example.com/apply
+
+# step 1: personal info
+gologin-agent-browser snapshot
+gologin-agent-browser fill @e3 "John Doe"
+gologin-agent-browser fill @e5 "john@example.com"
+gologin-agent-browser select @e7 "United States"
+gologin-agent-browser click @e9   # Next
+
+# step 2: upload and submit
+gologin-agent-browser wait 1000
+gologin-agent-browser snapshot
+gologin-agent-browser upload @e4 ./resume.pdf
+gologin-agent-browser check @e6   # agree to terms
+gologin-agent-browser click @e8   # Submit
+
+gologin-agent-browser wait 2000
+gologin-agent-browser snapshot     # confirm success
+gologin-agent-browser close
+```
+
+### 截取竞争对手页面的截图
+
+```bash
+# use different profiles with different geos
+for profile in us_profile de_profile jp_profile; do
+  gologin-agent-browser open https://competitor.com --profile $profile
+  gologin-agent-browser wait 3000
+  gologin-agent-browser screenshot ./${profile}-homepage.png
+  gologin-agent-browser close
+done
+```
+
+### 在阻止抓取的网站上搜索
+
+有些网站需要先执行 JavaScript、登录或进行交互，才会显示结果。可以使用浏览器进行搜索：
+
+```bash
+gologin-agent-browser open https://protected-directory.com
+gologin-agent-browser snapshot
+gologin-agent-browser find "search input"
+gologin-agent-browser type @found "machine learning engineer San Francisco"
+gologin-agent-browser press Enter
+gologin-agent-browser wait 3000
+gologin-agent-browser snapshot     # agent reads search results
+gologin-agent-browser screenshot ./search-results.png
+gologin-agent-browser close
+```
+
+### 保存和恢复会话状态
+
+导出 Cookie 和存储数据，以便在不同会话中重复使用：
+
+```bash
+# after logging in
+gologin-agent-browser cookies --output ./session-cookies.json
+gologin-agent-browser storage-export ./session-storage.json
+gologin-agent-browser close
+
+# later, restore the session
+gologin-agent-browser open https://app.example.com
+gologin-agent-browser cookies-import ./session-cookies.json
+gologin-agent-browser storage-import ./session-storage.json
+gologin-agent-browser reload
+gologin-agent-browser snapshot     # already logged in
+```
+
+---
+
+## 并行会话
+
+对于相互独立的云端任务，请使用显式的 `--session` ID。可使用 `close --all` 或 `sessions --prune --older-than-ms` 进行清理。
+
+---
+
+## 代理规则
+
+- 预先配置的配置文件：代理通过 Gologin 控制台或 API 设置在配置文件上
+- 临时配置文件：支持不使用代理，或使用自定义代理主机/端口
+- `--proxy-country` 仅适用于预先配置的配置文件
+
+---
+
+## 相关内容
+
+- [Gologin Web Access CLI](/zh/cli-tools/web-access)：统一 CLI（抓取 + 浏览器）
+- [Local Agent Browser CLI](/zh/cli-tools/local-agent-browser)：基于本地 Orbita 的替代方案
+- [Cloud Browser 入门](/zh/api-reference/cloud-browser/getting-started)：Puppeteer/Playwright 示例
+- [AI Skills](/zh/api-reference/ai-integrations/ai-skills)：适用于 Claude Code 的即插即用技能
+
+<Card title="npm 包" icon="npm" href="https://www.npmjs.com/package/gologin-agent-browser-cli">
+  gologin-agent-browser-cli
+</Card>
+
+<Card title="源代码" icon="github" href="https://github.com/GologinLabs/agent-browser">
+  GologinLabs/agent-browser
+</Card>

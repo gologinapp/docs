@@ -1,0 +1,97 @@
+---
+title: "Configuración avanzada del perfil"
+---
+
+La pestaña **Advanced** te da control directo sobre los parámetros individuales de la huella digital que Gologin gestiona para cada perfil. La mayoría de los usuarios no necesitará tocar nada de esto: los perfiles funcionan bien con la configuración predeterminada en la mayoría de los sitios.
+
+<Warning>
+  Cambia estos ajustes solo si tienes un motivo concreto y entiendes lo que estás modificando. Algunos cambios pueden mejorar cómo ve un sitio determinado a un perfil, pero los valores incorrectos también pueden hacer que un perfil parezca sospechoso o que el sitio deje de funcionar correctamente. Antes de experimentar aquí, te recomendamos informarte primero sobre las prácticas de multicuentas en foros y grupos de la comunidad especializados.
+</Warning>
+
+Puedes acceder a la pestaña Advanced haciendo clic en **3 dots on the profile** \> **Settings** \> **Advanced**.
+
+## Navigator
+
+Esta sección controla los parámetros del navegador y del sistema que el perfil comunica a los sitios web.
+
+**User-Agent** - La cadena que identifica tu navegador y sistema operativo ante cada sitio web que visitas. Si tienes varios perfiles con el mismo sistema operativo y la misma versión del navegador, es posible que compartan el mismo user-agent, y eso es normal. Solo existe un número limitado de combinaciones válidas, y Gologin diferencia los perfiles mediante otros parámetros de la huella digital.
+
+**Screen Resolution** - El tamaño de pantalla que comunica el perfil. Evita establecer un valor superior a la resolución real de tu monitor, ya que la discrepancia puede ser una señal detectable. La ventana del navegador no se puede redimensionar más allá de este valor, así que, si necesitas una ventana más grande, aumenta aquí la resolución. Consulta [¿Por qué no puedo expandir la ventana del navegador a pantalla completa?](/es/faq-profile-managment#why-cant-i-expand-the-browser-window-to-full-screen)
+
+**Languages** - El idioma del sistema que se comunica a los sitios web. Cuando está en **Based on IP**, sigue automáticamente el idioma asociado a la ubicación del proxy. Si lo configuras manualmente, ten en cuenta que en todos los sistemas excepto macOS esto también cambia el idioma de la interfaz del navegador; en macOS, el navegador siempre sigue la configuración de idioma real del sistema.
+
+**Platform** - Comunica el sistema operativo a los sitios web. Refleja el sistema operativo elegido al crear el perfil y no se puede cambiar en un perfil existente.
+
+**CPU Threads** y **RAM** - Son los valores de hardware que el navegador comunica a los sitios web. Cambiarlos no afecta al rendimiento real del navegador: solo determinan lo que se comunica, no lo que se utiliza.
+
+**DoNotTrack** - Envía a los sitios web una señal de "No rastrear" (Do Not Track). La mayoría de los sitios web ignoran esta señal, y tenerla activada puede convertirse en un dato más de la huella digital, ya que no es habitual entre los usuarios comunes.
+
+## Fonts
+
+Los sitios web pueden preguntar al navegador qué fuentes están instaladas en el sistema y usar la lista resultante como huella digital.
+
+**Enable fonts list masking** - Cuando está activado, Gologin presenta a los sitios web la lista de fuentes propia del perfil, cuidadosamente seleccionada, en lugar de las fuentes realmente instaladas en tu equipo. La lista actual se muestra debajo del interruptor y se puede editar manualmente con el botón **Edit**.
+
+Se recomienda dejar esta opción activada. Si la desactivas, expones las fuentes reales de tu sistema a todos los sitios que visite el perfil.
+
+## Mask Media Devices
+
+Los sitios web y las aplicaciones web pueden detectar cuántas cámaras, micrófonos y altavoces hay conectados a tu dispositivo.
+
+**Mask Media Devices** - Cuando está activado, el perfil comunica un conjunto fijo de dispositivos multimedia en lugar de los reales. Puedes establecer de forma independiente el número comunicado de **Video Inputs** (cámaras), **Audio Inputs** (micrófonos) y **Audio Outputs** (altavoces).
+
+El valor predeterminado es 1 para cada uno, lo que corresponde a una configuración típica de un solo dispositivo.
+
+## Hardware
+
+Esta sección controla cómo responde el perfil a las técnicas de fingerprinting que analizan el renderizado gráfico y de audio del navegador. Las señales se generan ejecutando pequeñas tareas en el motor de renderizado del navegador y comparando el resultado: cada dispositivo produce resultados ligeramente distintos.
+
+<Note>
+  La configuración predeterminada de esta sección es segura para la mayoría de los casos de uso. Se trata de controles avanzados de fingerprinting, y es más probable que cambiarlos de forma incorrecta haga que un perfil parezca inusual a que lo mejore.
+</Note>
+
+**Canvas** - Controla cómo gestiona el perfil el fingerprinting mediante canvas. Las opciones son **Noise** (añade pequeñas variaciones aleatorias al resultado del renderizado), **Off** (devuelve el resultado normal sin modificaciones) y **Block** (impide por completo el acceso a la API de canvas). Bloquear canvas es detectable por sí mismo y no se recomienda.
+
+**Client Rects** - Similar a canvas, pero actúa sobre cómo mide el navegador la posición y el tamaño de los elementos de una página. **Noise** u **Off**.
+
+**Audio Context** - Controla la huella digital del renderizado de audio. Se le puede pedir al navegador que procese audio y el resultado es ligeramente único en cada dispositivo. **Noise** añade una variación mínima; **Off** lo deja sin modificar.
+
+**WebGL Image** - Controla el resultado visual del renderizado WebGL, que varía según la GPU. **Noise** u **Off**.
+
+**WebGL Metadata** - Controla las cadenas de proveedor y de renderizador de la GPU que comunica WebGL. **Mask** sustituye los valores reales por los que se indican en los campos **WebGL Vendor** y **WebGL Renderer** que aparecen debajo. **Real** transmite la información real de tu GPU.
+
+## Storage Options
+
+Estos interruptores controlan qué puede guardar cada perfil entre sesiones.
+
+**Enable Local Storage** - Permite que los sitios web almacenen datos en el almacenamiento local del navegador. Muchos sitios dependen de esto para las sesiones de inicio de sesión y las preferencias. Desactivarlo puede hacer que algunas aplicaciones web dejen de funcionar.
+
+**Enable IndexedDB** - Permite que los sitios web usen una base de datos más estructurada en el lado del navegador. También la utilizan muchas aplicaciones web modernas. Actívalo si tienes problemas con la persistencia de la sesión.
+
+**Enable Extension storage** - Permite que las extensiones instaladas guarden sus propios datos entre sesiones.
+
+## Browser Plugins
+
+**Enable potentially vulnerable plugins** - Activa complementos del navegador como el visor de PDF de Adobe y Widevine (utilizado para vídeo protegido con DRM). Están desactivados de forma predeterminada porque las interfaces de complementos más antiguas han sido históricamente vectores de fingerprinting. Actívalo si necesitas ver PDF o reproducir vídeo protegido dentro del perfil.
+
+## Other
+
+**Enable Google services** - Permite que el perfil se conecte en segundo plano a los servicios de Google (corrector ortográfico, Safe Browsing, etc.). La mayoría de los usuarios puede dejarlo activado.
+
+**Disable image loading** y **Disable video autoplay** - Cuando están activados, el perfil no carga imágenes ni reproduce vídeos automáticamente en los sitios web. Esto reduce el tráfico de proxy que consume el perfil, lo cual es útil para scraping, automatización o cualquier trabajo en el que no necesites ver contenido multimedia. Ambos están desactivados de forma predeterminada. Disponible solo en los planes de pago.
+
+**Enable browser bookmark saving** - Indica si los marcadores creados o modificados durante una sesión se guardan al cerrar el perfil.
+
+**Enable browser history saving** - Indica si el historial de navegación se guarda entre sesiones.
+
+**Enable password saving** - Indica si el gestor de contraseñas integrado del navegador está activo en este perfil.
+
+**Enable System Extensions** - Cuando está activado, las extensiones instaladas en tu sistema operativo real se importan automáticamente al perfil al iniciarlo. Esto mostrará solicitudes de instalación al arrancar. Está desactivado de forma predeterminada y es mejor dejarlo así, salvo que realmente lo necesites.
+
+**Start URL** - Lo que abre el navegador al iniciar el perfil. Hay tres opciones: **Previously opened tabs** restaura lo que estaba abierto la última vez, **Open new tab page** empieza desde cero y **Open specified pages** abre una URL que tú defines.
+
+**Launch arguments** - Indicadores que se pasan al navegador al arrancar, del mismo tipo que los que se usan con Chrome normal (por ejemplo, `--disable-gpu` o `--start-maximized`). Déjalo en blanco si no sabes qué necesitas. Ten en cuenta que algunos argumentos están bloqueados y no surtirán efecto aunque los introduzcas.
+
+**Custom DNS** - Te permite especificar un servidor DNS para este perfil. Funciona con proxies SOCKS, conexiones VPN y conexiones directas. No funciona con proxies HTTP ni HTTPS.
+
+**WebRTC** - Controla cómo gestiona el navegador WebRTC, una tecnología utilizada para audio y vídeo en tiempo real que puede exponer tu dirección IP real incluso cuando hay un proxy activo. **Based on IP** alinea el comportamiento de WebRTC con la IP del proxy. **Off** desactiva WebRTC por completo, y algunos sitios requieren que esté activado para funcionar correctamente.

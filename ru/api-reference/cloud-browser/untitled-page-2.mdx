@@ -1,0 +1,104 @@
+---
+title: "Управление сессией браузера"
+---
+
+## Закрытие сессии
+
+Всегда закрывайте сессию, когда автоматизация завершена: это освобождает облачные ресурсы и помогает не превысить лимиты параллельных сессий.
+
+```javascript Puppeteer
+await browser.close();
+```
+
+```python Playwright
+await browser.close()
+```
+
+## Повторное использование сессии для нескольких операций
+
+Каждый вызов `puppeteer.connect()` или `connect_over_cdp()` запускает новую сессию. Если вы выполняете несколько операций последовательно (например, в рабочем процессе агента), используйте одно и то же подключение — иначе cookies, локальное хранилище и состояние страницы будут теряться между шагами.
+
+**Рекомендуемый подход — синглтон сессии:**
+
+```javascript Puppeteer
+// session.js
+const puppeteer = require('puppeteer-core');
+
+let _browser = null;
+let _page = null;
+
+async function getSession(token, profileId) {
+  if (_browser && _browser.isConnected()) {
+    return { browser: _browser, page: _page };
+  }
+
+  const url = `https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}`;
+  _browser = await puppeteer.connect({ browserWSEndpoint: url, defaultViewport: null });
+  const pages = await _browser.pages();
+  _page = pages[0] || await _browser.newPage();
+
+  return { browser: _browser, page: _page };
+}
+
+async function closeSession() {
+  if (_browser) {
+    await _browser.close();
+    _browser = null;
+    _page = null;
+  }
+}
+
+module.exports = { getSession, closeSession };
+```
+
+```python Playwright
+# session.py
+from playwright.async_api import async_playwright, Browser, Page
+
+_browser: Browser | None = None
+_page: Page | None = None
+_playwright = None
+
+async def get_session(token: str, profile_id: str):
+    global _browser, _page, _playwright
+
+    if _browser and _browser.is_connected():
+        return _browser, _page
+
+    url = f'https://cloudbrowser.gologin.com/connect?token={token}&profile={profile_id}'
+    _playwright = await async_playwright().start()
+    _browser = await _playwright.chromium.connect_over_cdp(url)
+    pages = _browser.contexts[0].pages if _browser.contexts else []
+    _page = pages[0] if pages else await _browser.new_page()
+
+    return _browser, _page
+
+async def close_session():
+    global _browser, _page, _playwright
+    if _browser:
+        await _browser.close()
+    if _playwright:
+        await _playwright.stop()
+    _browser = None
+    _page = None
+    _playwright = None
+```
+
+## Обработка разрывов соединения
+
+Сбои сети или тайм-ауты на стороне облака могут привести к разрыву соединения. Проверяйте подключение перед каждой операцией и при необходимости переподключайтесь:
+
+```javascript Puppeteer
+if (!browser.isConnected()) {
+  // reconnect
+  const { browser: b, page: p } = await getSession(token, profileId);
+}
+```
+
+## Параллельные сессии
+
+Каждая активная сессия учитывается в лимите параллельных сессий вашего тарифа. Чтобы избежать ошибок:
+- закрывайте сессии, когда они больше не нужны
+- не подключайтесь к одному и тому же профилю из нескольких процессов одновременно
+
+Лимиты запросов: https://gologin.com/docs/api-reference/limitations/rate-limits

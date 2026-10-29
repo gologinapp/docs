@@ -21,444 +21,4454 @@
     ]
   },
   "navigation": {
-    "tabs": [
+    "languages": [
       {
-        "tab": "Getting Started",
-        "groups": [
+        "language": "en",
+        "tabs": [
           {
-            "group": "Introduction",
-            "pages": [
-              "getting-started/introduction/what-is-gologin-and-who-its-for",
-              "getting-started/introduction/key-concepts-profiles-fingerprints-proxies",
-              "getting-started/introduction/quick-start-from-zero-to-your-first-profile",
-              "getting-started/introduction/extra-faq"
+            "tab": "Getting Started",
+            "groups": [
+              {
+                "group": "Introduction",
+                "pages": [
+                  "getting-started/introduction/what-is-gologin-and-who-its-for",
+                  "getting-started/introduction/key-concepts-profiles-fingerprints-proxies",
+                  "getting-started/introduction/quick-start-from-zero-to-your-first-profile",
+                  "getting-started/introduction/extra-faq"
+                ]
+              },
+              {
+                "group": "Setup",
+                "pages": [
+                  "getting-started/setup/supported-platforms-installation",
+                  "getting-started/setup/creating-gologin-account",
+                  "getting-started/setup/first-time-checklist"
+                ]
+              }
             ]
           },
           {
-            "group": "Setup",
-            "pages": [
-              "getting-started/setup/supported-platforms-installation",
-              "getting-started/setup/creating-gologin-account",
-              "getting-started/setup/first-time-checklist"
+            "tab": "Profiles & Proxies",
+            "groups": [
+              {
+                "group": "Browser Profiles",
+                "icon": "window-flip",
+                "pages": [
+                  {
+                    "group": "Overview",
+                    "expanded": true,
+                    "pages": [
+                      "what-is-a-browser-profile",
+                      "orbita-browser"
+                    ]
+                  },
+                  {
+                    "group": "Profile Management",
+                    "expanded": true,
+                    "pages": [
+                      "browser-profiles/profile-management/creating-and-launching-profiles",
+                      "browser-profiles/profile-management/editing-profiles",
+                      "browser-profiles/profile-management/cloning-profiles",
+                      "browser-profiles/profile-management/bulk-actions"
+                    ]
+                  },
+                  {
+                    "group": "Profile Organization",
+                    "pages": [
+                      "browser-profiles/profile-management/folders",
+                      "browser-profiles/profile-management/add-more-info-columns",
+                      "browser-profiles/profile-management/notes-and-tags",
+                      "browser-profiles/profile-management/profile-sorting",
+                      "browser-profiles/profile-management/profile-search"
+                    ]
+                  },
+                  {
+                    "group": "Profile Settings",
+                    "pages": [
+                      "profile-parameters",
+                      "general/account-and-billing/advanced-profile-settings",
+                      "default-profile-settings",
+                      "updating-your-browser-profile"
+                    ]
+                  },
+                  {
+                    "group": "Browser Cookies",
+                    "pages": [
+                      "browser-profiles/profile-features/browser-cookies/what-are-browser-cookies",
+                      "browser-profiles/profile-features/browser-cookies/cookies-import-and-export"
+                    ]
+                  },
+                  {
+                    "group": "Browser Extensions",
+                    "pages": [
+                      "browser-profiles/profile-features/browser-extensions/browser-extensions",
+                      "browser-profiles/profile-features/browser-extensions/adding-browser-extensions",
+                      "browser-profiles/profile-features/browser-extensions/installing-custom-extensions"
+                    ]
+                  },
+                  {
+                    "group": "Profile Sync & Recovery",
+                    "pages": [
+                      "browser-profiles/profile-management/profile-synchronization",
+                      "browser-profiles/profile-management/restore-browser-sessions",
+                      "browser-profiles/profile-management/restore-deleted-profiles"
+                    ]
+                  },
+                  {
+                    "group": "Profile Export & Import",
+                    "pages": [
+                      "export-and-import-overview",
+                      "profile-export-and-import"
+                    ]
+                  },
+                  "faq-profile-managment"
+                ]
+              },
+              {
+                "group": "Profile Features",
+                "icon": "aperture",
+                "pages": [
+                  "browser-profiles/profile-features/cookie-bot",
+                  "browser-profiles/profile-features/run-with-sync",
+                  "human-typing-simulation",
+                  "proxy-devices-overview",
+                  "browser-profiles/profile-features/browser-cookies/run-in-cloud"
+                ]
+              },
+              {
+                "group": "Proxies",
+                "icon": "network-wired",
+                "pages": [
+                  {
+                    "group": "Proxy Basics",
+                    "pages": [
+                      "proxy/introduction/what-is-a-proxy",
+                      "residential-mobile-or-datacenter",
+                      "private-vs-shared",
+                      "proxy-protocols",
+                      "static-vs-dynamic-proxies",
+                      "proxy/introduction/best-proxy-for-your-case",
+                      "proxy/introduction/vpn-vs-proxy"
+                    ]
+                  },
+                  {
+                    "group": "Proxy Management",
+                    "expanded": true,
+                    "pages": [
+                      "proxy/proxy-management/proxy-manager/overview",
+                      "proxy/proxy-management/adding-proxies",
+                      "proxy/proxy-management/proxy-manager/navigation",
+                      "proxy/proxy-management/proxy-manager/proxies-page",
+                      "proxy/proxy-management/proxy-manager/proxy-archive",
+                      "proxy/proxy-management/proxy-testing-and-troubleshooting"
+                    ]
+                  },
+                  "proxy/proxy-management/recommended-proxy-providers",
+                  "proxy/proxy-management/faq-proxies"
+                ]
+              },
+              {
+                "group": "Gologin Proxies",
+                "icon": "g",
+                "pages": [
+                  {
+                    "group": "Gologin Proxy Basics",
+                    "pages": [
+                      "proxy/gologin-proxies/what-are-gologin-proxies",
+                      "proxy/gologin-proxies/how-gologin-proxies-work-and-what-they-offer",
+                      "proxy/proxy-management/gologin-vs-3rd-party-proxies",
+                      "proxy/gologin-proxies/how-much-proxy-traffic-do-i-need"
+                    ]
+                  },
+                  {
+                    "group": "Managing Gologin Proxies",
+                    "expanded": true,
+                    "pages": [
+                      "proxy/gologin-proxies/purchasing-gologin-proxies",
+                      "proxy/gologin-proxies/gologin-proxy-management/adding-your-first-proxy",
+                      "proxy/gologin-proxies/gologin-proxy-management/gologin-proxy-settings",
+                      "proxy/gologin-proxies/website-compatibility-checker"
+                    ]
+                  },
+                  "proxy/gologin-proxies/faq-gologin-proxies"
+                ]
+              },
+              {
+                "group": "Fingerprints",
+                "icon": "user-alien",
+                "pages": [
+                  "how-browser-fingerprints-work",
+                  "profile-fingerprint-settings",
+                  "whats-safe-to-change"
+                ]
+              },
+              {
+                "group": "Android Anti-Detect",
+                "hidden": true,
+                "pages": [
+                  "overview",
+                  "mobile-vs-desktop",
+                  "use-cases",
+                  "limitations"
+                ]
+              },
+              {
+                "group": "Gologin Web app",
+                "icon": "cloud",
+                "pages": [
+                  "gologin-web-overview",
+                  "key-things-to-note",
+                  "downloading-and-uploading-files",
+                  "faq-web-app-and-cloud-browser",
+                  "upgrading-cloud-browser-limits"
+                ]
+              },
+              {
+                "group": "Gologin Android app",
+                "icon": "mobile",
+                "pages": [
+                  "gologin-android-overview",
+                  "creating-and-managing-profiles",
+                  "account-and-app-settings",
+                  "user-agent-on-android",
+                  "faq"
+                ]
+              }
             ]
-          }
-        ]
-      },
-      {
-        "tab": "Profiles & Proxies",
-        "groups": [
+          },
           {
-            "group": "Browser Profiles",
-            "icon": "window-flip",
+            "tab": "Account & Collaboration",
             "pages": [
+              {
+                "group": "Team Collaboration",
+                "icon": "users",
+                "expanded": true,
+                "pages": [
+                  "general/team-collaboration/how-you-can-share-access",
+                  {
+                    "group": "Access to Workspace and Folders",
+                    "expanded": true,
+                    "pages": [
+                      "general/team-collaboration/team-members",
+                      "general/team-collaboration/workspace-access",
+                      "general/team-collaboration/accessing-shared-workspace-or-folders"
+                    ]
+                  },
+                  {
+                    "group": "Profile Sharing",
+                    "expanded": true,
+                    "pages": [
+                      "general/team-collaboration/sharing-profiles",
+                      "general/team-collaboration/accessing-shared-profiles",
+                      "general/team-collaboration/untitled-page"
+                    ]
+                  },
+                  "general/team-collaboration/faq-team-collaboration"
+                ]
+              },
+              {
+                "group": "Account settings",
+                "icon": "user",
+                "expanded": true,
+                "pages": [
+                  "general/account-and-billing/overview",
+                  "general/account-and-billing/changing-your-email-and-pass",
+                  "general/account-and-billing/two-factor-authentication",
+                  "general/account-and-billing/affiliate-program",
+                  "general/account-and-billing/active-sessions-1",
+                  "general/account-and-billing/cloud-browser-usage"
+                ]
+              },
+              {
+                "group": "Workspaces",
+                "icon": "list-dropdown",
+                "pages": [
+                  "general/team-collaboration/workspaces",
+                  "general/account-and-billing/workspace-settings"
+                ]
+              },
+              {
+                "group": "Pricing & Subscription",
+                "icon": "money-bill",
+                "pages": [
+                  "general/account-and-billing/pricing",
+                  "general/account-and-billing/how-to-subscribe-to-gologin",
+                  "general/account-and-billing/change-plan",
+                  "general/account-and-billing/promo-codes",
+                  "general/account-and-billing/payment-methods",
+                  "general/account-and-billing/invoices",
+                  "general/account-and-billing/faq-subscription"
+                ]
+              },
+              {
+                "group": "Troubleshooting",
+                "icon": "wrench",
+                "expanded": true,
+                "pages": [
+                  "general/troubleshooting/common-errors",
+                  "general/troubleshooting/proxy-not-working",
+                  "general/troubleshooting/profile-data-disappeared",
+                  "general/troubleshooting/wrong-ip-my-ip-is-leaking",
+                  "general/troubleshooting/wrong-proxy-location",
+                  "general/troubleshooting/payments-and-subscription"
+                ]
+              },
+              {
+                "group": "General",
+                "pages": [
+                  "general/storage-and-cache",
+                  "general/migration-from-other-tools",
+                  "general/gologin-web-and-chrome-os",
+                  "general/updating-the-gologin-app",
+                  "general/data-safety"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Guides & Best Practices",
+            "pages": [
+              {
+                "group": "Fundamentals",
+                "pages": [
+                  "best-practices-overview",
+                  "how-gologin-protects-your-identity",
+                  "maintaining-trust-score",
+                  "profile-hygiene-checklist",
+                  "common-mistakes-to-avoid",
+                  "facebook-meta-ads-1"
+                ]
+              },
+              {
+                "group": "Usage Patterns",
+                "pages": [
+                  "creating-new-accounts-safely",
+                  "managing-existing-accounts"
+                ]
+              },
+              {
+                "group": "Platform Guides",
+                "pages": [
+                  "facebook-meta-ads",
+                  "tik-tok-ads",
+                  "google-ads-and-gmail",
+                  "amazon-e-bay-shopify",
+                  "reddit-quora",
+                  "linkedin",
+                  "crypto-and-kyc",
+                  "web-scraping-targets",
+                  "proxy-and-fingerprint-setup-per-platform"
+                ]
+              },
+              {
+                "group": "Templates",
+                "pages": [
+                  "prebuilt-profiles",
+                  "sample-team-setups"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Automation & API",
+            "groups": [
+              {
+                "group": "Introduction",
+                "pages": [
+                  "api-reference/introduction/quickstart",
+                  "api-reference/introduction/headless",
+                  "api-reference/introduction/cloud-launch-vs-local-launch",
+                  "api-reference/introduction/gologin-proxies"
+                ]
+              },
+              {
+                "group": "API Reference",
+                "openapi": "https://docs-download.gologin.com/openapi.json"
+              },
+              {
+                "group": "Scraping API & Web Unlocker",
+                "pages": [
+                  "what-is-web-unlocker",
+                  "web-unlocker-quick-start",
+                  "web-unlocker-use-cases",
+                  "scraping-api-sdk-and-cli"
+                ]
+              },
+              {
+                "group": "Node.js SDK",
+                "pages": [
+                  "api-reference/sdks/nodejs-sdk",
+                  "api-reference/sdks/nodejs-puppeteer-exmaple",
+                  "api-reference/sdks/nodejs-cloud-puppeteer-example",
+                  "api-reference/sdks/nodejs-changelog"
+                ]
+              },
+              {
+                "group": "Python SDK",
+                "pages": [
+                  "api-reference/sdks/python-sdk",
+                  "api-reference/sdks/python-selenium-example",
+                  "api-reference/sdks/python-changelog"
+                ]
+              },
+              {
+                "group": "Limitations",
+                "pages": [
+                  "api-reference/limitations/rate-limits"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Cloud Browser",
+            "pages": [
+              "api-reference/cloud-browser/what-is-gologin-cloud-browser",
+              "api-reference/cloud-browser/what-is-headless-browser",
+              "api-reference/cloud-browser/getting-started",
+              "api-reference/cloud-browser/scraping",
+              "api-reference/cloud-browser/untitled-page-1",
+              "api-reference/cloud-browser/untitled-page-2",
+              "api-reference/cloud-browser/live",
+              "api-reference/cloud-browser/untitled-page-3"
+            ]
+          },
+          {
+            "tab": "AI & Agents",
+            "groups": [
               {
                 "group": "Overview",
-                "expanded": true,
                 "pages": [
-                  "what-is-a-browser-profile",
-                  "orbita-browser"
+                  "ai/overview"
                 ]
               },
               {
-                "group": "Profile Management",
-                "expanded": true,
+                "group": "Connect",
                 "pages": [
-                  "browser-profiles/profile-management/creating-and-launching-profiles",
-                  "browser-profiles/profile-management/editing-profiles",
-                  "browser-profiles/profile-management/cloning-profiles",
-                  "browser-profiles/profile-management/bulk-actions"
+                  "api-reference/ai-integrations/mcp-server",
+                  "api-reference/ai-integrations/ai-skills"
                 ]
               },
               {
-                "group": "Profile Organization",
+                "group": "CLI Tools",
                 "pages": [
-                  "browser-profiles/profile-management/folders",
-                  "browser-profiles/profile-management/add-more-info-columns",
-                  "browser-profiles/profile-management/notes-and-tags",
-                  "browser-profiles/profile-management/profile-sorting",
-                  "browser-profiles/profile-management/profile-search"
+                  "cli-tools/web-access",
+                  "cli-tools/agent-browser",
+                  "cli-tools/local-agent-browser"
                 ]
               },
               {
-                "group": "Profile Settings",
+                "group": "Integration Guides",
                 "pages": [
-                  "profile-parameters",
-                  "general/account-and-billing/advanced-profile-settings",
-                  "default-profile-settings",
-                  "updating-your-browser-profile"
+                  "ai/cloud-browser-with-agents",
+                  "ai/web-unlocker-with-agents"
                 ]
-              },
-              {
-                "group": "Browser Cookies",
-                "pages": [
-                  "browser-profiles/profile-features/browser-cookies/what-are-browser-cookies",
-                  "browser-profiles/profile-features/browser-cookies/cookies-import-and-export"
-                ]
-              },
-              {
-                "group": "Browser Extensions",
-                "pages": [
-                  "browser-profiles/profile-features/browser-extensions/browser-extensions",
-                  "browser-profiles/profile-features/browser-extensions/adding-browser-extensions",
-                  "browser-profiles/profile-features/browser-extensions/installing-custom-extensions"
-                ]
-              },
-              {
-                "group": "Profile Sync & Recovery",
-                "pages": [
-                  "browser-profiles/profile-management/profile-synchronization",
-                  "browser-profiles/profile-management/restore-browser-sessions",
-                  "browser-profiles/profile-management/restore-deleted-profiles"
-                ]
-              },
-              {
-                "group": "Profile Export & Import",
-                "pages": [
-                  "export-and-import-overview",
-                  "profile-export-and-import"
-                ]
-              },
-              "faq-profile-managment"
-            ]
-          },
-          {
-            "group": "Profile Features",
-            "icon": "aperture",
-            "pages": [
-              "browser-profiles/profile-features/cookie-bot",
-              "browser-profiles/profile-features/run-with-sync",
-              "human-typing-simulation",
-              "proxy-devices-overview",
-              "browser-profiles/profile-features/browser-cookies/run-in-cloud"
-            ]
-          },
-          {
-            "group": "Proxies",
-            "icon": "network-wired",
-            "pages": [
-              {
-                "group": "Proxy Basics",
-                "pages": [
-                  "proxy/introduction/what-is-a-proxy",
-                  "residential-mobile-or-datacenter",
-                  "private-vs-shared",
-                  "proxy-protocols",
-                  "static-vs-dynamic-proxies",
-                  "proxy/introduction/best-proxy-for-your-case",
-                  "proxy/introduction/vpn-vs-proxy"
-                ]
-              },
-              {
-                "group": "Proxy Management",
-                "expanded": true,
-                "pages": [
-                  "proxy/proxy-management/proxy-manager/overview",
-                  "proxy/proxy-management/adding-proxies",
-                  "proxy/proxy-management/proxy-manager/navigation",
-                  "proxy/proxy-management/proxy-manager/proxies-page",
-                  "proxy/proxy-management/proxy-manager/proxy-archive",
-                  "proxy/proxy-management/proxy-testing-and-troubleshooting"
-                ]
-              },
-              "proxy/proxy-management/recommended-proxy-providers",
-              "proxy/proxy-management/faq-proxies"
-            ]
-          },
-          {
-            "group": "Gologin Proxies",
-            "icon": "g",
-            "pages": [
-              {
-                "group": "Gologin Proxy Basics",
-                "pages": [
-                  "proxy/gologin-proxies/what-are-gologin-proxies",
-                  "proxy/gologin-proxies/how-gologin-proxies-work-and-what-they-offer",
-                  "proxy/proxy-management/gologin-vs-3rd-party-proxies",
-                  "proxy/gologin-proxies/how-much-proxy-traffic-do-i-need"
-                ]
-              },
-              {
-                "group": "Managing Gologin Proxies",
-                "expanded": true,
-                "pages": [
-                  "proxy/gologin-proxies/purchasing-gologin-proxies",
-                  "proxy/gologin-proxies/gologin-proxy-management/adding-your-first-proxy",
-                  "proxy/gologin-proxies/gologin-proxy-management/gologin-proxy-settings",
-                  "proxy/gologin-proxies/website-compatibility-checker"
-                ]
-              },
-              "proxy/gologin-proxies/faq-gologin-proxies"
-            ]
-          },
-          {
-            "group": "Fingerprints",
-            "icon": "user-alien",
-            "pages": [
-              "how-browser-fingerprints-work",
-              "profile-fingerprint-settings",
-              "whats-safe-to-change"
-            ]
-          },
-          {
-            "group": "Android Anti-Detect",
-            "hidden": true,
-            "pages": [
-              "overview",
-              "mobile-vs-desktop",
-              "use-cases",
-              "limitations"
-            ]
-          },
-          {
-            "group": "Gologin Web app",
-            "icon": "cloud",
-            "pages": [
-              "gologin-web-overview",
-              "key-things-to-note",
-              "downloading-and-uploading-files",
-              "faq-web-app-and-cloud-browser",
-              "upgrading-cloud-browser-limits"
-            ]
-          },
-          {
-            "group": "Gologin Android app",
-            "icon": "mobile",
-            "pages": [
-              "gologin-android-overview",
-              "creating-and-managing-profiles",
-              "account-and-app-settings",
-              "user-agent-on-android",
-              "faq"
+              }
             ]
           }
         ]
       },
       {
-        "tab": "Account & Collaboration",
-        "pages": [
+        "language": "de",
+        "tabs": [
           {
-            "group": "Team Collaboration",
-            "icon": "users",
-            "expanded": true,
-            "pages": [
-              "general/team-collaboration/how-you-can-share-access",
+            "tab": "Erste Schritte",
+            "groups": [
               {
-                "group": "Access to Workspace and Folders",
-                "expanded": true,
+                "group": "Einführung",
                 "pages": [
-                  "general/team-collaboration/team-members",
-                  "general/team-collaboration/workspace-access",
-                  "general/team-collaboration/accessing-shared-workspace-or-folders"
+                  "de/getting-started/introduction/what-is-gologin-and-who-its-for",
+                  "de/getting-started/introduction/key-concepts-profiles-fingerprints-proxies",
+                  "de/getting-started/introduction/quick-start-from-zero-to-your-first-profile",
+                  "de/getting-started/introduction/extra-faq"
                 ]
               },
               {
-                "group": "Profile Sharing",
-                "expanded": true,
+                "group": "Einrichtung",
                 "pages": [
-                  "general/team-collaboration/sharing-profiles",
-                  "general/team-collaboration/accessing-shared-profiles",
-                  "general/team-collaboration/untitled-page"
+                  "de/getting-started/setup/supported-platforms-installation",
+                  "de/getting-started/setup/creating-gologin-account",
+                  "de/getting-started/setup/first-time-checklist"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Profile & Proxys",
+            "groups": [
+              {
+                "group": "Browserprofile",
+                "icon": "window-flip",
+                "pages": [
+                  {
+                    "group": "Übersicht",
+                    "expanded": true,
+                    "pages": [
+                      "de/what-is-a-browser-profile",
+                      "de/orbita-browser"
+                    ]
+                  },
+                  {
+                    "group": "Profilverwaltung",
+                    "expanded": true,
+                    "pages": [
+                      "de/browser-profiles/profile-management/creating-and-launching-profiles",
+                      "de/browser-profiles/profile-management/editing-profiles",
+                      "de/browser-profiles/profile-management/cloning-profiles",
+                      "de/browser-profiles/profile-management/bulk-actions"
+                    ]
+                  },
+                  {
+                    "group": "Profilorganisation",
+                    "pages": [
+                      "de/browser-profiles/profile-management/folders",
+                      "de/browser-profiles/profile-management/add-more-info-columns",
+                      "de/browser-profiles/profile-management/notes-and-tags",
+                      "de/browser-profiles/profile-management/profile-sorting",
+                      "de/browser-profiles/profile-management/profile-search"
+                    ]
+                  },
+                  {
+                    "group": "Profileinstellungen",
+                    "pages": [
+                      "de/profile-parameters",
+                      "de/general/account-and-billing/advanced-profile-settings",
+                      "de/default-profile-settings",
+                      "de/updating-your-browser-profile"
+                    ]
+                  },
+                  {
+                    "group": "Browser-Cookies",
+                    "pages": [
+                      "de/browser-profiles/profile-features/browser-cookies/what-are-browser-cookies",
+                      "de/browser-profiles/profile-features/browser-cookies/cookies-import-and-export"
+                    ]
+                  },
+                  {
+                    "group": "Browser-Erweiterungen",
+                    "pages": [
+                      "de/browser-profiles/profile-features/browser-extensions/browser-extensions",
+                      "de/browser-profiles/profile-features/browser-extensions/adding-browser-extensions",
+                      "de/browser-profiles/profile-features/browser-extensions/installing-custom-extensions"
+                    ]
+                  },
+                  {
+                    "group": "Profilsynchronisierung & Wiederherstellung",
+                    "pages": [
+                      "de/browser-profiles/profile-management/profile-synchronization",
+                      "de/browser-profiles/profile-management/restore-browser-sessions",
+                      "de/browser-profiles/profile-management/restore-deleted-profiles"
+                    ]
+                  },
+                  {
+                    "group": "Profilexport & -import",
+                    "pages": [
+                      "de/export-and-import-overview",
+                      "de/profile-export-and-import"
+                    ]
+                  },
+                  "de/faq-profile-managment"
                 ]
               },
-              "general/team-collaboration/faq-team-collaboration"
+              {
+                "group": "Profilfunktionen",
+                "icon": "aperture",
+                "pages": [
+                  "de/browser-profiles/profile-features/cookie-bot",
+                  "de/browser-profiles/profile-features/run-with-sync",
+                  "de/human-typing-simulation",
+                  "de/proxy-devices-overview",
+                  "de/browser-profiles/profile-features/browser-cookies/run-in-cloud"
+                ]
+              },
+              {
+                "group": "Proxys",
+                "icon": "network-wired",
+                "pages": [
+                  {
+                    "group": "Proxy-Grundlagen",
+                    "pages": [
+                      "de/proxy/introduction/what-is-a-proxy",
+                      "de/residential-mobile-or-datacenter",
+                      "de/private-vs-shared",
+                      "de/proxy-protocols",
+                      "de/static-vs-dynamic-proxies",
+                      "de/proxy/introduction/best-proxy-for-your-case",
+                      "de/proxy/introduction/vpn-vs-proxy"
+                    ]
+                  },
+                  {
+                    "group": "Proxy-Verwaltung",
+                    "expanded": true,
+                    "pages": [
+                      "de/proxy/proxy-management/proxy-manager/overview",
+                      "de/proxy/proxy-management/adding-proxies",
+                      "de/proxy/proxy-management/proxy-manager/navigation",
+                      "de/proxy/proxy-management/proxy-manager/proxies-page",
+                      "de/proxy/proxy-management/proxy-manager/proxy-archive",
+                      "de/proxy/proxy-management/proxy-testing-and-troubleshooting"
+                    ]
+                  },
+                  "de/proxy/proxy-management/recommended-proxy-providers",
+                  "de/proxy/proxy-management/faq-proxies"
+                ]
+              },
+              {
+                "group": "Gologin-Proxys",
+                "icon": "g",
+                "pages": [
+                  {
+                    "group": "Gologin-Proxy-Grundlagen",
+                    "pages": [
+                      "de/proxy/gologin-proxies/what-are-gologin-proxies",
+                      "de/proxy/gologin-proxies/how-gologin-proxies-work-and-what-they-offer",
+                      "de/proxy/proxy-management/gologin-vs-3rd-party-proxies",
+                      "de/proxy/gologin-proxies/how-much-proxy-traffic-do-i-need"
+                    ]
+                  },
+                  {
+                    "group": "Gologin-Proxys verwalten",
+                    "expanded": true,
+                    "pages": [
+                      "de/proxy/gologin-proxies/purchasing-gologin-proxies",
+                      "de/proxy/gologin-proxies/gologin-proxy-management/adding-your-first-proxy",
+                      "de/proxy/gologin-proxies/gologin-proxy-management/gologin-proxy-settings",
+                      "de/proxy/gologin-proxies/website-compatibility-checker"
+                    ]
+                  },
+                  "de/proxy/gologin-proxies/faq-gologin-proxies"
+                ]
+              },
+              {
+                "group": "Fingerabdrücke",
+                "icon": "user-alien",
+                "pages": [
+                  "de/how-browser-fingerprints-work",
+                  "de/profile-fingerprint-settings",
+                  "de/whats-safe-to-change"
+                ]
+              },
+              {
+                "group": "Anti-Erkennung für Android",
+                "hidden": true,
+                "pages": [
+                  "de/overview",
+                  "de/mobile-vs-desktop",
+                  "de/use-cases",
+                  "de/limitations"
+                ]
+              },
+              {
+                "group": "Gologin Web-App",
+                "icon": "cloud",
+                "pages": [
+                  "de/gologin-web-overview",
+                  "de/key-things-to-note",
+                  "de/downloading-and-uploading-files",
+                  "de/faq-web-app-and-cloud-browser",
+                  "de/upgrading-cloud-browser-limits"
+                ]
+              },
+              {
+                "group": "Gologin Android-App",
+                "icon": "mobile",
+                "pages": [
+                  "de/gologin-android-overview",
+                  "de/creating-and-managing-profiles",
+                  "de/account-and-app-settings",
+                  "de/user-agent-on-android",
+                  "de/faq"
+                ]
+              }
             ]
           },
           {
-            "group": "Account settings",
-            "icon": "user",
-            "expanded": true,
+            "tab": "Konto & Zusammenarbeit",
             "pages": [
-              "general/account-and-billing/overview",
-              "general/account-and-billing/changing-your-email-and-pass",
-              "general/account-and-billing/two-factor-authentication",
-              "general/account-and-billing/affiliate-program",
-              "general/account-and-billing/active-sessions-1",
-              "general/account-and-billing/cloud-browser-usage"
+              {
+                "group": "Teamzusammenarbeit",
+                "icon": "users",
+                "expanded": true,
+                "pages": [
+                  "de/general/team-collaboration/how-you-can-share-access",
+                  {
+                    "group": "Zugriff auf Arbeitsbereich und Ordner",
+                    "expanded": true,
+                    "pages": [
+                      "de/general/team-collaboration/team-members",
+                      "de/general/team-collaboration/workspace-access",
+                      "de/general/team-collaboration/accessing-shared-workspace-or-folders"
+                    ]
+                  },
+                  {
+                    "group": "Profilfreigabe",
+                    "expanded": true,
+                    "pages": [
+                      "de/general/team-collaboration/sharing-profiles",
+                      "de/general/team-collaboration/accessing-shared-profiles",
+                      "de/general/team-collaboration/untitled-page"
+                    ]
+                  },
+                  "de/general/team-collaboration/faq-team-collaboration"
+                ]
+              },
+              {
+                "group": "Kontoeinstellungen",
+                "icon": "user",
+                "expanded": true,
+                "pages": [
+                  "de/general/account-and-billing/overview",
+                  "de/general/account-and-billing/changing-your-email-and-pass",
+                  "de/general/account-and-billing/two-factor-authentication",
+                  "de/general/account-and-billing/affiliate-program",
+                  "de/general/account-and-billing/active-sessions-1",
+                  "de/general/account-and-billing/cloud-browser-usage"
+                ]
+              },
+              {
+                "group": "Arbeitsbereiche",
+                "icon": "list-dropdown",
+                "pages": [
+                  "de/general/team-collaboration/workspaces",
+                  "de/general/account-and-billing/workspace-settings"
+                ]
+              },
+              {
+                "group": "Preise & Abonnement",
+                "icon": "money-bill",
+                "pages": [
+                  "de/general/account-and-billing/pricing",
+                  "de/general/account-and-billing/how-to-subscribe-to-gologin",
+                  "de/general/account-and-billing/change-plan",
+                  "de/general/account-and-billing/promo-codes",
+                  "de/general/account-and-billing/payment-methods",
+                  "de/general/account-and-billing/invoices",
+                  "de/general/account-and-billing/faq-subscription"
+                ]
+              },
+              {
+                "group": "Fehlerbehebung",
+                "icon": "wrench",
+                "expanded": true,
+                "pages": [
+                  "de/general/troubleshooting/common-errors",
+                  "de/general/troubleshooting/proxy-not-working",
+                  "de/general/troubleshooting/profile-data-disappeared",
+                  "de/general/troubleshooting/wrong-ip-my-ip-is-leaking",
+                  "de/general/troubleshooting/wrong-proxy-location",
+                  "de/general/troubleshooting/payments-and-subscription"
+                ]
+              },
+              {
+                "group": "Allgemein",
+                "pages": [
+                  "de/general/storage-and-cache",
+                  "de/general/migration-from-other-tools",
+                  "de/general/gologin-web-and-chrome-os",
+                  "de/general/updating-the-gologin-app",
+                  "de/general/data-safety"
+                ]
+              }
             ]
           },
           {
-            "group": "Workspaces",
-            "icon": "list-dropdown",
+            "tab": "Anleitungen & bewährte Verfahren",
             "pages": [
-              "general/team-collaboration/workspaces",
-              "general/account-and-billing/workspace-settings"
+              {
+                "group": "Grundlagen",
+                "pages": [
+                  "de/best-practices-overview",
+                  "de/how-gologin-protects-your-identity",
+                  "de/maintaining-trust-score",
+                  "de/profile-hygiene-checklist",
+                  "de/common-mistakes-to-avoid",
+                  "de/facebook-meta-ads-1"
+                ]
+              },
+              {
+                "group": "Nutzungsmuster",
+                "pages": [
+                  "de/creating-new-accounts-safely",
+                  "de/managing-existing-accounts"
+                ]
+              },
+              {
+                "group": "Plattform-Anleitungen",
+                "pages": [
+                  "de/facebook-meta-ads",
+                  "de/tik-tok-ads",
+                  "de/google-ads-and-gmail",
+                  "de/amazon-e-bay-shopify",
+                  "de/reddit-quora",
+                  "de/linkedin",
+                  "de/crypto-and-kyc",
+                  "de/web-scraping-targets",
+                  "de/proxy-and-fingerprint-setup-per-platform"
+                ]
+              },
+              {
+                "group": "Vorlagen",
+                "pages": [
+                  "de/prebuilt-profiles",
+                  "de/sample-team-setups"
+                ]
+              }
             ]
           },
           {
-            "group": "Pricing & Subscription",
-            "icon": "money-bill",
-            "pages": [
-              "general/account-and-billing/pricing",
-              "general/account-and-billing/how-to-subscribe-to-gologin",
-              "general/account-and-billing/change-plan",
-              "general/account-and-billing/promo-codes",
-              "general/account-and-billing/payment-methods",
-              "general/account-and-billing/invoices",
-              "general/account-and-billing/faq-subscription"
+            "tab": "Automatisierung & API",
+            "groups": [
+              {
+                "group": "Einführung",
+                "pages": [
+                  "de/api-reference/introduction/quickstart",
+                  "de/api-reference/introduction/headless",
+                  "de/api-reference/introduction/cloud-launch-vs-local-launch",
+                  "de/api-reference/introduction/gologin-proxies"
+                ]
+              },
+              {
+                "group": "Scraping API & Web Unlocker",
+                "pages": [
+                  "de/what-is-web-unlocker",
+                  "de/web-unlocker-quick-start",
+                  "de/web-unlocker-use-cases",
+                  "de/scraping-api-sdk-and-cli"
+                ]
+              },
+              {
+                "group": "Node.js SDK",
+                "pages": [
+                  "de/api-reference/sdks/nodejs-sdk",
+                  "de/api-reference/sdks/nodejs-puppeteer-exmaple",
+                  "de/api-reference/sdks/nodejs-cloud-puppeteer-example",
+                  "de/api-reference/sdks/nodejs-changelog"
+                ]
+              },
+              {
+                "group": "Python SDK",
+                "pages": [
+                  "de/api-reference/sdks/python-sdk",
+                  "de/api-reference/sdks/python-selenium-example",
+                  "de/api-reference/sdks/python-changelog"
+                ]
+              },
+              {
+                "group": "Einschränkungen",
+                "pages": [
+                  "de/api-reference/limitations/rate-limits"
+                ]
+              }
             ]
           },
           {
-            "group": "Troubleshooting",
-            "icon": "wrench",
-            "expanded": true,
+            "tab": "Cloud Browser",
             "pages": [
-              "general/troubleshooting/common-errors",
-              "general/troubleshooting/proxy-not-working",
-              "general/troubleshooting/profile-data-disappeared",
-              "general/troubleshooting/wrong-ip-my-ip-is-leaking",
-              "general/troubleshooting/wrong-proxy-location",
-              "general/troubleshooting/payments-and-subscription"
+              "de/api-reference/cloud-browser/what-is-gologin-cloud-browser",
+              "de/api-reference/cloud-browser/what-is-headless-browser",
+              "de/api-reference/cloud-browser/getting-started",
+              "de/api-reference/cloud-browser/scraping",
+              "de/api-reference/cloud-browser/untitled-page-1",
+              "de/api-reference/cloud-browser/untitled-page-2",
+              "de/api-reference/cloud-browser/live",
+              "de/api-reference/cloud-browser/untitled-page-3"
             ]
           },
           {
-            "group": "General",
-            "pages": [
-              "general/storage-and-cache",
-              "general/migration-from-other-tools",
-              "general/gologin-web-and-chrome-os",
-              "general/updating-the-gologin-app",
-              "general/data-safety"
+            "tab": "KI & Agenten",
+            "groups": [
+              {
+                "group": "Übersicht",
+                "pages": [
+                  "de/ai/overview"
+                ]
+              },
+              {
+                "group": "Verbinden",
+                "pages": [
+                  "de/api-reference/ai-integrations/mcp-server",
+                  "de/api-reference/ai-integrations/ai-skills"
+                ]
+              },
+              {
+                "group": "CLI-Tools",
+                "pages": [
+                  "de/cli-tools/web-access",
+                  "de/cli-tools/agent-browser",
+                  "de/cli-tools/local-agent-browser"
+                ]
+              },
+              {
+                "group": "Integrationsanleitungen",
+                "pages": [
+                  "de/ai/cloud-browser-with-agents",
+                  "de/ai/web-unlocker-with-agents"
+                ]
+              }
             ]
+          },
+          {
+            "tab": "API-Referenz (Englisch)",
+            "href": "https://gologin.com/docs/api-reference/profile/get-all-profiles"
           }
         ]
       },
       {
-        "tab": "Guides & Best Practices",
-        "pages": [
+        "language": "es",
+        "tabs": [
           {
-            "group": "Fundamentals",
-            "pages": [
-              "best-practices-overview",
-              "how-gologin-protects-your-identity",
-              "maintaining-trust-score",
-              "profile-hygiene-checklist",
-              "common-mistakes-to-avoid",
-              "facebook-meta-ads-1"
+            "tab": "Primeros pasos",
+            "groups": [
+              {
+                "group": "Introducción",
+                "pages": [
+                  "es/getting-started/introduction/what-is-gologin-and-who-its-for",
+                  "es/getting-started/introduction/key-concepts-profiles-fingerprints-proxies",
+                  "es/getting-started/introduction/quick-start-from-zero-to-your-first-profile",
+                  "es/getting-started/introduction/extra-faq"
+                ]
+              },
+              {
+                "group": "Configuración",
+                "pages": [
+                  "es/getting-started/setup/supported-platforms-installation",
+                  "es/getting-started/setup/creating-gologin-account",
+                  "es/getting-started/setup/first-time-checklist"
+                ]
+              }
             ]
           },
           {
-            "group": "Usage Patterns",
-            "pages": [
-              "creating-new-accounts-safely",
-              "managing-existing-accounts"
+            "tab": "Perfiles y proxies",
+            "groups": [
+              {
+                "group": "Perfiles de navegador",
+                "icon": "window-flip",
+                "pages": [
+                  {
+                    "group": "Resumen",
+                    "expanded": true,
+                    "pages": [
+                      "es/what-is-a-browser-profile",
+                      "es/orbita-browser"
+                    ]
+                  },
+                  {
+                    "group": "Gestión de perfiles",
+                    "expanded": true,
+                    "pages": [
+                      "es/browser-profiles/profile-management/creating-and-launching-profiles",
+                      "es/browser-profiles/profile-management/editing-profiles",
+                      "es/browser-profiles/profile-management/cloning-profiles",
+                      "es/browser-profiles/profile-management/bulk-actions"
+                    ]
+                  },
+                  {
+                    "group": "Organización de perfiles",
+                    "pages": [
+                      "es/browser-profiles/profile-management/folders",
+                      "es/browser-profiles/profile-management/add-more-info-columns",
+                      "es/browser-profiles/profile-management/notes-and-tags",
+                      "es/browser-profiles/profile-management/profile-sorting",
+                      "es/browser-profiles/profile-management/profile-search"
+                    ]
+                  },
+                  {
+                    "group": "Ajustes del perfil",
+                    "pages": [
+                      "es/profile-parameters",
+                      "es/general/account-and-billing/advanced-profile-settings",
+                      "es/default-profile-settings",
+                      "es/updating-your-browser-profile"
+                    ]
+                  },
+                  {
+                    "group": "Cookies del navegador",
+                    "pages": [
+                      "es/browser-profiles/profile-features/browser-cookies/what-are-browser-cookies",
+                      "es/browser-profiles/profile-features/browser-cookies/cookies-import-and-export"
+                    ]
+                  },
+                  {
+                    "group": "Extensiones del navegador",
+                    "pages": [
+                      "es/browser-profiles/profile-features/browser-extensions/browser-extensions",
+                      "es/browser-profiles/profile-features/browser-extensions/adding-browser-extensions",
+                      "es/browser-profiles/profile-features/browser-extensions/installing-custom-extensions"
+                    ]
+                  },
+                  {
+                    "group": "Sincronización y recuperación de perfiles",
+                    "pages": [
+                      "es/browser-profiles/profile-management/profile-synchronization",
+                      "es/browser-profiles/profile-management/restore-browser-sessions",
+                      "es/browser-profiles/profile-management/restore-deleted-profiles"
+                    ]
+                  },
+                  {
+                    "group": "Exportación e importación de perfiles",
+                    "pages": [
+                      "es/export-and-import-overview",
+                      "es/profile-export-and-import"
+                    ]
+                  },
+                  "es/faq-profile-managment"
+                ]
+              },
+              {
+                "group": "Funciones del perfil",
+                "icon": "aperture",
+                "pages": [
+                  "es/browser-profiles/profile-features/cookie-bot",
+                  "es/browser-profiles/profile-features/run-with-sync",
+                  "es/human-typing-simulation",
+                  "es/proxy-devices-overview",
+                  "es/browser-profiles/profile-features/browser-cookies/run-in-cloud"
+                ]
+              },
+              {
+                "group": "Proxies",
+                "icon": "network-wired",
+                "pages": [
+                  {
+                    "group": "Conceptos básicos de proxies",
+                    "pages": [
+                      "es/proxy/introduction/what-is-a-proxy",
+                      "es/residential-mobile-or-datacenter",
+                      "es/private-vs-shared",
+                      "es/proxy-protocols",
+                      "es/static-vs-dynamic-proxies",
+                      "es/proxy/introduction/best-proxy-for-your-case",
+                      "es/proxy/introduction/vpn-vs-proxy"
+                    ]
+                  },
+                  {
+                    "group": "Gestión de proxies",
+                    "expanded": true,
+                    "pages": [
+                      "es/proxy/proxy-management/proxy-manager/overview",
+                      "es/proxy/proxy-management/adding-proxies",
+                      "es/proxy/proxy-management/proxy-manager/navigation",
+                      "es/proxy/proxy-management/proxy-manager/proxies-page",
+                      "es/proxy/proxy-management/proxy-manager/proxy-archive",
+                      "es/proxy/proxy-management/proxy-testing-and-troubleshooting"
+                    ]
+                  },
+                  "es/proxy/proxy-management/recommended-proxy-providers",
+                  "es/proxy/proxy-management/faq-proxies"
+                ]
+              },
+              {
+                "group": "Proxies de Gologin",
+                "icon": "g",
+                "pages": [
+                  {
+                    "group": "Conceptos básicos de proxies de Gologin",
+                    "pages": [
+                      "es/proxy/gologin-proxies/what-are-gologin-proxies",
+                      "es/proxy/gologin-proxies/how-gologin-proxies-work-and-what-they-offer",
+                      "es/proxy/proxy-management/gologin-vs-3rd-party-proxies",
+                      "es/proxy/gologin-proxies/how-much-proxy-traffic-do-i-need"
+                    ]
+                  },
+                  {
+                    "group": "Gestión de proxies de Gologin",
+                    "expanded": true,
+                    "pages": [
+                      "es/proxy/gologin-proxies/purchasing-gologin-proxies",
+                      "es/proxy/gologin-proxies/gologin-proxy-management/adding-your-first-proxy",
+                      "es/proxy/gologin-proxies/gologin-proxy-management/gologin-proxy-settings",
+                      "es/proxy/gologin-proxies/website-compatibility-checker"
+                    ]
+                  },
+                  "es/proxy/gologin-proxies/faq-gologin-proxies"
+                ]
+              },
+              {
+                "group": "Huellas digitales",
+                "icon": "user-alien",
+                "pages": [
+                  "es/how-browser-fingerprints-work",
+                  "es/profile-fingerprint-settings",
+                  "es/whats-safe-to-change"
+                ]
+              },
+              {
+                "group": "Anti-detección de Android",
+                "hidden": true,
+                "pages": [
+                  "es/overview",
+                  "es/mobile-vs-desktop",
+                  "es/use-cases",
+                  "es/limitations"
+                ]
+              },
+              {
+                "group": "App web de Gologin",
+                "icon": "cloud",
+                "pages": [
+                  "es/gologin-web-overview",
+                  "es/key-things-to-note",
+                  "es/downloading-and-uploading-files",
+                  "es/faq-web-app-and-cloud-browser",
+                  "es/upgrading-cloud-browser-limits"
+                ]
+              },
+              {
+                "group": "App de Gologin para Android",
+                "icon": "mobile",
+                "pages": [
+                  "es/gologin-android-overview",
+                  "es/creating-and-managing-profiles",
+                  "es/account-and-app-settings",
+                  "es/user-agent-on-android",
+                  "es/faq"
+                ]
+              }
             ]
           },
           {
-            "group": "Platform Guides",
+            "tab": "Cuenta y colaboración",
             "pages": [
-              "facebook-meta-ads",
-              "tik-tok-ads",
-              "google-ads-and-gmail",
-              "amazon-e-bay-shopify",
-              "reddit-quora",
-              "linkedin",
-              "crypto-and-kyc",
-              "web-scraping-targets",
-              "proxy-and-fingerprint-setup-per-platform"
+              {
+                "group": "Colaboración en equipo",
+                "icon": "users",
+                "expanded": true,
+                "pages": [
+                  "es/general/team-collaboration/how-you-can-share-access",
+                  {
+                    "group": "Acceso a espacios de trabajo y carpetas",
+                    "expanded": true,
+                    "pages": [
+                      "es/general/team-collaboration/team-members",
+                      "es/general/team-collaboration/workspace-access",
+                      "es/general/team-collaboration/accessing-shared-workspace-or-folders"
+                    ]
+                  },
+                  {
+                    "group": "Compartir perfiles",
+                    "expanded": true,
+                    "pages": [
+                      "es/general/team-collaboration/sharing-profiles",
+                      "es/general/team-collaboration/accessing-shared-profiles",
+                      "es/general/team-collaboration/untitled-page"
+                    ]
+                  },
+                  "es/general/team-collaboration/faq-team-collaboration"
+                ]
+              },
+              {
+                "group": "Ajustes de la cuenta",
+                "icon": "user",
+                "expanded": true,
+                "pages": [
+                  "es/general/account-and-billing/overview",
+                  "es/general/account-and-billing/changing-your-email-and-pass",
+                  "es/general/account-and-billing/two-factor-authentication",
+                  "es/general/account-and-billing/affiliate-program",
+                  "es/general/account-and-billing/active-sessions-1",
+                  "es/general/account-and-billing/cloud-browser-usage"
+                ]
+              },
+              {
+                "group": "Espacios de trabajo",
+                "icon": "list-dropdown",
+                "pages": [
+                  "es/general/team-collaboration/workspaces",
+                  "es/general/account-and-billing/workspace-settings"
+                ]
+              },
+              {
+                "group": "Precios y suscripción",
+                "icon": "money-bill",
+                "pages": [
+                  "es/general/account-and-billing/pricing",
+                  "es/general/account-and-billing/how-to-subscribe-to-gologin",
+                  "es/general/account-and-billing/change-plan",
+                  "es/general/account-and-billing/promo-codes",
+                  "es/general/account-and-billing/payment-methods",
+                  "es/general/account-and-billing/invoices",
+                  "es/general/account-and-billing/faq-subscription"
+                ]
+              },
+              {
+                "group": "Solución de problemas",
+                "icon": "wrench",
+                "expanded": true,
+                "pages": [
+                  "es/general/troubleshooting/common-errors",
+                  "es/general/troubleshooting/proxy-not-working",
+                  "es/general/troubleshooting/profile-data-disappeared",
+                  "es/general/troubleshooting/wrong-ip-my-ip-is-leaking",
+                  "es/general/troubleshooting/wrong-proxy-location",
+                  "es/general/troubleshooting/payments-and-subscription"
+                ]
+              },
+              {
+                "group": "General",
+                "pages": [
+                  "es/general/storage-and-cache",
+                  "es/general/migration-from-other-tools",
+                  "es/general/gologin-web-and-chrome-os",
+                  "es/general/updating-the-gologin-app",
+                  "es/general/data-safety"
+                ]
+              }
             ]
           },
           {
-            "group": "Templates",
+            "tab": "Guías y buenas prácticas",
             "pages": [
-              "prebuilt-profiles",
-              "sample-team-setups"
+              {
+                "group": "Fundamentos",
+                "pages": [
+                  "es/best-practices-overview",
+                  "es/how-gologin-protects-your-identity",
+                  "es/maintaining-trust-score",
+                  "es/profile-hygiene-checklist",
+                  "es/common-mistakes-to-avoid",
+                  "es/facebook-meta-ads-1"
+                ]
+              },
+              {
+                "group": "Patrones de uso",
+                "pages": [
+                  "es/creating-new-accounts-safely",
+                  "es/managing-existing-accounts"
+                ]
+              },
+              {
+                "group": "Guías por plataforma",
+                "pages": [
+                  "es/facebook-meta-ads",
+                  "es/tik-tok-ads",
+                  "es/google-ads-and-gmail",
+                  "es/amazon-e-bay-shopify",
+                  "es/reddit-quora",
+                  "es/linkedin",
+                  "es/crypto-and-kyc",
+                  "es/web-scraping-targets",
+                  "es/proxy-and-fingerprint-setup-per-platform"
+                ]
+              },
+              {
+                "group": "Plantillas",
+                "pages": [
+                  "es/prebuilt-profiles",
+                  "es/sample-team-setups"
+                ]
+              }
             ]
+          },
+          {
+            "tab": "Automatización y API",
+            "groups": [
+              {
+                "group": "Introducción",
+                "pages": [
+                  "es/api-reference/introduction/quickstart",
+                  "es/api-reference/introduction/headless",
+                  "es/api-reference/introduction/cloud-launch-vs-local-launch",
+                  "es/api-reference/introduction/gologin-proxies"
+                ]
+              },
+              {
+                "group": "Scraping API y Web Unlocker",
+                "pages": [
+                  "es/what-is-web-unlocker",
+                  "es/web-unlocker-quick-start",
+                  "es/web-unlocker-use-cases",
+                  "es/scraping-api-sdk-and-cli"
+                ]
+              },
+              {
+                "group": "Node.js SDK",
+                "pages": [
+                  "es/api-reference/sdks/nodejs-sdk",
+                  "es/api-reference/sdks/nodejs-puppeteer-exmaple",
+                  "es/api-reference/sdks/nodejs-cloud-puppeteer-example",
+                  "es/api-reference/sdks/nodejs-changelog"
+                ]
+              },
+              {
+                "group": "Python SDK",
+                "pages": [
+                  "es/api-reference/sdks/python-sdk",
+                  "es/api-reference/sdks/python-selenium-example",
+                  "es/api-reference/sdks/python-changelog"
+                ]
+              },
+              {
+                "group": "Limitaciones",
+                "pages": [
+                  "es/api-reference/limitations/rate-limits"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Cloud Browser",
+            "pages": [
+              "es/api-reference/cloud-browser/what-is-gologin-cloud-browser",
+              "es/api-reference/cloud-browser/what-is-headless-browser",
+              "es/api-reference/cloud-browser/getting-started",
+              "es/api-reference/cloud-browser/scraping",
+              "es/api-reference/cloud-browser/untitled-page-1",
+              "es/api-reference/cloud-browser/untitled-page-2",
+              "es/api-reference/cloud-browser/live",
+              "es/api-reference/cloud-browser/untitled-page-3"
+            ]
+          },
+          {
+            "tab": "IA y agentes",
+            "groups": [
+              {
+                "group": "Resumen",
+                "pages": [
+                  "es/ai/overview"
+                ]
+              },
+              {
+                "group": "Conectar",
+                "pages": [
+                  "es/api-reference/ai-integrations/mcp-server",
+                  "es/api-reference/ai-integrations/ai-skills"
+                ]
+              },
+              {
+                "group": "Herramientas CLI",
+                "pages": [
+                  "es/cli-tools/web-access",
+                  "es/cli-tools/agent-browser",
+                  "es/cli-tools/local-agent-browser"
+                ]
+              },
+              {
+                "group": "Guías de integración",
+                "pages": [
+                  "es/ai/cloud-browser-with-agents",
+                  "es/ai/web-unlocker-with-agents"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Referencia de la API (inglés)",
+            "href": "https://gologin.com/docs/api-reference/profile/get-all-profiles"
           }
         ]
       },
       {
-        "tab": "Automation & API",
-        "groups": [
+        "language": "fr",
+        "tabs": [
           {
-            "group": "Introduction",
-            "pages": [
-              "api-reference/introduction/quickstart",
-              "api-reference/introduction/headless",
-              "api-reference/introduction/cloud-launch-vs-local-launch",
-              "api-reference/introduction/gologin-proxies"
+            "tab": "Prise en main",
+            "groups": [
+              {
+                "group": "Introduction",
+                "pages": [
+                  "fr/getting-started/introduction/what-is-gologin-and-who-its-for",
+                  "fr/getting-started/introduction/key-concepts-profiles-fingerprints-proxies",
+                  "fr/getting-started/introduction/quick-start-from-zero-to-your-first-profile",
+                  "fr/getting-started/introduction/extra-faq"
+                ]
+              },
+              {
+                "group": "Configuration",
+                "pages": [
+                  "fr/getting-started/setup/supported-platforms-installation",
+                  "fr/getting-started/setup/creating-gologin-account",
+                  "fr/getting-started/setup/first-time-checklist"
+                ]
+              }
             ]
           },
           {
-            "group": "API Reference",
-            "openapi": "https://docs-download.gologin.com/openapi.json"
-          },
-          {
-            "group": "Scraping API & Web Unlocker",
-            "pages": [
-              "what-is-web-unlocker",
-              "web-unlocker-quick-start",
-              "web-unlocker-use-cases",
-              "scraping-api-sdk-and-cli"
+            "tab": "Profils et proxys",
+            "groups": [
+              {
+                "group": "Profils de navigateur",
+                "icon": "window-flip",
+                "pages": [
+                  {
+                    "group": "Vue d'ensemble",
+                    "expanded": true,
+                    "pages": [
+                      "fr/what-is-a-browser-profile",
+                      "fr/orbita-browser"
+                    ]
+                  },
+                  {
+                    "group": "Gestion des profils",
+                    "expanded": true,
+                    "pages": [
+                      "fr/browser-profiles/profile-management/creating-and-launching-profiles",
+                      "fr/browser-profiles/profile-management/editing-profiles",
+                      "fr/browser-profiles/profile-management/cloning-profiles",
+                      "fr/browser-profiles/profile-management/bulk-actions"
+                    ]
+                  },
+                  {
+                    "group": "Organisation des profils",
+                    "pages": [
+                      "fr/browser-profiles/profile-management/folders",
+                      "fr/browser-profiles/profile-management/add-more-info-columns",
+                      "fr/browser-profiles/profile-management/notes-and-tags",
+                      "fr/browser-profiles/profile-management/profile-sorting",
+                      "fr/browser-profiles/profile-management/profile-search"
+                    ]
+                  },
+                  {
+                    "group": "Paramètres du profil",
+                    "pages": [
+                      "fr/profile-parameters",
+                      "fr/general/account-and-billing/advanced-profile-settings",
+                      "fr/default-profile-settings",
+                      "fr/updating-your-browser-profile"
+                    ]
+                  },
+                  {
+                    "group": "Cookies du navigateur",
+                    "pages": [
+                      "fr/browser-profiles/profile-features/browser-cookies/what-are-browser-cookies",
+                      "fr/browser-profiles/profile-features/browser-cookies/cookies-import-and-export"
+                    ]
+                  },
+                  {
+                    "group": "Extensions du navigateur",
+                    "pages": [
+                      "fr/browser-profiles/profile-features/browser-extensions/browser-extensions",
+                      "fr/browser-profiles/profile-features/browser-extensions/adding-browser-extensions",
+                      "fr/browser-profiles/profile-features/browser-extensions/installing-custom-extensions"
+                    ]
+                  },
+                  {
+                    "group": "Synchronisation et récupération",
+                    "pages": [
+                      "fr/browser-profiles/profile-management/profile-synchronization",
+                      "fr/browser-profiles/profile-management/restore-browser-sessions",
+                      "fr/browser-profiles/profile-management/restore-deleted-profiles"
+                    ]
+                  },
+                  {
+                    "group": "Export et import de profils",
+                    "pages": [
+                      "fr/export-and-import-overview",
+                      "fr/profile-export-and-import"
+                    ]
+                  },
+                  "fr/faq-profile-managment"
+                ]
+              },
+              {
+                "group": "Fonctionnalités des profils",
+                "icon": "aperture",
+                "pages": [
+                  "fr/browser-profiles/profile-features/cookie-bot",
+                  "fr/browser-profiles/profile-features/run-with-sync",
+                  "fr/human-typing-simulation",
+                  "fr/proxy-devices-overview",
+                  "fr/browser-profiles/profile-features/browser-cookies/run-in-cloud"
+                ]
+              },
+              {
+                "group": "Proxys",
+                "icon": "network-wired",
+                "pages": [
+                  {
+                    "group": "Notions de base des proxys",
+                    "pages": [
+                      "fr/proxy/introduction/what-is-a-proxy",
+                      "fr/residential-mobile-or-datacenter",
+                      "fr/private-vs-shared",
+                      "fr/proxy-protocols",
+                      "fr/static-vs-dynamic-proxies",
+                      "fr/proxy/introduction/best-proxy-for-your-case",
+                      "fr/proxy/introduction/vpn-vs-proxy"
+                    ]
+                  },
+                  {
+                    "group": "Gestion des proxys",
+                    "expanded": true,
+                    "pages": [
+                      "fr/proxy/proxy-management/proxy-manager/overview",
+                      "fr/proxy/proxy-management/adding-proxies",
+                      "fr/proxy/proxy-management/proxy-manager/navigation",
+                      "fr/proxy/proxy-management/proxy-manager/proxies-page",
+                      "fr/proxy/proxy-management/proxy-manager/proxy-archive",
+                      "fr/proxy/proxy-management/proxy-testing-and-troubleshooting"
+                    ]
+                  },
+                  "fr/proxy/proxy-management/recommended-proxy-providers",
+                  "fr/proxy/proxy-management/faq-proxies"
+                ]
+              },
+              {
+                "group": "Proxys Gologin",
+                "icon": "g",
+                "pages": [
+                  {
+                    "group": "Notions de base des proxys Gologin",
+                    "pages": [
+                      "fr/proxy/gologin-proxies/what-are-gologin-proxies",
+                      "fr/proxy/gologin-proxies/how-gologin-proxies-work-and-what-they-offer",
+                      "fr/proxy/proxy-management/gologin-vs-3rd-party-proxies",
+                      "fr/proxy/gologin-proxies/how-much-proxy-traffic-do-i-need"
+                    ]
+                  },
+                  {
+                    "group": "Gérer les proxys Gologin",
+                    "expanded": true,
+                    "pages": [
+                      "fr/proxy/gologin-proxies/purchasing-gologin-proxies",
+                      "fr/proxy/gologin-proxies/gologin-proxy-management/adding-your-first-proxy",
+                      "fr/proxy/gologin-proxies/gologin-proxy-management/gologin-proxy-settings",
+                      "fr/proxy/gologin-proxies/website-compatibility-checker"
+                    ]
+                  },
+                  "fr/proxy/gologin-proxies/faq-gologin-proxies"
+                ]
+              },
+              {
+                "group": "Empreintes numériques",
+                "icon": "user-alien",
+                "pages": [
+                  "fr/how-browser-fingerprints-work",
+                  "fr/profile-fingerprint-settings",
+                  "fr/whats-safe-to-change"
+                ]
+              },
+              {
+                "group": "Anti-détection Android",
+                "hidden": true,
+                "pages": [
+                  "fr/overview",
+                  "fr/mobile-vs-desktop",
+                  "fr/use-cases",
+                  "fr/limitations"
+                ]
+              },
+              {
+                "group": "Application web Gologin",
+                "icon": "cloud",
+                "pages": [
+                  "fr/gologin-web-overview",
+                  "fr/key-things-to-note",
+                  "fr/downloading-and-uploading-files",
+                  "fr/faq-web-app-and-cloud-browser",
+                  "fr/upgrading-cloud-browser-limits"
+                ]
+              },
+              {
+                "group": "Application Android Gologin",
+                "icon": "mobile",
+                "pages": [
+                  "fr/gologin-android-overview",
+                  "fr/creating-and-managing-profiles",
+                  "fr/account-and-app-settings",
+                  "fr/user-agent-on-android",
+                  "fr/faq"
+                ]
+              }
             ]
           },
           {
-            "group": "Node.js SDK",
+            "tab": "Compte et collaboration",
             "pages": [
-              "api-reference/sdks/nodejs-sdk",
-              "api-reference/sdks/nodejs-puppeteer-exmaple",
-              "api-reference/sdks/nodejs-cloud-puppeteer-example",
-              "api-reference/sdks/nodejs-changelog"
+              {
+                "group": "Collaboration d'équipe",
+                "icon": "users",
+                "expanded": true,
+                "pages": [
+                  "fr/general/team-collaboration/how-you-can-share-access",
+                  {
+                    "group": "Accès aux espaces de travail et dossiers",
+                    "expanded": true,
+                    "pages": [
+                      "fr/general/team-collaboration/team-members",
+                      "fr/general/team-collaboration/workspace-access",
+                      "fr/general/team-collaboration/accessing-shared-workspace-or-folders"
+                    ]
+                  },
+                  {
+                    "group": "Partage de profils",
+                    "expanded": true,
+                    "pages": [
+                      "fr/general/team-collaboration/sharing-profiles",
+                      "fr/general/team-collaboration/accessing-shared-profiles",
+                      "fr/general/team-collaboration/untitled-page"
+                    ]
+                  },
+                  "fr/general/team-collaboration/faq-team-collaboration"
+                ]
+              },
+              {
+                "group": "Paramètres du compte",
+                "icon": "user",
+                "expanded": true,
+                "pages": [
+                  "fr/general/account-and-billing/overview",
+                  "fr/general/account-and-billing/changing-your-email-and-pass",
+                  "fr/general/account-and-billing/two-factor-authentication",
+                  "fr/general/account-and-billing/affiliate-program",
+                  "fr/general/account-and-billing/active-sessions-1",
+                  "fr/general/account-and-billing/cloud-browser-usage"
+                ]
+              },
+              {
+                "group": "Espaces de travail",
+                "icon": "list-dropdown",
+                "pages": [
+                  "fr/general/team-collaboration/workspaces",
+                  "fr/general/account-and-billing/workspace-settings"
+                ]
+              },
+              {
+                "group": "Tarifs et abonnement",
+                "icon": "money-bill",
+                "pages": [
+                  "fr/general/account-and-billing/pricing",
+                  "fr/general/account-and-billing/how-to-subscribe-to-gologin",
+                  "fr/general/account-and-billing/change-plan",
+                  "fr/general/account-and-billing/promo-codes",
+                  "fr/general/account-and-billing/payment-methods",
+                  "fr/general/account-and-billing/invoices",
+                  "fr/general/account-and-billing/faq-subscription"
+                ]
+              },
+              {
+                "group": "Dépannage",
+                "icon": "wrench",
+                "expanded": true,
+                "pages": [
+                  "fr/general/troubleshooting/common-errors",
+                  "fr/general/troubleshooting/proxy-not-working",
+                  "fr/general/troubleshooting/profile-data-disappeared",
+                  "fr/general/troubleshooting/wrong-ip-my-ip-is-leaking",
+                  "fr/general/troubleshooting/wrong-proxy-location",
+                  "fr/general/troubleshooting/payments-and-subscription"
+                ]
+              },
+              {
+                "group": "Général",
+                "pages": [
+                  "fr/general/storage-and-cache",
+                  "fr/general/migration-from-other-tools",
+                  "fr/general/gologin-web-and-chrome-os",
+                  "fr/general/updating-the-gologin-app",
+                  "fr/general/data-safety"
+                ]
+              }
             ]
           },
           {
-            "group": "Python SDK",
+            "tab": "Guides et bonnes pratiques",
             "pages": [
-              "api-reference/sdks/python-sdk",
-              "api-reference/sdks/python-selenium-example",
-              "api-reference/sdks/python-changelog"
+              {
+                "group": "Fondamentaux",
+                "pages": [
+                  "fr/best-practices-overview",
+                  "fr/how-gologin-protects-your-identity",
+                  "fr/maintaining-trust-score",
+                  "fr/profile-hygiene-checklist",
+                  "fr/common-mistakes-to-avoid",
+                  "fr/facebook-meta-ads-1"
+                ]
+              },
+              {
+                "group": "Modes d'utilisation",
+                "pages": [
+                  "fr/creating-new-accounts-safely",
+                  "fr/managing-existing-accounts"
+                ]
+              },
+              {
+                "group": "Guides par plateforme",
+                "pages": [
+                  "fr/facebook-meta-ads",
+                  "fr/tik-tok-ads",
+                  "fr/google-ads-and-gmail",
+                  "fr/amazon-e-bay-shopify",
+                  "fr/reddit-quora",
+                  "fr/linkedin",
+                  "fr/crypto-and-kyc",
+                  "fr/web-scraping-targets",
+                  "fr/proxy-and-fingerprint-setup-per-platform"
+                ]
+              },
+              {
+                "group": "Modèles",
+                "pages": [
+                  "fr/prebuilt-profiles",
+                  "fr/sample-team-setups"
+                ]
+              }
             ]
           },
           {
-            "group": "Limitations",
-            "pages": [
-              "api-reference/limitations/rate-limits"
+            "tab": "Automatisation et API",
+            "groups": [
+              {
+                "group": "Introduction",
+                "pages": [
+                  "fr/api-reference/introduction/quickstart",
+                  "fr/api-reference/introduction/headless",
+                  "fr/api-reference/introduction/cloud-launch-vs-local-launch",
+                  "fr/api-reference/introduction/gologin-proxies"
+                ]
+              },
+              {
+                "group": "Scraping API et Web Unlocker",
+                "pages": [
+                  "fr/what-is-web-unlocker",
+                  "fr/web-unlocker-quick-start",
+                  "fr/web-unlocker-use-cases",
+                  "fr/scraping-api-sdk-and-cli"
+                ]
+              },
+              {
+                "group": "SDK Node.js",
+                "pages": [
+                  "fr/api-reference/sdks/nodejs-sdk",
+                  "fr/api-reference/sdks/nodejs-puppeteer-exmaple",
+                  "fr/api-reference/sdks/nodejs-cloud-puppeteer-example",
+                  "fr/api-reference/sdks/nodejs-changelog"
+                ]
+              },
+              {
+                "group": "SDK Python",
+                "pages": [
+                  "fr/api-reference/sdks/python-sdk",
+                  "fr/api-reference/sdks/python-selenium-example",
+                  "fr/api-reference/sdks/python-changelog"
+                ]
+              },
+              {
+                "group": "Limites",
+                "pages": [
+                  "fr/api-reference/limitations/rate-limits"
+                ]
+              }
             ]
+          },
+          {
+            "tab": "Cloud Browser",
+            "pages": [
+              "fr/api-reference/cloud-browser/what-is-gologin-cloud-browser",
+              "fr/api-reference/cloud-browser/what-is-headless-browser",
+              "fr/api-reference/cloud-browser/getting-started",
+              "fr/api-reference/cloud-browser/scraping",
+              "fr/api-reference/cloud-browser/untitled-page-1",
+              "fr/api-reference/cloud-browser/untitled-page-2",
+              "fr/api-reference/cloud-browser/live",
+              "fr/api-reference/cloud-browser/untitled-page-3"
+            ]
+          },
+          {
+            "tab": "IA et agents",
+            "groups": [
+              {
+                "group": "Vue d'ensemble",
+                "pages": [
+                  "fr/ai/overview"
+                ]
+              },
+              {
+                "group": "Connexion",
+                "pages": [
+                  "fr/api-reference/ai-integrations/mcp-server",
+                  "fr/api-reference/ai-integrations/ai-skills"
+                ]
+              },
+              {
+                "group": "Outils CLI",
+                "pages": [
+                  "fr/cli-tools/web-access",
+                  "fr/cli-tools/agent-browser",
+                  "fr/cli-tools/local-agent-browser"
+                ]
+              },
+              {
+                "group": "Guides d'intégration",
+                "pages": [
+                  "fr/ai/cloud-browser-with-agents",
+                  "fr/ai/web-unlocker-with-agents"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Référence API (anglais)",
+            "href": "https://gologin.com/docs/api-reference/profile/get-all-profiles"
           }
         ]
       },
       {
-        "tab": "Cloud Browser",
-        "pages": [
-          "api-reference/cloud-browser/what-is-gologin-cloud-browser",
-          "api-reference/cloud-browser/what-is-headless-browser",
-          "api-reference/cloud-browser/getting-started",
-          "api-reference/cloud-browser/scraping",
-          "api-reference/cloud-browser/untitled-page-1",
-          "api-reference/cloud-browser/untitled-page-2",
-          "api-reference/cloud-browser/live",
-          "api-reference/cloud-browser/untitled-page-3"
+        "language": "ja",
+        "tabs": [
+          {
+            "tab": "はじめに",
+            "groups": [
+              {
+                "group": "紹介",
+                "pages": [
+                  "ja/getting-started/introduction/what-is-gologin-and-who-its-for",
+                  "ja/getting-started/introduction/key-concepts-profiles-fingerprints-proxies",
+                  "ja/getting-started/introduction/quick-start-from-zero-to-your-first-profile",
+                  "ja/getting-started/introduction/extra-faq"
+                ]
+              },
+              {
+                "group": "セットアップ",
+                "pages": [
+                  "ja/getting-started/setup/supported-platforms-installation",
+                  "ja/getting-started/setup/creating-gologin-account",
+                  "ja/getting-started/setup/first-time-checklist"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "プロファイルとプロキシ",
+            "groups": [
+              {
+                "group": "ブラウザプロファイル",
+                "icon": "window-flip",
+                "pages": [
+                  {
+                    "group": "概要",
+                    "expanded": true,
+                    "pages": [
+                      "ja/what-is-a-browser-profile",
+                      "ja/orbita-browser"
+                    ]
+                  },
+                  {
+                    "group": "プロファイル管理",
+                    "expanded": true,
+                    "pages": [
+                      "ja/browser-profiles/profile-management/creating-and-launching-profiles",
+                      "ja/browser-profiles/profile-management/editing-profiles",
+                      "ja/browser-profiles/profile-management/cloning-profiles",
+                      "ja/browser-profiles/profile-management/bulk-actions"
+                    ]
+                  },
+                  {
+                    "group": "プロファイルの整理",
+                    "pages": [
+                      "ja/browser-profiles/profile-management/folders",
+                      "ja/browser-profiles/profile-management/add-more-info-columns",
+                      "ja/browser-profiles/profile-management/notes-and-tags",
+                      "ja/browser-profiles/profile-management/profile-sorting",
+                      "ja/browser-profiles/profile-management/profile-search"
+                    ]
+                  },
+                  {
+                    "group": "プロファイル設定",
+                    "pages": [
+                      "ja/profile-parameters",
+                      "ja/general/account-and-billing/advanced-profile-settings",
+                      "ja/default-profile-settings",
+                      "ja/updating-your-browser-profile"
+                    ]
+                  },
+                  {
+                    "group": "ブラウザCookie",
+                    "pages": [
+                      "ja/browser-profiles/profile-features/browser-cookies/what-are-browser-cookies",
+                      "ja/browser-profiles/profile-features/browser-cookies/cookies-import-and-export"
+                    ]
+                  },
+                  {
+                    "group": "ブラウザ拡張機能",
+                    "pages": [
+                      "ja/browser-profiles/profile-features/browser-extensions/browser-extensions",
+                      "ja/browser-profiles/profile-features/browser-extensions/adding-browser-extensions",
+                      "ja/browser-profiles/profile-features/browser-extensions/installing-custom-extensions"
+                    ]
+                  },
+                  {
+                    "group": "プロファイルの同期と復元",
+                    "pages": [
+                      "ja/browser-profiles/profile-management/profile-synchronization",
+                      "ja/browser-profiles/profile-management/restore-browser-sessions",
+                      "ja/browser-profiles/profile-management/restore-deleted-profiles"
+                    ]
+                  },
+                  {
+                    "group": "プロファイルのエクスポートとインポート",
+                    "pages": [
+                      "ja/export-and-import-overview",
+                      "ja/profile-export-and-import"
+                    ]
+                  },
+                  "ja/faq-profile-managment"
+                ]
+              },
+              {
+                "group": "プロファイル機能",
+                "icon": "aperture",
+                "pages": [
+                  "ja/browser-profiles/profile-features/cookie-bot",
+                  "ja/browser-profiles/profile-features/run-with-sync",
+                  "ja/human-typing-simulation",
+                  "ja/proxy-devices-overview",
+                  "ja/browser-profiles/profile-features/browser-cookies/run-in-cloud"
+                ]
+              },
+              {
+                "group": "プロキシ",
+                "icon": "network-wired",
+                "pages": [
+                  {
+                    "group": "プロキシの基本",
+                    "pages": [
+                      "ja/proxy/introduction/what-is-a-proxy",
+                      "ja/residential-mobile-or-datacenter",
+                      "ja/private-vs-shared",
+                      "ja/proxy-protocols",
+                      "ja/static-vs-dynamic-proxies",
+                      "ja/proxy/introduction/best-proxy-for-your-case",
+                      "ja/proxy/introduction/vpn-vs-proxy"
+                    ]
+                  },
+                  {
+                    "group": "プロキシ管理",
+                    "expanded": true,
+                    "pages": [
+                      "ja/proxy/proxy-management/proxy-manager/overview",
+                      "ja/proxy/proxy-management/adding-proxies",
+                      "ja/proxy/proxy-management/proxy-manager/navigation",
+                      "ja/proxy/proxy-management/proxy-manager/proxies-page",
+                      "ja/proxy/proxy-management/proxy-manager/proxy-archive",
+                      "ja/proxy/proxy-management/proxy-testing-and-troubleshooting"
+                    ]
+                  },
+                  "ja/proxy/proxy-management/recommended-proxy-providers",
+                  "ja/proxy/proxy-management/faq-proxies"
+                ]
+              },
+              {
+                "group": "Gologinプロキシ",
+                "icon": "g",
+                "pages": [
+                  {
+                    "group": "Gologinプロキシの基本",
+                    "pages": [
+                      "ja/proxy/gologin-proxies/what-are-gologin-proxies",
+                      "ja/proxy/gologin-proxies/how-gologin-proxies-work-and-what-they-offer",
+                      "ja/proxy/proxy-management/gologin-vs-3rd-party-proxies",
+                      "ja/proxy/gologin-proxies/how-much-proxy-traffic-do-i-need"
+                    ]
+                  },
+                  {
+                    "group": "Gologinプロキシの管理",
+                    "expanded": true,
+                    "pages": [
+                      "ja/proxy/gologin-proxies/purchasing-gologin-proxies",
+                      "ja/proxy/gologin-proxies/gologin-proxy-management/adding-your-first-proxy",
+                      "ja/proxy/gologin-proxies/gologin-proxy-management/gologin-proxy-settings",
+                      "ja/proxy/gologin-proxies/website-compatibility-checker"
+                    ]
+                  },
+                  "ja/proxy/gologin-proxies/faq-gologin-proxies"
+                ]
+              },
+              {
+                "group": "フィンガープリント",
+                "icon": "user-alien",
+                "pages": [
+                  "ja/how-browser-fingerprints-work",
+                  "ja/profile-fingerprint-settings",
+                  "ja/whats-safe-to-change"
+                ]
+              },
+              {
+                "group": "Android アンチディテクト",
+                "hidden": true,
+                "pages": [
+                  "ja/overview",
+                  "ja/mobile-vs-desktop",
+                  "ja/use-cases",
+                  "ja/limitations"
+                ]
+              },
+              {
+                "group": "Gologin Webアプリ",
+                "icon": "cloud",
+                "pages": [
+                  "ja/gologin-web-overview",
+                  "ja/key-things-to-note",
+                  "ja/downloading-and-uploading-files",
+                  "ja/faq-web-app-and-cloud-browser",
+                  "ja/upgrading-cloud-browser-limits"
+                ]
+              },
+              {
+                "group": "Gologin Androidアプリ",
+                "icon": "mobile",
+                "pages": [
+                  "ja/gologin-android-overview",
+                  "ja/creating-and-managing-profiles",
+                  "ja/account-and-app-settings",
+                  "ja/user-agent-on-android",
+                  "ja/faq"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "アカウントとコラボレーション",
+            "pages": [
+              {
+                "group": "チームコラボレーション",
+                "icon": "users",
+                "expanded": true,
+                "pages": [
+                  "ja/general/team-collaboration/how-you-can-share-access",
+                  {
+                    "group": "ワークスペースとフォルダへのアクセス",
+                    "expanded": true,
+                    "pages": [
+                      "ja/general/team-collaboration/team-members",
+                      "ja/general/team-collaboration/workspace-access",
+                      "ja/general/team-collaboration/accessing-shared-workspace-or-folders"
+                    ]
+                  },
+                  {
+                    "group": "プロファイル共有",
+                    "expanded": true,
+                    "pages": [
+                      "ja/general/team-collaboration/sharing-profiles",
+                      "ja/general/team-collaboration/accessing-shared-profiles",
+                      "ja/general/team-collaboration/untitled-page"
+                    ]
+                  },
+                  "ja/general/team-collaboration/faq-team-collaboration"
+                ]
+              },
+              {
+                "group": "アカウント設定",
+                "icon": "user",
+                "expanded": true,
+                "pages": [
+                  "ja/general/account-and-billing/overview",
+                  "ja/general/account-and-billing/changing-your-email-and-pass",
+                  "ja/general/account-and-billing/two-factor-authentication",
+                  "ja/general/account-and-billing/affiliate-program",
+                  "ja/general/account-and-billing/active-sessions-1",
+                  "ja/general/account-and-billing/cloud-browser-usage"
+                ]
+              },
+              {
+                "group": "ワークスペース",
+                "icon": "list-dropdown",
+                "pages": [
+                  "ja/general/team-collaboration/workspaces",
+                  "ja/general/account-and-billing/workspace-settings"
+                ]
+              },
+              {
+                "group": "料金とサブスクリプション",
+                "icon": "money-bill",
+                "pages": [
+                  "ja/general/account-and-billing/pricing",
+                  "ja/general/account-and-billing/how-to-subscribe-to-gologin",
+                  "ja/general/account-and-billing/change-plan",
+                  "ja/general/account-and-billing/promo-codes",
+                  "ja/general/account-and-billing/payment-methods",
+                  "ja/general/account-and-billing/invoices",
+                  "ja/general/account-and-billing/faq-subscription"
+                ]
+              },
+              {
+                "group": "トラブルシューティング",
+                "icon": "wrench",
+                "expanded": true,
+                "pages": [
+                  "ja/general/troubleshooting/common-errors",
+                  "ja/general/troubleshooting/proxy-not-working",
+                  "ja/general/troubleshooting/profile-data-disappeared",
+                  "ja/general/troubleshooting/wrong-ip-my-ip-is-leaking",
+                  "ja/general/troubleshooting/wrong-proxy-location",
+                  "ja/general/troubleshooting/payments-and-subscription"
+                ]
+              },
+              {
+                "group": "一般",
+                "pages": [
+                  "ja/general/storage-and-cache",
+                  "ja/general/migration-from-other-tools",
+                  "ja/general/gologin-web-and-chrome-os",
+                  "ja/general/updating-the-gologin-app",
+                  "ja/general/data-safety"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "ガイドとベストプラクティス",
+            "pages": [
+              {
+                "group": "基礎",
+                "pages": [
+                  "ja/best-practices-overview",
+                  "ja/how-gologin-protects-your-identity",
+                  "ja/maintaining-trust-score",
+                  "ja/profile-hygiene-checklist",
+                  "ja/common-mistakes-to-avoid",
+                  "ja/facebook-meta-ads-1"
+                ]
+              },
+              {
+                "group": "利用パターン",
+                "pages": [
+                  "ja/creating-new-accounts-safely",
+                  "ja/managing-existing-accounts"
+                ]
+              },
+              {
+                "group": "プラットフォーム別ガイド",
+                "pages": [
+                  "ja/facebook-meta-ads",
+                  "ja/tik-tok-ads",
+                  "ja/google-ads-and-gmail",
+                  "ja/amazon-e-bay-shopify",
+                  "ja/reddit-quora",
+                  "ja/linkedin",
+                  "ja/crypto-and-kyc",
+                  "ja/web-scraping-targets",
+                  "ja/proxy-and-fingerprint-setup-per-platform"
+                ]
+              },
+              {
+                "group": "テンプレート",
+                "pages": [
+                  "ja/prebuilt-profiles",
+                  "ja/sample-team-setups"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "自動化とAPI",
+            "groups": [
+              {
+                "group": "紹介",
+                "pages": [
+                  "ja/api-reference/introduction/quickstart",
+                  "ja/api-reference/introduction/headless",
+                  "ja/api-reference/introduction/cloud-launch-vs-local-launch",
+                  "ja/api-reference/introduction/gologin-proxies"
+                ]
+              },
+              {
+                "group": "Scraping API と Web Unlocker",
+                "pages": [
+                  "ja/what-is-web-unlocker",
+                  "ja/web-unlocker-quick-start",
+                  "ja/web-unlocker-use-cases",
+                  "ja/scraping-api-sdk-and-cli"
+                ]
+              },
+              {
+                "group": "Node.js SDK",
+                "pages": [
+                  "ja/api-reference/sdks/nodejs-sdk",
+                  "ja/api-reference/sdks/nodejs-puppeteer-exmaple",
+                  "ja/api-reference/sdks/nodejs-cloud-puppeteer-example",
+                  "ja/api-reference/sdks/nodejs-changelog"
+                ]
+              },
+              {
+                "group": "Python SDK",
+                "pages": [
+                  "ja/api-reference/sdks/python-sdk",
+                  "ja/api-reference/sdks/python-selenium-example",
+                  "ja/api-reference/sdks/python-changelog"
+                ]
+              },
+              {
+                "group": "制限事項",
+                "pages": [
+                  "ja/api-reference/limitations/rate-limits"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Cloud Browser",
+            "pages": [
+              "ja/api-reference/cloud-browser/what-is-gologin-cloud-browser",
+              "ja/api-reference/cloud-browser/what-is-headless-browser",
+              "ja/api-reference/cloud-browser/getting-started",
+              "ja/api-reference/cloud-browser/scraping",
+              "ja/api-reference/cloud-browser/untitled-page-1",
+              "ja/api-reference/cloud-browser/untitled-page-2",
+              "ja/api-reference/cloud-browser/live",
+              "ja/api-reference/cloud-browser/untitled-page-3"
+            ]
+          },
+          {
+            "tab": "AIとエージェント",
+            "groups": [
+              {
+                "group": "概要",
+                "pages": [
+                  "ja/ai/overview"
+                ]
+              },
+              {
+                "group": "接続",
+                "pages": [
+                  "ja/api-reference/ai-integrations/mcp-server",
+                  "ja/api-reference/ai-integrations/ai-skills"
+                ]
+              },
+              {
+                "group": "CLIツール",
+                "pages": [
+                  "ja/cli-tools/web-access",
+                  "ja/cli-tools/agent-browser",
+                  "ja/cli-tools/local-agent-browser"
+                ]
+              },
+              {
+                "group": "連携ガイド",
+                "pages": [
+                  "ja/ai/cloud-browser-with-agents",
+                  "ja/ai/web-unlocker-with-agents"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "API リファレンス（英語）",
+            "href": "https://gologin.com/docs/api-reference/profile/get-all-profiles"
+          }
         ]
       },
       {
-        "tab": "AI & Agents",
-        "groups": [
+        "language": "pl",
+        "tabs": [
           {
-            "group": "Overview",
-            "pages": [
-              "ai/overview"
+            "tab": "Pierwsze kroki",
+            "groups": [
+              {
+                "group": "Wprowadzenie",
+                "pages": [
+                  "pl/getting-started/introduction/what-is-gologin-and-who-its-for",
+                  "pl/getting-started/introduction/key-concepts-profiles-fingerprints-proxies",
+                  "pl/getting-started/introduction/quick-start-from-zero-to-your-first-profile",
+                  "pl/getting-started/introduction/extra-faq"
+                ]
+              },
+              {
+                "group": "Konfiguracja",
+                "pages": [
+                  "pl/getting-started/setup/supported-platforms-installation",
+                  "pl/getting-started/setup/creating-gologin-account",
+                  "pl/getting-started/setup/first-time-checklist"
+                ]
+              }
             ]
           },
           {
-            "group": "Connect",
-            "pages": [
-              "api-reference/ai-integrations/mcp-server",
-              "api-reference/ai-integrations/ai-skills"
+            "tab": "Profile i proxy",
+            "groups": [
+              {
+                "group": "Profile przeglądarki",
+                "icon": "window-flip",
+                "pages": [
+                  {
+                    "group": "Przegląd",
+                    "expanded": true,
+                    "pages": [
+                      "pl/what-is-a-browser-profile",
+                      "pl/orbita-browser"
+                    ]
+                  },
+                  {
+                    "group": "Zarządzanie profilami",
+                    "expanded": true,
+                    "pages": [
+                      "pl/browser-profiles/profile-management/creating-and-launching-profiles",
+                      "pl/browser-profiles/profile-management/editing-profiles",
+                      "pl/browser-profiles/profile-management/cloning-profiles",
+                      "pl/browser-profiles/profile-management/bulk-actions"
+                    ]
+                  },
+                  {
+                    "group": "Organizacja profili",
+                    "pages": [
+                      "pl/browser-profiles/profile-management/folders",
+                      "pl/browser-profiles/profile-management/add-more-info-columns",
+                      "pl/browser-profiles/profile-management/notes-and-tags",
+                      "pl/browser-profiles/profile-management/profile-sorting",
+                      "pl/browser-profiles/profile-management/profile-search"
+                    ]
+                  },
+                  {
+                    "group": "Ustawienia profilu",
+                    "pages": [
+                      "pl/profile-parameters",
+                      "pl/general/account-and-billing/advanced-profile-settings",
+                      "pl/default-profile-settings",
+                      "pl/updating-your-browser-profile"
+                    ]
+                  },
+                  {
+                    "group": "Pliki cookie przeglądarki",
+                    "pages": [
+                      "pl/browser-profiles/profile-features/browser-cookies/what-are-browser-cookies",
+                      "pl/browser-profiles/profile-features/browser-cookies/cookies-import-and-export"
+                    ]
+                  },
+                  {
+                    "group": "Rozszerzenia przeglądarki",
+                    "pages": [
+                      "pl/browser-profiles/profile-features/browser-extensions/browser-extensions",
+                      "pl/browser-profiles/profile-features/browser-extensions/adding-browser-extensions",
+                      "pl/browser-profiles/profile-features/browser-extensions/installing-custom-extensions"
+                    ]
+                  },
+                  {
+                    "group": "Synchronizacja i odzyskiwanie profili",
+                    "pages": [
+                      "pl/browser-profiles/profile-management/profile-synchronization",
+                      "pl/browser-profiles/profile-management/restore-browser-sessions",
+                      "pl/browser-profiles/profile-management/restore-deleted-profiles"
+                    ]
+                  },
+                  {
+                    "group": "Eksport i import profili",
+                    "pages": [
+                      "pl/export-and-import-overview",
+                      "pl/profile-export-and-import"
+                    ]
+                  },
+                  "pl/faq-profile-managment"
+                ]
+              },
+              {
+                "group": "Funkcje profilu",
+                "icon": "aperture",
+                "pages": [
+                  "pl/browser-profiles/profile-features/cookie-bot",
+                  "pl/browser-profiles/profile-features/run-with-sync",
+                  "pl/human-typing-simulation",
+                  "pl/proxy-devices-overview",
+                  "pl/browser-profiles/profile-features/browser-cookies/run-in-cloud"
+                ]
+              },
+              {
+                "group": "Proxy",
+                "icon": "network-wired",
+                "pages": [
+                  {
+                    "group": "Podstawy proxy",
+                    "pages": [
+                      "pl/proxy/introduction/what-is-a-proxy",
+                      "pl/residential-mobile-or-datacenter",
+                      "pl/private-vs-shared",
+                      "pl/proxy-protocols",
+                      "pl/static-vs-dynamic-proxies",
+                      "pl/proxy/introduction/best-proxy-for-your-case",
+                      "pl/proxy/introduction/vpn-vs-proxy"
+                    ]
+                  },
+                  {
+                    "group": "Zarządzanie proxy",
+                    "expanded": true,
+                    "pages": [
+                      "pl/proxy/proxy-management/proxy-manager/overview",
+                      "pl/proxy/proxy-management/adding-proxies",
+                      "pl/proxy/proxy-management/proxy-manager/navigation",
+                      "pl/proxy/proxy-management/proxy-manager/proxies-page",
+                      "pl/proxy/proxy-management/proxy-manager/proxy-archive",
+                      "pl/proxy/proxy-management/proxy-testing-and-troubleshooting"
+                    ]
+                  },
+                  "pl/proxy/proxy-management/recommended-proxy-providers",
+                  "pl/proxy/proxy-management/faq-proxies"
+                ]
+              },
+              {
+                "group": "Proxy Gologin",
+                "icon": "g",
+                "pages": [
+                  {
+                    "group": "Podstawy proxy Gologin",
+                    "pages": [
+                      "pl/proxy/gologin-proxies/what-are-gologin-proxies",
+                      "pl/proxy/gologin-proxies/how-gologin-proxies-work-and-what-they-offer",
+                      "pl/proxy/proxy-management/gologin-vs-3rd-party-proxies",
+                      "pl/proxy/gologin-proxies/how-much-proxy-traffic-do-i-need"
+                    ]
+                  },
+                  {
+                    "group": "Zarządzanie proxy Gologin",
+                    "expanded": true,
+                    "pages": [
+                      "pl/proxy/gologin-proxies/purchasing-gologin-proxies",
+                      "pl/proxy/gologin-proxies/gologin-proxy-management/adding-your-first-proxy",
+                      "pl/proxy/gologin-proxies/gologin-proxy-management/gologin-proxy-settings",
+                      "pl/proxy/gologin-proxies/website-compatibility-checker"
+                    ]
+                  },
+                  "pl/proxy/gologin-proxies/faq-gologin-proxies"
+                ]
+              },
+              {
+                "group": "Odciski cyfrowe",
+                "icon": "user-alien",
+                "pages": [
+                  "pl/how-browser-fingerprints-work",
+                  "pl/profile-fingerprint-settings",
+                  "pl/whats-safe-to-change"
+                ]
+              },
+              {
+                "group": "Ochrona przed wykrywaniem na Androidzie",
+                "hidden": true,
+                "pages": [
+                  "pl/overview",
+                  "pl/mobile-vs-desktop",
+                  "pl/use-cases",
+                  "pl/limitations"
+                ]
+              },
+              {
+                "group": "Aplikacja internetowa Gologin",
+                "icon": "cloud",
+                "pages": [
+                  "pl/gologin-web-overview",
+                  "pl/key-things-to-note",
+                  "pl/downloading-and-uploading-files",
+                  "pl/faq-web-app-and-cloud-browser",
+                  "pl/upgrading-cloud-browser-limits"
+                ]
+              },
+              {
+                "group": "Aplikacja Gologin na Android",
+                "icon": "mobile",
+                "pages": [
+                  "pl/gologin-android-overview",
+                  "pl/creating-and-managing-profiles",
+                  "pl/account-and-app-settings",
+                  "pl/user-agent-on-android",
+                  "pl/faq"
+                ]
+              }
             ]
           },
           {
-            "group": "CLI Tools",
+            "tab": "Konto i współpraca",
             "pages": [
-              "cli-tools/web-access",
-              "cli-tools/agent-browser",
-              "cli-tools/local-agent-browser"
+              {
+                "group": "Współpraca zespołowa",
+                "icon": "users",
+                "expanded": true,
+                "pages": [
+                  "pl/general/team-collaboration/how-you-can-share-access",
+                  {
+                    "group": "Dostęp do przestrzeni roboczej i folderów",
+                    "expanded": true,
+                    "pages": [
+                      "pl/general/team-collaboration/team-members",
+                      "pl/general/team-collaboration/workspace-access",
+                      "pl/general/team-collaboration/accessing-shared-workspace-or-folders"
+                    ]
+                  },
+                  {
+                    "group": "Udostępnianie profili",
+                    "expanded": true,
+                    "pages": [
+                      "pl/general/team-collaboration/sharing-profiles",
+                      "pl/general/team-collaboration/accessing-shared-profiles",
+                      "pl/general/team-collaboration/untitled-page"
+                    ]
+                  },
+                  "pl/general/team-collaboration/faq-team-collaboration"
+                ]
+              },
+              {
+                "group": "Ustawienia konta",
+                "icon": "user",
+                "expanded": true,
+                "pages": [
+                  "pl/general/account-and-billing/overview",
+                  "pl/general/account-and-billing/changing-your-email-and-pass",
+                  "pl/general/account-and-billing/two-factor-authentication",
+                  "pl/general/account-and-billing/affiliate-program",
+                  "pl/general/account-and-billing/active-sessions-1",
+                  "pl/general/account-and-billing/cloud-browser-usage"
+                ]
+              },
+              {
+                "group": "Przestrzenie robocze",
+                "icon": "list-dropdown",
+                "pages": [
+                  "pl/general/team-collaboration/workspaces",
+                  "pl/general/account-and-billing/workspace-settings"
+                ]
+              },
+              {
+                "group": "Cennik i subskrypcja",
+                "icon": "money-bill",
+                "pages": [
+                  "pl/general/account-and-billing/pricing",
+                  "pl/general/account-and-billing/how-to-subscribe-to-gologin",
+                  "pl/general/account-and-billing/change-plan",
+                  "pl/general/account-and-billing/promo-codes",
+                  "pl/general/account-and-billing/payment-methods",
+                  "pl/general/account-and-billing/invoices",
+                  "pl/general/account-and-billing/faq-subscription"
+                ]
+              },
+              {
+                "group": "Rozwiązywanie problemów",
+                "icon": "wrench",
+                "expanded": true,
+                "pages": [
+                  "pl/general/troubleshooting/common-errors",
+                  "pl/general/troubleshooting/proxy-not-working",
+                  "pl/general/troubleshooting/profile-data-disappeared",
+                  "pl/general/troubleshooting/wrong-ip-my-ip-is-leaking",
+                  "pl/general/troubleshooting/wrong-proxy-location",
+                  "pl/general/troubleshooting/payments-and-subscription"
+                ]
+              },
+              {
+                "group": "Ogólne",
+                "pages": [
+                  "pl/general/storage-and-cache",
+                  "pl/general/migration-from-other-tools",
+                  "pl/general/gologin-web-and-chrome-os",
+                  "pl/general/updating-the-gologin-app",
+                  "pl/general/data-safety"
+                ]
+              }
             ]
           },
           {
-            "group": "Integration Guides",
+            "tab": "Poradniki i dobre praktyki",
             "pages": [
-              "ai/cloud-browser-with-agents",
-              "ai/web-unlocker-with-agents"
+              {
+                "group": "Podstawy",
+                "pages": [
+                  "pl/best-practices-overview",
+                  "pl/how-gologin-protects-your-identity",
+                  "pl/maintaining-trust-score",
+                  "pl/profile-hygiene-checklist",
+                  "pl/common-mistakes-to-avoid",
+                  "pl/facebook-meta-ads-1"
+                ]
+              },
+              {
+                "group": "Wzorce użycia",
+                "pages": [
+                  "pl/creating-new-accounts-safely",
+                  "pl/managing-existing-accounts"
+                ]
+              },
+              {
+                "group": "Poradniki dla platform",
+                "pages": [
+                  "pl/facebook-meta-ads",
+                  "pl/tik-tok-ads",
+                  "pl/google-ads-and-gmail",
+                  "pl/amazon-e-bay-shopify",
+                  "pl/reddit-quora",
+                  "pl/linkedin",
+                  "pl/crypto-and-kyc",
+                  "pl/web-scraping-targets",
+                  "pl/proxy-and-fingerprint-setup-per-platform"
+                ]
+              },
+              {
+                "group": "Szablony",
+                "pages": [
+                  "pl/prebuilt-profiles",
+                  "pl/sample-team-setups"
+                ]
+              }
             ]
+          },
+          {
+            "tab": "Automatyzacja i API",
+            "groups": [
+              {
+                "group": "Wprowadzenie",
+                "pages": [
+                  "pl/api-reference/introduction/quickstart",
+                  "pl/api-reference/introduction/headless",
+                  "pl/api-reference/introduction/cloud-launch-vs-local-launch",
+                  "pl/api-reference/introduction/gologin-proxies"
+                ]
+              },
+              {
+                "group": "Scraping API i Web Unlocker",
+                "pages": [
+                  "pl/what-is-web-unlocker",
+                  "pl/web-unlocker-quick-start",
+                  "pl/web-unlocker-use-cases",
+                  "pl/scraping-api-sdk-and-cli"
+                ]
+              },
+              {
+                "group": "Node.js SDK",
+                "pages": [
+                  "pl/api-reference/sdks/nodejs-sdk",
+                  "pl/api-reference/sdks/nodejs-puppeteer-exmaple",
+                  "pl/api-reference/sdks/nodejs-cloud-puppeteer-example",
+                  "pl/api-reference/sdks/nodejs-changelog"
+                ]
+              },
+              {
+                "group": "Python SDK",
+                "pages": [
+                  "pl/api-reference/sdks/python-sdk",
+                  "pl/api-reference/sdks/python-selenium-example",
+                  "pl/api-reference/sdks/python-changelog"
+                ]
+              },
+              {
+                "group": "Ograniczenia",
+                "pages": [
+                  "pl/api-reference/limitations/rate-limits"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Cloud Browser",
+            "pages": [
+              "pl/api-reference/cloud-browser/what-is-gologin-cloud-browser",
+              "pl/api-reference/cloud-browser/what-is-headless-browser",
+              "pl/api-reference/cloud-browser/getting-started",
+              "pl/api-reference/cloud-browser/scraping",
+              "pl/api-reference/cloud-browser/untitled-page-1",
+              "pl/api-reference/cloud-browser/untitled-page-2",
+              "pl/api-reference/cloud-browser/live",
+              "pl/api-reference/cloud-browser/untitled-page-3"
+            ]
+          },
+          {
+            "tab": "AI i agenci",
+            "groups": [
+              {
+                "group": "Przegląd",
+                "pages": [
+                  "pl/ai/overview"
+                ]
+              },
+              {
+                "group": "Połączenie",
+                "pages": [
+                  "pl/api-reference/ai-integrations/mcp-server",
+                  "pl/api-reference/ai-integrations/ai-skills"
+                ]
+              },
+              {
+                "group": "Narzędzia CLI",
+                "pages": [
+                  "pl/cli-tools/web-access",
+                  "pl/cli-tools/agent-browser",
+                  "pl/cli-tools/local-agent-browser"
+                ]
+              },
+              {
+                "group": "Poradniki integracji",
+                "pages": [
+                  "pl/ai/cloud-browser-with-agents",
+                  "pl/ai/web-unlocker-with-agents"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Dokumentacja API (angielski)",
+            "href": "https://gologin.com/docs/api-reference/profile/get-all-profiles"
+          }
+        ]
+      },
+      {
+        "language": "pt",
+        "tabs": [
+          {
+            "tab": "Primeiros Passos",
+            "groups": [
+              {
+                "group": "Introdução",
+                "pages": [
+                  "pt/getting-started/introduction/what-is-gologin-and-who-its-for",
+                  "pt/getting-started/introduction/key-concepts-profiles-fingerprints-proxies",
+                  "pt/getting-started/introduction/quick-start-from-zero-to-your-first-profile",
+                  "pt/getting-started/introduction/extra-faq"
+                ]
+              },
+              {
+                "group": "Configuração",
+                "pages": [
+                  "pt/getting-started/setup/supported-platforms-installation",
+                  "pt/getting-started/setup/creating-gologin-account",
+                  "pt/getting-started/setup/first-time-checklist"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Perfis e Proxies",
+            "groups": [
+              {
+                "group": "Perfis de Navegador",
+                "icon": "window-flip",
+                "pages": [
+                  {
+                    "group": "Visão Geral",
+                    "expanded": true,
+                    "pages": [
+                      "pt/what-is-a-browser-profile",
+                      "pt/orbita-browser"
+                    ]
+                  },
+                  {
+                    "group": "Gerenciamento de Perfis",
+                    "expanded": true,
+                    "pages": [
+                      "pt/browser-profiles/profile-management/creating-and-launching-profiles",
+                      "pt/browser-profiles/profile-management/editing-profiles",
+                      "pt/browser-profiles/profile-management/cloning-profiles",
+                      "pt/browser-profiles/profile-management/bulk-actions"
+                    ]
+                  },
+                  {
+                    "group": "Organização de Perfis",
+                    "pages": [
+                      "pt/browser-profiles/profile-management/folders",
+                      "pt/browser-profiles/profile-management/add-more-info-columns",
+                      "pt/browser-profiles/profile-management/notes-and-tags",
+                      "pt/browser-profiles/profile-management/profile-sorting",
+                      "pt/browser-profiles/profile-management/profile-search"
+                    ]
+                  },
+                  {
+                    "group": "Configurações de Perfil",
+                    "pages": [
+                      "pt/profile-parameters",
+                      "pt/general/account-and-billing/advanced-profile-settings",
+                      "pt/default-profile-settings",
+                      "pt/updating-your-browser-profile"
+                    ]
+                  },
+                  {
+                    "group": "Cookies do Navegador",
+                    "pages": [
+                      "pt/browser-profiles/profile-features/browser-cookies/what-are-browser-cookies",
+                      "pt/browser-profiles/profile-features/browser-cookies/cookies-import-and-export"
+                    ]
+                  },
+                  {
+                    "group": "Extensões do Navegador",
+                    "pages": [
+                      "pt/browser-profiles/profile-features/browser-extensions/browser-extensions",
+                      "pt/browser-profiles/profile-features/browser-extensions/adding-browser-extensions",
+                      "pt/browser-profiles/profile-features/browser-extensions/installing-custom-extensions"
+                    ]
+                  },
+                  {
+                    "group": "Sincronização e Recuperação de Perfis",
+                    "pages": [
+                      "pt/browser-profiles/profile-management/profile-synchronization",
+                      "pt/browser-profiles/profile-management/restore-browser-sessions",
+                      "pt/browser-profiles/profile-management/restore-deleted-profiles"
+                    ]
+                  },
+                  {
+                    "group": "Exportação e Importação de Perfis",
+                    "pages": [
+                      "pt/export-and-import-overview",
+                      "pt/profile-export-and-import"
+                    ]
+                  },
+                  "pt/faq-profile-managment"
+                ]
+              },
+              {
+                "group": "Recursos de Perfil",
+                "icon": "aperture",
+                "pages": [
+                  "pt/browser-profiles/profile-features/cookie-bot",
+                  "pt/browser-profiles/profile-features/run-with-sync",
+                  "pt/human-typing-simulation",
+                  "pt/proxy-devices-overview",
+                  "pt/browser-profiles/profile-features/browser-cookies/run-in-cloud"
+                ]
+              },
+              {
+                "group": "Proxies",
+                "icon": "network-wired",
+                "pages": [
+                  {
+                    "group": "Noções Básicas de Proxy",
+                    "pages": [
+                      "pt/proxy/introduction/what-is-a-proxy",
+                      "pt/residential-mobile-or-datacenter",
+                      "pt/private-vs-shared",
+                      "pt/proxy-protocols",
+                      "pt/static-vs-dynamic-proxies",
+                      "pt/proxy/introduction/best-proxy-for-your-case",
+                      "pt/proxy/introduction/vpn-vs-proxy"
+                    ]
+                  },
+                  {
+                    "group": "Gerenciamento de Proxies",
+                    "expanded": true,
+                    "pages": [
+                      "pt/proxy/proxy-management/proxy-manager/overview",
+                      "pt/proxy/proxy-management/adding-proxies",
+                      "pt/proxy/proxy-management/proxy-manager/navigation",
+                      "pt/proxy/proxy-management/proxy-manager/proxies-page",
+                      "pt/proxy/proxy-management/proxy-manager/proxy-archive",
+                      "pt/proxy/proxy-management/proxy-testing-and-troubleshooting"
+                    ]
+                  },
+                  "pt/proxy/proxy-management/recommended-proxy-providers",
+                  "pt/proxy/proxy-management/faq-proxies"
+                ]
+              },
+              {
+                "group": "Proxies Gologin",
+                "icon": "g",
+                "pages": [
+                  {
+                    "group": "Noções Básicas de Proxies Gologin",
+                    "pages": [
+                      "pt/proxy/gologin-proxies/what-are-gologin-proxies",
+                      "pt/proxy/gologin-proxies/how-gologin-proxies-work-and-what-they-offer",
+                      "pt/proxy/proxy-management/gologin-vs-3rd-party-proxies",
+                      "pt/proxy/gologin-proxies/how-much-proxy-traffic-do-i-need"
+                    ]
+                  },
+                  {
+                    "group": "Gerenciando Proxies Gologin",
+                    "expanded": true,
+                    "pages": [
+                      "pt/proxy/gologin-proxies/purchasing-gologin-proxies",
+                      "pt/proxy/gologin-proxies/gologin-proxy-management/adding-your-first-proxy",
+                      "pt/proxy/gologin-proxies/gologin-proxy-management/gologin-proxy-settings",
+                      "pt/proxy/gologin-proxies/website-compatibility-checker"
+                    ]
+                  },
+                  "pt/proxy/gologin-proxies/faq-gologin-proxies"
+                ]
+              },
+              {
+                "group": "Impressões digitais",
+                "icon": "user-alien",
+                "pages": [
+                  "pt/how-browser-fingerprints-work",
+                  "pt/profile-fingerprint-settings",
+                  "pt/whats-safe-to-change"
+                ]
+              },
+              {
+                "group": "Antidetecção para Android",
+                "hidden": true,
+                "pages": [
+                  "pt/overview",
+                  "pt/mobile-vs-desktop",
+                  "pt/use-cases",
+                  "pt/limitations"
+                ]
+              },
+              {
+                "group": "App Web Gologin",
+                "icon": "cloud",
+                "pages": [
+                  "pt/gologin-web-overview",
+                  "pt/key-things-to-note",
+                  "pt/downloading-and-uploading-files",
+                  "pt/faq-web-app-and-cloud-browser",
+                  "pt/upgrading-cloud-browser-limits"
+                ]
+              },
+              {
+                "group": "App Gologin para Android",
+                "icon": "mobile",
+                "pages": [
+                  "pt/gologin-android-overview",
+                  "pt/creating-and-managing-profiles",
+                  "pt/account-and-app-settings",
+                  "pt/user-agent-on-android",
+                  "pt/faq"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Conta e Colaboração",
+            "pages": [
+              {
+                "group": "Colaboração em Equipe",
+                "icon": "users",
+                "expanded": true,
+                "pages": [
+                  "pt/general/team-collaboration/how-you-can-share-access",
+                  {
+                    "group": "Acesso ao espaço de trabalho e às pastas",
+                    "expanded": true,
+                    "pages": [
+                      "pt/general/team-collaboration/team-members",
+                      "pt/general/team-collaboration/workspace-access",
+                      "pt/general/team-collaboration/accessing-shared-workspace-or-folders"
+                    ]
+                  },
+                  {
+                    "group": "Compartilhamento de Perfis",
+                    "expanded": true,
+                    "pages": [
+                      "pt/general/team-collaboration/sharing-profiles",
+                      "pt/general/team-collaboration/accessing-shared-profiles",
+                      "pt/general/team-collaboration/untitled-page"
+                    ]
+                  },
+                  "pt/general/team-collaboration/faq-team-collaboration"
+                ]
+              },
+              {
+                "group": "Configurações da Conta",
+                "icon": "user",
+                "expanded": true,
+                "pages": [
+                  "pt/general/account-and-billing/overview",
+                  "pt/general/account-and-billing/changing-your-email-and-pass",
+                  "pt/general/account-and-billing/two-factor-authentication",
+                  "pt/general/account-and-billing/affiliate-program",
+                  "pt/general/account-and-billing/active-sessions-1",
+                  "pt/general/account-and-billing/cloud-browser-usage"
+                ]
+              },
+              {
+                "group": "Espaços de trabalho",
+                "icon": "list-dropdown",
+                "pages": [
+                  "pt/general/team-collaboration/workspaces",
+                  "pt/general/account-and-billing/workspace-settings"
+                ]
+              },
+              {
+                "group": "Preços e Assinatura",
+                "icon": "money-bill",
+                "pages": [
+                  "pt/general/account-and-billing/pricing",
+                  "pt/general/account-and-billing/how-to-subscribe-to-gologin",
+                  "pt/general/account-and-billing/change-plan",
+                  "pt/general/account-and-billing/promo-codes",
+                  "pt/general/account-and-billing/payment-methods",
+                  "pt/general/account-and-billing/invoices",
+                  "pt/general/account-and-billing/faq-subscription"
+                ]
+              },
+              {
+                "group": "Solução de Problemas",
+                "icon": "wrench",
+                "expanded": true,
+                "pages": [
+                  "pt/general/troubleshooting/common-errors",
+                  "pt/general/troubleshooting/proxy-not-working",
+                  "pt/general/troubleshooting/profile-data-disappeared",
+                  "pt/general/troubleshooting/wrong-ip-my-ip-is-leaking",
+                  "pt/general/troubleshooting/wrong-proxy-location",
+                  "pt/general/troubleshooting/payments-and-subscription"
+                ]
+              },
+              {
+                "group": "Geral",
+                "pages": [
+                  "pt/general/storage-and-cache",
+                  "pt/general/migration-from-other-tools",
+                  "pt/general/gologin-web-and-chrome-os",
+                  "pt/general/updating-the-gologin-app",
+                  "pt/general/data-safety"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Guias e Boas Práticas",
+            "pages": [
+              {
+                "group": "Fundamentos",
+                "pages": [
+                  "pt/best-practices-overview",
+                  "pt/how-gologin-protects-your-identity",
+                  "pt/maintaining-trust-score",
+                  "pt/profile-hygiene-checklist",
+                  "pt/common-mistakes-to-avoid",
+                  "pt/facebook-meta-ads-1"
+                ]
+              },
+              {
+                "group": "Padrões de Uso",
+                "pages": [
+                  "pt/creating-new-accounts-safely",
+                  "pt/managing-existing-accounts"
+                ]
+              },
+              {
+                "group": "Guias de Plataformas",
+                "pages": [
+                  "pt/facebook-meta-ads",
+                  "pt/tik-tok-ads",
+                  "pt/google-ads-and-gmail",
+                  "pt/amazon-e-bay-shopify",
+                  "pt/reddit-quora",
+                  "pt/linkedin",
+                  "pt/crypto-and-kyc",
+                  "pt/web-scraping-targets",
+                  "pt/proxy-and-fingerprint-setup-per-platform"
+                ]
+              },
+              {
+                "group": "Modelos",
+                "pages": [
+                  "pt/prebuilt-profiles",
+                  "pt/sample-team-setups"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Automação e API",
+            "groups": [
+              {
+                "group": "Introdução",
+                "pages": [
+                  "pt/api-reference/introduction/quickstart",
+                  "pt/api-reference/introduction/headless",
+                  "pt/api-reference/introduction/cloud-launch-vs-local-launch",
+                  "pt/api-reference/introduction/gologin-proxies"
+                ]
+              },
+              {
+                "group": "Scraping API e Web Unlocker",
+                "pages": [
+                  "pt/what-is-web-unlocker",
+                  "pt/web-unlocker-quick-start",
+                  "pt/web-unlocker-use-cases",
+                  "pt/scraping-api-sdk-and-cli"
+                ]
+              },
+              {
+                "group": "SDK Node.js",
+                "pages": [
+                  "pt/api-reference/sdks/nodejs-sdk",
+                  "pt/api-reference/sdks/nodejs-puppeteer-exmaple",
+                  "pt/api-reference/sdks/nodejs-cloud-puppeteer-example",
+                  "pt/api-reference/sdks/nodejs-changelog"
+                ]
+              },
+              {
+                "group": "SDK Python",
+                "pages": [
+                  "pt/api-reference/sdks/python-sdk",
+                  "pt/api-reference/sdks/python-selenium-example",
+                  "pt/api-reference/sdks/python-changelog"
+                ]
+              },
+              {
+                "group": "Limitações",
+                "pages": [
+                  "pt/api-reference/limitations/rate-limits"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Cloud Browser",
+            "pages": [
+              "pt/api-reference/cloud-browser/what-is-gologin-cloud-browser",
+              "pt/api-reference/cloud-browser/what-is-headless-browser",
+              "pt/api-reference/cloud-browser/getting-started",
+              "pt/api-reference/cloud-browser/scraping",
+              "pt/api-reference/cloud-browser/untitled-page-1",
+              "pt/api-reference/cloud-browser/untitled-page-2",
+              "pt/api-reference/cloud-browser/live",
+              "pt/api-reference/cloud-browser/untitled-page-3"
+            ]
+          },
+          {
+            "tab": "IA e Agentes",
+            "groups": [
+              {
+                "group": "Visão Geral",
+                "pages": [
+                  "pt/ai/overview"
+                ]
+              },
+              {
+                "group": "Conectar",
+                "pages": [
+                  "pt/api-reference/ai-integrations/mcp-server",
+                  "pt/api-reference/ai-integrations/ai-skills"
+                ]
+              },
+              {
+                "group": "Ferramentas CLI",
+                "pages": [
+                  "pt/cli-tools/web-access",
+                  "pt/cli-tools/agent-browser",
+                  "pt/cli-tools/local-agent-browser"
+                ]
+              },
+              {
+                "group": "Guias de Integração",
+                "pages": [
+                  "pt/ai/cloud-browser-with-agents",
+                  "pt/ai/web-unlocker-with-agents"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Referência da API (inglês)",
+            "href": "https://gologin.com/docs/api-reference/profile/get-all-profiles"
+          }
+        ]
+      },
+      {
+        "language": "ru",
+        "tabs": [
+          {
+            "tab": "Начало работы",
+            "groups": [
+              {
+                "group": "Введение",
+                "pages": [
+                  "ru/getting-started/introduction/what-is-gologin-and-who-its-for",
+                  "ru/getting-started/introduction/key-concepts-profiles-fingerprints-proxies",
+                  "ru/getting-started/introduction/quick-start-from-zero-to-your-first-profile",
+                  "ru/getting-started/introduction/extra-faq"
+                ]
+              },
+              {
+                "group": "Настройка",
+                "pages": [
+                  "ru/getting-started/setup/supported-platforms-installation",
+                  "ru/getting-started/setup/creating-gologin-account",
+                  "ru/getting-started/setup/first-time-checklist"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Профили и прокси",
+            "groups": [
+              {
+                "group": "Профили браузера",
+                "icon": "window-flip",
+                "pages": [
+                  {
+                    "group": "Обзор",
+                    "expanded": true,
+                    "pages": [
+                      "ru/what-is-a-browser-profile",
+                      "ru/orbita-browser"
+                    ]
+                  },
+                  {
+                    "group": "Управление профилями",
+                    "expanded": true,
+                    "pages": [
+                      "ru/browser-profiles/profile-management/creating-and-launching-profiles",
+                      "ru/browser-profiles/profile-management/editing-profiles",
+                      "ru/browser-profiles/profile-management/cloning-profiles",
+                      "ru/browser-profiles/profile-management/bulk-actions"
+                    ]
+                  },
+                  {
+                    "group": "Организация профилей",
+                    "pages": [
+                      "ru/browser-profiles/profile-management/folders",
+                      "ru/browser-profiles/profile-management/add-more-info-columns",
+                      "ru/browser-profiles/profile-management/notes-and-tags",
+                      "ru/browser-profiles/profile-management/profile-sorting",
+                      "ru/browser-profiles/profile-management/profile-search"
+                    ]
+                  },
+                  {
+                    "group": "Настройки профиля",
+                    "pages": [
+                      "ru/profile-parameters",
+                      "ru/general/account-and-billing/advanced-profile-settings",
+                      "ru/default-profile-settings",
+                      "ru/updating-your-browser-profile"
+                    ]
+                  },
+                  {
+                    "group": "Файлы cookie браузера",
+                    "pages": [
+                      "ru/browser-profiles/profile-features/browser-cookies/what-are-browser-cookies",
+                      "ru/browser-profiles/profile-features/browser-cookies/cookies-import-and-export"
+                    ]
+                  },
+                  {
+                    "group": "Расширения браузера",
+                    "pages": [
+                      "ru/browser-profiles/profile-features/browser-extensions/browser-extensions",
+                      "ru/browser-profiles/profile-features/browser-extensions/adding-browser-extensions",
+                      "ru/browser-profiles/profile-features/browser-extensions/installing-custom-extensions"
+                    ]
+                  },
+                  {
+                    "group": "Синхронизация и восстановление профилей",
+                    "pages": [
+                      "ru/browser-profiles/profile-management/profile-synchronization",
+                      "ru/browser-profiles/profile-management/restore-browser-sessions",
+                      "ru/browser-profiles/profile-management/restore-deleted-profiles"
+                    ]
+                  },
+                  {
+                    "group": "Экспорт и импорт профилей",
+                    "pages": [
+                      "ru/export-and-import-overview",
+                      "ru/profile-export-and-import"
+                    ]
+                  },
+                  "ru/faq-profile-managment"
+                ]
+              },
+              {
+                "group": "Функции профиля",
+                "icon": "aperture",
+                "pages": [
+                  "ru/browser-profiles/profile-features/cookie-bot",
+                  "ru/browser-profiles/profile-features/run-with-sync",
+                  "ru/human-typing-simulation",
+                  "ru/proxy-devices-overview",
+                  "ru/browser-profiles/profile-features/browser-cookies/run-in-cloud"
+                ]
+              },
+              {
+                "group": "Прокси",
+                "icon": "network-wired",
+                "pages": [
+                  {
+                    "group": "Основы прокси",
+                    "pages": [
+                      "ru/proxy/introduction/what-is-a-proxy",
+                      "ru/residential-mobile-or-datacenter",
+                      "ru/private-vs-shared",
+                      "ru/proxy-protocols",
+                      "ru/static-vs-dynamic-proxies",
+                      "ru/proxy/introduction/best-proxy-for-your-case",
+                      "ru/proxy/introduction/vpn-vs-proxy"
+                    ]
+                  },
+                  {
+                    "group": "Управление прокси",
+                    "expanded": true,
+                    "pages": [
+                      "ru/proxy/proxy-management/proxy-manager/overview",
+                      "ru/proxy/proxy-management/adding-proxies",
+                      "ru/proxy/proxy-management/proxy-manager/navigation",
+                      "ru/proxy/proxy-management/proxy-manager/proxies-page",
+                      "ru/proxy/proxy-management/proxy-manager/proxy-archive",
+                      "ru/proxy/proxy-management/proxy-testing-and-troubleshooting"
+                    ]
+                  },
+                  "ru/proxy/proxy-management/recommended-proxy-providers",
+                  "ru/proxy/proxy-management/faq-proxies"
+                ]
+              },
+              {
+                "group": "Прокси Gologin",
+                "icon": "g",
+                "pages": [
+                  {
+                    "group": "Основы прокси Gologin",
+                    "pages": [
+                      "ru/proxy/gologin-proxies/what-are-gologin-proxies",
+                      "ru/proxy/gologin-proxies/how-gologin-proxies-work-and-what-they-offer",
+                      "ru/proxy/proxy-management/gologin-vs-3rd-party-proxies",
+                      "ru/proxy/gologin-proxies/how-much-proxy-traffic-do-i-need"
+                    ]
+                  },
+                  {
+                    "group": "Управление прокси Gologin",
+                    "expanded": true,
+                    "pages": [
+                      "ru/proxy/gologin-proxies/purchasing-gologin-proxies",
+                      "ru/proxy/gologin-proxies/gologin-proxy-management/adding-your-first-proxy",
+                      "ru/proxy/gologin-proxies/gologin-proxy-management/gologin-proxy-settings",
+                      "ru/proxy/gologin-proxies/website-compatibility-checker"
+                    ]
+                  },
+                  "ru/proxy/gologin-proxies/faq-gologin-proxies"
+                ]
+              },
+              {
+                "group": "Отпечатки",
+                "icon": "user-alien",
+                "pages": [
+                  "ru/how-browser-fingerprints-work",
+                  "ru/profile-fingerprint-settings",
+                  "ru/whats-safe-to-change"
+                ]
+              },
+              {
+                "group": "Антидетект для Android",
+                "hidden": true,
+                "pages": [
+                  "ru/overview",
+                  "ru/mobile-vs-desktop",
+                  "ru/use-cases",
+                  "ru/limitations"
+                ]
+              },
+              {
+                "group": "Веб-приложение Gologin",
+                "icon": "cloud",
+                "pages": [
+                  "ru/gologin-web-overview",
+                  "ru/key-things-to-note",
+                  "ru/downloading-and-uploading-files",
+                  "ru/faq-web-app-and-cloud-browser",
+                  "ru/upgrading-cloud-browser-limits"
+                ]
+              },
+              {
+                "group": "Приложение Gologin для Android",
+                "icon": "mobile",
+                "pages": [
+                  "ru/gologin-android-overview",
+                  "ru/creating-and-managing-profiles",
+                  "ru/account-and-app-settings",
+                  "ru/user-agent-on-android",
+                  "ru/faq"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Аккаунт и совместная работа",
+            "pages": [
+              {
+                "group": "Работа в команде",
+                "icon": "users",
+                "expanded": true,
+                "pages": [
+                  "ru/general/team-collaboration/how-you-can-share-access",
+                  {
+                    "group": "Доступ к рабочим пространствам и папкам",
+                    "expanded": true,
+                    "pages": [
+                      "ru/general/team-collaboration/team-members",
+                      "ru/general/team-collaboration/workspace-access",
+                      "ru/general/team-collaboration/accessing-shared-workspace-or-folders"
+                    ]
+                  },
+                  {
+                    "group": "Общий доступ к профилям",
+                    "expanded": true,
+                    "pages": [
+                      "ru/general/team-collaboration/sharing-profiles",
+                      "ru/general/team-collaboration/accessing-shared-profiles",
+                      "ru/general/team-collaboration/untitled-page"
+                    ]
+                  },
+                  "ru/general/team-collaboration/faq-team-collaboration"
+                ]
+              },
+              {
+                "group": "Настройки аккаунта",
+                "icon": "user",
+                "expanded": true,
+                "pages": [
+                  "ru/general/account-and-billing/overview",
+                  "ru/general/account-and-billing/changing-your-email-and-pass",
+                  "ru/general/account-and-billing/two-factor-authentication",
+                  "ru/general/account-and-billing/affiliate-program",
+                  "ru/general/account-and-billing/active-sessions-1",
+                  "ru/general/account-and-billing/cloud-browser-usage"
+                ]
+              },
+              {
+                "group": "Рабочие пространства",
+                "icon": "list-dropdown",
+                "pages": [
+                  "ru/general/team-collaboration/workspaces",
+                  "ru/general/account-and-billing/workspace-settings"
+                ]
+              },
+              {
+                "group": "Цены и подписка",
+                "icon": "money-bill",
+                "pages": [
+                  "ru/general/account-and-billing/pricing",
+                  "ru/general/account-and-billing/how-to-subscribe-to-gologin",
+                  "ru/general/account-and-billing/change-plan",
+                  "ru/general/account-and-billing/promo-codes",
+                  "ru/general/account-and-billing/payment-methods",
+                  "ru/general/account-and-billing/invoices",
+                  "ru/general/account-and-billing/faq-subscription"
+                ]
+              },
+              {
+                "group": "Устранение неполадок",
+                "icon": "wrench",
+                "expanded": true,
+                "pages": [
+                  "ru/general/troubleshooting/common-errors",
+                  "ru/general/troubleshooting/proxy-not-working",
+                  "ru/general/troubleshooting/profile-data-disappeared",
+                  "ru/general/troubleshooting/wrong-ip-my-ip-is-leaking",
+                  "ru/general/troubleshooting/wrong-proxy-location",
+                  "ru/general/troubleshooting/payments-and-subscription"
+                ]
+              },
+              {
+                "group": "Общее",
+                "pages": [
+                  "ru/general/storage-and-cache",
+                  "ru/general/migration-from-other-tools",
+                  "ru/general/gologin-web-and-chrome-os",
+                  "ru/general/updating-the-gologin-app",
+                  "ru/general/data-safety"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Руководства и лучшие практики",
+            "pages": [
+              {
+                "group": "Основы",
+                "pages": [
+                  "ru/best-practices-overview",
+                  "ru/how-gologin-protects-your-identity",
+                  "ru/maintaining-trust-score",
+                  "ru/profile-hygiene-checklist",
+                  "ru/common-mistakes-to-avoid",
+                  "ru/facebook-meta-ads-1"
+                ]
+              },
+              {
+                "group": "Сценарии использования",
+                "pages": [
+                  "ru/creating-new-accounts-safely",
+                  "ru/managing-existing-accounts"
+                ]
+              },
+              {
+                "group": "Руководства по платформам",
+                "pages": [
+                  "ru/facebook-meta-ads",
+                  "ru/tik-tok-ads",
+                  "ru/google-ads-and-gmail",
+                  "ru/amazon-e-bay-shopify",
+                  "ru/reddit-quora",
+                  "ru/linkedin",
+                  "ru/crypto-and-kyc",
+                  "ru/web-scraping-targets",
+                  "ru/proxy-and-fingerprint-setup-per-platform"
+                ]
+              },
+              {
+                "group": "Шаблоны",
+                "pages": [
+                  "ru/prebuilt-profiles",
+                  "ru/sample-team-setups"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Автоматизация и API",
+            "groups": [
+              {
+                "group": "Введение",
+                "pages": [
+                  "ru/api-reference/introduction/quickstart",
+                  "ru/api-reference/introduction/headless",
+                  "ru/api-reference/introduction/cloud-launch-vs-local-launch",
+                  "ru/api-reference/introduction/gologin-proxies"
+                ]
+              },
+              {
+                "group": "Scraping API и Web Unlocker",
+                "pages": [
+                  "ru/what-is-web-unlocker",
+                  "ru/web-unlocker-quick-start",
+                  "ru/web-unlocker-use-cases",
+                  "ru/scraping-api-sdk-and-cli"
+                ]
+              },
+              {
+                "group": "Node.js SDK",
+                "pages": [
+                  "ru/api-reference/sdks/nodejs-sdk",
+                  "ru/api-reference/sdks/nodejs-puppeteer-exmaple",
+                  "ru/api-reference/sdks/nodejs-cloud-puppeteer-example",
+                  "ru/api-reference/sdks/nodejs-changelog"
+                ]
+              },
+              {
+                "group": "Python SDK",
+                "pages": [
+                  "ru/api-reference/sdks/python-sdk",
+                  "ru/api-reference/sdks/python-selenium-example",
+                  "ru/api-reference/sdks/python-changelog"
+                ]
+              },
+              {
+                "group": "Ограничения",
+                "pages": [
+                  "ru/api-reference/limitations/rate-limits"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Cloud Browser",
+            "pages": [
+              "ru/api-reference/cloud-browser/what-is-gologin-cloud-browser",
+              "ru/api-reference/cloud-browser/what-is-headless-browser",
+              "ru/api-reference/cloud-browser/getting-started",
+              "ru/api-reference/cloud-browser/scraping",
+              "ru/api-reference/cloud-browser/untitled-page-1",
+              "ru/api-reference/cloud-browser/untitled-page-2",
+              "ru/api-reference/cloud-browser/live",
+              "ru/api-reference/cloud-browser/untitled-page-3"
+            ]
+          },
+          {
+            "tab": "ИИ и агенты",
+            "groups": [
+              {
+                "group": "Обзор",
+                "pages": [
+                  "ru/ai/overview"
+                ]
+              },
+              {
+                "group": "Подключение",
+                "pages": [
+                  "ru/api-reference/ai-integrations/mcp-server",
+                  "ru/api-reference/ai-integrations/ai-skills"
+                ]
+              },
+              {
+                "group": "Инструменты CLI",
+                "pages": [
+                  "ru/cli-tools/web-access",
+                  "ru/cli-tools/agent-browser",
+                  "ru/cli-tools/local-agent-browser"
+                ]
+              },
+              {
+                "group": "Руководства по интеграции",
+                "pages": [
+                  "ru/ai/cloud-browser-with-agents",
+                  "ru/ai/web-unlocker-with-agents"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Справочник API (на английском)",
+            "href": "https://gologin.com/docs/api-reference/profile/get-all-profiles"
+          }
+        ]
+      },
+      {
+        "language": "vi",
+        "tabs": [
+          {
+            "tab": "Bắt đầu",
+            "groups": [
+              {
+                "group": "Giới thiệu",
+                "pages": [
+                  "vi/getting-started/introduction/what-is-gologin-and-who-its-for",
+                  "vi/getting-started/introduction/key-concepts-profiles-fingerprints-proxies",
+                  "vi/getting-started/introduction/quick-start-from-zero-to-your-first-profile",
+                  "vi/getting-started/introduction/extra-faq"
+                ]
+              },
+              {
+                "group": "Cài đặt",
+                "pages": [
+                  "vi/getting-started/setup/supported-platforms-installation",
+                  "vi/getting-started/setup/creating-gologin-account",
+                  "vi/getting-started/setup/first-time-checklist"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Hồ sơ & Proxy",
+            "groups": [
+              {
+                "group": "Hồ sơ trình duyệt",
+                "icon": "window-flip",
+                "pages": [
+                  {
+                    "group": "Tổng quan",
+                    "expanded": true,
+                    "pages": [
+                      "vi/what-is-a-browser-profile",
+                      "vi/orbita-browser"
+                    ]
+                  },
+                  {
+                    "group": "Quản lý hồ sơ",
+                    "expanded": true,
+                    "pages": [
+                      "vi/browser-profiles/profile-management/creating-and-launching-profiles",
+                      "vi/browser-profiles/profile-management/editing-profiles",
+                      "vi/browser-profiles/profile-management/cloning-profiles",
+                      "vi/browser-profiles/profile-management/bulk-actions"
+                    ]
+                  },
+                  {
+                    "group": "Sắp xếp hồ sơ",
+                    "pages": [
+                      "vi/browser-profiles/profile-management/folders",
+                      "vi/browser-profiles/profile-management/add-more-info-columns",
+                      "vi/browser-profiles/profile-management/notes-and-tags",
+                      "vi/browser-profiles/profile-management/profile-sorting",
+                      "vi/browser-profiles/profile-management/profile-search"
+                    ]
+                  },
+                  {
+                    "group": "Cài đặt hồ sơ",
+                    "pages": [
+                      "vi/profile-parameters",
+                      "vi/general/account-and-billing/advanced-profile-settings",
+                      "vi/default-profile-settings",
+                      "vi/updating-your-browser-profile"
+                    ]
+                  },
+                  {
+                    "group": "Cookie trình duyệt",
+                    "pages": [
+                      "vi/browser-profiles/profile-features/browser-cookies/what-are-browser-cookies",
+                      "vi/browser-profiles/profile-features/browser-cookies/cookies-import-and-export"
+                    ]
+                  },
+                  {
+                    "group": "Tiện ích mở rộng trình duyệt",
+                    "pages": [
+                      "vi/browser-profiles/profile-features/browser-extensions/browser-extensions",
+                      "vi/browser-profiles/profile-features/browser-extensions/adding-browser-extensions",
+                      "vi/browser-profiles/profile-features/browser-extensions/installing-custom-extensions"
+                    ]
+                  },
+                  {
+                    "group": "Đồng bộ & khôi phục hồ sơ",
+                    "pages": [
+                      "vi/browser-profiles/profile-management/profile-synchronization",
+                      "vi/browser-profiles/profile-management/restore-browser-sessions",
+                      "vi/browser-profiles/profile-management/restore-deleted-profiles"
+                    ]
+                  },
+                  {
+                    "group": "Xuất & nhập hồ sơ",
+                    "pages": [
+                      "vi/export-and-import-overview",
+                      "vi/profile-export-and-import"
+                    ]
+                  },
+                  "vi/faq-profile-managment"
+                ]
+              },
+              {
+                "group": "Tính năng hồ sơ",
+                "icon": "aperture",
+                "pages": [
+                  "vi/browser-profiles/profile-features/cookie-bot",
+                  "vi/browser-profiles/profile-features/run-with-sync",
+                  "vi/human-typing-simulation",
+                  "vi/proxy-devices-overview",
+                  "vi/browser-profiles/profile-features/browser-cookies/run-in-cloud"
+                ]
+              },
+              {
+                "group": "Proxy",
+                "icon": "network-wired",
+                "pages": [
+                  {
+                    "group": "Kiến thức cơ bản về proxy",
+                    "pages": [
+                      "vi/proxy/introduction/what-is-a-proxy",
+                      "vi/residential-mobile-or-datacenter",
+                      "vi/private-vs-shared",
+                      "vi/proxy-protocols",
+                      "vi/static-vs-dynamic-proxies",
+                      "vi/proxy/introduction/best-proxy-for-your-case",
+                      "vi/proxy/introduction/vpn-vs-proxy"
+                    ]
+                  },
+                  {
+                    "group": "Quản lý proxy",
+                    "expanded": true,
+                    "pages": [
+                      "vi/proxy/proxy-management/proxy-manager/overview",
+                      "vi/proxy/proxy-management/adding-proxies",
+                      "vi/proxy/proxy-management/proxy-manager/navigation",
+                      "vi/proxy/proxy-management/proxy-manager/proxies-page",
+                      "vi/proxy/proxy-management/proxy-manager/proxy-archive",
+                      "vi/proxy/proxy-management/proxy-testing-and-troubleshooting"
+                    ]
+                  },
+                  "vi/proxy/proxy-management/recommended-proxy-providers",
+                  "vi/proxy/proxy-management/faq-proxies"
+                ]
+              },
+              {
+                "group": "Proxy Gologin",
+                "icon": "g",
+                "pages": [
+                  {
+                    "group": "Kiến thức cơ bản về proxy Gologin",
+                    "pages": [
+                      "vi/proxy/gologin-proxies/what-are-gologin-proxies",
+                      "vi/proxy/gologin-proxies/how-gologin-proxies-work-and-what-they-offer",
+                      "vi/proxy/proxy-management/gologin-vs-3rd-party-proxies",
+                      "vi/proxy/gologin-proxies/how-much-proxy-traffic-do-i-need"
+                    ]
+                  },
+                  {
+                    "group": "Quản lý proxy Gologin",
+                    "expanded": true,
+                    "pages": [
+                      "vi/proxy/gologin-proxies/purchasing-gologin-proxies",
+                      "vi/proxy/gologin-proxies/gologin-proxy-management/adding-your-first-proxy",
+                      "vi/proxy/gologin-proxies/gologin-proxy-management/gologin-proxy-settings",
+                      "vi/proxy/gologin-proxies/website-compatibility-checker"
+                    ]
+                  },
+                  "vi/proxy/gologin-proxies/faq-gologin-proxies"
+                ]
+              },
+              {
+                "group": "Dấu vân tay trình duyệt",
+                "icon": "user-alien",
+                "pages": [
+                  "vi/how-browser-fingerprints-work",
+                  "vi/profile-fingerprint-settings",
+                  "vi/whats-safe-to-change"
+                ]
+              },
+              {
+                "group": "Chống phát hiện trên Android",
+                "hidden": true,
+                "pages": [
+                  "vi/overview",
+                  "vi/mobile-vs-desktop",
+                  "vi/use-cases",
+                  "vi/limitations"
+                ]
+              },
+              {
+                "group": "Ứng dụng web Gologin",
+                "icon": "cloud",
+                "pages": [
+                  "vi/gologin-web-overview",
+                  "vi/key-things-to-note",
+                  "vi/downloading-and-uploading-files",
+                  "vi/faq-web-app-and-cloud-browser",
+                  "vi/upgrading-cloud-browser-limits"
+                ]
+              },
+              {
+                "group": "Ứng dụng Gologin Android",
+                "icon": "mobile",
+                "pages": [
+                  "vi/gologin-android-overview",
+                  "vi/creating-and-managing-profiles",
+                  "vi/account-and-app-settings",
+                  "vi/user-agent-on-android",
+                  "vi/faq"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Tài khoản & Cộng tác",
+            "pages": [
+              {
+                "group": "Cộng tác nhóm",
+                "icon": "users",
+                "expanded": true,
+                "pages": [
+                  "vi/general/team-collaboration/how-you-can-share-access",
+                  {
+                    "group": "Quyền truy cập không gian làm việc và thư mục",
+                    "expanded": true,
+                    "pages": [
+                      "vi/general/team-collaboration/team-members",
+                      "vi/general/team-collaboration/workspace-access",
+                      "vi/general/team-collaboration/accessing-shared-workspace-or-folders"
+                    ]
+                  },
+                  {
+                    "group": "Chia sẻ hồ sơ",
+                    "expanded": true,
+                    "pages": [
+                      "vi/general/team-collaboration/sharing-profiles",
+                      "vi/general/team-collaboration/accessing-shared-profiles",
+                      "vi/general/team-collaboration/untitled-page"
+                    ]
+                  },
+                  "vi/general/team-collaboration/faq-team-collaboration"
+                ]
+              },
+              {
+                "group": "Cài đặt tài khoản",
+                "icon": "user",
+                "expanded": true,
+                "pages": [
+                  "vi/general/account-and-billing/overview",
+                  "vi/general/account-and-billing/changing-your-email-and-pass",
+                  "vi/general/account-and-billing/two-factor-authentication",
+                  "vi/general/account-and-billing/affiliate-program",
+                  "vi/general/account-and-billing/active-sessions-1",
+                  "vi/general/account-and-billing/cloud-browser-usage"
+                ]
+              },
+              {
+                "group": "Không gian làm việc",
+                "icon": "list-dropdown",
+                "pages": [
+                  "vi/general/team-collaboration/workspaces",
+                  "vi/general/account-and-billing/workspace-settings"
+                ]
+              },
+              {
+                "group": "Giá & Gói đăng ký",
+                "icon": "money-bill",
+                "pages": [
+                  "vi/general/account-and-billing/pricing",
+                  "vi/general/account-and-billing/how-to-subscribe-to-gologin",
+                  "vi/general/account-and-billing/change-plan",
+                  "vi/general/account-and-billing/promo-codes",
+                  "vi/general/account-and-billing/payment-methods",
+                  "vi/general/account-and-billing/invoices",
+                  "vi/general/account-and-billing/faq-subscription"
+                ]
+              },
+              {
+                "group": "Khắc phục sự cố",
+                "icon": "wrench",
+                "expanded": true,
+                "pages": [
+                  "vi/general/troubleshooting/common-errors",
+                  "vi/general/troubleshooting/proxy-not-working",
+                  "vi/general/troubleshooting/profile-data-disappeared",
+                  "vi/general/troubleshooting/wrong-ip-my-ip-is-leaking",
+                  "vi/general/troubleshooting/wrong-proxy-location",
+                  "vi/general/troubleshooting/payments-and-subscription"
+                ]
+              },
+              {
+                "group": "Chung",
+                "pages": [
+                  "vi/general/storage-and-cache",
+                  "vi/general/migration-from-other-tools",
+                  "vi/general/gologin-web-and-chrome-os",
+                  "vi/general/updating-the-gologin-app",
+                  "vi/general/data-safety"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Hướng dẫn & Thực hành tốt nhất",
+            "pages": [
+              {
+                "group": "Kiến thức nền tảng",
+                "pages": [
+                  "vi/best-practices-overview",
+                  "vi/how-gologin-protects-your-identity",
+                  "vi/maintaining-trust-score",
+                  "vi/profile-hygiene-checklist",
+                  "vi/common-mistakes-to-avoid",
+                  "vi/facebook-meta-ads-1"
+                ]
+              },
+              {
+                "group": "Mẫu sử dụng",
+                "pages": [
+                  "vi/creating-new-accounts-safely",
+                  "vi/managing-existing-accounts"
+                ]
+              },
+              {
+                "group": "Hướng dẫn theo nền tảng",
+                "pages": [
+                  "vi/facebook-meta-ads",
+                  "vi/tik-tok-ads",
+                  "vi/google-ads-and-gmail",
+                  "vi/amazon-e-bay-shopify",
+                  "vi/reddit-quora",
+                  "vi/linkedin",
+                  "vi/crypto-and-kyc",
+                  "vi/web-scraping-targets",
+                  "vi/proxy-and-fingerprint-setup-per-platform"
+                ]
+              },
+              {
+                "group": "Mẫu",
+                "pages": [
+                  "vi/prebuilt-profiles",
+                  "vi/sample-team-setups"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Tự động hóa & API",
+            "groups": [
+              {
+                "group": "Giới thiệu",
+                "pages": [
+                  "vi/api-reference/introduction/quickstart",
+                  "vi/api-reference/introduction/headless",
+                  "vi/api-reference/introduction/cloud-launch-vs-local-launch",
+                  "vi/api-reference/introduction/gologin-proxies"
+                ]
+              },
+              {
+                "group": "Scraping API & Web Unlocker",
+                "pages": [
+                  "vi/what-is-web-unlocker",
+                  "vi/web-unlocker-quick-start",
+                  "vi/web-unlocker-use-cases",
+                  "vi/scraping-api-sdk-and-cli"
+                ]
+              },
+              {
+                "group": "Node.js SDK",
+                "pages": [
+                  "vi/api-reference/sdks/nodejs-sdk",
+                  "vi/api-reference/sdks/nodejs-puppeteer-exmaple",
+                  "vi/api-reference/sdks/nodejs-cloud-puppeteer-example",
+                  "vi/api-reference/sdks/nodejs-changelog"
+                ]
+              },
+              {
+                "group": "Python SDK",
+                "pages": [
+                  "vi/api-reference/sdks/python-sdk",
+                  "vi/api-reference/sdks/python-selenium-example",
+                  "vi/api-reference/sdks/python-changelog"
+                ]
+              },
+              {
+                "group": "Giới hạn",
+                "pages": [
+                  "vi/api-reference/limitations/rate-limits"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Cloud Browser",
+            "pages": [
+              "vi/api-reference/cloud-browser/what-is-gologin-cloud-browser",
+              "vi/api-reference/cloud-browser/what-is-headless-browser",
+              "vi/api-reference/cloud-browser/getting-started",
+              "vi/api-reference/cloud-browser/scraping",
+              "vi/api-reference/cloud-browser/untitled-page-1",
+              "vi/api-reference/cloud-browser/untitled-page-2",
+              "vi/api-reference/cloud-browser/live",
+              "vi/api-reference/cloud-browser/untitled-page-3"
+            ]
+          },
+          {
+            "tab": "AI & Tác nhân",
+            "groups": [
+              {
+                "group": "Tổng quan",
+                "pages": [
+                  "vi/ai/overview"
+                ]
+              },
+              {
+                "group": "Kết nối",
+                "pages": [
+                  "vi/api-reference/ai-integrations/mcp-server",
+                  "vi/api-reference/ai-integrations/ai-skills"
+                ]
+              },
+              {
+                "group": "Công cụ CLI",
+                "pages": [
+                  "vi/cli-tools/web-access",
+                  "vi/cli-tools/agent-browser",
+                  "vi/cli-tools/local-agent-browser"
+                ]
+              },
+              {
+                "group": "Hướng dẫn tích hợp",
+                "pages": [
+                  "vi/ai/cloud-browser-with-agents",
+                  "vi/ai/web-unlocker-with-agents"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Tài liệu tham khảo API (tiếng Anh)",
+            "href": "https://gologin.com/docs/api-reference/profile/get-all-profiles"
+          }
+        ]
+      },
+      {
+        "language": "zh",
+        "tabs": [
+          {
+            "tab": "快速入门",
+            "groups": [
+              {
+                "group": "简介",
+                "pages": [
+                  "zh/getting-started/introduction/what-is-gologin-and-who-its-for",
+                  "zh/getting-started/introduction/key-concepts-profiles-fingerprints-proxies",
+                  "zh/getting-started/introduction/quick-start-from-zero-to-your-first-profile",
+                  "zh/getting-started/introduction/extra-faq"
+                ]
+              },
+              {
+                "group": "设置",
+                "pages": [
+                  "zh/getting-started/setup/supported-platforms-installation",
+                  "zh/getting-started/setup/creating-gologin-account",
+                  "zh/getting-started/setup/first-time-checklist"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "配置文件与代理",
+            "groups": [
+              {
+                "group": "浏览器配置文件",
+                "icon": "window-flip",
+                "pages": [
+                  {
+                    "group": "概览",
+                    "expanded": true,
+                    "pages": [
+                      "zh/what-is-a-browser-profile",
+                      "zh/orbita-browser"
+                    ]
+                  },
+                  {
+                    "group": "配置文件管理",
+                    "expanded": true,
+                    "pages": [
+                      "zh/browser-profiles/profile-management/creating-and-launching-profiles",
+                      "zh/browser-profiles/profile-management/editing-profiles",
+                      "zh/browser-profiles/profile-management/cloning-profiles",
+                      "zh/browser-profiles/profile-management/bulk-actions"
+                    ]
+                  },
+                  {
+                    "group": "配置文件整理",
+                    "pages": [
+                      "zh/browser-profiles/profile-management/folders",
+                      "zh/browser-profiles/profile-management/add-more-info-columns",
+                      "zh/browser-profiles/profile-management/notes-and-tags",
+                      "zh/browser-profiles/profile-management/profile-sorting",
+                      "zh/browser-profiles/profile-management/profile-search"
+                    ]
+                  },
+                  {
+                    "group": "配置文件设置",
+                    "pages": [
+                      "zh/profile-parameters",
+                      "zh/general/account-and-billing/advanced-profile-settings",
+                      "zh/default-profile-settings",
+                      "zh/updating-your-browser-profile"
+                    ]
+                  },
+                  {
+                    "group": "浏览器 Cookie",
+                    "pages": [
+                      "zh/browser-profiles/profile-features/browser-cookies/what-are-browser-cookies",
+                      "zh/browser-profiles/profile-features/browser-cookies/cookies-import-and-export"
+                    ]
+                  },
+                  {
+                    "group": "浏览器扩展",
+                    "pages": [
+                      "zh/browser-profiles/profile-features/browser-extensions/browser-extensions",
+                      "zh/browser-profiles/profile-features/browser-extensions/adding-browser-extensions",
+                      "zh/browser-profiles/profile-features/browser-extensions/installing-custom-extensions"
+                    ]
+                  },
+                  {
+                    "group": "配置文件同步与恢复",
+                    "pages": [
+                      "zh/browser-profiles/profile-management/profile-synchronization",
+                      "zh/browser-profiles/profile-management/restore-browser-sessions",
+                      "zh/browser-profiles/profile-management/restore-deleted-profiles"
+                    ]
+                  },
+                  {
+                    "group": "配置文件导出与导入",
+                    "pages": [
+                      "zh/export-and-import-overview",
+                      "zh/profile-export-and-import"
+                    ]
+                  },
+                  "zh/faq-profile-managment"
+                ]
+              },
+              {
+                "group": "配置文件功能",
+                "icon": "aperture",
+                "pages": [
+                  "zh/browser-profiles/profile-features/cookie-bot",
+                  "zh/browser-profiles/profile-features/run-with-sync",
+                  "zh/human-typing-simulation",
+                  "zh/proxy-devices-overview",
+                  "zh/browser-profiles/profile-features/browser-cookies/run-in-cloud"
+                ]
+              },
+              {
+                "group": "代理",
+                "icon": "network-wired",
+                "pages": [
+                  {
+                    "group": "代理基础",
+                    "pages": [
+                      "zh/proxy/introduction/what-is-a-proxy",
+                      "zh/residential-mobile-or-datacenter",
+                      "zh/private-vs-shared",
+                      "zh/proxy-protocols",
+                      "zh/static-vs-dynamic-proxies",
+                      "zh/proxy/introduction/best-proxy-for-your-case",
+                      "zh/proxy/introduction/vpn-vs-proxy"
+                    ]
+                  },
+                  {
+                    "group": "代理管理",
+                    "expanded": true,
+                    "pages": [
+                      "zh/proxy/proxy-management/proxy-manager/overview",
+                      "zh/proxy/proxy-management/adding-proxies",
+                      "zh/proxy/proxy-management/proxy-manager/navigation",
+                      "zh/proxy/proxy-management/proxy-manager/proxies-page",
+                      "zh/proxy/proxy-management/proxy-manager/proxy-archive",
+                      "zh/proxy/proxy-management/proxy-testing-and-troubleshooting"
+                    ]
+                  },
+                  "zh/proxy/proxy-management/recommended-proxy-providers",
+                  "zh/proxy/proxy-management/faq-proxies"
+                ]
+              },
+              {
+                "group": "Gologin 代理",
+                "icon": "g",
+                "pages": [
+                  {
+                    "group": "Gologin 代理基础",
+                    "pages": [
+                      "zh/proxy/gologin-proxies/what-are-gologin-proxies",
+                      "zh/proxy/gologin-proxies/how-gologin-proxies-work-and-what-they-offer",
+                      "zh/proxy/proxy-management/gologin-vs-3rd-party-proxies",
+                      "zh/proxy/gologin-proxies/how-much-proxy-traffic-do-i-need"
+                    ]
+                  },
+                  {
+                    "group": "管理 Gologin 代理",
+                    "expanded": true,
+                    "pages": [
+                      "zh/proxy/gologin-proxies/purchasing-gologin-proxies",
+                      "zh/proxy/gologin-proxies/gologin-proxy-management/adding-your-first-proxy",
+                      "zh/proxy/gologin-proxies/gologin-proxy-management/gologin-proxy-settings",
+                      "zh/proxy/gologin-proxies/website-compatibility-checker"
+                    ]
+                  },
+                  "zh/proxy/gologin-proxies/faq-gologin-proxies"
+                ]
+              },
+              {
+                "group": "指纹",
+                "icon": "user-alien",
+                "pages": [
+                  "zh/how-browser-fingerprints-work",
+                  "zh/profile-fingerprint-settings",
+                  "zh/whats-safe-to-change"
+                ]
+              },
+              {
+                "group": "Android 防检测",
+                "hidden": true,
+                "pages": [
+                  "zh/overview",
+                  "zh/mobile-vs-desktop",
+                  "zh/use-cases",
+                  "zh/limitations"
+                ]
+              },
+              {
+                "group": "Gologin 网页版应用",
+                "icon": "cloud",
+                "pages": [
+                  "zh/gologin-web-overview",
+                  "zh/key-things-to-note",
+                  "zh/downloading-and-uploading-files",
+                  "zh/faq-web-app-and-cloud-browser",
+                  "zh/upgrading-cloud-browser-limits"
+                ]
+              },
+              {
+                "group": "Gologin Android 应用",
+                "icon": "mobile",
+                "pages": [
+                  "zh/gologin-android-overview",
+                  "zh/creating-and-managing-profiles",
+                  "zh/account-and-app-settings",
+                  "zh/user-agent-on-android",
+                  "zh/faq"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "账户与协作",
+            "pages": [
+              {
+                "group": "团队协作",
+                "icon": "users",
+                "expanded": true,
+                "pages": [
+                  "zh/general/team-collaboration/how-you-can-share-access",
+                  {
+                    "group": "工作区与文件夹访问权限",
+                    "expanded": true,
+                    "pages": [
+                      "zh/general/team-collaboration/team-members",
+                      "zh/general/team-collaboration/workspace-access",
+                      "zh/general/team-collaboration/accessing-shared-workspace-or-folders"
+                    ]
+                  },
+                  {
+                    "group": "配置文件共享",
+                    "expanded": true,
+                    "pages": [
+                      "zh/general/team-collaboration/sharing-profiles",
+                      "zh/general/team-collaboration/accessing-shared-profiles",
+                      "zh/general/team-collaboration/untitled-page"
+                    ]
+                  },
+                  "zh/general/team-collaboration/faq-team-collaboration"
+                ]
+              },
+              {
+                "group": "账户设置",
+                "icon": "user",
+                "expanded": true,
+                "pages": [
+                  "zh/general/account-and-billing/overview",
+                  "zh/general/account-and-billing/changing-your-email-and-pass",
+                  "zh/general/account-and-billing/two-factor-authentication",
+                  "zh/general/account-and-billing/affiliate-program",
+                  "zh/general/account-and-billing/active-sessions-1",
+                  "zh/general/account-and-billing/cloud-browser-usage"
+                ]
+              },
+              {
+                "group": "工作区",
+                "icon": "list-dropdown",
+                "pages": [
+                  "zh/general/team-collaboration/workspaces",
+                  "zh/general/account-and-billing/workspace-settings"
+                ]
+              },
+              {
+                "group": "价格与订阅",
+                "icon": "money-bill",
+                "pages": [
+                  "zh/general/account-and-billing/pricing",
+                  "zh/general/account-and-billing/how-to-subscribe-to-gologin",
+                  "zh/general/account-and-billing/change-plan",
+                  "zh/general/account-and-billing/promo-codes",
+                  "zh/general/account-and-billing/payment-methods",
+                  "zh/general/account-and-billing/invoices",
+                  "zh/general/account-and-billing/faq-subscription"
+                ]
+              },
+              {
+                "group": "故障排查",
+                "icon": "wrench",
+                "expanded": true,
+                "pages": [
+                  "zh/general/troubleshooting/common-errors",
+                  "zh/general/troubleshooting/proxy-not-working",
+                  "zh/general/troubleshooting/profile-data-disappeared",
+                  "zh/general/troubleshooting/wrong-ip-my-ip-is-leaking",
+                  "zh/general/troubleshooting/wrong-proxy-location",
+                  "zh/general/troubleshooting/payments-and-subscription"
+                ]
+              },
+              {
+                "group": "常规",
+                "pages": [
+                  "zh/general/storage-and-cache",
+                  "zh/general/migration-from-other-tools",
+                  "zh/general/gologin-web-and-chrome-os",
+                  "zh/general/updating-the-gologin-app",
+                  "zh/general/data-safety"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "指南与最佳实践",
+            "pages": [
+              {
+                "group": "基础知识",
+                "pages": [
+                  "zh/best-practices-overview",
+                  "zh/how-gologin-protects-your-identity",
+                  "zh/maintaining-trust-score",
+                  "zh/profile-hygiene-checklist",
+                  "zh/common-mistakes-to-avoid",
+                  "zh/facebook-meta-ads-1"
+                ]
+              },
+              {
+                "group": "使用模式",
+                "pages": [
+                  "zh/creating-new-accounts-safely",
+                  "zh/managing-existing-accounts"
+                ]
+              },
+              {
+                "group": "平台指南",
+                "pages": [
+                  "zh/facebook-meta-ads",
+                  "zh/tik-tok-ads",
+                  "zh/google-ads-and-gmail",
+                  "zh/amazon-e-bay-shopify",
+                  "zh/reddit-quora",
+                  "zh/linkedin",
+                  "zh/crypto-and-kyc",
+                  "zh/web-scraping-targets",
+                  "zh/proxy-and-fingerprint-setup-per-platform"
+                ]
+              },
+              {
+                "group": "模板",
+                "pages": [
+                  "zh/prebuilt-profiles",
+                  "zh/sample-team-setups"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "自动化与 API",
+            "groups": [
+              {
+                "group": "简介",
+                "pages": [
+                  "zh/api-reference/introduction/quickstart",
+                  "zh/api-reference/introduction/headless",
+                  "zh/api-reference/introduction/cloud-launch-vs-local-launch",
+                  "zh/api-reference/introduction/gologin-proxies"
+                ]
+              },
+              {
+                "group": "Scraping API 与 Web Unlocker",
+                "pages": [
+                  "zh/what-is-web-unlocker",
+                  "zh/web-unlocker-quick-start",
+                  "zh/web-unlocker-use-cases",
+                  "zh/scraping-api-sdk-and-cli"
+                ]
+              },
+              {
+                "group": "Node.js SDK",
+                "pages": [
+                  "zh/api-reference/sdks/nodejs-sdk",
+                  "zh/api-reference/sdks/nodejs-puppeteer-exmaple",
+                  "zh/api-reference/sdks/nodejs-cloud-puppeteer-example",
+                  "zh/api-reference/sdks/nodejs-changelog"
+                ]
+              },
+              {
+                "group": "Python SDK",
+                "pages": [
+                  "zh/api-reference/sdks/python-sdk",
+                  "zh/api-reference/sdks/python-selenium-example",
+                  "zh/api-reference/sdks/python-changelog"
+                ]
+              },
+              {
+                "group": "使用限制",
+                "pages": [
+                  "zh/api-reference/limitations/rate-limits"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Cloud Browser",
+            "pages": [
+              "zh/api-reference/cloud-browser/what-is-gologin-cloud-browser",
+              "zh/api-reference/cloud-browser/what-is-headless-browser",
+              "zh/api-reference/cloud-browser/getting-started",
+              "zh/api-reference/cloud-browser/scraping",
+              "zh/api-reference/cloud-browser/untitled-page-1",
+              "zh/api-reference/cloud-browser/untitled-page-2",
+              "zh/api-reference/cloud-browser/live",
+              "zh/api-reference/cloud-browser/untitled-page-3"
+            ]
+          },
+          {
+            "tab": "AI 与智能体",
+            "groups": [
+              {
+                "group": "概览",
+                "pages": [
+                  "zh/ai/overview"
+                ]
+              },
+              {
+                "group": "连接",
+                "pages": [
+                  "zh/api-reference/ai-integrations/mcp-server",
+                  "zh/api-reference/ai-integrations/ai-skills"
+                ]
+              },
+              {
+                "group": "CLI 工具",
+                "pages": [
+                  "zh/cli-tools/web-access",
+                  "zh/cli-tools/agent-browser",
+                  "zh/cli-tools/local-agent-browser"
+                ]
+              },
+              {
+                "group": "集成指南",
+                "pages": [
+                  "zh/ai/cloud-browser-with-agents",
+                  "zh/ai/web-unlocker-with-agents"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "API 参考（英文）",
+            "href": "https://gologin.com/docs/api-reference/profile/get-all-profiles"
           }
         ]
       }

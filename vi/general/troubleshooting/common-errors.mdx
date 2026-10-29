@@ -1,0 +1,425 @@
+---
+title: "Các lỗi thường gặp"
+description: "Hướng dẫn tra cứu các thông báo lỗi thường gặp của Gologin, nguyên nhân và cách khắc phục."
+---
+
+Hãy tìm lỗi của bạn trên trang này bằng **Ctrl+F** (Windows) hoặc **Cmd+F** (macOS) — hầu hết các tiêu đề đều dùng đúng nội dung thông báo lỗi.
+
+## Trước khi bắt đầu
+
+- **Xem toàn bộ thông báo lỗi.** Di chuột lên trạng thái **Lỗi** của hồ sơ trong danh sách hồ sơ để xem toàn bộ thông báo.
+- **Thoát hoàn toàn ứng dụng.** Đóng cửa sổ Gologin chỉ ẩn ứng dụng đi — ứng dụng vẫn tiếp tục chạy ở nền. Để thoát, hãy nhấp vào biểu tượng Gologin trong khay hệ thống (góc dưới bên phải trên Windows, thanh menu trên macOS) rồi chọn **Thoát**.
+- **Cập nhật Gologin và trình duyệt.** Tải phiên bản mới nhất từ [gologin.com/download](https://gologin.com/download) và cài đè lên phiên bản hiện tại — các hồ sơ của bạn sẽ được giữ nguyên. Để cập nhật trình duyệt của một hồ sơ, hãy nhấp vào dấu ba chấm bên cạnh hồ sơ và chọn **Cập nhật trình duyệt**.
+- **Liên hệ bộ phận hỗ trợ?** Hãy gửi kèm ID hồ sơ (dấu ba chấm bên cạnh hồ sơ → **Sao chép ID**) và ảnh chụp màn hình lỗi.
+
+## Lỗi khi khởi chạy hồ sơ
+
+### "The profile is being run by another user"
+
+**Biểu hiện:** Hồ sơ không khởi động và hiển thị thông báo này, dù có vẻ không có ai khác đang dùng hồ sơ đó.
+
+**Nguyên nhân:** Gologin không cho phép cùng một hồ sơ chạy trên nhiều thiết bị cùng lúc. Điều này giúp tránh xung đột đồng bộ hóa và các vấn đề về cookie và phiên làm việc. Bạn sẽ thấy thông báo này khi:
+
+- người mà bạn đã chia sẻ hồ sơ đang mở hồ sơ đó;
+- ứng dụng Gologin đang cài đặt bản cập nhật (bạn sẽ thấy thanh tiến trình ở đầu ứng dụng);
+- phiên trước đó của hồ sơ chưa được đóng đúng cách.
+
+**Cách khắc phục:**
+
+1. Hãy đảm bảo không ai trong số những người bạn đã chia sẻ hồ sơ đang mở hồ sơ đó, và chờ bản cập nhật ứng dụng hoàn tất (nếu có).
+2. Nhấp vào logo Gologin ở góc trên bên trái của ứng dụng rồi chạy lại hồ sơ.
+3. Thoát hoàn toàn Gologin từ khay hệ thống, khởi động lại và chạy hồ sơ.
+4. Nếu lỗi vẫn còn, hãy nhân bản hồ sơ (dấu ba chấm bên cạnh hồ sơ → **Dòng vô tính**) và chạy bản sao.
+
+<a id="profile-is-stuck-on-downloading-or-archiving" />
+
+### Hồ sơ bị treo ở trạng thái Đang tải xuống hoặc Đang lưu trữ
+
+**Biểu hiện:** Trạng thái của hồ sơ dừng ở **Đang tải xuống** khi bạn khởi động hồ sơ, hoặc dừng ở **Đang lưu trữ** khi bạn dừng hồ sơ.
+
+**Nguyên nhân:** Gologin không thể hoàn tất việc tải hoặc lưu dữ liệu hồ sơ. Các nguyên nhân thường gặp là kết nối tới máy chủ Gologin bị chặn, phần mềm diệt virus, hoặc tệp trình duyệt bị hỏng.
+
+**Cách khắc phục:**
+
+1. Kiểm tra kết nối của bạn — xem phần [Lỗi kết nối](#l%E1%BB%97i-k%E1%BA%BFt-n%E1%BB%91i) bên dưới.
+2. Tắt phần mềm diệt virus của bên thứ ba hoặc thêm Gologin vào danh sách ngoại lệ của phần mềm đó.
+3. Thoát hoàn toàn Gologin từ khay hệ thống.
+4. Xóa thư mục trình duyệt để Gologin tải lại:
+   - **Windows:** `C:\Users\<YourUser>\.gologin\browser`
+   - **macOS:** `~/.gologin/browser` (trong Terminal: `rm -r ~/.gologin/browser`)
+5. Khởi động Gologin (trên Windows, nhấp chuột phải vào Gologin và chọn **Run as administrator**), chờ trình duyệt tải xong rồi chạy hồ sơ.
+6. Nếu vẫn không được, hãy cài đặt lại Gologin từ [gologin.com/download](https://gologin.com/download). Hãy đảm bảo không có hồ sơ nào đang chạy trước khi gỡ cài đặt ứng dụng — các hồ sơ vẫn được giữ trong tài khoản của bạn.
+
+### "Seems like you don't have installed browser"
+
+**Biểu hiện:** Thông báo đầy đủ là "Seems like you don't have installed browser. We will try to install it. Please run the profile again after the installation is finished."
+
+**Nguyên nhân:** Orbita, trình duyệt mà các hồ sơ Gologin chạy trên đó, chưa tải xong hoặc các tệp của nó đã bị xóa khỏi máy tính của bạn.
+
+**Cách khắc phục:**
+
+1. Chờ quá trình tải trình duyệt hoàn tất rồi chạy lại hồ sơ.
+2. Nếu thông báo cứ xuất hiện lại, hãy kiểm tra xem phần mềm diệt virus có đang xóa các tệp Orbita hay không — xem phần [Phần mềm diệt virus và bảo mật](#ph%E1%BA%A7n-m%E1%BB%81m-di%E1%BB%87t-virus-v%C3%A0-b%E1%BA%A3o-m%E1%BA%ADt) — và kiểm tra xem bạn còn dung lượng ổ đĩa trống hay không.
+
+### "Seems like a GPU process has crashed"
+
+**Biểu hiện:** Thông báo đầy đủ là "Seems like a GPU process has crashed. Please try to restart the profile or restart your system".
+
+**Cách khắc phục:**
+
+1. Chạy lại hồ sơ.
+2. Khởi động lại máy tính.
+3. Nếu lỗi vẫn tiếp diễn, hãy làm theo các bước 2–5 trong phần [hồ sơ bị treo ở trạng thái Đang tải xuống hoặc Đang lưu trữ](#h%E1%BB%93-s%C6%A1-b%E1%BB%8B-treo-%E1%BB%9F-tr%E1%BA%A1ng-th%C3%A1i-%C4%91ang-t%E1%BA%A3i-xu%E1%BB%91ng-ho%E1%BA%B7c-%C4%91ang-l%C6%B0u-tr%E1%BB%AF).
+
+### "Your PC does not have enough memory or other system resource to run the browser"
+
+**Nguyên nhân:** Máy tính của bạn hết bộ nhớ hoặc dung lượng ổ đĩa. Các lỗi có chứa `ENOSPC` hoặc `SQLITE_FULL` cũng có nghĩa là ổ đĩa đã đầy.
+
+**Cách khắc phục:**
+
+1. Đóng các hồ sơ và chương trình bạn không cần.
+2. Giải phóng dung lượng ổ đĩa — Gologin lưu dữ liệu của các hồ sơ đang chạy trên ổ đĩa của bạn.
+3. Khởi động lại Gologin và chạy lại hồ sơ.
+
+### "Container not found"
+
+**Biểu hiện:** Bạn thấy "Container not found" khi cố khởi chạy hồ sơ, đặc biệt là ở chế độ đám mây.
+
+**Nguyên nhân:** Dữ liệu hồ sơ bị hỏng, hoặc container đám mây không khởi động được trên máy chủ của Gologin.
+
+**Cách khắc phục:**
+
+1. Khởi động lại ứng dụng Gologin và thử chạy lại hồ sơ.
+2. Thử chạy hồ sơ từ phiên bản web tại [app.gologin.com](https://app.gologin.com).
+3. Nếu sự cố vẫn còn, hãy liên hệ bộ phận hỗ trợ và cung cấp ID hồ sơ của bạn.
+
+### "Couldn't prepare your profile, contact support"
+
+**Biểu hiện:** Lỗi này xuất hiện khi Gologin không thể chuẩn bị hồ sơ của bạn để khởi chạy.
+
+**Nguyên nhân:** Thường do sự cố đồng bộ hồ sơ, dữ liệu hồ sơ bị hỏng, hoặc phiên bản trình duyệt Orbita của bạn không khớp với phiên bản mong đợi.
+
+**Cách khắc phục:**
+
+1. Cập nhật ứng dụng Gologin trên máy tính lên phiên bản mới nhất.
+2. Kiểm tra kết nối internet — kết nối không ổn định có thể làm gián đoạn quá trình đồng bộ hồ sơ.
+3. Thử chuyển sang một mạng khác (ví dụ, từ WiFi sang điểm phát sóng di động).
+4. Nếu lỗi vẫn tiếp diễn, hãy liên hệ bộ phận hỗ trợ kèm ID hồ sơ và phiên bản ứng dụng.
+
+### "Profile has been deleted"
+
+**Biểu hiện:** Bạn thấy "Profile has been deleted" hoặc "Profile has been already deleted", dù bạn chưa xóa hồ sơ.
+
+**Nguyên nhân:** Thông báo này gây hiểu lầm. Nó **không** có nghĩa là hồ sơ của bạn thực sự đã bị xóa. Thông báo thường xuất hiện khi bạn đã đạt giới hạn số lần khởi chạy hồ sơ trên gói dùng thử hoặc gói miễn phí.
+
+<Info>
+  Gologin lưu trữ các hồ sơ trên máy chủ của mình tối đa 180 ngày sau khi gói đăng ký hết hạn. Dữ liệu hồ sơ của bạn không bị mất khi bạn thấy thông báo này.
+</Info>
+
+**Cách khắc phục:**
+
+1. Nâng cấp lên gói trả phí hoặc gia hạn gói đăng ký để khôi phục quyền truy cập.
+2. Nếu bạn cho rằng đây là lỗi, hãy liên hệ bộ phận hỗ trợ kèm thông tin tài khoản của bạn.
+
+### ECONNREFUSED 127.0.0.1
+
+**Biểu hiện:** Một lỗi có chứa `ECONNREFUSED 127.0.0.1` xuất hiện khi cố khởi chạy hồ sơ trên máy cục bộ.
+
+**Nguyên nhân:** Trình duyệt Orbita không khởi động được trên máy của bạn. Các nguyên nhân phổ biến gồm:
+
+- Bản tải Orbita bị hỏng
+- Proxy không tương thích khiến trình duyệt không thể khởi tạo
+- Phiên bản ứng dụng Gologin đã cũ
+
+**Cách khắc phục:**
+
+1. Cập nhật ứng dụng Gologin trên máy tính lên phiên bản mới nhất.
+2. Tải lại Orbita: thoát hoàn toàn Gologin và xóa thư mục trình duyệt, như được mô tả trong phần [hồ sơ bị treo ở trạng thái Đang tải xuống hoặc Đang lưu trữ](#h%E1%BB%93-s%C6%A1-b%E1%BB%8B-treo-%E1%BB%9F-tr%E1%BA%A1ng-th%C3%A1i-%C4%91ang-t%E1%BA%A3i-xu%E1%BB%91ng-ho%E1%BA%B7c-%C4%91ang-l%C6%B0u-tr%E1%BB%AF).
+3. Kiểm tra cài đặt proxy của bạn — thử khởi chạy hồ sơ mà không dùng proxy để xác định nguyên nhân.
+
+### EBUSY: resource busy or locked (Windows)
+
+**Biểu hiện:** Trên Windows, bạn thấy lỗi `EBUSY: resource busy or locked`, thường nhắc đến một tệp Cookies.
+
+**Nguyên nhân:** Một tiến trình Orbita trước đó chưa tắt hoàn toàn và vẫn đang khóa các tệp của hồ sơ.
+
+**Cách khắc phục:**
+
+1. Mở **Task Manager** (Ctrl+Shift+Esc) và kết thúc tất cả các tiến trình có tên `orbita` hoặc `browser`.
+2. Xóa bản sao cục bộ của hồ sơ. Mở `C:\Users\<YourUser>\AppData\Roaming\GoLogin\profiles\` và xóa thư mục khớp với ID của hồ sơ bị ảnh hưởng.
+3. Khởi động lại Gologin và thử lại.
+
+<Warning>
+  Việc xóa thư mục này chỉ xóa bản sao cục bộ của hồ sơ. Dữ liệu hồ sơ được lưu trên máy chủ Gologin không bị ảnh hưởng.
+</Warning>
+
+<a id="connection-errors" />
+
+## Lỗi kết nối
+
+### "Timezone request error", "Profile loading error" và các lỗi kết nối khác
+
+**Biểu hiện:** Một trong các thông báo này xuất hiện, hoặc ứng dụng hiển thị màn hình trắng hoặc xanh lá thay vì tải bình thường:
+
+- "Timezone request error"
+- "Profile loading error. Check internet connection."
+- "Error in profile request. Check your internet connection and try again."
+- "Error uploading profile. Please check your internet connection and try again."
+- "Retrying your request due to internet connectivity issues. Thank you for your patience."
+
+**Nguyên nhân:** Mạng hoặc nhà cung cấp dịch vụ internet của bạn chặn hoặc làm gián đoạn kết nối giữa ứng dụng Gologin và máy chủ Gologin. Các trang web khác vẫn có thể hoạt động bình thường trên cùng kết nối đó.
+
+**Cách khắc phục:**
+
+1. Chuyển sang một mạng khác — ví dụ, tắt WiFi và dùng internet di động chia sẻ từ điện thoại.
+2. Bật VPN trên máy tính. Nếu VPN đầu tiên không hiệu quả, hãy thử nhà cung cấp khác — đôi khi cần thử vài lần.
+3. Sau khi đổi mạng hoặc VPN, hãy thoát hoàn toàn Gologin từ khay hệ thống và khởi động lại.
+
+<Tip>
+  Nếu bạn thấy "SSL certificate error. Please check and adjust your system time or check your internet connection", trước tiên hãy đảm bảo ngày, giờ và múi giờ trên máy tính của bạn được đặt ở chế độ tự động.
+</Tip>
+
+### "Something went wrong. Please try again later"
+
+**Biểu hiện:** Bạn thấy "Something went wrong. Please try again later" hoặc một trang có nội dung "Oops! Something went wrong…".
+
+**Nguyên nhân:** Một yêu cầu gửi tới máy chủ Gologin đã thất bại. Đây là lỗi chung có thể do nhiều nguyên nhân.
+
+**Cách khắc phục:**
+
+1. Nhấn **Ctrl+Shift+R** (Windows) hoặc **Cmd+Shift+R** (macOS) để tải lại. Cách này hoạt động cả trong ứng dụng trên máy tính lẫn trên phiên bản web.
+2. Nếu lỗi lặp lại, hãy thoát hoàn toàn Gologin từ khay hệ thống và khởi động lại.
+3. Nếu vẫn xảy ra, hãy làm theo các bước trong phần [lỗi kết nối](#l%E1%BB%97i-k%E1%BA%BFt-n%E1%BB%91i).
+4. Nếu vẫn không được, hãy cài đặt lại Gologin từ [gologin.com/download](https://gologin.com/download) hoặc liên hệ bộ phận hỗ trợ kèm ảnh chụp màn hình.
+
+### "Internal server error"
+
+**Nguyên nhân:** Sự cố tạm thời từ phía Gologin.
+
+**Cách khắc phục:**
+
+1. Chờ vài phút rồi thử lại.
+2. Cập nhật Gologin lên phiên bản mới nhất.
+3. Nếu lỗi không biến mất, hãy liên hệ bộ phận hỗ trợ.
+
+### "The proxy is functional but not working on your device or network"
+
+**Biểu hiện:** Gologin báo rằng proxy đã vượt qua bước kiểm tra phía máy chủ nhưng không thể kết nối từ máy của bạn.
+
+**Nguyên nhân:** Mạng nội bộ hoặc nhà cung cấp dịch vụ internet (ISP) của bạn đang chặn kết nối proxy. Bản thân proxy vẫn hoạt động — Gologin đã xác minh trên máy chủ của mình — nhưng lưu lượng không thể rời khỏi thiết bị của bạn.
+
+**Cách khắc phục:**
+
+1. Thử bật VPN trên thiết bị, sau đó khởi chạy lại hồ sơ.
+2. Chuyển sang một mạng khác (từ WiFi sang điểm phát sóng di động, hoặc ngược lại).
+3. Kiểm tra cài đặt tường lửa hoặc phần mềm diệt virus để đảm bảo chúng không chặn Gologin hoặc cổng proxy.
+
+### SyntaxError: Unexpected token 'e'
+
+**Biểu hiện:** Một lỗi kiểu JavaScript `SyntaxError: Unexpected token 'e'` xuất hiện, thường trong ứng dụng Gologin hoặc trong phản hồi của API.
+
+**Nguyên nhân:** Lỗi này xảy ra khi Cloudflare trả về trang lỗi giới hạn tần suất 1015 (HTML) thay vì phản hồi JSON mong đợi từ API của Gologin. Bộ phân tích JSON gặp HTML và báo lỗi ở ký tự bất ngờ đầu tiên.
+
+**Cách khắc phục:**
+
+1. Giảm tần suất gửi yêu cầu API hoặc khởi chạy hồ sơ.
+2. Chờ vài phút trước khi thử lại.
+3. Nếu bạn dùng API của Gologin bằng lập trình, hãy áp dụng cơ chế exponential backoff trong logic gửi yêu cầu.
+
+## Lỗi trên macOS
+
+### "Your macOS version is not supported by Chromium Engine"
+
+**Nguyên nhân:** Orbita 151 trở lên không hỗ trợ macOS 12 Monterey và các phiên bản macOS cũ hơn.
+
+**Cách khắc phục:**
+
+1. Cập nhật macOS lên phiên bản mới hơn, **hoặc**
+2. Tạo hồ sơ mới với Orbita 150 trở xuống: nhấp **Thêm hồ sơ**, mở tab **Nâng cao** và chọn phiên bản trình duyệt trong mục **Phiên bản cũ**.
+
+<Note>
+  Bạn không thể hạ phiên bản trình duyệt của một hồ sơ đã có — hãy tạo hồ sơ mới.
+</Note>
+
+### "Current browser version is not supported for ARM processor architecture"
+
+**Biểu hiện:** Các hồ sơ hiển thị lỗi này, hoặc Gologin rất chậm hay bị treo trên máy Mac của bạn.
+
+**Nguyên nhân:** Phiên bản Intel của Gologin được cài trên máy Mac dùng chip Apple Silicon (M1 trở lên), hoặc hồ sơ đang dùng phiên bản trình duyệt cũ.
+
+**Cách khắc phục:**
+
+1. Kiểm tra chip của bạn: mở menu Apple → **About This Mac** và xem trường **Chip**.
+2. Nếu đó là chip Apple dòng M, hãy chuyển Gologin từ **Applications** vào Thùng rác và cài phiên bản Apple Silicon từ [gologin.com/download](https://gologin.com/download).
+3. Cập nhật trình duyệt của hồ sơ: dấu ba chấm bên cạnh hồ sơ → **Cập nhật trình duyệt**.
+
+### "Cannot update while running on a read-only volume"
+
+**Biểu hiện:** Gologin không thể cài đặt bản cập nhật và hiển thị "Cannot update while running on a read-only volume. The application is on a read-only volume. Please move the application and try again."
+
+**Nguyên nhân:** Gologin đang chạy từ ảnh đĩa đã tải về hoặc từ thư mục **Downloads** thay vì **Applications**.
+
+**Cách khắc phục:**
+
+1. Thoát Gologin.
+2. Kéo Gologin vào thư mục **Applications**.
+3. Mở Gologin từ **Applications** và cài đặt bản cập nhật.
+
+<Tip>
+  Nếu bản cập nhật bị treo trên bất kỳ hệ thống nào, hãy kiểm tra [kết nối](#l%E1%BB%97i-k%E1%BA%BFt-n%E1%BB%91i) của bạn hoặc tải phiên bản mới nhất từ [gologin.com/download](https://gologin.com/download) và cài đè lên phiên bản hiện tại. Các hồ sơ của bạn sẽ được giữ nguyên.
+</Tip>
+
+<a id="antivirus-and-security-software" />
+
+## Phần mềm diệt virus và bảo mật
+
+### "Seems like your antivirus is blocking access to the Orbita browser"
+
+**Biểu hiện:** Bạn thấy một trong các thông báo sau:
+
+- "Seems like your antivirus is blocking access to the Orbita browser. Please adjust your antivirus and restart the profile"
+- "Seems like something is blocking application access to the system. Please check your antivirus or other security software."
+- "Seems like your browser files are damaged or missing (possibly deleted by antivirus software)…"
+- "Permission denied" khi bạn cập nhật trình duyệt
+
+**Nguyên nhân:** Phần mềm diệt virus hoặc phần mềm bảo mật khác của bạn chặn Gologin hoặc Orbita, hoặc đã chuyển các tệp của chúng vào khu cách ly.
+
+**Cách khắc phục:**
+
+1. Trên Windows, mở **Windows Security** → **Virus & threat protection** → **Protection history** và kiểm tra xem có tệp Gologin hoặc Orbita nào bị chặn hoặc bị cách ly không. Nếu có, hãy khôi phục chúng.
+2. Thêm Gologin vào danh sách ngoại lệ của phần mềm diệt virus, hoặc tắt phần mềm diệt virus.
+3. Khởi động lại Gologin và chạy lại hồ sơ — Gologin sẽ tự động khôi phục các tệp trình duyệt bị thiếu.
+
+## Lỗi về gói và giới hạn
+
+### "The owner of this profile has run out of subscription time"
+
+**Biểu hiện:** Bạn không thể chạy hồ sơ mà người khác đã chia sẻ cho bạn. Thông báo đầy đủ là "The owner of this profile has run out of subscription time. To resume using this profile, the owner needs to renew their subscription."
+
+**Nguyên nhân:** Gói đăng ký của chủ sở hữu hồ sơ đã kết thúc.
+
+**Cách khắc phục:** Hãy nhờ chủ sở hữu hồ sơ gia hạn gói đăng ký. Sau đó hồ sơ sẽ chạy lại bình thường.
+
+### "The workspace subscription has ended. Please upgrade your plan to restore access"
+
+**Nguyên nhân:** Gói dùng thử hoặc gói trả phí của bạn đã kết thúc.
+
+**Cách khắc phục:** Chọn một gói trong **Cài đặt & thành viên** → **Kế hoạch thanh toán** → **Thay đổi kế hoạch**. Để chuyển sang gói Forever Free, hãy nhấp **Forever Free** ở cuối trang đó — không gian làm việc của bạn phải có tối đa 3 hồ sơ.
+
+### "You've exceeded your workspace limits"
+
+**Nguyên nhân:** Trên gói Forever Free, bạn có thể có tối đa 3 hồ sơ cùng lúc và tạo tối đa 25 hồ sơ mỗi tháng.
+
+**Cách khắc phục:**
+
+1. Nếu bạn đang có 3 hồ sơ, hãy xóa một hồ sơ bạn không cần. Việc xóa hồ sơ không hoàn lại lượt tạo.
+2. Nếu bạn đã dùng hết 25 lượt tạo, hãy chờ đến khi giới hạn hằng tháng được đặt lại hoặc [nâng cấp lên gói trả phí](/vi/general/account-and-billing/how-to-subscribe-to-gologin).
+
+Xem [Giới hạn của gói miễn phí](/vi/general/account-and-billing/pricing#free-plan-limitations) để biết thêm chi tiết.
+
+### "You've reached max shares number. To share more update your plan"
+
+**Nguyên nhân:** Bạn đã dùng hết số lượt chia sẻ hồ sơ có trong gói của mình.
+
+**Cách khắc phục:** Hãy gỡ các lượt chia sẻ bạn không còn cần trong menu **Đăng lại** của các hồ sơ, hoặc nâng cấp gói của bạn.
+
+### "You've reached max parallel cloud launches limit"
+
+**Biểu hiện:** Lỗi này, hoặc "You've hit your parallel launch limit", xuất hiện khi bạn cố khởi chạy hồ sơ trên đám mây.
+
+**Nguyên nhân:** Bạn đã đạt số phiên đám mây đồng thời tối đa mà gói của bạn cho phép.
+
+Giới hạn phiên đám mây đồng thời như sau:
+
+| Gói          | Số phiên đám mây đồng thời |
+|--------------|---------------------------|
+| Professional | 1                         |
+| Business     | 2                         |
+| Enterprise   | 3                         |
+| Custom       | 4                         |
+
+**Cách khắc phục:**
+
+1. Đóng một hoặc nhiều hồ sơ đám mây đang chạy trước khi khởi chạy hồ sơ mới.
+2. Mua thêm lượt khởi chạy đám mây song song: nhấp vào tên tài khoản của bạn ở góc trên bên trái → **Cài đặt & thành viên** → **Mức sử dụng Cloud Browser** → **Mua thêm giới hạn**.
+3. Chạy hồ sơ trong ứng dụng trên máy tính — các lượt khởi chạy cục bộ không bị giới hạn bởi gói của bạn.
+
+<Note>
+  Chạy hồ sơ trên đám mây yêu cầu gói trả phí.
+</Note>
+
+### "You've exceeded your traffic limit" / "exceeded request limit"
+
+**Biểu hiện:** Một trong hai thông báo liên quan xuất hiện khi khởi chạy hồ sơ hoặc thực hiện thao tác.
+
+**Nguyên nhân:** Lỗi này có hai nguyên nhân có thể xảy ra:
+
+- **Giới hạn lưu lượng:** Lưu lượng proxy Gologin của bạn (tính bằng GB) đã dùng hết. Gói đăng ký và lưu lượng proxy là hai thứ riêng biệt: có gói đang hoạt động không có nghĩa là bạn còn lưu lượng.
+- **Giới hạn tần suất yêu cầu/IP:** Bạn đã chạm giới hạn tần suất dựa trên IP, thường do tạo quá nhiều tài khoản từ cùng một địa chỉ IP trong thời gian ngắn.
+
+**Cách khắc phục:**
+
+- **Với giới hạn lưu lượng:** Mua thêm lưu lượng: mở tab **proxy** ở bên trái, chọn loại proxy, nhấp **+**, chọn số GB và thanh toán.
+- **Nếu bạn vừa mua lưu lượng:** Hãy đảm bảo các hồ sơ của bạn dùng cùng loại proxy với lưu lượng bạn đã mua. Ví dụ, nếu bạn mua lưu lượng Datacenter, hãy chuyển proxy của hồ sơ từ Residential sang Datacenter trong cài đặt hồ sơ.
+- **Với giới hạn tần suất IP:** Chờ khoảng 1 giờ để lệnh chặn IP hết hạn, sau đó thử lại.
+
+## Lỗi tài khoản
+
+### "Registration error. Please try again."
+
+**Nguyên nhân:** Có quá nhiều lần đăng ký trong thời gian ngắn, hoặc đã tồn tại tài khoản với email này.
+
+**Cách khắc phục:**
+
+1. Chờ một lúc rồi thử lại.
+2. Nếu trước đây bạn đã đăng ký bằng email này, hãy nhấp **Đăng nhập** thay vì đăng ký. Nếu bạn không nhớ mật khẩu, hãy dùng **Quên mật khẩu?**.
+
+<Note>
+  "Invalid input data. Check field - "email"" có nghĩa là địa chỉ email không được chấp nhận. Hãy dùng địa chỉ có ít nhất 3 ký tự trước dấu @. Các địa chỉ có "+1", chẳng hạn name+1@gmail.com, không được chấp nhận.
+</Note>
+
+### Không thể đăng nhập bằng Google
+
+**Cách khắc phục:**
+
+1. Trên màn hình đăng nhập, nhấp **Quên mật khẩu?** và nhập email của tài khoản Gologin.
+2. Nhập mã trong email và đặt mật khẩu.
+3. Đăng nhập bằng email và mật khẩu của bạn.
+
+## Lỗi Cloud Android
+
+### "No available devices"
+
+**Nguyên nhân:** Tất cả điện thoại đám mây hiện đang bận. Điều này không phụ thuộc vào hồ sơ của bạn.
+
+**Cách khắc phục:** Hãy thử lại sau.
+
+## Lỗi trình duyệt và tiện ích mở rộng
+
+### "To install add-ons, you'll need the new Microsoft Edge"
+
+**Biểu hiện:** Khi cố cài đặt tiện ích mở rộng của trình duyệt trong một hồ sơ Gologin, bạn thấy một lời nhắc về Microsoft Edge.
+
+**Nguyên nhân:** Trình duyệt Orbita (dựa trên Chromium) đôi khi hiển thị thông báo này khi bạn cố cài tiện ích mở rộng từ cửa hàng Microsoft Edge Add-ons hoặc qua một đường dẫn cài đặt không tương thích.
+
+**Cách khắc phục:**
+
+1. Cài đặt tiện ích mở rộng từ [Chrome Web Store](https://chromewebstore.google.com/) thay vì cửa hàng Edge Add-ons.
+2. Hoặc, dùng giao diện quản lý tiện ích mở rộng của Gologin để thêm tiện ích vào hồ sơ trước khi khởi chạy.
+
+### Cửa sổ xác thực proxy cho geo.floppydata.com:10080
+
+**Biểu hiện:** Một hộp thoại xác thực proxy xuất hiện, yêu cầu thông tin đăng nhập cho `geo.floppydata.com:10080` khi khởi chạy hồ sơ.
+
+**Nguyên nhân:** Proxy tích hợp sẵn của Gologin yêu cầu xác thực một cách bất ngờ. Điều này có thể xảy ra khi cấu hình proxy không được truyền đúng cho trình duyệt, thường do xung đột mạng hoặc VPN.
+
+**Cách khắc phục:**
+
+1. Thoát hoàn toàn Gologin (kiểm tra khay hệ thống để chắc chắn ứng dụng đã đóng).
+2. Bật VPN trên thiết bị của bạn.
+3. Khởi động lại Gologin.
+4. Khởi chạy lại hồ sơ. Với proxy dân cư xoay vòng, việc khởi động lại hồ sơ cũng giúp bạn có IP mới.
+
+<Info>
+  Nếu cửa sổ này vẫn tiếp tục xuất hiện, hãy chạy hồ sơ trên phiên bản web tại [app.gologin.com](https://app.gologin.com), thử một proxy khác, hoặc liên hệ bộ phận hỗ trợ của Gologin.
+</Info>

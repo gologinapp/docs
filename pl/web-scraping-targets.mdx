@@ -1,0 +1,84 @@
+---
+title: "Cele web scrapingu"
+---
+
+Gologin działa jak przeglądarka do scrapingu — zamiast przeglądarki headless z generycznym fingerprintem Twój scraper korzysta z izolowanych profili, które wyglądają jak prawdziwi użytkownicy. Znacząco zmniejsza to liczbę wykryć na stronach, które rozpoznają przeglądarki po fingerprincie, a nie tylko blokują adresy IP.
+
+## Szybka lista kontrolna
+
+- 1 sesja scrapingu = 1 profil przeglądarki
+- Wybierz typ proxy w zależności od poziomu ochrony docelowej strony
+- Używaj ponownie profili w kolejnych sesjach, aby zachować pliki cookie i stan sesji
+- Kontroluj tempo żądań — scrapery są blokowane za zachowanie, a nie tylko za adres IP
+- Przy dużej skali (50\+ jednoczesnych sesji): korzystaj z Gologin API, a nie z aplikacji desktopowej
+
+## Wybór konfiguracji
+
+### Ręczny scraping (aplikacja desktopowa Gologin)
+
+Najlepszy do: zbierania danych na małą skalę, stron wymagających logowania i procesów wspomaganych ręcznie. Otwieraj profile z poziomu aplikacji Gologin i zbieraj dane w oknie przeglądarki.
+
+### Scraping przez API (Puppeteer / Playwright / Selenium)
+
+Najlepszy do: zautomatyzowanych procesów, 10\+ jednoczesnych sesji i scrapingu według harmonogramu. Gologin uruchamia profil i zwraca punkt końcowy WebSocket, z którym łączy się Twój skrypt automatyzacji.
+
+Pełną konfigurację znajdziesz w [Quickstart ](https://gologin.com/docs/api-reference/introduction/quickstart)API.
+
+## Krok 1. Wybierz strategię proxy
+
+| **Cel** | **Zalecane proxy** | **Uwagi** |
+| :-- | :-- | :-- |
+| Strony o niskim poziomie ochrony | Datacenter rotating | Szybkie i tanie |
+| Strony o średnim poziomie ochrony | Residential rotating | Wyższy wskaźnik zaufania |
+| Strony o wysokim poziomie ochrony (Cloudflare, PerimeterX) | Residential rotating | Wymagane |
+| Strony wymagające logowania / zachowania stanu konta | Residential static | Utrzymuje spójność sesji |
+| Porównywarki cen, marketplace'y | Residential rotating | Inny adres IP dla każdego żądania |
+
+## Krok 2. Zarządzaj sesjami i plikami cookie
+
+Profile Gologin automatycznie zachowują pliki cookie między sesjami — logujesz się raz, a profil pozostaje zalogowany. Unikaj czyszczenia plików cookie po każdym uruchomieniu — przerywa to ciągłość sesji i wygląda jak zachowanie bota.
+
+## Krok 3. Kontroluj wzorce żądań
+
+Wykrywanie dotyczy głównie zachowania, a nie tylko adresu IP. Praktyczne wskazówki dotyczące odstępów czasowych:
+
+| **Intensywność scrapingu** | **Opóźnienie między żądaniami** |
+| :-- | :-- |
+| Niska (unikanie wykrycia) | 3–8 sekund, losowo |
+| Średnia | 1–3 sekundy, losowo |
+| Agresywna (wysokie ryzyko blokady) | 0,5–1 sekunda |
+
+Zawsze losuj opóźnienia — stały odstęp jest sygnałem wykrycia.
+
+## Krok 4. Skaluj za pomocą wielu profili
+
+Przy scrapingu równoległym uruchamiaj wiele profili jednocześnie przez API. Przed uruchomieniem dużej liczby profili sprawdź Rate Limits — obowiązują limity API.
+
+### **Praktyczne limity w zależności od planu**
+
+- Professional: komfortowo do ok. 10 jednoczesnych profili
+- Business: do ok. 30 jednoczesnych profili
+- Enterprise: 100\+ jednoczesnych profili
+
+Ograniczeniem jest również sprzęt — każdy profil to osobna instancja przeglądarki. 10 jednoczesnych profili wymaga ok. 8–16 GB RAM.
+
+## Cloudflare i systemy antybotowe
+
+Gologin radzi sobie z wyzwaniami związanymi z fingerprintem przeglądarki (Canvas, WebGL, fingerprint TLS). Nie rozwiązuje automatycznie CAPTCHA. Jeśli docelowa strona używa Cloudflare z CAPTCHA, zintegruj ze swoim skryptem scrapingu usługę rozwiązującą CAPTCHA (2captcha, CapSolver, Anti-Captcha).
+
+## Typowe sygnały wykrycia
+
+- Identyczne odstępy czasowe między żądaniami
+- Brak zdarzeń przewijania lub ruchu myszy przed kliknięciem
+- Bezpośrednie przejście do głęboko zagnieżdżonych adresów URL bez referera
+- Fingerprint Canvas lub WebGL, który nie pasuje do deklarowanego systemu operacyjnego/przeglądarki
+
+## Zobacz także
+
+- [API Quickstart](https://gologin.com/docs/api-reference/introduction/quickstart)
+- [Headless mode](https://gologin.com/docs/api-reference/introduction/headless)
+- [Rate Limits](https://gologin.com/docs/api-reference/limitations/rate-limits)
+- [Best proxy for your case](https://gologin.com/docs/proxy/introduction/best-proxy-for-your-case)
+- [Static vs Rotating proxies](https://gologin.com/docs/static-vs-dynamic-proxies)
+
+\

@@ -1,0 +1,68 @@
+---
+title: "Was sich gefahrlos ändern lässt"
+---
+
+Wenn Sie Accounts mit Gologin verwalten, ist ein konsistenter Browser-Fingerprint wichtig.\
+Websites analysieren häufig Änderungen an der Browser-Konfiguration, um ungewöhnliche Aktivitäten zu erkennen.
+
+Einige Profileinstellungen können jederzeit gefahrlos geändert werden, andere sollten stabil bleiben, sobald ein Account das Profil verwendet.
+
+## Gefahrlos änderbar
+
+Die folgenden Einstellungen lassen sich in der Regel ändern, ohne den Browser-Fingerprint oder das Vertrauen in den Account zu beeinträchtigen:
+
+- Profilname
+- Notizen
+- Ordner und Tags
+- Erweiterungen
+- Proxy-Zugangsdaten (sofern der Proxy-Standort gleich bleibt)
+
+Diese Einstellungen haben keinen Einfluss auf die zentralen Fingerprint-Signale, die Websites auswerten.
+
+## Mit Vorsicht ändern
+
+Einige Parameter können die Browser-Umgebung beeinflussen und sollten nur mit Vorsicht geändert werden.
+
+Dazu gehören:
+
+- Zeitzone
+- Spracheinstellungen
+- WebRTC-Modus
+- Konfiguration der Mediengeräte
+
+Wenn Änderungen nötig sind, achten Sie darauf, dass sie zum Proxy-Standort und zum Gerätetyp passen.
+
+## Nach dem Erstellen von Accounts nicht mehr ändern
+
+Bestimmte Parameter bilden den Kern des Browser-Fingerprints.\
+Wenn Sie sie häufig ändern, behandeln Websites den Browser unter Umständen als neues Gerät.
+
+Ändern Sie diese Einstellungen nicht mehr, sobald Accounts im Profil angemeldet sind:
+
+- Betriebssystem
+- User Agent
+- Bildschirmauflösung
+- Schriftarten-Konfiguration
+- Canvas-Fingerprint
+- WebGL-Fingerprint
+- AudioContext-Fingerprint
+- CPU-Threads und RAM-Werte
+
+Größere Änderungen an diesen Parametern können zusätzliche Verifizierungen oder Anmeldeprüfungen auslösen.
+
+## Best Practices
+
+Für möglichst stabile Ergebnisse:
+
+- Erstellen Sie ein Profil und konfigurieren Sie den Fingerprint, bevor Sie sich bei Accounts anmelden
+- Halten Sie die Fingerprint-Einstellungen stabil, nachdem Accounts hinzugefügt wurden
+- Verwenden Sie für jedes Profil einen eigenen Proxy
+- Vermeiden Sie häufige Änderungen an hardwarebezogenen Parametern
+
+Ein konsistenter Fingerprint hilft Websites dabei, das Profil als stabiles Gerät zu erkennen.
+
+Siehe auch
+
+- [Fingerprint-Einstellungen des Profils](https://gologin.com/docs/profile-fingerprint-settings)
+- [Wie Browser-Fingerprints funktionieren](https://gologin.com/docs/how-browser-fingerprints-work)
+- [Checkliste zur Profilhygiene](https://gologin.com/docs/profile-hygiene-checklist)

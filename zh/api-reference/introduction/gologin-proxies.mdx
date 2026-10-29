@@ -1,0 +1,95 @@
+---
+title: "Gologin 代理"
+---
+
+Gologin 提供高质量代理，只需几行代码即可通过编程方式创建和管理。这些代理可与浏览器配置文件无缝集成，为您的自动化需求提供稳定可靠的连接和一致的 IP 地址。
+
+### 为什么选择 Gologin 代理？
+
+- **易于集成**：只需一次 API 调用，即可为配置文件添加代理
+- **全球覆盖**：可使用来自全球多个地区的代理
+- **稳定可靠**：企业级基础设施确保连接稳定
+- **反检测**：正确配置的代理可降低指纹识别风险
+- **简化工作流程**：无需再单独管理其他代理服务商
+
+# 使用 Gologin 代理运行配置文件
+
+<CodeGroup>
+
+```js node.js
+import { GologinApi } from 'gologin';
+
+const token = process.env.GL_API_TOKEN || 'your dev token here';
+const gologin = GologinApi({
+  token,
+});
+
+async function main() {
+  const profile = await gologin.createProfileRandomFingerprint();
+  const profileId = profile.id;
+  await gologin.addGologinProxyToProfile(profileId, 'US');
+
+  const { browser } = await gologin.launch({ profileId });
+  const page = await browser.newPage();
+
+  await page.goto('https://iphey.com/', { waitUntil: 'networkidle2' });
+  const status = await page.$eval('.trustworthy:not(.hide)',
+    (elt) => elt?.innerText?.trim(),
+  );
+
+  await new Promise((resolve) => setTimeout(resolve, 10000));
+  console.log('status', status);
+
+  return status;
+}
+
+main().catch(console.error)
+  .finally(gologin.exit);
+```
+
+```python Python
+import time
+from gologin import GoLogin
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+
+
+# Initialize GoLogin
+gl = GoLogin({
+	"token": "your dev token",
+	})
+profile = gl.createProfileRandomFingerprint({ "os": "win" })
+profile_id = profile.get('id')
+gl.setProfileId(profile_id)
+# Add proxy to the profile
+gl.addGologinProxyToProfile(profile_id, "us")
+
+# Start Browser and get websocket url
+debugger_address = gl.start()
+
+# Get Chromium version for webdriver
+chromium_version = gl.get_chromium_version()
+
+
+# Install webdriver
+service = Service(ChromeDriverManager(driver_version=chromium_version).install())
+
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_experimental_option("debuggerAddress", debugger_address)
+
+driver = webdriver.Chrome(service=service, options=chrome_options)
+
+# Give command to Selenium to open the page
+driver.get("http://www.python.org")
+
+time.sleep(30)
+driver.quit()
+time.sleep(10)
+
+gl.delete(profile_id)
+
+gl.stop()
+```
+
+</CodeGroup>

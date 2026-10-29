@@ -1,0 +1,51 @@
+---
+title: "セッションのライブビュー"
+---
+
+セッションのライブビューを使うと、実行中のクラウドブラウザセッションを通常のブラウザタブで開き、セッションが有効であることの確認や、プロファイルの動作をリアルタイムで確認できます。
+
+クラウドセッションは、次のいずれかの方法で開始できます。
+
+- 自動化コード(Puppeteer / Playwright)から
+- Gologin の UI(Cloud Browser タブ)から直接
+
+## Gologin の UI からセッションを開始する
+
+1. Gologin のウェブアプリで **プロフィールセクション** を開きます - [https://app.gologin.com/profileList](https://app.gologin.com/profileList)
+2. プロファイルを選択します。
+3. **起動** をクリックします。
+
+セッションが開始されると、ライブビューを開いて実行中のブラウザを確認できます。
+
+<video src="/videos/0305.mp4" controls={true} />
+
+## ライブビューの URL 形式
+
+実行中のセッションは、次のような URL で開くことができます。
+
+`https://cloudbrowser.gologin.com/browsers/<profileId>/<sessionId-or-view-token>/`
+
+- `<profileId>` — セッションで使用しているプロファイル
+- `<sessionId-or-view-token>` — 実行中のセッションを一意に識別する ID(セッション ID またはビュートークン)
+
+> セッションが有効な間は、この URL を機密情報として扱ってください。
+
+## ライブビューを使用する場面
+
+- 自動化フローのデバッグ(画面遷移、クリック、セレクタ、タイムアウトなど)
+- クラウドセッションが実際に開始されたことの確認
+- ウェブサイトの動作が想定外のときのブラウザ画面の確認
+- 実行中のセッションで使用されているプロファイルの確認
+
+## 注意事項
+
+- ライブビューは、セッションの実行中のみ利用できます。
+- 自動化の接続を閉じると、セッションが終了する場合があります(ワークフローやプランの制限によって異なります)。
+- プロキシやフィンガープリントなどの設定を繰り返し使用する場合は、REST API でプロファイルを設定してください。
+  - Profiles API: [https://gologin.com/docs/api-reference/profile](https://gologin.com/docs/api-reference/profile)
+  - Proxy API: [https://gologin.com/docs/api-reference/proxy](https://gologin.com/docs/api-reference/proxy)
+
+## 次のステップ
+
+- Cloud Browser → はじめに: [https://gologin.com/docs/api-reference/cloud-browser/getting-started](https://gologin.com/docs/api-reference/cloud-browser/getting-started)
+- スクレイピングソリューション: [https://gologin.com/docs/api-reference/cloud-browser/scraping](https://gologin.com/docs/api-reference/cloud-browser/scraping)

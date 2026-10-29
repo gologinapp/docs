@@ -1,0 +1,58 @@
+---
+title: "Obsługa CAPTCHA i 2FA"
+hidden: true
+---
+
+CAPTCHA i uwierzytelnianie dwuskładnikowe (2FA) to standardowe mechanizmy bezpieczeństwa, za pomocą których platformy weryfikują aktywność użytkowników.
+
+Są normalną częścią procesów związanych z kontem i mogą pojawiać się podczas logowania, rejestracji lub wtedy, gdy platforma wykryje nietypowe zachowanie.
+
+W większości przypadków takie weryfikacje są wywoływane zmianą środowiska lub zachowania, a nie konkretnym działaniem.
+
+## Najlepsze praktyki dotyczące 2FA
+
+Uwierzytelnianie dwuskładnikowe dodaje dodatkową warstwę zabezpieczeń konta i jest zalecane na większości platform.
+
+Poniżej znajduje się przykład konfiguracji 2FA w Gologin za pomocą aplikacji uwierzytelniającej:
+
+<Frame>
+  ![0319(14)](/images/0319\(14\).gif)
+</Frame>
+
+**Aby skonfigurować 2FA:**
+
+1. Otwórz ustawienia konta
+2. Włącz weryfikację dwuetapową
+3. Zeskanuj kod QR za pomocą aplikacji uwierzytelniającej (np. Google Authenticator)
+4. Wpisz 6-cyfrowy kod, aby potwierdzić konfigurację
+
+## Kiedy pojawia się weryfikacja
+
+Platformy częściej żądają weryfikacji, gdy dostęp do konta odbywa się z nowego lub niespójnego środowiska.
+
+Typowe przyczyny to:
+
+- Logowanie z innego adresu IP
+- Zmiana lokalizacji lub parametrów urządzenia
+- Używanie profilu bez wcześniejszej historii aktywności
+- Wykonywanie szybkich lub nietypowych działań
+
+## Jak zmniejszyć częstotliwość weryfikacji
+
+Nie da się całkowicie uniknąć próśb o weryfikację, ale można zmniejszyć ich częstotliwość, utrzymując spójną konfigurację.
+
+Aby ograniczyć liczbę weryfikacji:
+
+- Używaj tego samego profilu, proxy i lokalizacji
+- Unikaj częstych zmian środowiska
+- Buduj aktywność stopniowo w czasie
+- Utrzymuj stabilne sesje
+- Stosuj realistyczne, niepowtarzalne wzorce zachowania
+
+## Najważniejsze wnioski
+
+CAPTCHA i 2FA nie wskazują na problem.
+
+Są elementem tego, w jaki sposób platformy oceniają wiarygodność i potwierdzają tożsamość użytkownika.
+
+Stabilne środowisko i spójne zachowanie w naturalny sposób zmniejszają potrzebę ponownej weryfikacji.

@@ -1,0 +1,58 @@
+---
+title: "Trình duyệt headless là gì"
+keywords: ["headless browser"]
+---
+
+Trình duyệt headless là trình duyệt web được điều khiển bằng mã. Nó truy cập trang, nhấp vào nút, điền biểu mẫu và trích xuất dữ liệu một cách tự động, không cần giao diện đồ họa hiển thị.
+
+Nó hoạt động giống hệt Chrome hay Firefox, nhưng chạy trên máy chủ và không cần màn hình.
+
+## Cách hoạt động
+
+Các trình duyệt hiện đại cung cấp một giao thức điều khiển gọi là **Chrome DevTools Protocol (CDP)**. Các thư viện tự động hóa như Playwright và Puppeteer dùng CDP để gửi lệnh cho trình duyệt: truy cập URL này, nhấp vào phần tử này, đọc đoạn văn bản này, chụp ảnh màn hình.
+
+Gologin Cloud Browser được xây dựng trên chính giao thức này. Mã Puppeteer hoặc Playwright của bạn kết nối với một trình duyệt từ xa qua CDP và điều khiển nó giống như điều khiển trình duyệt chạy trên máy cục bộ.
+
+## Vì sao nên dùng trình duyệt headless thay vì yêu cầu HTTP thông thường?
+
+Ngày nay, nhiều website tải nội dung động bằng JavaScript. Một yêu cầu HTTP đơn giản chỉ lấy về HTML thô, nên bỏ sót mọi thứ được hiển thị ở phía client.
+
+Trình duyệt headless thực thi JavaScript giống như trình duyệt của người dùng thật, nên nó có thể:
+
+- Chờ nội dung tải xong sau khi trang được hiển thị
+- Tương tác với các phần tử động (menu thả xuống, hộp thoại modal, cuộn vô hạn)
+- Xử lý quy trình đăng nhập, biểu mẫu nhiều bước và SPA
+- Vượt qua các bước kiểm tra phát hiện bot mà HTTP client không vượt qua được
+
+## Vì sao nên chạy trên đám mây?
+
+Chạy trình duyệt headless trên máy cục bộ rất đơn giản. Nhưng chạy ổn định trong môi trường production thì không.
+
+Quản lý tiến trình trình duyệt trong production đòi hỏi phải xử lý:
+
+- **Sự cố và khởi động lại**: trình duyệt có thể bị treo hoặc sập, hạ tầng cần tự động phục hồi
+- **Đồng thời**: nhiều phiên chạy song song cần được cách ly tài nguyên
+- **Mở rộng quy mô**: lưu lượng tăng đột biến đòi hỏi khởi tạo thêm instance theo nhu cầu
+- **Rò rỉ bộ nhớ**: các phiên trình duyệt chạy lâu sẽ tích tụ bộ nhớ
+
+Gologin Cloud Browser đảm nhận toàn bộ phần hạ tầng này. Bạn chỉ cần kết nối với một phiên đã sẵn sàng qua một URL duy nhất và tập trung vào logic tự động hóa của mình.
+
+## Vì sao nên chọn Gologin?
+
+Chrome headless tiêu chuẩn rất dễ bị phát hiện. Các website dùng vân tay trình duyệt để nhận diện tự động hóa: họ kiểm tra cách hiển thị canvas, tham số WebGL, danh sách phông chữ, múi giờ, kích thước màn hình và hàng chục tín hiệu khác.
+
+Gologin Cloud Browser chạy một bản Chromium đã được tùy chỉnh (Orbita) để quản lý các tín hiệu vân tay này sao cho khớp với hồ sơ trình duyệt của người dùng thật. Kết hợp với cookie được lưu giữ và cấu hình proxy gắn trong từng hồ sơ, các phiên làm việc trông nhất quán và giống người dùng thật qua nhiều lần truy cập.
+
+Điều này rất quan trọng với mọi hoạt động tự động hóa nhắm đến các website có cơ chế chống bot.
+
+## Các framework tự động hóa phổ biến
+
+Gologin Cloud Browser hoạt động với mọi thư viện hỗ trợ CDP:
+
+| Thư viện       | Ngôn ngữ                    | Ghi chú                                         |
+| -------------- | --------------------------- | ----------------------------------------------- |
+| **Puppeteer**  | Node.js                     | Thư viện CDP của Google, được dùng rộng rãi     |
+| **Playwright** | Node.js, Python, Java, .NET | API hiện đại, hỗ trợ nhiều trình duyệt          |
+| **Selenium**   | Hầu hết các ngôn ngữ        | Lâu đời nhất, hệ sinh thái rộng nhất            |
+
+Xem [Bắt đầu](./getting-started) để biết các ví dụ về cách kết nối.

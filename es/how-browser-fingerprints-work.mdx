@@ -1,0 +1,38 @@
+---
+title: "Cómo funcionan las huellas digitales del navegador"
+---
+
+Cuando visitas un sitio web, el navegador comparte automáticamente cierta información técnica necesaria para que la página funcione correctamente. Los sitios web pueden acceder a esta información a través de encabezados HTTP y API de JavaScript.
+
+Los scripts de fingerprinting recopilan múltiples datos del navegador y del entorno del dispositivo, como:
+
+- información del navegador y del sistema operativo
+- resolución de pantalla y ajustes de visualización
+- fuentes instaladas
+- idioma y zona horaria
+- características del hardware
+- datos de renderizado gráfico (Canvas y WebGL)
+- datos de procesamiento de audio
+- dispositivos multimedia disponibles en el sistema
+
+Estos datos se combinan y se procesan para generar una **huella digital del navegador** (browser fingerprint): un identificador único que representa la configuración del dispositivo y del navegador.
+
+Los sitios web almacenan esta huella y la comparan cuando el mismo usuario vuelve a visitarlos. Si la huella coincide con una configuración registrada anteriormente, el sitio web puede reconocer el dispositivo aunque se hayan eliminado las cookies.
+
+Los sitios web utilizan ampliamente el fingerprinting para:
+
+- detectar comportamientos de inicio de sesión sospechosos
+- prevenir el fraude y el tráfico automatizado
+- identificar a los visitantes recurrentes
+- vincular varias sesiones al mismo dispositivo
+
+Si la huella cambia de forma significativa entre sesiones, el sitio web puede tratar el navegador como un dispositivo nuevo o potencialmente sospechoso.
+
+Gologin resuelve este problema creando **perfiles de navegador aislados**. Cada perfil tiene su propia configuración de huella digital, lo que le permite comportarse como un dispositivo independiente. Así es posible gestionar varias cuentas manteniendo sus entornos de navegación separados.
+
+## Véase también
+
+- [Configuración de la huella digital del perfil](https://gologin.com/docs/profile-fingerprint-settings)
+- [Qué se puede cambiar de forma segura](https://gologin.com/docs/whats-safe-to-change)
+- [Conceptos clave](https://gologin.com/docs/getting-started/introduction/key-concepts-profiles-fingerprints-proxies)
+- [Errores comunes que debes evitar](https://gologin.com/docs/common-mistakes-to-avoid)

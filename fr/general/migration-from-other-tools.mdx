@@ -1,0 +1,32 @@
+---
+title: "Migrer depuis d'autres navigateurs anti-détection"
+description: "Comment importer des profils depuis Multilogin, Dolphin Anty et d'autres navigateurs anti-détection vers Gologin"
+---
+
+Gologin permet d'importer des profils depuis d'autres navigateurs anti-détection.
+
+## Migrations prises en charge
+
+| Outil | Import pris en charge | Éléments transférés |
+|---|---|---|
+| Multilogin | Oui | Profils, cookies, paramètres de proxy |
+| Dolphin Anty | Oui | Profils, cookies, paramètres de proxy |
+| Incognition | Partiel | Contactez le support pour obtenir de l'aide |
+
+## Comment importer
+
+1. Ouvrez l'application de bureau Gologin
+2. Allez dans **Paramètres** > **Transférer des profils**
+3. Sélectionnez votre ancien outil
+4. Suivez l'assistant d'importation
+
+## À quoi s'attendre après la migration
+
+- **Cookies et sessions** : la plupart des sessions devraient rester actives. Certains sites peuvent demander une nouvelle connexion en raison des différences de fingerprint entre les outils.
+- **Paramètres de proxy** : les configurations de proxy sont transférées. Vérifiez que vos proxys fonctionnent toujours après l'importation.
+- **Extensions** : les extensions de navigateur ne sont PAS transférées. Réinstallez-les après la migration.
+- **Fingerprints** : Gologin attribuera de nouveaux fingerprints aux profils importés. Cela peut déclencher une vérification sur certaines plateformes ; prévoyez une courte période de « chauffe ».
+
+<Info>
+Si vous migrez depuis un outil qui ne figure pas dans la liste ci-dessus, vous pouvez exporter manuellement les cookies depuis votre ancien outil et les importer dans des profils Gologin.
+</Info>

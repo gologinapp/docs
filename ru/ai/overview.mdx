@@ -1,0 +1,235 @@
+---
+title: "Gologin для ИИ-агентов"
+description: "Обеспечьте своим ИИ-агентам надёжный доступ к вебу: скрапинг, автоматизация браузера и постоянные сессии через Gologin"
+---
+
+Gologin даёт ИИ-агентам три возможности, необходимые для надёжной работы с вебом:
+
+1. **Чтение веб-страниц** — скрапинг любых страниц, включая сайты с большим количеством JS и защитой, через Web Unlocker
+2. **Взаимодействие с вебом** — реальные сессии браузера с кликами, вводом текста, навигацией и сохранением cookies через Облачный браузер
+3. **Защита от обнаружения** — антидетект-фингерпринты, резидентные прокси и управление идентичностью на основе профилей
+
+Эти возможности доступны на разных уровнях интеграции — выберите тот, который подходит вашему стеку.
+
+---
+
+## Варианты интеграции
+
+<CardGroup cols={2}>
+  <Card title="MCP Server" icon="plug" href="/ru/api-reference/ai-integrations/mcp-server">
+    Подключите Gologin к Claude Desktop, Cursor или любому MCP-клиенту. Управляйте профилями и сессиями с помощью естественного языка.
+  </Card>
+  <Card title="AI Skills" icon="wand-magic-sparkles" href="/ru/api-reference/ai-integrations/ai-skills">
+    Готовые расширения для Claude Code. Установите навык, и ваш агент сразу получит возможности веб-скрапинга и автоматизации браузера.
+  </Card>
+  <Card title="CLI-инструменты" icon="terminal" href="/ru/cli-tools/web-access">
+    Команды оболочки, которые ИИ-агенты вызывают напрямую. Скрапинг, просмотр страниц, взаимодействие с сайтами — без написания кода. Три CLI для разных сценариев.
+  </Card>
+  <Card title="SDK + API Облачного браузера" icon="code" href="/ru/api-reference/cloud-browser/getting-started">
+    Полный программный контроль. Создавайте собственные инструменты для агентов с помощью Puppeteer/Playwright, подключённых к Облачному браузеру Gologin.
+  </Card>
+</CardGroup>
+
+---
+
+## Какой инструмент выбрать
+
+| Я хочу... | Использовать |
+|---|---|
+| Управлять профилями из Claude Desktop / Cursor | [MCP Server](/ru/api-reference/ai-integrations/mcp-server) |
+| Дать Claude Code доступ к вебу без настройки | [AI Skills](/ru/api-reference/ai-integrations/ai-skills) |
+| Скрапить страницы, обходить сайты, извлекать данные пакетно | [Web Access CLI](/ru/cli-tools/web-access) |
+| Открыть облачный браузер, кликать, вводить текст, делать скриншоты | [Agent Browser CLI](/ru/cli-tools/agent-browser) |
+| Прогревать локальные профили, выполнять сценарии входа | [Local Agent Browser CLI](/ru/cli-tools/local-agent-browser) |
+| Создавать собственные инструменты с Puppeteer/Playwright | [API Облачного браузера](/ru/api-reference/cloud-browser/getting-started) |
+| Вызывать Scraping API из собственного кода | [Web Unlocker SDK](/ru/scraping-api-sdk-and-cli) |
+
+---
+
+## Как всё работает вместе
+
+```
+┌─────────────────────────────────────────────────┐
+│                  AI Agent                        │
+│         (Claude, Codex, custom agent)            │
+└──────┬──────────┬──────────┬────────────────────┘
+       │          │          │
+  MCP Server   AI Skills   CLI Tools / SDK
+       │          │          │
+       └──────────┴──────────┘
+                  │
+    ┌─────────────┴─────────────┐
+    │                           │
+Web Unlocker              Cloud Browser
+(stateless scraping)    (stateful sessions)
+    │                           │
+    └─────────────┬─────────────┘
+                  │
+          Gologin Infrastructure
+    (proxies, fingerprints, profiles)
+```
+
+- **Web Unlocker** отвечает за чтение и извлечение данных без сохранения состояния: отправьте URL и получите готовый HTML
+- **Облачный браузер** отвечает за взаимодействие с сохранением состояния: откройте сессию, кликайте, вводите текст, переходите по страницам и сохраняйте cookies
+- **Локальный Orbita** отвечает за постоянные локальные профили: прогрев, сценарии входа, действия в соцсетях и на маркетплейсах
+
+Все три компонента используют общую инфраструктуру Gologin: резидентные прокси, антидетект-фингерпринты и управление профилями.
+
+---
+
+## Что можно создать с помощью этих инструментов
+
+### Исследования и конкурентная разведка
+
+ИИ-агент, который отслеживает цены конкурентов, запуски продуктов и изменения контента на десятках сайтов — ежедневно и автоматически. Агент скрапит страницы конкурентов через Web Unlocker, извлекает структурированные данные, сравнивает их со вчерашним снимком и формирует ежедневный дайджест. Сессии браузера не нужны — только извлечение данных без сохранения состояния в больших объёмах.
+
+```bash
+# scrape 20 competitor pricing pages and get structured output
+gologin-web-access batch-scrape \
+  https://competitor1.com/pricing \
+  https://competitor2.com/pricing \
+  https://competitor3.com/pricing \
+  --format json --summary --output ./today-prices.json
+
+# detect what changed since last check
+gologin-web-access batch-change-track \
+  https://competitor1.com/pricing \
+  https://competitor2.com/features \
+  --format markdown --output ./changes.json
+```
+
+### Лидогенерация и обогащение данных
+
+Скрапьте бизнес-каталоги, страницы компаний в LinkedIn, сайты с отзывами, а затем передавайте HTML в Claude, чтобы извлечь имена, адреса электронной почты, номера телефонов, размер компании и используемый технологический стек. Это работает как инструмент в цикле ИИ-агента: агент решает, какие страницы скрапить, вызывает инструмент и получает структурированные данные.
+
+```bash
+# search for leads
+gologin-web-access search "saas companies series A 2026" --limit 20
+
+# scrape and extract structured data from each result
+gologin-web-access extract https://example.com/company/123 --schema ./lead-schema.json
+```
+
+### Управление множеством аккаунтов
+
+Ведите 50 и более аккаунтов в соцсетях, рекламных кабинетов или аккаунтов продавцов на маркетплейсах — у каждого свой профиль браузера, фингерпринт, прокси и cookies. Local Agent Browser управляет профилями, прогревает их с помощью runbook-сценариев и поддерживает сессии активными между вызовами агента.
+
+```bash
+# create profiles for each account
+gologin-local-agent-browser profile-create "FB Ads Account 1" --template ads
+gologin-local-agent-browser profile-create "FB Ads Account 2" --template ads
+
+# warm up profiles in batch
+gologin-local-agent-browser batch ./warmup-runbook.json \
+  --targets ./all-profiles.json --concurrency 5
+```
+
+### Автоматическое заполнение форм и ввод данных
+
+ИИ-агент, который входит во внутренние панели управления, заполняет формы, отправляет отчёты и скачивает выгрузки — всё это через реальную сессию облачного браузера. Агент читает страницу как снимок (snapshot), находит нужные поля по ссылкам (ref), вводит значения, нажимает кнопку отправки и проверяет результат.
+
+```bash
+gologin-agent-browser open https://internal-dashboard.com/login --profile my_profile
+gologin-agent-browser snapshot
+gologin-agent-browser fill @e3 "username"
+gologin-agent-browser fill @e5 "password"
+gologin-agent-browser click @e7    # submit button
+gologin-agent-browser wait 2000
+gologin-agent-browser snapshot     # verify login success
+gologin-agent-browser screenshot ./logged-in.png
+```
+
+### Мониторинг контента и оповещения
+
+Отслеживайте изменения на страницах с государственными нормативными актами, в блогах конкурентов, на сайтах с вакансиями и на любых других страницах, важных для вашего бизнеса. Запускайте проверку ежедневно через cron или по расписанию с помощью агента, сравнивайте с предыдущей версией и получайте оповещения о существенных изменениях.
+
+```bash
+# track changes on key pages
+gologin-web-access change-track https://regulations.gov/new-rules --format markdown
+gologin-web-access batch-change-track \
+  https://competitor.com/blog \
+  https://competitor.com/changelog \
+  --output ./changes.json
+```
+
+### Конвейеры веб-скрапинга на базе ИИ
+
+Создайте сквозной конвейер: обойдите сайт с документацией, преобразуйте его в markdown и передайте в LLM для суммаризации или ответов на вопросы. Используйте CLI для извлечения данных, а для работы с LLM — собственный код.
+
+```bash
+# crawl an entire docs site
+gologin-web-access crawl https://docs.example.com \
+  --format markdown --limit 100 --max-depth 3 --only-main-content \
+  --output ./docs-corpus.json
+
+# or map the site first, then selectively scrape
+gologin-web-access map https://docs.example.com --limit 200
+gologin-web-access batch-scrape url1 url2 url3 --format text --output ./selected.json
+```
+
+### Геотестирование и проверка локализации
+
+Проверьте, как ваш сайт выглядит в разных странах. Откройте один и тот же URL через профили с прокси в разных регионах, сделайте скриншоты и сравните их.
+
+```bash
+# create geo-specific profiles
+gologin-local-agent-browser profile-create "US Test" --template geo --proxy-country us
+gologin-local-agent-browser profile-create "DE Test" --template geo --proxy-country de
+gologin-local-agent-browser profile-create "JP Test" --template geo --proxy-country jp
+
+# screenshot from each location
+gologin-agent-browser open https://yoursite.com --profile us_profile_id
+gologin-agent-browser screenshot ./us-view.png
+gologin-agent-browser close
+```
+
+---
+
+## Примеры быстрого старта
+
+### Скрапинг страницы (CLI)
+
+```bash
+npm install -g gologin-web-access
+export GOLOGIN_WEB_UNLOCKER_API_KEY="wu_..."
+
+gologin-web-access read https://example.com
+```
+
+### Открытие облачного браузера (CLI)
+
+```bash
+npm install -g gologin-agent-browser-cli
+export GOLOGIN_TOKEN='your_token'
+
+gologin-agent-browser open https://example.com
+gologin-agent-browser snapshot
+gologin-agent-browser click @e3
+gologin-agent-browser close
+```
+
+### Установка AI Skill (Claude Code)
+
+```bash
+npx skills add GologinLabs/gologin-web-access-skill
+```
+
+После этого просто попросите Claude Code проскрапить страницу или поработать с сайтом — остальное навык сделает сам.
+
+### Подключение MCP (Claude Desktop)
+
+Добавьте в `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "gologin-mcp": {
+      "command": "npx",
+      "args": ["gologin-mcp"],
+      "env": { "API_TOKEN": "your-token" }
+    }
+  }
+}
+```
+
+Затем попросите Claude: «Создай новый профиль браузера с американским прокси».

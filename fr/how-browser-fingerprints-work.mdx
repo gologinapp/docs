@@ -1,0 +1,38 @@
+---
+title: "Comment fonctionnent les empreintes de navigateur"
+---
+
+Lorsque vous visitez un site web, votre navigateur partage automatiquement certaines informations techniques nécessaires au bon fonctionnement de la page. Les sites web peuvent accéder à ces informations via les en-têtes HTTP et les API JavaScript.
+
+Les scripts de fingerprinting collectent de nombreuses données sur le navigateur et l'environnement de l'appareil, par exemple :
+
+- les informations sur le navigateur et le système d'exploitation
+- la résolution d'écran et les paramètres d'affichage
+- les polices installées
+- la langue et le fuseau horaire
+- les caractéristiques matérielles
+- les données de rendu graphique (Canvas et WebGL)
+- les données de traitement audio
+- les périphériques multimédias disponibles sur le système
+
+Ces données sont combinées et traitées pour générer une **empreinte de navigateur** : un identifiant unique qui représente la configuration de l'appareil et du navigateur.
+
+Les sites web enregistrent cette empreinte et la comparent lorsque le même utilisateur revient. Si l'empreinte correspond à une configuration enregistrée précédemment, le site peut reconnaître l'appareil, même si les cookies ont été supprimés.
+
+Les sites web utilisent largement le fingerprinting pour :
+
+- détecter les comportements de connexion suspects
+- prévenir la fraude et le trafic automatisé
+- identifier les visiteurs récurrents
+- relier plusieurs sessions à un même appareil
+
+Si l'empreinte change de manière importante d'une session à l'autre, le site peut considérer le navigateur comme un nouvel appareil, voire comme un appareil potentiellement suspect.
+
+Gologin résout ce problème en créant des **profils de navigateur isolés**. Chaque profil dispose de sa propre configuration d'empreinte et se comporte ainsi comme un appareil distinct. Vous pouvez de cette façon gérer plusieurs comptes tout en gardant leurs environnements de navigation indépendants.
+
+## Voir aussi
+
+- [Paramètres d'empreinte du profil](https://gologin.com/docs/profile-fingerprint-settings)
+- [Ce qu'il est possible de modifier en toute sécurité](https://gologin.com/docs/whats-safe-to-change)
+- [Concepts clés](https://gologin.com/docs/getting-started/introduction/key-concepts-profiles-fingerprints-proxies)
+- [Erreurs courantes à éviter](https://gologin.com/docs/common-mistakes-to-avoid)

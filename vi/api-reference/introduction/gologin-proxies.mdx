@@ -1,0 +1,95 @@
+---
+title: "Proxy của Gologin"
+---
+
+Gologin cung cấp các proxy chất lượng cao, có thể được tạo và quản lý bằng chương trình chỉ với vài dòng mã. Các proxy này tích hợp liền mạch với hồ sơ trình duyệt, đảm bảo kết nối ổn định và địa chỉ IP nhất quán cho nhu cầu tự động hóa của bạn.
+
+### Tại sao nên dùng proxy của Gologin?
+
+- **Dễ tích hợp**: Thêm proxy vào hồ sơ chỉ với một lệnh gọi API
+- **Phủ sóng toàn cầu**: Truy cập proxy từ nhiều vị trí trên khắp thế giới
+- **Ổn định**: Hạ tầng cấp doanh nghiệp đảm bảo kết nối đáng tin cậy
+- **Chống phát hiện**: Proxy được cấu hình đúng cách giúp giảm nguy cơ bị nhận diện qua dấu vân tay
+- **Quy trình làm việc gọn gàng**: Không cần quản lý các nhà cung cấp proxy riêng biệt
+
+# Chạy hồ sơ với proxy của Gologin
+
+<CodeGroup>
+
+```js node.js
+import { GologinApi } from 'gologin';
+
+const token = process.env.GL_API_TOKEN || 'your dev token here';
+const gologin = GologinApi({
+  token,
+});
+
+async function main() {
+  const profile = await gologin.createProfileRandomFingerprint();
+  const profileId = profile.id;
+  await gologin.addGologinProxyToProfile(profileId, 'US');
+
+  const { browser } = await gologin.launch({ profileId });
+  const page = await browser.newPage();
+
+  await page.goto('https://iphey.com/', { waitUntil: 'networkidle2' });
+  const status = await page.$eval('.trustworthy:not(.hide)',
+    (elt) => elt?.innerText?.trim(),
+  );
+
+  await new Promise((resolve) => setTimeout(resolve, 10000));
+  console.log('status', status);
+
+  return status;
+}
+
+main().catch(console.error)
+  .finally(gologin.exit);
+```
+
+```python Python
+import time
+from gologin import GoLogin
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+
+
+# Initialize GoLogin
+gl = GoLogin({
+	"token": "your dev token",
+	})
+profile = gl.createProfileRandomFingerprint({ "os": "win" })
+profile_id = profile.get('id')
+gl.setProfileId(profile_id)
+# Add proxy to the profile
+gl.addGologinProxyToProfile(profile_id, "us")
+
+# Start Browser and get websocket url
+debugger_address = gl.start()
+
+# Get Chromium version for webdriver
+chromium_version = gl.get_chromium_version()
+
+
+# Install webdriver
+service = Service(ChromeDriverManager(driver_version=chromium_version).install())
+
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_experimental_option("debuggerAddress", debugger_address)
+
+driver = webdriver.Chrome(service=service, options=chrome_options)
+
+# Give command to Selenium to open the page
+driver.get("http://www.python.org")
+
+time.sleep(30)
+driver.quit()
+time.sleep(10)
+
+gl.delete(profile_id)
+
+gl.stop()
+```
+
+</CodeGroup>

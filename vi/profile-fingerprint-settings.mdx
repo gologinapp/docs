@@ -1,0 +1,126 @@
+---
+title: "Cài đặt dấu vân tay của hồ sơ"
+---
+
+Gologin cho phép bạn cấu hình các tham số dấu vân tay khi tạo hoặc chỉnh sửa hồ sơ trình duyệt.
+
+Các cài đặt này quyết định cách hồ sơ trình duyệt của bạn hiển thị với các trang web và hệ thống chống gian lận.
+
+Các trang web thu thập nhiều tín hiệu kỹ thuật từ môi trường trình duyệt và kết hợp chúng thành một **dấu vân tay trình duyệt** dùng để nhận diện thiết bị.
+
+Các cài đặt dấu vân tay trong Gologin được chia thành nhiều nhóm.
+
+## Dấu vân tay Navigator
+
+Các tham số Navigator mô tả môi trường trình duyệt và thiết bị nói chung.
+
+Các trang web đọc những giá trị này bằng các API JavaScript như `navigator.userAgent` và `navigator.platform`.
+
+Các tham số Navigator phổ biến gồm:
+
+- **Đại lý người dùng** – xác định loại trình duyệt, phiên bản và hệ điều hành
+- **phiên bản quỹ đạo** – phiên bản Chromium mà hồ sơ sử dụng
+- **Độ phân giải màn hình** – kích thước màn hình được báo cho các trang web
+- **Ngôn ngữ** – các ngôn ngữ ưu tiên của trình duyệt
+- **Nền tảng** – nền tảng hệ điều hành
+- **Chủ đề CPU** – số nhân bộ xử lý được báo cho trình duyệt
+- **ĐẬP** – dung lượng bộ nhớ khả dụng của thiết bị
+- **Không theo dõi** – tín hiệu tùy chọn quyền riêng tư
+
+Các tham số này giúp trang web xác định loại thiết bị đang được sử dụng.
+
+## Phông chữ
+
+Các phông chữ được cài đặt trong môi trường trình duyệt là một tín hiệu dấu vân tay khác.
+
+Các trang web có thể phát hiện phông chữ bằng cách đo cách văn bản được hiển thị trên trang. Mỗi hệ điều hành và thiết bị có một bộ phông chữ khác nhau, điều này giúp phân biệt các thiết bị.
+
+Gologin có thể che danh sách phông chữ để tạo ra các tổ hợp thực tế phù hợp với hệ điều hành đã chọn.
+
+## Thiết bị đa phương tiện
+
+Cài đặt thiết bị đa phương tiện xác định những camera, micrô và thiết bị xuất âm thanh nào hiển thị với các trang web.
+
+Các trang web có thể truy cập thông tin này bằng API `navigator.mediaDevices`.
+
+Gologin cho phép bạn che:
+
+- đầu vào video
+- đầu vào âm thanh
+- đầu ra âm thanh
+
+Điều này giúp ngăn các trang web nhận diện cấu hình phần cứng thật của bạn.
+
+## Dấu vân tay phần cứng
+
+Các tín hiệu liên quan đến phần cứng cung cấp thêm độ ngẫu nhiên (entropy) cho việc tạo dấu vân tay trình duyệt.
+
+Các tham số này bao gồm đặc điểm kết xuất đồ họa và âm thanh.
+
+### Canvas
+
+API Canvas cho phép các trang web vẽ những hình ảnh ẩn trong trình duyệt.\
+Vì kết quả kết xuất hơi khác nhau giữa các thiết bị, hình ảnh thu được có thể được chuyển thành mã băm và dùng làm dấu vân tay.
+
+### WebGL
+
+WebGL tiết lộ thông tin về phần cứng đồ họa mà thiết bị sử dụng.
+
+Các trang web có thể kiểm tra báo cáo WebGL hoặc kết xuất một vật thể 3D ẩn để tạo dấu vân tay.
+
+### AudioContext
+
+Dấu vân tay âm thanh dựa vào sự khác biệt trong quá trình xử lý âm thanh để tạo ra một mã băm duy nhất.
+
+### ClientRects
+
+Phương pháp này đo cách các phần tử được định vị và hiển thị trên trang.
+
+Gologin cho phép bạn chỉnh sửa hoặc che các tín hiệu này để tạo ra dấu vân tay nhất quán nhưng độc nhất cho từng hồ sơ.
+
+## WebRTC
+
+WebRTC là công nghệ dùng cho giao tiếp thời gian thực trong trình duyệt.
+
+Tuy nhiên, nó có thể làm lộ địa chỉ IP cục bộ hoặc IP thật cho các trang web.
+
+Gologin cho phép bạn kiểm soát hành vi của WebRTC:
+
+- **Dựa trên IP** – WebRTC báo cáo IP của proxy
+- **Tắt** – WebRTC bị vô hiệu hóa
+
+Điều này giúp ngăn rò rỉ IP và giữ cho dấu vân tay nhất quán với vị trí của proxy.
+
+## Thực hành tốt nhất
+
+Để duy trì danh tính trình duyệt ổn định:
+
+- giữ nguyên các cài đặt dấu vân tay sau khi tài khoản đã được tạo
+- đặt múi giờ và ngôn ngữ khớp với vị trí của proxy
+- tránh thay đổi thường xuyên các tham số liên quan đến phần cứng
+- dùng một proxy riêng cho mỗi hồ sơ
+
+Dấu vân tay ổn định giúp các trang web nhận ra hồ sơ như một thiết bị nhất quán.
+
+## Cách kiểm tra dấu vân tay của bạn
+
+Sau khi khởi chạy hồ sơ, hãy truy cập một trong các trang sau để kiểm tra dấu vân tay:
+
+- [**iphey.com**](https://iphey.com) -- Hiển thị điểm tin cậy tổng thể. Kết quả "Trusted" màu xanh lá có nghĩa là hồ sơ của bạn trông giống một trình duyệt thật.
+- [**pixelscan.net**](https://pixelscan.net) -- Phân tích chi tiết từng tham số dấu vân tay.
+
+### Các sự cố thường gặp và ý nghĩa
+
+| Sự cố | Ý nghĩa | Cách khắc phục |
+| --- | --- | --- |
+| OS không khớp | Hệ điều hành của hồ sơ không khớp với hệ điều hành của thiết bị thật | Tạo hồ sơ mới khớp với hệ điều hành thực tế của bạn |
+| WebGL không khớp | Thông tin GPU không nhất quán với phần cứng được khai báo | Thường được tự động cấu hình đúng. Nếu bị gắn cờ, hãy thử chế độ WebGL khác trong cài đặt hồ sơ. |
+| Múi giờ không khớp | Múi giờ không khớp với vị trí của proxy | Gologin tự động đặt múi giờ khớp với IP của proxy. Nếu sai, hãy kiểm tra vị trí proxy của bạn. |
+| Mã băm Canvas thay đổi | Dấu vân tay Canvas khác nhau giữa các phiên | Đặt Canvas thành "Tắt" hoặc "Chặn" thay vì "Thêm nhiễu" để đảm bảo tính nhất quán giữa các thiết bị |
+
+Xem thêm
+
+- [Những gì an toàn để thay đổi](https://gologin.com/docs/whats-safe-to-change)
+- [Cách dấu vân tay trình duyệt hoạt động](https://gologin.com/docs/how-browser-fingerprints-work)
+- [Thiết lập proxy và dấu vân tay theo từng nền tảng](https://gologin.com/docs/proxy-and-fingerprint-setup-per-platform)
+- [Những sai lầm thường gặp cần tránh](https://gologin.com/docs/common-mistakes-to-avoid)

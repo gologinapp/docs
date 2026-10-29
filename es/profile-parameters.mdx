@@ -1,0 +1,99 @@
+---
+title: "Configuración del perfil"
+---
+
+Cada perfil de navegador en Gologin tiene su propio conjunto de ajustes que definen cómo lo ven los sitios web. Estos ajustes están organizados en pestañas en la parte superior del editor de perfiles.
+
+Puedes acceder a la configuración del perfil haciendo clic en **3 dots on the profile** \> **Settings**.
+
+## Overview
+
+En esta pestaña eliges el sistema operativo con el que el perfil aparecerá en los sitios web y generas su huella digital principal.
+
+**Operating system** - Elige entre Windows 10, Windows 11, Mac Intel, Mac ARM, Linux y Android. Esto determina el sistema operativo que el perfil comunica a cada sitio web que visita.
+
+<Warning>
+  El sistema operativo solo se puede seleccionar al crear un perfil. Una vez guardado el perfil, esta opción queda bloqueada y no se puede cambiar. Si necesitas un sistema operativo diferente, crea un perfil nuevo.
+</Warning>
+
+**New Fingerprint** - Al hacer clic aquí se genera un conjunto nuevo de valores de huella digital para el perfil, como la resolución de pantalla, las fuentes, los detalles de los gráficos y otras señales que los sitios web usan para identificar navegadores. Úsalo si quieres restablecer la identidad del perfil. No cambia el sistema operativo ni borra las cookies u otros datos del navegador.
+
+El panel **Profile Summary** de la derecha se actualiza a medida que haces cambios y te ofrece un resumen rápido de la huella digital actual del perfil.
+
+<Frame>
+  ![Settings Overview](/images/settings_overview.png)
+</Frame>
+
+## Proxy
+
+Esta pestaña controla qué proxy usa el perfil al navegar.
+
+- **Gologin proxy** - Usa un proxy del servicio de proxies integrado de Gologin.
+- **Your proxy** - Pega tu propio proxy de un proveedor externo.
+- **Without proxy** - El perfil usa tu conexión real a internet. La dirección IP que verán los sitios web será tu IP real.
+
+<Frame>
+  ![Settings Proxy](/images/settings_proxy.png)
+</Frame>
+
+El proxy que asignes aquí determina la dirección IP que ven los sitios web cuando este perfil está en ejecución. También afecta a la zona horaria y a la geolocalización si están configuradas para seguir la IP automáticamente.
+
+## Timezone
+
+Esta pestaña define la zona horaria que el perfil comunica a los sitios web.
+
+De forma predeterminada, el interruptor **Fill timezone based on the external IP** está activado, lo que significa que el perfil usa automáticamente la zona horaria que corresponde a la ubicación de su proxy. Así el perfil se mantiene coherente: un perfil con un proxy de EE. UU. comunicará una zona horaria de EE. UU., que es lo que tendría un usuario real en esa ubicación.
+
+<Note>
+  Se recomienda dejar esta opción en automático y no cambiarla manualmente. Si la zona horaria no coincide con la ubicación del proxy, los sitios web pueden considerarlo sospechoso. Cámbiala solo si tienes un motivo concreto.
+</Note>
+
+<Frame>
+  ![Settings Timezone](/images/settings_timezone.png)
+</Frame>
+
+## Extensions
+
+En esta pestaña instalas extensiones de navegador en el perfil. Cada perfil gestiona sus extensiones por separado: añadir una aquí no afecta a ningún otro perfil.
+
+Haz clic en **Add extensions** para explorar e instalar extensiones en este perfil.
+
+Para una guía completa sobre cómo funcionan las extensiones en los perfiles de Gologin, consulta [Extensions](/es/browser-profiles/profile-features/browser-extensions/browser-extensions).
+
+<Frame>
+  ![Settings Extensions](/images/settings_extensions.png)
+</Frame>
+
+## Bookmarks
+
+Esta pestaña te permite añadir marcadores a la barra de marcadores del perfil. Pégalos en el campo de texto usando uno de estos formatos:
+
+- `folder::name::url` - crea un marcador dentro de una carpeta con nombre
+- `name::url` - crea un marcador con nombre directamente en la barra
+- `url` - añade la URL directamente sin un nombre personalizado
+
+Cada línea es un marcador independiente. Aparecen en la barra de marcadores dentro de Orbita cuando el perfil está en ejecución.
+
+<Frame>
+  ![Settings Bookmarks](/images/settings_bookmarks.png)
+</Frame>
+
+## Geolocation
+
+Esta pestaña controla qué ocurre cuando un sitio web solicita tu ubicación, por ejemplo, cuando una aplicación de mapas pregunta "¿Permitir que este sitio conozca tu ubicación?".
+
+Hay tres opciones:
+
+- **Prompt** - El navegador te pregunta cada vez que un sitio solicita acceso a la ubicación. Es la opción predeterminada e imita el comportamiento de un navegador real.
+- **Allow** - El acceso a la ubicación se concede automáticamente a cualquier sitio que lo solicite.
+- **Block** - Todas las solicitudes de ubicación se rechazan sin notificación.
+
+El interruptor **Fill geolocation based on the external IP** está activado de forma predeterminada. Cuando está habilitado, Gologin configura automáticamente las coordenadas del perfil para que coincidan con la ubicación del proxy.
+
+<Note>
+  Se recomienda dejar este interruptor activado. Si lo desactivas y la geolocalización no coincide con la IP del proxy, la discrepancia puede ser una señal para los sistemas de detección. Ajústalo manualmente solo si sabes qué coordenadas quieres usar y por qué.
+</Note>
+
+<Frame>
+  ![Settings Geolocation](/images/settings_geolocation.png)
+</Frame>

@@ -1,0 +1,107 @@
+---
+title: 'ヘッドレスモード'
+---
+
+ヘッドレスブラウザとは、グラフィカルユーザーインターフェース(GUI)を持たないWebブラウザのことです。バックグラウンドで動作し、コードやコマンドラインインターフェースからプログラムによって制御されます。ヘッドレスブラウザは、Webページのレンダリング、JavaScriptの実行、Cookieの処理など、通常のブラウザと同じ操作をすべて実行できますが、画面上には何も表示しません。
+
+## 主なユースケース
+
+- Webスクレイピングとデータ抽出
+- Webアプリケーションの自動テスト
+- Webページのスクリーンショットの取得やPDFの生成
+- パフォーマンスの監視とテスト
+- 繰り返し行うWeb作業の自動化
+
+## メリット
+
+- リソース消費の削減(GUIのレンダリングが不要)
+- フルブラウザのインスタンスより高速に実行
+- ディスプレイのないサーバー環境に最適
+- CI/CDパイプラインや自動化ワークフローに最適
+
+ヘッドレスブラウザは、開発者向けツール、テストフレームワーク、自動化サービスなどで、Webコンテンツをプログラムから操作するために広く使われています。
+
+# ヘッドレスの例
+<CodeGroup tag="iphey.com" label="信頼性ステータスを確認">
+
+```js Node.js
+// SDK will prepare the browser and will start it on your machine then you can control it with puppeteer
+import { GologinApi } from 'gologin';
+
+const token = process.env.GL_API_TOKEN || 'your dev token here';
+const gologin = GologinApi({
+  token,
+});
+
+async function main() {
+  const { browser } = await gologin.launch({
+    extra_params: ['--headless'],
+    // pass profileId parameter if you want to run particular profile
+    // profileId: 'your profileId here',
+  });
+
+  const page = await browser.newPage();
+
+  await page.goto('https://iphey.com/', { waitUntil: 'networkidle2' });
+  const status = await page.$eval('.trustworthy:not(.hide)',
+    (elt) => elt?.innerText?.trim(),
+  );
+
+  await new Promise((resolve) => setTimeout(resolve, 10000));
+  console.log('status', status);
+
+  return status;
+}
+
+main().catch(console.error)
+  .finally(gologin.exit);
+```
+
+```python Python
+import time
+from gologin import GoLogin
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+
+
+# Initialize GoLogin
+gl = GoLogin({
+	"token": "your dev token",
+  "extra_params": ["--headless"]
+})
+profile = gl.createProfileRandomFingerprint({ "os": "win" })
+profile_id = profile.get('id')
+gl.setProfileId(profile_id)
+# Add proxy to the profile
+gl.addGologinProxyToProfile(profile_id, "us")
+
+# Start Browser and get websocket url
+debugger_address = gl.start()
+
+# Get Chromium version for webdriver
+chromium_version = gl.get_chromium_version()
+
+
+# Install webdriver
+service = Service(ChromeDriverManager(driver_version=chromium_version).install())
+
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_experimental_option("debuggerAddress", debugger_address)
+
+driver = webdriver.Chrome(service=service, options=chrome_options)
+
+# Give command to Selenium to open the page
+driver.get("http://www.python.org")
+
+time.sleep(30)
+driver.quit()
+time.sleep(10)
+
+gl.delete(profile_id)
+
+gl.stop()
+
+```
+
+</CodeGroup>

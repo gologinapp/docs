@@ -1,0 +1,33 @@
+---
+title: "Gestion du stockage et du cache"
+description: "Comment gérer le stockage local, les fichiers de cache et l'espace disque utilisé par Gologin"
+---
+
+Gologin stocke localement les données de navigation de chaque profil que vous lancez. Avec le temps, ces données peuvent occuper beaucoup d'espace disque.
+
+## Où Gologin stocke les données
+
+- **Windows** : `C:\Users\<username>\AppData\Local\Temp\gologin_profile_*`
+- **macOS** : `/tmp/gologin_profile_*`
+- **Linux** : `/tmp/gologin_profile_*`
+
+Les binaires du navigateur Orbita sont stockés séparément et peuvent occuper de 500 Mo à 2 Go par version.
+
+## Peut-on supprimer les fichiers de cache sans risque ?
+
+Oui, vous pouvez supprimer sans risque les dossiers temporaires des profils lorsqu'aucun profil n'est en cours d'exécution. Ces dossiers sont recréés au lancement d'un profil.
+
+**Avant de supprimer :**
+1. Assurez-vous que tous les profils Gologin sont fermés
+2. Fermez l'application de bureau Gologin
+3. Supprimez les dossiers correspondant à `gologin_profile_*` dans votre répertoire temporaire
+
+<Warning>
+Ne supprimez pas de fichiers pendant que des profils sont en cours d'exécution. Cela peut provoquer des erreurs "EBUSY: resource busy" sous Windows ou corrompre les sessions actives.
+</Warning>
+
+## Comment réduire l'espace disque utilisé
+
+- Fermez les profils lorsque vous avez terminé (ne les laissez pas ouverts toute la nuit)
+- Désinstallez les versions inutilisées du navigateur Orbita depuis les paramètres de Gologin
+- Videz régulièrement les dossiers temporaires des profils

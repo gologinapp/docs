@@ -1,0 +1,89 @@
+---
+title: "Sử dụng proxy với Cloud Browser"
+---
+
+Gologin Cloud Browser hỗ trợ cấu hình proxy linh hoạt để định tuyến lưu lượng của phiên trình duyệt. Bạn có thể dùng proxy dân cư tích hợp sẵn của Gologin hoặc dùng proxy của riêng mình.
+
+## Cách proxy hoạt động trong Gologin
+
+Khác với cấu hình proxy theo phiên, **proxy trong Gologin được gắn vào profile** — chứ không phải gắn vào từng kết nối riêng lẻ.
+
+Khi bạn kết nối tới một phiên Cloud Browser bằng ID của profile, proxy đã được cấu hình cho profile đó sẽ được áp dụng tự động:
+
+```text
+https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}
+```
+
+Điều này có nghĩa là bạn chỉ cần cấu hình proxy một lần (qua REST API hoặc dashboard), và mọi phiên sử dụng profile đó đều sẽ đi qua proxy này một cách nhất quán — không cần truyền thông tin đăng nhập proxy ở mỗi lần kết nối.
+
+> Nếu không thể kết nối tới proxy của profile khi phiên bắt đầu, kết nối sẽ thất bại với lỗi hết thời gian chờ proxy (proxy timeout). Hãy kiểm tra proxy hoạt động bình thường trước khi chạy tự động hóa.
+
+## Các tùy chọn proxy
+
+### Proxy tích hợp sẵn của Gologin
+
+Gologin cung cấp mạng proxy dân cư riêng với khả năng kiểm soát vị trí địa lý. Proxy tích hợp sẵn là lựa chọn đơn giản nhất — bạn không cần nhà cung cấp proxy bên ngoài.
+
+Để gắn proxy của Gologin vào một profile, hãy dùng [Proxies API](https://gologin.com/docs/api-reference/proxy/) để tạo proxy và gán nó cho profile.
+
+Proxy tích hợp sẵn hỗ trợ nhắm mục tiêu vị trí địa lý theo quốc gia và khu vực. Khi tạo proxy, hãy đặt `autoProxyRegion` thành mã quốc gia mong muốn:
+
+```json
+{
+  "mode": "geolocation",
+  "autoProxyRegion": "us"
+}
+```
+
+Các mã khu vực phổ biến: `us`, `gb`, `de`, `fr`, `nl`, `jp`, `au`, `ca`, `br`, `in`
+
+### Proxy của riêng bạn
+
+Bạn có thể gắn bất kỳ proxy bên thứ ba nào vào profile. Gologin hỗ trợ proxy `http`, `https` và `socks5`.
+
+Cấu hình qua [Proxies API](https://gologin.com/docs/api-reference/proxy/):
+
+```json
+{
+  "mode": "http",
+  "host": "your.proxy.host",
+  "port": 10000,
+  "username": "user",
+  "password": "pass"
+}
+```
+
+Proxy được kiểm tra khi phiên bắt đầu. Nếu không thể kết nối tới proxy, phiên sẽ không khởi động.
+
+### Không dùng proxy
+
+Để chạy phiên mà không dùng proxy, hãy đặt chế độ proxy của profile thành `none`:
+
+```json
+{
+  "mode": "none"
+}
+```
+
+Cách này hữu ích khi thử nghiệm hoặc với các quy trình mà IP của chính máy chủ tự động hóa là đủ.
+
+## Quản lý proxy qua API
+
+Bạn có thể quản lý proxy đầy đủ (tạo, cập nhật, xóa, liệt kê, kiểm tra lưu lượng) thông qua REST API:
+
+- [Tài liệu tham khảo Proxies API](https://gologin.com/docs/api-reference/proxy/)
+
+## Kiểm tra trạng thái proxy trước khi kết nối
+
+Vì proxy bị lỗi sẽ khiến phiên không thể khởi động, bạn nên kiểm tra proxy trước khi chạy tự động hóa — đặc biệt là trong các quy trình môi trường production:
+
+```javascript
+const profileRes = await fetch(`https://api.gologin.com/browser/${profileId}`, {
+  headers: { Authorization: `Bearer ${token}` },
+});
+const profile = await profileRes.json();
+
+if (profile.proxy?.mode !== 'none') {
+  // optionally verify proxy reachability here before connecting
+}
+```

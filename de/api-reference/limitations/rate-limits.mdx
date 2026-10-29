@@ -1,0 +1,32 @@
+---
+title: 'Rate Limits'
+---
+Wir erlauben Nutzern nicht, unbegrenzt viele Anfragen an unsere API zu senden. Wenn Sie unsere Limits überschreiten, müssen Sie eine Abkühlphase abwarten. <br />
+Unsere Standardlimits:
+- Free- und Testpläne: 300 Anfragen pro Minute
+- Alle anderen Pläne: 1200 Anfragen pro Minute
+
+### Token-Ungültigkeit bei Überschreiten des Rate Limits
+
+<Warning>
+Wenn Sie das Rate Limit überschreiten und eine HTTP-429-Antwort erhalten, wird Ihr API-Token automatisch ungültig. Das bedeutet, dass Ihr Token dauerhaft unbrauchbar ist und Sie einen neuen Token erstellen müssen.
+
+Das ist keine vorübergehende Abkühlphase – der Token wird widerrufen. Planen Sie Ihre Anfragerate daher sorgfältig und setzen Sie Exponential Backoff ein, um dies zu vermeiden.
+</Warning>
+
+### Fehler durch den Cloudflare-Schutz
+
+Wenn Ihre Server-IP zu viele Anfragen sendet, kann das Cloudflare-CDN von Gologin Ihre IP vollständig blockieren. In diesem Fall liefert die API statt JSON HTML-Fehlerseiten zurück, was zu Fehlern wie diesem führt:
+
+```
+SyntaxError: Unexpected token 'e', "error code: 1015" is not valid JSON
+```
+
+Dies ist eine Cloudflare-1015-Antwort auf eine Überschreitung des Rate Limits. Sie löst sich in der Regel innerhalb von Minuten bis Stunden von selbst. So vermeiden Sie das Problem:
+- Begrenzen Sie die Anfragerate in Ihrem Code
+- Verwenden Sie bei Fehlern Exponential Backoff
+- Vermeiden Sie Spitzen durch viele parallele API-Aufrufe
+
+### Limits für die Profilerstellung
+
+Für neue Konten gilt ein Limit von etwa 300 erstellten Profilen pro Tag. Dieses Limit kann je nach Plan variieren. Wenn Sie höhere Limits benötigen, wenden Sie sich an den Support.

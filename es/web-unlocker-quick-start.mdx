@@ -1,0 +1,138 @@
+---
+title: "Inicio rápido"
+---
+
+Esta guía muestra cómo extraer los datos de tu primera URL con Web Unlocker.
+
+---
+
+## Requisitos previos
+
+- Una clave de API de Web Unlocker (escribe a **ermakova.t@gologin.com** para obtenerla)
+- Python 3.x, Node.js o cualquier cliente HTTP
+
+---
+
+## Autenticación
+
+Todas las solicitudes requieren tu clave de API en el encabezado `apikey`:
+
+```
+apikey: YOUR_API_KEY
+```
+
+La URL base para todas las solicitudes a la API es:
+
+```
+https://parsing.webunlocker.gologin.com/v1
+```
+
+---
+
+## Haz tu primera solicitud
+
+Envía una solicitud GET con la URL de destino como parámetro de consulta. La respuesta es el HTML de la página completamente renderizado.
+
+### cURL
+
+```bash
+curl "https://parsing.webunlocker.gologin.com/v1/scrape?url=https%3A%2F%2Fexample.com" \
+  -H "apikey: YOUR_API_KEY"
+```
+
+### Python
+
+```python
+import requests
+
+response = requests.get(
+    "https://parsing.webunlocker.gologin.com/v1/scrape",
+    params={"url": "https://example.com"},
+    headers={"apikey": "YOUR_API_KEY"}
+)
+
+print(response.text)
+```
+
+### JavaScript (Node.js / Browser)
+
+```javascript
+const response = await fetch(
+  "https://parsing.webunlocker.gologin.com/v1/scrape?url=" +
+    encodeURIComponent("https://example.com"),
+  { headers: { apikey: "YOUR_API_KEY" } }
+);
+
+const html = await response.text();
+console.log(html);
+```
+
+---
+
+## Qué recibes como respuesta
+
+El cuerpo de la respuesta es el HTML renderizado de la página, sin procesar: el mismo contenido que verías si abrieras la URL en un navegador. No hay envoltorio JSON ni es necesario analizar nada.
+
+```html
+<!DOCTYPE html>
+<html>
+  <head><title>Example Domain</title></head>
+  <body>...</body>
+</html>
+```
+
+---
+
+## Gestión de errores
+
+Comprueba el código de estado HTTP antes de procesar la respuesta:
+
+| Estado | Significado |
+|---|---|
+| `200` | Correcto: el cuerpo de la respuesta es el HTML de la página |
+| `401` | Clave de API no válida o ausente |
+| `422` | Parámetro de URL no válido o ausente |
+| `429` | Se superó el límite de solicitudes |
+| `500` / `503` | Error del servidor: reintenta con espera progresiva (backoff) |
+
+```python
+response = requests.get(
+    "https://parsing.webunlocker.gologin.com/v1/scrape",
+    params={"url": "https://example.com"},
+    headers={"apikey": "YOUR_API_KEY"}
+)
+
+if response.status_code == 200:
+    html = response.text
+else:
+    print(f"Error {response.status_code}: {response.text}")
+```
+
+---
+
+## Inicio rápido con la CLI
+
+También puedes extraer datos de páginas con las herramientas CLI de Gologin sin escribir código:
+
+### CLI de Web Unlocker
+
+```bash
+npm install -g gologin-webunlocker
+
+GOLOGIN_WEBUNLOCKER_API_KEY=wu_... gologin-webunlocker scrape https://example.com
+GOLOGIN_WEBUNLOCKER_API_KEY=wu_... gologin-webunlocker text https://example.com
+GOLOGIN_WEBUNLOCKER_API_KEY=wu_... gologin-webunlocker markdown https://example.com
+```
+
+### CLI de Gologin Web Access (unificada)
+
+```bash
+npm install -g gologin-web-access
+
+export GOLOGIN_WEB_UNLOCKER_API_KEY="wu_..."
+gologin-web-access read https://example.com
+gologin-web-access scrape-json https://example.com
+gologin-web-access batch-scrape https://example.com/page/1 https://example.com/page/2 --format text
+```
+
+Consulta [Web Unlocker SDK y CLI](/es/scraping-api-sdk-and-cli) y [Web Access CLI](/es/cli-tools/web-access) para obtener todos los detalles.

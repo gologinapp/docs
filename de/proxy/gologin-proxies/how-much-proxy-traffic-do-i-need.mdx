@@ -1,0 +1,93 @@
+---
+title: "Wie viel Proxy-Traffic brauche ich?"
+---
+
+Gologin-Tarife enthalten ein Proxy-Traffic-Kontingent, das in Gigabyte (GB) gemessen wird. Das ist die Datenmenge, die über den Proxy läuft, während Ihre Profile im Internet unterwegs sind – nicht Speicherplatz oder Arbeitsspeicher.
+
+## Was als Traffic zählt
+
+Jedes Mal, wenn ein Gologin-Profil Daten über den Proxy sendet oder empfängt, verbraucht es Traffic. Dazu gehören:
+
+- Laden von Webseiten und Bildern
+- Ansehen von Videos oder anderen Inhalten
+- Absenden von Formularen
+- Ausführen von Automatisierungsskripten
+
+Traffic wird nur gezählt, wenn Sie Residential-, Mobile- oder Datacenter-Proxys von Gologin verwenden.
+
+**Was nicht auf Ihr Kontingent angerechnet wird:**
+
+- **Dedicated IPs.** Eine Dedicated IP hat kein Traffic-Limit. Alles, was darüber läuft, ist unbegrenzt – unabhängig von der Datenmenge.
+- **Proxys von Drittanbietern.** Wenn Sie einen Proxy eines externen Anbieters verbinden, wird dieser Traffic vom jeweiligen Anbieter abgerechnet, nicht von Gologin.
+
+## Grobe Schätzungen nach Anwendungsfall
+
+| Anwendungsfall | Geschätzter Traffic pro Profil |
+| --- | --- |
+| LinkedIn-Browsing und Outreach (2 Std./Tag) | 0.3–0.5 GB / Monat |
+| Facebook-/Instagram-Browsing (2 Std./Tag) | 0.5–1 GB / Monat |
+| Facebook-Ads-Verwaltung (aktive Arbeit) | 1–2 GB / Monat |
+| Krypto-Plattformen, Wallet-Interaktionen | 0.1–0.3 GB / Monat |
+| Web Scraping (leicht, reine Textseiten) | 0.5–2 GB / Monat |
+| Web Scraping (medienlastige Seiten) | 2–5 GB / Monat |
+| E-Commerce (Browsing auf Amazon und eBay) | 0.5–1.5 GB / Monat |
+
+Dies sind Schätzwerte. Der tatsächliche Verbrauch hängt davon ab, wie lange die Profile aktiv sind, wie medienlastig die Websites sind und ob Automatisierung läuft.
+
+## Schnelle Berechnung
+
+Formel: Anzahl der Profile × GB pro Profil und Monat = benötigte GB insgesamt
+
+Beispiele:
+
+| Szenario | Profile | GB/Profil/Monat | Insgesamt benötigt |
+| --- | --- | --- | --- |
+| 5 LinkedIn-Konten, leichte Nutzung | 5 | 0.4 GB | ~2 GB |
+| 10 Facebook-Ads-Konten | 10 | 1.5 GB | ~15 GB |
+| 20 Krypto-Wallets, gelegentliche Nutzung | 20 | 0.2 GB | ~4 GB |
+| 30 E-Commerce-Konten | 30 | 1 GB | ~30 GB |
+
+## So verbrauchen Sie weniger Traffic
+
+Bilder und Videos machen meist den größten Teil des Traffics eines Profils aus. Wenn Sie bei der Arbeit keine Medien sehen müssen – zum Beispiel beim Scraping oder bei der Automatisierung –, können Sie in den Einstellungen des Profils **Disable image loading** und **Disable video autoplay** aktivieren. Siehe [Erweiterte Profileinstellungen](/de/general/account-and-billing/advanced-profile-settings#other).
+
+Sie können diese Optionen auch in den [Standard-Profileinstellungen](/de/default-profile-settings) aktivieren, damit alle neuen Profile von Anfang an weniger Traffic verbrauchen.
+
+Diese Optionen sind nur in kostenpflichtigen Tarifen verfügbar.
+
+## Traffic oder Dedicated IP?
+
+Manche Proxy-Anbieter verkaufen Traffic in GB (wie Gologin bei Residential-, Mobile- und Datacenter-Proxys), andere nach Anzahl der IP-Adressen oder nach Zeitraum. Gologin bietet jetzt beides an.
+
+- **Kaufen Sie Traffic**, wenn Sie viele verschiedene IPs benötigen und es Ihnen egal ist, welche Sie erhalten – für Scraping, Recherche, kurzlebige Sitzungen und Tests.
+- **Kaufen Sie eine Dedicated IP**, wenn ein Konto dauerhaft dieselbe IP behalten soll – Amazon, eBay, LinkedIn, Meta Ads, PayPal, Wettseiten und alles, was den Login-Verlauf prüft. Eine Dedicated IP kostet \$5/Monat pro IP und enthält unbegrenzten Traffic. Ein einzelnes, stark genutztes Konto kann daher mit einer Dedicated IP günstiger sein als mit einem GB-Tarif.
+
+<Tip>
+  Wenn Sie ein gemischtes Setup berechnen: Zählen Sie bei der GB-Schätzung nur die Profile mit rotierenden Proxys. Profile mit einer Dedicated IP fließen gar nicht in die Berechnung ein.
+</Tip>
+
+## Ich habe GB-basierte Proxys bei einem anderen Anbieter gekauft – was bedeutet das?
+
+Manche Proxy-Anbieter verkaufen Traffic in GB (wie Gologin), andere nach Anzahl der IP-Adressen oder nach Zeitraum. Wenn Sie es gewohnt sind, IPs statt GB zu kaufen, hilft diese Sichtweise:
+
+Ein GB-basierter Proxy gibt Ihnen ein festes Datenvolumen, das Sie über beliebige IPs im Pool nutzen können. Sie bezahlen für Bandbreite, nicht für eine bestimmte Adresse.
+
+Wenn Sie eine feste IP benötigen, die sich nie ändert (erforderlich für Amazon, eBay, LinkedIn und die meisten Finanzplattformen), brauchen Sie einen statischen Proxy – dieser wird in der Regel als Monatsabo pro IP verkauft, nicht nach GB.
+
+## Was passiert, wenn der Traffic aufgebraucht ist
+
+Wenn Ihr Gologin-Proxy-Traffic-Kontingent aufgebraucht ist, können Profile, die die integrierten Proxys von Gologin verwenden, keine Verbindung mehr über diese Proxys herstellen. Sie sehen dann einen Verbindungsfehler.
+
+So vermeiden Sie Unterbrechungen:
+
+- Behalten Sie Ihren Verbrauch im Gologin-Dashboard im Blick
+- Laden Sie Ihr Proxy-Guthaben auf, bevor es aufgebraucht ist
+- Erwägen Sie Proxys von Drittanbietern für Konten mit hohem Traffic (sie verbrauchen Ihr Gologin-Kontingent nicht)
+
+## Stattdessen Proxys von Drittanbietern verwenden
+
+Wenn Sie Konten verwalten, die konstante, dedizierte IPs erfordern – oder wenn Sie mehr Traffic benötigen, als Ihr Tarif enthält –, verbinden Sie Ihren eigenen Proxy eines Drittanbieters.
+
+Proxys von Drittanbietern werden in den Profileinstellungen hinzugefügt und wirken sich überhaupt nicht auf Ihr Gologin-Traffic-Guthaben aus.
+
+Siehe [Proxy zu einem Profil hinzufügen](https://gologin.com/docs/proxy/proxy-management/adding-proxies) und [Empfohlene Proxy-Anbieter.](https://gologin.com/best-proxy-server-services/)

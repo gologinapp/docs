@@ -1,0 +1,20 @@
+---
+title: "Lanzamiento en la nube vs. lanzamiento local "
+hidden: true
+---
+
+Al automatizar con Gologin, el navegador puede ejecutarse en dos lugares: en tu equipo o en los servidores de Gologin. Esto determina dónde se ejecuta el binario de Orbita, cómo te conectas a él y qué infraestructura necesitas.
+
+## Descripción general
+
+|  | Lanzamiento local | Cloud Browser |
+| --- | --- | --- |
+| El navegador se ejecuta en | Tu equipo | Los servidores de Gologin |
+| Requiere la aplicación de escritorio | Sí | No |
+| Ventana visible | Opcional (headless) | No |
+| Hardware necesario | RAM por perfil (~300–500 MB cada uno) | Ninguno |
+| Ideal para | Automatización en tu propio equipo o VPS | Scripts del lado del servidor, sin configuración local |
+
+## Lanzamiento local
+
+El navegador se ejecuta en tu equipo. El SDK descarga automáticamente el binario de Orbita la primera vez que lo usas, lo inicia de forma local y devuelve un endpoint WebSocket al que se conectan Puppeteer o Playwright.

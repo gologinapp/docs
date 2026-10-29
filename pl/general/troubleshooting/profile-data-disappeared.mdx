@@ -1,0 +1,54 @@
+---
+title: "Dane profilu zniknęły"
+description: "Dlaczego dane profilu w Gologin mogą wydawać się niedostępne i jak je odzyskać."
+---
+
+## Dlaczego dane profilu mogą zniknąć
+
+Istnieje kilka powodów, dla których dane profilu w Gologin mogą wydawać się niedostępne. W większości przypadków dane nie zostały trwale utracone.
+
+### Po aktualizacji Orbita
+
+Gdy Orbita (przeglądarka Gologin) otrzymuje aktualizację do nowej wersji głównej, część danych lokalnych może zostać zresetowana. Dotyczy to:
+
+- historii przeglądania
+- danych zapisanych lokalnie w pamięci podręcznej
+- części danych przechowywanych przez poszczególne witryny
+
+<Info>
+Pliki cookie i dane sesji są zachowywane, jeśli profil został zsynchronizowany z serwerami Gologin przed aktualizacją. Przed aktualizacją zawsze upewnij się, że Twoje profile są zsynchronizowane.
+</Info>
+
+### Komunikat „Profile already deleted"
+
+Ten komunikat wprowadza w błąd. W większości przypadków **nie** oznacza on, że profil został faktycznie usunięty.
+
+Komunikat ten zwykle pojawia się, gdy osiągniesz limit uruchomień profili w planie próbnym lub darmowym. Dane Twojego profilu nadal znajdują się na serwerach Gologin.
+
+**Rozwiązanie:** Przejdź na plan płatny lub odnów subskrypcję, aby odzyskać dostęp do swoich profili.
+
+### Przechowywanie danych w planie darmowym
+
+Po wygaśnięciu subskrypcji Gologin przechowuje dane Twoich profili na swoich serwerach przez maksymalnie **180 dni**. Po upływie tego czasu dane są trwale usuwane i nie można ich odzyskać.
+
+<Warning>
+Jeśli Twoja subskrypcja wygasła dawno temu, odnów ją jak najszybciej, aby uniknąć trwałej utraty danych. Profile są usuwane 180 dni po wygaśnięciu subskrypcji.
+</Warning>
+
+### Po imporcie/eksporcie
+
+Podczas eksportowania i ponownego importowania profilu nie wszystkie dane są uwzględniane w eksporcie. Poniższe dane są w eksporcie **zachowywane**:
+
+- pliki cookie
+- ustawienia proxy
+- konfiguracja profilu (fingerprint, strefa czasowa itp.)
+
+Poniższe dane **nie są uwzględniane** w eksporcie:
+
+- historia przeglądania
+- dane Local Storage i IndexedDB
+- zapisane w pamięci podręcznej pliki i obrazy
+
+<Info>
+Jeśli chcesz zachować dane sesji na różnych urządzeniach, zamiast ręcznego eksportu i importu użyj wbudowanej synchronizacji w chmurze Gologin. Synchronizacja w chmurze zachowuje więcej danych profilu niż plik eksportu.
+</Info>

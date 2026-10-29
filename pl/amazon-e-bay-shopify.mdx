@@ -1,0 +1,96 @@
+---
+title: "Amazon, eBay, Shopify"
+---
+
+Platformy e-commerce są najbardziej rygorystyczne, jeśli chodzi o łączenie kont. Amazon, eBay i Shopify prowadzą grafy powiązań między kontami — jeśli dwa konta mają wspólny adres IP, metodę płatności, fingerprint urządzenia lub adres wysyłki, platforma je ze sobą powiąże. Gdy jedno konto zostanie zawieszone, powiązane konta zwykle podzielają jego los.
+
+## Szybka lista kontrolna
+
+- 1 konto sprzedawcy = 1 profil przeglądarki
+- 1 profil = 1 statyczny proxy rezydencyjne lub ISP
+- **Nigdy nie używaj rotujących proxy** — zmiana IP natychmiast łączy konta
+- **Nigdy nie używaj wbudowanych proxy Gologin** — domyślnie są rotujące
+- Unikalna metoda płatności dla każdego konta
+- Unikalny numer telefonu i adres e-mail dla każdego konta
+
+## Krok 1. Skonfiguruj profil Gologin
+
+- **Proxy: **statyczne proxy rezydencyjne lub ISP — jeden dedykowany adres IP na konto, nigdy współdzielony
+- **Fingerprint: **zostaw ustawienia domyślne
+
+## Krok 2. Rozgrzej konto
+
+| **Okres** | **Cel** | **Co zrobić** |
+| :-- | :-- | :-- |
+| Dzień 0 | Konfiguracja | Rejestracja \+ weryfikacja tożsamości |
+| Dni 1–3 | Eksploracja | Przeglądaj narzędzia sprzedawcy, czytaj regulaminy |
+| Dni 4–7 | Niewielka aktywność | Dodaj 5–10 ofert, skonfiguruj wysyłkę |
+| Tydzień 2 | Normalne użytkowanie | Zarządzaj ofertami, odpowiadaj na pytania |
+| Tydzień 3\+ | Skalowanie | Stopniowo zwiększaj liczbę ofert |
+
+## Bezpieczne wzorce aktywności
+
+| Działanie | Zalecane podejście |
+| :-- | :-- |
+| Oferty produktów | Dodawaj stopniowo |
+| Edycje konta | Okazjonalne aktualizacje |
+| Aktywność w panelu | Regularne przeglądanie |
+| Realizacja zamówień | Spójna obsługa |
+
+## Izolacja płatności
+
+To najczęstszy powód, dla którego konta na platformach handlowych zostają połączone i zawieszone razem.
+
+Każde konto potrzebuje:
+
+- Unikalnej karty kredytowej lub debetowej
+- Unikalnego konta PayPal (jeśli jest używane)
+- Unikalnego adresu rozliczeniowego
+
+Rozwiązania, które się sprawdzają: Revolut, Wise, N26 (wiele kart wirtualnych), Privacy.com (USA), przedpłacone karty debetowe.
+
+<Warning>
+  Używanie tej samej karty na kilku kontach sprzedawcy Amazon jest traktowane jako naruszenie Regulaminu. Amazon zawiesi wszystkie powiązane konta i wstrzyma środki na okres do 90 dni.
+</Warning>
+
+## Uwagi dotyczące poszczególnych platform
+
+### Amazon
+
+- Zmiany IP między sesjami uruchamiają automatyczną weryfikację powiązań kont
+- Odwołania są trudne — zapobieganie jest znacznie łatwiejsze niż odzyskiwanie konta
+- Konta firmowe wymagają zweryfikowanych dokumentów podmiotu prawnego
+
+### eBay
+
+- Mniej restrykcyjny niż Amazon w kwestii IP, ale nadal śledzi fingerprint urządzenia
+- Każde konto wymaga oddzielnych danych bankowych dla eBay Managed Payments
+- Liczy się wynik opinii — nowe konta mają niskie zaufanie kupujących
+
+### Shopify
+
+- Gologin jest używany głównie do zarządzania wieloma kontami administratora Shopify lub prowadzenia działalności z różnych lokalizacji
+- Brak wykrywania powiązań między kontami, jak w Amazon/eBay, ale Shopify Payments ma system wykrywania oszustw przy wypłatach
+
+## Częste przyczyny blokad
+
+### Amazon
+
+- Rotujące lub współdzielone adresy IP proxy
+- Ta sama metoda płatności na różnych kontach
+- Ten sam fingerprint urządzenia przy logowaniu na wiele kont sprzedawcy
+- Zawieszenie powiązanego konta (Amazon blokuje konta na zasadzie powiązania)
+
+### eBay
+
+- Ten sam adres IP lub fingerprint co w wcześniej zawieszonym koncie
+- Jednoczesne wystawianie tych samych przedmiotów na wielu kontach
+- Wzorce manipulowania opiniami
+
+## Zobacz także
+
+- [Proxy statyczne a rotujące](https://gologin.com/docs/static-vs-dynamic-proxies)
+- [Czym są proxy Gologin](https://gologin.com/docs/proxy/gologin-proxies/what-are-gologin-proxies) — dlaczego wbudowane proxy nie nadają się do Amazon
+- [Najlepsze proxy dla Twojego przypadku](https://gologin.com/docs/proxy/introduction/best-proxy-for-your-case)
+- [Migracja z innych przeglądarek antydetekcyjnych](https://gologin.com/docs/general/migration-from-other-tools)
+- [Typowe błędy, których należy unikać](https://gologin.com/docs/common-mistakes-to-avoid)

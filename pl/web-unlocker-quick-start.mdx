@@ -1,0 +1,138 @@
+---
+title: "Szybki start"
+---
+
+Ten przewodnik pokazuje, jak pobrać dane z pierwszego adresu URL za pomocą Web Unlocker.
+
+---
+
+## Wymagania wstępne
+
+- Klucz API Web Unlocker (aby go otrzymać, skontaktuj się z **ermakova.t@gologin.com**)
+- Python 3.x, Node.js lub dowolny klient HTTP
+
+---
+
+## Uwierzytelnianie
+
+Każde żądanie wymaga podania klucza API w nagłówku `apikey`:
+
+```
+apikey: YOUR_API_KEY
+```
+
+Bazowy adres URL dla wszystkich żądań API to:
+
+```
+https://parsing.webunlocker.gologin.com/v1
+```
+
+---
+
+## Wyślij pierwsze żądanie
+
+Wyślij żądanie GET, podając docelowy adres URL jako parametr zapytania. W odpowiedzi otrzymasz w pełni wyrenderowany kod HTML strony.
+
+### cURL
+
+```bash
+curl "https://parsing.webunlocker.gologin.com/v1/scrape?url=https%3A%2F%2Fexample.com" \
+  -H "apikey: YOUR_API_KEY"
+```
+
+### Python
+
+```python
+import requests
+
+response = requests.get(
+    "https://parsing.webunlocker.gologin.com/v1/scrape",
+    params={"url": "https://example.com"},
+    headers={"apikey": "YOUR_API_KEY"}
+)
+
+print(response.text)
+```
+
+### JavaScript (Node.js / przeglądarka)
+
+```javascript
+const response = await fetch(
+  "https://parsing.webunlocker.gologin.com/v1/scrape?url=" +
+    encodeURIComponent("https://example.com"),
+  { headers: { apikey: "YOUR_API_KEY" } }
+);
+
+const html = await response.text();
+console.log(html);
+```
+
+---
+
+## Co otrzymasz w odpowiedzi
+
+Treścią odpowiedzi jest surowy, wyrenderowany kod HTML strony — dokładnie ta sama zawartość, którą zobaczyłbyś po otwarciu adresu URL w przeglądarce. Bez opakowania w JSON i bez konieczności parsowania.
+
+```html
+<!DOCTYPE html>
+<html>
+  <head><title>Example Domain</title></head>
+  <body>...</body>
+</html>
+```
+
+---
+
+## Obsługa błędów
+
+Przed przetworzeniem odpowiedzi sprawdź kod statusu HTTP:
+
+| Status | Znaczenie |
+|---|---|
+| `200` | Sukces — treścią odpowiedzi jest kod HTML strony |
+| `401` | Nieprawidłowy lub brakujący klucz API |
+| `422` | Nieprawidłowy lub brakujący parametr URL |
+| `429` | Przekroczono limit żądań |
+| `500` / `503` | Błąd serwera — spróbuj ponownie ze stopniowo wydłużanymi odstępami |
+
+```python
+response = requests.get(
+    "https://parsing.webunlocker.gologin.com/v1/scrape",
+    params={"url": "https://example.com"},
+    headers={"apikey": "YOUR_API_KEY"}
+)
+
+if response.status_code == 200:
+    html = response.text
+else:
+    print(f"Error {response.status_code}: {response.text}")
+```
+
+---
+
+## Szybki start z CLI
+
+Strony możesz też pobierać za pomocą narzędzi CLI Gologin, bez pisania kodu:
+
+### Web Unlocker CLI
+
+```bash
+npm install -g gologin-webunlocker
+
+GOLOGIN_WEBUNLOCKER_API_KEY=wu_... gologin-webunlocker scrape https://example.com
+GOLOGIN_WEBUNLOCKER_API_KEY=wu_... gologin-webunlocker text https://example.com
+GOLOGIN_WEBUNLOCKER_API_KEY=wu_... gologin-webunlocker markdown https://example.com
+```
+
+### Gologin Web Access CLI (wersja zunifikowana)
+
+```bash
+npm install -g gologin-web-access
+
+export GOLOGIN_WEB_UNLOCKER_API_KEY="wu_..."
+gologin-web-access read https://example.com
+gologin-web-access scrape-json https://example.com
+gologin-web-access batch-scrape https://example.com/page/1 https://example.com/page/2 --format text
+```
+
+Więcej informacji znajdziesz w artykułach [Web Unlocker SDK and CLI](/pl/scraping-api-sdk-and-cli) oraz [Web Access CLI](/pl/cli-tools/web-access).

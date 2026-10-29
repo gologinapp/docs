@@ -1,0 +1,51 @@
+---
+title: "Просмотр сессии в реальном времени"
+---
+
+Функция Session Live View позволяет открыть запущенную сессию облачного браузера в обычной вкладке браузера, чтобы убедиться, что сессия активна, и в реальном времени увидеть, что делает профиль.
+
+Облачные сессии можно запускать двумя способами:
+
+- из кода автоматизации (Puppeteer / Playwright);
+- напрямую из интерфейса Gologin (вкладка Cloud Browser).
+
+## Запуск сессии из интерфейса Gologin
+
+1. Откройте **Разделы профилей** в веб-приложении Gologin - [https://app.gologin.com/profileList](https://app.gologin.com/profileList)
+2. Выберите профиль.
+3. Нажмите **Старт**.
+
+Когда сессия запустится, вы можете открыть Live View и наблюдать за работой браузера.
+
+<video src="/videos/0305.mp4" controls={true} />
+
+## Формат URL для Live View
+
+Запущенную сессию можно открыть по URL такого вида:
+
+`https://cloudbrowser.gologin.com/browsers/<profileId>/<sessionId-or-view-token>/`
+
+- `<profileId>` — профиль, использованный для сессии
+- `<sessionId-or-view-token>` — уникальный идентификатор запущенной сессии (ID сессии или токен просмотра)
+
+> Пока сессия активна, относитесь к этому URL как к конфиденциальным данным.
+
+## Когда использовать Live View
+
+- Отладка сценариев автоматизации (переходы, клики, селекторы, тайм-ауты)
+- Проверка того, что облачная сессия действительно запустилась
+- Наблюдение за интерфейсом браузера, когда сайт ведёт себя неожиданно
+- Проверка того, какой профиль используется в запущенной сессии
+
+## Примечания
+
+- Live View доступен только пока сессия запущена.
+- Закрытие соединения автоматизации может завершить сессию (зависит от вашего сценария работы и лимитов тарифа).
+- Для воспроизводимой конфигурации (прокси, фингерпринт и т. д.) настраивайте профиль через REST API:
+  - API профилей: [https://gologin.com/docs/api-reference/profile](https://gologin.com/docs/api-reference/profile)
+  - API прокси: [https://gologin.com/docs/api-reference/proxy](https://gologin.com/docs/api-reference/proxy)
+
+## Дальнейшие шаги
+
+- Cloud Browser → Начало работы: [https://gologin.com/docs/api-reference/cloud-browser/getting-started](https://gologin.com/docs/api-reference/cloud-browser/getting-started)
+- Решение для скрапинга: [https://gologin.com/docs/api-reference/cloud-browser/scraping](https://gologin.com/docs/api-reference/cloud-browser/scraping)

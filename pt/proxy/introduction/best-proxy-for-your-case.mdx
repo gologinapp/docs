@@ -1,0 +1,69 @@
+---
+title: "Melhor proxy para o seu caso"
+---
+
+<Tip>
+  Resumo: use proxies residenciais e móveis para redes sociais e e-commerce.
+</Tip>
+
+Escolher o tipo de proxy certo é fundamental para garantir eficiência, segurança e sucesso nas suas atividades online. Seja para gerenciar contas de redes sociais, coletar dados ou acessar conteúdo com bloqueio geográfico, o tipo de proxy que você usa pode determinar o resultado do seu trabalho. Abaixo, apresentamos os tipos de proxy mais populares para cada caso de uso.
+
+## Tabela de decisão
+
+| **Plataforma / tarefa** | **Tipo de proxy** | **Estático ou rotativo** | **Notas** |
+| :-- | :-- | :-- | :-- |
+| LinkedIn | Residencial ou móvel | **Estático ou rotativo com sessão fixa (sticky)** | Mudanças de IP causam logout imediato da sessão |
+| Facebook / Meta Ads | Residencial ou móvel | **Estático ou rotativo com sessão fixa (sticky)** | É necessário manter a consistência geográfica em contas de anúncios |
+| Instagram | Móvel | **Rotativo** | IPs móveis têm o maior nível de confiança |
+| TikTok (contas novas) | Móvel | **Rotativo** | Plataforma focada em dispositivos móveis, e IPs móveis convertem melhor |
+| Amazon | Residencial ou ISP | **Estático** | IPs rotativos vinculam contas, com risco de banimento imediato |
+| eBay | Residencial ou ISP | **Estático** | Igual à Amazon |
+| Etsy | Residencial | **Estático** |  |
+| PayPal / serviços financeiros | Residencial | **Estático** | Mudança de IP = suspeita de comprometimento da conta |
+| Plataformas de apostas | Móvel | **Estático** | A velocidade é importante, e IPs móveis são considerados confiáveis |
+| Plataformas de criptomoedas / KYC | Residencial | **Estático** | Sistemas de KYC verificam a consistência do IP |
+| Reddit | Residencial | **Estático ou rotativo com sessão fixa (sticky)** | Menos rigoroso que LinkedIn e Facebook |
+| Google Ads | Residencial | **Estático** |  |
+| Web scraping (leve) | Residencial rotativo | **Rotativo** | Um IP diferente por requisição ajuda a evitar bloqueios |
+| Web scraping (pesado) | Datacenter rotativo | **Rotativo** | Mais rápido e mais barato em grande escala |
+| Teste geográfico / QA | Integrado ao Gologin | **Rotativo** | Adequado para verificações pontuais |
+
+## Tipos de proxy explicados de forma simples
+
+**Proxies residenciais** usam endereços IP registrados em residências reais e provedores de internet (ISPs). Os sites confiam mais neles porque parecem conexões de usuários comuns. São mais lentos e mais caros que os proxies de datacenter, mas essenciais para plataformas sensíveis.
+
+**Proxies móveis** encaminham o tráfego pelas redes das operadoras de telefonia móvel (4G/5G). Os IPs móveis são compartilhados por milhares de usuários reais, o que torna muito difícil para as plataformas bloqueá-los sem causar danos colaterais. São ideais para redes sociais e plataformas que têm grande foco em usuários de dispositivos móveis.
+
+**Proxies ISP** ficam hospedados em datacenters, mas são registrados por meio de provedores de internet. Combinam a estabilidade dos proxies de datacenter com um nível de confiança melhor. São uma boa opção para marketplaces de e-commerce.
+
+**Proxies de datacenter** são rápidos e baratos, e ficam hospedados em servidores na nuvem. As plataformas conseguem detectá-los com mais facilidade do que IPs residenciais, mas funcionam bem para tarefas de scraping e testes, em que o nível de confiança é menos crítico.
+
+**Rotativo vs. estático:** um proxy rotativo atribui um novo IP a cada conexão ou em intervalos definidos. Um proxy estático mantém o mesmo endereço IP em todas as sessões. Em qualquer plataforma em que você mantém uma conta logada ao longo do tempo, use sempre proxy estático.
+
+## De quantos proxies eu preciso?
+
+Um proxy por perfil. Nunca compartilhe um proxy entre vários perfis, pois as plataformas vinculam contas que compartilham o mesmo endereço IP.
+
+Se você tem 20 perfis do LinkedIn, precisa de 20 proxies estáticos separados, ou seja, um IP dedicado para cada perfil.
+
+## Proxies integrados do Gologin vs. proxies de terceiros
+
+Os proxies integrados do Gologin são proxies residenciais rotativos incluídos no seu plano. São práticos para testes e tarefas de baixo risco, mas não devem ser usados para o gerenciamento de contas a longo prazo em plataformas sensíveis, como Amazon, LinkedIn ou serviços financeiros.
+
+Para trabalhos mais sérios, use um serviço de proxy de terceiros dedicado, com IPs estáticos.
+
+Veja [Proxies integrados do Gologin — limitações](https://gologin.com/docs/proxy/gologin-proxies/what-are-gologin-proxies#important-gologin-proxies-are-rotating) para uma explicação completa de quando não usar os proxies integrados.
+
+## Provedores recomendados
+
+Veja [Provedores de proxy recomendados](https://gologin.com/best-proxy-server-services/) para uma lista de serviços que os usuários do Gologin costumam usar, organizada por caso de uso.
+
+## Veja também
+
+[Residencial, móvel ou datacenter](https://gologin.com/docs/residential-mobile-or-datacenter)
+
+[Proxies estáticos vs. rotativos](https://gologin.com/docs/static-vs-dynamic-proxies)
+
+[Tráfego de proxy: de quanto eu preciso](https://gologin.com/docs/proxy/gologin-proxies/how-much-proxy-traffic-do-i-need)
+
+[Configuração de proxy e fingerprint por plataforma](https://gologin.com/docs/proxy-and-fingerprint-setup-per-platform)

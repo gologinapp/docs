@@ -1,0 +1,52 @@
+---
+title: "Khôi phục phiên trình duyệt"
+---
+
+Mỗi lần bạn chạy và đóng một hồ sơ Gologin, hệ thống sẽ tự động tạo một **bản chụp phiên (session snapshot)**. Tính năng **Lịch sử hồ sơ** trong Gologin cho phép bạn khôi phục từ tối đa **5 phiên gần nhất**.
+
+Một bản chụp phiên bao gồm:
+
+- Cookie
+- Bộ nhớ phiên
+- Trạng thái đã đăng nhập
+- Token của website
+- Dữ liệu trình duyệt của phiên đó
+
+Khi cần, bạn có thể khôi phục hồ sơ về bất kỳ trạng thái phiên trước đó nào trong số này.
+
+## Cách khôi phục phiên của hồ sơ
+
+Để khôi phục hồ sơ về một trong 5 phiên gần nhất, bạn chỉ cần:
+
+1. Nhấp vào **dấu 3 chấm** trên hồ sơ
+2. Chọn **Lịch sử**
+3. Chọn phiên mong muốn
+4. Nhấp **Khôi phục**
+
+<Frame>
+  ![Khôi phục phiên trong Lịch sử hồ sơ](/images/profile_history_restore_session.gif)
+</Frame>
+
+## Khi nào nên dùng Lịch sử hồ sơ?
+
+Việc khôi phục từ bản chụp phiên có thể hữu ích khi:
+
+1. **Tài khoản bị đăng xuất**\
+   Nếu một website đột ngột đăng xuất bạn, bạn có thể khôi phục về phiên trước đó, khi tài khoản vẫn còn đăng nhập.
+2. **Mất dữ liệu**\
+   Nếu bạn không thấy các tab đã mở gần đây hoặc nghi ngờ lần đồng bộ hồ sơ gần nhất không chính xác do sự cố kết nối mạng.
+3. **Trạng thái website bị lỗi**\
+   Nếu website hoạt động không như bình thường do thay đổi bộ nhớ đệm hoặc do tiện ích mở rộng can thiệp.
+4. **Hồ sơ không hoạt động**\
+   Nếu bạn không thể khởi chạy hồ sơ vì bất kỳ lỗi nào không liên quan đến proxy, ví dụ như phiên trước đó không được đồng bộ đúng cách.
+
+## Thực hành tốt nhất
+
+- **Luôn đóng hồ sơ đúng cách**\
+  Việc tắt đột ngột có thể tạo ra các bản chụp phiên không ổn định.
+- **Không lạm dụng việc khôi phục**\
+  Liên tục chuyển qua lại giữa các phiên có thể trông thiếu tự nhiên.
+- **Giữ proxy nhất quán**\
+  Khôi phục một phiên từ Mỹ trong khi dùng proxy mới ở EU có thể khiến cookie mất hiệu lực.
+- **Dùng như một công cụ phục hồi**\
+  Tính năng này phù hợp nhất để sửa lỗi hoặc khôi phục lại sự ổn định.

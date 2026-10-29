@@ -1,0 +1,215 @@
+---
+title: 'SDK et CLI de Scraping API'
+---
+
+Gologin Web Unlocker est une **API de scraping à point d'accès unique** conçue pour les sites web riches en JavaScript et protégés.
+
+Vous envoyez une URL, vous recevez le HTML/texte de la page rendue, puis vous le traitez dans votre propre pipeline d'extraction.
+
+## Pourquoi l'utiliser comme Scraping API
+
+- Un seul point d'accès pour n'importe quelle URL cible
+- Authentification par clé API, aucune orchestration de navigateur requise
+- Réponse centrée sur le HTML, compatible avec vos parseurs existants
+- Idéal pour l'ETL, la surveillance, l'ingestion par IA et les pipelines de données
+
+## Point d'accès
+
+`GET https://parsing.webunlocker.gologin.com/v1/scrape?url={encoded_url}`
+
+## Authentification
+
+Envoyez votre clé API dans les en-têtes :
+
+```http
+apikey: <API_KEY>
+```
+
+## Modèle de requête
+
+| Nom | Emplacement | Type | Obligatoire | Description |
+|---|---|---|---|---|
+| `url` | query | chaîne de caractères (URL absolue) | oui | URL cible à scraper |
+
+## Démarrage rapide
+
+### cURL
+
+```bash
+curl "https://parsing.webunlocker.gologin.com/v1/scrape?url=https%3A%2F%2Fexample.com" \
+  -H "apikey: YOUR_API_KEY"
+```
+
+### Python
+
+```python
+import requests
+
+response = requests.get(
+    "https://parsing.webunlocker.gologin.com/v1/scrape",
+    params={"url": "https://example.com"},
+    headers={"apikey": "YOUR_API_KEY"}
+)
+
+print(response.status_code)
+print(response.text[:500])
+```
+
+### JavaScript (fetch)
+
+```js
+const response = await fetch(
+  "https://parsing.webunlocker.gologin.com/v1/scrape?url=" +
+    encodeURIComponent("https://example.com"),
+  { headers: { apikey: "YOUR_API_KEY" } }
+);
+
+const html = await response.text();
+console.log(response.status, html.slice(0, 500));
+```
+
+## Comportement de la réponse
+
+Le corps de la réponse actuelle est le **HTML/texte brut rendu**.
+
+- `200` -> succès, le corps contient le HTML/texte de la page
+- `401` / `403` -> clé API invalide ou manquante
+- `422` -> `url` invalide ou manquante
+- `429` -> limite de requêtes atteinte
+- `500+` -> erreur temporaire côté serveur
+
+## Recommandations pour les nouvelles tentatives
+
+Réessayez avec un délai d'attente exponentiel (exponential backoff) en cas de :
+
+- erreurs réseau
+- `408`, `429`, `500`, `502`, `503`, `504`
+
+## Remarque sur le périmètre
+
+Le point d'accès public actuel est centré sur le HTML. Ne supposez pas l'existence d'autres points d'accès backend (par exemple capture d'écran, crawl, recherche ou usage), sauf s'ils sont explicitement documentés et activés pour votre compte.
+
+## SDK Node.js officiel
+
+Installation :
+
+```bash
+npm i gologin-webunlocker
+```
+
+### Démarrage rapide du SDK
+
+```ts
+import { WebUnlocker } from "gologin-webunlocker";
+
+const client = new WebUnlocker({
+  apiKey: process.env.GOLOGIN_WEBUNLOCKER_API_KEY!
+});
+
+const result = await client.scrape("https://example.com");
+console.log(result.status);
+console.log(result.content.slice(0, 500));
+```
+
+### Options du constructeur
+
+```ts
+new WebUnlocker({
+  apiKey: "wu_live_xxx",
+  baseUrl: "https://parsing.webunlocker.gologin.com",
+  timeoutMs: 15000,
+  maxRetries: 2
+});
+```
+
+### Méthodes principales du SDK
+
+- `scrape(url)` -> objet de réponse normalisé
+- `scrapeRaw(url)` -> objet `Response` natif
+- `buildScrapeUrl(url)` -> URL complète de la requête
+
+### Méthodes dérivées côté SDK (à partir du HTML renvoyé)
+
+Il ne s'agit **pas de points d'accès backend distincts** : elles sont dérivées du HTML de l'API au sein du SDK :
+
+- `scrapeText(url)` -> texte brut
+- `scrapeMarkdown(url)` -> markdown
+- `scrapeJSON(url)` -> métadonnées structurées (`title`, `meta`, `links`, `headings`)
+- `batchScrape(urls, { concurrency })` -> utilitaire pour effectuer plusieurs appels de scraping
+
+### Erreurs typées
+
+- `WebUnlockerError`
+- `AuthenticationError`
+- `RateLimitError`
+- `APIError`
+- `TimeoutError`
+- `NetworkError`
+
+Correspondances :
+
+- `401` / `403` -> `AuthenticationError`
+- `429` -> `RateLimitError`
+- `500+` -> `APIError`
+- délai dépassé/abandon -> `TimeoutError`
+- échec de fetch/réseau -> `NetworkError`
+
+## CLI
+
+```bash
+gologin-webunlocker <command> <url> [options]
+```
+
+Commandes :
+
+- `scrape` (HTML/texte brut)
+- `text` (texte dérivé)
+- `markdown` (markdown dérivé)
+- `json` (métadonnées dérivées)
+
+Exemples :
+
+```bash
+gologin-webunlocker scrape https://example.com --api-key wu_live_xxx
+GOLOGIN_WEBUNLOCKER_API_KEY=wu_live_xxx gologin-webunlocker text https://example.com
+GOLOGIN_WEBUNLOCKER_API_KEY=wu_live_xxx gologin-webunlocker json https://example.com
+```
+
+## Cas d'usage courants du scraping
+
+- surveillance des prix et des catalogues
+- enrichissement de leads et d'annuaires
+- pipelines de veille de marché
+- agrégation et indexation de contenu
+- workflows d'ingestion et d'extraction pour LLM
+
+## CLI Gologin Web Access (unifiée)
+
+Pour une CLI plus puissante qui combine Web Unlocker et Cloud Browser dans une seule interface de commandes, utilisez `gologin-web-access` :
+
+```bash
+npm install -g gologin-web-access
+
+export GOLOGIN_WEB_UNLOCKER_API_KEY="wu_..."
+
+# all scraping commands from gologin-webunlocker, plus:
+gologin-web-access batch-scrape url1 url2 url3 --format text --summary
+gologin-web-access search "query" --limit 10
+gologin-web-access map https://example.com --limit 50
+gologin-web-access crawl https://docs.example.com --format markdown --limit 20
+gologin-web-access extract https://example.com --schema ./schema.json
+gologin-web-access change-track https://example.com --format markdown
+
+# plus cloud browser interaction (requires GOLOGIN_TOKEN)
+gologin-web-access open https://example.com
+gologin-web-access snapshot
+gologin-web-access click e3
+```
+
+Consultez la [CLI Gologin Web Access](/fr/cli-tools/web-access) pour la référence complète.
+
+## Documentation associée
+
+- [Qu'est-ce que Web Unlocker](/fr/what-is-web-unlocker)
+- [Démarrage rapide de Web Unlocker](/fr/web-unlocker-quick-start)
+- [Cas d'usage de Web Unlocker](/fr/web-unlocker-use-cases)

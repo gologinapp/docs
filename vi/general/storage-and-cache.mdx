@@ -1,0 +1,33 @@
+---
+title: "Quản lý bộ nhớ và bộ nhớ đệm"
+description: "Cách quản lý bộ nhớ cục bộ, các tệp bộ nhớ đệm và dung lượng ổ đĩa của Gologin"
+---
+
+Gologin lưu trữ dữ liệu trình duyệt cục bộ cho mỗi profile bạn chạy. Theo thời gian, dữ liệu này có thể chiếm nhiều dung lượng ổ đĩa.
+
+## Gologin lưu dữ liệu ở đâu
+
+- **Windows**: `C:\Users\<username>\AppData\Local\Temp\gologin_profile_*`
+- **Mac**: `/tmp/gologin_profile_*`
+- **Linux**: `/tmp/gologin_profile_*`
+
+Các tệp nhị phân của trình duyệt Orbita được lưu riêng và có thể chiếm 500 MB--2 GB cho mỗi phiên bản.
+
+## Xóa các tệp bộ nhớ đệm có an toàn không?
+
+Có, bạn có thể xóa an toàn các thư mục profile tạm thời khi không có profile nào đang chạy. Các thư mục này sẽ được tạo lại khi bạn khởi chạy profile.
+
+**Trước khi xóa:**
+1. Đảm bảo tất cả profile Gologin đã được đóng
+2. Đóng ứng dụng Gologin trên máy tính
+3. Xóa các thư mục có tên khớp với `gologin_profile_*` trong thư mục tạm của bạn
+
+<Warning>
+Không xóa tệp khi các profile đang chạy. Việc này có thể gây ra lỗi "EBUSY: resource busy" trên Windows hoặc làm hỏng các phiên đang hoạt động.
+</Warning>
+
+## Cách giảm dung lượng ổ đĩa đã sử dụng
+
+- Đóng profile khi bạn dùng xong (đừng để chúng chạy qua đêm)
+- Gỡ cài đặt các phiên bản trình duyệt Orbita không dùng đến trong phần cài đặt của Gologin
+- Định kỳ xóa các thư mục profile tạm thời

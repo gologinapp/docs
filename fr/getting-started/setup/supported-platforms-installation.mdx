@@ -1,0 +1,120 @@
+---
+title: "Plateformes prises en charge et installation"
+description: "Configuration système requise et procédure d'installation de Gologin"
+---
+
+Vous pouvez télécharger l'application Gologin pour n'importe quel système pris en charge en utilisant le lien ci-dessous :
+
+👉 [**Télécharger Gologin**](https://gologin.com/download/)
+
+## Configuration matérielle requise
+
+- **RAM :** 4GB minimum
+- **Espace disque libre :** au moins 1 GB
+
+## Systèmes d'exploitation pris en charge
+
+### **Windows**
+
+- Windows 11
+- Windows 10
+- Windows Server 2016
+
+### Mac OS (puces de la série M, Mac Neo et Intel)
+
+- macOS 27 Golden Gate
+- macOS 26 Tahoe
+- macOS 15 Sequoia **(version du navigateur 122 et supérieure)**
+- macOS 14 Sonoma
+- macOS 13 Ventura
+- macOS 12 Monterey
+
+### Linux
+
+- Ubuntu
+- Mint
+
+### Android
+
+- Android 10.0 et supérieur
+- 3\+ GB de RAM
+
+### iOS
+
+- iPhone ou iPad avec iOS 17 et supérieur
+
+## Procédure d'installation
+
+### Windows
+
+1. Téléchargez le programme d'installation de l'application [ici](https://gologin.com/download/)
+2. Ouvrez votre dossier **Téléchargements**
+3. Double-cliquez sur le fichier téléchargé et suivez les instructions d'installation
+
+### Mac OS
+
+1. Téléchargez le programme d'installation de l'application [ici](https://gologin.com/download/)
+2. Ouvrez votre dossier **Téléchargements**
+3. Double-cliquez sur le fichier et suivez les instructions
+
+### Linux, exemple avec Ubuntu
+
+Gologin pour Linux est fourni sous la forme d'un fichier **AppImage**. Il s'agit d'un fichier exécutable autonome qui ne nécessite pas d'installation classique. Vous pouvez toujours accéder à l'application grâce à ce fichier.
+
+1. Téléchargez le fichier AppImage via ce [lien](https://gologin.com/download)
+2. Ouvrez votre dossier **Téléchargements**
+3. Faites un clic droit sur `gologin.tar` \> **Extraire**
+4. Allez dans le dossier **gologin** \> lancez Gologin en double-cliquant dessus
+
+**Si l'application ne s'ouvre pas**
+
+- si votre système reconnaît l'application comme un fichier texte, lancez-la une fois depuis le terminal avec le paramètre --no-sandbox
+  ```bash bash
+  cd ~/Downloads/gologin
+  ./<filename> --no-sandbox
+  ```
+- vous devrez peut-être rendre le fichier exécutable. Collez ce qui suit dans le terminal :
+  ```bash bash
+  cd ~/Downloads/gologin
+  chmod +x <filename>
+  ```
+  remplacez `<filename>` par le nom réel du fichier
+- sur les systèmes récents, le paquet **libfuse2** peut être nécessaire. Collez ce qui suit dans le terminal, puis essayez de relancer l'application.
+  ```bash bash
+    sudo apt install libfuse2
+  ```
+
+**Si les profils ne se lancent pas lorsque vous cliquez sur Exécuter**
+
+- ouvrez le terminal et accédez au dossier du navigateur, par exemple la version Orbita 145
+- définissez de nouvelles autorisations pour **chrome-sandbox**
+  ```bash bash
+  cd ~/.gologin/browser/orbita-browser-145
+  sudo chown root:root chrome-sandbox
+  sudo chmod 4755 chrome-sandbox
+  ```
+
+### Android
+
+Pour utiliser Gologin sur Android, il vous suffit d'installer l'**application Gologin** depuis le **Google Play Store**.
+
+1. Ouvrez le **Google Play Store** sur votre téléphone
+2. Repérez la barre de recherche en haut et saisissez **Gologin** \> **installez l'application**
+
+Une fois l'application installée, vous pouvez l'utiliser immédiatement, le navigateur étant intégré.
+
+## Configurations non prises en charge
+
+Gologin ne prend **pas** en charge les plateformes suivantes :
+
+- Les systèmes 32 bits
+- Windows 7, 8, 8.1, Server 2012 (toutes révisions) ou versions antérieures
+- macOS El Captain, Sierra, High-Sierra, Mojave, Catalina, Big Sur ou versions antérieures
+- Chrome OS (vous pouvez utiliser la version [Gologin web](/fr/gologin-web-overview))
+
+## Voir aussi
+
+- [Liste de vérification pour la première utilisation](https://gologin.com/docs/getting-started/setup/first-time-checklist)
+- [Gologin Web, Chrome OS](https://gologin.com/docs/general/gologin-web-and-mobile)
+- [Concepts clés](https://gologin.com/docs/getting-started/introduction/key-concepts-profiles-fingerprints-proxies)
+- [Mettre à jour l'application Gologin](https://gologin.com/docs/general/updating-the-gologin-app)

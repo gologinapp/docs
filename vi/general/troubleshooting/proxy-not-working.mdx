@@ -1,0 +1,72 @@
+---
+title: "Proxy không hoạt động"
+description: "Hướng dẫn từng bước để chẩn đoán và khắc phục sự cố kết nối proxy trong Gologin."
+---
+
+## Khắc phục sự cố proxy từng bước
+
+Nếu proxy của bạn không hoạt động trong Gologin, hãy làm theo các bước dưới đây theo thứ tự để xác định và giải quyết vấn đề.
+
+### 1. Đọc toàn bộ thông báo lỗi
+
+Di chuột lên biểu tượng báo lỗi (biểu tượng màu đỏ hoặc vàng) bên cạnh trường proxy trong phần cài đặt hồ sơ. Khi bạn di chuột qua, Gologin sẽ hiển thị thông báo lỗi chi tiết hơn, thường chứa thông tin cụ thể về lý do kết nối thất bại.
+
+### 2. Kiểm tra proxy có hoạt động bên ngoài Gologin không
+
+Hãy kiểm tra proxy một cách độc lập để xác nhận proxy vẫn hoạt động:
+
+- Sử dụng một công cụ kiểm tra proxy trực tuyến.
+- Cấu hình proxy trong một trình duyệt thông thường (thông qua tiện ích mở rộng proxy như FoxyProxy) và thử tải một trang web.
+
+Nếu proxy cũng không hoạt động bên ngoài Gologin, vấn đề nằm ở chính proxy -- hãy liên hệ nhà cung cấp proxy của bạn.
+
+### 3. Đổi mạng
+
+Một số mạng chặn lưu lượng proxy. Hãy thử một trong các cách sau:
+
+- Chuyển từ WiFi sang điểm phát sóng di động (hoặc ngược lại).
+- Bật VPN trên thiết bị của bạn trước khi khởi chạy hồ sơ.
+
+Nếu proxy hoạt động trên một mạng khác, nhiều khả năng mạng ban đầu của bạn đang chặn kết nối.
+
+### 4. Thử trên phiên bản web
+
+Hãy thử khởi chạy cùng hồ sơ đó trên [app.gologin.com](https://app.gologin.com) (phiên bản web/đám mây). Nếu hồ sơ hoạt động ở đó nhưng không hoạt động trên ứng dụng máy tính, thì vấn đề nằm ở môi trường cục bộ của bạn chứ không phải ở proxy.
+
+### 5. Cập nhật Gologin
+
+Hãy đảm bảo bạn đang sử dụng phiên bản mới nhất của ứng dụng Gologin trên máy tính. Các phiên bản cũ có thể gặp vấn đề tương thích với một số giao thức hoặc cấu hình proxy. Tải phiên bản mới nhất từ [gologin.com](https://gologin.com).
+
+### 6. Kiểm tra cài đặt DNS với proxy SOCKS
+
+Nếu bạn đã cấu hình DNS tùy chỉnh trong hồ sơ, lưu ý rằng DNS tùy chỉnh chỉ hoạt động với các giao thức proxy **SOCKS4** và **SOCKS5**.
+
+<Warning>
+Cài đặt DNS tùy chỉnh không được hỗ trợ với proxy HTTP hoặc HTTPS. Nếu bạn đang dùng proxy HTTP/HTTPS cùng với DNS tùy chỉnh, hãy xóa cấu hình DNS tùy chỉnh hoặc chuyển sang proxy SOCKS.
+</Warning>
+
+### 7. Proxy hoạt động nhưng vị trí sai
+
+Nếu proxy kết nối thành công nhưng một số trang web (đặc biệt là Google) hiển thị sai vị trí hoặc vị trí thật của bạn:
+
+Điều này xảy ra vì một số trang web sử dụng **Geolocation API** của trình duyệt một cách độc lập với địa chỉ IP của bạn. Geolocation API có thể tiết lộ vị trí thật của bạn ngay cả khi IP hiển thị một vị trí khác.
+
+**Cách khắc phục:** Tắt định vị địa lý trong cài đặt hồ sơ. Trong phần cấu hình hồ sơ, tìm tùy chọn Định vị địa lý và đặt thành **bị chặn** hoặc nhập thủ công tọa độ khớp với vị trí proxy của bạn.
+
+### 8. Proxy tích hợp của Gologin báo lỗi
+
+Nếu bạn đang dùng proxy tích hợp của Gologin và proxy không hoạt động:
+
+- Thử chọn một vị trí proxy khác trong các tùy chọn có sẵn.
+- Kiểm tra xem dung lượng lưu lượng proxy Gologin của bạn đã hết chưa. Bạn có thể xem lưu lượng còn lại trong phần cài đặt tài khoản.
+- Nếu lưu lượng đã hết, hãy nạp thêm hoặc chuyển sang nhà cung cấp proxy bên ngoài.
+
+---
+
+<Warning>
+Nếu không có bước nào ở trên giải quyết được vấn đề, hãy liên hệ bộ phận hỗ trợ và cung cấp các thông tin sau:
+
+- Thông tin proxy của bạn theo định dạng `ip:port:login:password`
+- Ảnh chụp màn hình thông báo lỗi
+- Phiên bản ứng dụng Gologin của bạn (xem tại Cài đặt > Giới thiệu)
+</Warning>

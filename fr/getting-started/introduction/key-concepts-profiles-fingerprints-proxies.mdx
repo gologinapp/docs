@@ -1,0 +1,86 @@
+---
+title: "Concepts clés"
+---
+
+Pour utiliser Gologin efficacement, il est important de comprendre trois concepts fondamentaux qui définissent la manière dont les environnements de navigation sont séparés et protégés.
+
+Ces éléments fonctionnent ensemble pour créer des identités de navigation indépendantes pour chaque compte.
+
+## Profils de navigateur
+
+Un **profil de navigateur** dans Gologin est un environnement de navigation isolé qui simule un appareil distinct.
+
+Chaque profil contient ses propres éléments :
+
+- empreinte de navigateur
+- cookies et données de session
+- stockage local et cache
+- extensions de navigateur
+- connexion par procuration
+
+Comme les profils sont isolés les uns des autres, les sites web les considèrent comme des utilisateurs ou des appareils différents.
+
+Cela vous permet de gérer plusieurs comptes sans que les sessions n'interfèrent entre elles, ce qui devient particulièrement important lorsque vous travaillez avec de nombreux comptes à grande échelle, comme décrit dans <br />[Gérer des comptes existants](https://gologin.com/docs/managing-existing-accounts).
+
+## Empreintes de navigateur
+
+Une **empreinte de navigateur** est un ensemble de paramètres techniques que les sites web utilisent pour identifier un appareil.
+
+Ces paramètres peuvent inclure :
+
+- système d'exploitation
+- version du navigateur
+- résolution d'écran
+- polices installées
+- données graphiques et WebGL
+- paramètres de fuseau horaire et de langue
+
+Gologin génère une empreinte unique pour chaque profil afin que les sites web voient chaque profil comme un appareil différent.
+
+Une empreinte de navigateur détermine la façon dont les sites web identifient votre appareil. Pour comprendre ce mécanisme en détail, consultez <br />[Comment fonctionnent les empreintes de navigateur](https://gologin.com/docs/how-browser-fingerprints-work).
+
+## Procurations
+
+Une **procuration** attribue une adresse IP différente à un profil de navigateur.
+
+Comme les sites web suivent à la fois les empreintes de navigateur et les adresses IP, l'utilisation de procurations permet de séparer les identités réseau entre les profils.
+
+Avec des procurations, chaque profil peut sembler se connecter depuis un emplacement ou un réseau différent.
+
+Utiliser une procuration avec une empreinte de navigateur unique permet de créer une identité de navigation cohérente et indépendante.
+
+Les procurations servent à séparer les comptes au niveau du réseau. Si vous ne savez pas comment elles fonctionnent, commencez par [Qu'est-ce qu'une procuration](https://gologin.com/docs/proxy/introduction/what-is-a-proxy).
+
+Une fois ces éléments compris, l'étape suivante consiste à les appliquer lors de la création de profils. <br />Consultez [Créer des profils](https://gologin.com/docs/browser-profiles/profile-management/creating-and-launching-profiles).
+
+## Le système d'exploitation du profil doit correspondre à celui de votre appareil
+
+Le système d'exploitation défini dans l'empreinte de votre profil doit correspondre à celui de l'appareil que vous utilisez pour ouvrir le profil. Par exemple :
+
+- Ouvrir un profil Windows sur un Mac peut créer des incohérences détectables
+- Des sites comme iphey.com et pixelscan.net signaleront cela comme une incohérence d'empreinte
+- LinkedIn et d'autres plateformes sensibles peuvent vous déconnecter immédiatement
+
+<Warning>
+  Si vous travaillez sur un Mac, créez des profils Mac. Si vous travaillez sur Windows, créez des profils Windows. Une utilisation multiplateforme (création sur un système d'exploitation, ouverture sur un autre) peut compromettre vos comptes.
+</Warning>
+
+## Les paramètres d'empreinte par défaut sont sûrs
+
+Gologin génère automatiquement des paramètres d'empreinte réalistes pour chaque nouveau profil. Vous n'avez pas besoin de personnaliser WebGL, Canvas, Audio ou d'autres paramètres d'empreinte, sauf si vous avez une raison précise de le faire.
+
+## Comment vérifier votre empreinte
+
+Après avoir lancé un profil, rendez-vous sur l'un de ces outils de vérification :
+
+- **iphey.com** -- affiche un score de confiance global et signale les problèmes
+- **pixelscan.net** -- analyse détaillée de l'empreinte
+
+Un résultat « vert » ou « fiable » signifie que votre profil ressemble à un vrai navigateur pour les sites web.
+
+## Voir aussi
+
+- [Démarrage rapide : de zéro à votre premier profil](https://gologin.com/docs/getting-started/introduction/quick-start-from-zero-to-your-first-profile)
+- [Liste de vérification pour la première utilisation](https://gologin.com/docs/getting-started/setup/first-time-checklist)
+- [Qu'est-ce qu'une procuration](https://gologin.com/docs/proxy/introduction/what-is-a-proxy)
+- [Paramètres d'empreinte du profil](https://gologin.com/docs/profile-fingerprint-settings)

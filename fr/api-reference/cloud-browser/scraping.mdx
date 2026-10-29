@@ -1,0 +1,102 @@
+---
+title: "Solution de scraping"
+---
+
+## Présentation
+
+Gologin Cloud Browser peut être utilisé comme navigateur distant géré pour vos workflows de scraping et d'extraction de données. Votre code d'automatisation (Puppeteer) se connecte à une session de navigateur distante via un point de terminaison WebSocket, puis exécute une logique standard de navigation et d'extraction.
+
+Cloud Browser est la couche de connexion et d'exécution ; les paramètres de profil et de proxy sont gérés via l'API REST. Cette configuration peut réduire la charge d'infrastructure et aider à limiter les blocages lors du scraping, mais les résultats dépendent du comportement et des protections du site ciblé.
+
+## Ce que vous obtenez
+
+- Des sessions de navigateur distantes pour les connexions Puppeteer.
+- Le rendu JavaScript pour les pages dynamiques.
+- Une montée en charge sans avoir à gérer votre propre infrastructure de navigateurs.
+- Une configuration des profils et des proxys gérée par API.
+- Un point de terminaison de connexion canonique unique pour démarrer une session.
+
+## Workflow type
+
+1. Générez un token d'API.
+2. Si vous le souhaitez, créez ou configurez un profil (et un proxy) via l'API REST.
+3. Construisez l'URL de connexion avec `token` et, en option, `profile`.
+4. Connectez-vous depuis Puppeteer/Playwright et lancez l'extraction.
+5. Enregistrez les données extraites et fermez la session du navigateur.
+
+## Prérequis
+
+- Créer un token : https://app.gologin.com/personalArea/TokenApi
+- API Profiles (recommandée pour une configuration maîtrisée) : https://gologin.com/docs/api-reference/profile
+- API Proxy : https://gologin.com/docs/api-reference/proxy
+
+## Un point de terminaison de connexion canonique
+
+```text
+https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}
+```
+
+- `token` est obligatoire.
+- `profile` est facultatif.
+- Si `profile` est omis, un nouveau profil est créé pour la session.
+
+## Exemple Puppeteer minimal
+
+```javascript
+const puppeteer = require('puppeteer-core');
+
+(async () => {
+
+
+  const token = 'your_token_here';
+  const profileId = 'your_profile_id'; // Remove this line if you want to create a new profile
+  const cloudBrowserUrl = `https://cloudbrowser.gologin.com/connect?token=${token}${profileId ? `&profile=${profileId}` : ''}`;
+  const browser = await puppeteer.connect({
+  
+    browserWSEndpoint: cloudBrowserUrl,
+    defaultViewport: null
+  
+  });
+
+  const page = await browser.newPage();
+  await page.goto('https://example.com');
+  const title = await page.title();
+  console.log('Page title:', title);
+  await page.screenshot({ path: 'screenshot.png' });
+  await browser.close();
+
+})();
+```
+
+## Étapes suivantes
+
+- Premiers pas avec Cloud Browser : https://gologin.com/docs/api-reference/cloud-browser/getting-started
+- API Profiles : https://gologin.com/docs/api-reference/profile
+- API Proxy : https://gologin.com/docs/api-reference/proxy
+
+## Bonnes pratiques
+
+- Privilégiez les attentes explicites plutôt que les pauses fixes.
+- Mettez en place une logique de nouvelle tentative avec un backoff borné et du jitter.
+- Stockez les données extraites sous forme structurée (URL, champs, horodatage, statut).
+- Configurez le profil et le proxy avant la connexion pour garantir la reproductibilité.
+- Fermez toujours les sessions et gérez le nettoyage en cas d'échec.
+- Adaptez le comportement des requêtes et des sessions aux contraintes de chaque site ciblé.
+
+## Limites et quotas
+
+Consultez les limites et quotas actuels : https://gologin.com/docs/api-reference/limitations/rate-limits
+
+## FAQ
+
+### Ai-je besoin d'un profil ?
+
+Non. Le paramètre `profile` est facultatif. S'il est omis, un nouveau profil est créé pour la session. Utilisez un profil lorsque vous avez besoin d'une configuration maîtrisée et reproductible.
+
+### Où configurer les proxys ?
+
+Configurez les proxys via l'API Proxy (ainsi que les paramètres de profil associés via l'API REST) : https://gologin.com/docs/api-reference/proxy
+
+### Est-ce différent de Cloud Browser ?
+
+Non. Cette page présente l'utilisation de Cloud Browser lui-même pour le scraping et l'extraction de données. Cloud Browser gère la connexion et l'exécution, tandis que les paramètres de profil et de proxy sont gérés via l'API REST.

@@ -1,0 +1,33 @@
+---
+title: "Speicher- und Cache-Verwaltung"
+description: "So verwalten Sie den lokalen Speicher, die Cache-Dateien und den Speicherplatzverbrauch von Gologin"
+---
+
+Gologin speichert Browserdaten lokal für jedes Profil, das Sie starten. Mit der Zeit kann dadurch viel Speicherplatz belegt werden.
+
+## Wo Gologin Daten speichert
+
+- **Windows**: `C:\Users\<username>\AppData\Local\Temp\gologin_profile_*`
+- **Mac**: `/tmp/gologin_profile_*`
+- **Linux**: `/tmp/gologin_profile_*`
+
+Die Orbita-Browserdateien werden separat gespeichert und können pro Version 500 MB bis 2 GB belegen.
+
+## Ist es sicher, Cache-Dateien zu löschen?
+
+Ja, Sie können temporäre Profilordner problemlos löschen, solange keine Profile laufen. Diese Ordner werden beim Start eines Profils neu angelegt.
+
+**Vor dem Löschen:**
+1. Stellen Sie sicher, dass alle Gologin-Profile geschlossen sind.
+2. Schließen Sie die Gologin-Desktop-App.
+3. Löschen Sie in Ihrem temporären Verzeichnis die Ordner, die dem Muster `gologin_profile_*` entsprechen.
+
+<Warning>
+Löschen Sie keine Dateien, während Profile laufen. Das kann unter Windows zu „EBUSY: resource busy“-Fehlern führen oder aktive Sitzungen beschädigen.
+</Warning>
+
+## So reduzieren Sie den Speicherplatzverbrauch
+
+- Schließen Sie Profile, wenn Sie fertig sind (lassen Sie sie nicht über Nacht laufen).
+- Deinstallieren Sie nicht verwendete Orbita-Browserversionen in den Gologin-Einstellungen.
+- Leeren Sie regelmäßig die temporären Profilordner.

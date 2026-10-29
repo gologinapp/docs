@@ -1,0 +1,35 @@
+---
+title: "Instalowanie niestandardowych rozszerzeń"
+---
+
+**Niestandardowe rozszerzenia** pozwalają korzystać z prywatnych, zmodyfikowanych lub tworzonych lokalnie narzędzi w profilach Gologin. W przeciwieństwie do rozszerzeń publicznych, niestandardowe rozszerzenia instaluje się ręcznie za pomocą plików rozszerzenia.
+
+## Sprawdzenie zgodności rozszerzenia
+
+**Gologin nie obsługuje archiwów .crx ani .zip.** Takie pliki można jednak przekonwertować na **rozpakowany folder**, który Gologin obsługuje.
+
+Jeśli masz archiwum **.zip**, wystarczy je rozpakować - powstały folder można dodać jako rozszerzenie niestandardowe.
+
+Jeśli masz plik **.crx**:
+
+1. Zmień nazwę pliku extension.crx na extension.zip
+2. Rozpakuj go za pomocą programu 7-zip lub wbudowanego w system operacyjny narzędzia do rozpakowywania
+
+<Warning>
+  Upewnij się, że rozpakowany folder zawiera plik **manifest.json** oraz pozostałe zasoby rozszerzenia (js, html, ikony itp.). \
+  Jeśli nie możesz dodać rozszerzenia, sprawdź, czy w folderze jest plik manifext.json
+</Warning>
+
+## Instalowanie rozpakowanego rozszerzenia
+
+Gologin obsługuje rozszerzenia w postaci **rozpakowanych folderów**. Aby zainstalować takie rozszerzenie:
+
+1. **Kliknij 3 kropki przy profilu**, na którym chcesz zainstalować rozszerzenie, a następnie kliknij **Settings**
+2. Przejdź do zakładki **Extensions** i kliknij **Add extensions**
+3. Kliknij przycisk **Upload custom extension**
+4. Otwórz folder zawierający rozszerzenie i kliknij **Select folder**
+5. Kliknij **Save**, aby zastosować zmiany
+
+<Frame>
+  ![Instalowanie niestandardowego rozszerzenia](/images/installing_custom_extension.gif)
+</Frame>

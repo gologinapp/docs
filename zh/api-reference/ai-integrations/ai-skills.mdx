@@ -1,0 +1,213 @@
+---
+title: "Claude Code 的 AI Skills"
+description: "即插即用的 Skills，通过 Gologin 为 Claude Code 智能体提供网页抓取、浏览器自动化和本地 Orbita 能力"
+---
+
+Gologin AI Skills 是适用于 [Claude Code](https://claude.ai/code) 的即插即用扩展，可为 AI 智能体提供网页抓取和浏览器自动化能力。每个 Skill 都封装了一个 Gologin CLI 工具，并将其作为一组可供智能体调用的函数对外提供。
+
+```
+agent → skill → Gologin CLI → Web Unlocker API / Cloud Browser / Local Orbita
+```
+
+---
+
+## 可用的 Skills
+
+<CardGroup cols={2}>
+  <Card title="Web Access Skill" icon="globe" href="https://github.com/GologinLabs/gologin-web-access-skill">
+    默认 Skill，适用于已知网站的读取、提取、爬取、监控，以及先抓取再浏览的混合任务。
+  </Card>
+  <Card title="Agent Browser Skill" icon="browser" href="https://github.com/GologinLabs/gologin-agent-browser-skill">
+    仅限浏览器的 Skill，支持实时云端会话、基于引用（ref）的交互、截图和 PDF。
+  </Card>
+  <Card title="Scraping Skill" icon="code" href="https://github.com/GologinLabs/gologin-scraping-skill">
+    仅限抓取的 Skill，封装了 Web Unlocker SDK，体积最小。
+  </Card>
+  <Card title="Local Agent Browser Skill" icon="desktop" href="https://github.com/GologinLabs/gologin-local-agent-browser-skill">
+    本地 Orbita 自动化，支持持久化配置文件、运行手册（runbook）和批量执行。
+  </Card>
+</CardGroup>
+
+---
+
+## 安装
+
+```bash
+# install any skill
+npx skills add GologinLabs/gologin-web-access-skill
+npx skills add GologinLabs/gologin-agent-browser-skill
+npx skills add GologinLabs/gologin-scraping-skill
+npx skills add GologinLabs/gologin-local-agent-browser-skill
+```
+
+每个 Skill 都需要先安装其对应的底层 CLI：
+
+| Skill | 所需 CLI |
+|---|---|
+| Web Access Skill | `npm i -g gologin-web-access` |
+| Agent Browser Skill | `npm i -g gologin-agent-browser-cli` |
+| Scraping Skill | `npm i gologin-webunlocker` |
+| Local Agent Browser Skill | `npm i -g gologin-local-agent-browser-cli` |
+
+---
+
+## 如何选择 Skill
+
+| 任务 | Skill |
+|---|---|
+| 读取文档页面、文章或已知 URL | Web Access |
+| 抓取并提取结构化数据 | Web Access |
+| 批量抓取多个 URL | Web Access |
+| 爬取网站、映射 URL | Web Access |
+| 监控页面变化 | Web Access |
+| 先读取页面，再在浏览器中交互 | Web Access（混合模式） |
+| 打开实时云端浏览器会话 | Agent Browser |
+| 登录后台并截图 | Agent Browser |
+| 填写表单、完成点击流程 | Agent Browser |
+| 仅需抓取、无需浏览器的 Node.js 应用 | Scraping |
+| 预热本地配置文件 | Local Agent Browser |
+| 使用持久化 Cookie 的账号登录流程 | Local Agent Browser |
+| 在本地 Orbita 中执行社交媒体/电商平台操作 | Local Agent Browser |
+| 对多个本地配置文件批量执行运行手册 | Local Agent Browser |
+
+---
+
+## Web Access Skill
+
+**安装：** `npx skills add GologinLabs/gologin-web-access-skill`
+
+这是默认且用途最广的 Skill，底层调用 `gologin-web-access` CLI。
+
+**抓取工具：** `scrape_url`, `read_page`, `scrape_markdown`, `scrape_text`, `scrape_json`, `batch_scrape`, `batch_extract`, `search_web`, `map_site`, `crawl_site`, `crawl_site_async`, `extract_structured`, `track_changes`, `batch_track_changes`, `parse_document`
+
+**浏览器工具：** `browser_open`, `browser_search`, `browser_snapshot`, `browser_click`, `browser_type`, `browser_screenshot`, `browser_close`, `browser_sessions`, `browser_current`
+
+**内置工作流：** browser-ref-loop, hybrid-read-then-interact, search-discover-and-scrape, lead-enrichment, competitive-monitoring, docs-ingestion, geo-testing, login-and-navigate-dashboard
+
+完整命令详情请参阅 [Web Access CLI 参考](/zh/cli-tools/web-access)。
+
+---
+
+## Agent Browser Skill
+
+**安装：** `npx skills add GologinLabs/gologin-agent-browser-skill`
+
+仅限浏览器的 Skill，用于实时云端会话。适用于只需交互式浏览、无需抓取的场景。
+
+**功能：** `doctor`, `open`, `sessions`, `current`, `snapshot`, `click`, `type`, `fill`, `find`, `get`, `tabs`, `tabopen`, `tabfocus`, `tabclose`, `cookies`, `cookies-import`, `storage-export`, `storage-import`, `eval`, `back`, `forward`, `reload`, `upload`, `screenshot`, `pdf`
+
+完整命令详情请参阅 [Agent Browser CLI 参考](/zh/cli-tools/agent-browser)。
+
+---
+
+## Scraping Skill
+
+**安装：** `npx skills add GologinLabs/gologin-scraping-skill`
+
+体积最小的 Skill，仅通过 Web Unlocker SDK 进行抓取，无需浏览器会话，也无需守护进程。
+
+**功能：** 原始 HTML（`scrape`）、文本（`text`）、Markdown（`markdown`）、结构化元数据（`json`）。SDK 方法：`scrapeRaw()`、`scrape()`、`scrapeText()`、`scrapeMarkdown()`、`scrapeJSON()`、`batchScrape()`。
+
+当任务仅涉及抓取，并且希望依赖项尽可能少时，请使用此 Skill。
+
+API 详情请参阅 [Web Unlocker SDK 参考](/zh/scraping-api-sdk-and-cli)。
+
+---
+
+## Local Agent Browser Skill
+
+**安装：** `npx skills add GologinLabs/gologin-local-agent-browser-skill`
+
+适用于持久化的本地 Orbita 自动化，包括预热、登录流程以及社交媒体/电商平台操作。
+
+**功能：** 包含全部浏览器交互命令，以及配置文件管理（`profiles`、`profile-create`、`profile-import`、`profile-update`、`profile-sync`、`profile-delete`）、运行手册（`run`、`batch`）、任务（`jobs`、`job`）和诊断（`doctor --use-case --check-proxy`）。
+
+**用例模板：** `linkedin`, `ads`, `smm`, `scraping`, `geo`
+
+完整命令详情请参阅 [Local Agent Browser CLI 参考](/zh/cli-tools/local-agent-browser)。
+
+---
+
+## 你可以让智能体做什么
+
+安装 Skill 后，你可以用自然语言与 Claude Code 对话。下面是各个 Skill 能实现的操作：
+
+### 使用 Web Access Skill
+
+- "读取 competitor.com 的定价页面，并总结各个套餐"
+- "抓取这 15 个 URL，并从每个页面中提取产品名称和价格"
+- "爬取 docs.example.com 上的文档，并为我总结每个章节"
+- "搜索 'best CRM tools 2026'，并抓取前 5 条结果"
+- "检查 competitor.com/pricing 自昨天以来是否有变化"
+- "提取该网站上所有博客文章的标题和 URL"
+- "在浏览器中打开 example.com，使用这些凭据登录，并对仪表盘截图"
+
+### 使用 Agent Browser Skill
+
+- "打开管理后台，进入设置，并对当前配置截图"
+- "登录预发布环境，检查新功能是否已部署"
+- "使用这些测试信息填写 example.com 上的注册表单"
+- "进入报表页面，下载月度导出文件，并对汇总内容截图"
+- "查看 iphey.com 对这个浏览器配置文件显示的结果"
+
+### 使用 Scraping Skill
+
+- "抓取这个 URL，并给我文本内容"
+- "获取这 10 个页面的标题、描述和各级标题"
+- "以 Markdown 格式获取这个页面，方便我进行分析"
+
+### 使用 Local Agent Browser Skill
+
+- "创建一个使用美国代理的新 LinkedIn 配置文件，并对其进行预热"
+- "打开我的 Reddit 账号，浏览信息流后关闭"
+- "以并发数 5 对全部 20 个配置文件运行预热运行手册"
+- "检查我的 Facebook 广告配置文件的代理健康状况"
+- "登录这个电商平台账号，并对卖家后台截图"
+
+---
+
+## 示例工作流
+
+### 竞品调研（Web Access Skill）
+
+1. 智能体搜索竞争对手：`search_web("saas project management tools")`
+2. 智能体映射竞争对手网站：`map_site("https://competitor.com")`
+3. 智能体批量抓取关键页面：`batch_scrape(pricing, features, about)`
+4. 智能体将内容交给 Claude 进行分析和对比
+
+### 账号预热（Local Agent Browser Skill）
+
+1. 智能体创建配置文件：`profile-create "Account 1" --template linkedin`
+2. 智能体运行预热运行手册：`batch ./warmup.json --targets ./profiles.json`
+3. 智能体检查任务结果：`jobs --kind batch --status completed`
+4. 智能体报告哪些配置文件已准备就绪
+
+### 仪表盘监控（Agent Browser Skill）
+
+1. 智能体打开仪表盘：`open https://dashboard.example.com --profile saved_login`
+2. 智能体读取页面：`snapshot`
+3. 智能体导航到指标页面：`click @e5`（报表链接）
+4. 智能体对报表截图：`screenshot ./daily-metrics.png`
+5. 智能体关闭会话：`close`
+6. 智能体根据快照数据总结各项指标
+
+---
+
+## 必要的预检
+
+在执行任何任务之前，Skills 会先对工作进行分类：
+
+1. **是单一已知网站，还是广泛的多来源调研？** — 决定是否需要抓取或搜索
+2. **是只读提取、监控，还是交互式浏览器操作？** — 决定使用抓取还是浏览器
+3. **只需要 Web Unlocker，还是同时需要 Web Unlocker 和 Cloud Browser？** — 决定所需的凭据
+4. **是否涉及地域敏感，或被封锁到需要全程使用 Gologin？** — 决定对代理/配置文件的要求
+
+---
+
+## 相关内容
+
+- [MCP Server](/zh/api-reference/ai-integrations/mcp-server) — 面向 AI 智能体的 Gologin MCP 服务器
+- [Web Access CLI](/zh/cli-tools/web-access) — 底层统一 CLI
+- [Agent Browser CLI](/zh/cli-tools/agent-browser) — 底层云端浏览器 CLI
+- [Local Agent Browser CLI](/zh/cli-tools/local-agent-browser) — 底层本地 Orbita CLI
+- [Web Unlocker SDK](/zh/scraping-api-sdk-and-cli) — 底层 TypeScript SDK

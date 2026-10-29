@@ -1,0 +1,107 @@
+---
+title: 'Chế độ headless'
+---
+
+Trình duyệt headless là trình duyệt web không có giao diện đồ họa người dùng (GUI). Trình duyệt chạy ngầm và được điều khiển bằng mã lập trình hoặc giao diện dòng lệnh. Trình duyệt headless có thể thực hiện mọi thao tác chuẩn của một trình duyệt, như hiển thị trang web, thực thi JavaScript và xử lý cookie, nhưng không hiển thị bất kỳ thành phần trực quan nào.
+
+## Các trường hợp sử dụng phổ biến
+
+- Thu thập dữ liệu web (web scraping) và trích xuất dữ liệu
+- Kiểm thử tự động các ứng dụng web
+- Chụp ảnh màn hình hoặc tạo tệp PDF từ các trang web
+- Giám sát và kiểm thử hiệu năng
+- Tự động hóa các tác vụ web lặp đi lặp lại
+
+## Ưu điểm
+
+- Tiêu tốn ít tài nguyên hơn (không cần kết xuất giao diện đồ họa)
+- Thực thi nhanh hơn so với phiên bản trình duyệt đầy đủ
+- Lý tưởng cho môi trường máy chủ không có màn hình hiển thị
+- Rất phù hợp với quy trình CI/CD và các luồng công việc tự động
+
+Trình duyệt headless thường được dùng trong các công cụ dành cho nhà phát triển, framework kiểm thử và dịch vụ tự động hóa để tương tác với nội dung web bằng lập trình.
+
+# Ví dụ về chế độ headless
+<CodeGroup tag="iphey.com" label="Kiểm tra trạng thái độ tin cậy">
+
+```js Node.js
+// SDK will prepare the browser and will start it on your machine then you can control it with puppeteer
+import { GologinApi } from 'gologin';
+
+const token = process.env.GL_API_TOKEN || 'your dev token here';
+const gologin = GologinApi({
+  token,
+});
+
+async function main() {
+  const { browser } = await gologin.launch({
+    extra_params: ['--headless'],
+    // pass profileId parameter if you want to run particular profile
+    // profileId: 'your profileId here',
+  });
+
+  const page = await browser.newPage();
+
+  await page.goto('https://iphey.com/', { waitUntil: 'networkidle2' });
+  const status = await page.$eval('.trustworthy:not(.hide)',
+    (elt) => elt?.innerText?.trim(),
+  );
+
+  await new Promise((resolve) => setTimeout(resolve, 10000));
+  console.log('status', status);
+
+  return status;
+}
+
+main().catch(console.error)
+  .finally(gologin.exit);
+```
+
+```python Python
+import time
+from gologin import GoLogin
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+
+
+# Initialize GoLogin
+gl = GoLogin({
+	"token": "your dev token",
+  "extra_params": ["--headless"]
+})
+profile = gl.createProfileRandomFingerprint({ "os": "win" })
+profile_id = profile.get('id')
+gl.setProfileId(profile_id)
+# Add proxy to the profile
+gl.addGologinProxyToProfile(profile_id, "us")
+
+# Start Browser and get websocket url
+debugger_address = gl.start()
+
+# Get Chromium version for webdriver
+chromium_version = gl.get_chromium_version()
+
+
+# Install webdriver
+service = Service(ChromeDriverManager(driver_version=chromium_version).install())
+
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_experimental_option("debuggerAddress", debugger_address)
+
+driver = webdriver.Chrome(service=service, options=chrome_options)
+
+# Give command to Selenium to open the page
+driver.get("http://www.python.org")
+
+time.sleep(30)
+driver.quit()
+time.sleep(10)
+
+gl.delete(profile_id)
+
+gl.stop()
+
+```
+
+</CodeGroup>

@@ -1,0 +1,43 @@
+---
+title: "Tổng quan về Xuất & Nhập"
+---
+
+Nhập/xuất CSV là cách đơn giản để quản lý nhiều hồ sơ trình duyệt cùng lúc. Thay vì thiết lập từng thứ theo cách thủ công, bạn có thể dùng tệp CSV để sao chép cấu hình, tạo hồ sơ hàng loạt, cập nhật các cài đặt như proxy và di chuyển các thiết lập giữa các workspace. Tính năng này đặc biệt hữu ích khi bạn làm việc ở quy mô lớn hoặc muốn đảm bảo sự nhất quán giữa các hồ sơ hay giữa các thành viên trong nhóm.
+
+Cần lưu ý rằng tính năng này chỉ áp dụng cho **cấu hình hồ sơ**, không bao gồm dữ liệu duyệt web thực tế. Nghĩa là tên hồ sơ, proxy, thẻ, thư mục và các cài đặt môi trường cơ bản sẽ được đưa vào, còn cookie, phiên làm việc, trạng thái đăng nhập và toàn bộ danh tính dấu vân tay thì không. Mọi hồ sơ được tạo từ tệp CSV sẽ hoạt động như một môi trường hoàn toàn mới, chưa có hoạt động nào trước đó.
+
+### Bạn có thể làm gì với CSV
+
+- Tạo nhiều hồ sơ cùng một lúc
+- Sao chép và tái sử dụng các thiết lập hồ sơ
+- Cập nhật proxy và các cài đặt hàng loạt
+- Giữ cấu hình của nhóm luôn nhất quán
+- Di chuyển các thiết lập giữa các workspace
+
+### Những gì được đưa vào và không được đưa vào
+
+**Được đưa vào:**
+
+- Tên hồ sơ
+- Cài đặt proxy
+- Thư mục và thẻ
+- Các cài đặt môi trường cơ bản
+
+**Không được đưa vào:**
+
+- Cookie
+- Phiên làm việc
+- Trạng thái đăng nhập
+- Toàn bộ danh tính dấu vân tay
+
+### Những điều quan trọng cần ghi nhớ
+
+- Các hồ sơ được tạo qua CSV bắt đầu như **môi trường mới, sạch**
+- Chúng **chưa đăng nhập vào bất kỳ tài khoản nào**
+- Các phiên và hoạt động trước đó **không được giữ lại**
+- Nhập CSV **không phải là phương pháp sao lưu**
+- Định dạng không đúng có thể **làm lỗi quá trình nhập hoặc tạo ra các hồ sơ không hợp lệ**
+
+### Điểm cần nhớ
+
+Nhập/xuất CSV phù hợp nhất để **mở rộng quy mô và quản lý các thiết lập hồ sơ**, không phải để chuyển các hồ sơ, phiên làm việc hoặc danh tính hiện có.

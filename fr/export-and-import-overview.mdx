@@ -1,0 +1,43 @@
+---
+title: "Présentation de l'export et de l'import"
+---
+
+L'import/export CSV est un moyen simple de gérer plusieurs profils de navigateur à la fois. Au lieu de tout configurer manuellement, vous pouvez utiliser un fichier CSV pour copier des configurations, créer des profils en masse, mettre à jour des paramètres comme les proxys et déplacer des configurations d'un espace de travail à un autre. Cette fonctionnalité est particulièrement utile lorsque vous travaillez à grande échelle ou que vous souhaitez garder une cohérence entre les profils ou entre les membres de l'équipe.
+
+Il est important de comprendre que cette fonctionnalité ne concerne que la **configuration des profils**, et non les données de navigation. Ainsi, le nom du profil, les proxys, les tags, les dossiers et les paramètres de base de l'environnement sont inclus, mais pas les cookies, les sessions, l'état de connexion ni l'identité complète du fingerprint. Tout profil créé à partir d'un CSV se comportera comme un nouvel environnement, sans aucune activité préalable.
+
+### Ce que vous pouvez faire avec le CSV
+
+- Créer de nombreux profils en une seule fois
+- Copier et réutiliser des configurations de profils
+- Mettre à jour les proxys et les paramètres en masse
+- Garder des configurations cohérentes au sein de l'équipe
+- Déplacer des configurations d'un espace de travail à un autre
+
+### Ce qui est inclus et ce qui ne l'est pas
+
+**Inclus :**
+
+- Nom du profil
+- Paramètres du proxy
+- Dossiers et tags
+- Paramètres de base de l'environnement
+
+**Non inclus :**
+
+- Cookies
+- Sessions
+- État de connexion
+- Identité complète du fingerprint
+
+### Points importants à retenir
+
+- Les profils créés via CSV démarrent comme des **environnements neufs et vierges**
+- Ils ne sont **connectés à aucun compte**
+- Les sessions et l'activité précédentes **ne sont pas conservées**
+- L'import CSV **n'est pas une méthode de sauvegarde**
+- Un format incorrect peut **faire échouer l'import ou créer des profils non valides**
+
+### À retenir
+
+L'import/export CSV est surtout adapté à la **mise à l'échelle et à la gestion des configurations de profils**, et non au transfert de profils, de sessions ou d'identités existants.

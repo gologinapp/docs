@@ -1,0 +1,63 @@
+---
+title: "添加和管理代理"
+---
+
+在 Gologin 浏览器中连接代理的方法有很多种。本文将从最直观的方式到较为进阶的方式，逐一介绍。
+
+第三方代理服务商通常会提供 **IP、端口、用户名和密码**，作为连接所需的端点信息。您几乎可以在各个代理设置的任意位置粘贴这些凭据，新的代理就会被添加到您的代理列表中。
+
+我们支持以下代理粘贴格式：
+
+```text
+192.168.0.1:8000:login:password
+​﻿http://192.168.0.1:8000:login:password:name
+﻿socks5://login:password@192.168.0.1:8000:name
+﻿socks5://login:password@192.168.0.1:8000[https://change-my-ip.com]:name
+​﻿http://192.168.0.1:8000:login
+​﻿http://192.168.0.1:8000:myproxy:pass[https://change-my-ip.com] 
+​﻿http://192.168.0.1:8000:myproxy:pass[https://change-my-ip.com]:name4
+```
+
+## 最简单的方式
+
+1. 在 **所有简介** 页面中，找到 **位置** 列，点击要添加代理的简介所在行的 **\+** 按钮。
+2. 在打开的窗口中，点击**电脑图标**，然后输入您的 **IP、端口、用户名**和**密码**。
+   - 系统会根据可用性自动选择 HTTP 或 SOCKS 协议，您之后可以自行更改。
+3. 点击 **连接**，代理就已添加到您的简介中了！
+4. Gologin 会立即检测您的代理。如果代理工作正常，您会看到绿色指示灯；如果不正常，则会显示红色指示灯。
+
+<Frame>
+  ![Add Proxy Simple](/images/add_proxy_simple.gif)
+</Frame>
+
+在同一页面中，您可以逐个粘贴代理，也可以批量粘贴。复制多个代理后，一次性将它们全部粘贴到 位置列中。您可以使用系统**快捷键**，也可以点击 **粘贴代理** 按钮。之后，您还可以在各个简介之间重新分配这些新添加的代理。
+
+<Frame>
+  ![Adding Proxy](/images/adding_proxy-1.gif)
+</Frame>
+
+## 添加单个或多个代理的其他方式
+
+### 在“代理”页面
+
+在左侧菜单中进入 **代理** 页面 \> **导入代理** \> 粘贴代理，然后点击 **导入代理**。
+
+<Frame>
+  ![Import Proxies Page](/images/import_proxies_page.gif)
+</Frame>
+
+### 使用批量选择简介
+
+**选择多个浏览器简介** \> 在批量操作栏中点击 **代理人** \> 在新窗口中**输入代理** \> 点击 **更新代理**。
+
+<Frame>
+  ![Bulk Proxy Update](/images/bulk_proxy_update.gif)
+</Frame>
+
+### 在简介设置中
+
+点击**简介上的 3 个点** \> **设置** \> **代理人** \> **您的代理**
+
+<Frame>
+  ![Proxy Profile Settings](/images/proxy_profile_settings.gif)
+</Frame>

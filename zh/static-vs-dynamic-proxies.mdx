@@ -1,0 +1,49 @@
+---
+title: "静态代理与轮换代理"
+---
+
+### 静态代理
+
+静态代理使用固定的 IP 地址，该地址会长期保持不变。
+
+适合需要稳定登录地点的长期账号管理。
+
+### 粘性代理
+
+粘性代理会在有限的会话时间内（通常为 10–30 分钟）保持同一个 IP 地址，之后进行轮换。
+
+适合需要短期会话保持一致的场景，同样也适用于账号管理。
+
+### 轮换代理
+
+轮换代理会自动从代理池中分配新的 IP 地址。
+
+轮换可能发生在：
+
+- 每次请求时
+- 会话结束后
+- 经过设定的时间间隔后
+
+轮换代理通常用于大规模抓取或数据采集。如果能在会话期间保持同一个 IP，一般也可以用于账号管理。
+
+### 不同平台应选择哪种类型？
+
+| 平台 | 推荐的代理类型 | 原因 |
+| --- | --- | --- |
+| LinkedIn | 静态住宅代理或移动代理 | IP 变化会立即触发安全审查 |
+| Facebook / Meta Ads | 静态住宅代理或粘性代理 | 广告账号要求地理位置保持一致 |
+| Amazon / eBay / Etsy | 静态 ISP 代理 | 轮换 IP 会导致账号被关联并触发封号 |
+| TikTok（新账号） | 移动代理 | 移动 IP 的信任度最高，适合注册账号 |
+| 网页抓取 | 轮换住宅代理或数据中心代理 | 速度和规模比一致性更重要 |
+| 博彩平台 | 移动代理 | 信任度最高，这类平台对桌面端指纹的审查十分严格 |
+
+<Warning>
+  为 Amazon 卖家账号使用轮换代理是一个常见错误，会导致账号被封。Amazon 会通过 IP 关联账号——如果你的 IP 不断轮换，多个账号可能会被标记为相互关联。
+</Warning>
+
+另请参阅
+
+- [什么是 Gologin 代理](https://gologin.com/docs/proxy/gologin-proxies/what-are-gologin-proxies) — Gologin 内置代理默认为轮换代理
+- [最适合你的使用场景的代理](https://gologin.com/docs/proxy/introduction/best-proxy-for-your-case)
+- [Amazon, eBay, Shopify](https://gologin.com/docs/amazon-e-bay-shopify) — 电商平台账号需要使用静态代理
+- [LinkedIn](https://gologin.com/docs/linkedin) — LinkedIn 需要使用静态代理

@@ -1,0 +1,96 @@
+---
+title: "Amazon, eBay, Shopify"
+---
+
+E-Commerce-Marktplätze gehen beim Verknüpfen von Konten am konsequentesten vor. Amazon, eBay und Shopify führen jeweils kontoübergreifende Verknüpfungsgraphen: Wenn zwei Konten dieselbe IP-Adresse, dieselbe Zahlungsmethode, denselben Geräte-Fingerprint oder dieselbe Lieferadresse nutzen, stellt die Plattform eine Verbindung zwischen ihnen her. Wird ein Konto gesperrt, folgen die verknüpften Konten in der Regel ebenfalls.
+
+## Kurze Checkliste
+
+- 1 Verkäuferkonto = 1 Browser-Profil
+- 1 Profil = 1 statischer Residential- oder ISP-Proxy
+- **Verwende niemals rotierende Proxys** – IP-Wechsel verknüpfen Konten sofort
+- **Verwende niemals die integrierten Gologin-Proxys** – sie sind standardmäßig rotierend
+- Eine eigene Zahlungsmethode pro Konto
+- Eine eigene Telefonnummer und E-Mail-Adresse pro Konto
+
+## Schritt 1. Gologin-Profil einrichten
+
+- **Proxy: **statischer Residential- oder ISP-Proxy – eine eigene IP-Adresse pro Konto, niemals geteilt
+- **Fingerprint: **Standardeinstellungen beibehalten
+
+## Schritt 2. Konto aufwärmen
+
+| **Zeitraum** | **Fokus** | **Was zu tun ist** |
+| :-- | :-- | :-- |
+| Tag 0 | Einrichtung | Registrierung \+ Identitätsprüfung |
+| Tage 1–3 | Erkunden | Verkäufer-Tools ansehen, Richtlinien lesen |
+| Tage 4–7 | Leichte Aktivität | 5–10 Angebote hinzufügen, Versand einrichten |
+| Woche 2 | Normale Nutzung | Angebote verwalten, Fragen beantworten |
+| Woche 3\+ | Skalieren | Angebotsvolumen schrittweise erhöhen |
+
+## Sichere Aktivitätsmuster
+
+| Aktion | Empfohlenes Vorgehen |
+| :-- | :-- |
+| Produktangebote | Schrittweise hinzufügen |
+| Kontoänderungen | Gelegentliche Aktualisierungen |
+| Dashboard-Aktivität | Regelmäßiges Durchsehen |
+| Bestellabwicklung | Gleichmäßige Bearbeitung |
+
+## Trennung der Zahlungsmethoden
+
+Dies ist der häufigste Grund, warum Marktplatzkonten verknüpft und gemeinsam gesperrt werden.
+
+Jedes Konto benötigt:
+
+- Eine eigene Kredit- oder Debitkarte
+- Ein eigenes PayPal-Konto (falls verwendet)
+- Eine eigene Rechnungsadresse
+
+Gut geeignete Optionen: Revolut, Wise, N26 (mehrere virtuelle Karten), Privacy.com (USA), Prepaid-Debitkarten.
+
+<Warning>
+  Die gemeinsame Nutzung einer Karte für mehrere Amazon-Verkäuferkonten gilt als Verstoß gegen die Nutzungsbedingungen. Amazon sperrt dann alle verknüpften Konten und hält Guthaben bis zu 90 Tage lang zurück.
+</Warning>
+
+## Hinweise zu den einzelnen Plattformen
+
+### Amazon
+
+- IP-Wechsel zwischen Sitzungen lösen eine automatische Prüfung auf Kontoverknüpfungen aus
+- Einsprüche sind schwierig – Vorbeugung ist deutlich einfacher als Wiederherstellung
+- Geschäftskonten erfordern verifizierte Dokumente zur juristischen Person
+
+### eBay
+
+- Bei der IP weniger streng als Amazon, erfasst aber ebenfalls den Geräte-Fingerprint
+- Jedes Konto benötigt eigene Bankdaten für eBay Managed Payments
+- Die Bewertung ist wichtig – neue Konten genießen bei Käufern wenig Vertrauen
+
+### Shopify
+
+- Gologin wird hauptsächlich verwendet, um mehrere Shopify-Admin-Konten zu verwalten oder Aktivitäten von verschiedenen Standorten aus durchzuführen
+- Es gibt keine kontoübergreifende Erkennung wie bei Amazon/eBay, aber Shopify Payments verfügt über eine Betrugserkennung bei Auszahlungen
+
+## Häufige Auslöser für Sperrungen
+
+### Amazon
+
+- Rotierende oder gemeinsam genutzte Proxy-IPs
+- Dieselbe Zahlungsmethode für mehrere Konten
+- Derselbe Geräte-Fingerprint bei mehreren Verkäufer-Logins
+- Sperrung eines verwandten Kontos (Amazon sperrt auf Basis von Verknüpfungen)
+
+### eBay
+
+- Dieselbe IP oder derselbe Fingerprint wie bei einem zuvor gesperrten Konto
+- Dieselben Artikel gleichzeitig über mehrere Konten einstellen
+- Muster der Bewertungsmanipulation
+
+## Siehe auch
+
+- [Statische vs. rotierende Proxys](https://gologin.com/docs/static-vs-dynamic-proxies)
+- [Was sind Gologin-Proxys](https://gologin.com/docs/proxy/gologin-proxies/what-are-gologin-proxies) – warum integrierte Proxys für Amazon nicht geeignet sind
+- [Der beste Proxy für deinen Anwendungsfall](https://gologin.com/docs/proxy/introduction/best-proxy-for-your-case)
+- [Wechsel von anderen Anti-Detect-Browsern](https://gologin.com/docs/general/migration-from-other-tools)
+- [Häufige Fehler, die du vermeiden solltest](https://gologin.com/docs/common-mistakes-to-avoid)

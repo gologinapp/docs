@@ -1,0 +1,41 @@
+---
+title: "Nieprawidłowa lokalizacja proxy na stronie lub w checkerze"
+description: "Gdy proxy pokazuje błędną geolokalizację w przypadku zewnętrznych serwerów proxy"
+---
+
+## **Dlaczego tak się dzieje i jak to działa?**
+
+Różne strony internetowe korzystają z odmiennych baz danych geolokalizacji IP, aby określić kraj, do którego należy dany adres IP. Bazy te nie są ze sobą zsynchronizowane, przez co ten sam adres IP może być rozpoznawany jako należący do kilku różnych lokalizacji.
+
+Kolejnym ważnym czynnikiem jest to, czy adres IP został oznaczony jako należący do Datacenter / VPN / innej usługi.\
+Jeśli adres IP zostanie rozpoznany jako usługa, jego wskaźnik zaufania (trust score) może drastycznie spaść, a strony internetowe będą go częściej oznaczać lub blokować.
+
+Nie zalecamy używania proxy, w przypadku których występują opisane powyżej rozbieżności.
+
+## **Jak sprawdzić proxy?**
+
+1. Sprawdź wychodzący adres IP swojego proxy w tym miejscu – wystarczy najechać kursorem na ikonę strzałek.
+
+   ![image (55).png](/images/image\(55\).png)
+2. W internecie jest więcej narzędzi, ale my zazwyczaj korzystamy z tych dwóch, ponieważ dają spójne wyniki:
+   - Aby sprawdzić geolokalizację IP: [<u>https://www.iplocation.net/ip-lookup</u>](https://www.iplocation.net/ip-lookup)
+
+     ❗Idealnie byłoby, gdyby wszystkie checkery pokazywały ten sam kraj.
+   - Aby sprawdzić, czy adres IP jest powiązany z jakimiś usługami: [<u>https://whatismyipaddress.com/ip/</u>](https://whatismyipaddress.com/ip/)
+
+     ❗Nie powinny być wskazane żadne usługi powiązane z adresem IP.
+
+   Przykłady, jak to ocenić, znajdziesz poniżej:
+
+   ![image.png](/images/image.png)
+
+## **Jak unikać problemów z proxy**
+
+Aby zminimalizować problemy spowodowane nieprawidłową lokalizacją proxy:
+
+- **Korzystaj z renomowanych dostawców proxy** – dobrzy dostawcy dbają o to, by ich adresy IP były poprawnie skategoryzowane i zarejestrowane. Możesz użyć proxy od Gologin lub [<u>proxy, które polecamy</u>](https://gologin.com/proxies/proxy-type/).
+- **Unikaj proxy z centrów danych przy wrażliwych zadaniach** – proxy rezydencjalne lub mobilne mają zazwyczaj wyższy wskaźnik zaufania.
+- **Przetestuj proxy przed użyciem** – sprawdź je w kilku checkerach IP, aby upewnić się, że wyniki są spójne.
+- **W razie potrzeby zmień adres IP** – jeśli dany adres IP został błędnie oznaczony, przełączenie się na inny adres IP może rozwiązać problem.
+
+Zwracając uwagę na te szczegóły, zapewnisz sobie płynniejszą i bardziej niezawodną pracę z Gologin.

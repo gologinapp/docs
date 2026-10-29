@@ -1,0 +1,104 @@
+---
+title: "Quản lý phiên trình duyệt"
+---
+
+## Đóng phiên
+
+Hãy luôn đóng phiên khi tác vụ tự động hóa của bạn hoàn tất để giải phóng tài nguyên đám mây và tránh chạm giới hạn đồng thời.
+
+```javascript Puppeteer
+await browser.close();
+```
+
+```python Playwright
+await browser.close()
+```
+
+## Tái sử dụng một phiên cho nhiều thao tác
+
+Mỗi lần gọi `puppeteer.connect()` hoặc `connect_over_cdp()` sẽ bắt đầu một phiên mới. Nếu bạn chạy nhiều thao tác tuần tự (ví dụ trong một quy trình làm việc của agent), hãy tái sử dụng cùng một kết nối — nếu không, cookie, local storage và trạng thái trang sẽ bị mất giữa các bước.
+
+**Mẫu được khuyến nghị — session singleton:**
+
+```javascript Puppeteer
+// session.js
+const puppeteer = require('puppeteer-core');
+
+let _browser = null;
+let _page = null;
+
+async function getSession(token, profileId) {
+  if (_browser && _browser.isConnected()) {
+    return { browser: _browser, page: _page };
+  }
+
+  const url = `https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}`;
+  _browser = await puppeteer.connect({ browserWSEndpoint: url, defaultViewport: null });
+  const pages = await _browser.pages();
+  _page = pages[0] || await _browser.newPage();
+
+  return { browser: _browser, page: _page };
+}
+
+async function closeSession() {
+  if (_browser) {
+    await _browser.close();
+    _browser = null;
+    _page = null;
+  }
+}
+
+module.exports = { getSession, closeSession };
+```
+
+```python Playwright
+# session.py
+from playwright.async_api import async_playwright, Browser, Page
+
+_browser: Browser | None = None
+_page: Page | None = None
+_playwright = None
+
+async def get_session(token: str, profile_id: str):
+    global _browser, _page, _playwright
+
+    if _browser and _browser.is_connected():
+        return _browser, _page
+
+    url = f'https://cloudbrowser.gologin.com/connect?token={token}&profile={profile_id}'
+    _playwright = await async_playwright().start()
+    _browser = await _playwright.chromium.connect_over_cdp(url)
+    pages = _browser.contexts[0].pages if _browser.contexts else []
+    _page = pages[0] if pages else await _browser.new_page()
+
+    return _browser, _page
+
+async def close_session():
+    global _browser, _page, _playwright
+    if _browser:
+        await _browser.close()
+    if _playwright:
+        await _playwright.stop()
+    _browser = None
+    _page = None
+    _playwright = None
+```
+
+## Xử lý ngắt kết nối
+
+Sự cố mạng hoặc hết thời gian chờ phía đám mây có thể làm mất kết nối. Hãy kiểm tra kết nối trước mỗi thao tác và kết nối lại nếu cần:
+
+```javascript Puppeteer
+if (!browser.isConnected()) {
+  // reconnect
+  const { browser: b, page: p } = await getSession(token, profileId);
+}
+```
+
+## Giới hạn đồng thời
+
+Mỗi phiên đang hoạt động được tính vào giới hạn đồng thời của gói của bạn. Để tránh lỗi:
+- đóng các phiên khi đã dùng xong
+- không kết nối đến cùng một hồ sơ từ nhiều tiến trình cùng lúc
+
+Xem giới hạn tốc độ: https://gologin.com/docs/api-reference/limitations/rate-limits

@@ -1,0 +1,68 @@
+---
+title: "O que é um perfil de navegador"
+---
+
+Um **perfil de navegador** no Gologin é um navegador virtual independente. Ele tem a aparência e o comportamento de um navegador real instalado em um computador real - mas vive dentro do Gologin e pode ser criado, salvo, alternado ou excluído em segundos.
+
+Cada perfil tem seus próprios:
+
+- [Fingerprint](/pt/how-browser-fingerprints-work) de navegador exclusivo (veja mais sobre isso abaixo)
+- Cookies e armazenamento local
+- Histórico de navegação
+- Senhas e extensões salvas
+- Conexão de proxy
+
+Quando você abre um perfil, os sites o veem como uma pessoa totalmente diferente, acessando de outro dispositivo. Quando você o fecha, tudo é salvo exatamente como você deixou.
+
+## Por que isso importa? Entendendo os fingerprints de navegador
+
+Antes de nos aprofundarmos nos perfis, é preciso entender um conceito: o **fingerprint do navegador**.
+
+Toda vez que você visita um site, seu navegador envia discretamente dezenas de sinais técnicos sobre o seu dispositivo e a sua configuração. Por exemplo:
+
+- Qual navegador você está usando e qual é a versão dele
+- Seu sistema operacional
+- Resolução da tela
+- As fontes instaladas no seu computador
+- Seu fuso horário e idioma
+- Como a sua placa de vídeo renderiza imagens
+- Se você está usando uma tela sensível ao toque
+
+Os sites coletam todos esses sinais e os combinam em um "fingerprint" único que identifica você — mesmo que você limpe os cookies, use uma VPN ou abra uma janela anônima.
+
+<Note>
+  O modo anônimo oculta seu histórico de navegação de outras pessoas que usam o mesmo computador. Ele **não** oculta o fingerprint do seu navegador dos sites. Cada janela anônima continua parecendo exatamente o seu navegador comum para o mundo externo.
+</Note>
+
+É por isso que simplesmente usar várias contas em abas diferentes não funciona. Todas essas abas compartilham o mesmo fingerprint, e os sites conseguem perceber que todas pertencem à mesma pessoa.
+
+## Como um perfil do Gologin resolve isso
+
+Quando você cria um perfil de navegador no Gologin, o app constrói do zero uma identidade de navegador completa, falsa porém convincente.
+
+O Gologin gera valores realistas para cada parâmetro do fingerprint - um tamanho de tela plausível, um conjunto de fontes crível, um fuso horário coerente, uma string de user agent compatível, e assim por diante. Todos esses valores ficam armazenados dentro do perfil e são apresentados a qualquer site que você visitar enquanto o usa.
+
+## Como os perfis são armazenados
+
+O Gologin armazena seus perfis na nuvem. Isso significa que:
+
+- Você pode abrir qualquer perfil em qualquer computador que tenha o Gologin instalado
+- Os perfis continuam disponíveis mesmo que sua máquina local falhe ou seja substituída
+- Você pode compartilhar perfis com colegas de equipe, que poderão usar a mesma sessão salva sem precisar fazer login novamente
+
+## A diferença entre um perfil e uma janela anônima
+
+|  | Janela anônima | Perfil do Gologin |
+| --- | --- | --- |
+| Oculta o histórico de navegação localmente | ✅ | ✅ |
+| Limpa os cookies ao fechar | ✅ | ❌ (os cookies são salvos) |
+| Altera o fingerprint do seu navegador | ❌ | ✅ |
+| Altera seu endereço IP | ❌ | ✅ (com proxy) |
+| Pode ser salvo e reaberto | ❌ | ✅ |
+| Parece ser um dispositivo diferente | ❌ | ✅ |
+
+O modo anônimo é uma ferramenta de privacidade para o seu dispositivo local. Um perfil do Gologin é uma substituição completa de identidade para a internet.
+
+## Resumo
+
+Um perfil de navegador no Gologin é um navegador virtual salvo, com seu próprio fingerprint, cookies e proxy. Ao abri-lo, você parece ser uma pessoa totalmente diferente, usando outro dispositivo, para qualquer site que visitar. Ao fechá-lo, sua sessão é salva para que você possa voltar a ela quando quiser. Isso permite gerenciar várias identidades online separadas a partir de um único computador - de forma limpa, segura e sem que as contas sejam vinculadas entre si ou a você.

@@ -1,0 +1,157 @@
+---
+title: "LinkedIn"
+---
+
+Un guide pratique pour gérer des comptes LinkedIn avec Gologin : génération de leads, prospection, élevage de comptes et accès d'équipe.
+
+LinkedIn est l'une des plateformes les plus sensibles en matière de sécurité dans l'écosystème Gologin. Elle surveille les schémas de connexion, la cohérence des adresses IP et les empreintes d'appareil plus agressivement que la plupart des réseaux sociaux. Les comptes qui présentent des signaux suspects sont rapidement restreints, parfois sans avertissement.
+
+## Liste de vérification rapide
+
+Avant de commencer :
+
+- 1 compte = 1 profil de navigateur
+- 1 profil = 1 proxy résidentiel statique ou mobile
+- Ne changez jamais le proxy d'un profil déjà utilisé
+- Choisissez pour le profil le même OS que celui de votre appareil
+- N'ouvrez pas le même profil sur deux appareils en même temps
+
+## Étape 1. Choisir le bon proxy
+
+LinkedIn est très sensible aux changements d'IP. Utilisez un proxy résidentiel statique ou un proxy mobile statique : une seule IP dédiée, qui reste la même d'une session à l'autre.
+
+<Warning>
+  N'utilisez pas de proxys rotatifs, de proxys de datacenter ni les proxys intégrés de Gologin pour les comptes LinkedIn auxquels vous tenez. Une IP qui change d'une session à l'autre déclenche immédiatement un contrôle de sécurité et entraîne souvent une déconnexion de la session.
+</Warning>
+
+Si vous et votre collègue êtes dans la même ville, vous pouvez utiliser un proxy situé dans le même pays ou la même ville. Si votre équipe est répartie dans plusieurs lieux, chaque personne doit utiliser un proxy correspondant à la région géographique du compte LinkedIn, et non à l'endroit où elle se trouve physiquement.
+
+Types de proxy recommandés pour LinkedIn :
+
+- Résidentiel statique (idéal pour la gestion de comptes sur le long terme)
+- Mobile (adapté à la création de nouveaux comptes et à leur période de chauffe)
+- Proxys ISP (stables, niveau de confiance correct)
+
+Consultez les [fournisseurs de proxy recommandés](https://gologin.com/best-proxy-server-services/) pour découvrir des services précis.
+
+## Étape 2. Configurer votre profil Gologin
+
+Créez un nouveau profil pour chaque compte LinkedIn.
+
+Paramètres recommandés :
+
+- **OS** : choisissez le même que votre appareil (Windows si vous êtes sous Windows, Mac si vous êtes sous Mac)
+- **Procuration** : attribuez votre proxy statique avant la première connexion
+- **Empreinte** : laissez les valeurs par défaut. Ne personnalisez pas WebGL, Canvas ou AudioContext sans raison précise
+
+Une fois que vous vous êtes connecté à LinkedIn dans un profil, **ne modifiez ni le proxy ni les paramètres d'empreinte.** LinkedIn enregistre les informations de l'appareil côté serveur. Un changement d'empreinte ressemble à un tout nouvel appareil qui tente d'accéder au compte.
+
+## Étape 3. Chauffer les nouveaux comptes
+
+Les nouveaux comptes LinkedIn qui envoient immédiatement des demandes de connexion ou des messages sont rapidement restreints. LinkedIn s'attend à ce que les nouveaux comptes se comportent comme de vrais utilisateurs : naviguer, lire, se construire progressivement une présence.
+
+Calendrier de chauffe :
+
+| Période | Que faire |
+| :-- | :-- |
+| Jour 0 | Compléter le profil : photo, titre, section À propos, parcours professionnel |
+| Jours 1-7 | Parcourir le fil d'actualité, consulter des profils, suivre quelques entreprises |
+| Jours 8-14 | Aimer et commenter des publications. Pas encore de prospection |
+| Semaine 3 | Envoyer 5 à 10 demandes de connexion à des personnes que vous « connaissez » |
+| Semaine 4\+ | Commencer une prospection progressive. Augmenter les limites lentement |
+
+Niveaux d'activité sûrs
+
+| **Action** | **Niveau recommandé** |
+| :-- | :-- |
+| Mentions J'aime / votes | 10 à 20 / jour |
+| Commentaires | 2 à 3 / jour |
+| Publications / réponses | Occasionnel |
+| Adhésions à des communautés | Progressif |
+
+Il s'agit d'estimations prudentes. Les limites réelles de LinkedIn varient selon l'ancienneté du compte, son historique d'activité et le type d'abonnement.
+
+## Étape 4. Éviter les bannissements courants
+
+Ce qui déclenche immédiatement des restrictions LinkedIn :
+
+- Se connecter depuis une nouvelle IP alors que le compte était déjà actif (utilisez des proxys statiques)
+- Ouvrir le même profil sur deux appareils en même temps
+- Envoyer des messages identiques à de nombreuses personnes en peu de temps
+- Créer plusieurs comptes le même jour avec le même schéma de configuration de profil
+- Utiliser des outils d'automatisation qui ne maintiennent pas une session cohérente (voir la section sur l'automatisation ci-dessous)
+
+Ce qui déclenche des restrictions progressivement :
+
+- Un volume élevé de demandes de connexion avec un faible taux d'acceptation
+- De nombreuses consultations de profils sans interaction
+- La publication du même contenu sur plusieurs comptes
+- Des comptes inactifs pendant des semaines, suivis d'une prospection massive soudaine
+
+## Étape 5. Partager l'accès avec votre équipe
+
+Pour permettre à un membre de votre équipe d'accéder à un compte LinkedIn dans Gologin :
+
+1. Partagez le profil avec lui grâce au **Partage de profil** (il a besoin d'un compte Gologin gratuit)
+2. Attribuez le rôle **Peut exécuter** s'il a seulement besoin d'ouvrir le profil et d'y travailler
+3. Attribuez **Peut éditer** s'il doit aussi modifier les paramètres
+
+<Warning>
+  Une seule personne à la fois doit travailler dans un profil LinkedIn. LinkedIn détecte les sessions simultanées depuis des lieux différents et déconnectera les deux sessions ou déclenchera un contrôle de sécurité.
+</Warning>
+
+Consultez [Partage de profils](https://gologin.com/docs/general/team-collaboration/sharing-profiles) pour des instructions pas à pas.
+
+## Outils d'automatisation
+
+Gologin est compatible avec les outils d'automatisation LinkedIn courants. L'essentiel est que l'automatisation s'exécute dans le profil Gologin, et non comme une extension de navigateur distincte dans une fenêtre Chrome classique.
+
+Approche compatible :
+
+- Exécuter les outils d'automatisation sous forme d'extensions Chrome installées dans le profil Gologin
+- Utiliser l'API de Gologin pour lancer le profil, puis connecter l'automatisation à la session de navigateur en cours
+
+Approche incompatible :
+
+- Exécuter l'automatisation dans une fenêtre Chrome classique tout en utilisant Gologin (les sessions sont distinctes et peuvent entrer en conflit)
+- Utiliser des outils d'automatisation qui ouvrent leur propre navigateur en dehors de Gologin
+
+L'automatisation doit toujours respecter les limites quotidiennes de LinkedIn. Une automatisation à fort volume sans période de chauffe est le moyen le plus rapide de voir son compte restreint.
+
+## Migrer des profils depuis un autre navigateur antidetect
+
+Si vous venez de Dolphin Anty, Multilogin ou d'un autre navigateur antidetect, les données du profil de navigateur (cookies, sessions, stockage local) peuvent être exportées puis importées dans Gologin.
+
+Étapes :
+
+1. Exportez les cookies depuis votre navigateur antidetect actuel (la plupart prennent en charge l'export JSON)
+2. Dans Gologin, ouvrez le profil cible et accédez à **Cookies**
+3. Importez le fichier de cookies
+
+Cela préserve votre session LinkedIn, vous n'avez donc pas besoin de vous reconnecter. L'empreinte sera différente (Gologin génère la sienne), mais tant que l'IP du proxy reste la même, LinkedIn acceptera généralement la session comme provenant du même appareil.
+
+## Pourquoi LinkedIn déconnecte les sessions
+
+Les déconnexions de session LinkedIn sont presque toujours causées par l'une de ces situations :
+
+- L'IP du proxy a changé : même un petit changement d'IP déclenche un contrôle de sécurité
+- Le profil a été ouvert sur un OS différent : incohérence de l'empreinte
+- Le profil a été ouvert sur deux appareils à la fois : session simultanée détectée
+- Une longue inactivité suivie d'une activité soudaine : cela ressemble à une prise de contrôle du compte
+- Automatisation détectée : schémas d'actions inhabituels à une vitesse non humaine
+
+Si vous êtes déconnecté fréquemment, vérifiez d'abord votre proxy : la différence entre statique et rotatif est la cause la plus courante.
+
+## Voir aussi
+
+[Proxys statiques et rotatifs](https://gologin.com/docs/static-vs-dynamic-proxies)
+
+[Le meilleur proxy pour votre cas](https://gologin.com/docs/proxy/introduction/best-proxy-for-your-case)
+
+[Ajouter et gérer des proxys](https://gologin.com/docs/proxy/proxy-management/adding-proxies)
+
+[Partager des profils avec votre équipe](https://gologin.com/docs/general/team-collaboration/sharing-profiles)
+
+[Erreurs courantes à éviter](https://gologin.com/docs/common-mistakes-to-avoid)
+
+[Maintenir le score de confiance](https://gologin.com/docs/maintaining-trust-score)

@@ -1,0 +1,68 @@
+---
+title: "Qué es un perfil de navegador"
+---
+
+Un **perfil de navegador** en Gologin es un navegador virtual independiente. Se ve y se comporta exactamente como un navegador real instalado en un ordenador real, pero vive dentro de Gologin y se puede crear, guardar, cambiar o eliminar en cuestión de segundos.
+
+Cada perfil tiene su propio:
+
+- [Huella digital](/es/how-browser-fingerprints-work) del navegador única (más sobre esto a continuación)
+- Cookies y almacenamiento local
+- Historial de navegación
+- Contraseñas guardadas y extensiones
+- Conexión proxy
+
+Cuando abres un perfil, los sitios web lo ven como una persona completamente distinta que los visita desde otro dispositivo. Cuando lo cierras, todo se guarda exactamente como lo dejaste.
+
+## ¿Por qué es importante? Cómo entender las huellas digitales del navegador
+
+Antes de profundizar en los perfiles, necesitas entender un concepto: la **huella digital del navegador** (*browser fingerprint*).
+
+Cada vez que visitas un sitio web, tu navegador envía de forma silenciosa decenas de señales técnicas sobre tu dispositivo y su configuración. Por ejemplo:
+
+- Qué navegador utilizas y su versión
+- Tu sistema operativo
+- La resolución de pantalla
+- Las fuentes instaladas en tu ordenador
+- Tu zona horaria y tu idioma
+- Cómo tu tarjeta gráfica renderiza las imágenes
+- Si utilizas una pantalla táctil
+
+Los sitios web recopilan todas estas señales y las combinan en una "huella digital" única que te identifica, incluso si borras las cookies, usas una VPN o abres una ventana de incógnito.
+
+<Note>
+  El modo incógnito oculta tu historial de navegación a otras personas que usen el mismo ordenador. **No** oculta la huella digital de tu navegador a los sitios web. Cada ventana de incógnito sigue viéndose, de cara al exterior, exactamente igual que tu navegador habitual.
+</Note>
+
+Por eso, simplemente usar varias cuentas en pestañas distintas no funciona. Todas esas pestañas comparten la misma huella digital y los sitios web pueden saber que pertenecen a la misma persona.
+
+## Cómo lo resuelve un perfil de Gologin
+
+Cuando creas un perfil de navegador en Gologin, la aplicación construye desde cero una identidad de navegador completa, falsa pero creíble.
+
+Gologin genera valores realistas para cada parámetro de la huella digital: un tamaño de pantalla verosímil, un conjunto de fuentes creíble, una zona horaria coherente, una cadena de user agent que concuerda, y así sucesivamente. Todos estos valores se almacenan dentro del perfil y se presentan a cualquier sitio web que visites mientras lo usas.
+
+## Cómo se almacenan los perfiles
+
+Gologin almacena tus perfiles en la nube. Esto significa que:
+
+- Puedes abrir cualquier perfil desde cualquier ordenador en el que esté instalado Gologin
+- Los perfiles se conservan aunque tu equipo local falle o lo sustituyas
+- Puedes compartir perfiles con tus compañeros de equipo, que podrán usar la misma sesión guardada sin necesidad de volver a iniciar sesión
+
+## La diferencia entre un perfil y una ventana de incógnito
+
+|  | Ventana de incógnito | Perfil de Gologin |
+| --- | --- | --- |
+| Oculta el historial de navegación en local | ✅ | ✅ |
+| Borra las cookies al cerrar | ✅ | ❌ (las cookies se guardan) |
+| Cambia la huella digital de tu navegador | ❌ | ✅ |
+| Cambia tu dirección IP | ❌ | ✅ (con proxy) |
+| Se puede guardar y volver a abrir | ❌ | ✅ |
+| Parece un dispositivo distinto | ❌ | ✅ |
+
+El modo incógnito es una herramienta de privacidad para tu dispositivo local. Un perfil de Gologin es una sustitución completa de identidad para internet.
+
+## Resumen
+
+Un perfil de navegador en Gologin es un navegador virtual guardado con su propia huella digital, cookies y proxy. Al abrirlo, para cualquier sitio web que visites pareces una persona completamente distinta en otro dispositivo. Al cerrarlo, tu sesión se guarda para que puedas retomarla en cualquier momento. Esto te permite gestionar varias identidades en línea independientes desde un solo ordenador, de forma limpia y segura, y sin que las cuentas queden vinculadas entre sí ni contigo.

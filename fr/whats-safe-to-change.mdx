@@ -1,0 +1,68 @@
+---
+title: "Ce qu'il est possible de modifier sans risque"
+---
+
+Lorsque vous gérez des comptes avec Gologin, il est important de conserver une empreinte de navigateur cohérente.\
+Les sites web analysent souvent les changements de configuration du navigateur pour détecter une activité inhabituelle.
+
+Certains paramètres du profil peuvent être modifiés sans risque à tout moment, tandis que d'autres doivent rester stables dès qu'un compte a commencé à utiliser le profil.
+
+## Modifications sans risque
+
+Les paramètres suivants peuvent généralement être modifiés sans affecter l'empreinte du navigateur ni la fiabilité du compte :
+
+- nom du profil
+- notes
+- dossiers et tags
+- extensions
+- identifiants du proxy (si l'emplacement du proxy reste cohérent)
+
+Ces paramètres n'ont aucune incidence sur les principaux signaux d'empreinte utilisés par les sites web.
+
+## Modifications à effectuer avec précaution
+
+Certains paramètres peuvent influencer l'environnement du navigateur et doivent être modifiés avec précaution.
+
+Il s'agit notamment de :
+
+- fuseau horaire
+- paramètres de langue
+- mode WebRTC
+- configuration des périphériques multimédias
+
+Si des modifications sont nécessaires, veillez à les maintenir cohérentes avec l'emplacement du proxy et le type d'appareil.
+
+## À éviter une fois les comptes créés
+
+Certains paramètres constituent le cœur de l'empreinte du navigateur.\
+Les modifier fréquemment peut amener les sites web à considérer le navigateur comme un nouvel appareil.
+
+Évitez de modifier ces paramètres une fois que vous êtes connecté à des comptes dans le profil :
+
+- système d'exploitation
+- user agent
+- résolution d'écran
+- configuration des polices
+- empreinte Canvas
+- empreinte WebGL
+- empreinte AudioContext
+- nombre de threads CPU et quantité de RAM
+
+Des changements importants de ces paramètres peuvent déclencher des vérifications supplémentaires ou des contrôles lors de la connexion.
+
+## Bonnes pratiques
+
+Pour des résultats les plus stables possible :
+
+- créez un profil et configurez son empreinte avant de vous connecter aux comptes
+- conservez des paramètres d'empreinte stables une fois les comptes ajoutés
+- utilisez un proxy dédié pour chaque profil
+- évitez de modifier fréquemment les paramètres liés au matériel
+
+Conserver une empreinte cohérente aide les sites web à reconnaître le profil comme un appareil stable.
+
+Voir aussi
+
+- [Paramètres d'empreinte du profil](https://gologin.com/docs/profile-fingerprint-settings)
+- [Comment fonctionnent les empreintes de navigateur](https://gologin.com/docs/how-browser-fingerprints-work)
+- [Liste de contrôle pour l'hygiène des profils](https://gologin.com/docs/profile-hygiene-checklist)

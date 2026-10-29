@@ -1,0 +1,371 @@
+---
+title: "Gologin Local Agent Browser CLI"
+description: "デーモン、スナップショット、ref、ランブック、バッチ実行に対応した、ローカルの Gologin Orbita プロファイルを実行するためのエージェント向け CLI"
+---
+
+Gologin Local Agent Browser CLI は、永続的なデーモンとコンパクトなシェルインターフェースを通じて、**ローカルの Gologin Orbita プロファイル**を実行するための、エージェント向け CLI です。
+
+クラウド版の [Agent Browser CLI](/ja/cli-tools/agent-browser) と同じ操作モデル(セッションを開く、スナップショットを読み取る、ref を指定して操作する)を採用していますが、Cloud Browser ではなく Gologin Orbita を使って、お使いのマシン上で**ローカルに**実行されます。
+
+---
+
+## ローカルとクラウドの使い分け
+
+| ローカルが向いているケース | クラウドが向いているケース |
+|---|---|
+| プロファイルのウォームアップ | ステートレスな簡易スクレイピング |
+| アカウントのログインフロー | ローカルマシンを利用できない場合 |
+| Cookie の蓄積 | 大規模な並列セッション |
+| 永続プロファイル内でのソーシャル / マーケットプレイス操作 | 単発のブラウザタスク |
+| 同じローカルアイデンティティを再利用するエージェントループ | プロファイルの状態を永続化する必要がない場合 |
+
+---
+
+## インストール
+
+```bash
+npm install -g gologin-local-agent-browser-cli
+```
+
+Node.js 20 以上が必要です。
+
+---
+
+## 認証情報
+
+| 変数 | 必須 | 説明 |
+|---|---|---|
+| `GOLOGIN_TOKEN` | はい(`open` に必要) | Gologin API トークン |
+| `GOLOGIN_PROFILE_ID` | 任意 | デフォルトのプロファイル ID |
+| `GOLOGIN_DAEMON_PORT` | 任意 | デーモンのポート(デフォルト: `44778`) |
+| `GOLOGIN_HEADLESS` | 任意 | `true` または `false`(デフォルト: `false`) |
+| `GOLOGIN_EXECUTABLE_PATH` | 任意 | Orbita 実行ファイルのパス |
+| `GOLOGIN_TMPDIR` | 任意 | Gologin の一時ディレクトリ / プロファイルディレクトリ |
+
+設定ファイル: `~/.gologin-local-agent-browser/config.json`
+
+---
+
+## アーキテクチャ
+
+2 つの部分で構成されています。
+
+1. **`gologin-local-agent-browser` CLI** — コマンドを解析し、デーモンを自動起動します
+2. **永続的なローカルデーモン** — 公式の Gologin SDK を通じてローカルの Orbita を起動し、返された websocket エンドポイントに Playwright の `connectOverCDP` で接続して、アクティブなページをメモリ上に保持します
+
+---
+
+## クイックスタート
+
+```bash
+export GOLOGIN_TOKEN='your_token'
+
+# open a profile locally (visible window)
+gologin-local-agent-browser open https://example.com --profile your_profile_id
+
+# or headless
+gologin-local-agent-browser open https://example.com --profile your_profile_id --headless
+
+# read the page
+gologin-local-agent-browser snapshot
+
+# interact
+gologin-local-agent-browser click @e3
+gologin-local-agent-browser type @e5 "search terms"
+
+# save a screenshot
+gologin-local-agent-browser screenshot ./page.png
+
+# close
+gologin-local-agent-browser close
+```
+
+---
+
+## プロファイル管理
+
+CLI から直接 Gologin プロファイルを管理できます。
+
+| コマンド | 説明 |
+|---|---|
+| `profiles` | プロファイルを一覧表示(ローカル、リモート、またはすべて) |
+| `profile <id>` | プロファイルの詳細を表示 |
+| `profile-create <name>` | 新しいプロファイルを作成 |
+| `profile-import <id>` | リモートプロファイルをローカルにインポート |
+| `profile-update <id>` | プロファイル設定を更新 |
+| `profile-sync <id>` | ローカルプロファイルをクラウドに同期 |
+| `profile-delete <id>` | プロファイルを削除 |
+
+**`profiles` のフィルター:** `--local`, `--remote`, `--all`, `--platform <os>`, `--status <status>`, `--tag <tag>`, `--search <query>`, `--json`
+
+---
+
+## ユースケース別テンプレート
+
+特定のワークフロー向けにあらかじめ設定されたプロファイルを作成できます。
+
+```bash
+gologin-local-agent-browser profile-create "My LinkedIn" --template linkedin
+gologin-local-agent-browser profile-create "Ad Account 1" --template ads
+gologin-local-agent-browser profile-create "Social Manager" --template smm
+```
+
+| テンプレート | 用途 |
+|---|---|
+| `linkedin` | ウォームアップを重視したリードジェネレーション用プロファイル |
+| `ads` / `facebook` | アカウントを強力に分離する広告運用者向けプロファイル |
+| `smm` | Cookie / ストレージの受け渡しを行う、共有アクセス用のソーシャルプロファイル |
+| `scraping` | 自動化向けのローカルプロファイル |
+| `geo` | 地域別テスト用プロファイル |
+
+---
+
+## Doctor 診断
+
+プロファイルの状態、プロキシの接続性、ユースケースへの対応状況を確認します。
+
+```bash
+# basic health check
+gologin-local-agent-browser doctor
+
+# check for a specific use case
+gologin-local-agent-browser doctor --use-case linkedin
+
+# check proxy on a profile
+gologin-local-agent-browser doctor --use-case linkedin --check-proxy your_profile_id
+```
+
+---
+
+## ランブックとバッチ実行
+
+### 単一のランブック
+
+```bash
+gologin-local-agent-browser run ./warmup.json --profile your_profile_id --name reddit-warmup
+```
+
+ランブックの形式:
+
+```json
+{
+  "variables": { "url": "https://www.reddit.com" },
+  "steps": [
+    { "command": "open-visible", "args": ["${url}"] },
+    { "command": "wait", "args": [1500] },
+    { "command": "scroll", "args": ["down", 900] },
+    { "command": "wait", "args": [1000] },
+    { "command": "scroll", "args": ["down", 900] },
+    { "command": "close" }
+  ]
+}
+```
+
+### バッチ実行
+
+複数のプロファイルに対して、1 つのランブックを並列で実行します。
+
+```bash
+gologin-local-agent-browser batch ./warmup.json \
+  --targets ./targets.json \
+  --concurrency 5 \
+  --name short-warmup
+```
+
+---
+
+## ジョブと履歴
+
+ランブックとバッチの実行状況を追跡できます。
+
+```bash
+# list all jobs
+gologin-local-agent-browser jobs
+
+# filter by kind and status
+gologin-local-agent-browser jobs --kind batch --status failed
+
+# get details for a specific job
+gologin-local-agent-browser job job-20260311123000-ab12cd34
+```
+
+---
+
+## 表示の制御
+
+| フラグ | 動作 |
+|---|---|
+| `--visible` / `--headed` | ウィンドウを表示した状態で Orbita を起動 |
+| `--background` / `--headless` | ウィンドウを表示せずに実行 |
+| デフォルト | 環境変数 `GOLOGIN_HEADLESS` に従い、未設定の場合は表示モードで起動 |
+
+エイリアス: `open-visible` = `open --visible`、`open-background` = `open --background`
+
+---
+
+## ユースケースと例
+
+### 新規アカウントのウォームアップ
+
+新しいブラウザプロファイルは「コールド」な状態で、Cookie も閲覧履歴も保存済みセッションもありません。Facebook、Google、LinkedIn などのサイトは、こうしたコールドなプロファイルを警戒します。重要な操作を行う前に、自然にブラウジングしてプロファイルをウォームアップしましょう。
+
+```json
+{
+  "variables": { "url": "https://www.google.com" },
+  "steps": [
+    { "command": "open-visible", "args": ["${url}"] },
+    { "command": "wait", "args": [2000] },
+    { "command": "scroll", "args": ["down", 500] },
+    { "command": "wait", "args": [1500] },
+    { "command": "scroll", "args": ["down", 500] },
+    { "command": "wait", "args": [1000] },
+    { "command": "close" }
+  ]
+}
+```
+
+20 個のプロファイルで並列実行する例:
+
+```bash
+gologin-local-agent-browser batch ./warmup.json \
+  --targets ./20-new-profiles.json \
+  --concurrency 5 --name daily-warmup
+```
+
+### 永続プロファイルを使った LinkedIn アウトリーチ
+
+LinkedIn の各アカウントは、独自の Cookie、プロキシ、フィンガープリントを持つ専用のプロファイルで運用します。一度ログインすれば、セッションは数日間にわたって保持されます。
+
+```bash
+# create a LinkedIn-optimized profile
+gologin-local-agent-browser profile-create "LinkedIn - Sales Rep 1" \
+  --template linkedin --proxy-country us
+
+# log in (visible mode to handle 2FA if needed)
+gologin-local-agent-browser open https://linkedin.com/login \
+  --profile profile_id --visible
+
+gologin-local-agent-browser snapshot
+gologin-local-agent-browser fill @e3 "email@company.com"
+gologin-local-agent-browser fill @e5 "password"
+gologin-local-agent-browser click @e7
+gologin-local-agent-browser wait 5000
+
+# verify login, then close — cookies are saved
+gologin-local-agent-browser snapshot
+gologin-local-agent-browser close
+
+# next day: reopen — already logged in
+gologin-local-agent-browser open https://linkedin.com/feed --profile profile_id
+gologin-local-agent-browser snapshot   # feed loads, no login needed
+```
+
+### 複数の広告アカウントの管理
+
+Facebook / Google の広告アカウントを、分離されたプロファイルで運用します。各アカウントには、独自のフィンガープリント、プロキシ、Cookie が割り当てられます。
+
+```bash
+# create profiles for each ad account
+gologin-local-agent-browser profile-create "FB Ads - Client A" --template ads --proxy-country us
+gologin-local-agent-browser profile-create "FB Ads - Client B" --template ads --proxy-country gb
+gologin-local-agent-browser profile-create "Google Ads - Client C" --template ads --proxy-country de
+
+# check proxy and fingerprint health before running
+gologin-local-agent-browser doctor --use-case ads --check-proxy profile_id_A
+```
+
+### ソーシャルメディア運用
+
+複数の Instagram、TikTok、Reddit アカウントを、それぞれ専用のプロファイルで運用します。コンテンツの投稿、エンゲージメント、モニタリングまで、すべて CLI から実行できます。
+
+```bash
+# create an SMM profile
+gologin-local-agent-browser profile-create "Reddit Account 3" --template smm
+
+# open, browse, interact
+gologin-local-agent-browser open https://reddit.com --profile profile_id --visible
+gologin-local-agent-browser snapshot
+gologin-local-agent-browser find "search input"
+gologin-local-agent-browser type @found "r/programming"
+gologin-local-agent-browser press Enter
+gologin-local-agent-browser wait 2000
+gologin-local-agent-browser snapshot
+gologin-local-agent-browser close
+```
+
+### EC・マーケットプレイスの運用
+
+Amazon、eBay、Etsy などの複数の販売者アカウントを、それぞれ専用のプロファイルで分離して管理します。
+
+```bash
+# batch warmup across all marketplace profiles
+gologin-local-agent-browser batch ./marketplace-warmup.json \
+  --targets ./all-seller-profiles.json \
+  --concurrency 3 --name marketplace-warmup
+
+# check which jobs succeeded
+gologin-local-agent-browser jobs --kind batch --status completed
+gologin-local-agent-browser jobs --kind batch --status failed
+```
+
+### 自社プロダクトの地域別テスト
+
+自社のウェブサイトが国ごとにどのように表示されるかを確認できます。価格は正しく表示されるか、地域別リダイレクトは機能しているかなどを検証します。
+
+```bash
+# create profiles for each test region
+gologin-local-agent-browser profile-create "Test US" --template geo --proxy-country us
+gologin-local-agent-browser profile-create "Test DE" --template geo --proxy-country de
+gologin-local-agent-browser profile-create "Test JP" --template geo --proxy-country jp
+
+# open each, screenshot, compare
+gologin-local-agent-browser open https://yoursite.com --profile us_id
+gologin-local-agent-browser screenshot ./geo-us.png
+gologin-local-agent-browser close
+
+gologin-local-agent-browser open https://yoursite.com --profile de_id
+gologin-local-agent-browser screenshot ./geo-de.png
+gologin-local-agent-browser close
+```
+
+---
+
+## ブラウザ操作コマンド
+
+ブラウザ操作のコマンドはすべて、クラウド版の [Agent Browser CLI](/ja/cli-tools/agent-browser) と共通です。`snapshot`、`click`、`type`、`fill`、`find`、`tabs`、`cookies`、`storage-export`、`storage-import`、`eval`、`screenshot`、`pdf`、`back`、`forward`、`reload`、`wait`、`press`、`scroll`、`upload` など、多数のコマンドを利用できます。
+
+コマンドの一覧は、[Agent Browser CLI のコマンドリファレンス](/ja/cli-tools/agent-browser#%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%83%AA%E3%83%95%E3%82%A1%E3%83%AC%E3%83%B3%E3%82%B9%EF%BC%88%E5%85%A8%E4%B8%80%E8%A6%A7%EF%BC%89)をご覧ください。
+
+---
+
+## エイリアス
+
+| エイリアス | 対応するコマンド |
+|---|---|
+| `goto`, `navigate` | `open` |
+| `history` | `jobs` |
+| `open-visible` | `open --visible` |
+| `open-background` | `open --background` |
+| `tabnew` | `tabopen` |
+| `tabswitch` | `tabfocus` |
+| `js` | `eval` |
+| `key` | `press` |
+| `scrollinto` | `scrollintoview` |
+| `quit`, `exit` | `close` |
+
+---
+
+## 関連情報
+
+- [Agent Browser CLI](/ja/cli-tools/agent-browser) — クラウドブラウザ版
+- [Gologin Web Access CLI](/ja/cli-tools/web-access) — 統合 CLI(スクレイピング + ブラウザ)
+- [AI Skills](/ja/api-reference/ai-integrations/ai-skills) — Claude Code 向けのプラグアンドプレイ スキル
+- [Node.js SDK](/ja/api-reference/sdks/nodejs-sdk) — プログラムによるプロファイル管理
+
+<Card title="npm パッケージ" icon="npm" href="https://www.npmjs.com/package/gologin-local-agent-browser-cli">
+  gologin-local-agent-browser-cli
+</Card>
+
+<Card title="ソースコード" icon="github" href="https://github.com/GologinLabs/gologin-local-agent-browser">
+  GologinLabs/gologin-local-agent-browser
+</Card>

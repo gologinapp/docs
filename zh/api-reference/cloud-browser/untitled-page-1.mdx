@@ -1,0 +1,75 @@
+---
+title: "使用浏览器会话"
+---
+
+连接到 Cloud Browser 会话后,您可以完全通过自动化库(Puppeteer 或 Playwright)来控制它。Gologin 不提供内置的操作方法,所有浏览器交互都是标准的库调用。
+
+## 页面导航
+
+```javascript Puppeteer
+await page.goto('https://example.com', { waitUntil: 'domcontentloaded' });
+console.log(await page.title());
+console.log(page.url());
+```
+
+```python Playwright
+await page.goto('https://example.com', wait_until='domcontentloaded')
+print(await page.title())
+print(page.url)
+```
+
+## 点击和输入
+
+```javascript Puppeteer
+await page.click('#search-input');
+await page.type('#search-input', 'hello world');
+await page.click('#submit-button');
+```
+
+```python Playwright
+await page.click('#search-input')
+await page.type('#search-input', 'hello world')
+await page.click('#submit-button')
+```
+
+## 等待元素
+
+```javascript Puppeteer
+await page.waitForSelector('.results', { timeout: 5000 });
+```
+
+```python Playwright
+await page.wait_for_selector('.results', timeout=5000)
+```
+
+## 提取文本
+
+```javascript Puppeteer
+const text = await page.$eval('.price', el => el.innerText);
+```
+
+```python Playwright
+text = await page.locator('.price').inner_text()
+```
+
+## 截取屏幕截图
+
+```javascript Puppeteer
+await page.screenshot({ path: 'screenshot.png' });
+```
+
+```python Playwright
+await page.screenshot(path='screenshot.png')
+```
+
+## 操作多个页面
+
+```javascript Puppeteer
+const page2 = await browser.newPage();
+await page2.goto('https://example.com/other');
+```
+
+```python Playwright
+page2 = await browser.new_page()
+await page2.goto('https://example.com/other')
+```

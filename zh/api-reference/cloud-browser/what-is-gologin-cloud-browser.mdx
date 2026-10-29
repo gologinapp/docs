@@ -1,0 +1,120 @@
+---
+title: "什么是 Gologin Cloud Browser"
+keywords: ["cloud browser", "headless browser"]
+---
+
+Gologin Cloud Browser 让你可以**在云端**运行 Gologin（Orbita）浏览器，并通过一个**连接 URL**，用自动化代码（Puppeteer / Playwright）对其进行控制。
+
+它是一种[无头浏览器](./what-is-headless-browser)，即完全由代码控制、没有图形界面的浏览器，由 Gologin 托管和管理，并内置对持久化配置文件、指纹配置和代理路由的支持。
+
+## Cloud Browser 能做什么
+
+- 在云端并行运行多个浏览器会话
+- 使用现有技术栈（Puppeteer / Playwright）进行自动化
+- 使用 Gologin **配置文件**保存持久状态（登录状态、Cookie、存储数据）
+- 在配置文件中设置**代理**，让流量通过代理转发
+- 作为远程浏览器运行环境供 AI 智能体使用
+
+## 与普通无头浏览器的区别
+
+普通的无头 Chrome 很容易被检测出来。网站会利用浏览器指纹识别自动化流量，检查 canvas 渲染、WebGL 参数、字体、时区、屏幕尺寸以及其他数十种特征。
+
+Gologin Cloud Browser 运行的是 **Orbita**，这是一款经过修改的 Chromium，能够管理各项指纹信号，使其与一致且真实的浏览器配置文件相匹配。再加上每个配置文件中保存的持久化 Cookie 和代理配置，你的会话在多次访问中都会显得稳定、自然，如同真人操作。
+
+## 为什么选择 Gologin Cloud Browser
+
+### 内置反检测，无需插件
+
+标准的无头 Chrome 很容易被检测。其他云浏览器服务运行的是原版 Chromium，需要借助第三方隐身插件来减少指纹特征，效果参差不齐。
+
+Gologin Cloud Browser 运行的是 **Orbita**，一个经过加固的 Chromium 版本，其核心就包含指纹管理：canvas、WebGL、字体、时区、屏幕分辨率等。反检测不是后加的补丁，而是浏览器本身的一部分。
+
+### 持久化配置文件，会话可以“记住”状态
+
+大多数云浏览器服务把每个会话都当作无状态的，会话关闭后 Cookie 和存储数据就会被丢弃。
+
+Gologin 的配置文件是持久保存的。登录一次后关闭会话，之后重新连接时，配置文件仍保留其 Cookie、本地存储和所有已配置的设置。无需重新登录，也无需预热会话。
+
+### 定价可预期，按时间计费而非按流量计费
+
+|                | Gologin Cloud Browser          | 常见替代方案        |
+| -------------- | ------------------------------ | ------------- |
+| **会话计费**       | 按小时计费（0.048/小时，视套餐而定）         | 按会话或按小时       |
+| **代理流量**       | \$1.99 / GB                    | 按 MB（每个会话有最低消费） |
+| **ISP 代理**     | \$5 / IP，流量不限                  | 按 GB          |
+| **包含时长**       | 视套餐而定，每月 20–200 小时            | 通常没有          |
+
+### 无供应商锁定
+
+Gologin Cloud Browser 是标准的 CDP 端点。你的 Puppeteer 或 Playwright 代码连接它的方式，与连接任何远程 Chrome 实例完全相同，无需专有 SDK，也无需学习自定义 API。只需更改一个 URL，就可以随时切换使用或停止使用。
+
+### 可扩展的并行会话
+
+各套餐默认包含 1–4 个并行会话。如需更多，请联系我们获取定制套餐。
+
+## 常见技术场景
+
+Cloud Browser 通常用于以下工作流程：
+
+- 登录一次网络账号，并通过配置文件保持会话持久
+- 在多个配置文件上对相同网站重复执行操作
+- 需要稳定、长时间运行的会话，且不依赖本地设备
+
+典型示例包括：为网络应用、电商平台或社交平台自动化已登录的会话，这类场景对会话持久性和配置文件设置的一致性要求较高。
+
+## 核心概念
+
+- **用户档案们**：可重复使用的浏览器身份（Cookie/存储数据，以及指纹和代理设置）。
+- **云会话**：配置文件在 Gologin 云端运行的实例。
+- **连接 URL**：传给自动化工具、用于控制云会话的端点。
+
+## 工作原理（概览）
+
+1. （推荐）通过 Gologin REST API 创建并配置配置文件（代理、指纹等）。
+2. 使用你的**开发者令牌（dev token）**和可选的 `profileId` 连接到 Cloud Browser。
+3. 使用 Puppeteer 或 Playwright 对会话进行自动化操作。
+4. 完成后关闭连接。
+
+## 连接 URL
+
+将此 URL 用作远程浏览器端点：
+
+```text
+https://cloudbrowser.gologin.com/connect?token=${token}&profile=${params.profileId}
+```
+
+- `token`：你的 Gologin **开发者令牌（dev token）**（在控制台中生成：`个人中心 → API 令牌`）。
+- `profile`：**配置文件 ID**（可选）。如果省略，将为该会话创建一个新的配置文件。
+
+## 管理配置文件（代理、指纹等）
+
+Cloud Browser 是**连接层**。\
+如需创建/更新配置文件、绑定代理以及配置文件设置，请使用 Gologin REST API：
+
+- 配置文件 API：https://gologin.com/docs/api-reference/profile
+- 代理 API：https://gologin.com/docs/api-reference/proxy
+
+## 通过 CLI 使用 Cloud Browser
+
+如果你更喜欢使用 shell 命令，而不是编写 Puppeteer/Playwright 代码，Gologin 提供了适合智能体使用的 CLI 工具：
+
+- **[Gologin Agent Browser CLI](/zh/cli-tools/agent-browser)**：带有守护进程、页面快照和基于引用交互的云浏览器 CLI，专为 AI 智能体打造。
+- **[Gologin Web Access CLI](/zh/cli-tools/web-access)**：统一的 CLI，将 Web Unlocker 抓取与 Cloud Browser 交互整合在一个工具中。
+
+```bash
+npm install -g gologin-agent-browser-cli
+export GOLOGIN_TOKEN='your_token'
+
+gologin-agent-browser open https://example.com
+gologin-agent-browser snapshot
+gologin-agent-browser click @e3
+gologin-agent-browser screenshot ./page.png
+gologin-agent-browser close
+```
+
+## 后续步骤
+
+- [快速入门](/zh/api-reference/cloud-browser/getting-started)：Puppeteer/Playwright 连接示例
+- [API 快速入门](/zh/api-reference/introduction/quickstart)：REST API 设置
+- [Agent Browser CLI](/zh/cli-tools/agent-browser)：面向 AI 智能体的 CLI
+- [AI Skills](/zh/api-reference/ai-integrations/ai-skills)：适用于 Claude Code 的即插即用技能

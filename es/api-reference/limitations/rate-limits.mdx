@@ -1,0 +1,32 @@
+---
+title: 'Límites de solicitudes'
+---
+No permitimos que los usuarios envíen una cantidad ilimitada de solicitudes a nuestra API. Si superas nuestros límites, tendrás que esperar un tiempo de enfriamiento. <br />
+Nuestros límites base:
+- Planes gratuitos y de prueba: 300 solicitudes por minuto
+- Otros planes: 1200 solicitudes por minuto
+
+### Invalidación del token al superar el límite
+
+<Warning>
+Cuando superas el límite de solicitudes y recibes una respuesta HTTP 429, tu token de API se invalida automáticamente. Esto significa que el token deja de ser utilizable de forma permanente y debes generar uno nuevo.
+
+No se trata de un tiempo de espera temporal: el token se revoca. Planifica con cuidado la frecuencia de tus solicitudes e implementa un retroceso exponencial (exponential backoff) para evitarlo.
+</Warning>
+
+### Errores de protección de Cloudflare
+
+Si la IP de tu servidor envía demasiadas solicitudes, la CDN de Cloudflare de Gologin puede bloquear tu IP por completo. Cuando esto ocurre, las respuestas de la API serán páginas de error HTML en lugar de JSON, lo que provoca errores como:
+
+```
+SyntaxError: Unexpected token 'e', "error code: 1015" is not valid JSON
+```
+
+Esta es una respuesta de límite de solicitudes de Cloudflare con el código 1015. Normalmente se resuelve por sí sola en un plazo de entre unos minutos y varias horas. Para evitarlo:
+- Implementa un límite de solicitudes en tu código
+- Usa retroceso exponencial (exponential backoff) cuando haya fallos
+- Evita ráfagas de llamadas paralelas a la API
+
+### Límites de creación de perfiles
+
+Las cuentas nuevas tienen un límite de aproximadamente 300 perfiles creados por día. Este límite puede variar según el plan. Si necesitas límites más altos, contacta con el soporte.

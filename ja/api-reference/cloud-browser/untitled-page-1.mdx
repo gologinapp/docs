@@ -1,0 +1,75 @@
+---
+title: "ブラウザセッションの使い方"
+---
+
+Cloud Browser セッションに接続したら、あとは自動化ライブラリ（Puppeteer または Playwright）ですべての操作を行います。Gologin には独自の操作メソッドはありません。ブラウザに対する操作はすべて、各ライブラリの標準的な呼び出しで行います。
+
+## ページ移動
+
+```javascript Puppeteer
+await page.goto('https://example.com', { waitUntil: 'domcontentloaded' });
+console.log(await page.title());
+console.log(page.url());
+```
+
+```python Playwright
+await page.goto('https://example.com', wait_until='domcontentloaded')
+print(await page.title())
+print(page.url)
+```
+
+## クリックと入力
+
+```javascript Puppeteer
+await page.click('#search-input');
+await page.type('#search-input', 'hello world');
+await page.click('#submit-button');
+```
+
+```python Playwright
+await page.click('#search-input')
+await page.type('#search-input', 'hello world')
+await page.click('#submit-button')
+```
+
+## 要素の待機
+
+```javascript Puppeteer
+await page.waitForSelector('.results', { timeout: 5000 });
+```
+
+```python Playwright
+await page.wait_for_selector('.results', timeout=5000)
+```
+
+## テキストの取得
+
+```javascript Puppeteer
+const text = await page.$eval('.price', el => el.innerText);
+```
+
+```python Playwright
+text = await page.locator('.price').inner_text()
+```
+
+## スクリーンショットの取得
+
+```javascript Puppeteer
+await page.screenshot({ path: 'screenshot.png' });
+```
+
+```python Playwright
+await page.screenshot(path='screenshot.png')
+```
+
+## 複数ページの操作
+
+```javascript Puppeteer
+const page2 = await browser.newPage();
+await page2.goto('https://example.com/other');
+```
+
+```python Playwright
+page2 = await browser.new_page()
+await page2.goto('https://example.com/other')
+```

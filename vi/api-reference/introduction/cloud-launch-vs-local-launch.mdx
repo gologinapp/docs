@@ -1,0 +1,20 @@
+---
+title: "Khởi chạy trên đám mây so với khởi chạy cục bộ"
+hidden: true
+---
+
+Khi tự động hóa bằng Gologin, trình duyệt có thể chạy ở hai nơi: trên máy của bạn hoặc trên máy chủ của Gologin. Lựa chọn này quyết định Orbita binary được thực thi ở đâu, bạn kết nối với trình duyệt như thế nào và bạn cần chuẩn bị hạ tầng gì.
+
+## Tổng quan
+
+|  | Khởi chạy cục bộ | Cloud Browser |
+| --- | --- | --- |
+| Trình duyệt chạy trên | Máy của bạn | Máy chủ của Gologin |
+| Yêu cầu ứng dụng desktop | Có | Không |
+| Cửa sổ hiển thị | Tùy chọn (headless) | Không |
+| Phần cứng cần thiết | RAM cho mỗi profile (~300–500 MB mỗi profile) | Không cần |
+| Phù hợp nhất cho | Tự động hóa trên máy của bạn hoặc VPS | Script phía máy chủ, không cần cài đặt cục bộ |
+
+## Khởi chạy cục bộ
+
+Trình duyệt chạy trên máy của bạn. Ở lần chạy đầu tiên, SDK tự động tải Orbita binary, khởi chạy cục bộ và trả về một WebSocket endpoint để Puppeteer hoặc Playwright kết nối tới.

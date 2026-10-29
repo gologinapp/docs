@@ -1,0 +1,213 @@
+---
+title: "AI Skills для Claude Code"
+description: "Готовые навыки, которые дают агентам Claude Code возможности веб-скрейпинга, автоматизации браузера и работы с локальным Orbita через Gologin"
+---
+
+Gologin AI Skills — это готовые к использованию расширения для [Claude Code](https://claude.ai/code), которые дают ИИ-агентам возможности веб-скрейпинга и автоматизации браузера. Каждый навык оборачивает инструмент Gologin CLI и предоставляет его как набор функций, которые может вызывать агент.
+
+```
+agent → skill → Gologin CLI → Web Unlocker API / Cloud Browser / Local Orbita
+```
+
+---
+
+## Доступные навыки
+
+<CardGroup cols={2}>
+  <Card title="Web Access Skill" icon="globe" href="https://github.com/GologinLabs/gologin-web-access-skill">
+    Основной навык для чтения известных сайтов, извлечения данных, обхода, мониторинга и гибридных задач «сначала скрейпинг, затем работа в браузере».
+  </Card>
+  <Card title="Agent Browser Skill" icon="browser" href="https://github.com/GologinLabs/gologin-agent-browser-skill">
+    Навык только для работы в браузере: живые облачные сессии, взаимодействие через ref-ссылки, скриншоты и PDF.
+  </Card>
+  <Card title="Scraping Skill" icon="code" href="https://github.com/GologinLabs/gologin-scraping-skill">
+    Навык только для скрейпинга на основе Web Unlocker SDK. Минимальный размер зависимостей.
+  </Card>
+  <Card title="Local Agent Browser Skill" icon="desktop" href="https://github.com/GologinLabs/gologin-local-agent-browser-skill">
+    Автоматизация локального Orbita с постоянными профилями, ранбуками и пакетным выполнением.
+  </Card>
+</CardGroup>
+
+---
+
+## Установка
+
+```bash
+# install any skill
+npx skills add GologinLabs/gologin-web-access-skill
+npx skills add GologinLabs/gologin-agent-browser-skill
+npx skills add GologinLabs/gologin-scraping-skill
+npx skills add GologinLabs/gologin-local-agent-browser-skill
+```
+
+Для каждого навыка должен быть установлен соответствующий CLI:
+
+| Навык | Необходимый CLI |
+|---|---|
+| Web Access Skill | `npm i -g gologin-web-access` |
+| Agent Browser Skill | `npm i -g gologin-agent-browser-cli` |
+| Scraping Skill | `npm i gologin-webunlocker` |
+| Local Agent Browser Skill | `npm i -g gologin-local-agent-browser-cli` |
+
+---
+
+## Какой навык выбрать
+
+| Задача | Навык |
+|---|---|
+| Прочитать страницу документации, статью или известный URL | Web Access |
+| Выполнить скрейпинг и извлечь структурированные данные | Web Access |
+| Пакетный скрейпинг множества URL | Web Access |
+| Обойти сайт, составить карту URL | Web Access |
+| Отслеживать изменения на странице | Web Access |
+| Прочитать страницу, затем выполнить действия в браузере | Web Access (гибридный режим) |
+| Открыть живую сессию в облачном браузере | Agent Browser |
+| Войти в панель управления, сделать скриншоты | Agent Browser |
+| Заполнять формы, проходить пользовательские сценарии | Agent Browser |
+| Только скрейпинг, браузер не нужен, приложение на Node.js | Scraping |
+| Прогреть локальные профили | Local Agent Browser |
+| Сценарии входа в аккаунты с сохранением cookies | Local Agent Browser |
+| Действия в соцсетях и на маркетплейсах в локальном Orbita | Local Agent Browser |
+| Пакетные ранбуки для множества локальных профилей | Local Agent Browser |
+
+---
+
+## Web Access Skill
+
+**Установка:** `npx skills add GologinLabs/gologin-web-access-skill`
+
+Основной и самый универсальный навык. Делегирует выполнение CLI `gologin-web-access`.
+
+**Инструменты скрейпинга:** `scrape_url`, `read_page`, `scrape_markdown`, `scrape_text`, `scrape_json`, `batch_scrape`, `batch_extract`, `search_web`, `map_site`, `crawl_site`, `crawl_site_async`, `extract_structured`, `track_changes`, `batch_track_changes`, `parse_document`
+
+**Инструменты браузера:** `browser_open`, `browser_search`, `browser_snapshot`, `browser_click`, `browser_type`, `browser_screenshot`, `browser_close`, `browser_sessions`, `browser_current`
+
+**Встроенные сценарии:** browser-ref-loop, hybrid-read-then-interact, search-discover-and-scrape, lead-enrichment, competitive-monitoring, docs-ingestion, geo-testing, login-and-navigate-dashboard
+
+Подробное описание команд см. в [справочнике по Web Access CLI](/ru/cli-tools/web-access).
+
+---
+
+## Agent Browser Skill
+
+**Установка:** `npx skills add GologinLabs/gologin-agent-browser-skill`
+
+Навык только для работы в браузере с живыми облачными сессиями. Используйте его, когда нужна интерактивная работа в браузере без скрейпинга.
+
+**Возможности:** `doctor`, `open`, `sessions`, `current`, `snapshot`, `click`, `type`, `fill`, `find`, `get`, `tabs`, `tabopen`, `tabfocus`, `tabclose`, `cookies`, `cookies-import`, `storage-export`, `storage-import`, `eval`, `back`, `forward`, `reload`, `upload`, `screenshot`, `pdf`
+
+Подробное описание команд см. в [справочнике по Agent Browser CLI](/ru/cli-tools/agent-browser).
+
+---
+
+## Scraping Skill
+
+**Установка:** `npx skills add GologinLabs/gologin-scraping-skill`
+
+Самый компактный навык — только скрейпинг через Web Unlocker SDK. Без браузерной сессии и без демона.
+
+**Возможности:** необработанный HTML (`scrape`), текст (`text`), markdown (`markdown`), структурированные метаданные (`json`). Методы SDK: `scrapeRaw()`, `scrape()`, `scrapeText()`, `scrapeMarkdown()`, `scrapeJSON()`, `batchScrape()`.
+
+Используйте, если задача сводится только к скрейпингу и нужно минимизировать зависимости.
+
+Подробности об API см. в [справочнике по Web Unlocker SDK](/ru/scraping-api-sdk-and-cli).
+
+---
+
+## Local Agent Browser Skill
+
+**Установка:** `npx skills add GologinLabs/gologin-local-agent-browser-skill`
+
+Для постоянной автоматизации локального Orbita: прогрев, сценарии входа, действия в соцсетях и на маркетплейсах.
+
+**Возможности:** все команды взаимодействия с браузером, а также управление профилями (`profiles`, `profile-create`, `profile-import`, `profile-update`, `profile-sync`, `profile-delete`), ранбуки (`run`, `batch`), задания (`jobs`, `job`) и диагностика (`doctor --use-case --check-proxy`).
+
+**Шаблоны для сценариев использования:** `linkedin`, `ads`, `smm`, `scraping`, `geo`
+
+Подробное описание команд см. в [справочнике по Local Agent Browser CLI](/ru/cli-tools/local-agent-browser).
+
+---
+
+## Что можно поручить агенту
+
+После установки навыка вы общаетесь с Claude Code на естественном языке. Вот что позволяет каждый навык:
+
+### С Web Access Skill
+
+- «Прочитай страницу с тарифами на competitor.com и кратко опиши планы»
+- «Выполни скрейпинг этих 15 URL и извлеки из каждого название и цену товара»
+- «Обойди документацию на docs.example.com и подготовь краткое описание каждого раздела»
+- «Найди "best CRM tools 2026" и выполни скрейпинг первых 5 результатов»
+- «Проверь, изменилась ли страница competitor.com/pricing со вчерашнего дня»
+- «Извлеки заголовки и URL всех статей блога с этого сайта»
+- «Открой example.com в браузере, войди с этими учётными данными и сделай скриншот панели управления»
+
+### С Agent Browser Skill
+
+- «Открой админ-панель, перейди в «Настройки» и сделай скриншот текущей конфигурации»
+- «Войди в тестовое окружение и проверь, развёрнута ли новая функция»
+- «Заполни форму регистрации на example.com этими тестовыми данными»
+- «Перейди на страницу отчётов, скачай ежемесячную выгрузку и сделай скриншот сводки»
+- «Проверь, что iphey.com показывает для этого профиля браузера»
+
+### С Scraping Skill
+
+- «Выполни скрейпинг этого URL и пришли мне текстовое содержимое»
+- «Получи заголовок, описание и подзаголовки с этих 10 страниц»
+- «Загрузи эту страницу в формате markdown, чтобы я мог её проанализировать»
+
+### С Local Agent Browser Skill
+
+- «Создай новый профиль для LinkedIn с прокси из США и прогрей его»
+- «Открой мой аккаунт Reddit, пролистай ленту и закрой его»
+- «Запусти ранбук прогрева для всех 20 профилей с параллелизмом 5»
+- «Проверь состояние прокси в моих профилях для рекламы в Facebook»
+- «Войди в этот аккаунт на маркетплейсе и сделай скриншот панели продавца»
+
+---
+
+## Примеры сценариев
+
+### Анализ конкурентов (Web Access Skill)
+
+1. Агент ищет конкурентов: `search_web("saas project management tools")`
+2. Агент составляет карту сайта конкурента: `map_site("https://competitor.com")`
+3. Агент выполняет пакетный скрейпинг ключевых страниц: `batch_scrape(pricing, features, about)`
+4. Агент передаёт содержимое Claude для анализа и сравнения
+
+### Прогрев аккаунтов (Local Agent Browser Skill)
+
+1. Агент создаёт профили: `profile-create "Account 1" --template linkedin`
+2. Агент запускает ранбук прогрева: `batch ./warmup.json --targets ./profiles.json`
+3. Агент проверяет результаты заданий: `jobs --kind batch --status completed`
+4. Агент сообщает, какие профили готовы
+
+### Мониторинг панели управления (Agent Browser Skill)
+
+1. Агент открывает панель управления: `open https://dashboard.example.com --profile saved_login`
+2. Агент считывает страницу: `snapshot`
+3. Агент переходит к метрикам: `click @e5` (ссылка «Отчёты»)
+4. Агент делает скриншот отчёта: `screenshot ./daily-metrics.png`
+5. Агент закрывает сессию: `close`
+6. Агент формирует сводку по метрикам на основе данных снимка
+
+---
+
+## Обязательная предварительная проверка
+
+Перед выполнением любой задачи навыки классифицируют работу:
+
+1. **Один известный сайт или широкое исследование по нескольким источникам?** — определяет, нужен ли скрейпинг или поиск
+2. **Только извлечение данных, мониторинг или интерактивная работа в браузере?** — определяет выбор между скрейпингом и браузером
+3. **Только Web Unlocker или и Web Unlocker, и Cloud Browser?** — определяет, какие учётные данные нужны
+4. **Зависит ли задача от геолокации или достаточно ли она защищена от доступа, чтобы использовать Gologin целиком?** — определяет требования к прокси и профилям
+
+---
+
+## См. также
+
+- [MCP-сервер](/ru/api-reference/ai-integrations/mcp-server) — MCP-сервер Gologin для ИИ-агентов
+- [Web Access CLI](/ru/cli-tools/web-access) — базовый универсальный CLI
+- [Agent Browser CLI](/ru/cli-tools/agent-browser) — базовый CLI для облачного браузера
+- [Local Agent Browser CLI](/ru/cli-tools/local-agent-browser) — базовый CLI для локального Orbita
+- [Web Unlocker SDK](/ru/scraping-api-sdk-and-cli) — базовый TypeScript SDK

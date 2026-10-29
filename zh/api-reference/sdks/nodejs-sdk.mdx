@@ -1,0 +1,116 @@
+---
+title: "Node.js SDK"
+description: "使用 Node.js SDK 以编程方式运行 Gologin 配置文件"
+---
+
+### 安装
+
+```bash
+npm i gologin
+```
+
+### 基本用法
+
+```javascript
+import GoLogin from 'gologin';
+
+const GL = new GoLogin({
+  token: 'your-api-token',
+  profile_id: 'your-profile-id',
+});
+
+const { status, wsUrl } = await GL.start();
+// Connect Puppeteer or Playwright using wsUrl
+// ... your automation code ...
+await GL.stop();
+```
+
+### 关键参数
+
+| 参数 | 默认值 | 说明 |
+|---|---|---|
+| `token` | 必填 | 您的 Gologin API 令牌 |
+| `profile_id` | 必填 | 要启动的配置文件 ID |
+| `executablePath` | 自动 | Orbita 浏览器可执行文件的路径 |
+| `uploadCookiesToServer` | `false` | 停止配置文件时将 Cookie 上传到云端。如果需要在多台设备之间保持会话，请设置为 `true`。 |
+| `checkBrowserUpdate` | `true` | 启动时检查此配置文件所用版本的 Orbita 更新。设置为 `false` 可固定当前版本。 |
+| `autoUpdateBrowser` | `true` | 自动下载新版本的 Orbita。设置为 `false` 可避免意外更新。 |
+| `extra_params` | `[]` | 传递给浏览器的额外 Chromium 启动参数 |
+
+### 停止配置文件
+
+```javascript
+// Stop and sync to cloud (default)
+await GL.stop();
+
+// Stop without syncing any data to cloud
+await GL.stop({ posting: false });
+```
+
+注意:`posting: false` 会阻止配置文件数据上传到 Gologin 服务器。如果您在服务器上运行配置文件,且不希望进行云端同步,请使用此选项。
+
+### 管理 Orbita 浏览器版本
+
+```javascript
+import { checkAndDownloadBrowserByOpts } from 'gologin';
+
+// Pre-download the latest Orbita version
+await checkAndDownloadBrowserByOpts({ lastActualCount: 1 });
+
+// Pre-download specific versions
+await checkAndDownloadBrowserByOpts({ majorVersions: [142, 143] });
+```
+
+在并行启动配置文件之前,请先使用 `checkAndDownloadBrowserByOpts`,以避免同时进行多个下载任务。
+
+### 并行运行 100 个以上的配置文件
+
+在服务器上同时运行大量配置文件时:
+
+```javascript
+// Use a queue to limit concurrent launches
+const CONCURRENCY = 10;
+const queue = [...profileIds];
+const active = new Set();
+
+async function launchProfile(profileId) {
+  const gl = new GoLogin({ token, profile_id: profileId });
+  try {
+    const { wsUrl } = await gl.start();
+    // ... your automation ...
+  } finally {
+    await gl.stop();
+  }
+}
+
+async function processQueue() {
+  while (queue.length > 0) {
+    while (active.size >= CONCURRENCY) {
+      await new Promise(r => setTimeout(r, 1000));
+    }
+    const id = queue.shift();
+    active.add(id);
+    launchProfile(id).finally(() => active.delete(id));
+  }
+}
+```
+
+**服务器使用注意事项:**
+- 限制并发启动的配置文件数量(建议从 10-20 个开始)
+- 在启动之前预先下载 Orbita 版本
+- 在 Linux 上:安装 Xvfb 并设置 `DISPLAY=:99`
+- 提高文件描述符限制:`ulimit -n 65536`
+- 监控内存:每个配置文件约占用 300-500 MB
+
+### 调试
+
+设置环境变量以启用详细日志:
+
+```bash
+DEBUG=gologin node your-script.js
+```
+
+### GitHub 与更新日志
+
+- 源代码:https://github.com/gologinapp/gologin
+- [更新日志](/zh/api-reference/sdks/nodejs-changelog)

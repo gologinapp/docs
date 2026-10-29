@@ -1,0 +1,61 @@
+---
+title: "User-Agent w systemie Android"
+description: "Profile Android zawsze zgłaszają w User-Agent wartość Android 10; K, niezależnie od wybranej wersji. Oto dlaczego tak się dzieje i dlaczego jest to zachowanie prawidłowe."
+---
+
+Jeśli utworzysz profil Android w Gologin i sprawdzisz jego User-Agent, zauważysz, że zawsze wyświetla on `Android 10; K`, nawet gdy profil jest ustawiony na Android 14, 15 lub 16. Ciąg wygląda mniej więcej tak:
+
+```text
+Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/... Mobile Safari/537.36
+```
+
+To oczekiwane zachowanie, a nie błąd. **Każda nowoczesna przeglądarka oparta na Chrome w systemie Android zgłasza dokładnie to samo.**
+
+## Dlaczego tak się dzieje
+
+Od wersji Chrome 110, wydanej na początku 2023 roku, Google wprowadziło zmianę o nazwie **User-Agent Reduction**. Aby utrudnić śledzenie przeglądarek i tworzenie ich odcisków (fingerprintów), Chrome przestał przekazywać w User-Agent rzeczywistą wersję Androida i model urządzenia. Zamiast tego wysyła teraz dla wszystkich stałe wartości zastępcze:
+
+- Wersja Androida jest zablokowana na `Android 10`
+- Model urządzenia jest zastąpiony literą `K`
+- Pomocnicze numery wersji Chrome są ustawione na `0.0.0`
+
+Z każdym wydaniem aktualizuje się tylko główny numer wersji Chrome. Wszystko inne w tej części ciągu jest takie samo na każdym urządzeniu.
+
+Przeglądarka Gologin dla Androida jest oparta na Chromium, więc stosuje ten sam standard. Chrome, Edge, Opera i Samsung Internet również pokazują `Android 10; K`. Nie dotyczy to tylko Gologin – tak działa dzisiejszy mobilny internet.
+
+<Info>
+  `K` nie jest wersją Androida ani literówką. To wartość zastępcza, której Chrome używa teraz zamiast prawdziwego modelu urządzenia.
+</Info>
+
+## Dlaczego to dla Ciebie korzystne
+
+Ponieważ niemal każdy użytkownik Chrome na Androidzie na świecie zgłasza teraz `Android 10; K`, Twój profil wtapia się w tłum. Gdyby Gologin zgłaszał prawdziwą wersję Androida, Twój profil wyróżniałby się na tle zwykłego ruchu i wyglądałby dla stron internetowych nietypowo. Zgodność ze standardowym zachowaniem jest dokładnie tym, czego potrzebuje profil przeglądarki, który ma wyglądać jak zwykły użytkownik.
+
+<Check>
+  Profil Android pokazujący `Android 10; K` działa prawidłowo i wygląda jak typowe, prawdziwe urządzenie z Androidem.
+</Check>
+
+Strony, które naprawdę potrzebują znać rzeczywistą wersję Androida lub model urządzenia, pobierają je teraz nowszym, bardziej przyjaznym prywatności kanałem (tzw. Client Hints), zamiast odczytywać je z User-Agent. Dlatego mimo że User-Agent zawiera `Android 10`, nic nie jest tracone, a wybrana przez Ciebie wersja Androida nadal obowiązuje tam, gdzie ma znaczenie.
+
+## Jak samodzielnie to sprawdzić
+
+Możesz to potwierdzić na dowolnym prawdziwym urządzeniu z Androidem, porównując profil Gologin ze zwykłą przeglądarką Chrome.
+
+Otwórz [iphey.com](https://iphey.com) lub inne wiarygodne narzędzie do sprawdzania fingerprintu w swojej zwykłej przeglądarce Chrome i przejdź na kartę **Browser**. Następnie otwórz tę samą stronę w profilu Android w Gologin. Porównaj wiersz **User Agent** w obu przeglądarkach.
+
+W obu zobaczysz dokładnie tę samą wartość `Android 10; K`, mimo że działają na nowoczesnym urządzeniu z Androidem. Różni się tylko numer wersji Chrome, który po prostu odzwierciedla wydanie danej przeglądarki.
+
+Ponieważ obie przeglądarki zgłaszają to samo, takie porównanie jest najprostszym sposobem, by przekonać się, że Gologin działa dokładnie tak jak zwykła przeglądarka Chrome.
+
+<Columns cols={2}>
+  <Column>
+    <Frame>
+      ![Chrome w systemie Android](/images/UA_chrome_android_app-1.jpg "Chrome w systemie Android")
+    </Frame>
+  </Column>
+  <Column>
+    <Frame>
+      ![Aplikacja Gologin Android](/images/UA_gologin_android_app.jpg "Aplikacja Gologin Android")
+    </Frame>
+  </Column>
+</Columns>

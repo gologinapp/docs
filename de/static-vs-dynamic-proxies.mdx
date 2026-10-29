@@ -1,0 +1,49 @@
+---
+title: "Statische vs. rotierende Proxys"
+---
+
+### Statische Proxys
+
+Statische Proxys verwenden eine feste IP-Adresse, die sich im Laufe der Zeit nicht ändert.
+
+Sie werden für die langfristige Verwaltung von Accounts empfohlen, bei der ein stabiler Anmeldestandort erforderlich ist.
+
+### Sticky-Proxys
+
+Sticky-Proxys behalten dieselbe IP-Adresse für einen begrenzten Sitzungszeitraum (meist 10–30 Minuten) bei, bevor sie rotieren.
+
+Sie sind nützlich, wenn kurzfristig eine konsistente Sitzung benötigt wird, und eignen sich ebenfalls für die Account-Verwaltung.
+
+### Rotierende Proxys
+
+Rotierende Proxys weisen automatisch eine neue IP-Adresse aus einem Proxy-Pool zu.
+
+Die Rotation kann erfolgen:
+
+- bei jeder Anfrage
+- nach Ende einer Sitzung
+- nach einem festgelegten Zeitintervall
+
+Sie werden typischerweise für Scraping oder Datenerfassung in großem Umfang eingesetzt. Für die Account-Verwaltung können sie in der Regel verwendet werden, wenn sie während der Sitzung dieselbe IP beibehalten.
+
+### Welcher Typ für welche Plattform?
+
+| Plattform | Empfohlener Proxy-Typ | Warum |
+| --- | --- | --- |
+| LinkedIn | Statisch residential oder mobil | IP-Wechsel lösen sofort eine Sicherheitsprüfung aus |
+| Facebook / Meta Ads | Statisch residential oder Sticky | Für Werbekonten ist eine konsistente Geolokalisierung erforderlich |
+| Amazon / eBay / Etsy | Statisch ISP | Rotierende IPs verknüpfen Accounts miteinander und führen zu Sperren |
+| TikTok (neue Accounts) | Mobil | Mobile IPs genießen beim Erstellen von Accounts das höchste Vertrauen |
+| Web Scraping | Rotierend residential oder Datacenter | Geschwindigkeit und Volumen sind wichtiger als Konsistenz |
+| Wettplattformen | Mobil | Höchste Vertrauensstufe, die Plattformen gehen aggressiv gegen Desktop-Fingerprints vor |
+
+<Warning>
+  Die Verwendung rotierender Proxys für Amazon-Verkäuferkonten ist ein häufiger Fehler, der zu Account-Sperren führt. Amazon verknüpft Accounts anhand der IP – wenn sich Ihre IP ändert, können mehrere Accounts als zusammengehörig markiert werden.
+</Warning>
+
+Siehe auch
+
+- [Was sind Gologin-Proxys](https://gologin.com/docs/proxy/gologin-proxies/what-are-gologin-proxies) — Die integrierten Gologin-Proxys sind standardmäßig rotierend
+- [Der beste Proxy für Ihren Anwendungsfall](https://gologin.com/docs/proxy/introduction/best-proxy-for-your-case)
+- [Amazon, eBay, Shopify](https://gologin.com/docs/amazon-e-bay-shopify) — Marktplatz-Accounts erfordern statische Proxys
+- [LinkedIn](https://gologin.com/docs/linkedin) — LinkedIn erfordert statische Proxys

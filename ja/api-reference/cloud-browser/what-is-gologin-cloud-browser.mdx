@@ -1,0 +1,120 @@
+---
+title: "Gologin Cloud Browser とは"
+keywords: ["cloud browser", "headless browser"]
+---
+
+Gologin Cloud Browser を使うと、Gologin (Orbita) ブラウザを**クラウド上**で実行し、1 つの**接続 URL** を使って自動化コード (Puppeteer / Playwright) から操作できます。
+
+これは [ヘッドレスブラウザ](./what-is-headless-browser)、つまりグラフィカルインターフェースを持たず、コードだけで制御されるブラウザで、Gologin がホスティングと管理を行います。永続的なプロファイル、フィンガープリントの設定、代理人経由のルーティングを標準でサポートしています。
+
+## Cloud Browser でできること
+
+- クラウド上で複数のブラウザセッションを並行して実行
+- 既存の環境 (Puppeteer / Playwright) でそのまま自動化
+- Gologin の**プロファイル**を使って、ログイン情報、Cookie、ストレージなどの状態を保持
+- プロファイルに設定した**代理人**を経由して通信
+- AI エージェント用のリモートブラウザ実行環境として利用
+
+## 通常のヘッドレスブラウザとの違い
+
+通常のヘッドレス Chrome は検出されやすいという問題があります。ウェブサイトはブラウザフィンガープリントを使って自動化されたトラフィックを識別します。canvas の描画、WebGL パラメータ、フォント、タイムゾーン、画面サイズなど、数十種類のシグナルがチェックされます。
+
+Gologin Cloud Browser は **Orbita** を実行します。Orbita は、一貫性のある現実的なブラウザプロファイルに合わせてフィンガープリントのシグナルを管理する、改良版の Chromium です。各プロファイルに保存された永続的な Cookie や代理人の設定と組み合わせることで、繰り返しアクセスしても、セッションは安定した人間らしいものに見えます。
+
+## Gologin Cloud Browser を選ぶ理由
+
+### アンチディテクトを標準搭載 — プラグイン不要
+
+通常のヘッドレス Chrome は簡単に検出されます。他のクラウドブラウザサービスは標準の Chromium を実行しており、フィンガープリントのシグナルを減らすにはサードパーティ製のステルスプラグインが必要で、効果にもばらつきがあります。
+
+Gologin Cloud Browser は **Orbita** を実行します。Orbita は強化された Chromium ビルドで、canvas、WebGL、フォント、タイムゾーン、画面解像度などのフィンガープリント管理が中核に組み込まれています。アンチディテクトは後付けのパッチではなく、ブラウザそのものです。
+
+### 永続的なプロファイル — セッションを記憶
+
+多くのクラウドブラウザサービスは、各セッションをステートレスに扱います。セッションを閉じると、Cookie やストレージは破棄されます。
+
+Gologin のプロファイルは保持されます。一度ログインしてセッションを閉じ、後で再接続しても、プロファイルには Cookie、ローカルストレージ、設定内容がそのまま残っています。再認証やセッションのウォームアップは不要です。
+
+### 予測しやすい料金 — トラフィックではなく時間で課金
+
+|                     | Gologin Cloud Browser               | 一般的な他社サービス          |
+| ------------------- | ----------------------------------- | ---------------------------- |
+| **セッション課金** | 時間単位 ( 0.048/h、プランによって異なります) | セッション単位または時間単位      |
+| **プロキシトラフィック**   | \$1.99 / GB                         | MB 単位 (セッションごとに最低料金あり) |
+| **ISP 代理人**     | \$5 / IP、トラフィック無制限         | GB 単位                       |
+| **含まれる時間**  | 20–200 時間/月、プランによって異なります    | 通常なし                       |
+
+### ベンダーロックインなし
+
+Gologin Cloud Browser は標準的な CDP エンドポイントです。Puppeteer や Playwright のコードは、他のリモート Chrome インスタンスに接続するのと同じ方法で接続できます。独自 SDK や専用 API を覚える必要はありません。URL を 1 つ変更するだけで、導入も乗り換えも可能です。
+
+### 拡張できる並列セッション
+
+プランには、最初から 1〜4 件の並列セッションが含まれています。さらに必要な場合は、カスタムプランについてお問い合わせください。
+
+## 主な利用シナリオ
+
+Cloud Browser は、次のようなワークフローでよく使われます。
+
+- ウェブアカウントに一度ログインし、プロファイルを通じてセッションを保持する
+- 多数のプロファイルで、同じウェブサイトに対して繰り返し操作を実行する
+- ローカルマシンに依存せず、安定した長時間のセッションを必要とする
+
+たとえば、Web アプリ、マーケットプレイス、ソーシャルプラットフォームなど、セッションの永続性と一貫したプロファイル設定が重要なログイン済みセッションの自動化があります。
+
+## 基本概念
+
+- **プロフィール** — 再利用可能なブラウザ ID (Cookie / ストレージ、フィンガープリントと代理人の設定)。
+- **クラウドセッション** — Gologin のクラウド上で実行されているプロファイルのインスタンス。
+- **接続 URL** — クラウドセッションを操作するために、自動化ツールに渡すエンドポイント。
+
+## 仕組み (概要)
+
+1. (推奨) Gologin REST API を使ってプロファイルを作成し、設定します (代理人、フィンガープリントなど)。
+2. **dev トークン**と、任意の `profileId` を使って Cloud Browser に接続します。
+3. Puppeteer または Playwright でセッションを自動化します。
+4. 作業が終わったら接続を閉じます。
+
+## 接続 URL
+
+リモートブラウザのエンドポイントとして、次の URL を使用します。
+
+```text
+https://cloudbrowser.gologin.com/connect?token=${token}&profile=${params.profileId}
+```
+
+- `token` — Gologin の **dev トークン** (ダッシュボードで生成します: `個人エリア → API トークン`)。
+- `profile` — **プロファイル ID** (任意)。省略すると、セッション用に新しいプロファイルが作成されます。
+
+## プロファイルの管理 (代理人、フィンガープリントなど)
+
+Cloud Browser は**接続レイヤー**です。\
+プロファイルの作成や更新、代理人の割り当て、プロファイル設定の構成には、Gologin REST API を使用します。
+
+- プロファイル API: https://gologin.com/docs/api-reference/profile
+- プロキシ API: https://gologin.com/docs/api-reference/proxy
+
+## CLI から Cloud Browser を使う
+
+Puppeteer / Playwright のコードを書くよりシェルコマンドを使いたい場合は、Gologin が提供するエージェント向け CLI ツールをご利用ください。
+
+- **[Gologin Agent Browser CLI](/ja/cli-tools/agent-browser)** — デーモン、ページスナップショット、参照ベースの操作を備えたクラウドブラウザ CLI。AI エージェント向けに作られています。
+- **[Gologin Web Access CLI](/ja/cli-tools/web-access)** — Web Unlocker によるスクレイピングと Cloud Browser の操作を 1 つにまとめた統合 CLI。
+
+```bash
+npm install -g gologin-agent-browser-cli
+export GOLOGIN_TOKEN='your_token'
+
+gologin-agent-browser open https://example.com
+gologin-agent-browser snapshot
+gologin-agent-browser click @e3
+gologin-agent-browser screenshot ./page.png
+gologin-agent-browser close
+```
+
+## 次のステップ
+
+- [はじめに](/ja/api-reference/cloud-browser/getting-started) — Puppeteer/Playwright の接続例
+- [API クイックスタート](/ja/api-reference/introduction/quickstart) — REST API のセットアップ
+- [Agent Browser CLI](/ja/cli-tools/agent-browser) — AI エージェント向け CLI
+- [AI Skills](/ja/api-reference/ai-integrations/ai-skills) — Claude Code 向けのプラグアンドプレイ スキル

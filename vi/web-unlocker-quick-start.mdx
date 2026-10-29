@@ -1,0 +1,138 @@
+---
+title: "Bắt đầu nhanh"
+---
+
+Hướng dẫn này chỉ cách thu thập dữ liệu từ URL đầu tiên của bạn bằng Web Unlocker.
+
+---
+
+## Điều kiện tiên quyết
+
+- Khóa API của Web Unlocker (liên hệ **ermakova.t@gologin.com** để nhận)
+- Python 3.x, Node.js hoặc bất kỳ HTTP client nào
+
+---
+
+## Xác thực
+
+Mọi yêu cầu đều cần có khóa API của bạn trong header `apikey`:
+
+```
+apikey: YOUR_API_KEY
+```
+
+URL cơ sở cho tất cả các yêu cầu API là:
+
+```
+https://parsing.webunlocker.gologin.com/v1
+```
+
+---
+
+## Gửi yêu cầu đầu tiên
+
+Gửi một yêu cầu GET với URL đích làm tham số truy vấn. Phản hồi là mã HTML của trang đã được hiển thị đầy đủ.
+
+### cURL
+
+```bash
+curl "https://parsing.webunlocker.gologin.com/v1/scrape?url=https%3A%2F%2Fexample.com" \
+  -H "apikey: YOUR_API_KEY"
+```
+
+### Python
+
+```python
+import requests
+
+response = requests.get(
+    "https://parsing.webunlocker.gologin.com/v1/scrape",
+    params={"url": "https://example.com"},
+    headers={"apikey": "YOUR_API_KEY"}
+)
+
+print(response.text)
+```
+
+### JavaScript (Node.js / Browser)
+
+```javascript
+const response = await fetch(
+  "https://parsing.webunlocker.gologin.com/v1/scrape?url=" +
+    encodeURIComponent("https://example.com"),
+  { headers: { apikey: "YOUR_API_KEY" } }
+);
+
+const html = await response.text();
+console.log(html);
+```
+
+---
+
+## Kết quả nhận được
+
+Nội dung phản hồi là mã HTML thô đã được hiển thị của trang — giống hệt nội dung bạn thấy khi mở URL đó trong trình duyệt. Không có lớp bọc JSON và không cần phân tích cú pháp.
+
+```html
+<!DOCTYPE html>
+<html>
+  <head><title>Example Domain</title></head>
+  <body>...</body>
+</html>
+```
+
+---
+
+## Xử lý lỗi
+
+Hãy kiểm tra mã trạng thái HTTP trước khi xử lý phản hồi:
+
+| Trạng thái | Ý nghĩa |
+|---|---|
+| `200` | Thành công — nội dung phản hồi là HTML của trang |
+| `401` | Khóa API không hợp lệ hoặc bị thiếu |
+| `422` | Tham số URL không hợp lệ hoặc bị thiếu |
+| `429` | Vượt quá giới hạn tốc độ |
+| `500` / `503` | Lỗi máy chủ — hãy thử lại với backoff |
+
+```python
+response = requests.get(
+    "https://parsing.webunlocker.gologin.com/v1/scrape",
+    params={"url": "https://example.com"},
+    headers={"apikey": "YOUR_API_KEY"}
+)
+
+if response.status_code == 200:
+    html = response.text
+else:
+    print(f"Error {response.status_code}: {response.text}")
+```
+
+---
+
+## Bắt đầu nhanh với CLI
+
+Bạn cũng có thể thu thập dữ liệu trang bằng các công cụ CLI của Gologin mà không cần viết mã:
+
+### Web Unlocker CLI
+
+```bash
+npm install -g gologin-webunlocker
+
+GOLOGIN_WEBUNLOCKER_API_KEY=wu_... gologin-webunlocker scrape https://example.com
+GOLOGIN_WEBUNLOCKER_API_KEY=wu_... gologin-webunlocker text https://example.com
+GOLOGIN_WEBUNLOCKER_API_KEY=wu_... gologin-webunlocker markdown https://example.com
+```
+
+### Gologin Web Access CLI (hợp nhất)
+
+```bash
+npm install -g gologin-web-access
+
+export GOLOGIN_WEB_UNLOCKER_API_KEY="wu_..."
+gologin-web-access read https://example.com
+gologin-web-access scrape-json https://example.com
+gologin-web-access batch-scrape https://example.com/page/1 https://example.com/page/2 --format text
+```
+
+Xem [Web Unlocker SDK và CLI](/vi/scraping-api-sdk-and-cli) và [Web Access CLI](/vi/cli-tools/web-access) để biết thêm chi tiết.

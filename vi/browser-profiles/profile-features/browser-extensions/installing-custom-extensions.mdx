@@ -1,0 +1,35 @@
+---
+title: "Cài đặt tiện ích mở rộng tùy chỉnh"
+---
+
+**Tiện ích mở rộng tùy chỉnh** cho phép bạn sử dụng các công cụ riêng tư, đã chỉnh sửa hoặc tự phát triển ngay trong profile Gologin của mình. Không giống các tiện ích mở rộng công khai, tiện ích mở rộng tùy chỉnh được cài đặt thủ công bằng các tệp tiện ích.
+
+## Đảm bảo tiện ích của bạn tương thích
+
+**Gologin không hỗ trợ tệp nén .crx hoặc .zip.** Tuy nhiên, bạn có thể chuyển các tệp này thành **thư mục đã giải nén** (unpacked folder), định dạng mà Gologin hỗ trợ.
+
+Nếu bạn có tệp nén **.zip**, chỉ cần giải nén nó - thư mục thu được có thể được thêm làm tiện ích mở rộng tùy chỉnh.
+
+Nếu bạn có tệp **.crx**:
+
+1. Đổi tên extension.crx thành extension.zip
+2. Giải nén bằng ứng dụng 7-zip hoặc trình giải nén có sẵn trong hệ điều hành của bạn
+
+<Warning>
+  Hãy đảm bảo thư mục sau khi giải nén chứa **manifest.json** và các tệp khác của tiện ích (js, html, biểu tượng, v.v.). \
+  Nếu không thể thêm tiện ích, hãy kiểm tra tệp manifext.json
+</Warning>
+
+## Cài đặt tiện ích đã giải nén
+
+Gologin hỗ trợ tiện ích mở rộng dưới dạng **thư mục đã giải nén**. Để cài đặt một tiện ích như vậy:
+
+1. **Nhấp vào ba dấu chấm trên profile** mà bạn muốn cài đặt tiện ích, sau đó nhấp **Cài đặt**
+2. Chuyển đến tab **Tiện ích mở rộng** và nhấp **Thêm tiện ích mở rộng**
+3. Nhấp nút **Tải lên phần mở rộng tùy chỉnh**
+4. Mở thư mục chứa tiện ích và nhấp **Chọn thư mục**
+5. Nhấn **Cứu** để áp dụng các thay đổi
+
+<Frame>
+  ![Cài đặt tiện ích mở rộng tùy chỉnh](/images/installing_custom_extension.gif)
+</Frame>

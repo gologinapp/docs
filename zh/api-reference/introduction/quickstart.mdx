@@ -1,0 +1,149 @@
+---
+title: "快速入门"
+---
+
+本指南将帮助您完成所有准备工作，开始使用 Gologin API。我们将介绍如何使用我们的 API 客户端，以及如何发起您的第一个 API 请求。我们还会告诉您接下来可以去哪里查找所需的全部信息，帮助您充分发挥我们强大的 REST API 的功能。
+
+<Note>
+  在向 Gologin API 发起请求之前，您需要先从控制面板中获取您的 API 密钥。您可以在[设置 » API](https://app.gologin.com/personalArea/TokenApi)中找到它。
+</Note>
+
+## 发起您的第一个匿名抓取请求
+
+<CodeGroup>
+
+```js node.js
+import { GologinApi } from 'gologin';
+
+// Token can be passed here in code or from env 
+const token = process.env.GL_API_TOKEN || 'your dev token here';
+const gologin = GologinApi({
+  token,
+  // If you want to run particular profile you need to pass profileId param
+});
+
+async function main() {
+  // This line of code creates new profile that will be run. If you want to run existed profile - delete this line of code
+  const profile = await gologin.createProfileRandomFingerprint();
+  const profileId = profile.id;
+
+  // This line of code adds gologin proxy to the profile.
+  await gologin.addGologinProxyToProfile(profileId, 'US');
+
+  // This line of code starts the browser and return object that can be managed by puppeteer
+  const { browser } = await gologin.launch({ profileId });
+
+  // Opens new page in browser
+  const page = await browser.newPage();
+
+  // Goes to website and waits untill all parts of the website is loaded
+  await page.goto('https://iphey.com/', { waitUntil: 'networkidle2' });
+
+  // Reads profile check result in website
+  const status = await page.$eval('.trustworthy:not(.hide)',
+    (elt) => elt?.innerText?.trim(),
+  );
+
+  await new Promise((resolve) => setTimeout(resolve, 10000));
+  console.log('status', status);
+
+  // This line of code deletes used profile. If you dont want to delete used profie - remove this line
+  await gologin.deleteProfile(profileId);
+
+  return status;
+}
+
+main().catch(console.error)
+  .finally(gologin.exit);
+```
+
+
+```python Python
+import time
+import os
+from gologin import GoLogin
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+
+
+# Initialize GoLogin
+gl = GoLogin({
+	"token": os.environ.get('GL_API_TOKEN', 'your dev token'),
+	})
+profile = gl.createProfileRandomFingerprint({ "os": "win" })
+profile_id = profile.get('id')
+gl.setProfileId(profile_id)
+# Add proxy to the profile
+gl.addGologinProxyToProfile(profile_id, "us")
+
+# Start Browser and get websocket url
+debugger_address = gl.start()
+
+# Get Chromium version for webdriver
+chromium_version = gl.get_chromium_version()
+
+
+# Install webdriver
+service = Service(ChromeDriverManager(driver_version=chromium_version).install())
+
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_experimental_option("debuggerAddress", debugger_address)
+
+driver = webdriver.Chrome(service=service, options=chrome_options)
+
+# Give command to Selenium to open the page
+driver.get("http://www.python.org")
+
+time.sleep(30)
+driver.quit()
+time.sleep(10)
+
+gl.delete(profile_id)
+
+gl.stop()
+```
+
+</CodeGroup>
+
+## 在 Node.js 中自行运行代码
+
+<CodeGroup>
+
+```bash bash
+# Install required packages
+npm i gologin
+
+# Run the code - change filename.js to your actual filename and add your token
+GL_API_TOKEN=[YOUR_GOLOGIN_API_TOKEN] node filename.js
+```
+
+</CodeGroup>
+
+## 在 Python 中自行运行代码
+
+<CodeGroup>
+
+```bash bash
+# create local env for the project
+python3 -m venv venv
+
+# Install required packages
+source venv/bin/activate && pip install gologin selenium webdriver-manager
+
+# Run the script. Your file should not be named gologin.py as it will cause conflict with import
+GL_API_TOKEN=[YOUR_GOLOGIN_API_TOKEN] python3 filename.py
+```
+
+</CodeGroup>
+
+## 下一步
+
+太好了，您已经配置好 API 客户端，并完成了第一次 API 请求。以下链接可以在您深入使用 Gologin API 时提供帮助：
+
+- [在设置 \> API 中获取您的 API 密钥](https://app.gologin.com/personalArea/TokenApi)
+- [Gologin Web Access CLI](/zh/cli-tools/web-access) — 用于抓取和浏览器自动化的统一 CLI（无需编写代码）
+- [Agent Browser CLI](/zh/cli-tools/agent-browser) — 专为 AI 智能体打造的云端浏览器 CLI
+- [Local Agent Browser CLI](/zh/cli-tools/local-agent-browser) — 支持配置文件和运行手册的本地 Orbita CLI
+- [AI Skills](/zh/api-reference/ai-integrations/ai-skills) — 适用于 Claude Code 的即插即用技能
+- [MCP Server](/zh/api-reference/ai-integrations/mcp-server) — 通过 AI 对话管理配置文件

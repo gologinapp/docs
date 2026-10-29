@@ -1,0 +1,58 @@
+---
+title: "Qué es un navegador headless"
+keywords: ["headless browser"]
+---
+
+Un navegador headless es un navegador web controlado mediante código: visita páginas, hace clic en botones, rellena formularios y extrae datos de forma automática, sin una interfaz gráfica visible.
+
+Funciona exactamente igual que Chrome o Firefox, pero se ejecuta en un servidor. No necesita pantalla.
+
+## Cómo funciona
+
+Los navegadores modernos exponen un protocolo de control llamado **Chrome DevTools Protocol (CDP)**. Las bibliotecas de automatización como Playwright y Puppeteer usan CDP para enviar comandos al navegador: ir a esta URL, hacer clic en este elemento, leer este texto, tomar una captura de pantalla.
+
+Gologin Cloud Browser está construido sobre este mismo protocolo: tu código de Puppeteer o Playwright se conecta a un navegador remoto mediante CDP y lo controla igual que lo haría con uno local.
+
+## ¿Por qué usar un navegador headless en lugar de una solicitud HTTP normal?
+
+Muchos sitios web actuales cargan su contenido de forma dinámica mediante JavaScript. Una simple solicitud HTTP solo obtiene el HTML en bruto, por lo que se pierde todo lo que se renderiza en el cliente.
+
+Un navegador headless ejecuta JavaScript igual que el navegador de un usuario real, lo que le permite:
+
+- Esperar a que el contenido se cargue después de renderizar la página
+- Interactuar con elementos dinámicos (menús desplegables, ventanas modales, scroll infinito)
+- Gestionar flujos de inicio de sesión, formularios de varios pasos y SPAs
+- Superar controles de detección de bots que los clientes HTTP no pueden pasar
+
+## ¿Por qué ejecutarlo en la nube?
+
+Ejecutar un navegador headless en local es sencillo. Ejecutarlo de forma fiable en producción, no tanto.
+
+Gestionar procesos de navegador en producción exige ocuparse de:
+
+- **Fallos y reinicios**: los navegadores se bloquean; la infraestructura debe recuperarse automáticamente
+- **Concurrencia**: varias sesiones en paralelo requieren aislamiento de recursos
+- **Escalado**: los picos de tráfico obligan a levantar más instancias bajo demanda
+- **Fugas de memoria**: las sesiones de navegador de larga duración acumulan memoria
+
+Gologin Cloud Browser se encarga de toda esta infraestructura, de modo que te conectas a una sesión lista para usar mediante una única URL y te centras en la lógica de tu automatización.
+
+## ¿Por qué Gologin en concreto?
+
+Un Chrome headless estándar es detectable. Los sitios web usan el fingerprinting del navegador para identificar la automatización: comprueban el renderizado de canvas, los parámetros de WebGL, las listas de fuentes, la zona horaria, el tamaño de pantalla y decenas de señales más.
+
+Gologin Cloud Browser ejecuta una versión modificada de Chromium (Orbita) que gestiona estas señales de fingerprint para que coincidan con el perfil de un navegador de usuario real. Combinado con cookies persistentes y la configuración de proxy integrada en cada perfil, las sesiones se ven coherentes y humanas a lo largo de varias visitas.
+
+Esto es importante en cualquier automatización dirigida a sitios web con protección antibot.
+
+## Frameworks de automatización habituales
+
+Gologin Cloud Browser funciona con cualquier biblioteca compatible con CDP:
+
+| Biblioteca     | Lenguaje                    | Notas                                          |
+| -------------- | --------------------------- | ---------------------------------------------- |
+| **Puppeteer**  | Node.js                     | Biblioteca CDP de Google, muy utilizada        |
+| **Playwright** | Node.js, Python, Java, .NET | API moderna, compatible con varios navegadores |
+| **Selenium**   | La mayoría de lenguajes     | La más antigua, con el ecosistema más amplio   |
+
+Consulta [Getting Started](./getting-started) para ver ejemplos de conexión.

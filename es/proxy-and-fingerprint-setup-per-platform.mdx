@@ -1,0 +1,131 @@
+---
+title: "Configuración de proxy y fingerprint por plataforma"
+hidden: true
+---
+
+Guía de referencia rápida para elegir el tipo de proxy y la configuración de fingerprint adecuados para cada plataforma. Para ver los pasos de configuración detallados, consulta las guías de cada plataforma.
+
+Una guía práctica para configurar proxies y fingerprints del navegador según el tipo de plataforma.
+
+La mayoría de los sitios web modernos evalúan las sesiones combinando varios factores:
+
+- Dirección IP y ubicación
+- fingerprint del navegador
+- historial de sesión y cookies
+- patrones de inicio de sesión
+
+Si estas señales son incoherentes, las plataformas pueden activar verificaciones o restringir la actividad.
+
+En Gologin, cada perfil de navegador representa un dispositivo independiente. Para mantener la estabilidad, la configuración del proxy y del fingerprint debe ser coherente y realista.
+
+## Lista de comprobación rápida
+
+Antes de empezar:
+
+- 1 cuenta = 1 perfil de navegador
+- 1 perfil = 1 proxy
+- Mantén estable la ubicación del proxy
+- No cambies el fingerprint después de la configuración
+- Alinea la ubicación del proxy con los ajustes del navegador
+
+## Por qué es importante la coherencia
+
+Las plataformas evalúan varias señales en conjunto.
+
+Incoherencias habituales que activan verificaciones:
+
+- La ubicación de la IP no coincide con la zona horaria
+- cambios frecuentes en la configuración del fingerprint
+- varias cuentas que comparten un mismo proxy
+
+Ejemplo:
+
+- proxy en Alemania \+ zona horaria de EE. UU.
+- el mismo proxy usado en varias cuentas
+
+Mantener la coherencia ayuda a que las sesiones parezcan las de usuarios reales.
+
+## Paso 1. Configura el perfil correctamente
+
+Al crear un perfil en Gologin:
+
+- asigna un proxy exclusivo
+- no modifiques la configuración del fingerprint
+- asegúrate de que los parámetros del dispositivo sean realistas
+
+Cada perfil debe comportarse como un dispositivo físico independiente.
+
+Evita:
+
+- reutilizar perfiles para varias cuentas
+- modificar la configuración después del primer uso
+
+## Paso 2. Elige el tipo de proxy
+
+Cada caso de uso requiere un tipo de proxy diferente:
+
+| Tipo de plataforma | Proxy recomendado |
+| :-- | :-- |
+| Redes sociales | Residencial / Móvil |
+| Publicidad | Residencial |
+| Marketplaces | Residencial |
+| Cripto | Residencial |
+| Web scraping | De centro de datos / Rotativo |
+
+**Proxies residenciales: mayor confianza**\
+**Proxies datacenter: mayor velocidad**
+
+## Paso 3. Mantén estable el fingerprint
+
+La estabilidad del fingerprint es fundamental.
+
+Para mantener la coherencia:
+
+- evita cambiar los parámetros del fingerprint
+- mantén el mismo tipo de dispositivo
+- no cambies de sistema operativo ni modifiques ajustes importantes
+
+Ejemplos de comportamiento de riesgo:
+
+- pasar de un perfil de Windows a uno de Mac
+- cambiar drásticamente la resolución de pantalla
+
+## Paso 4. Alinea el proxy y los ajustes del navegador
+
+Los ajustes de tu perfil deben coincidir con la ubicación del proxy.
+
+Alineación recomendada:
+
+- La zona horaria coincide con el país del proxy
+- El idioma coincide con la región
+- La ubicación de la IP coincide con el entorno del navegador
+
+Las discrepancias importantes pueden activar verificaciones.
+
+## Errores de configuración más comunes
+
+Los problemas más frecuentes:
+
+- usar varias cuentas con un mismo proxy
+- cambiar con frecuencia la región del proxy
+- configuración del fingerprint incoherente
+- discrepancia entre la IP y los ajustes del navegador
+
+## Conclusión clave
+
+Las plataformas evalúan en conjunto las señales del dispositivo y de la red.
+
+Para mantener la estabilidad:
+
+- mantén el proxy y el fingerprint coherentes
+- evita hacer cambios después de la configuración
+- haz coincidir los ajustes del entorno
+
+Los perfiles coherentes se comportan como dispositivos reales, lo que reduce las verificaciones y mejora la estabilidad a largo plazo.
+
+## Véase también
+
+- [El mejor proxy para tu caso](https://gologin.com/docs/proxy/introduction/best-proxy-for-your-case)
+- [Proxies estáticos frente a rotativos](https://gologin.com/docs/static-vs-dynamic-proxies)
+- [Configuración del fingerprint del perfil](https://gologin.com/docs/profile-fingerprint-settings)
+- [El proxy no funciona](https://gologin.com/docs/general/troubleshooting/proxy-not-working)

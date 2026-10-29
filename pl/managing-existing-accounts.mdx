@@ -1,0 +1,78 @@
+---
+title: "Zarządzanie istniejącymi kontami"
+---
+
+Zarządzanie istniejącymi kontami w Gologin opiera się na jednej podstawowej zasadzie: spójności.
+
+W przeciwieństwie do nowych kont, istniejące konta mają już swoją historię, w tym środowisko logowania, wzorce zachowań i dane sesji. Platformy oczekują, że ten schemat pozostanie stabilny w czasie.
+
+Gologin pomaga zachować tę spójność, przechowując każde konto w osobnym profilu przeglądarki.
+
+## Korzystanie z tego samego profilu
+
+Dostęp do każdego konta powinien odbywać się zawsze przez ten sam profil Gologin.
+
+Profil przechowuje:
+
+• fingerprint\
+• pliki cookie i dane sesji\
+• local storage i stan przeglądarki
+
+Dzięki temu platformy rozpoznają konto jako powracającego użytkownika.
+
+Przełączanie profili lub tworzenie nowego profilu dla istniejącego konta może przerwać tę ciągłość i wywołać weryfikację.
+
+## Utrzymywanie stabilnego proxy i lokalizacji
+
+Proxy używane z profilem powinno pozostać niezmienne.
+
+Unikaj częstych zmian:
+
+- adresu IP
+- kraju
+- regionu
+
+Jeśli zmiana proxy jest konieczna, wykonaj ją ostrożnie, najlepiej w obrębie tego samego regionu i bez nagłych zmian.
+
+## Zachowywanie danych sesji
+
+Gologin automatycznie zapisuje dane sesji, gdy profile są prawidłowo zamykane.
+
+Obejmuje to pliki cookie i stany logowania, które pomagają utrzymać zaufanie do konta.
+
+Aby uniknąć problemów:
+
+- Zawsze prawidłowo zamykaj profile
+- Poczekaj na zakończenie synchronizacji
+- Unikaj niepotrzebnego czyszczenia danych
+
+Wielokrotne logowanie od zera może obniżyć zaufanie do konta i wywołać dodatkowe weryfikacje.
+
+## Zgodność z dotychczasowym zachowaniem
+
+Istniejące konta powinny nadal zachowywać się zgodnie ze swoją historią.
+
+Unikaj:
+
+- nagłego wzrostu aktywności
+- nowych lub niespójnych wzorców korzystania z konta
+- zbyt szybkiej zmiany sposobu pracy
+
+Gologin zapewnia stabilne środowisko, ale spójność zachowań jest równie ważna.
+
+## Najważniejsze wnioski
+
+Gologin zapewnia kontrolowane i spójne środowisko dla każdego konta.
+
+Aby zachować stabilność:
+
+- zawsze używaj tego samego profilu
+- utrzymuj spójną konfigurację proxy
+- unikaj nagłych zmian w zachowaniu lub środowisku
+
+Zobacz także
+
+- [Bezpieczne tworzenie nowych kont](https://gologin.com/docs/creating-new-accounts-safely)
+- [Lista kontrolna higieny profilu](https://gologin.com/docs/profile-hygiene-checklist)
+- [Migracja z innych przeglądarek antydetekcyjnych](https://gologin.com/docs/general/migration-from-other-tools)
+- [Typowe błędy, których należy unikać](https://gologin.com/docs/common-mistakes-to-avoid)

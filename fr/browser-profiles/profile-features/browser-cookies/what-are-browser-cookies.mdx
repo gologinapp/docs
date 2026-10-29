@@ -1,0 +1,48 @@
+---
+title: "Que sont les cookies de navigateur"
+---
+
+Les **cookies** sont de petits fichiers de données créés par les sites web et stockés dans votre navigateur.
+
+Les cookies contiennent généralement :
+
+- Des jetons de session de connexion
+- L'authentification « Se souvenir de moi »
+- Les paramètres de langue et de région
+- Les données du panier d'achat
+- Des identifiants de suivi
+- Des signaux de confiance anti-fraude
+
+Lorsque vous gérez plusieurs comptes, les cookies déterminent souvent si un site web considère votre session comme fiable ou suspecte.
+
+## Fonctionnement des cookies dans Gologin
+
+Chaque profil Gologin :
+
+- Dispose de son propre espace de stockage de cookies isolé
+- Ne partage pas ses cookies avec les autres profils
+- Synchronise les cookies avec le cloud lorsque le profil est correctement fermé
+- Restaure les cookies lorsque le profil est relancé
+
+Cela signifie que chaque profil se comporte comme un appareil physique distinct, à condition d'utiliser un proxy différent pour chaque profil.
+
+## Cohérence du proxy et du fingerprint
+
+Les cookies seuls ne garantissent pas l'accès à un compte.
+
+Pour réussir l'import de cookies :
+
+- Utilisez le même proxy ou un proxy géographiquement cohérent
+- Faites correspondre le fuseau horaire à l'adresse IP
+- Évitez les changements importants de fingerprint
+- Ne mélangez pas des cookies mobiles avec des fingerprints de bureau
+
+Si le pays de l'adresse IP ou le fingerprint de l'appareil change radicalement, les sites web peuvent invalider la session.
+
+## Bonnes pratiques
+
+- Fermez toujours les profils correctement afin de synchroniser les cookies
+- Conservez une géographie de proxy cohérente
+- Exportez les cookies avant d'effectuer des modifications importantes
+- Testez d'abord les imports sur des comptes non critiques
+- Évitez de remplacer fréquemment les cookies sur des comptes établis

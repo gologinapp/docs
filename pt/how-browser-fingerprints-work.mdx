@@ -1,0 +1,38 @@
+---
+title: "Como funcionam as impressões digitais do navegador"
+---
+
+Quando você acessa um site, o navegador compartilha automaticamente algumas informações técnicas necessárias para que a página funcione corretamente. Os sites podem acessar essas informações por meio de cabeçalhos HTTP e APIs de JavaScript.
+
+Os scripts de fingerprinting coletam vários dados do navegador e do ambiente do dispositivo, como:
+
+- informações do navegador e do sistema operacional
+- resolução de tela e configurações de exibição
+- fontes instaladas
+- idioma e fuso horário
+- características de hardware
+- dados de renderização gráfica (Canvas e WebGL)
+- dados de processamento de áudio
+- dispositivos de mídia disponíveis no sistema
+
+Esses dados são combinados e processados para gerar uma **impressão digital do navegador** (browser fingerprint), um identificador único que representa a configuração do dispositivo e do navegador.
+
+Os sites armazenam essa impressão digital e a comparam quando o mesmo usuário volta a acessá-los. Se ela corresponder a uma configuração registrada anteriormente, o site pode reconhecer o dispositivo mesmo que os cookies tenham sido excluídos.
+
+Os sites usam amplamente o fingerprinting para:
+
+- detectar comportamentos suspeitos de login
+- prevenir fraudes e tráfego automatizado
+- identificar visitantes recorrentes
+- vincular várias sessões ao mesmo dispositivo
+
+Se a impressão digital mudar de forma significativa entre as sessões, o site pode tratar o navegador como um dispositivo novo ou potencialmente suspeito.
+
+O Gologin resolve esse problema criando **perfis de navegador isolados**. Cada perfil tem sua própria configuração de impressão digital, o que permite que ele se comporte como um dispositivo separado. Assim, é possível gerenciar várias contas mantendo os ambientes de navegador independentes.
+
+## Veja também
+
+- [Configurações de impressão digital do perfil](https://gologin.com/docs/profile-fingerprint-settings)
+- [O que é seguro alterar](https://gologin.com/docs/whats-safe-to-change)
+- [Conceitos principais](https://gologin.com/docs/getting-started/introduction/key-concepts-profiles-fingerprints-proxies)
+- [Erros comuns a evitar](https://gologin.com/docs/common-mistakes-to-avoid)

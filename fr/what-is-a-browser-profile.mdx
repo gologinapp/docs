@@ -1,0 +1,68 @@
+---
+title: "Qu'est-ce qu'un profil de navigateur"
+---
+
+Un **profil de navigateur** dans Gologin est un navigateur virtuel autonome. Il ressemble à un vrai navigateur installé sur un vrai ordinateur et se comporte exactement comme lui, mais il existe dans Gologin et peut être créé, enregistré, changé ou supprimé en quelques secondes.
+
+Chaque profil possède :
+
+- Une [empreinte](/fr/how-browser-fingerprints-work) de navigateur unique (plus de détails ci-dessous)
+- Ses propres cookies et son propre stockage local
+- Son historique de navigation
+- Ses mots de passe enregistrés et ses extensions
+- Sa propre connexion proxy
+
+Lorsque vous ouvrez un profil, les sites web le perçoivent comme une personne totalement distincte qui les visite depuis un autre appareil. Lorsque vous le fermez, tout est enregistré exactement tel que vous l'avez laissé.
+
+## Pourquoi est-ce important ? Comprendre les empreintes de navigateur
+
+Avant d'aborder les profils plus en détail, il faut comprendre une notion : l'**empreinte de navigateur**.
+
+Chaque fois que vous visitez un site web, votre navigateur envoie discrètement des dizaines de signaux techniques sur votre appareil et votre configuration. Par exemple :
+
+- Le navigateur que vous utilisez et sa version
+- Votre système d'exploitation
+- La résolution de votre écran
+- Les polices installées sur votre ordinateur
+- Votre fuseau horaire et votre langue
+- La façon dont votre carte graphique affiche les images
+- Le fait que vous utilisiez ou non un écran tactile
+
+Les sites web collectent tous ces signaux et les combinent pour former une « empreinte » unique qui vous identifie, même si vous supprimez vos cookies, utilisez un VPN ou ouvrez une fenêtre de navigation privée.
+
+<Note>
+  Le mode navigation privée masque votre historique de navigation aux autres personnes qui utilisent le même ordinateur. Il ne masque **pas** l'empreinte de votre navigateur aux sites web. Chaque fenêtre de navigation privée ressemble toujours exactement à votre navigateur habituel vu de l'extérieur.
+</Note>
+
+C'est pourquoi il ne suffit pas d'utiliser plusieurs comptes dans différents onglets. Tous ces onglets partagent la même empreinte, et les sites web peuvent savoir qu'ils appartiennent à la même personne.
+
+## Comment un profil Gologin résout ce problème
+
+Lorsque vous créez un profil de navigateur dans Gologin, l'application construit de toutes pièces une identité de navigateur complète, fictive mais crédible.
+
+Gologin génère des valeurs réalistes pour chaque paramètre de l'empreinte : une taille d'écran plausible, un ensemble de polices crédible, un fuseau horaire cohérent, une chaîne user agent correspondante, etc. Toutes ces valeurs sont stockées dans le profil et présentées à tout site web que vous visitez lorsque vous l'utilisez.
+
+## Comment les profils sont stockés
+
+Gologin stocke vos profils dans le cloud. Cela signifie que :
+
+- Vous pouvez ouvrir n'importe quel profil depuis n'importe quel ordinateur sur lequel Gologin est installé
+- Vos profils sont conservés en cas de panne ou de remplacement de votre machine locale
+- Vous pouvez partager des profils avec vos collègues, qui peuvent utiliser la même session enregistrée sans avoir à se reconnecter
+
+## La différence entre un profil et une fenêtre de navigation privée
+
+|  | Fenêtre de navigation privée | Profil Gologin |
+| --- | --- | --- |
+| Masque l'historique de navigation en local | ✅ | ✅ |
+| Supprime les cookies à la fermeture | ✅ | ❌ (les cookies sont enregistrés) |
+| Modifie l'empreinte de votre navigateur | ❌ | ✅ |
+| Modifie votre adresse IP | ❌ | ✅ (avec un proxy) |
+| Peut être enregistré et rouvert | ❌ | ✅ |
+| Apparaît comme un autre appareil | ❌ | ✅ |
+
+La navigation privée est un outil de confidentialité pour votre appareil local. Un profil Gologin remplace entièrement votre identité sur Internet.
+
+## Résumé
+
+Un profil de navigateur dans Gologin est un navigateur virtuel enregistré, doté de sa propre empreinte, de ses propres cookies et de son propre proxy. Lorsque vous en ouvrez un, vous apparaissez aux yeux de n'importe quel site web comme une personne totalement différente, sur un autre appareil. En le fermant, vous enregistrez votre session pour pouvoir y revenir à tout moment. Vous pouvez ainsi gérer plusieurs identités en ligne distinctes depuis un seul ordinateur, de façon propre et sûre, sans que les comptes soient liés entre eux ni à vous.

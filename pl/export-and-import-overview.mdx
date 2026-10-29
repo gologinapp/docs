@@ -1,0 +1,43 @@
+---
+title: "Przegląd eksportu i importu"
+---
+
+Import i eksport CSV to prosty sposób na zarządzanie wieloma profilami przeglądarki jednocześnie. Zamiast konfigurować wszystko ręcznie, możesz użyć pliku CSV, aby kopiować konfiguracje, tworzyć profile zbiorczo, aktualizować ustawienia (np. proxy) oraz przenosić konfiguracje między workspace'ami. Jest to szczególnie przydatne, gdy pracujesz na dużą skalę lub zależy Ci na spójności profili albo konfiguracji członków zespołu.
+
+Warto pamiętać, że ta funkcja działa wyłącznie na **konfiguracji profilu**, a nie na rzeczywistych danych przeglądania. Oznacza to, że uwzględniane są takie elementy jak nazwa profilu, proxy, tagi, foldery i podstawowe ustawienia środowiska, natomiast pliki cookie, sesje, stan zalogowania oraz pełna tożsamość fingerprintu nie są uwzględniane. Każdy profil utworzony z pliku CSV zachowuje się jak zupełnie nowe środowisko, bez żadnej wcześniejszej aktywności.
+
+### Co możesz zrobić dzięki CSV
+
+- Utworzyć wiele profili naraz
+- Kopiować i ponownie wykorzystywać konfiguracje profili
+- Zbiorczo aktualizować proxy i ustawienia
+- Zachować spójność konfiguracji w zespole
+- Przenosić konfiguracje między workspace'ami
+
+### Co jest uwzględniane, a co nie
+
+**Uwzględniane:**
+
+- Nazwa profilu
+- Ustawienia proxy
+- Foldery i tagi
+- Podstawowe ustawienia środowiska
+
+**Nieuwzględniane:**
+
+- Pliki cookie
+- Sesje
+- Stan zalogowania
+- Pełna tożsamość fingerprintu
+
+### Warto pamiętać
+
+- Profile utworzone przez CSV zaczynają jako **nowe, czyste środowiska**
+- **Nie są zalogowane** na żadne konta
+- Poprzednie sesje i aktywność **nie są zachowywane**
+- Import CSV **nie jest metodą tworzenia kopii zapasowych**
+- Nieprawidłowe formatowanie może **uszkodzić import lub utworzyć nieprawidłowe profile**
+
+### Najważniejsze wnioski
+
+Import i eksport CSV najlepiej sprawdza się przy **skalowaniu i zarządzaniu konfiguracjami profili**, a nie przy przenoszeniu istniejących profili, sesji ani tożsamości.

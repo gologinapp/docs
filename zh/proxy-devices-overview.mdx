@@ -1,0 +1,70 @@
+---
+title: "代理设备"
+hidden: true
+---
+
+**代理设备**让您可以通过自己的 Android 手机来转发浏览器配置文件的流量，而无需使用传统的代理服务器。
+
+简单来说，就是让您的手机成为配置文件的上网连接。
+
+## 为什么要使用它？
+
+在以下情况下，这个功能会很有用：
+
+- 需要**真实的移动 IP 地址**（而不是数据中心或住宅代理）
+- 希望网站对 IP 有**更高的信任度**
+- 希望减少对第三方代理服务商的依赖
+- 希望以您设备所在网络的身份，显示为**真实的移动端用户**
+
+## 工作原理
+
+- 您在 Android 设备上安装配套应用
+- 该应用会共享手机的网络连接
+- 您的配置文件将该设备作为代理进行连接
+- 所有流量都通过您手机的 IP 传输
+
+<Warning>
+  请勿在多个配置文件中同时使用同一个代理设备。这样 IP 会相同，网站会认为存在异常。
+</Warning>
+
+## 设置指南
+
+### 安装 Gologin Devices 手机应用
+
+1. 在您的 Android 手机上，从 Google Play **下载并安装** Gologin Devices 应用
+2. **登录**您的 Gologin 账号
+3. 点击 **启动代理**
+
+<Columns cols={4}>
+  <Column>
+    <Frame>
+      ![Gologin Devices Google Play](/images/gologin_devices_google_play.jpg)
+    </Frame>
+  </Column>
+  <Column>
+    <Frame>
+      ![Gologin Devices Log In](/images/gologin_devices_log_in-3.jpg)
+    </Frame>
+  </Column>
+  <Column>
+    <Frame>
+      ![Gologin Devices Logged In](/images/gologin_devices_logged_in.jpg)
+    </Frame>
+  </Column>
+  <Column>
+    <Frame>
+      ![Gologin Devices Proxy Running](/images/gologin_devices_proxy_running-1.jpg)
+    </Frame>
+  </Column>
+</Columns>
+
+### 在 Gologin 桌面应用中继续
+
+1. 在 Gologin 应用中，**进入代理设备**页面，确认在 Android 上登录后新设备已经出现
+   <Frame>
+     ![Proxy Devices Tab](/images/proxy_devices_tab.png)
+   </Frame>
+2. 进入**所有简介** \> 点击您的配置文件上的**代理和位置** \> 在代理列表中选择您新添加的代理设备
+   <Frame>
+     ![Choosing A Proxy Device](/images/choosing_a_proxy_device.gif)
+   </Frame>

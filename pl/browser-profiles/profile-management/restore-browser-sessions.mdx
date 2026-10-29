@@ -1,0 +1,52 @@
+---
+title: "Przywracanie sesji przeglądarki"
+---
+
+Za każdym razem, gdy uruchamiasz i zamykasz profil Gologin, system automatycznie tworzy **migawkę sesji**. Funkcja **Profile history** w Gologin pozwala przywrócić jedną z **5 ostatnich sesji**.
+
+Migawka sesji obejmuje:
+
+- pliki cookie,
+- dane session storage,
+- stan zalogowania,
+- tokeny witryn,
+- dane przeglądarki z tej sesji.
+
+W razie potrzeby możesz przywrócić profil do dowolnego z tych wcześniejszych stanów sesji.
+
+## Jak przywrócić sesję profilu?
+
+Aby przywrócić profil do jednej z 5 ostatnich sesji, wykonaj następujące kroki:
+
+1. Kliknij **3 dots** przy profilu
+2. Wybierz **History**
+3. Wybierz żądaną sesję
+4. Kliknij **Restore**
+
+<Frame>
+  ![Przywracanie sesji w historii profilu](/images/profile_history_restore_session.gif)
+</Frame>
+
+## Kiedy korzystać z historii profilu?
+
+Przywracanie z migawek może się przydać, gdy:
+
+1. **Konto zostało wylogowane**\
+   Jeśli witryna niespodziewanie Cię wyloguje, możesz przywrócić wcześniejszą sesję, w której konto było nadal aktywne.
+2. **Utracono dane**\
+   Jeśli nie widzisz ostatnio otwartych kart lub podejrzewasz, że ostatnia synchronizacja profilu nie przebiegła poprawnie z powodu problemów z połączeniem sieciowym.
+3. **Witryna działa nieprawidłowo**\
+   Jeśli witryna nie zachowuje się tak, jak powinna, z powodu zmian w pamięci podręcznej lub ingerencji rozszerzeń.
+4. **Profil nie działa**\
+   Jeśli nie możesz uruchomić profilu z przyczyn niezwiązanych z proxy, na przykład gdy poprzednia sesja nie zsynchronizowała się poprawnie.
+
+## Dobre praktyki
+
+- **Zawsze zamykaj profile prawidłowo**\
+  Nagłe zamknięcie może skutkować niestabilnymi migawkami.
+- **Nie nadużywaj przywracania**\
+  Ciągłe przeskakiwanie między sesjami może wyglądać nienaturalnie.
+- **Zachowaj spójność proxy**\
+  Przywrócenie sesji z USA przy użyciu nowego proxy z UE może unieważnić pliki cookie.
+- **Traktuj to jako narzędzie awaryjne**\
+  Najlepiej sprawdza się przy naprawianiu błędów lub cofaniu niestabilności.

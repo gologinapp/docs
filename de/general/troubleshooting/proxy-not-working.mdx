@@ -1,0 +1,72 @@
+---
+title: "Proxy funktioniert nicht"
+description: "Schritt-für-Schritt-Anleitung zur Diagnose und Behebung von Proxy-Verbindungsproblemen in Gologin."
+---
+
+## Schritt-für-Schritt-Fehlerbehebung für Proxys
+
+Wenn Ihr Proxy in Gologin nicht funktioniert, gehen Sie die folgenden Schritte der Reihe nach durch, um das Problem zu finden und zu beheben.
+
+### 1. Die vollständige Fehlermeldung lesen
+
+Bewegen Sie den Mauszeiger über das Fehlersymbol (das rote oder gelbe Symbol) neben dem Proxy-Feld in den Profileinstellungen. Gologin zeigt beim Darüberfahren eine ausführliche Fehlermeldung an, die oft genaue Hinweise darauf enthält, warum die Verbindung fehlgeschlagen ist.
+
+### 2. Prüfen, ob der Proxy außerhalb von Gologin funktioniert
+
+Testen Sie Ihren Proxy unabhängig, um sicherzustellen, dass er funktionsfähig ist:
+
+- Verwenden Sie ein Online-Tool zur Proxy-Prüfung.
+- Richten Sie den Proxy in einem normalen Browser ein (über eine Proxy-Erweiterung wie FoxyProxy) und versuchen Sie, eine Website zu laden.
+
+Wenn der Proxy auch außerhalb von Gologin nicht funktioniert, liegt das Problem beim Proxy selbst – wenden Sie sich an Ihren Proxy-Anbieter.
+
+### 3. Das Netzwerk wechseln
+
+Manche Netzwerke blockieren Proxy-Verkehr. Versuchen Sie Folgendes:
+
+- Wechseln Sie vom WLAN zu einem mobilen Hotspot (oder umgekehrt).
+- Aktivieren Sie auf Ihrem Gerät ein VPN, bevor Sie das Profil starten.
+
+Wenn der Proxy in einem anderen Netzwerk funktioniert, blockiert wahrscheinlich Ihr ursprüngliches Netzwerk die Verbindung.
+
+### 4. In der Webversion testen
+
+Starten Sie dasselbe Profil auf [app.gologin.com](https://app.gologin.com) (der Web-/Cloud-Version). Funktioniert das Profil dort, aber nicht in der Desktop-App, liegt das Problem an Ihrer lokalen Umgebung und nicht am Proxy selbst.
+
+### 5. Gologin aktualisieren
+
+Stellen Sie sicher, dass Sie die neueste Version der Gologin-Desktop-App verwenden. Ältere Versionen können Kompatibilitätsprobleme mit bestimmten Proxy-Protokollen oder -Konfigurationen haben. Laden Sie die neueste Version von [gologin.com](https://gologin.com) herunter.
+
+### 6. DNS-Einstellungen bei SOCKS-Proxys prüfen
+
+Wenn Sie in Ihrem Profil benutzerdefinierte DNS-Einstellungen konfiguriert haben, beachten Sie, dass benutzerdefiniertes DNS nur mit den Proxy-Protokollen **SOCKS4** und **SOCKS5** funktioniert.
+
+<Warning>
+Benutzerdefinierte DNS-Einstellungen werden bei HTTP- oder HTTPS-Proxys nicht unterstützt. Wenn Sie einen HTTP/HTTPS-Proxy mit benutzerdefiniertem DNS verwenden, entfernen Sie die benutzerdefinierte DNS-Konfiguration oder wechseln Sie zu einem SOCKS-Proxy.
+</Warning>
+
+### 7. Der Proxy funktioniert, aber der Standort ist falsch
+
+Wenn Ihr Proxy erfolgreich verbunden ist, bestimmte Websites (insbesondere Google) aber einen falschen oder Ihren echten Standort anzeigen:
+
+Das liegt daran, dass manche Websites unabhängig von Ihrer IP-Adresse die **Geolocation API** des Browsers nutzen. Die Geolocation API kann Ihren echten Standort verraten, auch wenn Ihre IP-Adresse einen anderen anzeigt.
+
+**Lösung:** Deaktivieren Sie die Geolokalisierung in den Profileinstellungen. Suchen Sie in der Profilkonfiguration die Option Geolocation und setzen Sie sie auf **Blocked** oder geben Sie manuell Koordinaten ein, die zum Standort Ihres Proxys passen.
+
+### 8. Der in Gologin integrierte Proxy zeigt einen Fehler an
+
+Wenn Sie den integrierten Proxy von Gologin verwenden und er nicht funktioniert:
+
+- Wählen Sie einen anderen Proxy-Standort aus den verfügbaren Optionen.
+- Prüfen Sie, ob Ihr Datenvolumen für den Gologin-Proxy aufgebraucht ist. Ihren verbleibenden Traffic sehen Sie in den Kontoeinstellungen.
+- Ist das Datenvolumen aufgebraucht, laden Sie es auf oder wechseln Sie zu einem externen Proxy-Anbieter.
+
+---
+
+<Warning>
+Wenn keiner dieser Schritte hilft, wenden Sie sich mit den folgenden Angaben an den Support:
+
+- Ihre Proxy-Zugangsdaten im Format `ip:port:login:password`
+- Einen Screenshot der Fehlermeldung
+- Ihre Gologin-App-Version (zu finden unter Settings > About)
+</Warning>

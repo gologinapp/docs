@@ -1,0 +1,86 @@
+---
+title: "Kluczowe pojęcia"
+---
+
+Aby skutecznie korzystać z Gologin, warto zrozumieć trzy podstawowe pojęcia, które określają, w jaki sposób środowiska przeglądarki są od siebie oddzielane i chronione.
+
+Te elementy działają razem i tworzą niezależne tożsamości przeglądania dla każdego konta.
+
+## Profile przeglądarki
+
+**Profil przeglądarki** w Gologin to odizolowane środowisko przeglądarki, które symuluje oddzielne urządzenie.
+
+Każdy profil zawiera własne:
+
+- odcisk przeglądarki (fingerprint)
+- pliki cookie i dane sesji
+- pamięć lokalną (local storage) i pamięć podręczną
+- rozszerzenia przeglądarki
+- połączenie proxy
+
+Ponieważ profile są od siebie odizolowane, strony internetowe traktują je jak różnych użytkowników lub urządzenia.
+
+Dzięki temu możesz zarządzać wieloma kontami bez wzajemnego zakłócania sesji. Ma to szczególne znaczenie przy pracy z wieloma kontami na dużą skalę, jak opisano w <br />[Zarządzanie istniejącymi kontami](https://gologin.com/docs/managing-existing-accounts).
+
+## Odciski przeglądarki
+
+**Odcisk przeglądarki** (browser fingerprint) to zestaw parametrów technicznych, za pomocą których strony internetowe identyfikują urządzenie.
+
+Parametry te mogą obejmować:
+
+- system operacyjny
+- wersję przeglądarki
+- rozdzielczość ekranu
+- zainstalowane czcionki
+- dane graficzne i WebGL
+- ustawienia strefy czasowej i języka
+
+Gologin generuje unikalny odcisk dla każdego profilu, dzięki czemu strony widzą każdy profil jako inne urządzenie.
+
+Odcisk przeglądarki określa, w jaki sposób strony internetowe identyfikują Twoje urządzenie. Aby poznać szczegóły, zobacz <br />[Jak działają odciski przeglądarki](https://gologin.com/docs/how-browser-fingerprints-work).
+
+## Proxy
+
+**Proxy** przypisuje profilowi przeglądarki inny adres IP.
+
+Ponieważ strony internetowe śledzą zarówno odciski przeglądarki, jak i adresy IP, używanie proxy pomaga oddzielić tożsamości sieciowe poszczególnych profili.
+
+Dzięki proxy każdy profil może łączyć się z innej lokalizacji lub sieci.
+
+Użycie proxy razem z unikalnym odciskiem przeglądarki pomaga stworzyć spójną i niezależną tożsamość przeglądania.
+
+Proxy służą do oddzielania kont na poziomie sieci. Jeśli nie wiesz, jak działają, zacznij od [Czym jest proxy](https://gologin.com/docs/proxy/introduction/what-is-a-proxy).
+
+Gdy już rozumiesz te elementy, kolejnym krokiem jest ich zastosowanie podczas tworzenia profili. <br />Zobacz [Tworzenie profili](https://gologin.com/docs/browser-profiles/profile-management/creating-and-launching-profiles).
+
+## System operacyjny profilu musi odpowiadać systemowi Twojego urządzenia
+
+System operacyjny ustawiony w odcisku profilu powinien odpowiadać systemowi urządzenia, na którym otwierasz ten profil. Na przykład:
+
+- Otwarcie profilu Windows na komputerze Mac może powodować wykrywalne niezgodności
+- Strony takie jak iphey.com i pixelscan.net oznaczą to jako niespójność odcisku przeglądarki
+- LinkedIn i inne wrażliwe platformy mogą natychmiast Cię wylogować
+
+<Warning>
+  Jeśli pracujesz na komputerze Mac, twórz profile Mac. Jeśli pracujesz w systemie Windows, twórz profile Windows. Korzystanie między platformami (tworzenie profilu w jednym systemie i otwieranie w innym) może narazić Twoje konta na ryzyko.
+</Warning>
+
+## Domyślne ustawienia odcisku są bezpieczne
+
+Gologin automatycznie generuje realistyczne ustawienia odcisku dla każdego nowego profilu. Nie musisz dostosowywać parametrów WebGL, Canvas, Audio ani innych parametrów odcisku, chyba że masz ku temu konkretny powód.
+
+## Jak sprawdzić odcisk przeglądarki
+
+Po uruchomieniu profilu odwiedź jedno z tych narzędzi do sprawdzania:
+
+- **iphey.com** -- pokazuje ogólny wskaźnik zaufania i wskazuje problemy
+- **pixelscan.net** -- szczegółowa analiza odcisku
+
+Wynik „zielony” lub „zaufany” oznacza, że Twój profil wygląda dla stron internetowych jak prawdziwa przeglądarka.
+
+## Zobacz także
+
+- [Szybki start: od zera do pierwszego profilu](https://gologin.com/docs/getting-started/introduction/quick-start-from-zero-to-your-first-profile)
+- [Lista kontrolna na początek](https://gologin.com/docs/getting-started/setup/first-time-checklist)
+- [Czym jest proxy](https://gologin.com/docs/proxy/introduction/what-is-a-proxy)
+- [Ustawienia odcisku profilu](https://gologin.com/docs/profile-fingerprint-settings)

@@ -1,0 +1,215 @@
+---
+title: 'Scraping API SDK và CLI'
+---
+
+Gologin Web Unlocker là một **scraping API chỉ với một endpoint** dành cho các trang web nặng JavaScript và có cơ chế bảo vệ.
+
+Bạn gửi một URL, nhận về HTML/văn bản của trang đã được render, rồi xử lý bằng quy trình trích xuất dữ liệu của riêng bạn.
+
+## Vì sao nên dùng như một Scraping API
+
+- Một endpoint cho mọi URL đích
+- Xác thực bằng API key, không cần điều phối trình duyệt
+- Phản hồi ưu tiên HTML, dễ tích hợp với các bộ phân tích cú pháp (parser) hiện có
+- Phù hợp với ETL, giám sát, nạp dữ liệu cho AI và các pipeline dữ liệu
+
+## Endpoint
+
+`GET https://parsing.webunlocker.gologin.com/v1/scrape?url={encoded_url}`
+
+## Xác thực
+
+Gửi API key của bạn trong header:
+
+```http
+apikey: <API_KEY>
+```
+
+## Mô hình yêu cầu
+
+| Tên | Vị trí | Kiểu | Bắt buộc | Mô tả |
+|---|---|---|---|---|
+| `url` | tham số truy vấn | chuỗi (URL tuyệt đối) | có | URL đích cần thu thập dữ liệu |
+
+## Bắt đầu nhanh
+
+### cURL
+
+```bash
+curl "https://parsing.webunlocker.gologin.com/v1/scrape?url=https%3A%2F%2Fexample.com" \
+  -H "apikey: YOUR_API_KEY"
+```
+
+### Python
+
+```python
+import requests
+
+response = requests.get(
+    "https://parsing.webunlocker.gologin.com/v1/scrape",
+    params={"url": "https://example.com"},
+    headers={"apikey": "YOUR_API_KEY"}
+)
+
+print(response.status_code)
+print(response.text[:500])
+```
+
+### JavaScript (fetch)
+
+```js
+const response = await fetch(
+  "https://parsing.webunlocker.gologin.com/v1/scrape?url=" +
+    encodeURIComponent("https://example.com"),
+  { headers: { apikey: "YOUR_API_KEY" } }
+);
+
+const html = await response.text();
+console.log(response.status, html.slice(0, 500));
+```
+
+## Hành vi của phản hồi
+
+Nội dung phản hồi hiện tại là **HTML/văn bản thô đã được render**.
+
+- `200` -> thành công, nội dung chứa HTML/văn bản của trang
+- `401` / `403` -> API key không hợp lệ hoặc bị thiếu
+- `422` -> `url` không hợp lệ hoặc bị thiếu
+- `429` -> vượt giới hạn tốc độ (rate limit)
+- `500+` -> lỗi tạm thời từ phía máy chủ
+
+## Hướng dẫn thử lại
+
+Hãy thử lại với cơ chế exponential backoff (tăng dần thời gian chờ) khi gặp:
+
+- lỗi mạng
+- `408`, `429`, `500`, `502`, `503`, `504`
+
+## Lưu ý về phạm vi
+
+Endpoint công khai hiện tại ưu tiên HTML. Đừng mặc định rằng có thêm các endpoint backend khác (ví dụ chụp ảnh màn hình/crawl/tìm kiếm/usage), trừ khi chúng được nêu rõ trong tài liệu và đã được bật cho tài khoản của bạn.
+
+## SDK Node.js chính thức
+
+Cài đặt:
+
+```bash
+npm i gologin-webunlocker
+```
+
+### Bắt đầu nhanh với SDK
+
+```ts
+import { WebUnlocker } from "gologin-webunlocker";
+
+const client = new WebUnlocker({
+  apiKey: process.env.GOLOGIN_WEBUNLOCKER_API_KEY!
+});
+
+const result = await client.scrape("https://example.com");
+console.log(result.status);
+console.log(result.content.slice(0, 500));
+```
+
+### Tùy chọn của constructor
+
+```ts
+new WebUnlocker({
+  apiKey: "wu_live_xxx",
+  baseUrl: "https://parsing.webunlocker.gologin.com",
+  timeoutMs: 15000,
+  maxRetries: 2
+});
+```
+
+### Các phương thức chính của SDK
+
+- `scrape(url)` -> đối tượng phản hồi đã được chuẩn hóa
+- `scrapeRaw(url)` -> `Response` gốc
+- `buildScrapeUrl(url)` -> URL yêu cầu đầy đủ
+
+### Các phương thức suy ra ở phía SDK (từ HTML trả về)
+
+Đây **không phải là các endpoint backend riêng biệt**; chúng được SDK suy ra từ HTML mà API trả về:
+
+- `scrapeText(url)` -> văn bản thuần
+- `scrapeMarkdown(url)` -> markdown
+- `scrapeJSON(url)` -> siêu dữ liệu có cấu trúc (`title`, `meta`, `links`, `headings`)
+- `batchScrape(urls, { concurrency })` -> hàm hỗ trợ gọi scrape cho nhiều URL
+
+### Lỗi có kiểu xác định
+
+- `WebUnlockerError`
+- `AuthenticationError`
+- `RateLimitError`
+- `APIError`
+- `TimeoutError`
+- `NetworkError`
+
+Ánh xạ lỗi:
+
+- `401` / `403` -> `AuthenticationError`
+- `429` -> `RateLimitError`
+- `500+` -> `APIError`
+- hết thời gian chờ/bị hủy -> `TimeoutError`
+- lỗi fetch/mạng -> `NetworkError`
+
+## CLI
+
+```bash
+gologin-webunlocker <command> <url> [options]
+```
+
+Các lệnh:
+
+- `scrape` (HTML/văn bản thô)
+- `text` (văn bản được suy ra)
+- `markdown` (markdown được suy ra)
+- `json` (siêu dữ liệu được suy ra)
+
+Ví dụ:
+
+```bash
+gologin-webunlocker scrape https://example.com --api-key wu_live_xxx
+GOLOGIN_WEBUNLOCKER_API_KEY=wu_live_xxx gologin-webunlocker text https://example.com
+GOLOGIN_WEBUNLOCKER_API_KEY=wu_live_xxx gologin-webunlocker json https://example.com
+```
+
+## Các trường hợp sử dụng scraping điển hình
+
+- giám sát giá và danh mục sản phẩm
+- bổ sung dữ liệu cho danh sách khách hàng tiềm năng và danh bạ
+- các pipeline thu thập thông tin thị trường
+- tổng hợp và lập chỉ mục nội dung
+- quy trình nạp dữ liệu và trích xuất cho LLM
+
+## Gologin Web Access CLI (hợp nhất)
+
+Nếu bạn cần một CLI mạnh mẽ hơn, kết hợp Web Unlocker với Cloud Browser trong cùng một bộ lệnh, hãy dùng `gologin-web-access`:
+
+```bash
+npm install -g gologin-web-access
+
+export GOLOGIN_WEB_UNLOCKER_API_KEY="wu_..."
+
+# all scraping commands from gologin-webunlocker, plus:
+gologin-web-access batch-scrape url1 url2 url3 --format text --summary
+gologin-web-access search "query" --limit 10
+gologin-web-access map https://example.com --limit 50
+gologin-web-access crawl https://docs.example.com --format markdown --limit 20
+gologin-web-access extract https://example.com --schema ./schema.json
+gologin-web-access change-track https://example.com --format markdown
+
+# plus cloud browser interaction (requires GOLOGIN_TOKEN)
+gologin-web-access open https://example.com
+gologin-web-access snapshot
+gologin-web-access click e3
+```
+
+Xem [Gologin Web Access CLI](/vi/cli-tools/web-access) để biết đầy đủ tài liệu tham khảo.
+
+## Tài liệu nguồn
+
+- [Web Unlocker là gì](/vi/what-is-web-unlocker)
+- [Bắt đầu nhanh với Web Unlocker](/vi/web-unlocker-quick-start)
+- [Các trường hợp sử dụng Web Unlocker](/vi/web-unlocker-use-cases)

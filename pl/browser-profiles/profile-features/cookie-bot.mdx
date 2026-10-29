@@ -1,0 +1,101 @@
+---
+title: "Cookie Bot"
+---
+
+Cookie Bot to wbudowane narzędzie Gologin, które automatycznie generuje pliki cookie przeglądania dla profilu. Może ono pomóc w automatyzacji procesu rozgrzewania profilu.
+
+Symuluje naturalne zachowanie podczas przeglądania: odwiedza popularne strony internetowe i wykonuje proste czynności, takie jak przewijanie i klikanie. Dzięki temu przed zalogowaniem się na konta środowisko przeglądarki wygląda bardziej realistycznie.
+
+Cookie Bot może pomóc w następujących zadaniach:
+
+- generowanie początkowej historii przeglądania
+- tworzenie naturalnych plików cookie dla stron internetowych
+- rozgrzewanie nowych profili przeglądarki
+- przygotowanie profili do logowania na konta lub automatyzacji
+
+## Jak działa Cookie Bot
+
+Cookie Bot odwiedza listę popularnych stron internetowych i symuluje podstawowe interakcje użytkownika.
+
+Do tych działań mogą należeć:
+
+- ładowanie stron
+- przewijanie treści
+- klikanie przycisków
+- ładowanie obrazów
+
+<Frame>
+  ![Cookie Bot](/images/cookie_bot.png)
+</Frame>
+
+Taka aktywność tworzy pliki cookie i dane przeglądania w profilu, dzięki czemu sesja przeglądarki wygląda bardziej naturalnie.
+
+## Funkcje i ustawienia Cookie Bot
+
+Obecnie można skonfigurować następujące ustawienia:
+
+- **Loading images**\
+  ON – obrazy będą ładowane\
+  OFF – obrazy nie będą ładowane, co pozwala oszczędzać transfer proxy
+- **Using scrolling**\
+  ON – bot będzie przewijać strony, naśladując zachowanie człowieka\
+  OFF – bot nie będzie przewijać stron i przejdzie do kolejnego kroku
+- **Use autoclock**\
+  ON – bot **zaakceptuje za Ciebie prośby o zgodę na pliki cookie**\
+  OFF – bot niczego nie kliknie
+
+Czego jeszcze nie obsługuje:
+
+- ręcznego nagrywania przepływów działań, które bot ma wykonać
+- dostosowywania tego, co bot klika
+
+## Uruchamianie Cookie Bot
+
+### Uruchamianie Cookie Bot dla pojedynczego profilu
+
+1. Przejdź na stronę **All profiles**.
+2. Kliknij **3 dots** przy profilu.
+3. Wybierz **Automation**.
+4. Przejrzyj listę stron, które bot ma odwiedzić.
+5. W razie potrzeby dostosuj opcjonalne ustawienia.
+6. Kliknij **Run**.
+
+<Frame>
+  ![Run Cookie Bot For Profile](/images/run_cookie_bot_for_profile-1.gif)
+</Frame>
+
+Cookie Bot zasymuluje aktywność przeglądania i wygeneruje pliki cookie dla profilu.
+
+### Uruchamianie Cookie Bot dla wielu profili
+
+Gologin umożliwia również uruchomienie Cookie Bot **dla kilku profili jednocześnie**.
+
+Aby to zrobić:
+
+1. Zaznacz kilka profili w tabeli profili.
+2. Wybierz **Automation**.
+3. Skonfiguruj ustawienia.
+4. Kliknij **Run**.
+
+<Frame>
+  ![Run Cookie Bot For Multiple Profiles](/images/run_cookie_bot_for_multiple_profiles.gif)
+</Frame>
+
+Proces zostanie uruchomiony dla wszystkich zaznaczonych profili.
+
+## Dobre praktyki
+
+Aby uzyskać najlepsze rezultaty:
+
+- uruchom Cookie Bot przed zalogowaniem się na nowe konta
+- pozostaw włączone proxy profilu na czas działania procesu
+- unikaj zbyt częstego uruchamiania Cookie Bot na tym samym profilu
+
+Pomaga to zachować naturalne środowisko przeglądania.
+
+## Zobacz także
+
+- [Run with Sync](https://gologin.com/docs/browser-profiles/profile-features/run-with-sync)
+- [Bezpieczne tworzenie nowych kont](https://gologin.com/docs/creating-new-accounts-safely)
+- [Utrzymywanie wskaźnika zaufania](https://gologin.com/docs/maintaining-trust-score)
+- [Migracja z innych przeglądarek antydetekcyjnych](https://gologin.com/docs/general/migration-from-other-tools)

@@ -1,0 +1,157 @@
+---
+title: "LinkedIn"
+---
+
+Praktyczny przewodnik po zarządzaniu kontami LinkedIn w Gologin — obejmuje pozyskiwanie leadów, outreach, farmienie kont i dostęp dla zespołu.
+
+LinkedIn to jedna z platform o najwyższych wymaganiach bezpieczeństwa w ekosystemie Gologin. Monitoruje wzorce logowania, spójność adresów IP i odciski urządzeń (fingerprinty) bardziej agresywnie niż większość sieci społecznościowych. Konta, które wykazują podejrzane sygnały, są szybko ograniczane, czasem bez ostrzeżenia.
+
+## Szybka lista kontrolna
+
+Zanim zaczniesz:
+
+- 1 konto = 1 profil przeglądarki
+- 1 profil = 1 statyczne proxy rezydencjalne lub mobilne
+- Nigdy nie zmieniaj proxy w profilu, który był już używany
+- Dopasuj system operacyjny profilu do systemu operacyjnego swojego urządzenia
+- Nie otwieraj tego samego profilu na dwóch urządzeniach jednocześnie
+
+## Krok 1. Wybierz odpowiednie proxy
+
+LinkedIn jest bardzo wrażliwy na zmiany adresu IP. Używaj statycznego proxy rezydencjalnego lub statycznego proxy mobilnego — jednego dedykowanego adresu IP, który pozostaje taki sam w kolejnych sesjach.
+
+<Warning>
+  Nie używaj proxy rotacyjnych, proxy z centrów danych (datacenter) ani wbudowanych proxy Gologin dla kont LinkedIn, na których Ci zależy. Zmieniający się adres IP między sesjami wywoła natychmiastową weryfikację bezpieczeństwa i często wylogowanie z sesji.
+</Warning>
+
+Jeśli Ty i członek Twojego zespołu mieszkacie w tym samym mieście, możecie używać proxy z tego samego kraju i miasta. Jeśli zespół jest rozproszony, każda osoba powinna używać proxy dopasowanego do regionu geograficznego konta LinkedIn — a nie do miejsca, w którym fizycznie przebywa.
+
+Zalecane typy proxy dla LinkedIn:
+
+- Statyczne rezydencjalne (najlepsze do długoterminowego zarządzania kontami)
+- Mobilne (dobre do tworzenia nowych kont i ich rozgrzewania)
+- Proxy ISP (stabilne, przyzwoity poziom zaufania)
+
+Konkretne usługi znajdziesz w artykule [Polecani dostawcy proxy](https://gologin.com/best-proxy-server-services/).
+
+## Krok 2. Skonfiguruj profil w Gologin
+
+Dla każdego konta LinkedIn utwórz osobny profil.
+
+Zalecane ustawienia:
+
+- **OS**: dopasuj do swojego urządzenia (Windows, jeśli pracujesz na Windows, Mac, jeśli pracujesz na Mac)
+- **Proxy**: przypisz statyczne proxy przed pierwszym logowaniem
+- **Fingerprint**: pozostaw ustawienia domyślne — nie zmieniaj WebGL, Canvas ani AudioContext, chyba że masz ku temu konkretny powód
+
+Po zalogowaniu się do LinkedIn w danym profilu **nie zmieniaj ustawień proxy ani fingerprintu.** LinkedIn przechowuje informacje o urządzeniu po stronie serwera. Zmiana fingerprintu wygląda tak, jakby zupełnie nowe urządzenie próbowało uzyskać dostęp do konta.
+
+## Krok 3. Rozgrzej nowe konta
+
+Nowe konta LinkedIn, które od razu wysyłają zaproszenia do kontaktów lub wiadomości, są szybko ograniczane. LinkedIn oczekuje, że nowe konta będą zachowywać się jak prawdziwi użytkownicy — przeglądać, czytać i stopniowo budować swoją obecność.
+
+Harmonogram rozgrzewania:
+
+| Okres | Co robić |
+| :-- | :-- |
+| Dzień 0 | Uzupełnij profil: zdjęcie, nagłówek, sekcję „O mnie", historię zatrudnienia |
+| Dni 1–7 | Przeglądaj feed, oglądaj profile, obserwuj kilka firm |
+| Dni 8–14 | Lajkuj i komentuj posty. Jeszcze bez outreachu |
+| Tydzień 3 | Wyślij 5–10 zaproszeń do osób, które „znasz" |
+| Tydzień 4\+ | Zacznij stopniowy outreach. Limity zwiększaj powoli |
+
+Bezpieczny poziom aktywności
+
+| **Działanie** | **Zalecany poziom** |
+| :-- | :-- |
+| Polubienia / upvote'y | 10–20 / dzień |
+| Komentarze | 2–3 / dzień |
+| Posty / odpowiedzi | Okazjonalnie |
+| Dołączanie do społeczności | Stopniowo |
+
+To ostrożne szacunki. Rzeczywiste limity LinkedIn zależą od wieku konta, historii aktywności i typu subskrypcji.
+
+## Krok 4. Unikaj typowych blokad
+
+Czynniki, które natychmiast powodują ograniczenia na LinkedIn:
+
+- Logowanie z nowego adresu IP po tym, jak konto było już aktywne (używaj statycznych proxy)
+- Jednoczesne otwieranie tego samego profilu na dwóch urządzeniach
+- Wysyłanie identycznych wiadomości do wielu osób w krótkim czasie
+- Tworzenie wielu kont tego samego dnia z takim samym schematem konfiguracji profilu
+- Używanie narzędzi do automatyzacji, które nie utrzymują spójnej sesji (zobacz sekcję o automatyzacji poniżej)
+
+Czynniki, które powodują ograniczenia stopniowo:
+
+- Duża liczba zaproszeń do kontaktów przy niskim odsetku akceptacji
+- Wiele wyświetleń profili bez żadnej interakcji
+- Publikowanie tych samych treści na wielu kontach
+- Konta bez aktywności przez kilka tygodni, a następnie nagły masowy outreach
+
+## Krok 5. Udostępnij dostęp zespołowi
+
+Aby umożliwić członkowi zespołu dostęp do konta LinkedIn w Gologin:
+
+1. Udostępnij mu profil za pomocą **Profile Sharing** (potrzebuje darmowego konta Gologin)
+2. Przypisz rolę **Can run**, jeśli ma tylko otwierać profil i w nim pracować
+3. Przypisz **Can edit**, jeśli musi też zmieniać ustawienia
+
+<Warning>
+  W profilu LinkedIn powinna pracować tylko jedna osoba naraz. LinkedIn wykrywa równoczesne sesje z różnych lokalizacji i wyloguje obie sesje albo uruchomi weryfikację bezpieczeństwa.
+</Warning>
+
+Instrukcję krok po kroku znajdziesz w artykule [Udostępnianie profili](https://gologin.com/docs/general/team-collaboration/sharing-profiles).
+
+## Narzędzia do automatyzacji
+
+Gologin jest zgodny z popularnymi narzędziami do automatyzacji LinkedIn. Kluczowy warunek jest taki, że automatyzacja działa wewnątrz profilu Gologin — a nie jako osobne rozszerzenie w zwykłym oknie Chrome.
+
+Zgodne podejście:
+
+- Uruchamiaj narzędzia do automatyzacji jako rozszerzenia Chrome zainstalowane wewnątrz profilu Gologin
+- Użyj API Gologin, aby uruchomić profil, a następnie podłącz automatyzację do działającej sesji przeglądarki
+
+Niezgodne podejście:
+
+- Uruchamianie automatyzacji w zwykłym oknie Chrome przy jednoczesnym użyciu Gologin (sesje są oddzielne i mogą ze sobą kolidować)
+- Używanie narzędzi do automatyzacji, które otwierają własną przeglądarkę poza Gologin
+
+Automatyzacja powinna zawsze przestrzegać dziennych limitów LinkedIn. Automatyzacja na dużą skalę bez rozgrzewania to najszybsza droga do ograniczenia konta.
+
+## Migracja profili z innej przeglądarki antydetekcyjnej
+
+Jeśli przechodzisz z Dolphin Anty, Multilogin lub innej przeglądarki antydetekcyjnej, dane profilu przeglądarki (ciasteczka, sesje, local storage) można wyeksportować i zaimportować do Gologin.
+
+Kroki:
+
+1. Wyeksportuj ciasteczka z dotychczasowej przeglądarki antydetekcyjnej (większość obsługuje eksport do formatu JSON)
+2. W Gologin otwórz docelowy profil i przejdź do **Cookies**
+3. Zaimportuj plik z ciasteczkami
+
+Dzięki temu sesja LinkedIn zostaje zachowana i nie musisz logować się ponownie. Fingerprint będzie inny (Gologin generuje własny), ale dopóki adres IP proxy pozostaje taki sam, LinkedIn zwykle zaakceptuje sesję jako pochodzącą z tego samego urządzenia.
+
+## Dlaczego LinkedIn wylogowuje sesje
+
+Wylogowania z sesji LinkedIn są prawie zawsze spowodowane jedną z poniższych przyczyn:
+
+- Zmiana adresu IP proxy — nawet niewielka zmiana IP uruchamia weryfikację bezpieczeństwa
+- Otwarcie profilu w innym systemie operacyjnym — niespójność fingerprintu
+- Otwarcie profilu na dwóch urządzeniach jednocześnie — wykryto równoczesną sesję
+- Długa nieaktywność, po której następuje nagła aktywność — wygląda jak przejęcie konta
+- Wykrycie automatyzacji — nietypowe wzorce działań wykonywanych w nieludzkim tempie
+
+Jeśli często jesteś wylogowywany, w pierwszej kolejności sprawdź proxy — najczęstszą przyczyną jest użycie proxy rotacyjnego zamiast statycznego.
+
+## Zobacz także
+
+[Proxy statyczne a rotacyjne](https://gologin.com/docs/static-vs-dynamic-proxies)
+
+[Najlepsze proxy do Twoich potrzeb](https://gologin.com/docs/proxy/introduction/best-proxy-for-your-case)
+
+[Dodawanie proxy i zarządzanie nimi](https://gologin.com/docs/proxy/proxy-management/adding-proxies)
+
+[Udostępnianie profili zespołowi](https://gologin.com/docs/general/team-collaboration/sharing-profiles)
+
+[Typowe błędy, których należy unikać](https://gologin.com/docs/common-mistakes-to-avoid)
+
+[Utrzymywanie poziomu zaufania](https://gologin.com/docs/maintaining-trust-score)

@@ -1,0 +1,235 @@
+---
+title: "Gologin dành cho AI Agent"
+description: "Giúp các AI agent của bạn truy cập web một cách ổn định — thu thập dữ liệu, tự động hóa trình duyệt và duy trì phiên làm việc với Gologin"
+---
+
+Gologin cung cấp cho AI agent ba khả năng cần thiết để làm việc với web một cách ổn định:
+
+1. **Đọc web** — thu thập dữ liệu từ mọi trang, kể cả các trang dùng nhiều JavaScript hoặc có cơ chế bảo vệ, thông qua Web Unlocker
+2. **Tương tác với web** — mở phiên trình duyệt thật với các thao tác nhấp chuột, nhập liệu, điều hướng và lưu cookie bền vững thông qua Cloud Browser
+3. **Không bị phát hiện** — tạo vân tay chống phát hiện, proxy dân cư và quản lý danh tính theo profile
+
+Các khả năng này có sẵn ở nhiều cấp độ tích hợp — hãy chọn cấp độ phù hợp với hệ thống của bạn.
+
+---
+
+## Các tùy chọn tích hợp
+
+<CardGroup cols={2}>
+  <Card title="MCP Server" icon="plug" href="/vi/api-reference/ai-integrations/mcp-server">
+    Kết nối Gologin với Claude Desktop, Cursor hoặc bất kỳ MCP client nào. Quản lý profile và phiên làm việc bằng ngôn ngữ tự nhiên.
+  </Card>
+  <Card title="AI Skills" icon="wand-magic-sparkles" href="/vi/api-reference/ai-integrations/ai-skills">
+    Các tiện ích mở rộng cắm là chạy cho Claude Code. Cài đặt một skill và agent của bạn có ngay khả năng thu thập dữ liệu web và tự động hóa trình duyệt.
+  </Card>
+  <Card title="Công cụ CLI" icon="terminal" href="/vi/cli-tools/web-access">
+    Các lệnh shell mà AI agent có thể gọi trực tiếp. Thu thập dữ liệu, duyệt web, tương tác — không cần viết code. Ba công cụ CLI cho các quy trình làm việc khác nhau.
+  </Card>
+  <Card title="SDK + Cloud Browser API" icon="code" href="/vi/api-reference/cloud-browser/getting-started">
+    Toàn quyền kiểm soát bằng lập trình. Xây dựng các công cụ agent tùy chỉnh với Puppeteer/Playwright kết nối với Gologin Cloud Browser.
+  </Card>
+</CardGroup>
+
+---
+
+## Nên chọn công cụ nào
+
+| Tôi muốn... | Sử dụng |
+|---|---|
+| Quản lý profile từ Claude Desktop / Cursor | [MCP Server](/vi/api-reference/ai-integrations/mcp-server) |
+| Cho Claude Code khả năng truy cập web mà không cần thiết lập | [AI Skills](/vi/api-reference/ai-integrations/ai-skills) |
+| Thu thập dữ liệu trang, thu thập toàn bộ website, trích xuất hàng loạt | [Web Access CLI](/vi/cli-tools/web-access) |
+| Mở trình duyệt đám mây, nhấp chuột, nhập liệu, chụp ảnh màn hình | [Agent Browser CLI](/vi/cli-tools/agent-browser) |
+| Làm nóng profile cục bộ, chạy quy trình đăng nhập | [Local Agent Browser CLI](/vi/cli-tools/local-agent-browser) |
+| Xây dựng công cụ tùy chỉnh với Puppeteer/Playwright | [Cloud Browser API](/vi/api-reference/cloud-browser/getting-started) |
+| Gọi API thu thập dữ liệu từ code của riêng tôi | [Web Unlocker SDK](/vi/scraping-api-sdk-and-cli) |
+
+---
+
+## Các thành phần kết hợp với nhau như thế nào
+
+```
+┌─────────────────────────────────────────────────┐
+│                  AI Agent                        │
+│         (Claude, Codex, custom agent)            │
+└──────┬──────────┬──────────┬────────────────────┘
+       │          │          │
+  MCP Server   AI Skills   CLI Tools / SDK
+       │          │          │
+       └──────────┴──────────┘
+                  │
+    ┌─────────────┴─────────────┐
+    │                           │
+Web Unlocker              Cloud Browser
+(stateless scraping)    (stateful sessions)
+    │                           │
+    └─────────────┬─────────────┘
+                  │
+          Gologin Infrastructure
+    (proxies, fingerprints, profiles)
+```
+
+- **Web Unlocker** xử lý việc đọc và trích xuất dữ liệu không lưu trạng thái — gửi một URL và nhận lại HTML đã được render
+- **Cloud Browser** xử lý các tương tác có lưu trạng thái — mở phiên, nhấp chuột, nhập liệu, điều hướng và lưu giữ cookie
+- **Orbita cục bộ** xử lý các profile cục bộ bền vững — làm nóng profile, quy trình đăng nhập, các thao tác trên mạng xã hội/sàn thương mại điện tử
+
+Cả ba đều dùng chung hạ tầng của Gologin: proxy dân cư, vân tay chống phát hiện và quản lý profile.
+
+---
+
+## Mọi người xây dựng gì với giải pháp này
+
+### Nghiên cứu và tình báo cạnh tranh
+
+Một AI agent theo dõi giá của đối thủ, các đợt ra mắt sản phẩm và thay đổi nội dung trên hàng chục website — tự động, mỗi ngày. Agent thu thập dữ liệu các trang của đối thủ thông qua Web Unlocker, trích xuất dữ liệu có cấu trúc, so sánh với bản chụp của ngày hôm trước và tạo bản tổng hợp hằng ngày. Không cần phiên trình duyệt, chỉ cần trích xuất không lưu trạng thái ở quy mô lớn.
+
+```bash
+# scrape 20 competitor pricing pages and get structured output
+gologin-web-access batch-scrape \
+  https://competitor1.com/pricing \
+  https://competitor2.com/pricing \
+  https://competitor3.com/pricing \
+  --format json --summary --output ./today-prices.json
+
+# detect what changed since last check
+gologin-web-access batch-change-track \
+  https://competitor1.com/pricing \
+  https://competitor2.com/features \
+  --format markdown --output ./changes.json
+```
+
+### Tạo và làm giàu danh sách khách hàng tiềm năng
+
+Thu thập dữ liệu từ các danh bạ doanh nghiệp, trang công ty trên LinkedIn, các trang đánh giá — rồi đưa HTML vào Claude để trích xuất tên, email, số điện thoại, quy mô công ty và công nghệ đang sử dụng. Hoạt động như một công cụ trong vòng lặp của AI agent: agent quyết định trang nào cần thu thập, gọi công cụ và nhận lại dữ liệu có cấu trúc.
+
+```bash
+# search for leads
+gologin-web-access search "saas companies series A 2026" --limit 20
+
+# scrape and extract structured data from each result
+gologin-web-access extract https://example.com/company/123 --schema ./lead-schema.json
+```
+
+### Quản lý nhiều tài khoản
+
+Vận hành hơn 50 tài khoản mạng xã hội, tài khoản quảng cáo hoặc tài khoản người bán trên sàn thương mại điện tử — mỗi tài khoản có profile trình duyệt, vân tay, proxy và cookie riêng. Local Agent Browser quản lý các profile, làm nóng chúng bằng runbook và giữ phiên làm việc hoạt động xuyên suốt các lần agent gọi.
+
+```bash
+# create profiles for each account
+gologin-local-agent-browser profile-create "FB Ads Account 1" --template ads
+gologin-local-agent-browser profile-create "FB Ads Account 2" --template ads
+
+# warm up profiles in batch
+gologin-local-agent-browser batch ./warmup-runbook.json \
+  --targets ./all-profiles.json --concurrency 5
+```
+
+### Tự động điền biểu mẫu và nhập dữ liệu
+
+Một AI agent đăng nhập vào các bảng điều khiển nội bộ, điền biểu mẫu, gửi báo cáo, tải xuống các bản xuất — tất cả thông qua một phiên trình duyệt đám mây thật. Agent đọc trang dưới dạng snapshot, tìm đúng các trường theo ref, nhập giá trị, nhấp nút gửi và kiểm tra kết quả.
+
+```bash
+gologin-agent-browser open https://internal-dashboard.com/login --profile my_profile
+gologin-agent-browser snapshot
+gologin-agent-browser fill @e3 "username"
+gologin-agent-browser fill @e5 "password"
+gologin-agent-browser click @e7    # submit button
+gologin-agent-browser wait 2000
+gologin-agent-browser snapshot     # verify login success
+gologin-agent-browser screenshot ./logged-in.png
+```
+
+### Giám sát và cảnh báo nội dung
+
+Theo dõi các thay đổi trên trang quy định của chính phủ, blog của đối thủ, trang tuyển dụng hoặc bất kỳ trang nào quan trọng với doanh nghiệp của bạn. Chạy hằng ngày bằng cron hoặc một agent theo lịch, so sánh với phiên bản trước và cảnh báo khi có thay đổi đáng kể.
+
+```bash
+# track changes on key pages
+gologin-web-access change-track https://regulations.gov/new-rules --format markdown
+gologin-web-access batch-change-track \
+  https://competitor.com/blog \
+  https://competitor.com/changelog \
+  --output ./changes.json
+```
+
+### Quy trình thu thập dữ liệu web dùng AI
+
+Xây dựng một quy trình hoàn chỉnh: thu thập toàn bộ website tài liệu, chuyển sang markdown, đưa vào LLM để tóm tắt hoặc hỏi đáp. Dùng CLI để trích xuất dữ liệu và dùng code của riêng bạn cho phần LLM.
+
+```bash
+# crawl an entire docs site
+gologin-web-access crawl https://docs.example.com \
+  --format markdown --limit 100 --max-depth 3 --only-main-content \
+  --output ./docs-corpus.json
+
+# or map the site first, then selectively scrape
+gologin-web-access map https://docs.example.com --limit 200
+gologin-web-access batch-scrape url1 url2 url3 --format text --output ./selected.json
+```
+
+### Kiểm thử địa lý và QA bản địa hóa
+
+Kiểm tra website của bạn hiển thị như thế nào từ các quốc gia khác nhau. Mở cùng một URL thông qua các profile được cấu hình proxy ở nhiều khu vực địa lý khác nhau, chụp ảnh màn hình và so sánh.
+
+```bash
+# create geo-specific profiles
+gologin-local-agent-browser profile-create "US Test" --template geo --proxy-country us
+gologin-local-agent-browser profile-create "DE Test" --template geo --proxy-country de
+gologin-local-agent-browser profile-create "JP Test" --template geo --proxy-country jp
+
+# screenshot from each location
+gologin-agent-browser open https://yoursite.com --profile us_profile_id
+gologin-agent-browser screenshot ./us-view.png
+gologin-agent-browser close
+```
+
+---
+
+## Ví dụ bắt đầu nhanh
+
+### Thu thập dữ liệu một trang (CLI)
+
+```bash
+npm install -g gologin-web-access
+export GOLOGIN_WEB_UNLOCKER_API_KEY="wu_..."
+
+gologin-web-access read https://example.com
+```
+
+### Mở trình duyệt đám mây (CLI)
+
+```bash
+npm install -g gologin-agent-browser-cli
+export GOLOGIN_TOKEN='your_token'
+
+gologin-agent-browser open https://example.com
+gologin-agent-browser snapshot
+gologin-agent-browser click @e3
+gologin-agent-browser close
+```
+
+### Cài đặt AI Skill (Claude Code)
+
+```bash
+npx skills add GologinLabs/gologin-web-access-skill
+```
+
+Sau đó, bạn chỉ cần yêu cầu Claude Code thu thập dữ liệu một trang hoặc tương tác với một website — skill sẽ lo phần còn lại.
+
+### Kết nối MCP (Claude Desktop)
+
+Thêm vào `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "gologin-mcp": {
+      "command": "npx",
+      "args": ["gologin-mcp"],
+      "env": { "API_TOKEN": "your-token" }
+    }
+  }
+}
+```
+
+Sau đó hãy yêu cầu Claude: "Tạo một profile trình duyệt mới với proxy Hoa Kỳ."

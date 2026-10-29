@@ -1,0 +1,70 @@
+---
+title: "Proxy Devices"
+hidden: true
+---
+
+**Proxy Devices** pozwala kierować ruch profilu przeglądarki przez własny telefon z Androidem zamiast przez tradycyjny serwer proxy.
+
+Mówiąc prościej, Twój telefon staje się połączeniem internetowym dla profilu.
+
+## Dlaczego warto z tego korzystać?
+
+Ta funkcja przydaje się, gdy chcesz:
+
+- Używać **prawdziwego mobilnego adresu IP** (zamiast proxy z centrów danych lub rezydencyjnych)
+- Mieć adres IP **bardziej wiarygodny** dla stron internetowych
+- Ograniczyć zależność od zewnętrznych dostawców proxy
+- Wyglądać jak **prawdziwy użytkownik mobilny** korzystający z sieci Twojego urządzenia
+
+## Jak to działa?
+
+- Instalujesz aplikację towarzyszącą na urządzeniu z Androidem
+- Aplikacja udostępnia połączenie internetowe Twojego telefonu
+- Profil łączy się z tym urządzeniem jako z proxy
+- Cały ruch przechodzi przez adres IP Twojego telefonu
+
+<Warning>
+  Nie używaj tego samego urządzenia proxy w różnych profilach jednocześnie. Adres IP będzie taki sam, co wzbudza podejrzenia stron internetowych.
+</Warning>
+
+## Instrukcja konfiguracji
+
+### Zainstaluj aplikację mobilną Gologin Devices
+
+1. **Pobierz i zainstaluj** aplikację Gologin Devices z Google Play na telefonie z Androidem
+2. **Zaloguj się** na swoje konto Gologin
+3. Naciśnij **Start proxy**
+
+<Columns cols={4}>
+  <Column>
+    <Frame>
+      ![Gologin Devices w Google Play](/images/gologin_devices_google_play.jpg)
+    </Frame>
+  </Column>
+  <Column>
+    <Frame>
+      ![Logowanie w Gologin Devices](/images/gologin_devices_log_in-3.jpg)
+    </Frame>
+  </Column>
+  <Column>
+    <Frame>
+      ![Zalogowano w Gologin Devices](/images/gologin_devices_logged_in.jpg)
+    </Frame>
+  </Column>
+  <Column>
+    <Frame>
+      ![Proxy w Gologin Devices działa](/images/gologin_devices_proxy_running-1.jpg)
+    </Frame>
+  </Column>
+</Columns>
+
+### Kontynuuj w aplikacji Gologin na komputerze
+
+1. W aplikacji Gologin **przejdź do Proxy Devices** i sprawdź, czy nowe urządzenie pojawiło się po zalogowaniu na Androidzie
+   <Frame>
+     ![Karta Proxy Devices](/images/proxy_devices_tab.png)
+   </Frame>
+2. Przejdź do **All profiles** \> kliknij **Proxy & Location** przy swoim profilu \> wybierz nowe urządzenie Proxy Device z listy proxy
+   <Frame>
+     ![Wybieranie urządzenia Proxy Device](/images/choosing_a_proxy_device.gif)
+   </Frame>

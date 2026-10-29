@@ -1,0 +1,72 @@
+---
+title: "El proxy no funciona"
+description: "Guía paso a paso para diagnosticar y resolver problemas de conexión del proxy en Gologin."
+---
+
+## Solución de problemas del proxy paso a paso
+
+Si tu proxy no funciona en Gologin, sigue estos pasos en orden para identificar y resolver el problema.
+
+### 1. Lee el mensaje de error completo
+
+Pasa el cursor sobre el indicador de error (el icono rojo o amarillo) situado junto al campo del proxy en la configuración de tu perfil. Gologin muestra un mensaje de error ampliado al pasar el cursor, que a menudo incluye detalles específicos sobre por qué falló la conexión.
+
+### 2. Comprueba que el proxy funciona fuera de Gologin
+
+Prueba tu proxy de forma independiente para confirmar que funciona:
+
+- Usa una herramienta en línea para comprobar proxies.
+- Configura el proxy en un navegador normal (mediante una extensión de proxy como FoxyProxy) e intenta cargar un sitio web.
+
+Si el proxy tampoco funciona fuera de Gologin, el problema está en el proxy en sí: contacta con tu proveedor de proxies.
+
+### 3. Cambia de red
+
+Algunas redes bloquean el tráfico de proxies. Prueba una de estas opciones:
+
+- Cambia de WiFi a un punto de acceso móvil (o al revés).
+- Activa una VPN en tu dispositivo antes de iniciar el perfil.
+
+Si el proxy funciona en otra red, es probable que tu red original esté bloqueando la conexión.
+
+### 4. Prueba en la versión web
+
+Intenta iniciar el mismo perfil en [app.gologin.com](https://app.gologin.com) (la versión web/en la nube). Si el perfil funciona allí pero no en la aplicación de escritorio, el problema es propio de tu entorno local y no del proxy.
+
+### 5. Actualiza Gologin
+
+Asegúrate de usar la última versión de la aplicación de escritorio de Gologin. Las versiones antiguas pueden tener problemas de compatibilidad con ciertos protocolos o configuraciones de proxy. Descarga la última versión desde [gologin.com](https://gologin.com).
+
+### 6. Revisa la configuración de DNS con proxies SOCKS
+
+Si has configurado un DNS personalizado en tu perfil, ten en cuenta que solo funciona con los protocolos de proxy **SOCKS4** y **SOCKS5**.
+
+<Warning>
+La configuración de DNS personalizado no es compatible con proxies HTTP o HTTPS. Si usas un proxy HTTP/HTTPS con DNS personalizado, elimina la configuración de DNS personalizado o cambia a un proxy SOCKS.
+</Warning>
+
+### 7. El proxy funciona, pero la ubicación es incorrecta
+
+Si tu proxy se conecta correctamente, pero ciertos sitios web (especialmente Google) muestran una ubicación incorrecta o tu ubicación real:
+
+Esto ocurre porque algunos sitios usan la **Geolocation API** del navegador de forma independiente a tu dirección IP. La Geolocation API puede revelar tu ubicación real aunque tu IP muestre otra distinta.
+
+**Solución:** desactiva la geolocalización en la configuración de tu perfil. En la configuración del perfil, busca la opción Geolocation y establécela en **Blocked**, o introduce manualmente unas coordenadas que coincidan con la ubicación de tu proxy.
+
+### 8. El proxy integrado de Gologin muestra un error
+
+Si usas el proxy integrado de Gologin y no funciona:
+
+- Prueba a seleccionar otra ubicación de proxy entre las opciones disponibles.
+- Comprueba si se ha agotado tu cuota de tráfico del proxy de Gologin. Puedes ver el tráfico restante en la configuración de tu cuenta.
+- Si el tráfico se ha agotado, recárgalo o cambia a un proveedor de proxies externo.
+
+---
+
+<Warning>
+Si ninguno de estos pasos funciona, contacta con el soporte e incluye la siguiente información:
+
+- Tus credenciales del proxy en formato `ip:port:login:password`
+- Una captura de pantalla del mensaje de error
+- La versión de tu aplicación Gologin (la encontrarás en Settings > About)
+</Warning>

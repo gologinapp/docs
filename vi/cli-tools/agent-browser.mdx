@@ -1,0 +1,378 @@
+---
+title: "Gologin Agent Browser CLI"
+description: "CLI tự động hóa trình duyệt đám mây dành cho AI agent, với snapshot, ref và daemon chạy liên tục"
+---
+
+Gologin Agent Browser CLI biến Gologin Cloud Browser thành một môi trường chạy bền vững, có thể điều khiển bằng script dành cho AI agent. CLI cung cấp snapshot trang gọn nhẹ, tương tác dựa trên ref, bộ nhớ phiên và đầu ra thân thiện với shell.
+
+Khác với việc tự viết mã Puppeteer/Playwright từ đầu, CLI này cung cấp cho agent một bộ lệnh dựng sẵn để tự động hóa trình duyệt — không cần mã mẫu, không cần mã quản lý phiên.
+
+---
+
+## Vì sao nên dùng trình duyệt đám mây
+
+Tự động hóa bằng trình duyệt cục bộ có những giới hạn lớn đối với quy trình làm việc của agent:
+
+- Trình duyệt cục bộ dễ bị phát hiện hơn
+- Không có vân tay (fingerprint) theo từng profile
+- Không có profile trình duyệt đám mây lưu trữ lâu dài
+- Không có lớp proxy tích hợp sẵn
+- Khó chuẩn hóa giữa các agent và môi trường
+
+Agent Browser CLI đi theo hướng ngược lại:
+
+- Môi trường chạy trình duyệt đám mây thay cho tiến trình cục bộ
+- Profile Gologin đóng vai trò lớp định danh của phiên
+- Phiên hỗ trợ proxy
+- Kế thừa khả năng chống phát hiện từ Gologin
+- Daemon chạy liên tục giúp duy trì phiên giữa các lần gọi CLI
+
+---
+
+## Cài đặt
+
+```bash
+npm install -g gologin-agent-browser-cli
+```
+
+Hoặc chạy mà không cần cài đặt toàn cục:
+
+```bash
+npx gologin-agent-browser-cli --help
+```
+
+Yêu cầu Node.js >= 18.
+
+---
+
+## Thông tin xác thực
+
+| Biến | Bắt buộc | Mô tả |
+|---|---|---|
+| `GOLOGIN_TOKEN` | Có (đối với `open`) | Mã thông báo API của Gologin |
+| `GOLOGIN_PROFILE_ID` | Không bắt buộc | ID profile mặc định |
+| `GOLOGIN_DAEMON_PORT` | Không bắt buộc | Cổng của daemon (mặc định: `44777`) |
+| `GOLOGIN_CONNECT_BASE` | Không bắt buộc | Điểm cuối (endpoint) của Cloud Browser |
+
+### Lấy mã thông báo
+
+1. Đăng ký hoặc đăng nhập tại [gologin.com](https://gologin.com)
+2. Mở **API & MCP** trong bảng điều khiển
+3. Mở tab **API**
+4. Nhấp vào **Mã thông báo mới**
+5. Sao chép mã thông báo truy cập vừa được tạo
+
+```bash
+export GOLOGIN_TOKEN='your_gologin_token'
+```
+
+### Tệp cấu hình
+
+`~/.gologin-agent-browser/config.json`
+
+---
+
+## Kiến trúc
+
+Gồm hai phần:
+
+1. **CLI `gologin-agent-browser`** — phân tích lệnh, tự động khởi động daemon, in ra đầu ra gọn nhẹ
+2. **Daemon cục bộ chạy liên tục** — quản lý các phiên trình duyệt đang hoạt động, kết nối với Gologin Cloud Browser thông qua `connectOverCDP` của Playwright, giữ trang đang hoạt động trong bộ nhớ, tạo snapshot, phân giải ref và theo dõi siêu dữ liệu của phiên
+
+Kênh truyền tải chỉ hoạt động cục bộ:
+- Unix socket tại `${TMPDIR:-/tmp}/gologin-agent-browser.sock`
+- HTTP localhost tại `127.0.0.1:${GOLOGIN_DAEMON_PORT:-44777}`
+
+Nếu bạn không cung cấp ID profile, daemon sẽ tạo một profile đám mây Gologin tạm thời thông qua API.
+
+---
+
+## Cách hoạt động của ref
+
+`snapshot` in ra một bản xem trang gọn nhẹ và gán các ref như `@e1`, `@e2`, `@e3` cho các phần tử có thể tương tác. Bạn thao tác trực tiếp trên các ref này:
+
+```bash
+gologin-agent-browser snapshot
+# output shows page content with refs like @e1, @e2, @e3...
+
+gologin-agent-browser click @e3
+gologin-agent-browser type @e5 "search query"
+gologin-agent-browser fill @e7 "username"
+```
+
+Ref chỉ mang tính nỗ lực tối đa (best-effort) và cần được tạo lại sau khi điều hướng hoặc khi DOM thay đổi lớn. Trên các trang động, `find` thường là phương án dự phòng tốt hơn so với các ref đã lỗi thời.
+
+---
+
+## Bắt đầu nhanh
+
+```bash
+export GOLOGIN_TOKEN='your_token'
+
+# open a page in cloud browser
+gologin-agent-browser open https://example.com
+
+# read the page as a compact snapshot
+gologin-agent-browser snapshot
+
+# interact with elements
+gologin-agent-browser click @e3
+gologin-agent-browser type @e5 "hello world"
+
+# take a screenshot
+gologin-agent-browser screenshot ./page.png
+
+# close the session
+gologin-agent-browser close
+```
+
+---
+
+## Ví dụ vòng lặp của agent
+
+Một vòng lặp AI agent điển hình:
+
+```
+1. open <url>
+2. snapshot          → agent reads page content
+3. click/type/fill   → agent acts on refs
+4. snapshot          → agent reads result
+5. repeat 3-4 as needed
+6. screenshot        → save artifact
+7. close
+```
+
+---
+
+## Tham chiếu đầy đủ các lệnh
+
+### Chẩn đoán
+
+| Lệnh | Mô tả |
+|---|---|
+| `doctor` | Kiểm tra tình trạng và kết nối của daemon |
+
+### Quản lý phiên
+
+| Lệnh | Mô tả |
+|---|---|
+| `open <url>` | Mở URL trong một phiên trình duyệt đám mây |
+| `close` | Đóng phiên hiện tại |
+| `sessions` | Liệt kê các phiên đang hoạt động |
+| `current` | Hiển thị thông tin phiên hiện tại |
+
+### Đọc trang
+
+| Lệnh | Mô tả |
+|---|---|
+| `snapshot` | Snapshot văn bản gọn nhẹ kèm ref của các phần tử |
+| `screenshot <path>` | Lưu ảnh chụp màn hình trang |
+| `pdf <path>` | Lưu trang dưới dạng PDF |
+| `get <kind> [target]` | Lấy các thuộc tính của trang |
+
+### Tương tác
+
+| Lệnh | Mô tả |
+|---|---|
+| `click <ref>` | Nhấp vào một phần tử |
+| `dblclick <ref>` | Nhấp đúp |
+| `type <ref> <text>` | Nhập văn bản (nối thêm) |
+| `fill <ref> <text>` | Điền vào ô nhập liệu (thay thế nội dung cũ) |
+| `hover <ref>` | Di chuột lên phần tử |
+| `select <ref> <value>` | Chọn một giá trị trong danh sách thả xuống |
+| `check <ref>` / `uncheck <ref>` | Bật/tắt hộp kiểm |
+| `focus <ref>` | Đặt tiêu điểm vào một phần tử |
+| `find ...` | Tìm kiếm phần tử theo ngữ nghĩa |
+
+### Bàn phím và cuộn
+
+| Lệnh | Mô tả |
+|---|---|
+| `press <key> [target]` | Nhấn một phím trên bàn phím |
+| `scroll <direction> [pixels]` | Cuộn trang |
+| `scrollintoview <ref>` | Cuộn phần tử vào vùng nhìn thấy |
+
+### Điều hướng
+
+| Lệnh | Mô tả |
+|---|---|
+| `back` | Quay lại |
+| `forward` | Đi tới |
+| `reload` | Tải lại trang |
+| `wait <target\|ms>` | Chờ phần tử xuất hiện hoặc hết thời gian chờ |
+
+### Tab
+
+| Lệnh | Mô tả |
+|---|---|
+| `tabs` | Liệt kê các tab đang mở |
+| `tabopen [url]` | Mở một tab mới |
+| `tabfocus <index>` | Chuyển sang một tab |
+| `tabclose [index]` | Đóng một tab |
+
+### Cookie và bộ nhớ lưu trữ
+
+| Lệnh | Mô tả |
+|---|---|
+| `cookies` | Xuất cookie |
+| `cookies-import <file>` | Nhập cookie |
+| `cookies-clear` | Xóa cookie |
+| `storage-export [path]` | Xuất localStorage |
+| `storage-import <file>` | Nhập localStorage |
+| `storage-clear` | Xóa localStorage |
+
+### Nâng cao
+
+| Lệnh | Mô tả |
+|---|---|
+| `eval <expression>` | Thực thi JavaScript trong trang |
+| `upload <ref> <file...>` | Tải tệp lên |
+
+### Bí danh
+
+| Bí danh | Tương ứng với |
+|---|---|
+| `goto`, `navigate` | `open` |
+| `tabnew` | `tabopen` |
+| `tabswitch` | `tabfocus` |
+| `js` | `eval` |
+| `key` | `press` |
+| `scrollinto` | `scrollintoview` |
+| `quit`, `exit` | `close` |
+
+---
+
+## Trường hợp sử dụng và ví dụ
+
+### Kiểm tra xem trang web của bạn có vượt qua các bài kiểm tra chống phát hiện hay không
+
+```bash
+gologin-agent-browser open https://iphey.com/ --profile your_profile_id
+gologin-agent-browser wait 3000
+gologin-agent-browser snapshot     # read the trust score
+gologin-agent-browser screenshot ./iphey-result.png
+gologin-agent-browser close
+```
+
+### Đăng nhập vào ứng dụng web và trích xuất dữ liệu bảng điều khiển
+
+```bash
+gologin-agent-browser open https://app.example.com/login
+gologin-agent-browser snapshot
+
+# agent reads snapshot, finds login form
+gologin-agent-browser fill @e4 "user@company.com"
+gologin-agent-browser fill @e6 "password"
+gologin-agent-browser click @e8
+
+gologin-agent-browser wait 3000
+gologin-agent-browser snapshot     # agent reads dashboard content
+
+# navigate to the report page
+gologin-agent-browser click @e12   # "Reports" link
+gologin-agent-browser wait 2000
+gologin-agent-browser snapshot     # agent extracts report data
+gologin-agent-browser screenshot ./report.png
+gologin-agent-browser close
+```
+
+### Điền biểu mẫu nhiều bước
+
+```bash
+gologin-agent-browser open https://forms.example.com/apply
+
+# step 1: personal info
+gologin-agent-browser snapshot
+gologin-agent-browser fill @e3 "John Doe"
+gologin-agent-browser fill @e5 "john@example.com"
+gologin-agent-browser select @e7 "United States"
+gologin-agent-browser click @e9   # Next
+
+# step 2: upload and submit
+gologin-agent-browser wait 1000
+gologin-agent-browser snapshot
+gologin-agent-browser upload @e4 ./resume.pdf
+gologin-agent-browser check @e6   # agree to terms
+gologin-agent-browser click @e8   # Submit
+
+gologin-agent-browser wait 2000
+gologin-agent-browser snapshot     # confirm success
+gologin-agent-browser close
+```
+
+### Chụp ảnh màn hình các trang của đối thủ cạnh tranh
+
+```bash
+# use different profiles with different geos
+for profile in us_profile de_profile jp_profile; do
+  gologin-agent-browser open https://competitor.com --profile $profile
+  gologin-agent-browser wait 3000
+  gologin-agent-browser screenshot ./${profile}-homepage.png
+  gologin-agent-browser close
+done
+```
+
+### Tìm kiếm trên trang web chặn thu thập dữ liệu
+
+Một số trang web yêu cầu thực thi JavaScript, đăng nhập hoặc tương tác trước khi hiển thị kết quả. Hãy dùng trình duyệt để tìm kiếm:
+
+```bash
+gologin-agent-browser open https://protected-directory.com
+gologin-agent-browser snapshot
+gologin-agent-browser find "search input"
+gologin-agent-browser type @found "machine learning engineer San Francisco"
+gologin-agent-browser press Enter
+gologin-agent-browser wait 3000
+gologin-agent-browser snapshot     # agent reads search results
+gologin-agent-browser screenshot ./search-results.png
+gologin-agent-browser close
+```
+
+### Lưu và khôi phục trạng thái phiên
+
+Xuất cookie và bộ nhớ lưu trữ để dùng lại giữa các phiên:
+
+```bash
+# after logging in
+gologin-agent-browser cookies --output ./session-cookies.json
+gologin-agent-browser storage-export ./session-storage.json
+gologin-agent-browser close
+
+# later, restore the session
+gologin-agent-browser open https://app.example.com
+gologin-agent-browser cookies-import ./session-cookies.json
+gologin-agent-browser storage-import ./session-storage.json
+gologin-agent-browser reload
+gologin-agent-browser snapshot     # already logged in
+```
+
+---
+
+## Phiên song song
+
+Hãy dùng các ID `--session` tường minh cho các tác vụ đám mây độc lập. Dọn dẹp bằng `close --all` hoặc `sessions --prune --older-than-ms`.
+
+---
+
+## Quy tắc về proxy
+
+- Profile được cấu hình sẵn: proxy được thiết lập trên profile thông qua bảng điều khiển Gologin hoặc API
+- Profile tạm thời: hỗ trợ không dùng proxy hoặc proxy tùy chỉnh với host/port
+- `--proxy-country` chỉ khả dụng cho các profile được cấu hình sẵn
+
+---
+
+## Liên quan
+
+- [Gologin Web Access CLI](/vi/cli-tools/web-access) — CLI hợp nhất (thu thập dữ liệu + trình duyệt)
+- [Local Agent Browser CLI](/vi/cli-tools/local-agent-browser) — giải pháp thay thế chạy cục bộ với Orbita
+- [Bắt đầu với Cloud Browser](/vi/api-reference/cloud-browser/getting-started) — ví dụ Puppeteer/Playwright
+- [AI Skills](/vi/api-reference/ai-integrations/ai-skills) — các skill cắm là chạy cho Claude Code
+
+<Card title="Gói npm" icon="npm" href="https://www.npmjs.com/package/gologin-agent-browser-cli">
+  gologin-agent-browser-cli
+</Card>
+
+<Card title="Mã nguồn" icon="github" href="https://github.com/GologinLabs/agent-browser">
+  GologinLabs/agent-browser
+</Card>

@@ -1,0 +1,89 @@
+---
+title: "在 Cloud Browser 中使用代理"
+---
+
+Gologin Cloud Browser 支持灵活的代理配置，用于转发浏览器会话的流量。您可以使用 Gologin 内置的住宅代理，也可以使用自己的代理。
+
+## 代理在 Gologin 中的工作方式
+
+与基于会话的代理配置不同，**Gologin 中的代理是绑定到配置文件上的**，而不是绑定到单个连接。
+
+当您使用配置文件 ID 连接到 Cloud Browser 会话时，该配置文件上配置的代理会自动生效：
+
+```text
+https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}
+```
+
+这意味着您只需配置一次代理（通过 REST API 或控制台），之后每个使用该配置文件的会话都会稳定地通过该代理转发流量，无需在每次连接时传入代理凭据。
+
+> 如果会话启动时配置文件的代理无法连接，连接将失败并返回代理超时错误。请在运行自动化任务之前，先确认代理可以正常使用。
+
+## 代理选项
+
+### Gologin 内置代理
+
+Gologin 提供自有的住宅代理网络，并支持地理位置控制。内置代理是最简单的选择，无需额外的第三方代理服务商。
+
+要为配置文件绑定 Gologin 代理，请使用 [Proxies API](https://gologin.com/docs/api-reference/proxy/) 创建代理，并将其分配给该配置文件。
+
+内置代理支持按国家和地区进行地理位置定向。创建代理时，请将 `autoProxyRegion` 设置为所需的国家代码：
+
+```json
+{
+  "mode": "geolocation",
+  "autoProxyRegion": "us"
+}
+```
+
+常用地区代码：`us`、`gb`、`de`、`fr`、`nl`、`jp`、`au`、`ca`、`br`、`in`
+
+### 使用自己的代理
+
+您可以为配置文件绑定任意第三方代理。Gologin 支持 `http`、`https` 和 `socks5` 代理。
+
+通过 [Proxies API](https://gologin.com/docs/api-reference/proxy/) 进行配置：
+
+```json
+{
+  "mode": "http",
+  "host": "your.proxy.host",
+  "port": 10000,
+  "username": "user",
+  "password": "pass"
+}
+```
+
+代理会在会话启动时进行验证。如果代理无法连接，会话将无法启动。
+
+### 不使用代理
+
+如果要在不使用任何代理的情况下运行会话，请将配置文件的代理模式设置为 `none`：
+
+```json
+{
+  "mode": "none"
+}
+```
+
+这适用于测试场景，或者直接使用自动化服务器自身 IP 即可满足需求的工作流。
+
+## 通过 API 管理代理
+
+您可以通过 REST API 完成完整的代理管理（创建、更新、删除、列出、查看流量）：
+
+- [Proxies API 参考文档](https://gologin.com/docs/api-reference/proxy/)
+
+## 连接前检查代理状态
+
+由于代理失效会导致会话无法启动，建议在运行自动化任务之前先验证代理，在生产环境的工作流中尤其如此：
+
+```javascript
+const profileRes = await fetch(`https://api.gologin.com/browser/${profileId}`, {
+  headers: { Authorization: `Bearer ${token}` },
+});
+const profile = await profileRes.json();
+
+if (profile.proxy?.mode !== 'none') {
+  // optionally verify proxy reachability here before connecting
+}
+```

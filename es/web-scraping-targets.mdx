@@ -1,0 +1,84 @@
+---
+title: "Objetivos de web scraping"
+---
+
+Gologin funciona como un navegador de scraping: en lugar de un navegador headless con una huella digital genérica, tu scraper se ejecuta a través de perfiles aislados que parecen usuarios reales. Esto reduce de forma considerable las tasas de detección en sitios que analizan la huella del navegador y no solo bloquean IP.
+
+## Lista de verificación rápida
+
+- 1 sesión de scraping = 1 perfil de navegador
+- Elige el tipo de proxy según el nivel de protección del sitio objetivo
+- Reutiliza los perfiles entre sesiones para conservar las cookies y el estado de la sesión
+- Controla la velocidad de las solicitudes: los scrapers se bloquean por su comportamiento, no solo por la IP
+- Para trabajar a gran escala (50 o más sesiones simultáneas): usa la API de Gologin, no la aplicación de escritorio
+
+## Cómo elegir tu configuración
+
+### Scraping manual (aplicación de escritorio de Gologin)
+
+Ideal para: recopilación de datos a pequeña escala, sitios que requieren inicio de sesión y flujos de trabajo asistidos manualmente. Abre los perfiles desde la aplicación de Gologin y haz el scraping dentro de la ventana del navegador.
+
+### Scraping mediante API (Puppeteer / Playwright / Selenium)
+
+Ideal para: flujos de trabajo automatizados, 10 o más sesiones simultáneas y scraping programado. Gologin inicia el perfil y devuelve un endpoint WebSocket al que se conecta tu script de automatización.
+
+Consulta el [Quickstart ](https://gologin.com/docs/api-reference/introduction/quickstart)de la API para ver la configuración completa.
+
+## Paso 1. Elige la estrategia de proxy
+
+| **Objetivo** | **Proxy recomendado** | **Notas** |
+| :-- | :-- | :-- |
+| Sitios con poca protección | Datacenter rotativo | Rápido y económico |
+| Sitios con protección media | Residencial rotativo | Mejor puntuación de confianza |
+| Sitios con mucha protección (Cloudflare, PerimeterX) | Residencial rotativo | Obligatorio |
+| Sitios que requieren inicio de sesión / estado de la cuenta | Residencial estático | Mantiene la sesión consistente |
+| Comparación de precios, marketplaces | Residencial rotativo | Una IP distinta por solicitud |
+
+## Paso 2. Gestiona las sesiones y las cookies
+
+Los perfiles de Gologin conservan las cookies automáticamente entre sesiones: inicias sesión una vez y el perfil permanece autenticado. Evita borrar las cookies después de cada ejecución, ya que se rompe la continuidad de la sesión y parece un comportamiento de bot.
+
+## Paso 3. Controla los patrones de solicitud
+
+La detección depende sobre todo del comportamiento, no solo de la IP. Pautas prácticas de tiempos:
+
+| **Intensidad del scraping** | **Retraso entre solicitudes** |
+| :-- | :-- |
+| Baja (evitar la detección) | 3–8 segundos, aleatorio |
+| Media | 1–3 segundos, aleatorio |
+| Agresiva (alto riesgo de bloqueo) | 0.5–1 segundo |
+
+Aleatoriza siempre los retrasos: un intervalo fijo es una señal de detección.
+
+## Paso 4. Escala con varios perfiles
+
+Para el scraping en paralelo, inicia varios perfiles a la vez mediante la API. Revisa los Rate Limits antes de iniciar muchos perfiles, ya que se aplican los límites de la API.
+
+### **Límites prácticos según el plan**
+
+- Professional: hasta ~10 perfiles simultáneos sin problemas
+- Business: hasta ~30 perfiles simultáneos
+- Enterprise: 100 o más perfiles simultáneos
+
+El hardware también es una limitación: cada perfil es una instancia de navegador. Para 10 perfiles simultáneos se necesitan ~8–16 GB de RAM.
+
+## Cloudflare y sistemas anti-bot
+
+Gologin gestiona los desafíos de huella digital del navegador (Canvas, WebGL, huella TLS). No resuelve los CAPTCHA automáticamente. Si un sitio objetivo usa Cloudflare con CAPTCHA, integra un servicio de resolución de CAPTCHA (2captcha, CapSolver, Anti-Captcha) en tu script de scraping.
+
+## Señales de detección comunes
+
+- Tiempos idénticos entre solicitudes
+- Ausencia de eventos de desplazamiento o de ratón antes de hacer clic
+- Navegación directa a URL profundas sin referer
+- Huella de Canvas o WebGL que no coincide con el sistema operativo o navegador declarado
+
+## Véase también
+
+- [API Quickstart](https://gologin.com/docs/api-reference/introduction/quickstart)
+- [Headless mode](https://gologin.com/docs/api-reference/introduction/headless)
+- [Rate Limits](https://gologin.com/docs/api-reference/limitations/rate-limits)
+- [Best proxy for your case](https://gologin.com/docs/proxy/introduction/best-proxy-for-your-case)
+- [Static vs Rotating proxies](https://gologin.com/docs/static-vs-dynamic-proxies)
+
+\

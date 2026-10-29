@@ -1,0 +1,102 @@
+---
+title: "Solução de Scraping"
+---
+
+## Visão geral
+
+O Gologin Cloud Browser pode ser usado como um navegador remoto gerenciado para fluxos de trabalho de scraping e extração de dados. Seu código de automação (Puppeteer) se conecta a uma sessão de navegador remota por meio de um endpoint WebSocket e, em seguida, executa a lógica padrão de navegação e extração.
+
+O Cloud Browser é a camada de conexão e execução; as configurações de perfil e proxy são gerenciadas pela API REST. Essa configuração pode reduzir a sobrecarga de infraestrutura e ajudar a reduzir dificuldades durante o scraping, mas os resultados dependem do comportamento e dos controles do site de destino.
+
+## O que você recebe
+
+- Sessões de navegador remotas para conexões com o Puppeteer.
+- Renderização de JavaScript para páginas dinâmicas.
+- Escalabilidade sem precisar manter sua própria infraestrutura de navegadores.
+- Configuração de perfis e proxies gerenciada por API.
+- Um único endpoint de conexão canônico para iniciar sessões.
+
+## Fluxo de trabalho típico
+
+1. Gere um token de API.
+2. Opcionalmente, crie/configure um perfil (e um proxy) pela API REST.
+3. Monte a URL de conexão com `token` e, opcionalmente, `profile`.
+4. Conecte-se pelo Puppeteer/Playwright e execute a extração.
+5. Armazene o resultado e encerre a sessão do navegador.
+
+## Pré-requisitos
+
+- Crie um token: https://app.gologin.com/personalArea/TokenApi
+- API de perfis (recomendada para configuração controlada): https://gologin.com/docs/api-reference/profile
+- API de proxies: https://gologin.com/docs/api-reference/proxy
+
+## Um endpoint de conexão canônico
+
+```text
+https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}
+```
+
+- `token` é obrigatório.
+- `profile` é opcional.
+- Se `profile` for omitido, um novo perfil será criado para a sessão.
+
+## Exemplo mínimo com Puppeteer
+
+```javascript
+const puppeteer = require('puppeteer-core');
+
+(async () => {
+
+
+  const token = 'your_token_here';
+  const profileId = 'your_profile_id'; // Remove this line if you want to create a new profile
+  const cloudBrowserUrl = `https://cloudbrowser.gologin.com/connect?token=${token}${profileId ? `&profile=${profileId}` : ''}`;
+  const browser = await puppeteer.connect({
+  
+    browserWSEndpoint: cloudBrowserUrl,
+    defaultViewport: null
+  
+  });
+
+  const page = await browser.newPage();
+  await page.goto('https://example.com');
+  const title = await page.title();
+  console.log('Page title:', title);
+  await page.screenshot({ path: 'screenshot.png' });
+  await browser.close();
+
+})();
+```
+
+## Próximos passos
+
+- Primeiros passos com o Cloud Browser: https://gologin.com/docs/api-reference/cloud-browser/getting-started
+- API de perfis: https://gologin.com/docs/api-reference/profile
+- API de proxies: https://gologin.com/docs/api-reference/proxy
+
+## Boas práticas
+
+- Prefira esperas explícitas a pausas fixas.
+- Implemente lógica de nova tentativa com backoff limitado e jitter.
+- Armazene a saída da extração de forma estruturada (URL, campos, data e hora, status).
+- Configure o perfil e o proxy antes da conexão para garantir reprodutibilidade.
+- Sempre encerre as sessões e trate a limpeza em caso de falhas.
+- Adapte o comportamento das requisições e sessões às restrições de cada site de destino.
+
+## Limites e cotas
+
+Veja os limites e cotas atuais: https://gologin.com/docs/api-reference/limitations/rate-limits
+
+## Perguntas frequentes
+
+### Preciso de um perfil?
+
+Não. O parâmetro `profile` é opcional. Se for omitido, um novo perfil será criado para a sessão. Use um perfil quando precisar de uma configuração controlada e repetível.
+
+### Onde configuro os proxies?
+
+Configure os proxies pela API de proxies (e as configurações de perfil relacionadas pela API REST): https://gologin.com/docs/api-reference/proxy
+
+### Isso é diferente do Cloud Browser?
+
+Não. Esta é uma página sobre o uso do próprio Cloud Browser para scraping e extração de dados. O Cloud Browser cuida da conexão e da execução, enquanto as configurações de perfil e proxy são gerenciadas pela API REST.

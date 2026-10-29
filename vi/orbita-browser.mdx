@@ -1,0 +1,54 @@
+---
+title: "Trình duyệt Orbita"
+---
+
+Khi bạn nhấp **Chạy** trên một hồ sơ trong Gologin, một cửa sổ trình duyệt sẽ mở ra. Trình duyệt đó chính là **Orbita**.
+
+Orbita trông giống hệt Google Chrome - cùng bố cục, cùng thẻ, cùng menu. Điểm khác biệt nằm ở những gì diễn ra phía sau khi một trang web cố gắng nhận dạng bạn.
+
+<Frame>
+  ![Orbita Browser](/images/orbita_browser.png)
+</Frame>
+
+## Vì sao chúng tôi xây dựng trình duyệt riêng
+
+Trình duyệt nào cũng gặp vấn đề về danh tính. Khi bạn truy cập một trang web, trang đó có thể âm thầm hỏi trình duyệt của bạn hàng chục câu hỏi về thiết bị đang chạy nó: bạn dùng GPU nào, đã cài những phông chữ nào, độ phân giải màn hình là bao nhiêu, trình duyệt hiển thị đồ họa ra sao, và nhiều thông tin khác. Câu trả lời cho những câu hỏi này tạo thành một dấu vân tay nhận dạng bạn - ngay cả khi bạn dùng VPN hoặc xóa cookie.
+
+Chrome tiêu chuẩn không cố giấu bất kỳ thông tin nào trong số này. Nó trả lời trung thực mọi câu hỏi bằng dữ liệu thật của thiết bị bạn.
+
+## Orbita thực sự thay đổi điều gì
+
+Khi một trang web hỏi Orbita về thông tin của thiết bị đang chạy nó, Orbita trả về các giá trị của hồ sơ chứ không phải giá trị thật của máy tính bạn. Điều này bao gồm:
+
+- Phiên bản trình duyệt và hệ điều hành được báo cho các trang web
+- Kích thước và độ phân giải màn hình
+- Thông tin card đồ họa
+- Danh sách phông chữ có trên thiết bị
+- Cách trình duyệt hiển thị đồ họa và âm thanh (được dùng để tạo dấu vân tay)
+- Múi giờ và ngôn ngữ của bạn
+- Việc lộ IP của bạn qua các tính năng video và âm thanh (WebRTC)
+- Và một số thứ khác ở bên trong
+
+Theo góc nhìn của trang web, nó đang giao tiếp với thiết bị mà hồ sơ được cấu hình - chứ không phải máy tính thật của bạn.
+
+## Mỗi hồ sơ được cách ly hoàn toàn
+
+Khi bạn mở hai hồ sơ, mỗi hồ sơ chạy trong một môi trường hoàn toàn riêng biệt. Cookie, thông tin đăng nhập đã lưu, lịch sử duyệt web và dữ liệu phiên của chúng không liên quan gì đến nhau. Khi bạn đóng một hồ sơ, mọi thứ bên trong sẽ được lưu lại và lần sau hồ sơ sẽ tiếp tục đúng từ chỗ bạn đã dừng.
+
+Sự cách ly này giúp Gologin hữu ích cho việc quản lý nhiều tài khoản. Các tài khoản không chia sẻ bất kỳ thông tin nào ở cấp độ trình duyệt.
+
+## Dùng có khác biệt không?
+
+Không. Orbita được xây dựng trên cùng nền tảng mã nguồn mở với Chrome, nên trải nghiệm giống hệt khi dùng Chrome. Dấu trang, tiện ích mở rộng, phím tắt, công cụ dành cho nhà phát triển — tất cả đều như nhau. Những thay đổi mà Orbita thực hiện không thể nhìn thấy đối với người đang duyệt web.
+
+## Luôn cập nhật Orbita
+
+Orbita theo sát các bản phát hành phiên bản của Chrome. Điều này quan trọng vì một trình duyệt báo phiên bản lỗi thời sẽ trông đáng ngờ đối với các trang web. Gologin cập nhật Orbita thường xuyên, và bạn có thể [cập nhật từng hồ sơ](/vi/updating-your-browser-profile) lên phiên bản trình duyệt mới nhất từ menu của hồ sơ.
+
+<Tip>
+  Nếu bạn có các hồ sơ cũ, hãy kiểm tra xem chúng có đang chạy phiên bản Orbita mới nhất hay không. Bạn có thể thực hiện việc này từ menu ba chấm bên cạnh mỗi hồ sơ.
+</Tip>
+
+## Orbita trên Android
+
+Gologin cũng có một ứng dụng Android dùng Orbita làm công cụ trình duyệt. Trên điện thoại, Orbita chạy trực tiếp trên thiết bị - nghĩa là dữ liệu cảm biến mà các trang web có thể phát hiện (chuyển động, pin, loại màn hình) đến từ phần cứng điện thoại thật, không phải mô phỏng. Điều này khiến các hồ sơ di động khó bị phân biệt với người dùng di động thật hơn.

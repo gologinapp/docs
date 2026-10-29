@@ -1,0 +1,281 @@
+---
+title: "Сценарии использования Web Unlocker"
+---
+
+Web Unlocker — это Scraping API: вы отправляете URL и получаете полностью отрендеренный HTML. На этой странице показаны самые распространённые способы применения.
+
+---
+
+## Самостоятельный парсинг страницы
+
+Самый простой сценарий: вам нужно содержимое веб-страницы, которая блокирует обычные HTTP-запросы.
+
+### Python
+
+```python
+import requests
+
+response = requests.get(
+    "https://parsing.webunlocker.gologin.com/v1/scrape",
+    params={"url": "https://example.com/product/123"},
+    headers={"apikey": "YOUR_API_KEY"}
+)
+
+html = response.text
+print(html)
+```
+
+### JavaScript
+
+```javascript
+const html = await fetch(
+  "https://parsing.webunlocker.gologin.com/v1/scrape?url=" +
+    encodeURIComponent("https://example.com/product/123"),
+  { headers: { apikey: "YOUR_API_KEY" } }
+).then((r) => r.text());
+
+console.log(html);
+```
+
+Не нужно запускать браузер, настраивать прокси или бороться с Cloudflare. Один запрос — и вы получаете страницу.
+
+**Подходит для:**
+
+- Проверки цен на сайте конкурента
+- Сбора вакансий, отзывов или данных о товарах
+- Отслеживания изменений на страницах
+- Разовых скриптов для сбора данных
+
+---
+
+## Передача контента в ИИ
+
+Web Unlocker возвращает необработанный HTML. Передайте его в LLM, чтобы извлечь структурированные данные, кратко изложить содержимое или получить ответы на вопросы о странице — без написания логики парсинга.
+
+### Python \+ OpenAI
+
+```python
+import requests
+from openai import OpenAI
+
+html = requests.get(
+    "https://parsing.webunlocker.gologin.com/v1/scrape",
+    params={"url": "https://news.ycombinator.com"},
+    headers={"apikey": "YOUR_API_KEY"}
+).text
+
+client = OpenAI()
+response = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[
+        {
+            "role": "user",
+            "content": f"Extract the top 5 story titles and their URLs from this HTML:\n\n{html[:8000]}"
+        }
+    ]
+)
+
+print(response.choices[0].message.content)
+```
+
+### JavaScript \+ Anthropic
+
+```javascript
+import Anthropic from "@anthropic-ai/sdk";
+
+const html = await fetch(
+  "https://parsing.webunlocker.gologin.com/v1/scrape?url=" +
+    encodeURIComponent("https://news.ycombinator.com"),
+  { headers: { apikey: "YOUR_API_KEY" } }
+).then((r) => r.text());
+
+const client = new Anthropic();
+const message = await client.messages.create({
+  model: "claude-opus-4-5",
+  max_tokens: 1024,
+  messages: [
+    {
+      role: "user",
+      content: `Extract the top 5 story titles and their URLs from this HTML:\n\n${html.slice(0, 8000)}`,
+    },
+  ],
+});
+
+console.log(message.content[0].text);
+```
+
+**Подходит для:**
+
+- Извлечения структурированных данных (цен, названий, дат) без написания парсеров
+- Краткого изложения статей или страниц товаров
+- Сравнения нескольких страниц и формирования выводов
+- Создания инструментов для исследований и мониторинга на базе ИИ
+
+---
+
+## Использование внутри ИИ-агента
+
+Добавьте вашему ИИ-агенту инструмент `scrape` на базе Web Unlocker. Тогда агент сможет самостоятельно работать с вебом: загружать страницы, читать их содержимое и выполнять действия — без необходимости писать логику просмотра страниц.
+
+```python
+import requests
+import anthropic
+
+def scrape(url: str) -> str:
+    """Fetch a URL and return its rendered HTML."""
+    return requests.get(
+        "https://parsing.webunlocker.gologin.com/v1/scrape",
+        params={"url": url},
+        headers={"apikey": "YOUR_API_KEY"}
+    ).text
+
+tools = [
+    {
+        "name": "scrape",
+        "description": "Fetch the rendered HTML of any URL, including JavaScript-heavy and protected sites.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "url": {"type": "string", "description": "The URL to scrape"}
+            },
+            "required": ["url"]
+        }
+    }
+]
+
+client = anthropic.Anthropic()
+messages = [
+    {"role": "user", "content": "What is the current price of the iPhone 16 Pro on apple.com?"}
+]
+
+while True:
+    response = client.messages.create(
+        model="claude-opus-4-5",
+        max_tokens=1024,
+        tools=tools,
+        messages=messages
+    )
+
+    if response.stop_reason == "end_turn":
+        print(response.content[0].text)
+        break
+
+    tool_results = []
+    for block in response.content:
+        if block.type == "tool_use" and block.name == "scrape":
+            html = scrape(block.input["url"])
+            tool_results.append({
+                "type": "tool_result",
+                "tool_use_id": block.id,
+                "content": html[:10000]
+            })
+
+    messages.append({"role": "assistant", "content": response.content})
+    messages.append({"role": "user", "content": tool_results})
+```
+
+Агент сам решает, когда выполнять парсинг и какой URL загружать. Саму загрузку берёт на себя Web Unlocker.
+
+**Подходит для:**
+
+- Исследовательских агентов, которые самостоятельно работают с вебом
+- Ботов для сравнения цен и поиска выгодных предложений
+- Конвейеров конкурентной разведки
+- Любых агентов, которым нужны актуальные данные из интернета
+
+---
+
+## Парсинг множества страниц одновременно
+
+Запускайте запросы параллельно, чтобы собирать данные сразу с нескольких URL.
+
+```python
+import requests
+from concurrent.futures import ThreadPoolExecutor
+
+API_URL = "https://parsing.webunlocker.gologin.com/v1/scrape"
+API_KEY = "YOUR_API_KEY"
+
+urls = [
+    "https://example.com/page/1",
+    "https://example.com/page/2",
+    "https://example.com/page/3",
+]
+
+def scrape(url):
+    response = requests.get(
+        API_URL,
+        params={"url": url},
+        headers={"apikey": API_KEY}
+    )
+    return url, response.text
+
+with ThreadPoolExecutor(max_workers=5) as executor:
+    results = list(executor.map(scrape, urls))
+
+for url, html in results:
+    print(f"{url}: {len(html)} chars")
+```
+
+**Подходит для:**
+
+- Парсинга целых каталогов товаров или страниц со списками
+- Массового сбора данных для обучающих датасетов
+- Одновременного мониторинга множества страниц
+
+---
+
+## Итоги
+
+| Сценарий | Что вы делаете | Что получаете |
+| --- | --- | --- |
+| Парсинг одной страницы | GET-запрос с параметром URL | Отрендеренный HTML |
+| Передача в LLM | Парсинг → передача в модель | Извлечённые данные или краткое изложение |
+| Инструмент ИИ-агента | Агент вызывает по необходимости | Актуальный веб-контент |
+| Массовый парсинг | Параллельные запросы | HTML для каждого URL |
+
+---
+
+## Использование из командной строки
+
+Обойдитесь без написания кода — используйте Gologin Web Access CLI для типовых задач парсинга:
+
+```bash
+npm install -g gologin-web-access
+export GOLOGIN_WEB_UNLOCKER_API_KEY="wu_..."
+
+# batch scrape multiple pages
+gologin-web-access batch-scrape \
+  https://example.com/page/1 \
+  https://example.com/page/2 \
+  https://example.com/page/3 \
+  --format text --only-main-content --summary
+
+# crawl a site
+gologin-web-access crawl https://docs.example.com --format markdown --limit 50 --max-depth 2
+
+# monitor page changes
+gologin-web-access change-track https://example.com/pricing --format markdown
+
+# extract structured data with a schema
+gologin-web-access extract https://example.com/product/123 --schema ./product-schema.json
+
+# search the web
+gologin-web-access search "best antidetect browser 2026" --limit 10
+```
+
+Полный справочник команд смотрите в разделе [Web Access CLI](/ru/cli-tools/web-access).
+
+---
+
+## Итоги
+
+| Сценарий | Что вы делаете | Что получаете |
+| --- | --- | --- |
+| Парсинг одной страницы | GET-запрос с параметром URL | Отрендеренный HTML |
+| Передача в LLM | Парсинг → передача в модель | Извлечённые данные или краткое изложение |
+| Инструмент ИИ-агента | Агент вызывает по необходимости | Актуальный веб-контент |
+| Массовый парсинг | Параллельные запросы | HTML для каждого URL |
+| Рабочие процессы в CLI | Команды `gologin-web-access` | Текст, markdown, JSON, результаты пакетной обработки |
+
+Чтобы выполнить первый запрос, перейдите к [Быстрому старту](/ru/web-unlocker-quick-start).

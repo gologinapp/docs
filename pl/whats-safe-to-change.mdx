@@ -1,0 +1,68 @@
+---
+title: "Co można bezpiecznie zmieniać"
+---
+
+Podczas zarządzania kontami w Gologin ważne jest utrzymanie spójnego odcisku przeglądarki (fingerprint).\
+Strony internetowe często analizują zmiany w konfiguracji przeglądarki, aby wykrywać nietypową aktywność.
+
+Niektóre ustawienia profilu można bezpiecznie zmieniać w dowolnym momencie, a inne powinny pozostać stałe, gdy konto zaczęło już korzystać z profilu.
+
+## Można bezpiecznie zmieniać
+
+Poniższe ustawienia zazwyczaj można zmieniać bez wpływu na odcisk przeglądarki ani na zaufanie do konta:
+
+- nazwa profilu
+- notatki
+- foldery i tagi
+- rozszerzenia
+- dane logowania do proxy (jeśli lokalizacja proxy pozostaje taka sama)
+
+Te ustawienia nie wpływają na podstawowe sygnały odcisku przeglądarki wykorzystywane przez strony internetowe.
+
+## Zmieniaj ostrożnie
+
+Niektóre parametry mogą wpływać na środowisko przeglądarki i należy je zmieniać ostrożnie.
+
+Należą do nich:
+
+- strefa czasowa
+- ustawienia języka
+- tryb WebRTC
+- konfiguracja urządzeń multimedialnych
+
+Jeśli zmiany są konieczne, staraj się zachować ich spójność z lokalizacją proxy i typem urządzenia.
+
+## Unikaj zmian po utworzeniu kont
+
+Niektóre parametry stanowią podstawę odcisku przeglądarki.\
+Ich częsta zmiana może sprawić, że strony internetowe uznają przeglądarkę za nowe urządzenie.
+
+Unikaj zmieniania tych ustawień po zalogowaniu kont w profilu:
+
+- system operacyjny
+- user agent
+- rozdzielczość ekranu
+- konfiguracja czcionek
+- odcisk Canvas
+- odcisk WebGL
+- odcisk AudioContext
+- liczba wątków procesora i ilość pamięci RAM
+
+Duże zmiany tych parametrów mogą wywołać dodatkową weryfikację lub kontrole podczas logowania.
+
+## Najlepsze praktyki
+
+Aby uzyskać jak najbardziej stabilne rezultaty:
+
+- utwórz profil i skonfiguruj jego odcisk przeglądarki przed zalogowaniem do kont
+- zachowaj stałe ustawienia odcisku po dodaniu kont
+- używaj osobnego proxy dla każdego profilu
+- unikaj częstych zmian parametrów związanych ze sprzętem
+
+Utrzymanie spójnego odcisku pomaga stronom internetowym rozpoznać profil jako stabilne urządzenie.
+
+Zobacz także
+
+- [Ustawienia odcisku przeglądarki profilu](https://gologin.com/docs/profile-fingerprint-settings)
+- [Jak działają odciski przeglądarki](https://gologin.com/docs/how-browser-fingerprints-work)
+- [Lista kontrolna higieny profilu](https://gologin.com/docs/profile-hygiene-checklist)

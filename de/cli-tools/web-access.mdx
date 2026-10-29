@@ -1,0 +1,411 @@
+---
+title: "Gologin Web Access CLI"
+description: "Einheitliche CLI zum Lesen und Interagieren mit dem Web über Gologin Web Unlocker und Cloud Browser"
+---
+
+Gologin Web Access ist eine einheitliche CLI, die zwei Gologin-Produkte unter einer gemeinsamen Befehlsoberfläche vereint:
+
+- **Web Unlocker** — zustandsloses Lesen und Extrahieren. Ideal, wenn Sie Seiteninhalte schnell abrufen möchten, ohne eine Browser-Sitzung aufrechtzuerhalten.
+- **Cloud Browser** — zustandsbehaftete Interaktion. Ideal, wenn Sie Navigation, Klicks, Texteingaben, Screenshots oder mehrstufige Abläufe benötigen, die über mehrere Befehle hinweg erhalten bleiben.
+
+Beide Modi nutzen dasselbe Konfigurationsmodell und dieselbe Einrichtung der Zugangsdaten. Wir empfehlen, beide Zugangsdaten von Anfang an zu konfigurieren, damit Agents mitten in einer Aufgabe nicht wegen fehlender Schlüssel anhalten und nachfragen müssen.
+
+---
+
+## Installation
+
+```bash
+npm install -g gologin-web-access
+```
+
+Erfordert Node.js >= 18.17.
+
+---
+
+## Zugangsdaten
+
+Zwei verschiedene Gologin-Zugangsdaten steuern die beiden Modi:
+
+| Variable | Erforderlich für | Beschreibung |
+|---|---|---|
+| `GOLOGIN_WEB_UNLOCKER_API_KEY` | Scraping-/Lesebefehle | Web Unlocker API-Schlüssel |
+| `GOLOGIN_TOKEN` | Browser-/Interaktionsbefehle | Gologin API-Token |
+| `GOLOGIN_DEFAULT_PROFILE_ID` | Optional | Standard-Browserprofil |
+| `GOLOGIN_DAEMON_PORT` | Optional | Lokaler Daemon-Port |
+
+### Konfigurationsdatei
+
+Speichern Sie Ihre Zugangsdaten in `~/.gologin-web-access/config.json`:
+
+```json
+{
+  "webUnlockerApiKey": "wu_...",
+  "cloudToken": "gl_...",
+  "defaultProfileId": "profile_123",
+  "daemonPort": 4590
+}
+```
+
+Konfiguration interaktiv initialisieren:
+
+```bash
+gologin-web-access config init --web-unlocker-api-key wu_... --token gl_...
+```
+
+---
+
+## Schnellstart — eine Seite lesen
+
+```bash
+export GOLOGIN_WEB_UNLOCKER_API_KEY="wu_..."
+
+# rendered HTML
+gologin-web-access scrape https://example.com
+
+# readable text with metadata
+gologin-web-access read https://docs.example.com/features
+
+# plain text
+gologin-web-access scrape-text https://example.com/pricing
+
+# markdown
+gologin-web-access scrape-markdown https://example.com/docs
+
+# structured JSON (title, description, headings, links)
+gologin-web-access scrape-json https://example.com
+
+# search the web
+gologin-web-access search "gologin antidetect browser" --limit 5
+```
+
+## Schnellstart — mit einer Website interagieren
+
+```bash
+export GOLOGIN_TOKEN="gl_..."
+export GOLOGIN_DEFAULT_PROFILE_ID="profile_123"
+
+gologin-web-access open https://example.com
+gologin-web-access snapshot
+gologin-web-access click e3
+gologin-web-access type e5 "search terms"
+gologin-web-access screenshot ./page.png
+gologin-web-access close
+```
+
+---
+
+## Befehlsreferenz — Scraping / Lesen
+
+Diese Befehle verwenden Web Unlocker. Sie sind zustandslos — es wird keine Browser-Sitzung aufrechterhalten.
+
+### Einzelne Seite
+
+| Befehl | Beschreibung |
+|---|---|
+| `scrape <url>` | Gerendertes HTML im Rohformat |
+| `read <url>` | Lesbarer Inhalt mit Formatsteuerung |
+| `scrape-text <url>` | Extraktion als reiner Text |
+| `scrape-markdown <url>` | Extraktion als Markdown |
+| `scrape-json <url>` | Strukturierte Metadaten (Titel, Beschreibung, Überschriften, Links) |
+| `extract <url> --schema <file>` | Daten extrahieren, die einem JSON-Schema entsprechen |
+| `parse-document <url-or-path>` | PDF-, DOCX-, XLSX- und HTML-Dateien parsen |
+
+**Gängige Optionen:** `--format text|markdown|html`, `--source auto|unlocker|browser`, `--fallback none|browser`
+
+### Batch-Operationen
+
+| Befehl | Beschreibung |
+|---|---|
+| `batch-scrape <url...>` | Viele URLs auf einmal scrapen |
+| `batch-extract <url...> --schema <file>` | Strukturierte Daten aus vielen URLs extrahieren |
+| `batch-change-track <url...>` | Änderungen auf mehreren Seiten überwachen |
+
+**Batch-Optionen:** `--format`, `--source`, `--only-main-content`, `--retry <n>`, `--backoff-ms <ms>`, `--summary`, `--output <path>`, `--strict`
+
+Standardmäßig beendet sich `batch-scrape` bei teilweisem Erfolg mit Exit-Code 0. Fügen Sie `--strict` hinzu, damit der Befehl bei jedem Fehler fehlschlägt.
+
+### Suche und Erkennung
+
+| Befehl | Beschreibung |
+|---|---|
+| `search <query>` | Websuche mit strukturierten Ergebnissen |
+| `map <url>` | URLs einer Website erkennen |
+| `crawl <url>` | Inhalte von mehreren Seiten crawlen und extrahieren |
+
+**Optionen:** `--limit <n>`, `--max-depth <n>`, `--concurrency <n>`, `--only-main-content`
+
+### Asynchrone Crawl-Jobs
+
+| Befehl | Beschreibung |
+|---|---|
+| `crawl-start <url> ...` | Einen asynchronen Crawl-Job starten |
+| `crawl-status <jobId>` | Job-Status prüfen |
+| `crawl-result <jobId>` | Crawl-Ergebnisse abrufen |
+| `crawl-errors <jobId>` | Crawl-Fehler abrufen |
+
+### Änderungsverfolgung
+
+| Befehl | Beschreibung |
+|---|---|
+| `change-track <url>` | Änderungen auf einer Seite erkennen |
+| `batch-change-track <url...>` | Änderungen auf mehreren Seiten verfolgen |
+
+### Runbooks
+
+| Befehl | Beschreibung |
+|---|---|
+| `run <runbook.json>` | Ein Runbook (Abfolge von Schritten) ausführen |
+| `batch <runbook.json> --targets <file>` | Ein Runbook für mehrere Ziele ausführen |
+| `jobs` | Laufende/abgeschlossene Jobs auflisten |
+| `job <jobId>` | Job-Details abrufen |
+
+---
+
+## Befehlsreferenz — Browser / Interaktion
+
+Diese Befehle verwenden Cloud Browser. Sie halten über einen lokalen Daemon eine zustandsbehaftete Sitzung aufrecht.
+
+### Sitzungsverwaltung
+
+| Befehl | Beschreibung |
+|---|---|
+| `open <url>` | Eine URL in einer Cloud-Browser-Sitzung öffnen |
+| `search-browser <query>` | Suchen und Ergebnisse im Browser öffnen |
+| `close` | Aktuelle Sitzung schließen |
+| `sessions` | Aktive Sitzungen auflisten |
+| `current` | Informationen zur aktuellen Sitzung anzeigen |
+
+**Optionen:** `--profile <id>`, um ein bestimmtes Gologin-Profil zu verwenden.
+
+### Seiteninhalte lesen
+
+| Befehl | Beschreibung |
+|---|---|
+| `snapshot` | Kompakter Text-Snapshot mit Element-Referenzen |
+| `scrape-screenshot <url> [path]` | Screenshot über den Browser |
+| `screenshot <path>` | Screenshot der aktuellen Seite speichern |
+| `pdf <path>` | Seite als PDF speichern |
+| `get <kind> [target]` | Seiteneigenschaften abrufen |
+
+### Interaktion
+
+| Befehl | Beschreibung |
+|---|---|
+| `click <ref>` | Ein Element anhand seiner Referenz anklicken |
+| `dblclick <ref>` | Ein Element doppelt anklicken |
+| `type <ref> <text>` | Text in ein Element eingeben |
+| `fill <ref> <text>` | Ein Eingabefeld ausfüllen |
+| `hover <ref>` | Mit der Maus über ein Element fahren |
+| `select <ref> <value>` | Einen Wert aus einer Dropdown-Liste auswählen |
+| `check <ref>` / `uncheck <ref>` | Ein Kontrollkästchen umschalten |
+| `focus <ref>` | Ein Element fokussieren |
+| `press <key> [target]` | Eine Taste drücken |
+| `scroll <direction> [pixels]` | Die Seite scrollen |
+| `scrollintoview <ref>` | Ein Element in den sichtbaren Bereich scrollen |
+| `find ...` | Semantische Elementsuche |
+
+### Navigation
+
+| Befehl | Beschreibung |
+|---|---|
+| `back` | Zurückgehen |
+| `forward` | Vorwärtsgehen |
+| `reload` | Die Seite neu laden |
+| `wait <target\|ms>` | Auf ein Element oder den Ablauf einer Zeitspanne warten |
+
+### Tabs
+
+| Befehl | Beschreibung |
+|---|---|
+| `tabs` | Geöffnete Tabs auflisten |
+| `tabopen [url]` | Einen neuen Tab öffnen |
+| `tabfocus <index>` | Zu einem Tab wechseln |
+| `tabclose [index]` | Einen Tab schließen |
+
+### Cookies und Speicher
+
+| Befehl | Beschreibung |
+|---|---|
+| `cookies` | Cookies exportieren |
+| `cookies-import <file>` | Cookies importieren |
+| `cookies-clear` | Cookies löschen |
+| `storage-export [path]` | localStorage exportieren |
+| `storage-import <file>` | localStorage importieren |
+| `storage-clear` | localStorage löschen |
+
+### Erweitert
+
+| Befehl | Beschreibung |
+|---|---|
+| `eval <expression>` | JavaScript auf der Seite auswerten |
+| `upload <ref> <file...>` | Dateien in ein Datei-Eingabefeld hochladen |
+
+---
+
+## Anwendungsfälle und Beispiele
+
+### Die Preisseite eines Mitbewerbers scrapen
+
+```bash
+gologin-web-access scrape-json https://competitor.com/pricing
+```
+
+Gibt Titel, Beschreibung, Überschriften und Links als strukturiertes JSON zurück. Befindet sich die Seite hinter einer Cookie-Abfrage oder einer Challenge, zeigt Ihnen das Feld outcome dies an — und `nextActionHint` schlägt vor, in den Browser-Modus zu wechseln.
+
+### Einen Recherche-Korpus aus einer Dokumentationsseite erstellen
+
+```bash
+# discover all pages
+gologin-web-access map https://docs.example.com --limit 200 --max-depth 3
+
+# crawl and extract main content as markdown
+gologin-web-access crawl https://docs.example.com \
+  --format markdown --limit 100 --max-depth 3 --only-main-content \
+  --output ./corpus.json
+```
+
+Geben Sie die Ausgabe an ein LLM weiter, etwa für Zusammenfassungen, Frage-Antwort-Szenarien oder Fine-Tuning.
+
+### Seiten auf Änderungen überwachen
+
+```bash
+# check if a page changed
+gologin-web-access change-track https://competitor.com/pricing --format markdown
+
+# track many pages at once
+gologin-web-access batch-change-track \
+  https://competitor.com/pricing \
+  https://competitor.com/features \
+  https://competitor.com/changelog \
+  --output ./changes.json
+```
+
+Führen Sie den Befehl täglich per Cron aus. Vergleichen Sie die Diffs, um Preisänderungen, neue Funktionen oder entfernte Inhalte zu erkennen.
+
+### Strukturierte Daten mit einem Schema extrahieren
+
+Legen Sie fest, was extrahiert werden soll:
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "product_name": { "type": "string" },
+    "price": { "type": "string" },
+    "features": { "type": "array", "items": { "type": "string" } }
+  }
+}
+```
+
+Anschließend extrahieren Sie die Daten:
+
+```bash
+gologin-web-access extract https://example.com/product/123 --schema ./product-schema.json
+```
+
+Mit `batch-extract` funktioniert dies auch für viele Seiten.
+
+### Das Web durchsuchen und Ergebnisse scrapen
+
+```bash
+# search
+gologin-web-access search "best project management tools 2026" --limit 10
+
+# scrape the top results
+gologin-web-access batch-scrape url1 url2 url3 --format text --only-main-content --summary
+```
+
+### Sich bei einer Website anmelden und interagieren
+
+Wenn Scraping nicht ausreicht — etwa weil Sie klicken, tippen und navigieren müssen:
+
+```bash
+export GOLOGIN_TOKEN="gl_..."
+
+gologin-web-access open https://dashboard.example.com/login
+gologin-web-access snapshot
+gologin-web-access fill e3 "user@example.com"
+gologin-web-access fill e5 "password123"
+gologin-web-access click e7
+gologin-web-access wait 2000
+gologin-web-access snapshot          # verify you're logged in
+gologin-web-access screenshot ./dashboard.png
+gologin-web-access close
+```
+
+### Lokale Dokumente parsen
+
+Nicht nur Webseiten — Sie können auch PDFs, Word-Dokumente und Excel-Dateien parsen:
+
+```bash
+gologin-web-access parse-document ./report.pdf
+gologin-web-access parse-document ./data.xlsx
+gologin-web-access parse-document ./contract.docx
+```
+
+### Mehrstufige Workflows mit Runbooks automatisieren
+
+Definieren Sie eine Abfolge von Schritten in JSON und spielen Sie sie erneut ab:
+
+```json
+{
+  "variables": { "url": "https://example.com", "query": "gologin" },
+  "steps": [
+    { "command": "open", "args": ["${url}"] },
+    { "command": "wait", "args": [1000] },
+    { "command": "snapshot" },
+    { "command": "find", "args": ["search input"] },
+    { "command": "type", "args": ["@found", "${query}"] },
+    { "command": "press", "args": ["Enter"] },
+    { "command": "wait", "args": [2000] },
+    { "command": "screenshot", "args": ["./result.png"] },
+    { "command": "close" }
+  ]
+}
+```
+
+```bash
+gologin-web-access run ./search-runbook.json
+```
+
+---
+
+## Source-Routing
+
+Befehle, die `--source` unterstützen, können über unterschiedliche Backends geleitet werden:
+
+| Wert | Verhalten |
+|---|---|
+| `auto` (Standard) | Zuerst Web Unlocker versuchen, bei Bedarf auf Cloud Browser ausweichen |
+| `unlocker` | Ausschließlich Web Unlocker erzwingen |
+| `browser` | Ausschließlich Cloud Browser erzwingen |
+
+---
+
+## Strukturierte Ausgabe
+
+`scrape-json` liefert umfangreiche Metadaten, darunter:
+
+- `title`, `description`, `headings`, `headingsByLevel`, `links`
+- **Ergebnisklassifizierung:** `ok`, `empty`, `incomplete`, `authwall`, `challenge`, `blocked`, `cookie_wall`
+- `nextActionHint` — empfohlener nächster Schritt, wenn die Seite nicht vollständig zugänglich ist
+
+`search` gibt `requestedLimit`, `returnedCount`, `warnings`, `cacheTtlMs` sowie pro Ergebnis `position` zurück.
+
+---
+
+## Weiterführende Links
+
+- [Web Unlocker SDK](/de/scraping-api-sdk-and-cli) — TypeScript-SDK für die programmatische Nutzung
+- [Was ist Web Unlocker](/de/what-is-web-unlocker) — Produktübersicht
+- [Agent Browser CLI](/de/cli-tools/agent-browser) — reine Browser-CLI für KI-Agents
+- [Local Agent Browser CLI](/de/cli-tools/local-agent-browser) — lokale Orbita-CLI
+- [AI Skills](/de/api-reference/ai-integrations/ai-skills) — Plug-and-Play-Skills für Claude Code
+
+<Card title="npm-Paket" icon="npm" href="https://www.npmjs.com/package/gologin-web-access">
+  gologin-web-access
+</Card>
+
+<Card title="Quellcode" icon="github" href="https://github.com/GologinLabs/gologin-web-access">
+  GologinLabs/gologin-web-access
+</Card>

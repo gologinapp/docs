@@ -1,0 +1,58 @@
+---
+title: "Tratamento de CAPTCHA e 2FA"
+hidden: true
+---
+
+O CAPTCHA e a autenticação de dois fatores (2FA) são mecanismos de segurança padrão usados pelas plataformas para verificar a atividade dos usuários.
+
+Eles fazem parte do fluxo normal de uma conta e podem aparecer durante o login, o cadastro ou quando a plataforma detecta padrões incomuns.
+
+Na maioria dos casos, essas verificações são acionadas por mudanças no ambiente ou no comportamento, e não por uma ação específica.
+
+## Boas práticas de 2FA
+
+A autenticação de dois fatores adiciona uma camada extra de segurança à conta e é recomendada para a maioria das plataformas.
+
+Veja abaixo um exemplo de configuração do 2FA no Gologin usando um aplicativo autenticador:
+
+<Frame>
+  ![0319(14)](/images/0319\(14\).gif)
+</Frame>
+
+**Para configurar o 2FA:**
+
+1. Abra as configurações da sua conta
+2. Ative a verificação em duas etapas
+3. Escaneie o QR code usando um aplicativo autenticador (por exemplo, Google Authenticator)
+4. Digite o código de 6 dígitos para confirmar a configuração
+
+## Quando a verificação aparece
+
+As plataformas têm maior probabilidade de solicitar verificação quando uma conta é acessada a partir de um ambiente novo ou inconsistente.
+
+Os gatilhos mais comuns incluem:
+
+- Fazer login a partir de um endereço IP diferente
+- Alterar a localização ou os parâmetros do dispositivo
+- Usar um perfil sem histórico de atividade anterior
+- Realizar ações rápidas ou incomuns
+
+## Como reduzir a frequência
+
+Não é possível evitar completamente as solicitações de verificação, mas é possível reduzir sua frequência mantendo uma configuração consistente.
+
+Para minimizar as verificações:
+
+- Use o mesmo perfil, proxy e localização
+- Evite mudanças frequentes de ambiente
+- Construa a atividade de forma gradual ao longo do tempo
+- Mantenha sessões estáveis
+- Siga padrões de comportamento realistas e não repetitivos
+
+## Principal conclusão
+
+CAPTCHA e 2FA não são indícios de um problema.
+
+Eles fazem parte da forma como as plataformas avaliam a confiança e confirmam a identidade do usuário.
+
+Um ambiente estável e um comportamento consistente reduzem naturalmente a necessidade de verificações repetidas.

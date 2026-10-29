@@ -1,0 +1,20 @@
+---
+title: "Uruchamianie w chmurze a uruchamianie lokalne"
+hidden: true
+---
+
+Podczas automatyzacji z Gologin przeglądarka może działać w dwóch miejscach: na Twoim komputerze lub na serwerach Gologin. Od tego zależy, gdzie uruchamiany jest plik binarny Orbita, w jaki sposób się z nim łączysz i jakiej infrastruktury potrzebujesz.
+
+## Przegląd
+
+|  | Uruchamianie lokalne | Cloud Browser |
+| --- | --- | --- |
+| Przeglądarka działa na | Twoim komputerze | Serwerach Gologin |
+| Wymaga aplikacji desktopowej | Tak | Nie |
+| Widoczne okno | Opcjonalnie (tryb headless) | Nie |
+| Wymagany sprzęt | RAM na każdy profil (ok. 300–500 MB) | Brak |
+| Najlepsze do | Automatyzacji na własnym komputerze lub VPS | Skryptów po stronie serwera, bez lokalnej konfiguracji |
+
+## Uruchamianie lokalne
+
+Przeglądarka działa na Twoim komputerze. SDK automatycznie pobiera plik binarny Orbita przy pierwszym uruchomieniu, uruchamia go lokalnie i zwraca punkt końcowy WebSocket, z którym łączy się Puppeteer lub Playwright.

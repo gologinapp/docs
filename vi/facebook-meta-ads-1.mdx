@@ -1,0 +1,58 @@
+---
+title: "Xử lý CAPTCHA & 2FA"
+hidden: true
+---
+
+CAPTCHA và xác thực hai yếu tố (2FA) là các cơ chế bảo mật tiêu chuẩn mà các nền tảng sử dụng để xác minh hoạt động của người dùng.
+
+Đây là một phần bình thường trong quy trình làm việc với tài khoản và có thể xuất hiện khi đăng nhập, đăng ký hoặc khi nền tảng phát hiện các hành vi bất thường.
+
+Trong hầu hết trường hợp, các bước kiểm tra này được kích hoạt do thay đổi về môi trường hoặc hành vi, chứ không phải do một thao tác cụ thể nào.
+
+## Các phương pháp hay nhất khi dùng 2FA
+
+Xác thực hai yếu tố bổ sung thêm một lớp bảo mật cho tài khoản và được khuyến nghị cho hầu hết các nền tảng.
+
+Dưới đây là ví dụ về cách thiết lập 2FA trong Gologin bằng ứng dụng xác thực:
+
+<Frame>
+  ![0319(14)](/images/0319\(14\).gif)
+</Frame>
+
+**Để thiết lập 2FA:**
+
+1. Mở phần cài đặt tài khoản của bạn
+2. Bật xác minh hai bước
+3. Quét mã QR bằng ứng dụng xác thực (ví dụ: Google Authenticator)
+4. Nhập mã gồm 6 chữ số để xác nhận thiết lập
+
+## Khi nào xuất hiện yêu cầu xác minh
+
+Các nền tảng thường có xu hướng yêu cầu xác minh hơn khi tài khoản được truy cập từ một môi trường mới hoặc không nhất quán.
+
+Các nguyên nhân phổ biến gồm:
+
+- Đăng nhập từ một địa chỉ IP khác
+- Thay đổi vị trí hoặc thông số thiết bị
+- Sử dụng profile chưa có lịch sử hoạt động trước đó
+- Thực hiện các thao tác quá nhanh hoặc bất thường
+
+## Cách giảm tần suất xuất hiện
+
+Không thể tránh hoàn toàn các yêu cầu xác minh, nhưng bạn có thể giảm tần suất của chúng bằng cách duy trì thiết lập nhất quán.
+
+Để hạn chế các bước kiểm tra:
+
+- Sử dụng cùng một profile, proxy và vị trí
+- Tránh thay đổi môi trường thường xuyên
+- Xây dựng hoạt động dần dần theo thời gian
+- Duy trì các phiên làm việc ổn định
+- Hành xử giống người dùng thật, tránh các kiểu hành vi lặp đi lặp lại
+
+## Điểm chính cần nhớ
+
+CAPTCHA và 2FA không phải là dấu hiệu của sự cố.
+
+Đây là một phần trong cách các nền tảng đánh giá mức độ tin cậy và xác nhận danh tính người dùng.
+
+Môi trường ổn định và hành vi nhất quán sẽ tự nhiên làm giảm nhu cầu xác minh lặp lại.

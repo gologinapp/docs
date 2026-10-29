@@ -1,0 +1,78 @@
+---
+title: "Quản lý tài khoản hiện có"
+---
+
+Việc quản lý các tài khoản hiện có trong Gologin dựa trên một nguyên tắc cốt lõi: tính nhất quán.
+
+Không giống tài khoản mới, tài khoản hiện có đã có lịch sử, bao gồm môi trường đăng nhập, thói quen hoạt động và dữ liệu phiên. Các nền tảng kỳ vọng những đặc điểm này được giữ ổn định theo thời gian.
+
+Gologin giúp duy trì tính nhất quán này bằng cách lưu mỗi tài khoản trong một hồ sơ trình duyệt riêng.
+
+## Luôn dùng cùng một hồ sơ
+
+Mỗi tài khoản nên luôn được truy cập thông qua cùng một hồ sơ Gologin.
+
+Hồ sơ lưu trữ:
+
+• vân tay trình duyệt (fingerprint)\
+• cookie và dữ liệu phiên\
+• local storage và trạng thái trình duyệt
+
+Nhờ vậy, các nền tảng có thể nhận diện tài khoản là một người dùng quay lại.
+
+Việc đổi hồ sơ hoặc tạo hồ sơ mới cho một tài khoản hiện có có thể làm gián đoạn tính liên tục này và kích hoạt các bước xác minh.
+
+## Giữ proxy và vị trí ổn định
+
+Proxy dùng cho một hồ sơ nên được giữ nhất quán.
+
+Hạn chế thay đổi thường xuyên:
+
+- địa chỉ IP
+- quốc gia
+- khu vực
+
+Nếu bắt buộc phải đổi proxy, hãy thực hiện cẩn thận, tốt nhất là trong cùng một khu vực và không có thay đổi đột ngột.
+
+## Bảo toàn dữ liệu phiên
+
+Gologin tự động lưu dữ liệu phiên khi hồ sơ được đóng đúng cách.
+
+Dữ liệu này bao gồm cookie và trạng thái đăng nhập, giúp duy trì độ tin cậy của tài khoản.
+
+Để tránh sự cố:
+
+- Luôn đóng hồ sơ đúng cách
+- Chờ quá trình đồng bộ hoàn tất
+- Tránh xóa dữ liệu một cách không cần thiết
+
+Việc đăng nhập lại từ đầu nhiều lần có thể làm giảm độ tin cậy và kích hoạt thêm các bước kiểm tra.
+
+## Phù hợp với hành vi trước đây
+
+Các tài khoản hiện có nên tiếp tục hoạt động phù hợp với lịch sử của chúng.
+
+Hãy tránh:
+
+- tăng hoạt động đột ngột
+- các kiểu sử dụng mới hoặc thiếu nhất quán
+- thay đổi quy trình làm việc quá nhanh
+
+Gologin cung cấp một môi trường ổn định, nhưng sự nhất quán trong hành vi cũng quan trọng không kém.
+
+## Điểm chính cần nhớ
+
+Gologin mang đến cho bạn một môi trường được kiểm soát và nhất quán cho từng tài khoản.
+
+Để duy trì sự ổn định:
+
+- luôn dùng cùng một hồ sơ
+- giữ cấu hình proxy nhất quán
+- tránh thay đổi đột ngột về hành vi hoặc môi trường
+
+Xem thêm
+
+- [Tạo tài khoản mới an toàn](https://gologin.com/docs/creating-new-accounts-safely)
+- [Danh sách kiểm tra vệ sinh hồ sơ](https://gologin.com/docs/profile-hygiene-checklist)
+- [Chuyển từ các trình duyệt antidetect khác](https://gologin.com/docs/general/migration-from-other-tools)
+- [Những lỗi thường gặp cần tránh](https://gologin.com/docs/common-mistakes-to-avoid)

@@ -1,0 +1,81 @@
+---
+title: "FAQ : Profils"
+---
+
+### Puis-je lancer plusieurs profils en même temps ?
+
+Oui. Gologin vous permet d'exécuter plusieurs profils de navigateur simultanément, selon les ressources de votre système et votre abonnement.
+
+Chaque profil s'exécute dans un environnement de navigateur isolé, avec sa propre empreinte, ses propres cookies et ses propres paramètres de proxy.
+
+### Puis-je utiliser le même proxy pour plusieurs profils ?
+
+Techniquement oui, mais ce n'est pas recommandé.
+
+Utiliser le même proxy pour plusieurs profils peut relier vos comptes entre eux et réduire leur score de confiance sur certaines plateformes.
+
+Pour de meilleurs résultats, utilisez **un proxy unique pour chaque profil**.
+
+### Que se passe-t-il si je ferme un profil de manière incorrecte ?
+
+Si un profil est fermé avant la fin de la synchronisation, les dernières données de session peuvent ne pas être enregistrées.
+
+Cela peut entraîner :
+
+- la perte des cookies
+- la perte de l'état de la session
+- une déconnexion de vos comptes sur les sites web
+
+Fermez toujours les profils normalement et attendez que l'état du profil repasse à **prêt**.
+
+### Puis-je lancer un même profil sur plusieurs appareils en même temps ?
+
+C'est techniquement possible, mais ce n'est pas recommandé.
+
+Exécuter le même profil simultanément sur différents appareils peut provoquer des conflits de synchronisation et augmenter le risque de problèmes avec vos comptes.
+
+### Puis-je copier ou dupliquer un profil ?
+
+Oui. Gologin vous permet de **cloner des profils**.
+
+Cloner un profil copie ses paramètres, sa configuration d'empreinte et son environnement, ce qui vous permet de créer rapidement des profils similaires.
+
+### Puis-je me connecter aux profils via RDP, VNC ou d'autres outils à distance ?
+
+Les profils Gologin ne sont pas émulés : ils s'exécutent sur votre appareil en local ou dans le cloud. Ils n'ont pas de système d'exploitation sous-jacent, il n'y a donc rien à quoi se connecter. En revanche, si besoin, vous pouvez vous connecter en RDP à un appareil sur lequel des profils Gologin sont exécutés.
+
+### Puis-je récupérer un profil supprimé ?
+
+Oui. Les profils supprimés peuvent être restaurés pendant une durée limitée depuis la section **Restaurer les profils** dans les Paramètres.
+
+Si le profil n'a pas été définitivement supprimé, il peut être récupéré avec toutes ses données.
+
+### Pourquoi ai-je été déconnecté de mon compte après le lancement d'un profil ?
+
+Cela peut arriver si :
+
+- l'emplacement du proxy a changé
+- l'empreinte a changé de manière importante
+- les cookies étaient invalides ou expirés
+
+Pour réduire ce risque, gardez des paramètres de proxy, d'empreinte et de fuseau horaire cohérents.
+
+### Puis-je activer les notifications en arrière-plan des sites web ou des extensions dans mes profils ?
+
+Orbita ne permet pas d'envoyer de notifications en arrière-plan pour le moment.
+
+### Pourquoi ne puis-je pas agrandir la fenêtre du navigateur en plein écran ?
+
+La fenêtre du navigateur d'un profil ne peut pas être plus grande que la **Résolution d'écran** définie dans ses paramètres. C'est voulu. Les sites web peuvent voir à la fois la taille d'écran que le profil indique et la taille réelle de la fenêtre du navigateur. Sur un véritable appareil, la fenêtre n'est jamais plus grande que l'écran : une incohérence peut donc rendre le profil suspect.
+
+Pour agrandir la fenêtre :
+
+1. Ouvrez les **Paramètres** du profil > **Autre**.
+2. Dans **Résolution d'écran**, choisissez une valeur égale à la résolution de votre moniteur ou légèrement inférieure.
+3. Enregistrez les paramètres et relancez le profil.
+
+Si vous êtes déjà connecté à des comptes dans ce profil, gardez à l'esprit que les sites web peuvent considérer un changement de résolution comme un nouvel appareil et demander une vérification supplémentaire.
+
+Pour que les nouveaux profils s'ouvrent directement à la bonne taille, définissez la résolution d'écran dans les [Paramètres de profil par défaut](/fr/default-profile-settings). Elle s'appliquera à tous les profils que vous créerez par la suite.
+
+Voir aussi : [Paramètres avancés du profil](/fr/general/account-and-billing/advanced-profile-settings), [Ce que vous pouvez modifier en toute sécurité](/fr/whats-safe-to-change)

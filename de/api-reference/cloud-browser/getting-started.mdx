@@ -1,0 +1,136 @@
+---
+title: "Erste Schritte"
+keywords: ["cloud browser", "headless browser"]
+---
+
+Mit Gologin Cloud Browser können Sie eine Browsersitzung **in der Cloud** ausführen und sie über eine einzige **Verbindungs-URL** mit Ihrem Automatisierungstool (Puppeteer / Playwright) steuern.
+
+<Tip>
+  **Lieber per CLI?** Mit dem [Gologin Agent Browser CLI](/de/cli-tools/agent-browser) steuern Sie Cloud Browser direkt über die Shell, ganz ohne Code – entwickelt für KI-Agenten, mit Snapshots, Refs und einem dauerhaften Daemon.
+</Tip>
+
+## Verbindungs-URL
+
+Verwenden Sie diese URL in Ihrer Automatisierungsbibliothek als Remote-Browser-Endpunkt:
+
+```text
+https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}
+```
+
+- `token` – Ihr Gologin **Dev-Token**.
+- `profile` – **Profil-ID** (optional):
+  - Wenn angegeben, führt Gologin dieses Profil in der Cloud aus.
+  - Wenn nicht angegeben, erstellt Gologin für die Sitzung ein neues Profil.
+
+> Hinweis: Diese URL wird von Automatisierungsbibliotheken als **WebSocket-Verbindungsendpunkt** verwendet (zum Beispiel als `browserWSEndpoint` in Puppeteer).\
+> Erstellen Sie Ihren Token im Gologin-Dashboard unter: `Personal Area → API Token`.
+
+<Frame>
+  ![Screenshot vom 5. März, 14:27:28](/images/ScreenshotatMar0514-27-28.png)
+</Frame>
+
+## Profile verwalten (Proxy, Fingerprint usw.)
+
+Cloud Browser ist nur die **Verbindungsebene** (Remote-Browsersitzung).\
+Um **Profile zu erstellen oder zu aktualisieren**, **Proxys** zuzuweisen, den **Fingerprint** zu konfigurieren sowie Tags und weitere Profileinstellungen festzulegen, verwenden Sie die Gologin **REST API**:
+
+- Profiles API: https://gologin.com/docs/api-reference/profile
+- Proxies API: https://gologin.com/docs/api-reference/proxy
+
+# Beispiele
+
+<CodeGroup>
+
+```javascript Puppeteer
+import puppeteer from 'puppeteer-core';
+
+const token = process.env.GL_API_TOKEN || 'your dev token here';
+const profileId = 'profile ID';
+
+const CLOUD_BROWSER_URL = `https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}`;
+const STOP_PROFILE_URL = `https://api.gologin.com/browser/${profileId}/web`;
+
+async function stopProfile() {
+  await fetch(STOP_PROFILE_URL, {
+    method: 'DELETE',
+    headers: { Authorization: `Bearer ${token}` },
+  });
+}
+
+async function main() {
+  const response = await fetch(CLOUD_BROWSER_URL);
+
+  if (!response.ok) {
+    const errorReason = response.headers.get('X-Error-Reason');
+    throw new Error(`Failed to start cloud browser: ${errorReason ?? response.statusText}`);
+  }
+
+  const browser = await puppeteer.connect({
+    browserWSEndpoint: CLOUD_BROWSER_URL,
+    ignoreHTTPSErrors: true,
+  });
+
+  const page = await browser.newPage();
+
+  await page.goto('https://iphey.com/', { waitUntil: 'networkidle2' });
+  const status = await page.$eval('.trustworthy:not(.hide)',
+    (elt) => elt?.innerText?.trim(),
+  );
+
+  return status;
+}
+
+main().catch(console.error).finally(stopProfile);
+```
+
+
+```python Playwright
+import asyncio
+import os
+
+import aiohttp
+from playwright.async_api import async_playwright
+
+token = os.environ.get('GL_API_TOKEN', 'your dev token here')
+profile_id = 'profile ID'
+
+CLOUD_BROWSER_URL = f'wss://cloudbrowser.gologin.com/connect?token={token}&profile={profile_id}'
+STOP_PROFILE_URL = f'https://api.gologin.com/browser/{profile_id}/web'
+
+
+async def stop_profile():
+    async with aiohttp.ClientSession() as session:
+        await session.delete(STOP_PROFILE_URL, headers={'Authorization': f'Bearer {token}'})
+
+
+async def main():
+    async with aiohttp.ClientSession() as session:
+        response = await session.get(CLOUD_BROWSER_URL.replace('wss://', 'https://'))
+        if response.status >= 400:
+            error_reason = response.headers.get('X-Error-Reason', response.reason)
+            raise RuntimeError(f'Failed to start cloud browser: {error_reason}')
+
+    async with async_playwright() as p:
+        browser = await p.chromium.connect_over_cdp(CLOUD_BROWSER_URL)
+
+        page = await browser.new_page()
+        await page.goto('https://iphey.com/', wait_until='networkidle')
+        status = await page.eval_on_selector(
+            '.trustworthy:not(.hide)',
+            '(elt) => elt?.innerText?.trim()',
+        )
+
+        print('status', status)
+
+        await browser.close()
+
+        return status
+
+if __name__ == '__main__':
+    try:
+        asyncio.run(main())
+    finally:
+        asyncio.run(stop_profile())
+```
+
+</CodeGroup>

@@ -1,0 +1,102 @@
+---
+title: "Решение для скрапинга"
+---
+
+## Обзор
+
+Gologin Cloud Browser можно использовать как управляемый удалённый браузер для скрапинга и извлечения данных. Ваш код автоматизации (Puppeteer) подключается к удалённой сессии браузера через WebSocket-эндпоинт, а затем выполняет стандартную логику навигации и извлечения данных.
+
+Cloud Browser отвечает за подключение и выполнение, а настройки профилей и прокси управляются через REST API. Такая схема может снизить затраты на инфраструктуру и уменьшить количество препятствий при скрапинге, однако результат зависит от поведения и защитных механизмов целевого сайта.
+
+## Что вы получаете
+
+- Удалённые сессии браузера для подключений через Puppeteer.
+- Рендеринг JavaScript для динамических страниц.
+- Масштабирование без необходимости поддерживать собственную инфраструктуру браузеров.
+- Настройка профилей и прокси через API.
+- Единый канонический эндпоинт для запуска сессии.
+
+## Типичный порядок работы
+
+1. Сгенерируйте API-токен.
+2. При необходимости создайте и настройте профиль (и прокси) через REST API.
+3. Сформируйте URL для подключения с параметром `token` и, при необходимости, `profile`.
+4. Подключитесь из Puppeteer/Playwright и запустите извлечение данных.
+5. Сохраните результат и закройте сессию браузера.
+
+## Предварительные требования
+
+- Создайте токен: https://app.gologin.com/personalArea/TokenApi
+- Profiles API (рекомендуется для контролируемой конфигурации): https://gologin.com/docs/api-reference/profile
+- Proxy API: https://gologin.com/docs/api-reference/proxy
+
+## Канонический эндпоинт подключения
+
+```text
+https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}
+```
+
+- Параметр `token` обязателен.
+- Параметр `profile` необязателен.
+- Если `profile` не указан, для сессии создаётся новый профиль.
+
+## Минимальный пример на Puppeteer
+
+```javascript
+const puppeteer = require('puppeteer-core');
+
+(async () => {
+
+
+  const token = 'your_token_here';
+  const profileId = 'your_profile_id'; // Remove this line if you want to create a new profile
+  const cloudBrowserUrl = `https://cloudbrowser.gologin.com/connect?token=${token}${profileId ? `&profile=${profileId}` : ''}`;
+  const browser = await puppeteer.connect({
+  
+    browserWSEndpoint: cloudBrowserUrl,
+    defaultViewport: null
+  
+  });
+
+  const page = await browser.newPage();
+  await page.goto('https://example.com');
+  const title = await page.title();
+  console.log('Page title:', title);
+  await page.screenshot({ path: 'screenshot.png' });
+  await browser.close();
+
+})();
+```
+
+## Следующие шаги
+
+- Начало работы с Cloud Browser: https://gologin.com/docs/api-reference/cloud-browser/getting-started
+- Profiles API: https://gologin.com/docs/api-reference/profile
+- Proxy API: https://gologin.com/docs/api-reference/proxy
+
+## Рекомендации
+
+- Используйте явные ожидания вместо фиксированных пауз.
+- Реализуйте повторные попытки с увеличением задержки в заданных пределах и случайным разбросом (jitter).
+- Сохраняйте структурированные результаты извлечения (URL, поля, временная метка, статус).
+- Настраивайте профиль и прокси до подключения, чтобы результаты были воспроизводимыми.
+- Всегда закрывайте сессии и выполняйте очистку при сбоях.
+- Адаптируйте поведение запросов и сессий под ограничения целевого сайта.
+
+## Лимиты и квоты
+
+Актуальные лимиты и квоты: https://gologin.com/docs/api-reference/limitations/rate-limits
+
+## FAQ
+
+### Нужен ли мне профиль?
+
+Нет. Параметр `profile` необязателен. Если его не указать, для сессии будет создан новый профиль. Используйте профиль, когда нужна контролируемая и повторяемая конфигурация.
+
+### Где настраивать прокси?
+
+Настраивайте прокси через Proxy API (а связанные настройки профиля — через REST API): https://gologin.com/docs/api-reference/proxy
+
+### Чем это отличается от Cloud Browser?
+
+Ничем. Эта страница описывает использование самого Cloud Browser для скрапинга и извлечения данных. Cloud Browser отвечает за подключение и выполнение, а настройки профилей и прокси управляются через REST API.

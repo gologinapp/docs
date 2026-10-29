@@ -1,0 +1,81 @@
+---
+title: "Câu hỏi thường gặp: Hồ sơ"
+---
+
+### Tôi có thể chạy nhiều hồ sơ cùng lúc không?
+
+Có. Gologin cho phép bạn chạy đồng thời nhiều hồ sơ trình duyệt, tùy thuộc vào tài nguyên hệ thống và gói đăng ký của bạn.
+
+Mỗi hồ sơ chạy trong một môi trường trình duyệt riêng biệt, với dấu vân tay, cookie và cài đặt proxy riêng.
+
+### Tôi có thể dùng chung một proxy cho nhiều hồ sơ không?
+
+Về mặt kỹ thuật là có, nhưng không được khuyến nghị.
+
+Việc dùng chung một proxy cho nhiều hồ sơ có thể khiến các tài khoản bị liên kết với nhau và làm giảm điểm tin cậy của chúng trên một số nền tảng.
+
+Để có kết quả tốt nhất, hãy dùng **một proxy riêng cho mỗi hồ sơ**.
+
+### Điều gì xảy ra nếu tôi đóng hồ sơ không đúng cách?
+
+Nếu hồ sơ bị đóng trước khi quá trình đồng bộ hoàn tất, dữ liệu phiên mới nhất có thể không được lưu.
+
+Điều này có thể dẫn đến:
+
+- mất cookie
+- mất trạng thái phiên
+- bị các trang web đăng xuất
+
+Hãy luôn đóng hồ sơ bình thường và chờ cho đến khi trạng thái hồ sơ trở về **sẵn sàng**.
+
+### Tôi có thể khởi chạy một hồ sơ trên nhiều thiết bị cùng lúc không?
+
+Về mặt kỹ thuật là có thể, nhưng không được khuyến nghị.
+
+Chạy cùng một hồ sơ đồng thời trên các thiết bị khác nhau có thể gây xung đột đồng bộ và làm tăng nguy cơ xảy ra sự cố với tài khoản.
+
+### Tôi có thể sao chép hoặc nhân bản một hồ sơ không?
+
+Có. Gologin cho phép bạn **nhân bản hồ sơ**.
+
+Khi nhân bản một hồ sơ, cài đặt, cấu hình dấu vân tay và môi trường của hồ sơ đó sẽ được sao chép, giúp bạn nhanh chóng tạo các hồ sơ tương tự.
+
+### Tôi có thể kết nối với hồ sơ qua RDP, VNC hoặc các công cụ từ xa khác không?
+
+Các hồ sơ Gologin không phải là môi trường giả lập; chúng chạy trực tiếp trên thiết bị của bạn hoặc trên đám mây. Chúng không có hệ điều hành bên dưới, nên không có gì để kết nối tới. Tuy nhiên, nếu cần, bạn vẫn có thể kết nối qua RDP tới thiết bị đang chạy các hồ sơ Gologin.
+
+### Tôi có thể khôi phục một hồ sơ đã xóa không?
+
+Có. Các hồ sơ đã xóa có thể được khôi phục trong một khoảng thời gian giới hạn từ mục **Khôi phục hồ sơ** trong phần Cài đặt.
+
+Nếu hồ sơ chưa bị xóa vĩnh viễn, bạn có thể khôi phục nó cùng với toàn bộ dữ liệu.
+
+### Tại sao tài khoản của tôi bị đăng xuất sau khi khởi chạy hồ sơ?
+
+Điều này có thể xảy ra nếu:
+
+- vị trí của proxy đã thay đổi
+- dấu vân tay đã thay đổi đáng kể
+- cookie không hợp lệ hoặc đã hết hạn
+
+Để giảm nguy cơ này, hãy giữ cho cài đặt proxy, dấu vân tay và múi giờ nhất quán.
+
+### Tôi có thể bật thông báo nền từ các trang web hoặc tiện ích mở rộng trong hồ sơ của mình không?
+
+Hiện tại Orbita chưa hỗ trợ gửi thông báo nền.
+
+### Tại sao tôi không thể phóng to cửa sổ trình duyệt ra toàn màn hình?
+
+Cửa sổ trình duyệt của hồ sơ không thể lớn hơn **Độ phân giải màn hình** được đặt trong phần cài đặt của hồ sơ. Đây là thiết kế có chủ đích. Các trang web có thể thấy cả kích thước màn hình mà hồ sơ báo cáo lẫn kích thước thực tế của cửa sổ trình duyệt. Trên một thiết bị thật, cửa sổ không bao giờ lớn hơn màn hình, vì vậy sự chênh lệch này có thể khiến hồ sơ trông đáng ngờ.
+
+Để làm cho cửa sổ lớn hơn:
+
+1. Mở **Cài đặt** của hồ sơ > **Nâng cao**.
+2. Trong **Độ phân giải màn hình**, chọn một giá trị khớp với độ phân giải màn hình của bạn hoặc thấp hơn một chút.
+3. Lưu cài đặt và khởi chạy lại hồ sơ.
+
+Nếu bạn đã đăng nhập vào các tài khoản trong hồ sơ này, hãy lưu ý rằng các trang web có thể coi việc thay đổi độ phân giải là một thiết bị mới và yêu cầu xác minh bổ sung.
+
+Để các hồ sơ mới mở với kích thước phù hợp ngay từ đầu, hãy đặt độ phân giải màn hình trong [Cài đặt hồ sơ mặc định](/vi/default-profile-settings). Cài đặt này sẽ áp dụng cho tất cả các hồ sơ bạn tạo sau đó.
+
+Xem thêm: [Cài đặt hồ sơ nâng cao](/vi/general/account-and-billing/advanced-profile-settings), [Những gì có thể thay đổi an toàn](/vi/whats-safe-to-change)

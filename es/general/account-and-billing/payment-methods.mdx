@@ -1,0 +1,117 @@
+---
+title: "Métodos de pago"
+---
+
+## Cambiar tu método de pago
+
+Actualmente, no es posible cambiar el método de pago sin realizar un pago. Esto es lo que puedes hacer:
+
+### Cambiar el método de pago comprando un plan
+
+1. Ve al **main menu at the top-left \>** **Settings & Members \> Billing Plans \> Payment Methods \> Change payment method.**
+   <Frame>
+     ![Cambiar método de pago](/images/change_payment_method.png)
+   </Frame>
+2. Renueva el plan actual o mejóralo. El método de pago se actualizará.
+   1. tu plan actual se tendrá en cuenta durante la [mejora del plan](/es/general/account-and-billing/change-plan)
+
+### Cambiar el método de pago eliminando el actual
+
+1. Elimina el método de pago actual en el **main menu at the top-left \>** **Settings & Members \> Billing Plans \> Payment Methods \> Cancel subscription.**
+   <Frame>
+     ![Cancelar suscripción](/images/cancel_subscription.png)
+   </Frame>
+2. Espera a que termine el plan actual y compra uno nuevo con la nueva tarjeta o PayPal.
+
+## Cancelar la suscripción
+
+Si quieres cancelar la suscripción actual, solo tienes que eliminar el método de pago de tu cuenta. Ve al **main menu at the top-left \>** **Settings & Members \> Billing Plans \> Payment Methods \> Cancel subscription.**
+
+## Métodos de pago disponibles
+
+Gologin admite varios métodos de pago para la suscripción y la recarga de tráfico de proxy.
+
+### Suscripción
+
+Los pagos de la suscripción pueden incluir complementos para miembros del equipo y tráfico de proxy. Hay dos tipos de pagos de suscripción: **recurrentes** y **únicos**.
+
+Los **pagos recurrentes** se cobran automáticamente antes de que comience cada nuevo periodo de facturación. Los siguientes métodos admiten pagos recurrentes:
+
+- **Stripe** - tarjetas de crédito y débito, Google Pay, Apple Pay
+- **PayPal** - pagos desde el saldo de PayPal o con la tarjeta vinculada
+
+Los **pagos únicos** se cobran una sola vez en el momento de la compra y no se renuevan automáticamente. Los siguientes métodos admiten pagos únicos:
+
+- **Stripe** - WeChat Pay, Pix, Cash App, Amazon Pay, cuenta bancaria de EE. UU. o SEPA
+- **Cryptomus** - pagos con criptomonedas
+
+### Recarga de tráfico de proxy
+
+- **Paddle** - solo tarjetas de crédito y débito
+- **Cryptomus** - pagos con criptomonedas
+
+## Información adicional sobre los métodos de pago
+
+### Pagos con criptomonedas
+
+Gologin acepta pagos con criptomonedas en las siguientes monedas:
+
+- **BTC** (Bitcoin)
+- **LTC** (Litecoin)
+- **BCH** (Bitcoin Cash)
+- **DOGE** (Dogecoin)
+- **ETH** (Ethereum — solo en la red ERC-20)
+
+<Warning>
+  Envía ETH únicamente por la **red ERC-20**. Si envías criptomonedas por una red incorrecta (por ejemplo, TRC-20 o BEP-20), el pago **no llegará y no podrá recuperarse**. Comprueba siempre la red antes de confirmar la transacción.
+</Warning>
+
+<Note>
+  Es posible que Cryptomus, nuestro proveedor de pagos con criptomonedas, no funcione en todos los países. Actualmente no presta servicios a usuarios de Canadá. Si la página de pago con criptomonedas no se abre, usa otro método de pago.
+</Note>
+
+Tras enviar un pago con criptomonedas, espera un tiempo para que la transacción se confirme en la blockchain. Si tu suscripción no se actualiza una vez confirmada la transacción, reinicia la aplicación de Gologin y espera hasta 24 horas. Si el problema continúa, contacta con el soporte e indica el hash de tu transacción.
+
+### Comisiones de red en los pagos con criptomonedas
+
+Cuando pagas con criptomonedas, puede aparecer en la pantalla de pago la nota "You pay network fee". Esto significa simplemente que tú asumes la comisión de red de la blockchain (también llamada gas fee) por tu transacción.
+
+Gologin y Cryptomus (nuestro proveedor de pagos) no añaden ningún cargo adicional a tu pago. La comisión de red no es nuestra: la cobra la propia blockchain y se paga a través de la billetera o el exchange desde el que envías los fondos. El importe exacto depende de la moneda y la red que elijas, y de lo saturada que esté esa red en ese momento.
+
+Recomendamos usar la red TRON (TRC-20) para los pagos, ya que es la opción más barata y rápida.
+
+<Info>
+  Si envías desde un exchange en lugar de una billetera personal, el exchange también puede aplicar su propia comisión de retiro además de la comisión de red. Comprueba el total antes de confirmar.
+</Info>
+
+<Warning>
+  Algunas billeteras y exchanges restan la comisión de red del importe que introduces, por lo que la cantidad que llega es menor que la de la factura. Si se recibe menos del importe requerido, es posible que tu pago no se acredite automáticamente.
+
+  Para evitarlo, suma la comisión y envía un poco más de lo que indica la factura. Si ya has pagado de menos, los fondos no se pierden: contacta con el soporte para que el pago se aplique manualmente.
+</Warning>
+
+### Métodos de pago regionales
+
+Algunos métodos de pago solo están disponibles en determinados países. Por ejemplo:
+
+- **WeChat Pay** está disponible para usuarios de China
+- **Pix** está disponible para usuarios de Brasil
+- Yookassa está disponible para usuarios de Rusia
+
+Para ver estas opciones en la página de pago, asegúrate de estar conectado con una dirección IP del país correspondiente; de lo contrario, la opción no aparecerá.
+
+### Pagos con cuenta bancaria de EE. UU. y SEPA
+
+Gologin acepta pagos con cuenta bancaria de EE. UU. y SEPA a través de Stripe. Este método funciona de forma distinta a las tarjetas: el pago no es instantáneo.
+
+Después de completar el pago, espera un **retraso de 3 a 5 días hábiles** antes de que se acredite en tu cuenta. Tu suscripción o plan de Gologin no se activará hasta que se confirmen los fondos.
+
+Tenlo en cuenta si tienes una fecha límite: para un acceso inmediato, usa una tarjeta u otro método de pago instantáneo.
+
+### Problemas con tarjetas corporativas
+
+Es posible que nuestro procesador de pagos rechace algunas tarjetas de crédito corporativas o empresariales. Si tu tarjeta corporativa no es aceptada:
+
+- Prueba a usar una **tarjeta de crédito o débito personal**
+- Usa **PayPal** como método de pago alternativo
+- Paga con **criptomonedas** (consulta más arriba)

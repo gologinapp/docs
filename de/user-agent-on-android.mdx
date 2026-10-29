@@ -1,0 +1,61 @@
+---
+title: "User-Agent unter Android"
+description: "Android-Profile melden im User-Agent immer Android 10; K, unabhängig von der gewählten Version. Hier erfahren Sie, warum das so ist und warum es erwartet wird."
+---
+
+Wenn Sie in Gologin ein Android-Profil erstellen und dessen User-Agent prüfen, fällt Ihnen auf, dass dort immer `Android 10; K` steht, selbst wenn das Profil auf Android 14, 15 oder 16 eingestellt ist. Der String sieht ungefähr so aus:
+
+```text
+Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/... Mobile Safari/537.36
+```
+
+Das ist erwartetes Verhalten und kein Fehler. **Jeder moderne Chrome-basierte Browser unter Android meldet dasselbe.**
+
+## Warum das so ist
+
+Mit Chrome 110 Anfang 2023 hat Google eine Änderung namens **User-Agent Reduction** eingeführt. Damit Browser schwerer zu tracken und über Fingerprints zu identifizieren sind, gibt Chrome die tatsächliche Android-Version und das Gerätemodell nicht mehr im User-Agent preis. Stattdessen sendet Chrome für alle Nutzer feste Platzhalterwerte:
+
+- Die Android-Version ist auf `Android 10` festgelegt
+- Das Gerätemodell wird durch den Buchstaben `K` ersetzt
+- Die Nebenversionsnummern von Chrome sind auf `0.0.0` gesetzt
+
+Nur die Hauptversion von Chrome wird mit jedem Release weiter aktualisiert. Alles andere in diesem Teil des Strings bleibt für alle Geräte gleich.
+
+Der Android-Browser von Gologin basiert auf Chromium und folgt daher demselben Standard. Auch Chrome, Edge, Opera und Samsung Internet zeigen `Android 10; K` an. Das ist keine Besonderheit von Gologin, sondern so funktioniert das moderne mobile Web.
+
+<Info>
+  Das `K` ist weder eine Android-Version noch ein Tippfehler. Es ist ein Platzhalter, den Chrome jetzt anstelle des tatsächlichen Gerätemodells verwendet.
+</Info>
+
+## Warum das für Sie sogar vorteilhaft ist
+
+Da fast jeder Android-Chrome-Nutzer weltweit inzwischen `Android 10; K` meldet, geht Ihr Profil in der Masse unter. Würde Gologin stattdessen die echte Android-Version melden, würde Ihr Profil sich vom normalen Datenverkehr abheben und für Websites ungewöhnlich wirken. Das Standardverhalten zu übernehmen ist genau das, was Sie für ein Browserprofil brauchen, das wie ein gewöhnlicher Besucher aussehen soll.
+
+<Check>
+  Ein Android-Profil, das `Android 10; K` anzeigt, verhält sich korrekt und wirkt wie ein typisches, echtes Android-Gerät.
+</Check>
+
+Websites, die die tatsächliche Android-Version oder das Gerätemodell wirklich benötigen, fragen diese Informationen inzwischen über einen neueren, datenschutzfreundlicheren Weg ab (die sogenannten Client Hints), anstatt sie aus dem User-Agent auszulesen. Auch wenn der User-Agent `Android 10` angibt, geht also nichts verloren, und Ihre gewählte Android-Version wird dort berücksichtigt, wo es darauf ankommt.
+
+## So können Sie es selbst testen
+
+Sie können dies auf jedem echten Android-Gerät überprüfen, indem Sie ein Gologin-Profil und Ihren normalen Chrome-Browser direkt miteinander vergleichen.
+
+Öffnen Sie [iphey.com](https://iphey.com) oder einen anderen vertrauenswürdigen Fingerprint-Checker in Ihrem normalen Chrome-Browser und wechseln Sie zum Tab **Browser**. Öffnen Sie anschließend dieselbe Seite in einem Gologin-Android-Profil. Sehen Sie sich in beiden Browsern die Zeile **User Agent** an.
+
+In beiden Browsern sehen Sie genau denselben Wert `Android 10; K`, obwohl sie auf einem modernen Android-Gerät laufen. Der einzige Unterschied ist die Chrome-Versionsnummer, die lediglich den jeweiligen Release des Browsers widerspiegelt.
+
+Da beide Browser dasselbe melden, lässt sich mit diesem direkten Vergleich am einfachsten erkennen, dass Gologin genau das tut, was auch ein normaler Chrome-Browser tut.
+
+<Columns cols={2}>
+  <Column>
+    <Frame>
+      ![Chrome unter Android](/images/UA_chrome_android_app-1.jpg "Chrome unter Android")
+    </Frame>
+  </Column>
+  <Column>
+    <Frame>
+      ![Gologin Android-App](/images/UA_gologin_android_app.jpg "Gologin Android-App")
+    </Frame>
+  </Column>
+</Columns>

@@ -1,0 +1,54 @@
+---
+title: "Dữ liệu hồ sơ bị biến mất"
+description: "Lý do dữ liệu hồ sơ Gologin của bạn có thể bị mất và cách khôi phục."
+---
+
+## Vì sao dữ liệu hồ sơ có thể biến mất
+
+Có nhiều lý do khiến dữ liệu hồ sơ dường như bị mất trong Gologin. Trong hầu hết các trường hợp, dữ liệu không bị mất vĩnh viễn.
+
+### Sau khi cập nhật Orbita
+
+Khi Orbita (trình duyệt của Gologin) nhận bản cập nhật phiên bản lớn, một số dữ liệu cục bộ có thể bị đặt lại. Bao gồm:
+
+- Lịch sử duyệt web
+- Dữ liệu được lưu đệm cục bộ
+- Một số dữ liệu lưu trữ theo từng trang web
+
+<Info>
+Cookie và dữ liệu phiên sẽ được giữ nguyên nếu hồ sơ đã được đồng bộ lên máy chủ của Gologin trước khi cập nhật. Hãy luôn đảm bảo các hồ sơ đã được đồng bộ trước khi cập nhật.
+</Info>
+
+### Thông báo "Hồ sơ đã bị xóa"
+
+Thông báo này dễ gây hiểu nhầm. Trong hầu hết các trường hợp, nó **không** có nghĩa là hồ sơ của bạn thực sự đã bị xóa.
+
+Thông báo này thường xuất hiện khi bạn đã đạt giới hạn số lần khởi chạy hồ sơ trên gói dùng thử hoặc gói miễn phí. Dữ liệu hồ sơ của bạn vẫn còn trên máy chủ của Gologin.
+
+**Cách khắc phục:** Nâng cấp lên gói trả phí hoặc gia hạn gói đăng ký để truy cập lại các hồ sơ của bạn.
+
+### Thời gian lưu giữ dữ liệu của gói miễn phí
+
+Sau khi gói đăng ký hết hạn, Gologin lưu dữ liệu hồ sơ của bạn trên máy chủ tối đa **180 ngày**. Sau thời gian đó, dữ liệu sẽ bị xóa vĩnh viễn và không thể khôi phục.
+
+<Warning>
+Nếu gói đăng ký của bạn đã hết hạn từ lâu, hãy gia hạn càng sớm càng tốt để tránh mất dữ liệu vĩnh viễn. Các hồ sơ sẽ bị xóa sau 180 ngày kể từ khi gói đăng ký hết hạn.
+</Warning>
+
+### Sau khi nhập/xuất
+
+Khi bạn xuất rồi nhập lại một hồ sơ, không phải toàn bộ dữ liệu đều được đưa vào bản xuất. Các dữ liệu sau **được giữ lại** trong bản xuất:
+
+- Cookie
+- Cài đặt proxy
+- Cấu hình hồ sơ (vân tay trình duyệt, múi giờ, v.v.)
+
+Các dữ liệu sau **không được đưa vào** bản xuất:
+
+- Lịch sử duyệt web
+- Dữ liệu Local Storage và IndexedDB
+- Các tệp và hình ảnh được lưu đệm
+
+<Info>
+Nếu bạn cần giữ dữ liệu phiên giữa các thiết bị, hãy dùng tính năng đồng bộ đám mây tích hợp sẵn của Gologin thay vì xuất/nhập thủ công. Đồng bộ đám mây giữ lại nhiều dữ liệu hồ sơ hơn so với định dạng tệp xuất.
+</Info>

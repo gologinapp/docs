@@ -1,0 +1,378 @@
+---
+title: "Gologin Agent Browser CLI"
+description: "Cloud-Browser-Automatisierungs-CLI für KI-Agenten mit Snapshots, Refs und einem persistenten Daemon"
+---
+
+Die Gologin Agent Browser CLI macht aus dem Gologin Cloud Browser eine persistente, skriptfähige Laufzeitumgebung für KI-Agenten. Sie bietet kompakte Seiten-Snapshots, Ref-basierte Interaktion, Sitzungsspeicher und shellfreundliche Ausgaben.
+
+Anders als bei Puppeteer-/Playwright-Code, den Sie von Grund auf selbst schreiben, erhalten Agenten mit dieser CLI eine fertige Befehlsoberfläche für die Browser-Automatisierung – ohne Boilerplate und ohne Code für die Sitzungsverwaltung.
+
+---
+
+## Warum ein Cloud Browser
+
+Lokale Browser-Automatisierung stößt in Agenten-Workflows an harte Grenzen:
+
+- Lokale Browser lassen sich leichter erkennen
+- Kein profilbasiertes Fingerprinting
+- Keine persistenten Cloud-Browser-Profile
+- Keine integrierte Proxy-Ebene
+- Schwer über Agenten und Umgebungen hinweg zu standardisieren
+
+Die Agent Browser CLI verfolgt den entgegengesetzten Ansatz:
+
+- Cloud-Browser-Laufzeit statt eines lokalen Prozesses
+- Gologin-Profile als Identitätsebene der Sitzung
+- Proxy-fähige Sitzungen
+- Anti-Detect-Funktionen von Gologin
+- Ein persistenter Daemon, der Sitzungen über mehrere CLI-Aufrufe hinweg am Leben hält
+
+---
+
+## Installation
+
+```bash
+npm install -g gologin-agent-browser-cli
+```
+
+Oder ohne globale Installation ausführen:
+
+```bash
+npx gologin-agent-browser-cli --help
+```
+
+Erfordert Node.js >= 18.
+
+---
+
+## Zugangsdaten
+
+| Variable | Erforderlich | Beschreibung |
+|---|---|---|
+| `GOLOGIN_TOKEN` | Ja (für `open`) | Gologin API-Token |
+| `GOLOGIN_PROFILE_ID` | Optional | Standard-Profil-ID |
+| `GOLOGIN_DAEMON_PORT` | Optional | Daemon-Port (Standard: `44777`) |
+| `GOLOGIN_CONNECT_BASE` | Optional | Cloud Browser-Endpunkt |
+
+### Token erhalten
+
+1. Registrieren Sie sich oder melden Sie sich bei [gologin.com](https://gologin.com) an
+2. Öffnen Sie im Dashboard **API & MCP**
+3. Öffnen Sie den Tab **API**
+4. Klicken Sie auf **New Token**
+5. Kopieren Sie den generierten Zugriffstoken
+
+```bash
+export GOLOGIN_TOKEN='your_gologin_token'
+```
+
+### Konfigurationsdatei
+
+`~/.gologin-agent-browser/config.json`
+
+---
+
+## Architektur
+
+Sie besteht aus zwei Teilen:
+
+1. **`gologin-agent-browser` CLI** – verarbeitet Befehle, startet den Daemon automatisch und gibt kompakte Ausgaben aus
+2. **Persistenter lokaler Daemon** – verwaltet die aktiven Browser-Sitzungen, verbindet sich über Playwright `connectOverCDP` mit dem Gologin Cloud Browser, hält die aktive Seite im Speicher, erstellt Snapshots, löst Refs auf und erfasst Sitzungs-Metadaten
+
+Der Transport erfolgt ausschließlich lokal:
+- Unix-Socket unter `${TMPDIR:-/tmp}/gologin-agent-browser.sock`
+- Localhost-HTTP unter `127.0.0.1:${GOLOGIN_DAEMON_PORT:-44777}`
+
+Wenn Sie keine Profil-ID angeben, erstellt der Daemon über die API ein temporäres Gologin-Cloud-Profil.
+
+---
+
+## So funktionieren Refs
+
+`snapshot` gibt eine kompakte Seitenansicht aus und weist interaktiven Elementen Refs wie `@e1`, `@e2`, `@e3` zu. Mit diesen Refs steuern Sie die Elemente direkt:
+
+```bash
+gologin-agent-browser snapshot
+# output shows page content with refs like @e1, @e2, @e3...
+
+gologin-agent-browser click @e3
+gologin-agent-browser type @e5 "search query"
+gologin-agent-browser fill @e7 "username"
+```
+
+Refs funktionieren nach bestem Bemühen („Best Effort“) und sollten nach einer Navigation oder größeren DOM-Änderungen neu erzeugt werden. Auf dynamischen Seiten ist `find` meist die bessere Alternative zu veralteten Refs.
+
+---
+
+## Schnellstart
+
+```bash
+export GOLOGIN_TOKEN='your_token'
+
+# open a page in cloud browser
+gologin-agent-browser open https://example.com
+
+# read the page as a compact snapshot
+gologin-agent-browser snapshot
+
+# interact with elements
+gologin-agent-browser click @e3
+gologin-agent-browser type @e5 "hello world"
+
+# take a screenshot
+gologin-agent-browser screenshot ./page.png
+
+# close the session
+gologin-agent-browser close
+```
+
+---
+
+## Beispiel für eine Agenten-Schleife
+
+Eine typische Schleife eines KI-Agenten:
+
+```
+1. open <url>
+2. snapshot          → agent reads page content
+3. click/type/fill   → agent acts on refs
+4. snapshot          → agent reads result
+5. repeat 3-4 as needed
+6. screenshot        → save artifact
+7. close
+```
+
+---
+
+## Vollständige Befehlsreferenz
+
+### Diagnose
+
+| Befehl | Beschreibung |
+|---|---|
+| `doctor` | Zustand und Konnektivität des Daemons prüfen |
+
+### Sitzungsverwaltung
+
+| Befehl | Beschreibung |
+|---|---|
+| `open <url>` | URL in einer Cloud-Browser-Sitzung öffnen |
+| `close` | Aktuelle Sitzung schließen |
+| `sessions` | Aktive Sitzungen auflisten |
+| `current` | Informationen zur aktuellen Sitzung anzeigen |
+
+### Seiteninhalte lesen
+
+| Befehl | Beschreibung |
+|---|---|
+| `snapshot` | Kompakter Text-Snapshot mit Element-Refs |
+| `screenshot <path>` | Screenshot der Seite speichern |
+| `pdf <path>` | Seite als PDF speichern |
+| `get <kind> [target]` | Seiteneigenschaften abrufen |
+
+### Interaktion
+
+| Befehl | Beschreibung |
+|---|---|
+| `click <ref>` | Element anklicken |
+| `dblclick <ref>` | Doppelklick |
+| `type <ref> <text>` | Text eingeben (hängt an) |
+| `fill <ref> <text>` | Eingabefeld ausfüllen (ersetzt den Inhalt) |
+| `hover <ref>` | Mit der Maus über ein Element fahren |
+| `select <ref> <value>` | Wert in einer Dropdown-Liste auswählen |
+| `check <ref>` / `uncheck <ref>` | Kontrollkästchen umschalten |
+| `focus <ref>` | Element fokussieren |
+| `find ...` | Semantische Elementsuche |
+
+### Tastatur und Scrollen
+
+| Befehl | Beschreibung |
+|---|---|
+| `press <key> [target]` | Eine Taste drücken |
+| `scroll <direction> [pixels]` | Seite scrollen |
+| `scrollintoview <ref>` | Element in den sichtbaren Bereich scrollen |
+
+### Navigation
+
+| Befehl | Beschreibung |
+|---|---|
+| `back` | Zurück |
+| `forward` | Vorwärts |
+| `reload` | Seite neu laden |
+| `wait <target\|ms>` | Auf ein Element oder den Ablauf einer Zeit warten |
+
+### Tabs
+
+| Befehl | Beschreibung |
+|---|---|
+| `tabs` | Geöffnete Tabs auflisten |
+| `tabopen [url]` | Neuen Tab öffnen |
+| `tabfocus <index>` | Zu einem Tab wechseln |
+| `tabclose [index]` | Einen Tab schließen |
+
+### Cookies und Speicher
+
+| Befehl | Beschreibung |
+|---|---|
+| `cookies` | Cookies exportieren |
+| `cookies-import <file>` | Cookies importieren |
+| `cookies-clear` | Cookies löschen |
+| `storage-export [path]` | localStorage exportieren |
+| `storage-import <file>` | localStorage importieren |
+| `storage-clear` | localStorage löschen |
+
+### Erweitert
+
+| Befehl | Beschreibung |
+|---|---|
+| `eval <expression>` | JavaScript auf der Seite ausführen |
+| `upload <ref> <file...>` | Dateien hochladen |
+
+### Aliase
+
+| Alias | Entspricht |
+|---|---|
+| `goto`, `navigate` | `open` |
+| `tabnew` | `tabopen` |
+| `tabswitch` | `tabfocus` |
+| `js` | `eval` |
+| `key` | `press` |
+| `scrollinto` | `scrollintoview` |
+| `quit`, `exit` | `close` |
+
+---
+
+## Anwendungsfälle und Beispiele
+
+### Prüfen, ob Ihre Website Anti-Detect-Tests besteht
+
+```bash
+gologin-agent-browser open https://iphey.com/ --profile your_profile_id
+gologin-agent-browser wait 3000
+gologin-agent-browser snapshot     # read the trust score
+gologin-agent-browser screenshot ./iphey-result.png
+gologin-agent-browser close
+```
+
+### In einer Web-App anmelden und Dashboard-Daten extrahieren
+
+```bash
+gologin-agent-browser open https://app.example.com/login
+gologin-agent-browser snapshot
+
+# agent reads snapshot, finds login form
+gologin-agent-browser fill @e4 "user@company.com"
+gologin-agent-browser fill @e6 "password"
+gologin-agent-browser click @e8
+
+gologin-agent-browser wait 3000
+gologin-agent-browser snapshot     # agent reads dashboard content
+
+# navigate to the report page
+gologin-agent-browser click @e12   # "Reports" link
+gologin-agent-browser wait 2000
+gologin-agent-browser snapshot     # agent extracts report data
+gologin-agent-browser screenshot ./report.png
+gologin-agent-browser close
+```
+
+### Ein mehrstufiges Formular ausfüllen
+
+```bash
+gologin-agent-browser open https://forms.example.com/apply
+
+# step 1: personal info
+gologin-agent-browser snapshot
+gologin-agent-browser fill @e3 "John Doe"
+gologin-agent-browser fill @e5 "john@example.com"
+gologin-agent-browser select @e7 "United States"
+gologin-agent-browser click @e9   # Next
+
+# step 2: upload and submit
+gologin-agent-browser wait 1000
+gologin-agent-browser snapshot
+gologin-agent-browser upload @e4 ./resume.pdf
+gologin-agent-browser check @e6   # agree to terms
+gologin-agent-browser click @e8   # Submit
+
+gologin-agent-browser wait 2000
+gologin-agent-browser snapshot     # confirm success
+gologin-agent-browser close
+```
+
+### Screenshots von Wettbewerber-Seiten erstellen
+
+```bash
+# use different profiles with different geos
+for profile in us_profile de_profile jp_profile; do
+  gologin-agent-browser open https://competitor.com --profile $profile
+  gologin-agent-browser wait 3000
+  gologin-agent-browser screenshot ./${profile}-homepage.png
+  gologin-agent-browser close
+done
+```
+
+### Auf einer Website suchen, die Scraping blockiert
+
+Manche Websites verlangen die Ausführung von JavaScript, eine Anmeldung oder eine Interaktion, bevor sie Ergebnisse anzeigen. Nutzen Sie den Browser für die Suche:
+
+```bash
+gologin-agent-browser open https://protected-directory.com
+gologin-agent-browser snapshot
+gologin-agent-browser find "search input"
+gologin-agent-browser type @found "machine learning engineer San Francisco"
+gologin-agent-browser press Enter
+gologin-agent-browser wait 3000
+gologin-agent-browser snapshot     # agent reads search results
+gologin-agent-browser screenshot ./search-results.png
+gologin-agent-browser close
+```
+
+### Sitzungsstatus speichern und wiederherstellen
+
+Exportieren Sie Cookies und Speicher, um sie in späteren Sitzungen wiederzuverwenden:
+
+```bash
+# after logging in
+gologin-agent-browser cookies --output ./session-cookies.json
+gologin-agent-browser storage-export ./session-storage.json
+gologin-agent-browser close
+
+# later, restore the session
+gologin-agent-browser open https://app.example.com
+gologin-agent-browser cookies-import ./session-cookies.json
+gologin-agent-browser storage-import ./session-storage.json
+gologin-agent-browser reload
+gologin-agent-browser snapshot     # already logged in
+```
+
+---
+
+## Parallele Sitzungen
+
+Verwenden Sie für unabhängige Cloud-Aufgaben explizite `--session`-IDs. Aufräumen können Sie mit `close --all` oder `sessions --prune --older-than-ms`.
+
+---
+
+## Proxy-Regeln
+
+- Vorkonfigurierte Profile: Der Proxy wird im Gologin-Dashboard oder über die API am Profil festgelegt
+- Temporäre Profile: unterstützen entweder keinen Proxy oder einen benutzerdefinierten Proxy mit Host/Port
+- `--proxy-country` ist nur für vorkonfigurierte Profile verfügbar
+
+---
+
+## Weiterführende Links
+
+- [Gologin Web Access CLI](/de/cli-tools/web-access) – einheitliche CLI (Scraping + Browser)
+- [Local Agent Browser CLI](/de/cli-tools/local-agent-browser) – lokale Alternative auf Basis von Orbita
+- [Cloud Browser Getting Started](/de/api-reference/cloud-browser/getting-started) – Puppeteer-/Playwright-Beispiele
+- [AI Skills](/de/api-reference/ai-integrations/ai-skills) – Plug-and-play-Skills für Claude Code
+
+<Card title="npm-Paket" icon="npm" href="https://www.npmjs.com/package/gologin-agent-browser-cli">
+  gologin-agent-browser-cli
+</Card>
+
+<Card title="Quellcode" icon="github" href="https://github.com/GologinLabs/agent-browser">
+  GologinLabs/agent-browser
+</Card>

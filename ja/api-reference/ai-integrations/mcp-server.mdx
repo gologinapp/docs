@@ -1,0 +1,171 @@
+---
+title: "MCPサーバー"
+description: "Model Context Protocol を通じて、AIとの会話で Gologin のブラウザプロファイルを管理します"
+---
+
+Gologin MCPサーバーを使うと、[Model Context Protocol](https://modelcontextprotocol.io/) を通じて、AIとの会話でブラウザプロファイルを管理できます。Claude Desktop、Cursor、Claude Code、またはMCP対応のクライアントに接続すれば、自然な言葉でプロファイルを操作できます。
+
+---
+
+## できること
+
+- **プロファイル管理** — ブラウザプロファイルの作成、更新、削除、一覧表示
+- **プロキシ設定** — プロファイルへのプロキシの設定
+- **フィンガープリント管理** — ブラウザのフィンガープリントやユーザーエージェントのカスタマイズ
+- **フォルダ整理** — フォルダの作成とプロファイルの整理
+- **ブラウザセッション** — ブラウザセッションの開始と停止
+- **アカウント情報** — サブスクリプションの状態と使用状況の確認
+
+---
+
+## インストール
+
+### 要件
+
+- Node.js 18 以上
+- Gologin の API トークン
+- 有効な Gologin アカウント
+
+### API トークンを取得する
+
+1. [gologin.com](https://gologin.com) にログインします
+2. ダッシュボードで **API & MCP** を開きます
+3. **API** タブを開きます
+4. **新しいトークン** をクリックして、トークンをコピーします
+
+### Claude Desktop
+
+1. Claude Desktop を開き、**設定** に移動します
+2. サイドバーの **Developer** をクリックし、**Edit Config** をクリックします
+3. `claude_desktop_config.json` に次の内容を追加します:
+
+```json
+{
+  "mcpServers": {
+    "gologin-mcp": {
+      "command": "npx",
+      "args": ["gologin-mcp"],
+      "env": {
+        "API_TOKEN": "your-gologin-api-token-here"
+      }
+    }
+  }
+}
+```
+
+4. Claude Desktop を再起動します
+5. **設定 → Connectors** に「gologin-mcp LOCAL」が表示されていることを確認します
+
+### Claude Code
+
+Claude Code のMCP設定に次の内容を追加します:
+
+```json
+{
+  "mcpServers": {
+    "gologin-mcp": {
+      "command": "npx",
+      "args": ["gologin-mcp"],
+      "env": {
+        "API_TOKEN": "your-gologin-api-token-here"
+      }
+    }
+  }
+}
+```
+
+### Cursor
+
+Cursor のMCP設定ファイルに、同じJSON設定を使用します。
+
+### その他のMCPクライアント
+
+Model Context Protocol に対応しているクライアントであれば、同じ設定構造を使用できます。
+
+---
+
+## 使用例
+
+接続が完了したら、AIアシスタントに自然な言葉で話しかけてください。
+
+**アカウント**
+- 「私の Gologin アカウントの状態を教えて」
+- 「サブスクリプションの詳細を確認して」
+
+**プロファイルの作成**
+- 「米国のプロキシを設定した新しいブラウザプロファイルを作成して」
+- 「SNS運用向けにプロファイルを5つ用意して」
+
+**プロファイルの管理**
+- 「すべてのプロファイルを表示して」
+- 「プロファイルID 123 のプロキシを英国のプロキシに変更して」
+- 「'test-profile' という名前のプロファイルを削除して」
+
+**整理**
+- 「'Social Media Accounts' という名前のフォルダを作成して」
+- 「プロファイル XYZ を Social Media フォルダに移動して」
+
+**ブラウザセッション**
+- 「私のプロファイルでブラウザセッションを開始して」
+- 「実行中のブラウザセッションをすべて停止して」
+
+---
+
+## 実際の活用シナリオ
+
+### 新規クライアント用のプロファイルを設定する
+
+新しいクライアントのために、地域別の広告アカウント向けブラウザプロファイルを10個用意する場合:
+
+> 「'Client X - US'、'Client X - UK'、'Client X - DE' のような名前でブラウザプロファイルを10個作成して。それぞれに該当する国のレジデンシャルプロキシを設定して。すべて 'Client X' という名前のフォルダに入れて。」
+
+Claude がプロファイルの作成、プロキシの設定、整理まで、すべて自然な言葉の指示だけで行います。
+
+### 既存の設定を確認する
+
+> 「プロキシが設定されていないプロファイルをすべて表示して。あと、過去30日間使われていないプロファイルはどれ?」
+
+ダッシュボードを一つずつ開かなくても、設定漏れや使われていないプロファイルをすばやく見つけられます。
+
+### 自動化の前にプロファイルを準備する
+
+MCPサーバーがセットアップを担当し、CLIツールが実行を担当します:
+
+1. **MCP:** 「スクレイピング用に米国のプロキシを設定したプロファイルを5つ作成して、'Scraping' フォルダに入れて」
+2. **CLI:** `gologin-agent-browser open https://target.com --profile profile_1` で自動化を実行します
+3. **MCP:** 作業が終わったら「'Scraping' フォルダ内のプロファイルをすべて削除して」
+
+### チーム管理
+
+> 「現在実行中のセッションはいくつ? 私のプランのセッション上限は?」
+> 「サブスクリプションを確認して。あといくつプロファイルを作成できる?」
+
+ダッシュボードを開かずに使用状況を把握したいチームリーダーに便利です。
+
+---
+
+## MCPサーバー、CLIツール、AIスキルの違い
+
+| ツール | 適した用途 | 仕組み |
+|---|---|---|
+| **MCPサーバー** | プロファイル管理、アカウント操作 | MCPプロトコルを通じた自然言語での操作 |
+| [CLIツール](/ja/cli-tools/web-access) | Webスクレイピング、ブラウザ自動化、一括処理 | シェルコマンド |
+| [AIスキル](/ja/api-reference/ai-integrations/ai-skills) | Claude Code ですぐに使えるエージェント機能 | CLIツールをラップしたスキル拡張 |
+
+MCPサーバーは**プロファイルとアカウントの管理**に特化しています。Webスクレイピングやブラウザ自動化には、[CLIツール](/ja/cli-tools/web-access)または[AIスキル](/ja/api-reference/ai-integrations/ai-skills)を使用してください。
+
+---
+
+## 関連情報
+
+- [AIスキル](/ja/api-reference/ai-integrations/ai-skills) — Claude Code ですぐに使えるWebアクセス用スキル
+- [Web Access CLI](/ja/cli-tools/web-access) — スクレイピングとブラウザ操作を統合したCLI
+- [Agent Browser CLI](/ja/cli-tools/agent-browser) — AIエージェント向けのクラウドブラウザCLI
+
+<Card title="npm パッケージ" icon="npm" href="https://www.npmjs.com/package/gologin-mcp">
+  gologin-mcp
+</Card>
+
+<Card title="ソースコード" icon="github" href="https://github.com/gologinapp/gologin-mcp">
+  gologinapp/gologin-mcp
+</Card>

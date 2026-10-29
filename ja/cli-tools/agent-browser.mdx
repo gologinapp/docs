@@ -1,0 +1,378 @@
+---
+title: "Gologin Agent Browser CLI"
+description: "スナップショット、ref、常駐デーモンを備えた、AIエージェント向けのクラウドブラウザ自動化CLI"
+---
+
+Gologin Agent Browser CLI は、Gologin Cloud Browser を、AIエージェント向けの永続的でスクリプト化できる実行環境に変えます。コンパクトなページスナップショット、ref ベースの操作、セッションの記憶、シェルで扱いやすい出力を提供します。
+
+Puppeteer/Playwright のコードをゼロから書く場合と異なり、この CLI はブラウザ自動化のためのコマンドをあらかじめ用意しています。定型コードもセッション管理コードも不要です。
+
+---
+
+## クラウドブラウザを使う理由
+
+ローカルブラウザによる自動化には、エージェントのワークフローにおいて次のような明確な限界があります。
+
+- ローカルブラウザは検出されやすい
+- プロファイル単位のフィンガープリントを利用できない
+- クラウド上に永続的なブラウザプロファイルを持てない
+- プロキシ層が組み込まれていない
+- エージェントや環境をまたいで標準化するのが難しい
+
+Agent Browser CLI は、これとは反対のアプローチを取ります。
+
+- ローカルプロセスではなく、クラウドブラウザの実行環境を使用
+- セッションの ID 層として Gologin プロファイルを使用
+- プロキシに対応したセッション
+- Gologin から引き継がれるアンチ検出機能
+- CLI の呼び出しをまたいでセッションを維持する常駐デーモン
+
+---
+
+## インストール
+
+```bash
+npm install -g gologin-agent-browser-cli
+```
+
+グローバルにインストールせずに実行することもできます。
+
+```bash
+npx gologin-agent-browser-cli --help
+```
+
+Node.js 18 以上が必要です。
+
+---
+
+## 認証情報
+
+| 変数 | 必須 | 説明 |
+|---|---|---|
+| `GOLOGIN_TOKEN` | はい（`open` の場合） | Gologin API トークン |
+| `GOLOGIN_PROFILE_ID` | 任意 | デフォルトのプロファイル ID |
+| `GOLOGIN_DAEMON_PORT` | 任意 | デーモンのポート（デフォルト: `44777`） |
+| `GOLOGIN_CONNECT_BASE` | 任意 | Cloud Browser のエンドポイント |
+
+### トークンを取得する
+
+1. [gologin.com](https://gologin.com) でサインアップまたはログインします
+2. ダッシュボードで **API & MCP** を開きます
+3. **API** タブを開きます
+4. **新しいトークン** をクリックします
+5. 生成されたアクセストークンをコピーします
+
+```bash
+export GOLOGIN_TOKEN='your_gologin_token'
+```
+
+### 設定ファイル
+
+`~/.gologin-agent-browser/config.json`
+
+---
+
+## アーキテクチャ
+
+構成は次の2つの部分からなります。
+
+1. **`gologin-agent-browser` CLI** — コマンドを解析し、デーモンを自動起動して、コンパクトな出力を表示します
+2. **常駐ローカルデーモン** — ライブのブラウザセッションを管理し、Playwright の `connectOverCDP` を通じて Gologin Cloud Browser に接続します。また、アクティブなページをメモリ上に保持し、スナップショットの作成、ref の解決、セッションメタデータの追跡を行います
+
+通信はローカルのみです。
+- `${TMPDIR:-/tmp}/gologin-agent-browser.sock` の Unix ソケット
+- `127.0.0.1:${GOLOGIN_DAEMON_PORT:-44777}` のローカルホスト HTTP
+
+プロファイル ID を指定しない場合、デーモンは API を通じて一時的な Gologin クラウドプロファイルを作成します。
+
+---
+
+## ref の仕組み
+
+`snapshot` はコンパクトなページビューを出力し、操作可能な要素に `@e1`、`@e2`、`@e3` のような ref を割り当てます。これらを直接指定して操作できます。
+
+```bash
+gologin-agent-browser snapshot
+# output shows page content with refs like @e1, @e2, @e3...
+
+gologin-agent-browser click @e3
+gologin-agent-browser type @e5 "search query"
+gologin-agent-browser fill @e7 "username"
+```
+
+ref はベストエフォートで割り当てられるため、ページ遷移後や DOM が大きく変化した後は再生成してください。動的なページでは、古くなった ref よりも `find` を使うほうが確実な場合が多くあります。
+
+---
+
+## クイックスタート
+
+```bash
+export GOLOGIN_TOKEN='your_token'
+
+# open a page in cloud browser
+gologin-agent-browser open https://example.com
+
+# read the page as a compact snapshot
+gologin-agent-browser snapshot
+
+# interact with elements
+gologin-agent-browser click @e3
+gologin-agent-browser type @e5 "hello world"
+
+# take a screenshot
+gologin-agent-browser screenshot ./page.png
+
+# close the session
+gologin-agent-browser close
+```
+
+---
+
+## エージェントループの例
+
+典型的な AI エージェントのループは次のとおりです。
+
+```
+1. open <url>
+2. snapshot          → agent reads page content
+3. click/type/fill   → agent acts on refs
+4. snapshot          → agent reads result
+5. repeat 3-4 as needed
+6. screenshot        → save artifact
+7. close
+```
+
+---
+
+## コマンドリファレンス（全一覧）
+
+### 診断
+
+| コマンド | 説明 |
+|---|---|
+| `doctor` | デーモンの状態と接続を確認します |
+
+### セッション管理
+
+| コマンド | 説明 |
+|---|---|
+| `open <url>` | クラウドブラウザのセッションで URL を開きます |
+| `close` | 現在のセッションを閉じます |
+| `sessions` | アクティブなセッションを一覧表示します |
+| `current` | 現在のセッション情報を表示します |
+
+### ページの読み取り
+
+| コマンド | 説明 |
+|---|---|
+| `snapshot` | 要素の ref を含むコンパクトなテキストスナップショット |
+| `screenshot <path>` | ページのスクリーンショットを保存します |
+| `pdf <path>` | ページを PDF として保存します |
+| `get <kind> [target]` | ページのプロパティを取得します |
+
+### 操作
+
+| コマンド | 説明 |
+|---|---|
+| `click <ref>` | 要素をクリックします |
+| `dblclick <ref>` | ダブルクリックします |
+| `type <ref> <text>` | テキストを入力します（追記） |
+| `fill <ref> <text>` | 入力欄に入力します（置換） |
+| `hover <ref>` | 要素にカーソルを合わせます |
+| `select <ref> <value>` | ドロップダウンの値を選択します |
+| `check <ref>` / `uncheck <ref>` | チェックボックスのオン／オフを切り替えます |
+| `focus <ref>` | 要素にフォーカスします |
+| `find ...` | 意味に基づいて要素を検索します |
+
+### キーボードとスクロール
+
+| コマンド | 説明 |
+|---|---|
+| `press <key> [target]` | キーボードのキーを押します |
+| `scroll <direction> [pixels]` | ページをスクロールします |
+| `scrollintoview <ref>` | 要素が表示されるようにスクロールします |
+
+### ナビゲーション
+
+| コマンド | 説明 |
+|---|---|
+| `back` | 戻ります |
+| `forward` | 進みます |
+| `reload` | ページを再読み込みします |
+| `wait <target\|ms>` | 要素の出現またはタイムアウトまで待機します |
+
+### タブ
+
+| コマンド | 説明 |
+|---|---|
+| `tabs` | 開いているタブを一覧表示します |
+| `tabopen [url]` | 新しいタブを開きます |
+| `tabfocus <index>` | タブを切り替えます |
+| `tabclose [index]` | タブを閉じます |
+
+### Cookie とストレージ
+
+| コマンド | 説明 |
+|---|---|
+| `cookies` | Cookie をエクスポートします |
+| `cookies-import <file>` | Cookie をインポートします |
+| `cookies-clear` | Cookie を削除します |
+| `storage-export [path]` | localStorage をエクスポートします |
+| `storage-import <file>` | localStorage をインポートします |
+| `storage-clear` | localStorage を削除します |
+
+### 高度なコマンド
+
+| コマンド | 説明 |
+|---|---|
+| `eval <expression>` | ページ内で JavaScript を評価します |
+| `upload <ref> <file...>` | ファイルをアップロードします |
+
+### エイリアス
+
+| エイリアス | 対応するコマンド |
+|---|---|
+| `goto`, `navigate` | `open` |
+| `tabnew` | `tabopen` |
+| `tabswitch` | `tabfocus` |
+| `js` | `eval` |
+| `key` | `press` |
+| `scrollinto` | `scrollintoview` |
+| `quit`, `exit` | `close` |
+
+---
+
+## ユースケースと例
+
+### サイトがアンチ検出テストに合格するか確認する
+
+```bash
+gologin-agent-browser open https://iphey.com/ --profile your_profile_id
+gologin-agent-browser wait 3000
+gologin-agent-browser snapshot     # read the trust score
+gologin-agent-browser screenshot ./iphey-result.png
+gologin-agent-browser close
+```
+
+### Web アプリにログインしてダッシュボードのデータを取得する
+
+```bash
+gologin-agent-browser open https://app.example.com/login
+gologin-agent-browser snapshot
+
+# agent reads snapshot, finds login form
+gologin-agent-browser fill @e4 "user@company.com"
+gologin-agent-browser fill @e6 "password"
+gologin-agent-browser click @e8
+
+gologin-agent-browser wait 3000
+gologin-agent-browser snapshot     # agent reads dashboard content
+
+# navigate to the report page
+gologin-agent-browser click @e12   # "Reports" link
+gologin-agent-browser wait 2000
+gologin-agent-browser snapshot     # agent extracts report data
+gologin-agent-browser screenshot ./report.png
+gologin-agent-browser close
+```
+
+### 複数ステップのフォームに入力する
+
+```bash
+gologin-agent-browser open https://forms.example.com/apply
+
+# step 1: personal info
+gologin-agent-browser snapshot
+gologin-agent-browser fill @e3 "John Doe"
+gologin-agent-browser fill @e5 "john@example.com"
+gologin-agent-browser select @e7 "United States"
+gologin-agent-browser click @e9   # Next
+
+# step 2: upload and submit
+gologin-agent-browser wait 1000
+gologin-agent-browser snapshot
+gologin-agent-browser upload @e4 ./resume.pdf
+gologin-agent-browser check @e6   # agree to terms
+gologin-agent-browser click @e8   # Submit
+
+gologin-agent-browser wait 2000
+gologin-agent-browser snapshot     # confirm success
+gologin-agent-browser close
+```
+
+### 競合他社のページのスクリーンショットを撮る
+
+```bash
+# use different profiles with different geos
+for profile in us_profile de_profile jp_profile; do
+  gologin-agent-browser open https://competitor.com --profile $profile
+  gologin-agent-browser wait 3000
+  gologin-agent-browser screenshot ./${profile}-homepage.png
+  gologin-agent-browser close
+done
+```
+
+### スクレイピングをブロックするサイトで検索する
+
+サイトによっては、結果を表示する前に JavaScript の実行、ログイン、または操作が必要になります。そのような場合は、ブラウザを使って検索します。
+
+```bash
+gologin-agent-browser open https://protected-directory.com
+gologin-agent-browser snapshot
+gologin-agent-browser find "search input"
+gologin-agent-browser type @found "machine learning engineer San Francisco"
+gologin-agent-browser press Enter
+gologin-agent-browser wait 3000
+gologin-agent-browser snapshot     # agent reads search results
+gologin-agent-browser screenshot ./search-results.png
+gologin-agent-browser close
+```
+
+### セッション状態を保存して復元する
+
+Cookie とストレージをエクスポートしておけば、別のセッションで再利用できます。
+
+```bash
+# after logging in
+gologin-agent-browser cookies --output ./session-cookies.json
+gologin-agent-browser storage-export ./session-storage.json
+gologin-agent-browser close
+
+# later, restore the session
+gologin-agent-browser open https://app.example.com
+gologin-agent-browser cookies-import ./session-cookies.json
+gologin-agent-browser storage-import ./session-storage.json
+gologin-agent-browser reload
+gologin-agent-browser snapshot     # already logged in
+```
+
+---
+
+## 並列セッション
+
+独立したクラウドタスクには、明示的に `--session` ID を指定します。後片付けには `close --all` または `sessions --prune --older-than-ms` を使用します。
+
+---
+
+## プロキシのルール
+
+- 事前設定済みのプロファイル: プロキシは Gologin のダッシュボードまたは API でプロファイルに設定します
+- 一時プロファイル: プロキシなし、またはカスタムのプロキシホスト／ポートに対応します
+- `--proxy-country` は事前設定済みのプロファイルでのみ利用できます
+
+---
+
+## 関連情報
+
+- [Gologin Web Access CLI](/ja/cli-tools/web-access) — 統合 CLI（スクレイピング + ブラウザ）
+- [Local Agent Browser CLI](/ja/cli-tools/local-agent-browser) — ローカルの Orbita を使う代替手段
+- [Cloud Browser Getting Started](/ja/api-reference/cloud-browser/getting-started) — Puppeteer/Playwright の例
+- [AI Skills](/ja/api-reference/ai-integrations/ai-skills) — Claude Code 向けのプラグアンドプレイ スキル
+
+<Card title="npm パッケージ" icon="npm" href="https://www.npmjs.com/package/gologin-agent-browser-cli">
+  gologin-agent-browser-cli
+</Card>
+
+<Card title="ソースコード" icon="github" href="https://github.com/GologinLabs/agent-browser">
+  GologinLabs/agent-browser
+</Card>

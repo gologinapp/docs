@@ -1,0 +1,43 @@
+---
+title: "Visão geral de exportação e importação"
+---
+
+A importação/exportação de CSV é uma forma simples de gerenciar vários perfis de navegador de uma só vez. Em vez de configurar tudo manualmente, você pode usar um arquivo CSV para copiar configurações, criar perfis em massa, atualizar ajustes como proxies e mover configurações entre workspaces. É especialmente útil quando você trabalha em grande escala ou quer manter a consistência entre perfis ou membros da equipe.
+
+É importante entender que esse recurso funciona apenas com a **configuração dos perfis**, e não com os dados reais de navegação. Isso significa que itens como nome do perfil, proxies, tags, pastas e configurações básicas do ambiente são incluídos, mas cookies, sessões, estado de login e a identidade completa do fingerprint não são. Qualquer perfil criado a partir de um CSV se comportará como um ambiente totalmente novo, sem nenhuma atividade anterior.
+
+### O que você pode fazer com CSV
+
+- Criar vários perfis de uma só vez
+- Copiar e reutilizar configurações de perfis
+- Atualizar proxies e configurações em massa
+- Manter as configurações da equipe consistentes
+- Mover configurações entre workspaces
+
+### O que está incluído e o que não está
+
+**Incluído:**
+
+- Nome do perfil
+- Configurações de proxy
+- Pastas e tags
+- Configurações básicas do ambiente
+
+**Não incluído:**
+
+- Cookies
+- Sessões
+- Estado de login
+- Identidade completa do fingerprint
+
+### Pontos importantes a ter em mente
+
+- Os perfis criados via CSV começam como **ambientes novos e limpos**
+- Eles **não estão conectados a nenhuma conta**
+- Sessões e atividades anteriores **não são preservadas**
+- A importação de CSV **não é um método de backup**
+- Uma formatação incorreta pode **interromper a importação ou criar perfis inválidos**
+
+### Principal conclusão
+
+A importação/exportação de CSV é mais indicada para **escalar e gerenciar configurações de perfis**, e não para transferir perfis, sessões ou identidades existentes.

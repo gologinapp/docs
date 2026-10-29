@@ -1,0 +1,33 @@
+---
+title: "Gestión de almacenamiento y caché"
+description: "Cómo gestionar el almacenamiento local, los archivos de caché y el uso de disco de Gologin"
+---
+
+Gologin guarda localmente los datos del navegador de cada perfil que ejecutas. Con el tiempo, esto puede ocupar una cantidad considerable de espacio en disco.
+
+## Dónde guarda Gologin los datos
+
+- **Windows**: `C:\Users\<username>\AppData\Local\Temp\gologin_profile_*`
+- **Mac**: `/tmp/gologin_profile_*`
+- **Linux**: `/tmp/gologin_profile_*`
+
+Los archivos binarios del navegador Orbita se almacenan por separado y pueden ocupar entre 500 MB y 2 GB por versión.
+
+## ¿Es seguro eliminar los archivos de caché?
+
+Sí, puedes eliminar sin problema las carpetas temporales de los perfiles cuando no haya ningún perfil en ejecución. Estas carpetas se vuelven a crear al iniciar un perfil.
+
+**Antes de eliminar:**
+1. Asegúrate de que todos los perfiles de Gologin estén cerrados
+2. Cierra la aplicación de escritorio de Gologin
+3. Elimina las carpetas que coincidan con `gologin_profile_*` en tu directorio temporal
+
+<Warning>
+No elimines archivos mientras haya perfiles en ejecución. Esto puede provocar errores "EBUSY: resource busy" en Windows o dañar las sesiones activas.
+</Warning>
+
+## Cómo reducir el uso de disco
+
+- Cierra los perfiles cuando termines de usarlos (no los dejes abiertos durante la noche)
+- Desinstala las versiones de Orbita que no uses desde los ajustes de Gologin
+- Limpia periódicamente las carpetas temporales de los perfiles

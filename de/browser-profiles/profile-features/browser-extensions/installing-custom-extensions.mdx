@@ -1,0 +1,35 @@
+---
+title: "Benutzerdefinierte Erweiterungen installieren"
+---
+
+**Benutzerdefinierte Erweiterungen** ermöglichen es Ihnen, private, angepasste oder lokal entwickelte Tools in Ihren Gologin-Profilen zu verwenden. Anders als öffentliche Erweiterungen werden benutzerdefinierte Erweiterungen manuell über Erweiterungsdateien installiert.
+
+## Kompatibilität Ihrer Erweiterung sicherstellen
+
+**Gologin unterstützt keine .crx- oder .zip-Archive.** Sie können solche Dateien jedoch in einen **entpackten Ordner** umwandeln, der von Gologin unterstützt wird.
+
+Wenn Sie ein **.zip**-Archiv haben, entpacken Sie es einfach. Der entstandene Ordner kann als benutzerdefinierte Erweiterung hinzugefügt werden.
+
+Wenn Sie eine **.crx**-Datei haben:
+
+1. Benennen Sie Ihre extension.crx in extension.zip um
+2. Entpacken Sie die Datei mit der App 7-zip oder mit dem integrierten Entpackprogramm Ihres Betriebssystems
+
+<Warning>
+  Stellen Sie sicher, dass der entpackte Ordner die Datei **manifest.json** sowie weitere Erweiterungsdateien (js, html, Symbole usw.) enthält. \
+  Wenn sich die Erweiterung nicht hinzufügen lässt, prüfen Sie, ob die Datei manifest.json vorhanden ist.
+</Warning>
+
+## Entpackte Erweiterung installieren
+
+Gologin unterstützt Erweiterungen als **entpackte Ordner**. So installieren Sie eine solche Erweiterung:
+
+1. **Klicken Sie auf die drei Punkte beim Profil**, auf dem Sie die Erweiterung installieren möchten, und klicken Sie dann auf **Settings**
+2. Wechseln Sie zum Tab **Extensions** und klicken Sie auf **Add extensions**
+3. Klicken Sie auf die Schaltfläche **Upload custom extension**
+4. Öffnen Sie den Ordner, der die Erweiterung enthält, und klicken Sie auf **Select folder**
+5. Klicken Sie auf **Save**, um die Änderungen zu übernehmen
+
+<Frame>
+  ![Installing Custom Extension](/images/installing_custom_extension.gif)
+</Frame>

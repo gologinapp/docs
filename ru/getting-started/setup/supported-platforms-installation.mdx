@@ -1,0 +1,120 @@
+---
+title: "Поддерживаемые платформы и установка"
+description: "Системные требования Gologin и процесс установки"
+---
+
+Вы можете скачать приложение Gologin для любой поддерживаемой системы по ссылке ниже:
+
+👉 [**Скачать Gologin**](https://gologin.com/download/)
+
+## Требования к оборудованию
+
+- **Оперативная память:** минимум 4GB
+- **Свободное место на диске:** не менее 1 GB
+
+## Поддерживаемые операционные системы
+
+### **Windows**
+
+- Windows 11
+- Windows 10
+- Windows Server 2016
+
+### Mac OS (чипы серии M, Mac Neo и Intel)
+
+- macOS 27 Golden Gate
+- macOS 26 Tahoe
+- macOS 15 Sequoia **(версия браузера 122 и выше)**
+- macOS 14 Sonoma
+- macOS 13 Ventura
+- macOS 12 Monterey
+
+### Linux
+
+- Ubuntu
+- Mint
+
+### Android
+
+- Android 10.0 и выше
+- 3\+ GB оперативной памяти
+
+### iOS
+
+- iPhone или iPad с iOS 17 и выше
+
+## Процесс установки
+
+### Windows
+
+1. Скачайте установщик приложения [здесь](https://gologin.com/download/)
+2. Перейдите в папку **Загрузки**
+3. Дважды щёлкните по скачанному файлу и следуйте подсказкам установщика
+
+### Mac OS
+
+1. Скачайте установщик приложения [здесь](https://gologin.com/download/)
+2. Перейдите в папку **Загрузки**
+3. Дважды щёлкните по файлу и следуйте инструкциям
+
+### Linux, пример для Ubuntu
+
+Gologin для Linux поставляется в виде файла **AppImage**. Это автономный исполняемый файл, который не требует традиционной установки. Запускать приложение можно в любой момент с помощью этого файла.
+
+1. Скачайте файл AppImage по этой [ссылке](https://gologin.com/download)
+2. Перейдите в папку **Загрузки**
+3. Щёлкните правой кнопкой мыши по файлу `gologin.tar` \> **Извлечь**
+4. Откройте папку **gologin** \> запустите Gologin двойным щелчком
+
+**Если приложение не открывается**
+
+- если система воспринимает приложение как текстовый файл, один раз запустите его через терминал с параметром --no-sandbox
+  ```bash bash
+  cd ~/Downloads/gologin
+  ./<filename> --no-sandbox
+  ```
+- возможно, потребуется сделать файл исполняемым. Вставьте в терминал следующие команды:
+  ```bash bash
+  cd ~/Downloads/gologin
+  chmod +x <filename>
+  ```
+  замените `<filename>` на фактическое имя файла
+- в более новых системах может понадобиться пакет **libfuse2**. Вставьте в терминал следующую команду и попробуйте запустить приложение снова.
+  ```bash bash
+    sudo apt install libfuse2
+  ```
+
+**Если профили не запускаются при нажатии на кнопку запуска**
+
+- откройте терминал и перейдите в папку браузера, например для версии Orbita 145
+- задайте новые права доступа для **chrome-sandbox**
+  ```bash bash
+  cd ~/.gologin/browser/orbita-browser-145
+  sudo chown root:root chrome-sandbox
+  sudo chmod 4755 chrome-sandbox
+  ```
+
+### Android
+
+Чтобы использовать Gologin на Android, достаточно установить **приложение Gologin** из **Google Play Store**.
+
+1. Откройте **Google Play Store** на телефоне
+2. Найдите строку поиска вверху и введите **Gologin** \> **установите приложение**
+
+После установки приложение можно сразу использовать со встроенным браузером.
+
+## Неподдерживаемые конфигурации
+
+Gologin **не** поддерживает следующие платформы:
+
+- Любые 32-разрядные системы
+- Windows 7, 8, 8.1, Server 2012 (любых версий) и более ранние
+- macOS El Captain, Sierra, High-Sierra, Mojave, Catalina, Big Sur и более ранние
+- Chrome OS (вы можете использовать [веб-версию Gologin](/ru/gologin-web-overview))
+
+## См. также
+
+- [Чек-лист для первого запуска](https://gologin.com/docs/getting-started/setup/first-time-checklist)
+- [Gologin Web, Chrome OS](https://gologin.com/docs/general/gologin-web-and-mobile)
+- [Ключевые понятия](https://gologin.com/docs/getting-started/introduction/key-concepts-profiles-fingerprints-proxies)
+- [Обновление приложения Gologin](https://gologin.com/docs/general/updating-the-gologin-app)

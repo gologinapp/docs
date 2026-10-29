@@ -1,0 +1,86 @@
+---
+title: "Conceitos-chave"
+---
+
+Para usar o Gologin de forma eficaz, é importante entender três conceitos fundamentais que definem como os ambientes de navegador são separados e protegidos.
+
+Esses componentes trabalham juntos para criar identidades de navegação independentes para cada conta.
+
+## Perfis de navegador
+
+Um **perfil de navegador** no Gologin é um ambiente de navegador isolado que simula um dispositivo separado.
+
+Cada perfil contém seus próprios:
+
+- fingerprint do navegador
+- cookies e dados de sessão
+- armazenamento local e cache
+- extensões do navegador
+- conexão de Procuração
+
+Como os perfis são isolados uns dos outros, os sites os tratam como usuários ou dispositivos diferentes.
+
+Isso permite gerenciar várias contas sem que as sessões interfiram entre si, o que se torna especialmente importante ao trabalhar com várias contas em grande escala, conforme descrito em <br />[Gerenciando contas existentes](https://gologin.com/docs/managing-existing-accounts).
+
+## Fingerprints do navegador
+
+Um **fingerprint do navegador** é um conjunto de parâmetros técnicos que os sites usam para identificar um dispositivo.
+
+Esses parâmetros podem incluir:
+
+- sistema operacional
+- versão do navegador
+- resolução de tela
+- fontes instaladas
+- dados de gráficos e WebGL
+- configurações de fuso horário e idioma
+
+O Gologin gera um fingerprint único para cada perfil, para que os sites vejam cada perfil como um dispositivo diferente.
+
+O fingerprint do navegador determina como os sites identificam o seu dispositivo. Para entender isso em detalhes, consulte <br />[Como funcionam os fingerprints do navegador](https://gologin.com/docs/how-browser-fingerprints-work).
+
+## Procurações
+
+Uma **Procuração** atribui um endereço IP diferente a um perfil de navegador.
+
+Como os sites rastreiam tanto os fingerprints do navegador quanto os endereços IP, usar Procurações ajuda a separar as identidades de rede entre os perfis.
+
+Com Procurações, cada perfil pode parecer se conectar de um local ou de uma rede diferente.
+
+Usar uma Procuração junto com um fingerprint de navegador único ajuda a criar uma identidade de navegação consistente e independente.
+
+As Procurações são usadas para separar contas no nível da rede. Se você não está familiarizado com o funcionamento delas, comece por [O que é uma Procuração](https://gologin.com/docs/proxy/introduction/what-is-a-proxy).
+
+Depois de entender esses componentes, o próximo passo é aplicá-los ao criar perfis. <br />Veja [Criando perfis](https://gologin.com/docs/browser-profiles/profile-management/creating-and-launching-profiles).
+
+## O SO do perfil deve corresponder ao SO do seu dispositivo
+
+O sistema operacional definido no fingerprint do seu perfil deve corresponder ao SO do dispositivo que você usa para abrir o perfil. Por exemplo:
+
+- Abrir um perfil Windows em um Mac pode gerar incompatibilidades detectáveis
+- Sites como iphey.com e pixelscan.net sinalizarão isso como uma inconsistência de fingerprint
+- O LinkedIn e outras plataformas sensíveis podem desconectar você imediatamente
+
+<Warning>
+  Se você trabalha em um Mac, crie perfis Mac. Se você trabalha no Windows, crie perfis Windows. O uso entre plataformas (criar em um SO e abrir em outro) pode comprometer suas contas.
+</Warning>
+
+## As configurações de fingerprint padrão são seguras
+
+O Gologin gera automaticamente configurações de fingerprint realistas para cada novo perfil. Você não precisa personalizar WebGL, Canvas, Audio ou outros parâmetros de fingerprint, a menos que tenha um motivo específico para isso.
+
+## Como verificar seu fingerprint
+
+Depois de iniciar um perfil, acesse um destes verificadores:
+
+- **iphey.com** -- mostra uma pontuação geral de confiança e sinaliza problemas
+- **pixelscan.net** -- análise detalhada do fingerprint
+
+Um resultado "verde" ou "confiável" significa que seu perfil parece um navegador real para os sites.
+
+## Veja também
+
+- [Início rápido: do zero ao seu primeiro perfil](https://gologin.com/docs/getting-started/introduction/quick-start-from-zero-to-your-first-profile)
+- [Checklist para o primeiro uso](https://gologin.com/docs/getting-started/setup/first-time-checklist)
+- [O que é uma Procuração](https://gologin.com/docs/proxy/introduction/what-is-a-proxy)
+- [Configurações de fingerprint do perfil](https://gologin.com/docs/profile-fingerprint-settings)

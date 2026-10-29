@@ -1,0 +1,54 @@
+---
+title: "Navigateur Orbita"
+---
+
+Lorsque vous cliquez sur **Exécuter** sur un profil dans Gologin, une fenêtre de navigateur s'ouvre. Ce navigateur s'appelle **Orbita**.
+
+Il ressemble exactement à Google Chrome : même interface, mêmes onglets, mêmes menus. La différence réside dans ce qui se passe en coulisses lorsqu'un site web essaie de vous identifier.
+
+<Frame>
+  ![Navigateur Orbita](/images/orbita_browser.png)
+</Frame>
+
+## Pourquoi nous avons créé notre propre navigateur
+
+Tous les navigateurs ont un problème d'identité. Lorsque vous visitez un site web, celui-ci peut interroger discrètement votre navigateur sur des dizaines d'éléments concernant l'appareil utilisé : quel GPU vous avez, quelles polices sont installées, quelle est la résolution de votre écran, comment votre navigateur affiche les graphiques, etc. Les réponses à ces questions forment une empreinte qui vous identifie, même si vous utilisez un VPN ou supprimez vos cookies.
+
+Chrome standard ne cherche pas à masquer ces informations. Il répond honnêtement à chaque question, avec les données réelles de votre appareil.
+
+## Ce que modifie réellement Orbita
+
+Lorsqu'un site web demande à Orbita des informations sur l'appareil utilisé, Orbita renvoie les valeurs du profil, et non les valeurs réelles de votre ordinateur. Cela concerne notamment :
+
+- La version du navigateur et le système d'exploitation communiqués aux sites
+- La taille et la résolution de l'écran
+- Les informations sur la carte graphique
+- La liste des polices disponibles sur l'appareil
+- La manière dont le navigateur affiche les graphiques et l'audio (utilisée pour le fingerprinting)
+- Votre fuseau horaire et votre langue
+- L'exposition de votre adresse IP via les fonctions vidéo et audio (WebRTC)
+- Et d'autres éléments en arrière-plan
+
+Du point de vue du site web, il communique avec l'appareil que le profil est configuré pour imiter, et non avec votre véritable ordinateur.
+
+## Chaque profil est entièrement isolé
+
+Lorsque vous ouvrez deux profils, chacun fonctionne dans un environnement totalement séparé. Leurs cookies, identifiants enregistrés, historique de navigation et données de session n'ont aucun lien entre eux. La fermeture d'un profil enregistre tout son contenu, et vous retrouvez exactement l'état précédent à la prochaine ouverture.
+
+Cette isolation rend Gologin particulièrement utile pour gérer plusieurs comptes. Les comptes ne partagent aucune information au niveau du navigateur.
+
+## L'utilisation est-elle différente ?
+
+Non. Orbita repose sur la même base open source que Chrome, l'expérience est donc identique à celle de Chrome. Favoris, extensions, raccourcis clavier, outils de développement : tout est pareil. Les modifications apportées par Orbita sont invisibles pour la personne qui navigue.
+
+## Maintenir Orbita à jour
+
+Orbita suit les versions de Chrome. C'est important, car un navigateur qui indique une version obsolète paraît suspect aux yeux des sites web. Gologin met régulièrement Orbita à jour, et vous pouvez [mettre à jour des profils individuellement](/fr/updating-your-browser-profile) vers la dernière version du navigateur depuis le menu du profil.
+
+<Tip>
+  Si vous avez des profils plus anciens, il est conseillé de vérifier qu'ils utilisent la dernière version d'Orbita. Vous pouvez le faire depuis le menu à trois points situé à côté de chaque profil.
+</Tip>
+
+## Orbita sur Android
+
+Gologin propose également une application Android qui utilise Orbita comme moteur de navigation. Sur un téléphone, Orbita fonctionne nativement sur l'appareil : les données de capteurs que les sites web peuvent détecter (mouvement, batterie, type d'écran) proviennent du véritable matériel du téléphone, et non d'une simulation. Les profils mobiles sont ainsi plus difficiles à distinguer d'un véritable utilisateur mobile.

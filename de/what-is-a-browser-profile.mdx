@@ -1,0 +1,68 @@
+---
+title: "Was ist ein Browserprofil"
+---
+
+Ein **Browserprofil** in Gologin ist ein in sich geschlossener virtueller Browser. Er sieht aus und verhält sich genau wie ein echter Browser, der auf einem echten Computer installiert ist – lebt aber innerhalb von Gologin und lässt sich in Sekunden erstellen, speichern, wechseln oder löschen.
+
+Jedes Profil hat seine eigenen:
+
+- Einzigartigen Browser-[Fingerprint](/de/how-browser-fingerprints-work) (mehr dazu weiter unten)
+- Cookies und lokalen Speicher
+- Browserverlauf
+- Gespeicherten Passwörter und Erweiterungen
+- Proxy-Verbindung
+
+Wenn du ein Profil öffnest, sehen Websites darin eine völlig eigenständige Person, die von einem anderen Gerät aus zugreift. Wenn du es schließt, wird alles genau so gespeichert, wie du es verlassen hast.
+
+## Warum ist das wichtig? Browser-Fingerprints verstehen
+
+Bevor wir tiefer in die Profile einsteigen, solltest du ein Konzept kennen: den **Browser-Fingerprint**.
+
+Bei jedem Besuch einer Website sendet dein Browser unbemerkt Dutzende technischer Signale über dein Gerät und deine Konfiguration. Zum Beispiel:
+
+- Welchen Browser du verwendest und in welcher Version
+- Dein Betriebssystem
+- Die Bildschirmauflösung
+- Die auf deinem Computer installierten Schriftarten
+- Deine Zeitzone und Sprache
+- Wie deine Grafikkarte Bilder darstellt
+- Ob du einen Touchscreen verwendest
+
+Websites sammeln alle diese Signale und fügen sie zu einem einzigartigen „Fingerprint“ zusammen, der dich identifiziert – selbst wenn du deine Cookies löschst, ein VPN nutzt oder ein Inkognito-Fenster öffnest.
+
+<Note>
+  Der Inkognito-Modus verbirgt deinen Browserverlauf vor anderen Personen, die denselben Computer nutzen. Er verbirgt deinen Browser-Fingerprint jedoch **nicht** vor Websites. Jedes Inkognito-Fenster sieht für die Außenwelt weiterhin genauso aus wie dein normaler Browser.
+</Note>
+
+Deshalb funktioniert es nicht, einfach mehrere Konten in verschiedenen Tabs zu nutzen. Alle diese Tabs teilen sich denselben Fingerprint, und Websites erkennen, dass sie zur selben Person gehören.
+
+## Wie ein Gologin-Profil das Problem löst
+
+Wenn du in Gologin ein Browserprofil erstellst, baut die App von Grund auf eine vollständige, künstliche, aber glaubwürdige Browser-Identität auf.
+
+Gologin generiert realistische Werte für jeden Fingerprint-Parameter – eine plausible Bildschirmgröße, eine glaubwürdige Auswahl an Schriftarten, eine konsistente Zeitzone, einen passenden User-Agent-String und so weiter. Alle diese Werte werden im Profil gespeichert und an jede Website übermittelt, die du mit diesem Profil besuchst.
+
+## Wie Profile gespeichert werden
+
+Gologin speichert deine Profile in der Cloud. Das bedeutet:
+
+- Du kannst jedes Profil von jedem Computer aus öffnen, auf dem Gologin installiert ist
+- Profile bleiben erhalten, wenn dein lokaler Rechner ausfällt oder ersetzt wird
+- Du kannst Profile mit Teammitgliedern teilen, die dieselbe gespeicherte Sitzung nutzen können, ohne sich erneut anmelden zu müssen
+
+## Der Unterschied zwischen einem Profil und einem Inkognito-Fenster
+
+|  | Inkognito-Fenster | Gologin-Profil |
+| --- | --- | --- |
+| Verbirgt den Browserverlauf lokal | ✅ | ✅ |
+| Löscht Cookies beim Schließen | ✅ | ❌ (Cookies werden gespeichert) |
+| Ändert deinen Browser-Fingerprint | ❌ | ✅ |
+| Ändert deine IP-Adresse | ❌ | ✅ (mit Proxy) |
+| Kann gespeichert und erneut geöffnet werden | ❌ | ✅ |
+| Wirkt wie ein anderes Gerät | ❌ | ✅ |
+
+Inkognito ist ein Datenschutzwerkzeug für dein lokales Gerät. Ein Gologin-Profil ersetzt dagegen deine gesamte Identität im Internet.
+
+## Zusammenfassung
+
+Ein Browserprofil in Gologin ist ein gespeicherter virtueller Browser mit eigenem Fingerprint, eigenen Cookies und eigenem Proxy. Wenn du ein Profil öffnest, wirkst du auf jeder besuchten Website wie eine völlig andere Person auf einem anderen Gerät. Wenn du es schließt, wird deine Sitzung gespeichert, sodass du jederzeit dorthin zurückkehren kannst. So kannst du mehrere getrennte Online-Identitäten von einem einzigen Computer aus verwalten – sauber, sicher und ohne dass die Konten miteinander oder mit dir in Verbindung gebracht werden.

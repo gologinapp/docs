@@ -1,0 +1,61 @@
+---
+title: "User-Agent sur Android"
+description: "Les profils Android affichent Android 10; K dans le User-Agent, quelle que soit la version sélectionnée. Voici pourquoi c'est le cas et pourquoi c'est normal."
+---
+
+Si vous créez un profil Android dans Gologin et vérifiez son User-Agent, vous remarquerez qu'il indique toujours `Android 10; K`, même lorsque le profil est configuré sur Android 14, 15 ou 16. La chaîne ressemble à ceci :
+
+```text
+Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/... Mobile Safari/537.36
+```
+
+Il s'agit d'un comportement attendu, et non d'un bug. **Tous les navigateurs modernes basés sur Chrome sous Android affichent la même chose.**
+
+## Pourquoi cela se produit
+
+À partir de Chrome 110, début 2023, Google a introduit un changement appelé **User-Agent Reduction** (réduction du User-Agent). Pour rendre les navigateurs plus difficiles à suivre et à identifier par empreinte, Chrome a cessé de communiquer la version réelle d'Android et le modèle de l'appareil dans le User-Agent. Il envoie désormais à la place des valeurs fixes, identiques pour tout le monde :
+
+- La version d'Android est figée sur `Android 10`
+- Le modèle de l'appareil est remplacé par la lettre `K`
+- Les numéros de version mineure de Chrome sont fixés à `0.0.0`
+
+Seule la version majeure de Chrome continue d'évoluer à chaque publication. Tout le reste de cette partie de la chaîne est identique pour tous les appareils.
+
+Le navigateur Android de Gologin est basé sur Chromium et suit donc la même norme. Chrome, Edge, Opera et Samsung Internet affichent eux aussi `Android 10; K`. Ce n'est pas propre à Gologin : c'est ainsi que fonctionne le web mobile moderne.
+
+<Info>
+  Le `K` n'est ni une version d'Android ni une faute de frappe. C'est une valeur de remplacement que Chrome utilise désormais à la place du modèle réel de l'appareil.
+</Info>
+
+## Pourquoi c'est en réalité un avantage pour vous
+
+Comme presque tous les utilisateurs de Chrome sous Android dans le monde affichent désormais `Android 10; K`, votre profil se fond dans la masse. Si Gologin indiquait la version réelle d'Android, votre profil se démarquerait du trafic normal et paraîtrait inhabituel aux yeux des sites web. Respecter le comportement standard est exactement ce qu'il faut pour un profil de navigateur qui doit ressembler à un visiteur ordinaire.
+
+<Check>
+  Un profil Android qui affiche `Android 10; K` fonctionne correctement et ressemble à un véritable appareil Android typique.
+</Check>
+
+Les sites web qui ont réellement besoin de connaître la version exacte d'Android ou le modèle de l'appareil la demandent désormais via un canal plus récent et plus respectueux de la vie privée (appelé Client Hints), au lieu de la lire dans le User-Agent. Ainsi, même si le User-Agent indique `Android 10`, rien n'est perdu et la version d'Android que vous avez sélectionnée s'applique là où c'est important.
+
+## Comment le vérifier vous-même
+
+Vous pouvez le confirmer sur n'importe quel appareil Android réel en comparant côte à côte un profil Gologin et votre navigateur Chrome habituel.
+
+Ouvrez [iphey.com](https://iphey.com) ou tout autre outil de vérification d'empreinte fiable dans votre navigateur Chrome habituel, puis passez à l'onglet **Navigateur**. Ouvrez ensuite la même page dans un profil Android Gologin. Regardez la ligne **Agent utilisateur** dans les deux cas.
+
+Vous verrez exactement la même valeur `Android 10; K` dans les deux navigateurs, même s'ils s'exécutent sur un appareil Android récent. La seule différence est le numéro de version de Chrome, qui reflète simplement la version de chaque navigateur.
+
+Comme les deux navigateurs affichent la même chose, cette comparaison côte à côte est le moyen le plus simple de constater que Gologin fait exactement ce que fait un navigateur Chrome normal.
+
+<Columns cols={2}>
+  <Column>
+    <Frame>
+      ![Chrome sur Android](/images/UA_chrome_android_app-1.jpg "Chrome sur Android")
+    </Frame>
+  </Column>
+  <Column>
+    <Frame>
+      ![Application Gologin Android](/images/UA_gologin_android_app.jpg "Application Gologin Android")
+    </Frame>
+  </Column>
+</Columns>

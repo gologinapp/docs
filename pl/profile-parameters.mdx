@@ -1,0 +1,99 @@
+---
+title: "Ustawienia profilu"
+---
+
+Każdy profil przeglądarki w Gologin ma własny zestaw ustawień, które określają, jak wygląda dla stron internetowych. Ustawienia te są podzielone na karty u góry edytora profilu.
+
+Do ustawień profilu przejdziesz, klikając **3 dots on the profile** \> **Settings**.
+
+## Overview
+
+Na tej karcie wybierasz system operacyjny, który profil ma zgłaszać stronom internetowym, oraz generujesz jego podstawowy fingerprint.
+
+**Operating system** - Wybierz jedną z opcji: Windows 10, Windows 11, Mac Intel, Mac ARM, Linux lub Android. Ten wybór określa, jaki system operacyjny profil zgłasza każdej odwiedzanej stronie.
+
+<Warning>
+  System operacyjny można wybrać tylko podczas tworzenia profilu. Po zapisaniu profilu ta opcja zostaje zablokowana i nie można jej zmienić. Jeśli potrzebujesz innego systemu, utwórz nowy profil.
+</Warning>
+
+**New Fingerprint** - Kliknięcie tej opcji generuje dla profilu nowy zestaw wartości fingerprintu, takich jak rozdzielczość ekranu, czcionki, dane karty graficznej i inne sygnały, za pomocą których strony identyfikują przeglądarki. Użyj jej, jeśli chcesz zresetować tożsamość profilu. Nie zmienia ona systemu operacyjnego i nie usuwa plików cookie ani innych danych przeglądarki.
+
+Panel **Profile Summary** po prawej stronie aktualizuje się na bieżąco podczas wprowadzania zmian i pokazuje skrócony przegląd aktualnego fingerprintu profilu.
+
+<Frame>
+  ![Settings Overview](/images/settings_overview.png)
+</Frame>
+
+## Proxy
+
+Ta karta określa, z jakiego proxy profil korzysta podczas przeglądania.
+
+- **Gologin proxy** - Użyj proxy z wbudowanej usługi proxy Gologin.
+- **Your proxy** - Wklej własne proxy od zewnętrznego dostawcy.
+- **Without proxy** - Profil korzysta z Twojego prawdziwego połączenia internetowego. Adres IP widoczny dla stron będzie Twoim rzeczywistym adresem IP.
+
+<Frame>
+  ![Settings Proxy](/images/settings_proxy.png)
+</Frame>
+
+Przypisane tutaj proxy określa adres IP, który widzą strony internetowe, gdy profil jest uruchomiony. Wpływa ono również na strefę czasową i geolokalizację, jeśli są ustawione tak, aby automatycznie podążały za adresem IP.
+
+## Timezone
+
+Ta karta ustawia strefę czasową, którą profil zgłasza stronom internetowym.
+
+Domyślnie przełącznik **Fill timezone based on the external IP** jest włączony, co oznacza, że profil automatycznie używa strefy czasowej odpowiadającej lokalizacji jego proxy. Dzięki temu profil pozostaje spójny wewnętrznie - profil z proxy z USA zgłosi strefę czasową USA, tak jak zrobiłby to prawdziwy użytkownik w tej lokalizacji.
+
+<Note>
+  Zalecamy pozostawienie ustawienia automatycznego i niezmienianie go ręcznie. Jeśli strefa czasowa nie zgadza się z lokalizacją proxy, może to wyglądać podejrzanie dla stron internetowych. Zmieniaj to ustawienie tylko wtedy, gdy masz ku temu konkretny powód.
+</Note>
+
+<Frame>
+  ![Settings Timezone](/images/settings_timezone.png)
+</Frame>
+
+## Extensions
+
+Na tej karcie instalujesz rozszerzenia przeglądarki w profilu. Każdy profil zarządza swoimi rozszerzeniami osobno - dodanie rozszerzenia tutaj nie wpływa na żaden inny profil.
+
+Kliknij **Add extensions**, aby przeglądać i instalować rozszerzenia dla tego profilu.
+
+Pełny opis działania rozszerzeń w profilach Gologin znajdziesz w artykule [Extensions](/pl/browser-profiles/profile-features/browser-extensions/browser-extensions).
+
+<Frame>
+  ![Settings Extensions](/images/settings_extensions.png)
+</Frame>
+
+## Bookmarks
+
+Ta karta pozwala dodawać zakładki do paska zakładek profilu. Wklej je w pole tekstowe w jednym z poniższych formatów:
+
+- `folder::name::url` - tworzy zakładkę wewnątrz folderu o podanej nazwie
+- `name::url` - tworzy nazwaną zakładkę bezpośrednio na pasku
+- `url` - dodaje sam adres URL bez własnej nazwy
+
+Każda linia to osobna zakładka. Zakładki pojawiają się na pasku zakładek w Orbita, gdy profil jest uruchomiony.
+
+<Frame>
+  ![Settings Bookmarks](/images/settings_bookmarks.png)
+</Frame>
+
+## Geolocation
+
+Ta karta określa, co się dzieje, gdy strona internetowa prosi o Twoją lokalizację - na przykład gdy aplikacja map pyta: „Allow this site to know your location?"
+
+Dostępne są trzy opcje:
+
+- **Prompt** - Przeglądarka pyta za każdym razem, gdy strona prosi o dostęp do lokalizacji. Jest to ustawienie domyślne, które naśladuje zachowanie prawdziwej przeglądarki.
+- **Allow** - Dostęp do lokalizacji jest automatycznie przyznawany każdej stronie, która o niego poprosi.
+- **Block** - Wszystkie prośby o lokalizację są po cichu odrzucane.
+
+Przełącznik **Fill geolocation based on the external IP** jest domyślnie włączony. Gdy jest aktywny, Gologin automatycznie ustawia zgłaszane współrzędne profilu zgodnie z lokalizacją proxy.
+
+<Note>
+  Zalecamy pozostawienie tego przełącznika włączonego. Jeśli go wyłączysz, a geolokalizacja nie będzie zgadzać się z adresem IP proxy, ta niezgodność może być sygnałem dla systemów wykrywania. Dostosowuj to ustawienie ręcznie tylko wtedy, gdy wiesz, jakich współrzędnych chcesz użyć i dlaczego.
+</Note>
+
+<Frame>
+  ![Settings Geolocation](/images/settings_geolocation.png)
+</Frame>

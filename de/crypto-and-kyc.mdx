@@ -1,0 +1,89 @@
+---
+title: "Krypto- & KYC-Plattformen"
+---
+
+Krypto-Plattformen lassen sich in zwei Kategorien einteilen: Börsen und Wallets (Binance, Coinbase, Kraken), bei denen KYC das Konto an eine reale Person bindet, sowie Airdrop- und Farming-Plattformen (Galxe, Zealy, Layer3, Premint), bei denen es darum geht, mehrere Konten für verschiedene Kampagnen zu verwalten.
+
+## Kurze Checkliste
+
+- 1 Konto = 1 Browserprofil
+- 1 Profil = 1 statischer Residential-Proxy
+- Halte den Proxy-Standort konstant, besonders nach dem KYC
+- Ändere Fingerprint oder Proxy nach der Identitätsprüfung nicht mehr
+- Für Farming: Behandle Konten als Wegwerfkonten und vermische Farming-Konten nicht mit echten Börsenkonten
+
+## Börsen & KYC-Plattformen
+
+Nach dem KYC kommt es vor allem auf Konsistenz an. Ein Login von einer neuen IP-Adresse oder mit einem geänderten Fingerprint löst eine Sicherheitsprüfung, zusätzliche Verifizierung oder eine Kontosperrung aus.
+
+### Einrichtung des Gologin-Profils
+
+- \*\*Proxy:\*\* statischer Residential-Proxy, in jeder Sitzung dieselbe IP
+- \*\*Proxy location:\*\* wenn möglich das Land, das in deinen Ausweisdokumenten steht
+
+<Warning>
+  Ändere den Proxy eines Gologin-Profils nie, nachdem du das KYC auf einer Krypto-Börse abgeschlossen hast. Die Börse speichert deine Geräteumgebung zum Zeitpunkt der Verifizierung. Eine andere IP oder ein anderer Fingerprint beim nächsten Login wird als Kontoübernahme gewertet.
+</Warning>
+
+## Warmup-Zeitplan
+
+| **Zeitraum** | **Schwerpunkt** | **Was zu tun ist** |
+| :-- | :-- | :-- |
+| Tag 0 | Registrierung | Konto erstellen \+ E-Mail-Adresse bestätigen |
+| Tag 1–3 | KYC | Ausweisdokumente einreichen, Verifizierung abschließen |
+| Tag 4–7 | Erkunden | Die Plattform durchstöbern, die Handelsoberfläche kennenlernen |
+| Woche 2 | Kleine Transaktionen | Einen kleinen Betrag einzahlen, 1–2 Trades ausführen |
+| Ab Woche 3\+ | Normale Nutzung | Regelmäßige Handelsaktivität |
+
+### Häufige Auslöser für Sperrungen bei Börsen
+
+- IP-Wechsel nach dem KYC (selbst im gleichen Land, aber in einer anderen Stadt)
+- Abweichender Geräte-Fingerprint zwischen Sitzungen
+- Hohe Einzahlungen direkt nach der Kontoerstellung
+- Mehrere Konten mit derselben Zahlungsmethode oder demselben Bankkonto
+
+## Airdrop- & Points-Farming (Galxe, Zealy, Premint, Layer3)
+
+Web3-Kampagnen wie Airdrops, Quests und Points-Programme erlauben oft nur eine Teilnahme pro Person. Gologin wird hier genutzt, um mehrere legitime Konten zu verwalten (zum Beispiel für ein Team, in dem jedes Mitglied separat teilnimmt) und diese Konten technisch voneinander zu isolieren.
+
+### **So erkennen Plattformen verknüpfte Konten**
+
+Plattformen nutzen zwei Arten von Signalen:
+
+Browser- und Netzwerksignale (diese deckt Gologin ab):
+
+- Dieselbe IP-Adresse bei mehreren Konten
+- Derselbe Browser-Fingerprint
+- Konten, die Aufgaben zu identischen Zeiten aus derselben Umgebung abschließen
+
+On-Chain-Signale (außerhalb des Funktionsumfangs von Gologin):
+
+- Blockchains sind öffentlich, alle Transaktionen bleiben dauerhaft einsehbar
+- Wenn mehrere Wallet-Adressen Guthaben von derselben Quell-Wallet erhalten, sind sie on-chain ohne Weiteres verknüpfbar
+- Plattformen nutzen Tools wie Nansen oder Arkham, um Wallet-Beziehungen zu analysieren, bevor sie Token verteilen
+
+Gologin isoliert die Browserumgebung und die IP-Adresse. Die On-Chain-Beziehungen zwischen Wallets sind ein separates Thema, das jeder Nutzer entsprechend seiner eigenen Konfiguration und den Regeln der Plattform selbst verwaltet.
+
+### Gologin-Einrichtung für Multi-Account-Kampagnen
+
+Wenn du Konten im Auftrag mehrerer Teammitglieder verwaltest, sollte jede Person Folgendes haben:
+
+- Ein eigenes Gologin-Profil
+- Einen eigenen Residential-Proxy
+- Eine eigene verbundene Wallet, die nicht aus einer gemeinsamen Team-Wallet finanziert wird
+
+### Verwaltung in großem Umfang
+
+Für Teams mit 10\+ Konten in mehreren Kampagnen:
+
+- Ordne Profile in Gologin-Ordnern nach Kampagne oder Teammitglied
+- Nutze Tags, um den Status zu verfolgen (active, completed, pending)
+- Nutze die Gologin API, um Profile programmgesteuert zu starten und zu verwalten
+- Führe Buch darüber, welches Profil zu welchem Teammitglied und welcher Wallet gehört
+
+## Siehe auch
+
+- [Statische vs. rotierende Proxys](https://gologin.com/docs/static-vs-dynamic-proxies)
+- [Der beste Proxy für deinen Anwendungsfall](https://gologin.com/docs/proxy/introduction/best-proxy-for-your-case)
+- [Den Vertrauenswert aufrechterhalten](https://gologin.com/docs/maintaining-trust-score)
+- [API Quickstart](https://gologin.com/docs/api-reference/introduction/quickstart): zur programmgesteuerten Verwaltung großer Mengen an Farming-Profilen

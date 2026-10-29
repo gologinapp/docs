@@ -1,0 +1,41 @@
+---
+title: "Vị trí proxy hiển thị sai trên website hoặc trang kiểm tra"
+description: "Khi proxy hiển thị sai vị trí địa lý đối với proxy bên thứ ba của bạn"
+---
+
+## **Nguyên nhân và cách hoạt động**
+
+Mỗi website sử dụng một cơ sở dữ liệu định vị địa lý IP khác nhau để xác định quốc gia của một địa chỉ IP. Các cơ sở dữ liệu này không đồng bộ với nhau, nên có trường hợp cùng một IP bị nhận diện là thuộc nhiều vị trí khác nhau.
+
+Một yếu tố quan trọng khác là IP có bị gắn nhãn thuộc Datacenter / VPN / một dịch vụ nào khác hay không.\
+Nếu một IP bị nhận diện là IP của dịch vụ, điểm tin cậy của IP đó có thể giảm mạnh, khiến website dễ gắn cờ hoặc chặn IP hơn.
+
+Chúng tôi không khuyến nghị sử dụng các proxy có những sai lệch nêu trên.
+
+## **Cách kiểm tra proxy của bạn**
+
+1. Lấy IP đầu ra của proxy tại đây, chỉ cần di chuột qua biểu tượng mũi tên
+
+   ![image (55).png](/images/image\(55\).png)
+2. Trên Internet còn nhiều công cụ khác, nhưng chúng tôi thường dùng hai công cụ sau để có kết quả nhất quán:
+   - Để kiểm tra vị trí địa lý của IP: [<u>https://www.iplocation.net/ip-lookup</u>](https://www.iplocation.net/ip-lookup)
+
+     ❗Lý tưởng nhất là tất cả các trang kiểm tra đều hiển thị cùng một quốc gia
+   - Để kiểm tra các dịch vụ trên IP: [<u>https://whatismyipaddress.com/ip/</u>](https://whatismyipaddress.com/ip/)
+
+     ❗Không được hiển thị bất kỳ dịch vụ nào trên IP
+
+   Dưới đây là các ví dụ để bạn đối chiếu:
+
+   ![image.png](/images/image.png)
+
+## **Cách tránh các sự cố về proxy**
+
+Để hạn chế các sự cố do vị trí proxy không chính xác:
+
+- **Sử dụng nhà cung cấp proxy uy tín** – Các nhà cung cấp chất lượng cao đảm bảo IP của họ được phân loại và đăng ký chính xác. Bạn có thể dùng proxy của Gologin hoặc [<u>các proxy chúng tôi khuyên dùng</u>](https://gologin.com/proxies/proxy-type/).
+- **Tránh dùng proxy data center cho các tác vụ nhạy cảm** – Proxy residential hoặc mobile thường có điểm tin cậy cao hơn.
+- **Kiểm tra proxy trước khi sử dụng** – Chạy proxy qua nhiều công cụ kiểm tra IP để đảm bảo kết quả nhất quán.
+- **Đổi IP khi cần** – Nếu một IP bị gắn cờ sai, việc chuyển sang IP khác có thể giải quyết vấn đề.
+
+Khi chú ý đến những chi tiết này, bạn sẽ có trải nghiệm mượt mà và ổn định hơn khi sử dụng Gologin.

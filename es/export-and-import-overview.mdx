@@ -1,0 +1,43 @@
+---
+title: "Descripción general de Export & Import"
+---
+
+La importación y exportación en CSV es una forma sencilla de gestionar varios perfiles de navegador a la vez. En lugar de configurarlo todo manualmente, puedes usar un archivo CSV para copiar configuraciones, crear perfiles de forma masiva, actualizar ajustes como los proxies y trasladar configuraciones entre workspaces. Es especialmente útil cuando trabajas a gran escala o quieres mantener la coherencia entre perfiles o miembros del equipo.
+
+Es importante entender que esta función solo trabaja con la **configuración del perfil**, no con los datos de navegación reales. Es decir, se incluyen elementos como el nombre del perfil, los proxies, las etiquetas, las carpetas y los ajustes básicos del entorno, pero no las cookies, las sesiones, el estado de inicio de sesión ni la identidad completa del fingerprint. Cualquier perfil creado a partir de un CSV se comportará como un entorno completamente nuevo, sin actividad previa.
+
+### Qué puedes hacer con CSV
+
+- Crear muchos perfiles de una sola vez
+- Copiar y reutilizar configuraciones de perfiles
+- Actualizar proxies y ajustes de forma masiva
+- Mantener la coherencia de las configuraciones del equipo
+- Trasladar configuraciones entre workspaces
+
+### Qué se incluye y qué no
+
+**Se incluye:**
+
+- Nombre del perfil
+- Ajustes de proxy
+- Carpetas y etiquetas
+- Ajustes básicos del entorno
+
+**No se incluye:**
+
+- Cookies
+- Sesiones
+- Estado de inicio de sesión
+- Identidad completa del fingerprint
+
+### Aspectos importantes que debes tener en cuenta
+
+- Los perfiles creados mediante CSV comienzan como **entornos nuevos y limpios**
+- **No tienen la sesión iniciada** en ninguna cuenta
+- Las sesiones y la actividad anteriores **no se conservan**
+- La importación de CSV **no es un método de copia de seguridad**
+- Un formato incorrecto **puede interrumpir la importación o crear perfiles no válidos**
+
+### Conclusión clave
+
+La importación y exportación en CSV se utiliza mejor para **escalar y gestionar configuraciones de perfiles**, no para transferir perfiles, sesiones o identidades existentes.

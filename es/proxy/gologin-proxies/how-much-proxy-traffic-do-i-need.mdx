@@ -1,0 +1,93 @@
+---
+title: "¿Cuánto tráfico de proxy necesito?"
+---
+
+Los planes de Gologin incluyen una cuota de tráfico de proxy medida en gigabytes (GB). Es el volumen de datos que pasa por el proxy mientras tus perfiles navegan, no el espacio en disco ni la RAM.
+
+## Qué cuenta como tráfico
+
+Cada vez que un perfil de Gologin envía o recibe datos a través del proxy, consume tráfico. Esto incluye:
+
+- Cargar páginas web e imágenes
+- Ver videos o contenido multimedia
+- Enviar formularios
+- Ejecutar scripts de automatización
+
+El tráfico solo se contabiliza cuando usas los proxies residenciales, móviles o de centro de datos de Gologin.
+
+**Lo que no cuenta para tu cuota:**
+
+- **IP dedicadas.** Una IP dedicada no tiene límite de tráfico. Todo lo que pase por ella es ilimitado, sin importar cuántos datos uses.
+- **Proxies de terceros.** Si conectas un proxy de un proveedor externo, ese tráfico lo factura el proveedor, no Gologin.
+
+## Estimaciones aproximadas por caso de uso
+
+| Caso de uso | Tráfico estimado por perfil |
+| --- | --- |
+| Navegación y prospección en LinkedIn (2 h/día) | 0.3–0.5 GB / mes |
+| Navegación en Facebook / Instagram (2 h/día) | 0.5–1 GB / mes |
+| Gestión de Facebook Ads (trabajo activo) | 1–2 GB / mes |
+| Plataformas de criptomonedas, interacciones con wallets | 0.1–0.3 GB / mes |
+| Web scraping (ligero, páginas solo de texto) | 0.5–2 GB / mes |
+| Web scraping (páginas con mucho contenido multimedia) | 2–5 GB / mes |
+| Comercio electrónico (navegación en Amazon, eBay) | 0.5–1.5 GB / mes |
+
+Son solo estimaciones. El uso real depende del tiempo que los perfiles estén activos, de cuánto contenido multimedia tengan los sitios y de si hay automatización en ejecución.
+
+## Cálculo rápido
+
+Fórmula: número de perfiles × GB por perfil al mes = total de GB necesarios
+
+Ejemplos:
+
+| Escenario | Perfiles | GB/perfil/mes | Total necesario |
+| --- | --- | --- | --- |
+| 5 cuentas de LinkedIn, uso ligero | 5 | 0.4 GB | ~2 GB |
+| 10 cuentas de Facebook Ads | 10 | 1.5 GB | ~15 GB |
+| 20 wallets de criptomonedas, uso ocasional | 20 | 0.2 GB | ~4 GB |
+| 30 cuentas de comercio electrónico | 30 | 1 GB | ~30 GB |
+
+## Cómo usar menos tráfico
+
+Las imágenes y los videos suelen ser la mayor parte del tráfico que consume un perfil. Si no necesitas ver contenido multimedia mientras trabajas (por ejemplo, al hacer scraping o ejecutar automatizaciones), puedes activar **Disable image loading** y **Disable video autoplay** en los ajustes del perfil. Consulta [Advanced profile settings](/es/general/account-and-billing/advanced-profile-settings#other).
+
+También puedes activar estas opciones en [Default profile settings](/es/default-profile-settings) para que todos los perfiles nuevos usen menos tráfico desde el principio.
+
+Estas opciones solo están disponibles en los planes de pago.
+
+## ¿Tráfico o una IP dedicada?
+
+Algunos proveedores de proxy venden tráfico en GB (como hace Gologin con los proxies residenciales, móviles y de centro de datos), mientras que otros venden por número de direcciones IP o por periodo de tiempo. Gologin ahora ofrece ambas opciones.
+
+- **Compra tráfico** cuando necesites muchas IP distintas y no te importe cuál te toque: scraping, investigación, sesiones de corta duración, pruebas.
+- **Compra una IP dedicada** cuando una cuenta necesite conservar siempre la misma IP: Amazon, eBay, LinkedIn, Meta Ads, PayPal, sitios de apuestas y cualquier plataforma que revise el historial de inicios de sesión. Una IP dedicada cuesta \$5/mes por IP e incluye tráfico ilimitado, así que una sola cuenta con mucho uso puede salir más barata con una IP dedicada que con un plan por GB.
+
+<Tip>
+  Si estás haciendo cuentas para una configuración mixta: cuenta solo los perfiles que usan proxies rotativos al estimar los GB. Los perfiles con una IP dedicada no entran en el cálculo.
+</Tip>
+
+## Compré proxies por GB a otro proveedor: ¿qué significa eso?
+
+Algunos proveedores de proxy venden tráfico en GB (como Gologin), mientras que otros venden por número de direcciones IP o por periodo de tiempo. Si estás acostumbrado a comprar IP en lugar de GB, así debes entenderlo:
+
+Un proxy por GB te da un volumen fijo de datos que puedes usar en cualquier IP del grupo. Pagas por ancho de banda, no por una dirección concreta.
+
+Si necesitas una IP fija que nunca cambie (obligatoria para Amazon, eBay, LinkedIn y la mayoría de las plataformas financieras), necesitas un proxy estático, que normalmente se vende como suscripción mensual por IP, no por GB.
+
+## Qué pasa cuando se agota el tráfico
+
+Cuando se agota la cuota de tráfico de proxy de Gologin, los perfiles que usan los proxies integrados de Gologin dejarán de poder conectarse a través de ellos. Verás un error de conexión.
+
+Para evitar interrupciones:
+
+- Controla tu consumo en el panel de Gologin
+- Recarga tu saldo de proxy antes de que se agote
+- Considera usar proxies de terceros para las cuentas con mucho tráfico (no consumen tu cuota de Gologin)
+
+## Usar proxies de terceros
+
+Si gestionas cuentas que requieren IP dedicadas y constantes, o necesitas más tráfico del que incluye tu plan, conecta tu propio proxy de un proveedor externo.
+
+Los proxies de terceros se añaden en los ajustes del perfil y no afectan en absoluto a tu saldo de tráfico de Gologin.
+
+Consulta [Añadir un proxy a un perfil](https://gologin.com/docs/proxy/proxy-management/adding-proxies) y [Proveedores de proxy recomendados.](https://gologin.com/best-proxy-server-services/)

@@ -1,0 +1,95 @@
+---
+title: "Gologin プロキシ"
+---
+
+Gologin は、数行のコードでプログラムから作成・管理できる高品質なプロキシを提供しています。これらのプロキシはブラウザプロファイルとシームレスに連携し、自動化に必要な安定した接続と一貫した IP アドレスを実現します。
+
+### Gologin プロキシを使う理由
+
+- **簡単な統合**: API を 1 回呼び出すだけで、プロファイルにプロキシを追加できます
+- **グローバルなカバレッジ**: 世界各地のロケーションのプロキシを利用できます
+- **安定性**: エンタープライズ級のインフラにより、信頼性の高い接続を維持します
+- **検出対策**: 適切に設定されたプロキシは、フィンガープリントによる検出のリスクを低減します
+- **効率的なワークフロー**: 別のプロキシプロバイダーを管理する必要がありません
+
+# Gologin プロキシでプロファイルを実行する
+
+<CodeGroup>
+
+```js node.js
+import { GologinApi } from 'gologin';
+
+const token = process.env.GL_API_TOKEN || 'your dev token here';
+const gologin = GologinApi({
+  token,
+});
+
+async function main() {
+  const profile = await gologin.createProfileRandomFingerprint();
+  const profileId = profile.id;
+  await gologin.addGologinProxyToProfile(profileId, 'US');
+
+  const { browser } = await gologin.launch({ profileId });
+  const page = await browser.newPage();
+
+  await page.goto('https://iphey.com/', { waitUntil: 'networkidle2' });
+  const status = await page.$eval('.trustworthy:not(.hide)',
+    (elt) => elt?.innerText?.trim(),
+  );
+
+  await new Promise((resolve) => setTimeout(resolve, 10000));
+  console.log('status', status);
+
+  return status;
+}
+
+main().catch(console.error)
+  .finally(gologin.exit);
+```
+
+```python Python
+import time
+from gologin import GoLogin
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+
+
+# Initialize GoLogin
+gl = GoLogin({
+	"token": "your dev token",
+	})
+profile = gl.createProfileRandomFingerprint({ "os": "win" })
+profile_id = profile.get('id')
+gl.setProfileId(profile_id)
+# Add proxy to the profile
+gl.addGologinProxyToProfile(profile_id, "us")
+
+# Start Browser and get websocket url
+debugger_address = gl.start()
+
+# Get Chromium version for webdriver
+chromium_version = gl.get_chromium_version()
+
+
+# Install webdriver
+service = Service(ChromeDriverManager(driver_version=chromium_version).install())
+
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_experimental_option("debuggerAddress", debugger_address)
+
+driver = webdriver.Chrome(service=service, options=chrome_options)
+
+# Give command to Selenium to open the page
+driver.get("http://www.python.org")
+
+time.sleep(30)
+driver.quit()
+time.sleep(10)
+
+gl.delete(profile_id)
+
+gl.stop()
+```
+
+</CodeGroup>

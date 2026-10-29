@@ -1,0 +1,61 @@
+---
+title: "Android 上の User-Agent"
+description: "選択した Android のバージョンに関係なく、Android プロファイルの User-Agent には Android 10; K と表示されます。なぜこうなるのか、そしてこれが正常な動作である理由を説明します。"
+---
+
+Gologin で Android プロファイルを作成して User-Agent を確認すると、プロファイルを Android 14、15、16 に設定していても、常に `Android 10; K` と表示されます。文字列は次のようになります。
+
+```text
+Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/... Mobile Safari/537.36
+```
+
+これは不具合ではなく、想定どおりの動作です。**Android 上の最新の Chrome ベースのブラウザは、すべて同じ値を報告します。**
+
+## なぜこうなるのか
+
+2023 年初頭の Chrome 110 以降、Google は **User-Agent Reduction** と呼ばれる変更を導入しました。ブラウザの追跡やフィンガープリントを難しくするため、Chrome は User-Agent で実際の Android バージョンやデバイスモデルを共有しなくなりました。代わりに、すべてのユーザーに対して固定のプレースホルダー値を送信します。
+
+- Android のバージョンは `Android 10` に固定されます
+- デバイスモデルは `K` という文字に置き換えられます
+- Chrome のマイナーバージョン番号は `0.0.0` に設定されます
+
+リリースごとに更新されるのは Chrome のメジャーバージョンだけです。この部分の文字列のそれ以外の要素は、すべてのデバイスで同じです。
+
+Gologin の Android ブラウザは Chromium をベースにしているため、同じ標準に従っています。Chrome、Edge、Opera、Samsung Internet も、すべて `Android 10; K` と表示します。これは Gologin に限った話ではなく、現在のモバイル Web の仕組みです。
+
+<Info>
+  `K` は Android のバージョンでも、タイプミスでもありません。Chrome が実際のデバイスモデルの代わりに使用するプレースホルダーです。
+</Info>
+
+## これが実はメリットになる理由
+
+世界中のほぼすべての Android Chrome ユーザーが `Android 10; K` と報告するため、プロファイルは多数のユーザーに紛れることができます。仮に Gologin が実際の Android バージョンを報告した場合、プロファイルは通常のトラフィックから浮いてしまい、ウェブサイトから見て不自然に映ります。標準的な動作に合わせることは、通常の訪問者のように見せる必要があるブラウザプロファイルにとってまさに望ましいことです。
+
+<Check>
+  Android プロファイルに `Android 10; K` と表示されているのは、正しく動作しており、一般的な本物の Android デバイスのように見えている状態です。
+</Check>
+
+実際の Android バージョンやデバイスモデルを必要とするウェブサイトは、現在では User-Agent から読み取るのではなく、よりプライバシーに配慮した新しい仕組み(Client Hints と呼ばれます)を通じてそれらを要求します。そのため、User-Agent が `Android 10` となっていても失われるものはなく、選択した Android バージョンは必要な場面できちんと反映されます。
+
+## 自分でテストする方法
+
+Gologin のプロファイルと通常の Chrome ブラウザを並べて比較すれば、実際の Android デバイスでこれを確認できます。
+
+通常の Chrome ブラウザで [iphey.com](https://iphey.com) またはその他の信頼できるフィンガープリントチェッカーを開き、**ブラウザ** タブに切り替えます。次に、同じページを Gologin の Android プロファイルで開きます。どちらも **ユーザーエージェント** の行を確認してください。
+
+最新の Android デバイス上で動作していても、両方のブラウザで全く同じ `Android 10; K` という値が表示されます。異なるのは Chrome のバージョン番号だけで、これは各ブラウザのリリースを反映しているにすぎません。
+
+両方のブラウザが同じ値を報告するので、この並べて比較する方法は、Gologin が通常の Chrome ブラウザとまったく同じ動作をしていることを確認する最も簡単な方法です。
+
+<Columns cols={2}>
+  <Column>
+    <Frame>
+      ![Android 上の Chrome](/images/UA_chrome_android_app-1.jpg "Android 上の Chrome")
+    </Frame>
+  </Column>
+  <Column>
+    <Frame>
+      ![Gologin Android アプリ](/images/UA_gologin_android_app.jpg "Gologin Android アプリ")
+    </Frame>
+  </Column>
+</Columns>

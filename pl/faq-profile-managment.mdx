@@ -1,0 +1,81 @@
+---
+title: "FAQ: Profile"
+---
+
+### Czy mogę uruchamiać wiele profili jednocześnie?
+
+Tak. Gologin pozwala uruchamiać wiele profili przeglądarki jednocześnie, w zależności od zasobów systemu i posiadanego planu subskrypcji.
+
+Każdy profil działa w odizolowanym środowisku przeglądarki z własnym odciskiem cyfrowym (fingerprint), plikami cookie i ustawieniami proxy.
+
+### Czy mogę używać tego samego proxy dla wielu profili?
+
+Technicznie tak, ale nie jest to zalecane.
+
+Używanie tego samego proxy w wielu profilach może powiązać konta ze sobą i obniżyć ich poziom zaufania na niektórych platformach.
+
+Aby uzyskać najlepsze rezultaty, używaj **unikalnego proxy dla każdego profilu**.
+
+### Co się stanie, jeśli nieprawidłowo zamknę profil?
+
+Jeśli profil zostanie zamknięty przed zakończeniem synchronizacji, najnowsze dane sesji mogą nie zostać zapisane.
+
+Może to skutkować:
+
+- utratą plików cookie
+- utratą stanu sesji
+- wylogowaniem z witryn
+
+Zawsze zamykaj profile w standardowy sposób i poczekaj, aż stan profilu wróci do **Ready**.
+
+### Czy mogę uruchomić jeden profil na kilku urządzeniach jednocześnie?
+
+Jest to technicznie możliwe, ale niezalecane.
+
+Jednoczesne uruchamianie tego samego profilu na różnych urządzeniach może powodować konflikty synchronizacji i zwiększać ryzyko problemów z kontem.
+
+### Czy mogę skopiować lub zduplikować profil?
+
+Tak. Gologin umożliwia **klonowanie profili**.
+
+Klonowanie profilu kopiuje jego ustawienia, konfigurację fingerprintu i środowisko, dzięki czemu możesz szybko tworzyć podobne profile.
+
+### Czy mogę łączyć się z profilami przez RDP, VNC lub inne narzędzia zdalne?
+
+Profile Gologin nie są emulowane – działają lokalnie na Twoim urządzeniu lub w chmurze. Nie mają własnego systemu operacyjnego, więc nie ma z czym się łączyć. Możesz jednak w razie potrzeby połączyć się przez RDP z urządzeniem, na którym uruchomione są profile Gologin.
+
+### Czy mogę odzyskać usunięty profil?
+
+Tak. Usunięte profile można przywrócić przez ograniczony czas w sekcji **Restore profiles** w Settings.
+
+Jeśli profil nie został trwale usunięty, można go odzyskać wraz ze wszystkimi danymi.
+
+### Dlaczego po uruchomieniu profilu zostałem wylogowany z konta?
+
+Może się tak zdarzyć, jeśli:
+
+- zmieniła się lokalizacja proxy
+- fingerprint uległ znacznej zmianie
+- pliki cookie były nieprawidłowe lub wygasły
+
+Aby zmniejszyć to ryzyko, utrzymuj spójne ustawienia proxy, fingerprintu i strefy czasowej.
+
+### Czy mogę włączyć powiadomienia w tle z witryn lub rozszerzeń w moich profilach?
+
+Orbita na razie nie obsługuje powiadomień w tle.
+
+### Dlaczego nie mogę rozszerzyć okna przeglądarki do pełnego ekranu?
+
+Okno przeglądarki profilu nie może być większe niż wartość **Screen Resolution** ustawiona w jego ustawieniach. Jest to celowe. Witryny widzą zarówno rozmiar ekranu zgłaszany przez profil, jak i rzeczywisty rozmiar okna przeglądarki. Na prawdziwym urządzeniu okno nigdy nie jest większe niż ekran, więc rozbieżność może sprawić, że profil będzie wyglądał podejrzanie.
+
+Aby powiększyć okno:
+
+1. Otwórz **Settings** > **Advanced** profilu.
+2. W polu **Screen Resolution** wybierz wartość odpowiadającą rozdzielczości Twojego monitora lub nieco niższą.
+3. Zapisz ustawienia i uruchom profil ponownie.
+
+Jeśli jesteś już zalogowany na konta w tym profilu, pamiętaj, że witryny mogą potraktować zmianę rozdzielczości jako nowe urządzenie i poprosić o dodatkową weryfikację.
+
+Aby nowe profile od początku otwierały się w odpowiednim rozmiarze, ustaw rozdzielczość ekranu w [Default profile settings](/pl/default-profile-settings). Zostanie ona zastosowana do wszystkich profili tworzonych później.
+
+Zobacz także: [Advanced profile settings](/pl/general/account-and-billing/advanced-profile-settings), [What's safe to change](/pl/whats-safe-to-change)

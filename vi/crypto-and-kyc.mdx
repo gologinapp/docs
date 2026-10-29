@@ -1,0 +1,89 @@
+---
+title: "Nền tảng tiền mã hóa và KYC"
+---
+
+Các nền tảng tiền mã hóa chia thành hai nhóm: sàn giao dịch và ví (Binance, Coinbase, Kraken), nơi KYC gắn tài khoản với một người thật, và các nền tảng airdrop/farming (Galxe, Zealy, Layer3, Premint), nơi mục tiêu là quản lý nhiều tài khoản trên các chiến dịch.
+
+## Danh sách kiểm tra nhanh
+
+- 1 tài khoản = 1 hồ sơ trình duyệt
+- 1 hồ sơ = 1 proxy dân cư tĩnh
+- Giữ vị trí proxy nhất quán, đặc biệt là sau khi KYC
+- Không thay đổi vân tay trình duyệt hoặc proxy sau khi xác minh danh tính
+- Với farming: hãy coi các tài khoản là dùng một lần, không dùng chung tài khoản farming với tài khoản sàn giao dịch thật
+
+## Sàn giao dịch và nền tảng KYC
+
+Sau khi KYC, sự nhất quán là yếu tố quan trọng nhất. Việc đăng nhập từ một IP mới hoặc vân tay trình duyệt bị thay đổi sẽ kích hoạt đợt rà soát bảo mật, yêu cầu xác minh bổ sung hoặc đóng băng tài khoản.
+
+### Thiết lập hồ sơ Gologin
+
+- **Proxy:** proxy dân cư tĩnh, cùng một IP cho mọi phiên
+- **Vị trí proxy:** nếu có thể, hãy chọn quốc gia trùng với quốc gia trên giấy tờ tùy thân của bạn
+
+<Warning>
+  Không bao giờ thay đổi proxy của hồ sơ Gologin sau khi đã hoàn tất KYC trên sàn giao dịch tiền mã hóa. Sàn lưu lại môi trường thiết bị của bạn tại thời điểm xác minh. Nếu lần đăng nhập tiếp theo có IP hoặc vân tay trình duyệt khác, sàn sẽ coi đó là hành vi chiếm đoạt tài khoản.
+</Warning>
+
+## Lộ trình warmup
+
+| **Giai đoạn** | **Trọng tâm** | **Việc cần làm** |
+| :-- | :-- | :-- |
+| Ngày 0 | Đăng ký | Tạo tài khoản \+ xác minh email |
+| Ngày 1–3 | KYC | Gửi giấy tờ tùy thân, hoàn tất xác minh |
+| Ngày 4–7 | Làm quen | Duyệt nền tảng, khám phá giao diện giao dịch |
+| Tuần 2 | Giao dịch nhỏ | Nạp một khoản nhỏ, thực hiện 1–2 giao dịch |
+| Tuần 3\+ | Sử dụng bình thường | Giao dịch thường xuyên |
+
+### Các nguyên nhân thường gây khóa tài khoản trên sàn giao dịch
+
+- Đổi IP sau khi KYC (kể cả cùng quốc gia nhưng khác thành phố)
+- Vân tay thiết bị không khớp giữa các phiên
+- Nạp số tiền lớn ngay sau khi tạo tài khoản
+- Nhiều tài khoản dùng chung phương thức thanh toán hoặc tài khoản ngân hàng
+
+## Airdrop và farming điểm (Galxe, Zealy, Premint, Layer3)
+
+Các chiến dịch Web3, như airdrop, nhiệm vụ (quest) và chương trình điểm, thường chỉ cho phép mỗi người tham gia một lần. Gologin được dùng ở đây để quản lý nhiều tài khoản hợp lệ (ví dụ, một nhóm mà mỗi thành viên tham gia riêng) đồng thời giữ cho các tài khoản đó được tách biệt về mặt kỹ thuật.
+
+### **Cách các nền tảng phát hiện tài khoản liên kết**
+
+Các nền tảng dựa vào hai loại tín hiệu:
+
+Tín hiệu từ trình duyệt và mạng (phần Gologin xử lý):
+
+- Cùng một địa chỉ IP trên nhiều tài khoản
+- Cùng một vân tay trình duyệt
+- Các tài khoản hoàn thành nhiệm vụ vào cùng thời điểm từ cùng một môi trường
+
+Tín hiệu trên chuỗi (nằm ngoài phạm vi của Gologin):
+
+- Blockchain là công khai, mọi giao dịch đều hiển thị vĩnh viễn
+- Nếu nhiều địa chỉ ví nhận tiền từ cùng một ví nguồn, chúng có thể dễ dàng bị liên kết trên chuỗi
+- Các nền tảng dùng những công cụ như Nansen hoặc Arkham để phân tích mối quan hệ giữa các ví trước khi phân phối token
+
+Gologin cách ly môi trường trình duyệt và IP. Mối quan hệ giữa các ví trên chuỗi là vấn đề riêng, mỗi người dùng tự quản lý theo thiết lập của mình và quy định của nền tảng.
+
+### Thiết lập Gologin cho các chiến dịch nhiều tài khoản
+
+Nếu bạn quản lý tài khoản thay cho nhiều thành viên trong nhóm, mỗi người nên có:
+
+- Một hồ sơ Gologin riêng
+- Một proxy dân cư riêng
+- Ví kết nối riêng của họ, không được nạp tiền từ ví chung của nhóm
+
+### Quản lý ở quy mô lớn
+
+Với các nhóm có từ 10\+ tài khoản trên nhiều chiến dịch:
+
+- Sắp xếp các hồ sơ trong thư mục Gologin theo chiến dịch hoặc theo thành viên
+- Dùng thẻ để theo dõi trạng thái (đang hoạt động, đã hoàn thành, đang chờ)
+- Dùng Gologin API để khởi chạy và quản lý hồ sơ theo cách lập trình
+- Ghi lại hồ sơ nào tương ứng với thành viên và ví nào
+
+## Xem thêm
+
+- [Proxy tĩnh và proxy xoay](https://gologin.com/docs/static-vs-dynamic-proxies)
+- [Proxy tốt nhất cho trường hợp của bạn](https://gologin.com/docs/proxy/introduction/best-proxy-for-your-case)
+- [Duy trì điểm tin cậy](https://gologin.com/docs/maintaining-trust-score)
+- [Bắt đầu nhanh với API](https://gologin.com/docs/api-reference/introduction/quickstart) — để quản lý số lượng lớn hồ sơ farming theo cách lập trình

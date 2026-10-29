@@ -1,0 +1,81 @@
+---
+title: "FAQ: Perfis"
+---
+
+### Posso executar vários perfis ao mesmo tempo?
+
+Sim. O Gologin permite executar vários perfis de navegador simultaneamente, dependendo dos recursos do seu sistema e do seu plano de assinatura.
+
+Cada perfil é executado em um ambiente de navegador isolado, com seu próprio fingerprint, cookies e configurações de proxy.
+
+### Posso usar o mesmo proxy em vários perfis?
+
+Tecnicamente sim, mas não é recomendado.
+
+Usar o mesmo proxy em vários perfis pode vincular as contas entre si e reduzir a pontuação de confiança delas em determinadas plataformas.
+
+Para obter os melhores resultados, use **um proxy exclusivo para cada perfil**.
+
+### O que acontece se eu fechar um perfil de forma incorreta?
+
+Se um perfil for fechado antes de a sincronização ser concluída, os dados mais recentes da sessão podem não ser salvos.
+
+Isso pode resultar em:
+
+- perda de cookies
+- perda do estado da sessão
+- desconexão automática de sites
+
+Sempre feche os perfis normalmente e aguarde até que o estado do perfil volte a **pronto**.
+
+### Posso abrir o mesmo perfil em vários dispositivos ao mesmo tempo?
+
+Isso é tecnicamente possível, mas não é recomendado.
+
+Executar o mesmo perfil simultaneamente em dispositivos diferentes pode causar conflitos de sincronização e aumentar o risco de problemas com as contas.
+
+### Posso copiar ou duplicar um perfil?
+
+Sim. O Gologin permite **clonar perfis**.
+
+Ao clonar um perfil, são copiadas as configurações, a configuração do fingerprint e o ambiente, o que permite criar rapidamente perfis semelhantes.
+
+### Posso me conectar aos perfis por RDP, VNC ou outras ferramentas remotas?
+
+Os perfis do Gologin não são emulados: eles são executados localmente no seu dispositivo ou na nuvem. Eles não têm um sistema operacional próprio, então não há nada ao que se conectar. No entanto, se necessário, você pode se conectar por RDP a um dispositivo que esteja executando perfis do Gologin.
+
+### Posso recuperar um perfil excluído?
+
+Sim. Os perfis excluídos podem ser restaurados por tempo limitado na seção **Restaurar perfis**, em Configurações.
+
+Se o perfil ainda não tiver sido removido permanentemente, ele pode ser recuperado com todos os dados intactos.
+
+### Por que minha conta foi desconectada depois de abrir um perfil?
+
+Isso pode acontecer se:
+
+- a localização do proxy mudou
+- o fingerprint mudou de forma significativa
+- os cookies eram inválidos ou expiraram
+
+Para reduzir esse risco, mantenha consistentes as configurações de proxy, fingerprint e fuso horário.
+
+### Posso ativar notificações em segundo plano de sites ou extensões nos meus perfis?
+
+Por enquanto, o Orbita não tem como enviar notificações em segundo plano.
+
+### Por que não consigo expandir a janela do navegador para tela cheia?
+
+A janela do navegador de um perfil não pode ser maior que a **Resolução da tela** definida nas configurações dele. Isso é intencional. Os sites conseguem ver tanto o tamanho de tela informado pelo perfil quanto o tamanho real da janela do navegador. Em um dispositivo real, a janela nunca é maior que a tela, então essa divergência pode fazer o perfil parecer suspeito.
+
+Para aumentar a janela:
+
+1. Abra as **Configurações** do perfil > **Avançado**.
+2. Em **Resolução da tela**, escolha um valor igual à resolução do seu monitor ou um pouco menor.
+3. Salve as configurações e reinicie o perfil.
+
+Se você já estiver conectado a contas nesse perfil, lembre-se de que os sites podem tratar uma mudança de resolução como um novo dispositivo e pedir uma verificação adicional.
+
+Para que os novos perfis já abram no tamanho certo desde o início, defina a resolução da tela em [Configurações padrão de perfil](/pt/default-profile-settings). Ela será aplicada a todos os perfis que você criar depois.
+
+Veja também: [Configurações avançadas de perfil](/pt/general/account-and-billing/advanced-profile-settings), [O que é seguro alterar](/pt/whats-safe-to-change)

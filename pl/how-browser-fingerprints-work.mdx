@@ -1,0 +1,38 @@
+---
+title: "Jak działają odciski przeglądarki"
+---
+
+Gdy odwiedzasz stronę internetową, przeglądarka automatycznie udostępnia pewne informacje techniczne, które są potrzebne do prawidłowego działania strony. Witryny mogą uzyskać dostęp do tych informacji za pomocą nagłówków HTTP i interfejsów API JavaScript.
+
+Skrypty fingerprintingu zbierają z przeglądarki i środowiska urządzenia wiele danych, takich jak:
+
+- informacje o przeglądarce i systemie operacyjnym
+- rozdzielczość ekranu i ustawienia wyświetlania
+- zainstalowane czcionki
+- język i strefa czasowa
+- parametry sprzętowe
+- dane z renderowania grafiki (Canvas i WebGL)
+- dane z przetwarzania dźwięku
+- urządzenia multimedialne dostępne w systemie
+
+Dane te są łączone i przetwarzane, aby utworzyć **odcisk przeglądarki (browser fingerprint)** — unikalny identyfikator opisujący konfigurację urządzenia i przeglądarki.
+
+Strony zapisują ten odcisk i porównują go, gdy ten sam użytkownik odwiedzi je ponownie. Jeśli odcisk odpowiada wcześniej zapisanej konfiguracji, witryna może rozpoznać urządzenie, nawet jeśli pliki cookie zostały usunięte.
+
+Strony internetowe szeroko wykorzystują fingerprinting, aby:
+
+- wykrywać podejrzane zachowania podczas logowania
+- zapobiegać oszustwom i zautomatyzowanemu ruchowi
+- rozpoznawać powracających użytkowników
+- łączyć wiele sesji z tym samym urządzeniem
+
+Jeśli odcisk znacząco zmienia się między sesjami, witryna może uznać przeglądarkę za nowe lub potencjalnie podejrzane urządzenie.
+
+Gologin rozwiązuje ten problem, tworząc **izolowane profile przeglądarki**. Każdy profil ma własną konfigurację odcisku, dzięki czemu zachowuje się jak oddzielne urządzenie. Pozwala to zarządzać wieloma kontami, utrzymując niezależność ich środowisk przeglądarki.
+
+## Zobacz także
+
+- [Ustawienia odcisku profilu](https://gologin.com/docs/profile-fingerprint-settings)
+- [Co można bezpiecznie zmieniać](https://gologin.com/docs/whats-safe-to-change)
+- [Kluczowe pojęcia](https://gologin.com/docs/getting-started/introduction/key-concepts-profiles-fingerprints-proxies)
+- [Typowe błędy, których należy unikać](https://gologin.com/docs/common-mistakes-to-avoid)

@@ -1,0 +1,75 @@
+---
+title: "Câu hỏi thường gặp: Proxy"
+---
+
+### Tôi có cần proxy để sử dụng Gologin không?
+
+Nên dùng proxy khi bạn quản lý nhiều tài khoản.
+
+Gologin tạo dấu vân tay trình duyệt riêng cho từng profile, nhưng các website vẫn có thể liên kết các tài khoản với nhau thông qua cùng một địa chỉ IP. Dùng một proxy khác nhau cho mỗi profile giúp giữ các phiên làm việc tách biệt.
+
+### Tôi có thể dùng nhà cung cấp proxy của riêng mình không?
+
+Có. Gologin hỗ trợ proxy từ bất kỳ nhà cung cấp bên thứ ba nào.
+
+Bạn có thể thêm proxy bên ngoài theo cách thủ công trong phần cài đặt profile, nhập hàng loạt, hoặc quản lý qua **Trình quản lý proxy**.
+
+### Tôi nên dùng loại proxy nào?
+
+Với hầu hết các tác vụ quản lý tài khoản, nên dùng **proxy dân cư (residential proxy)** vì các website khó phát hiện loại proxy này hơn.
+
+Các loại proxy khác cũng có thể phù hợp tùy theo mục đích sử dụng của bạn:
+
+- **Proxy di động (mobile proxy)** – độ tin cậy cao, thường được dùng cho các nền tảng mạng xã hội
+- **Proxy trung tâm dữ liệu (datacenter proxy)** – nhanh hơn nhưng dễ bị website phát hiện hơn
+
+### Tôi có thể dùng một proxy cho nhiều profile không?
+
+Về mặt kỹ thuật thì có, nhưng **không khuyến khích**.
+
+Dùng cùng một proxy cho nhiều profile có thể làm tăng nguy cơ các website liên kết những tài khoản đó với nhau.
+
+Để tách biệt tốt hơn, hãy gán **một proxy riêng cho mỗi profile**.
+
+### Tại sao proxy của tôi không hoạt động?
+
+Một số nguyên nhân thường gặp:
+
+- sai IP, cổng (port), tên người dùng hoặc mật khẩu
+- máy chủ proxy không phản hồi
+- proxy bị chặn hoặc đã hết hạn
+- không đủ dung lượng traffic
+
+Bạn có thể kiểm tra kết nối proxy bằng **công cụ kiểm tra proxy** trong Gologin.
+
+### Tôi có thể dùng tiện ích mở rộng VPN hoặc proxy trong trình duyệt Orbita thay cho cài đặt proxy của Gologin không?
+
+Chúng tôi không khuyến khích cách này và rất có thể sẽ không mang lại kết quả. Bạn có thể gặp lỗi kết nối internet khi truy cập trang web, hoặc IP thật của bạn có thể bị lộ. Việc dùng các tiện ích mở rộng như vậy để thay đổi IP hiếm khi thành công, do Chrome thông thường và trình duyệt Orbita hoạt động khác nhau về cách định tuyến mạng.
+
+### Tôi có thể dùng proxy HTTP và SOCKS trong Gologin không?
+
+Có. Gologin hỗ trợ cả proxy **HTTP/HTTPS** và **SOCKS5**.
+
+Hầu hết các nhà cung cấp proxy đều hỗ trợ các giao thức này, và trong nhiều trường hợp Gologin có thể tự động nhận diện đúng giao thức.
+
+### Gologin có cung cấp proxy tích hợp sẵn không?
+
+Có. Gologin cung cấp proxy tích hợp có thể gán trực tiếp vào các profile trình duyệt mà không cần thiết lập bên ngoài.
+
+Bạn cũng có thể dùng proxy của bên thứ ba nếu cần thêm vị trí hoặc lựa chọn proxy.
+
+### "2 GB proxy dân cư" nghĩa là gì?
+
+2 GB là dung lượng truyền tải dữ liệu (traffic), không phải dung lượng lưu trữ hay RAM. Đây là lượng dữ liệu đi qua proxy khi bạn duyệt web. Duyệt web thông thường tiêu tốn khoảng 0.5-1 GB mỗi ngày cho mỗi profile đang hoạt động.
+
+### Nếu tôi dùng proxy riêng, có bị trừ vào 2 GB traffic đi kèm của Gologin không?
+
+Không. Traffic proxy đi kèm của Gologin chỉ bị trừ khi bạn dùng proxy tích hợp sẵn của Gologin. Proxy bên thứ ba của bạn sử dụng traffic từ nhà cung cấp proxy, không phải từ hạn mức Gologin của bạn.
+
+### Tôi cần bao nhiêu traffic proxy?
+
+Ước tính sơ bộ cho mỗi profile mỗi ngày:
+
+- **Duyệt web nhẹ** (mạng xã hội, email): 0.3-0.5 GB
+- **Làm việc thường xuyên** (quản lý quảng cáo, đăng nội dung): 0.5-1 GB
+- **Sử dụng nhiều** (cuộc gọi video, các website nhiều đa phương tiện): 1-3 GB

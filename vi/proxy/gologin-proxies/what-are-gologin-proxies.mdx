@@ -1,0 +1,86 @@
+---
+title: "Gologin Proxies là gì"
+---
+
+Gologin proxies là các địa chỉ IP được **tích hợp trực tiếp vào trình duyệt Gologin**. Khi một proxy được gắn vào hồ sơ trình duyệt, nó xác định **nguồn lưu lượng internet của bạn** và giúp các website nhìn nhận mỗi hồ sơ như một **người dùng thật, riêng biệt**.
+
+Cách làm này ngăn các website và nền tảng **liên kết nhiều tài khoản với nhau** dựa trên dữ liệu địa chỉ IP, đồng thời giảm nguy cơ bị chặn, hạn chế hoặc bị yêu cầu kiểm tra bảo mật.
+
+## Proxy tích hợp sẵn và proxy tùy chỉnh
+
+Gologin hỗ trợ **hai cách sử dụng proxy**, tùy theo nhu cầu và mức độ kinh nghiệm của bạn.
+
+- **Proxy tích hợp sẵn** Proxy tích hợp sẵn được **Gologin cung cấp và quản lý**. Chúng sẵn sàng để sử dụng, không cần thiết lập bên ngoài và hoạt động liền mạch với hệ thống vân tay trình duyệt của chúng tôi. Đây là lựa chọn tốt nhất nếu bạn muốn **thiết lập đơn giản, ổn định và nhanh chóng** mà không phải làm việc với dịch vụ của bên thứ ba.
+- **Proxy tùy chỉnh** Proxy tùy chỉnh là proxy **mua từ các nhà cung cấp bên thứ ba** và được thêm thủ công vào Gologin. Lựa chọn này mang lại cho bạn sự linh hoạt hơn trong việc chọn nhà cung cấp proxy, vị trí và định dạng proxy. Phù hợp hơn với **người dùng nâng cao** cần kiểm soát nhiều hơn hạ tầng proxy của mình.
+
+Proxy tích hợp sẵn lý tưởng cho **sự đơn giản và độ tin cậy**, còn proxy tùy chỉnh mang lại **khả năng kiểm soát cao hơn** cho các thiết lập nâng cao.
+
+## Các loại Gologin proxies
+
+Tùy theo gói dịch vụ và nhu cầu của bạn, Gologin có thể cung cấp nhiều loại proxy khác nhau, chẳng hạn:
+
+- **Proxy dân cư (Residential)** – IP của người dùng thật, phù hợp với hầu hết các nền tảng
+- **Proxy di động (Mobile)** – IP từ mạng di động, hữu ích trong các môi trường yêu cầu độ tin cậy cao hơn
+- **Proxy trung tâm dữ liệu (Datacenter)** – nhanh hơn và rẻ hơn, nhưng dễ bị phát hiện hơn
+- **IP chuyên dụng** - một địa chỉ IP dành riêng cho một mình bạn. IP này không bao giờ thay đổi, đến từ nhà cung cấp dịch vụ internet thật và không giới hạn lưu lượng.
+
+Proxy dân cư, proxy di động và proxy trung tâm dữ liệu được tính phí theo lưu lượng (tính bằng gigabyte). IP chuyên dụng được thanh toán riêng, theo hình thức đăng ký \$5/tháng cho mỗi IP, và có sẵn trên các gói trả phí.
+
+<Note>
+  **IP chuyên dụng**, **proxy ISP** và **proxy tĩnh** đều có cùng một ý nghĩa. Ứng dụng Gologin gọi là **Mua IP chuyên dụng**, và đó cũng là thuật ngữ được dùng xuyên suốt trong tài liệu này.
+</Note>
+
+## Về proxy xoay
+
+Proxy dân cư và proxy di động của Gologin tự động xoay địa chỉ IP sau mỗi 5-30 phút. Điều này có nghĩa là IP của bạn sẽ thay đổi trong một phiên duyệt web.
+
+**Proxy xoay phù hợp cho:**
+
+- Thu thập dữ liệu web (web scraping)
+- Các phiên duyệt web ngắn
+- Nghiên cứu chung **Khi nào không nên dùng proxy xoay**
+
+<Warning>
+  Không sử dụng proxy xoay cho Amazon, eBay, Etsy, PayPal hoặc bất kỳ sàn thương mại nào theo dõi lịch sử tài khoản. IP xoay là một trong những cách nhanh nhất khiến tài khoản bị liên kết và bị khóa trên các nền tảng này. Hãy dùng IP chuyên dụng cho các tài khoản đó.
+</Warning>
+
+- Amazon và eBay phát hiện khi cùng một tài khoản đăng nhập từ các địa chỉ IP khác nhau theo thời gian. Họ xem đây là dấu hiệu cho thấy tài khoản đang được bên thứ ba quản lý hoặc nằm trong một mô hình đa tài khoản. Proxy xoay đổi IP của bạn ở mỗi phiên, đúng với mẫu hành vi mà họ đánh dấu.
+- LinkedIn đăng xuất các phiên và kích hoạt các đợt kiểm tra bảo mật khi thấy IP thay đổi giữa các phiên. Proxy xoay sẽ khiến bạn thường xuyên bị đăng xuất và bị yêu cầu xác minh.
+- Các nền tảng cá cược yêu cầu địa chỉ IP nhất quán cho mỗi tài khoản. Việc thay đổi IP bị coi là hoạt động đăng nhập đáng ngờ và thường dẫn đến việc tài khoản bị hạn chế.
+- PayPal và các nền tảng tài chính đánh dấu việc thay đổi IP là dấu hiệu tài khoản có thể bị xâm phạm. Họ có thể đóng băng tài khoản hoặc yêu cầu xác minh danh tính.
+
+## Nên dùng loại nào thay thế
+
+Để quản lý tài khoản lâu dài trên bất kỳ nền tảng nhạy cảm nào, bạn cần một địa chỉ IP cho mỗi tài khoản và địa chỉ đó không bao giờ thay đổi. Trong Gologin, đó là **IP chuyên dụng**.
+
+| Nền tảng | Loại proxy được khuyên dùng |
+| --- | --- |
+| Amazon / eBay / Etsy | IP chuyên dụng |
+| LinkedIn | IP chuyên dụng |
+| Facebook / Meta Ads | IP chuyên dụng hoặc proxy di động tĩnh |
+| Các trang cá cược | Proxy di động tĩnh |
+| Thu thập dữ liệu web | Proxy dân cư xoay hoặc proxy trung tâm dữ liệu |
+| Kiểm thử / kiểm tra nhanh | Gologin proxies xoay là đủ dùng |
+
+Xem [Proxy tốt nhất cho trường hợp của bạn](https://gologin.com/docs/proxy/introduction/best-proxy-for-your-case) để có phân tích đầy đủ, hoặc [Nhà cung cấp proxy được đề xuất](https://gologin.com/best-proxy-server-services/) để biết các dịch vụ cụ thể.
+
+## Về dung lượng lưu lượng đi kèm
+
+Mỗi gói Gologin đều bao gồm một lượng lưu lượng proxy được tính bằng gigabyte. Đây là dữ liệu đi qua proxy khi các hồ sơ của bạn duyệt web — không phải dung lượng lưu trữ.
+
+**Ước tính sơ bộ:**
+
+- Duyệt web nhẹ (xem bảng tin, đọc trang): ~0.3–0.5 GB mỗi hồ sơ mỗi ngày
+- Làm việc tích cực (tải media, chạy quảng cáo): ~1–2 GB mỗi hồ sơ mỗi ngày
+- 10 hồ sơ LinkedIn sử dụng 2 giờ/ngày: ~3–6 GB mỗi tháng
+
+Nếu bạn kết nối proxy của bên thứ ba với một hồ sơ, proxy đó sẽ không tiêu tốn dung lượng lưu lượng Gologin của bạn — chỉ lưu lượng đi qua mạng proxy riêng của Gologin mới được tính.
+
+## Xem thêm
+
+- [Gologin so với proxy của bên thứ ba](https://gologin.com/docs/proxy/proxy-management/gologin-vs-3rd-party-proxies)
+- [Cách Gologin proxies hoạt động](https://gologin.com/docs/proxy/gologin-proxies/how-gologin-proxies-work-and-what-they-offer)
+- [Tôi cần bao nhiêu lưu lượng proxy?](https://gologin.com/docs/proxy/gologin-proxies/how-much-proxy-traffic-do-i-need)
+- [VPN so với Proxy](https://gologin.com/docs/proxy/introduction/vpn-vs-proxy) — điểm khác biệt là gì
+- [Proxy tĩnh so với proxy xoay](https://gologin.com/docs/static-vs-dynamic-proxies) — vì sao proxy tĩnh quan trọng trong quản lý tài khoản
+- [Thêm proxy đầu tiên của bạn](https://gologin.com/docs/proxy/gologin-proxies/gologin-proxy-management/adding-your-first-proxy)

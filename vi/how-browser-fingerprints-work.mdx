@@ -1,0 +1,38 @@
+---
+title: "Cách dấu vân tay trình duyệt hoạt động"
+---
+
+Khi bạn truy cập một trang web, trình duyệt sẽ tự động chia sẻ một số thông tin kỹ thuật cần thiết để trang hoạt động bình thường. Các trang web có thể truy cập thông tin này thông qua HTTP header và JavaScript API.
+
+Các script nhận dạng dấu vân tay (fingerprinting) thu thập nhiều điểm dữ liệu từ trình duyệt và môi trường thiết bị, chẳng hạn như:
+
+- thông tin về trình duyệt và hệ điều hành
+- độ phân giải màn hình và cài đặt hiển thị
+- phông chữ đã cài đặt
+- ngôn ngữ và múi giờ
+- đặc điểm phần cứng
+- dữ liệu kết xuất đồ họa (Canvas và WebGL)
+- dữ liệu xử lý âm thanh
+- các thiết bị đa phương tiện có trên hệ thống
+
+Các điểm dữ liệu này được kết hợp và xử lý để tạo ra **dấu vân tay trình duyệt** — một mã định danh duy nhất đại diện cho cấu hình của thiết bị và trình duyệt.
+
+Các trang web lưu lại dấu vân tay này và đối chiếu khi cùng một người dùng truy cập lại. Nếu dấu vân tay khớp với cấu hình đã ghi nhận trước đó, trang web có thể nhận ra thiết bị ngay cả khi cookie đã bị xóa.
+
+Các trang web sử dụng dấu vân tay rộng rãi để:
+
+- phát hiện hành vi đăng nhập đáng ngờ
+- ngăn chặn gian lận và lưu lượng truy cập tự động
+- nhận diện khách truy cập quay lại
+- liên kết nhiều phiên với cùng một thiết bị
+
+Nếu dấu vân tay thay đổi đáng kể giữa các phiên, trang web có thể coi trình duyệt đó là một thiết bị mới hoặc có khả năng đáng ngờ.
+
+Gologin giải quyết vấn đề này bằng cách tạo ra các **hồ sơ trình duyệt tách biệt**. Mỗi hồ sơ có cấu hình dấu vân tay riêng, giúp hồ sơ hoạt động như một thiết bị độc lập. Nhờ đó, bạn có thể quản lý nhiều tài khoản mà vẫn giữ cho môi trường trình duyệt của từng tài khoản độc lập với nhau.
+
+## Xem thêm
+
+- [Cài đặt dấu vân tay của hồ sơ](https://gologin.com/docs/profile-fingerprint-settings)
+- [Những thay đổi an toàn](https://gologin.com/docs/whats-safe-to-change)
+- [Các khái niệm chính](https://gologin.com/docs/getting-started/introduction/key-concepts-profiles-fingerprints-proxies)
+- [Những lỗi thường gặp cần tránh](https://gologin.com/docs/common-mistakes-to-avoid)

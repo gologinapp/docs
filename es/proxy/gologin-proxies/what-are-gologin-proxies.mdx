@@ -1,0 +1,86 @@
+---
+title: "Qué son los proxies de Gologin"
+---
+
+Los proxies de Gologin son direcciones IP **integradas directamente en el navegador Gologin**. Cuando se asigna un proxy a un perfil de navegador, este define **desde dónde llega tu tráfico de internet** y ayuda a que los sitios web vean cada perfil como un **usuario real e independiente**.
+
+Este enfoque evita que los sitios web y las plataformas **vinculen varias cuentas entre sí** a partir de los datos de la dirección IP, y reduce el riesgo de bloqueos, restricciones o verificaciones de seguridad.
+
+## Proxies integrados vs. proxies personalizados
+
+Gologin admite **dos formas de usar proxies**, según tus necesidades y tu nivel de experiencia.
+
+- **Proxies integrados**: los proxies integrados los **proporciona y gestiona Gologin**. Están listos para usar, no requieren ninguna configuración externa y funcionan a la perfección con nuestro sistema de huellas digitales del navegador. Son la mejor opción si quieres una **configuración sencilla, estable y rápida** sin tener que lidiar con servicios de terceros.
+- **Proxies personalizados**: los proxies personalizados se **compran a proveedores externos** y se añaden manualmente a Gologin. Esta opción te da más flexibilidad para elegir proveedores, ubicaciones y formatos de proxy. Son más adecuados para **usuarios avanzados** que necesitan más control sobre su infraestructura de proxies.
+
+Los proxies integrados son ideales por su **sencillez y fiabilidad**, mientras que los proxies personalizados ofrecen **más control** para configuraciones avanzadas.
+
+## Tipos de proxies de Gologin
+
+Según tu plan y tus necesidades, Gologin puede ofrecer distintos tipos de proxy, como:
+
+- **Proxies residenciales**: IP de usuarios reales, adecuadas para la mayoría de las plataformas
+- **Proxies móviles**: IP de redes móviles, útiles en entornos que exigen mayor nivel de confianza
+- **Proxies de centro de datos**: más rápidos y económicos, pero más fáciles de detectar
+- **IP dedicada**: una dirección IP reservada solo para ti. Nunca cambia, proviene de un proveedor de internet real y no tiene límite de tráfico.
+
+Los proxies residenciales, móviles y de centro de datos se pagan por tráfico (en gigabytes). Una IP dedicada se paga por separado, con una suscripción de \$5/mes por IP, y está disponible en los planes de pago.
+
+<Note>
+  **IP dedicada**, **proxy ISP** y **proxy estático** significan lo mismo. La aplicación de Gologin lo llama **Buy dedicated IP**, y ese es el término que se usa en toda esta documentación.
+</Note>
+
+## Sobre los proxies rotativos
+
+Los proxies residenciales y móviles de Gologin rotan automáticamente las direcciones IP cada 5-30 minutos. Esto significa que tu IP cambiará durante una sesión de navegación.
+
+**La rotación es adecuada para:**
+
+- Web scraping
+- Sesiones de navegación cortas
+- Investigación general **Cuándo no usar proxies rotativos**
+
+<Warning>
+  No uses proxies rotativos para Amazon, eBay, Etsy, PayPal ni ningún marketplace que supervise el historial de las cuentas. Las IP rotativas son una de las formas más rápidas de que tus cuentas se vinculen y se bloqueen en estas plataformas. Usa una IP dedicada para estas cuentas.
+</Warning>
+
+- Amazon y eBay detectan cuando una misma cuenta inicia sesión desde distintas direcciones IP a lo largo del tiempo. Lo toman como una señal de que la cuenta la gestiona un tercero o forma parte de un esquema de múltiples cuentas. Un proxy rotativo cambia tu IP en cada sesión, exactamente el patrón que marcan.
+- LinkedIn cierra sesiones y activa revisiones de seguridad cuando detecta un cambio de IP entre sesiones. Los proxies rotativos provocarán cierres de sesión frecuentes y solicitudes de verificación.
+- Las plataformas de apuestas exigen direcciones IP constantes por cuenta. Un cambio de IP se considera una actividad de inicio de sesión sospechosa y con frecuencia conduce a la restricción de la cuenta.
+- PayPal y las plataformas financieras marcan los cambios de IP como un posible compromiso de la cuenta. Pueden congelarla o exigir verificación de identidad.
+
+## Qué usar en su lugar
+
+Para la gestión de cuentas a largo plazo en cualquier plataforma sensible, necesitas una dirección IP por cuenta que nunca cambie. En Gologin, eso es una **IP dedicada**.
+
+| Plataforma | Tipo de proxy recomendado |
+| --- | --- |
+| Amazon / eBay / Etsy | IP dedicada |
+| LinkedIn | IP dedicada |
+| Facebook / Meta Ads | IP dedicada o móvil estático |
+| Sitios de apuestas | Móvil estático |
+| Web scraping | Residencial rotativo o de centro de datos |
+| Pruebas / comprobaciones rápidas | Los proxies rotativos de Gologin son suficientes |
+
+Consulta [El mejor proxy para tu caso](https://gologin.com/docs/proxy/introduction/best-proxy-for-your-case) para ver un desglose completo, o [Proveedores de proxies recomendados](https://gologin.com/best-proxy-server-services/) para conocer servicios concretos.
+
+## Sobre el tráfico incluido
+
+Cada plan de Gologin incluye una cantidad de tráfico de proxy medida en gigabytes. Son los datos que pasan por el proxy mientras tus perfiles navegan, no almacenamiento.
+
+**Estimaciones aproximadas:**
+
+- Navegación ligera (revisar feeds, leer páginas): ~0.3–0.5 GB por perfil al día
+- Trabajo activo (cargar contenido multimedia, gestionar anuncios): ~1–2 GB por perfil al día
+- 10 perfiles de LinkedIn usados 2 horas al día: ~3–6 GB al mes
+
+Si conectas tu propio proxy de terceros a un perfil, este no consume tu tráfico incluido en Gologin: solo cuenta el tráfico que pasa por la red de proxies propia de Gologin.
+
+## Ver también
+
+- [Proxies de Gologin vs. proxies de terceros](https://gologin.com/docs/proxy/proxy-management/gologin-vs-3rd-party-proxies)
+- [Cómo funcionan los proxies de Gologin](https://gologin.com/docs/proxy/gologin-proxies/how-gologin-proxies-work-and-what-they-offer)
+- [¿Cuánto tráfico de proxy necesito?](https://gologin.com/docs/proxy/gologin-proxies/how-much-proxy-traffic-do-i-need)
+- [VPN vs Proxy](https://gologin.com/docs/proxy/introduction/vpn-vs-proxy): cuál es la diferencia
+- [Proxies estáticos vs. rotativos](https://gologin.com/docs/static-vs-dynamic-proxies): por qué lo estático es importante para la gestión de cuentas
+- [Cómo añadir tu primer proxy](https://gologin.com/docs/proxy/gologin-proxies/gologin-proxy-management/adding-your-first-proxy)

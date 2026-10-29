@@ -1,0 +1,49 @@
+---
+title: "Proxy tĩnh và proxy xoay"
+---
+
+### Proxy tĩnh
+
+Proxy tĩnh sử dụng một địa chỉ IP cố định, không thay đổi theo thời gian.
+
+Loại proxy này được khuyên dùng để quản lý tài khoản lâu dài, khi cần giữ vị trí đăng nhập ổn định.
+
+### Proxy sticky
+
+Proxy sticky giữ nguyên cùng một địa chỉ IP trong một khoảng thời gian phiên giới hạn (thường là 10–30 phút) rồi mới xoay sang IP khác.
+
+Loại proxy này hữu ích khi cần duy trì phiên làm việc ổn định trong thời gian ngắn, và cũng phù hợp để quản lý tài khoản.
+
+### Proxy xoay
+
+Proxy xoay tự động gán một địa chỉ IP mới từ một nhóm proxy (proxy pool).
+
+Việc xoay IP có thể diễn ra:
+
+- ở mỗi yêu cầu
+- sau khi một phiên kết thúc
+- sau một khoảng thời gian định sẵn
+
+Loại proxy này thường được dùng để thu thập dữ liệu (scraping) với khối lượng lớn. Nhìn chung, bạn vẫn có thể dùng proxy xoay để quản lý tài khoản nếu chúng giữ nguyên IP trong suốt phiên làm việc.
+
+### Nên chọn loại nào cho từng nền tảng?
+
+| Nền tảng | Loại proxy được khuyên dùng | Lý do |
+| --- | --- | --- |
+| LinkedIn | Residential tĩnh hoặc mobile | Việc đổi IP sẽ kích hoạt kiểm tra bảo mật ngay lập tức |
+| Facebook / Meta Ads | Residential tĩnh hoặc sticky | Tài khoản quảng cáo yêu cầu vị trí địa lý nhất quán |
+| Amazon / eBay / Etsy | ISP tĩnh | IP xoay khiến các tài khoản bị liên kết với nhau và dẫn đến bị khóa |
+| TikTok (tài khoản mới) | Mobile | IP mobile có độ tin cậy cao nhất khi tạo tài khoản |
+| Web scraping | Residential xoay hoặc datacenter | Tốc độ và khối lượng quan trọng hơn sự nhất quán |
+| Nền tảng cá cược | Mobile | Mức độ tin cậy cao nhất, các nền tảng này kiểm soát rất gắt đối với dấu vân tay trên máy tính |
+
+<Warning>
+  Dùng proxy xoay cho tài khoản người bán Amazon là một sai lầm phổ biến và có thể dẫn đến việc tài khoản bị khóa. Amazon liên kết các tài khoản qua IP - nếu IP của bạn thay đổi liên tục, nhiều tài khoản có thể bị đánh dấu là có liên quan đến nhau.
+</Warning>
+
+Xem thêm
+
+- [Proxy Gologin là gì](https://gologin.com/docs/proxy/gologin-proxies/what-are-gologin-proxies) — Proxy tích hợp sẵn của Gologin mặc định là proxy xoay
+- [Proxy tốt nhất cho trường hợp của bạn](https://gologin.com/docs/proxy/introduction/best-proxy-for-your-case)
+- [Amazon, eBay, Shopify](https://gologin.com/docs/amazon-e-bay-shopify) — tài khoản trên các sàn thương mại điện tử yêu cầu proxy tĩnh
+- [LinkedIn](https://gologin.com/docs/linkedin) — LinkedIn yêu cầu proxy tĩnh

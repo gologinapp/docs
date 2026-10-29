@@ -1,0 +1,89 @@
+---
+title: "Cloud Browser でプロキシを使用する"
+---
+
+Gologin Cloud Browser では、ブラウザセッションのトラフィックを柔軟なプロキシ設定でルーティングできます。Gologin 内蔵のレジデンシャルプロキシを使用することも、お持ちのプロキシを使用することも可能です。
+
+## Gologin でのプロキシの仕組み
+
+セッション単位でプロキシを設定する方式とは異なり、**Gologin ではプロキシは個々の接続ではなくプロファイルに紐付けられます**。
+
+プロファイル ID を指定して Cloud Browser セッションに接続すると、そのプロファイルに設定されているプロキシが自動的に適用されます。
+
+```text
+https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}
+```
+
+つまり、プロキシは(REST API またはダッシュボードから)一度設定するだけで、そのプロファイルを使用するすべてのセッションが常に同じプロキシ経由で通信します。接続のたびにプロキシの認証情報を渡す必要はありません。
+
+> セッション開始時にプロファイルのプロキシに接続できない場合、接続はプロキシのタイムアウトエラーで失敗します。自動化を実行する前に、プロキシが正常に動作していることを確認してください。
+
+## プロキシのオプション
+
+### Gologin 内蔵プロキシ
+
+Gologin は、地域(ジオロケーション)を指定できる独自のレジデンシャルプロキシネットワークを提供しています。内蔵プロキシは最も簡単な選択肢で、外部のプロキシプロバイダーは必要ありません。
+
+Gologin のプロキシをプロファイルに紐付けるには、[Proxies API](https://gologin.com/docs/api-reference/proxy/) を使用してプロキシを作成し、プロファイルに割り当てます。
+
+内蔵プロキシでは、国や地域を指定したジオロケーションのターゲティングが可能です。プロキシを作成する際に、`autoProxyRegion` に希望する国コードを設定してください。
+
+```json
+{
+  "mode": "geolocation",
+  "autoProxyRegion": "us"
+}
+```
+
+主な地域コード: `us`, `gb`, `de`, `fr`, `nl`, `jp`, `au`, `ca`, `br`, `in`
+
+### 独自のプロキシ
+
+サードパーティ製のプロキシも、プロファイルに紐付けて使用できます。Gologin は `http`、`https`、`socks5` のプロキシに対応しています。
+
+[Proxies API](https://gologin.com/docs/api-reference/proxy/) を使用して設定します。
+
+```json
+{
+  "mode": "http",
+  "host": "your.proxy.host",
+  "port": 10000,
+  "username": "user",
+  "password": "pass"
+}
+```
+
+プロキシはセッション開始時に検証されます。プロキシに接続できない場合、セッションは開始されません。
+
+### プロキシなし
+
+プロキシを使用せずにセッションを実行するには、プロファイルのプロキシモードを `none` に設定します。
+
+```json
+{
+  "mode": "none"
+}
+```
+
+テスト用途や、自動化サーバー自身の IP で問題ないワークフローで便利です。
+
+## API でプロキシを管理する
+
+プロキシの管理(作成、更新、削除、一覧取得、トラフィック確認)は、REST API ですべて行えます。
+
+- [Proxies API リファレンス](https://gologin.com/docs/api-reference/proxy/)
+
+## 接続前にプロキシの状態を確認する
+
+プロキシに問題があるとセッションを開始できないため、特に本番環境のワークフローでは、自動化を実行する前にプロキシを検証しておくことをおすすめします。
+
+```javascript
+const profileRes = await fetch(`https://api.gologin.com/browser/${profileId}`, {
+  headers: { Authorization: `Bearer ${token}` },
+});
+const profile = await profileRes.json();
+
+if (profile.proxy?.mode !== 'none') {
+  // optionally verify proxy reachability here before connecting
+}
+```

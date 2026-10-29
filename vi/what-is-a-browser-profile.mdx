@@ -1,0 +1,68 @@
+---
+title: "Hồ sơ trình duyệt là gì"
+---
+
+**Hồ sơ trình duyệt** (browser profile) trong Gologin là một trình duyệt ảo hoàn toàn độc lập. Nó trông và hoạt động giống hệt một trình duyệt thật được cài trên máy tính thật - nhưng nằm bên trong Gologin và có thể được tạo, lưu, chuyển đổi hoặc xóa chỉ trong vài giây.
+
+Mỗi hồ sơ có riêng:
+
+- [Vân tay](/vi/how-browser-fingerprints-work) trình duyệt độc nhất (sẽ nói rõ hơn ở phần bên dưới)
+- Cookie và bộ nhớ cục bộ (local storage)
+- Lịch sử duyệt web
+- Mật khẩu đã lưu và tiện ích mở rộng
+- Kết nối proxy
+
+Khi bạn mở một hồ sơ, các trang web sẽ nhìn nhận đó là một người hoàn toàn khác đang truy cập từ một thiết bị khác. Khi bạn đóng hồ sơ, mọi thứ được lưu lại đúng như lúc bạn rời đi.
+
+## Vì sao điều này quan trọng? Tìm hiểu về vân tay trình duyệt
+
+Trước khi tìm hiểu sâu hơn về hồ sơ, bạn cần nắm một khái niệm: **vân tay trình duyệt** (browser fingerprint).
+
+Mỗi lần bạn truy cập một trang web, trình duyệt của bạn âm thầm gửi đi hàng chục tín hiệu kỹ thuật về thiết bị và cấu hình của bạn. Chẳng hạn như:
+
+- Trình duyệt bạn đang dùng và phiên bản của nó
+- Hệ điều hành của bạn
+- Độ phân giải màn hình
+- Các phông chữ được cài trên máy tính
+- Múi giờ và ngôn ngữ của bạn
+- Cách card đồ họa của bạn hiển thị hình ảnh
+- Bạn có đang dùng màn hình cảm ứng hay không
+
+Các trang web thu thập tất cả những tín hiệu này và kết hợp chúng thành một "vân tay" duy nhất để nhận diện bạn — ngay cả khi bạn xóa cookie, dùng VPN hoặc mở cửa sổ ẩn danh.
+
+<Note>
+  Chế độ ẩn danh chỉ giấu lịch sử duyệt web của bạn khỏi những người khác dùng chung máy tính. Nó **không** giấu vân tay trình duyệt của bạn khỏi các trang web. Mỗi cửa sổ ẩn danh vẫn trông giống hệt trình duyệt thông thường của bạn đối với thế giới bên ngoài.
+</Note>
+
+Đó là lý do việc chỉ dùng nhiều tài khoản trong các tab khác nhau không hiệu quả. Tất cả các tab đó dùng chung một vân tay, và các trang web có thể nhận ra chúng đều thuộc về cùng một người.
+
+## Hồ sơ Gologin giải quyết vấn đề này như thế nào
+
+Khi bạn tạo một hồ sơ trình duyệt trong Gologin, ứng dụng sẽ dựng nên từ đầu một danh tính trình duyệt hoàn chỉnh, giả lập nhưng đáng tin cậy.
+
+Gologin tạo ra các giá trị chân thực cho mọi thông số vân tay - kích thước màn hình hợp lý, bộ phông chữ đáng tin, múi giờ nhất quán, chuỗi user agent phù hợp, v.v. Tất cả các giá trị này được lưu trong hồ sơ và được hiển thị cho mọi trang web bạn truy cập khi dùng hồ sơ đó.
+
+## Cách lưu trữ hồ sơ
+
+Gologin lưu trữ các hồ sơ của bạn trên đám mây. Điều này có nghĩa là:
+
+- Bạn có thể mở bất kỳ hồ sơ nào từ bất kỳ máy tính nào có cài Gologin
+- Hồ sơ vẫn được giữ nguyên nếu máy tính của bạn gặp sự cố hoặc được thay mới
+- Bạn có thể chia sẻ hồ sơ với đồng đội, và họ có thể dùng cùng phiên đã lưu mà không cần đăng nhập lại
+
+## Sự khác biệt giữa hồ sơ và cửa sổ ẩn danh
+
+|  | Cửa sổ ẩn danh | Hồ sơ Gologin |
+| --- | --- | --- |
+| Ẩn lịch sử duyệt web trên máy | ✅ | ✅ |
+| Xóa cookie khi đóng | ✅ | ❌ (cookie được lưu lại) |
+| Thay đổi vân tay trình duyệt của bạn | ❌ | ✅ |
+| Thay đổi địa chỉ IP của bạn | ❌ | ✅ (khi dùng proxy) |
+| Có thể lưu và mở lại | ❌ | ✅ |
+| Trông như một thiết bị khác | ❌ | ✅ |
+
+Chế độ ẩn danh là công cụ bảo vệ quyền riêng tư trên thiết bị cục bộ của bạn. Hồ sơ Gologin là một danh tính thay thế hoàn chỉnh trên internet.
+
+## Tóm tắt
+
+Hồ sơ trình duyệt trong Gologin là một trình duyệt ảo đã được lưu, có vân tay, cookie và proxy riêng. Khi mở một hồ sơ, bạn trông như một người hoàn toàn khác trên một thiết bị khác trong mắt mọi trang web bạn truy cập. Khi đóng hồ sơ, phiên làm việc của bạn được lưu lại để bạn có thể quay lại bất cứ lúc nào. Nhờ đó, bạn có thể quản lý nhiều danh tính trực tuyến tách biệt từ một máy tính duy nhất - gọn gàng, an toàn, và không để các tài khoản bị liên kết với nhau hay truy ngược về bạn.

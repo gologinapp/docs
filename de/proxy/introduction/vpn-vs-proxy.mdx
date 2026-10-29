@@ -1,0 +1,63 @@
+---
+title: "Warum kein VPN für Profile verwenden?"
+---
+
+Viele verwechseln VPNs und Proxys, weil beide Ihre sichtbare IP-Adresse ändern. Sie funktionieren jedoch unterschiedlich, und für die Arbeit mit mehreren Accounts ist dieser Unterschied sehr wichtig.
+
+|  | VPN | Proxy |
+| :-- | :-- | :-- |
+| Ändert Ihre IP | ✅ | ✅ |
+| Ändert den Browser-Fingerprint | ❌ | ❌ |
+| Eine IP für das ganze Gerät | ✅ | ❌ |
+| Eine IP pro Browserprofil | ❌ | ✅ |
+| Funktioniert in Gologin | ❌ | ✅ |
+| Von Facebook / LinkedIn erkannt | Oft | Selten (Residential) |
+
+## So funktioniert ein VPN
+
+Ein VPN verschlüsselt den gesamten Datenverkehr Ihres Geräts und leitet ihn über einen einzigen Server. Jede App auf Ihrem Computer – Browser, Slack, Spotify, einfach alles – verwendet dieselbe IP-Adresse.
+
+Das ist nützlich für den Datenschutz und zum Umgehen von Geoblocking. Für die Arbeit mit mehreren Accounts führt es jedoch zu zwei Problemen:
+
+**Problem 1 – Eine IP für alles.** Wenn Sie 10 Browserprofile haben, scheinen alle von derselben IP-Adresse zu kommen. Plattformen wie Facebook und LinkedIn sehen mehrere Accounts von einem Standort und verknüpfen sie miteinander.
+
+**Problem 2 – Ein VPN ändert Ihren Browser-Fingerprint nicht.** Plattformen erfassen weit mehr als die IP. Sie lesen Ihre Bildschirmauflösung, Schriftarten, Grafikkarte, Zeitzone und Dutzende weitere Merkmale aus. Ein VPN ändert nichts davon. Gologin-Profile ändern alles davon.
+
+## So funktioniert ein Proxy
+
+Ein Proxy wird einem bestimmten Browserprofil zugewiesen. Der Datenverkehr dieses Profils läuft über den Proxy – alles andere auf Ihrem Computer bleibt unberührt.
+
+Das bedeutet:
+
+- Profil A → Proxy in New York → wirkt wie ein echtes Gerät in New York
+- Profil B → Proxy in London → wirkt wie ein völlig anderes Gerät in London
+- Ihr echter Computer → kein Proxy → Ihre normale IP
+
+Jedes Profil erhält seine eigene Netzwerkidentität. In Kombination mit dem einzigartigen Fingerprint, den Gologin für jedes Profil erzeugt, sehen Plattformen tatsächlich getrennte Geräte.
+
+## Warum VPNs für die Verwaltung mehrerer Accounts nicht geeignet sind
+
+Ein VPN ist für Plattformen außerdem leichter zu erkennen als ein Residential-Proxy. IP-Adressen von VPN-Servern sind allgemein bekannt und stehen auf Sperrlisten. Viele Plattformen (Facebook, LinkedIn, PayPal, die meisten Wettseiten) blockieren oder markieren VPN-IPs ausdrücklich.
+
+## Wann ein VPN trotzdem sinnvoll ist
+
+Ein VPN ist in folgenden Fällen eine gute Wahl:
+
+- Sie möchten auf eine Website zugreifen, die in Ihrem Land durch Geoblocking gesperrt ist
+- Sie möchten Ihre echte IP in öffentlichen WLANs schützen
+- Sie möchten einen einzelnen Account aus einem anderen Land nutzen
+- Sie haben Probleme, sich aus Ihrem Netzwerk mit Gologin-Diensten oder Proxys zu verbinden
+
+Ein VPN ist kein Ersatz für Proxys in Gologin.
+
+## Einen Proxy in Gologin einrichten
+
+Eine Schritt-für-Schritt-Anleitung finden Sie unter [Einen Proxy zu einem Profil hinzufügen](https://gologin.com/docs/proxy/proxy-management/adding-proxies).
+
+Sie sind sich nicht sicher, welchen Proxy-Typ Sie wählen sollen? Lesen Sie [Der beste Proxy für Ihren Anwendungsfall.](https://gologin.com/best-proxy-server-services/)
+
+## Siehe auch
+
+[Was ist ein Proxy](https://gologin.com/docs/proxy/introduction/what-is-a-proxy) – ausführlichere Erklärung, wie Proxys funktionieren
+
+[Integrierte Gologin-Proxys — Einschränkungen](https://gologin.com/docs/proxy/gologin-proxies/what-are-gologin-proxies#important-gologin-proxies-are-rotating) – wann Sie die integrierten Proxys nicht verwenden sollten

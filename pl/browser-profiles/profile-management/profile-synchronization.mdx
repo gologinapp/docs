@@ -1,0 +1,40 @@
+---
+title: "Synchronizacja profili"
+---
+
+**Synchronizacja profili** w Gologin pozwala automatycznie zapisywać w chmurze Twoje profile przeglądarki - wraz ze wszystkimi odciskami palca (fingerprints), plikami cookie, local storage i rozszerzeniami. Dzięki temu:
+
+- Możesz **korzystać z tego samego profilu w wersji webowej lub na dowolnym urządzeniu** z zainstalowanym Gologin
+- Członkowie Twojego zespołu mogą **współpracować przy wspólnych profilach**
+- Profile pozostają **spójne**, niezależnie od tego, skąd je uruchomisz
+
+## Jak działa synchronizacja
+
+Gdy profil zostanie poprawnie zamknięty, Gologin przesyła najnowsze dane profilu na serwery w chmurze. Przy następnym uruchomieniu profilu zapisany stan zostaje przywrócony. Dzięki temu dane sesji, pliki cookie i stan przeglądarki pozostają spójne.
+
+## Jak bezpiecznie korzystać z profili
+
+- **Przed wyłączeniem upewnij się, że synchronizacja została zakończona.**\
+  Status powinien wskazywać **ready**, a przycisk **Run** przy profilu powinien być aktywny - oznacza to, że dane profilu zostały zsynchronizowane.
+- **Zamknij profile przed wyłączeniem komputera lub zamknięciem aplikacji.**\
+  Zamknij profile, **zamykając okno profilu** lub klikając **Stop** w aplikacji, aby zakończyć synchronizację.
+- **Nie używaj jednego profilu na różnych urządzeniach jednocześnie.**\
+  Chociaż jest to możliwe, nie jest to zalecane: tylko jeden z jednocześnie uruchomionych profili może zostać zsynchronizowany z serwerami w chmurze. Może to prowadzić do rozbieżności między tym, co zostaje zapisane w profilu, a tym, czego oczekuje strona internetowa, co z kolei może obniżyć Twój trust score.
+- **Nie zamykaj profilu, gdy nie masz połączenia z internetem.**\
+  Jeśli synchronizacja nie zostanie zakończona, możesz utracić bieżące postępy i będziesz musiał odzyskać dane z poprzednich sesji.
+
+<Frame>
+  ![Profile Sync Wait For Ready](/images/profile_sync_wait_for_ready.gif)
+</Frame>
+
+## Zasady bezpiecznej synchronizacji
+
+Aby dane profilu pozostały nienaruszone, przestrzegaj poniższych zasad:
+
+- Przed zamknięciem aplikacji upewnij się, że synchronizacja została zakończona
+- Poczekaj, aż status profilu zmieni się na Ready
+- Zawsze zamykaj profile przed wyłączeniem komputera
+- Nie uruchamiaj tego samego profilu na kilku urządzeniach jednocześnie
+- Unikaj zamykania profili, gdy połączenie z internetem jest niestabilne
+
+Jednoczesne uruchamianie tego samego profilu na różnych urządzeniach może powodować niespójności w zapisanych danych sesji.

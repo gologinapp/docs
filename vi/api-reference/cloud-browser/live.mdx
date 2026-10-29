@@ -1,0 +1,51 @@
+---
+title: "Session Live View"
+---
+
+Session Live View cho phép bạn mở một phiên Cloud Browser đang chạy trong một tab trình duyệt thông thường, để kiểm tra phiên có đang hoạt động hay không và xem hồ sơ đang làm gì theo thời gian thực.
+
+Bạn có thể bắt đầu các phiên đám mây theo một trong hai cách:
+
+- từ mã tự động hóa của bạn (Puppeteer / Playwright), hoặc
+- trực tiếp từ giao diện Gologin (tab Cloud Browser).
+
+## Bắt đầu một phiên từ giao diện Gologin
+
+1. Mở **Các mục hồ sơ** trong ứng dụng web Gologin - [https://app.gologin.com/profileList](https://app.gologin.com/profileList)
+2. Chọn một hồ sơ.
+3. Nhấp vào **Chạy**.
+
+Khi phiên bắt đầu, bạn có thể mở Live View để theo dõi trình duyệt đang chạy.
+
+<video src="/videos/0305.mp4" controls={true} />
+
+## Định dạng URL của Live View
+
+Bạn có thể mở một phiên đang chạy bằng URL có dạng như sau:
+
+`https://cloudbrowser.gologin.com/browsers/<profileId>/<sessionId-or-view-token>/`
+
+- `<profileId>` — hồ sơ được dùng cho phiên
+- `<sessionId-or-view-token>` — mã định danh duy nhất của phiên đang chạy đó (session id hoặc view token)
+
+> Hãy coi URL này là thông tin nhạy cảm khi phiên đang hoạt động.
+
+## Khi nào nên dùng Live View
+
+- Gỡ lỗi các luồng tự động hóa (điều hướng, nhấp chuột, selector, timeout)
+- Xác minh rằng phiên đám mây đã thực sự khởi động
+- Quan sát giao diện trình duyệt khi một trang web hoạt động bất thường
+- Xác nhận hồ sơ nào đang được dùng cho phiên đang chạy
+
+## Lưu ý
+
+- Live View chỉ khả dụng khi phiên đang chạy.
+- Việc đóng kết nối tự động hóa có thể kết thúc phiên (tùy thuộc vào quy trình làm việc và giới hạn của gói bạn dùng).
+- Để cấu hình có thể lặp lại (proxy, fingerprint, v.v.), hãy cấu hình hồ sơ thông qua REST API:
+  - Profiles API: [https://gologin.com/docs/api-reference/profile](https://gologin.com/docs/api-reference/profile)
+  - Proxy API: [https://gologin.com/docs/api-reference/proxy](https://gologin.com/docs/api-reference/proxy)
+
+## Các bước tiếp theo
+
+- Cloud Browser → Bắt đầu: [https://gologin.com/docs/api-reference/cloud-browser/getting-started](https://gologin.com/docs/api-reference/cloud-browser/getting-started)
+- Giải pháp thu thập dữ liệu: [https://gologin.com/docs/api-reference/cloud-browser/scraping](https://gologin.com/docs/api-reference/cloud-browser/scraping)

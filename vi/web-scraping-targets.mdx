@@ -1,0 +1,84 @@
+---
+title: "Mục tiêu web scraping"
+---
+
+Gologin hoạt động như một trình duyệt scraping — thay vì dùng trình duyệt headless với fingerprint chung chung, scraper của bạn chạy qua các profile tách biệt trông giống người dùng thật. Cách này giúp giảm đáng kể tỷ lệ bị phát hiện trên những trang web nhận diện trình duyệt bằng fingerprint, chứ không chỉ chặn theo IP.
+
+## Danh sách kiểm tra nhanh
+
+- 1 phiên scraping = 1 profile trình duyệt
+- Chọn loại proxy dựa trên mức độ bảo vệ của trang web mục tiêu
+- Dùng lại profile giữa các phiên để giữ cookie và trạng thái phiên
+- Kiểm soát tốc độ gửi request — scraper bị chặn do hành vi, không chỉ do IP
+- Khi chạy quy mô lớn (50\+ phiên đồng thời): hãy dùng Gologin API, không dùng ứng dụng desktop
+
+## Chọn cách thiết lập
+
+### Scraping thủ công (ứng dụng desktop Gologin)
+
+Phù hợp cho: thu thập dữ liệu quy mô nhỏ, các trang yêu cầu đăng nhập, quy trình có sự hỗ trợ thủ công. Mở profile từ ứng dụng Gologin và scrape ngay trong cửa sổ trình duyệt.
+
+### Scraping qua API (Puppeteer / Playwright / Selenium)
+
+Phù hợp cho: quy trình tự động, 10\+ phiên đồng thời, scraping theo lịch. Gologin khởi chạy profile và trả về một WebSocket endpoint để script tự động hóa của bạn kết nối vào.
+
+Xem API [Quickstart ](https://gologin.com/docs/api-reference/introduction/quickstart)để biết cách thiết lập đầy đủ.
+
+## Bước 1. Chọn chiến lược proxy
+
+| **Mục tiêu** | **Proxy khuyến nghị** | **Ghi chú** |
+| :-- | :-- | :-- |
+| Trang web bảo vệ thấp | Datacenter xoay vòng | Nhanh và rẻ |
+| Trang web bảo vệ trung bình | Residential xoay vòng | Điểm tin cậy tốt hơn |
+| Bảo vệ cao (Cloudflare, PerimeterX) | Residential xoay vòng | Bắt buộc |
+| Trang web yêu cầu đăng nhập / giữ trạng thái tài khoản | Residential tĩnh | Giữ phiên làm việc nhất quán |
+| So sánh giá, sàn thương mại điện tử | Residential xoay vòng | Mỗi request một IP khác nhau |
+
+## Bước 2. Quản lý phiên và cookie
+
+Profile Gologin tự động lưu cookie giữa các phiên — bạn chỉ cần đăng nhập một lần, profile sẽ giữ trạng thái đã xác thực. Tránh xóa cookie sau mỗi lần chạy — việc này làm đứt mạch phiên và trông giống hành vi của bot.
+
+## Bước 3. Kiểm soát mẫu request
+
+Việc bị phát hiện chủ yếu liên quan đến hành vi, không chỉ IP. Hướng dẫn thực tế về thời gian chờ:
+
+| **Cường độ scraping** | **Độ trễ giữa các request** |
+| :-- | :-- |
+| Nhẹ (tránh bị phát hiện) | 3–8 giây, ngẫu nhiên |
+| Trung bình | 1–3 giây, ngẫu nhiên |
+| Mạnh (nguy cơ bị chặn cao) | 0.5–1 giây |
+
+Hãy luôn ngẫu nhiên hóa độ trễ — khoảng thời gian cố định là một tín hiệu để bị phát hiện.
+
+## Bước 4. Mở rộng với nhiều profile
+
+Để scraping song song, hãy khởi chạy đồng thời nhiều profile qua API. Kiểm tra Rate Limits trước khi khởi chạy nhiều profile — giới hạn API sẽ được áp dụng.
+
+### **Giới hạn thực tế theo gói**
+
+- Professional: tối đa khoảng 10 profile đồng thời một cách thoải mái
+- Business: tối đa khoảng 30 profile đồng thời
+- Enterprise: 100\+ profile đồng thời
+
+Phần cứng cũng là một giới hạn — mỗi profile là một phiên bản trình duyệt. 10 profile đồng thời cần khoảng 8–16 GB RAM.
+
+## Cloudflare và các hệ thống chống bot
+
+Gologin xử lý các thử thách về fingerprint trình duyệt (Canvas, WebGL, TLS fingerprint). Gologin không tự động giải CAPTCHA. Nếu trang web mục tiêu dùng Cloudflare kèm CAPTCHA, hãy tích hợp dịch vụ giải CAPTCHA (2captcha, CapSolver, Anti-Captcha) vào script scraping của bạn.
+
+## Các tín hiệu phát hiện phổ biến
+
+- Thời gian giữa các request giống hệt nhau
+- Không có sự kiện cuộn trang hoặc di chuyển chuột trước khi click
+- Truy cập trực tiếp vào các URL sâu mà không có referrer
+- Fingerprint Canvas hoặc WebGL không khớp với hệ điều hành/trình duyệt được khai báo
+
+## Xem thêm
+
+- [API Quickstart](https://gologin.com/docs/api-reference/introduction/quickstart)
+- [Headless mode](https://gologin.com/docs/api-reference/introduction/headless)
+- [Rate Limits](https://gologin.com/docs/api-reference/limitations/rate-limits)
+- [Proxy tốt nhất cho trường hợp của bạn](https://gologin.com/docs/proxy/introduction/best-proxy-for-your-case)
+- [Proxy tĩnh và proxy xoay vòng](https://gologin.com/docs/static-vs-dynamic-proxies)
+
+\

@@ -1,0 +1,235 @@
+---
+title: "面向 AI Agent 的 Gologin"
+description: "通过 Gologin 为你的 AI Agent 提供可靠的网页访问能力——网页抓取、浏览器自动化和持久会话"
+---
+
+Gologin 为 AI Agent 提供了可靠访问网络所需的三项能力:
+
+1. **读取网页**——通过 Web Unlocker 抓取任意页面,包括大量依赖 JS 的页面和有防护的网站
+2. **与网页交互**——通过 云浏览器 打开真实的浏览器会话,支持点击、输入、页面跳转和持久化 Cookie
+3. **保持不被检测**——防检测指纹、住宅代理以及基于配置文件的身份管理
+
+这些能力可以通过多个集成层级使用,请选择最适合你技术栈的方式。
+
+---
+
+## 集成方式
+
+<CardGroup cols={2}>
+  <Card title="MCP Server" icon="plug" href="/zh/api-reference/ai-integrations/mcp-server">
+    将 Gologin 连接到 Claude Desktop、Cursor 或任意 MCP 客户端,通过自然语言管理配置文件和会话。
+  </Card>
+  <Card title="AI Skills" icon="wand-magic-sparkles" href="/zh/api-reference/ai-integrations/ai-skills">
+    适用于 Claude Code 的即插即用扩展。安装一个 Skill,你的 Agent 即可开箱使用网页抓取和浏览器自动化功能。
+  </Card>
+  <Card title="CLI 工具" icon="terminal" href="/zh/cli-tools/web-access">
+    供 AI Agent 直接调用的 Shell 命令。抓取、浏览、交互,无需编写代码。提供三个适用于不同工作流的 CLI。
+  </Card>
+  <Card title="SDK + 云浏览器 API" icon="code" href="/zh/api-reference/cloud-browser/getting-started">
+    完整的编程控制能力。使用连接到 Gologin 云浏览器 的 Puppeteer/Playwright 构建自定义 Agent 工具。
+  </Card>
+</CardGroup>
+
+---
+
+## 如何选择工具
+
+| 我想要…… | 使用 |
+|---|---|
+| 在 Claude Desktop / Cursor 中管理配置文件 | [MCP Server](/zh/api-reference/ai-integrations/mcp-server) |
+| 无需任何配置,让 Claude Code 具备网页访问能力 | [AI Skills](/zh/api-reference/ai-integrations/ai-skills) |
+| 抓取页面、爬取网站、批量提取数据 | [Web Access CLI](/zh/cli-tools/web-access) |
+| 打开云浏览器、点击、输入、截图 | [Agent Browser CLI](/zh/cli-tools/agent-browser) |
+| 预热本地配置文件、运行登录流程 | [Local Agent Browser CLI](/zh/cli-tools/local-agent-browser) |
+| 使用 Puppeteer/Playwright 构建自定义工具 | [云浏览器 API](/zh/api-reference/cloud-browser/getting-started) |
+| 在自己的代码中调用抓取 API | [Web Unlocker SDK](/zh/scraping-api-sdk-and-cli) |
+
+---
+
+## 整体架构
+
+```
+┌─────────────────────────────────────────────────┐
+│                  AI Agent                        │
+│         (Claude, Codex, custom agent)            │
+└──────┬──────────┬──────────┬────────────────────┘
+       │          │          │
+  MCP Server   AI Skills   CLI Tools / SDK
+       │          │          │
+       └──────────┴──────────┘
+                  │
+    ┌─────────────┴─────────────┐
+    │                           │
+Web Unlocker              Cloud Browser
+(stateless scraping)    (stateful sessions)
+    │                           │
+    └─────────────┬─────────────┘
+                  │
+          Gologin Infrastructure
+    (proxies, fingerprints, profiles)
+```
+
+- **Web Unlocker** 负责无状态的读取与提取——发送一个 URL,返回渲染后的 HTML
+- **云浏览器** 负责有状态的交互——打开会话、点击、输入、跳转页面并保留 Cookie
+- **本地 Orbita** 负责持久化的本地配置文件——预热、登录流程以及社交/电商平台操作
+
+三者共用同一套 Gologin 基础设施:住宅代理、防检测指纹和配置文件管理。
+
+---
+
+## 典型应用场景
+
+### 市场调研与竞争情报
+
+一个 AI Agent 可以每天自动监控数十个网站上的竞品价格、产品发布和内容变化。Agent 通过 Web Unlocker 抓取竞品页面,提取结构化数据,与昨天的快照进行对比,并生成每日摘要。整个过程无需浏览器会话,只需大规模的无状态提取。
+
+```bash
+# scrape 20 competitor pricing pages and get structured output
+gologin-web-access batch-scrape \
+  https://competitor1.com/pricing \
+  https://competitor2.com/pricing \
+  https://competitor3.com/pricing \
+  --format json --summary --output ./today-prices.json
+
+# detect what changed since last check
+gologin-web-access batch-change-track \
+  https://competitor1.com/pricing \
+  https://competitor2.com/features \
+  --format markdown --output ./changes.json
+```
+
+### 潜在客户开发与信息补全
+
+抓取企业名录、LinkedIn 公司页面和评价网站,然后将 HTML 交给 Claude,提取姓名、邮箱、电话号码、公司规模和技术栈等信息。它可以作为 AI Agent 循环中的一个工具:由 Agent 决定要抓取哪些页面,调用工具,并获得结构化数据。
+
+```bash
+# search for leads
+gologin-web-access search "saas companies series A 2026" --limit 20
+
+# scrape and extract structured data from each result
+gologin-web-access extract https://example.com/company/123 --schema ./lead-schema.json
+```
+
+### 多账号管理
+
+运行 50 个以上的社交媒体账号、广告账号或电商平台卖家账号,每个账号都拥有独立的浏览器配置文件、指纹、代理和 Cookie。Local Agent Browser 负责管理这些配置文件,通过 runbook 对其进行预热,并在多次 Agent 调用之间保持会话有效。
+
+```bash
+# create profiles for each account
+gologin-local-agent-browser profile-create "FB Ads Account 1" --template ads
+gologin-local-agent-browser profile-create "FB Ads Account 2" --template ads
+
+# warm up profiles in batch
+gologin-local-agent-browser batch ./warmup-runbook.json \
+  --targets ./all-profiles.json --concurrency 5
+```
+
+### 自动填写表单与数据录入
+
+一个 AI Agent 可以登录内部仪表板、填写表单、提交报告并下载导出文件,这一切都通过真实的云浏览器会话完成。Agent 以快照形式读取页面,通过 ref 找到正确的字段,输入内容,点击提交,并验证结果。
+
+```bash
+gologin-agent-browser open https://internal-dashboard.com/login --profile my_profile
+gologin-agent-browser snapshot
+gologin-agent-browser fill @e3 "username"
+gologin-agent-browser fill @e5 "password"
+gologin-agent-browser click @e7    # submit button
+gologin-agent-browser wait 2000
+gologin-agent-browser snapshot     # verify login success
+gologin-agent-browser screenshot ./logged-in.png
+```
+
+### 内容监控与告警
+
+跟踪政府法规页面、竞品博客、招聘网站,或任何对你的业务重要的页面的变化。通过 cron 或定时 Agent 每天运行,与上一版本进行对比,并在出现重要变化时发出告警。
+
+```bash
+# track changes on key pages
+gologin-web-access change-track https://regulations.gov/new-rules --format markdown
+gologin-web-access batch-change-track \
+  https://competitor.com/blog \
+  https://competitor.com/changelog \
+  --output ./changes.json
+```
+
+### AI 驱动的网页抓取流水线
+
+构建端到端的流水线:爬取文档网站,转换为 Markdown,再输入 LLM 进行摘要或问答。使用 CLI 完成提取,LLM 部分则使用你自己的代码。
+
+```bash
+# crawl an entire docs site
+gologin-web-access crawl https://docs.example.com \
+  --format markdown --limit 100 --max-depth 3 --only-main-content \
+  --output ./docs-corpus.json
+
+# or map the site first, then selectively scrape
+gologin-web-access map https://docs.example.com --limit 200
+gologin-web-access batch-scrape url1 url2 url3 --format text --output ./selected.json
+```
+
+### 地域测试与本地化 QA
+
+检查你的网站在不同国家/地区的显示效果。通过配置了不同地区代理的配置文件打开同一个 URL,截图并进行对比。
+
+```bash
+# create geo-specific profiles
+gologin-local-agent-browser profile-create "US Test" --template geo --proxy-country us
+gologin-local-agent-browser profile-create "DE Test" --template geo --proxy-country de
+gologin-local-agent-browser profile-create "JP Test" --template geo --proxy-country jp
+
+# screenshot from each location
+gologin-agent-browser open https://yoursite.com --profile us_profile_id
+gologin-agent-browser screenshot ./us-view.png
+gologin-agent-browser close
+```
+
+---
+
+## 快速入门示例
+
+### 抓取页面(CLI)
+
+```bash
+npm install -g gologin-web-access
+export GOLOGIN_WEB_UNLOCKER_API_KEY="wu_..."
+
+gologin-web-access read https://example.com
+```
+
+### 打开云浏览器(CLI)
+
+```bash
+npm install -g gologin-agent-browser-cli
+export GOLOGIN_TOKEN='your_token'
+
+gologin-agent-browser open https://example.com
+gologin-agent-browser snapshot
+gologin-agent-browser click @e3
+gologin-agent-browser close
+```
+
+### 安装 AI Skill(Claude Code)
+
+```bash
+npx skills add GologinLabs/gologin-web-access-skill
+```
+
+然后只需让 Claude Code 抓取某个页面或与某个网站交互,其余的工作由 Skill 完成。
+
+### 连接 MCP(Claude Desktop)
+
+添加到 `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "gologin-mcp": {
+      "command": "npx",
+      "args": ["gologin-mcp"],
+      "env": { "API_TOKEN": "your-token" }
+    }
+  }
+}
+```
+
+然后对 Claude 说:“创建一个使用美国代理的新浏览器配置文件。”

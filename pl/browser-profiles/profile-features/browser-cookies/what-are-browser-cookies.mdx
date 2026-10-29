@@ -1,0 +1,48 @@
+---
+title: "Czym są pliki cookie w przeglądarce"
+---
+
+**Pliki cookie** to małe pliki danych tworzone przez strony internetowe i przechowywane w Twojej przeglądarce.
+
+Pliki cookie zazwyczaj zawierają:
+
+- Tokeny sesji logowania
+- Dane uwierzytelniania „Zapamiętaj mnie”
+- Ustawienia języka i regionu
+- Dane koszyka zakupowego
+- Identyfikatory śledzące
+- Sygnały zaufania stosowane w systemach antyfraudowych
+
+Podczas pracy z wieloma kontami pliki cookie często decydują o tym, czy strona uzna Twoją sesję za zaufaną, czy podejrzaną.
+
+## Jak pliki cookie działają w Gologin
+
+Każdy profil Gologin:
+
+- Ma własny, odizolowany magazyn plików cookie
+- Nie udostępnia plików cookie innym profilom
+- Synchronizuje pliki cookie z chmurą po prawidłowym zamknięciu profilu
+- Przywraca pliki cookie przy ponownym uruchomieniu profilu
+
+Dzięki temu każdy profil zachowuje się jak oddzielne fizyczne urządzenie, pod warunkiem że dla każdego profilu używasz innego proxy.
+
+## Spójność proxy i fingerprintu
+
+Same pliki cookie nie gwarantują dostępu do konta.
+
+Aby import plików cookie zakończył się powodzeniem:
+
+- Użyj tego samego proxy lub proxy o spójnej lokalizacji geograficznej
+- Dopasuj strefę czasową do adresu IP
+- Unikaj poważnych zmian fingerprintu
+- Nie łącz plików cookie z urządzeń mobilnych z fingerprintami komputerów stacjonarnych
+
+Jeśli kraj adresu IP lub fingerprint urządzenia zmieni się znacząco, strony mogą unieważnić sesję.
+
+## Najlepsze praktyki
+
+- Zawsze zamykaj profile prawidłowo, aby pliki cookie zostały zsynchronizowane
+- Utrzymuj spójną lokalizację geograficzną proxy
+- Eksportuj pliki cookie przed wprowadzeniem większych zmian
+- Najpierw testuj importy na mniej istotnych kontach
+- Unikaj częstej wymiany plików cookie na dobrze ugruntowanych kontach

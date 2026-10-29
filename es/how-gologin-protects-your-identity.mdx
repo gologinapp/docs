@@ -1,0 +1,44 @@
+---
+title: "Cómo Gologin protege tu identidad"
+---
+
+Gologin protege tu identidad mediante la creación de perfiles de navegador independientes que se comportan como dispositivos distintos.
+
+Cada perfil tiene su propia huella digital (fingerprint), dirección IP, cookies y datos de sesión. Esto evita que las plataformas puedan vincular varias cuentas entre sí.
+
+## Mecanismos clave
+
+- **Perfiles aislados** - Cada perfil se ejecuta en su propio entorno. No se comparten cookies, almacenamiento ni datos entre perfiles.
+- **Simulación de fingerprint** - Gologin asigna parámetros realistas de navegador y dispositivo, de modo que cada perfil parezca el de un usuario común.
+- **Proxy alineado** - Cada perfil puede usar su propio proxy, con una dirección IP, ubicación y configuración de dispositivo que coincidan entre sí.
+- **Sesiones persistentes** - Los datos del perfil se guardan entre sesiones, lo que permite que los sitios web reconozcan el perfil como un usuario recurrente.
+- **Coherencia del entorno** - Los perfiles se mantienen estables con el tiempo, lo que ayuda a generar confianza y reduce las verificaciones adicionales.
+
+## Por qué es importante
+
+La mayoría de las plataformas evalúan a los usuarios a partir de una combinación de fingerprint, dirección IP y comportamiento.
+
+Si estas señales no son coherentes, las plataformas pueden:
+
+- solicitar una verificación adicional
+- restablecer las sesiones
+- reducir la confianza en la cuenta
+
+Gologin mantiene estos elementos alineados dentro de cada perfil, para que la actividad parezca coherente y natural.
+
+## Errores comunes
+
+Evita estos problemas habituales:
+
+- Usar un mismo proxy para varias cuentas
+- Iniciar sesión en varias cuentas dentro del mismo perfil
+- Cambiar la configuración del fingerprint después de iniciar sesión
+- Usar proxies de baja calidad o que no coincidan con el perfil
+- Cambiar de ubicación o de dispositivo con demasiada frecuencia
+
+Ver también
+
+- [Cómo funcionan las huellas digitales del navegador](https://gologin.com/docs/how-browser-fingerprints-work)
+- [Cómo mantener la puntuación de confianza](https://gologin.com/docs/maintaining-trust-score)
+- [VPN vs Proxy](https://gologin.com/docs/proxy/introduction/vpn-vs-proxy)
+- [Configuración de la huella digital del perfil](https://gologin.com/docs/profile-fingerprint-settings)

@@ -1,0 +1,13 @@
+---
+title: "An toàn dữ liệu"
+---
+
+Tại Gologin, chúng tôi áp dụng các biện pháp bảo mật hàng đầu trong ngành để bảo vệ thông tin xác thực và dữ liệu nhạy cảm của người dùng.
+
+Chúng tôi sử dụng **hàm dẫn xuất khóa Argon2**, một tiêu chuẩn hiện đại và có độ bảo mật cao, được thiết kế để chống lại các cuộc tấn công dò mật khẩu (brute-force) và tấn công dựa trên GPU mà vẫn duy trì hiệu năng tốt. Mỗi mật khẩu của người dùng được xử lý thành một khóa mật mã riêng biệt và không bao giờ được lưu trữ ở dạng ban đầu. Quan trọng hơn, chúng tôi không thể truy cập các khóa này ở bất kỳ giai đoạn nào.
+
+Do tính chất một chiều của các hàm băm mật mã, về mặt toán học, việc khôi phục mật khẩu gốc từ kết quả đã được dẫn xuất là không khả thi. Máy chủ của chúng tôi chỉ lưu trữ các giá trị băm, vì vậy mật khẩu dạng văn bản thuần không được biết đến và không thể khôi phục. Do đó, chúng tôi đặc biệt khuyến nghị người dùng lưu giữ mật khẩu của mình một cách an toàn.
+
+Trong trình duyệt Orbita, chúng tôi sử dụng **AES (Advanced Encryption Standard - Tiêu chuẩn mã hóa nâng cao)** để mã hóa an toàn dữ liệu được lưu trữ, bao gồm mật khẩu và cookie. Nhờ đó, thông tin nhạy cảm luôn được bảo vệ cả khi lưu trữ lẫn trong quá trình sử dụng.
+
+Gologin được thiết kế theo kiến trúc zero-access nghiêm ngặt: chúng tôi không có khả năng xem, chỉnh sửa hoặc xóa hồ sơ hay dữ liệu cá nhân của người dùng. Quyền truy cập chỉ có thể được cấp khi chính người dùng chủ động chia sẻ hoặc chuyển giao theo cách thủ công.

@@ -1,0 +1,371 @@
+---
+title: "Gologin Local Agent Browser CLI"
+description: "CLI thân thiện với agent để chạy các profile Gologin Orbita cục bộ với daemon, snapshot, ref, runbook và thực thi hàng loạt"
+---
+
+Gologin Local Agent Browser CLI là một CLI thân thiện với agent, dùng để chạy **các profile Gologin Orbita cục bộ** thông qua một daemon chạy liên tục và giao diện shell gọn nhẹ.
+
+CLI này giữ nguyên mô hình tương tác của [Agent Browser CLI](/vi/cli-tools/agent-browser) trên đám mây — mở một phiên, đọc snapshot, thao tác trên ref — nhưng chạy **cục bộ** trên máy của bạn bằng Gologin Orbita thay vì Cloud Browser.
+
+---
+
+## Khi nào nên dùng cục bộ, khi nào dùng đám mây
+
+| Dùng cục bộ khi | Dùng đám mây khi |
+|---|---|
+| Warmup profile | Scraping nhanh, không cần lưu trạng thái |
+| Quy trình đăng nhập tài khoản | Không có máy cục bộ để sử dụng |
+| Tích lũy cookie | Chạy nhiều phiên song song ở quy mô lớn |
+| Thao tác mạng xã hội / sàn thương mại điện tử trong một profile cố định | Các tác vụ trình duyệt dùng một lần |
+| Vòng lặp agent tái sử dụng cùng một danh tính cục bộ | Không cần lưu trạng thái profile |
+
+---
+
+## Cài đặt
+
+```bash
+npm install -g gologin-local-agent-browser-cli
+```
+
+Yêu cầu Node.js >= 20.
+
+---
+
+## Thông tin xác thực
+
+| Biến | Bắt buộc | Mô tả |
+|---|---|---|
+| `GOLOGIN_TOKEN` | Có (cho `open`) | API token của Gologin |
+| `GOLOGIN_PROFILE_ID` | Tùy chọn | ID profile mặc định |
+| `GOLOGIN_DAEMON_PORT` | Tùy chọn | Cổng của daemon (mặc định: `44778`) |
+| `GOLOGIN_HEADLESS` | Tùy chọn | `true` hoặc `false` (mặc định: `false`) |
+| `GOLOGIN_EXECUTABLE_PATH` | Tùy chọn | Đường dẫn đến tệp thực thi Orbita |
+| `GOLOGIN_TMPDIR` | Tùy chọn | Thư mục tạm/thư mục profile của Gologin |
+
+Tệp cấu hình: `~/.gologin-local-agent-browser/config.json`
+
+---
+
+## Kiến trúc
+
+Gồm hai phần:
+
+1. **CLI `gologin-local-agent-browser`** — phân tích lệnh và tự động khởi động daemon
+2. **Daemon cục bộ chạy liên tục** — khởi chạy Orbita cục bộ thông qua SDK chính thức của Gologin, kết nối đến websocket endpoint được trả về bằng Playwright `connectOverCDP` và giữ trang đang hoạt động trong bộ nhớ
+
+---
+
+## Bắt đầu nhanh
+
+```bash
+export GOLOGIN_TOKEN='your_token'
+
+# open a profile locally (visible window)
+gologin-local-agent-browser open https://example.com --profile your_profile_id
+
+# or headless
+gologin-local-agent-browser open https://example.com --profile your_profile_id --headless
+
+# read the page
+gologin-local-agent-browser snapshot
+
+# interact
+gologin-local-agent-browser click @e3
+gologin-local-agent-browser type @e5 "search terms"
+
+# save a screenshot
+gologin-local-agent-browser screenshot ./page.png
+
+# close
+gologin-local-agent-browser close
+```
+
+---
+
+## Quản lý profile
+
+Quản lý các profile Gologin trực tiếp từ CLI.
+
+| Lệnh | Mô tả |
+|---|---|
+| `profiles` | Liệt kê các profile (cục bộ, từ xa hoặc tất cả) |
+| `profile <id>` | Hiển thị thông tin chi tiết của profile |
+| `profile-create <name>` | Tạo profile mới |
+| `profile-import <id>` | Nhập một profile từ xa về máy cục bộ |
+| `profile-update <id>` | Cập nhật cài đặt profile |
+| `profile-sync <id>` | Đồng bộ profile cục bộ lên đám mây |
+| `profile-delete <id>` | Xóa profile |
+
+**Bộ lọc cho `profiles`:** `--local`, `--remote`, `--all`, `--platform <os>`, `--status <status>`, `--tag <tag>`, `--search <query>`, `--json`
+
+---
+
+## Mẫu theo trường hợp sử dụng
+
+Tạo các profile được cấu hình sẵn cho từng quy trình làm việc cụ thể:
+
+```bash
+gologin-local-agent-browser profile-create "My LinkedIn" --template linkedin
+gologin-local-agent-browser profile-create "Ad Account 1" --template ads
+gologin-local-agent-browser profile-create "Social Manager" --template smm
+```
+
+| Mẫu | Mục đích |
+|---|---|
+| `linkedin` | Profile tạo leadgen hướng đến warmup |
+| `ads` / `facebook` | Profile vận hành quảng cáo với khả năng cách ly tài khoản chặt chẽ |
+| `smm` | Profile mạng xã hội dùng chung, phục vụ việc bàn giao cookie/storage |
+| `scraping` | Profile cục bộ hướng đến tự động hóa |
+| `geo` | Profile kiểm thử theo vị trí địa lý |
+
+---
+
+## Chẩn đoán với Doctor
+
+Kiểm tra tình trạng profile, kết nối proxy và mức độ sẵn sàng cho từng trường hợp sử dụng:
+
+```bash
+# basic health check
+gologin-local-agent-browser doctor
+
+# check for a specific use case
+gologin-local-agent-browser doctor --use-case linkedin
+
+# check proxy on a profile
+gologin-local-agent-browser doctor --use-case linkedin --check-proxy your_profile_id
+```
+
+---
+
+## Runbook và thực thi hàng loạt
+
+### Runbook đơn lẻ
+
+```bash
+gologin-local-agent-browser run ./warmup.json --profile your_profile_id --name reddit-warmup
+```
+
+Định dạng runbook:
+
+```json
+{
+  "variables": { "url": "https://www.reddit.com" },
+  "steps": [
+    { "command": "open-visible", "args": ["${url}"] },
+    { "command": "wait", "args": [1500] },
+    { "command": "scroll", "args": ["down", 900] },
+    { "command": "wait", "args": [1000] },
+    { "command": "scroll", "args": ["down", 900] },
+    { "command": "close" }
+  ]
+}
+```
+
+### Thực thi hàng loạt
+
+Chạy một runbook trên nhiều profile song song:
+
+```bash
+gologin-local-agent-browser batch ./warmup.json \
+  --targets ./targets.json \
+  --concurrency 5 \
+  --name short-warmup
+```
+
+---
+
+## Job và lịch sử
+
+Theo dõi việc thực thi runbook và batch:
+
+```bash
+# list all jobs
+gologin-local-agent-browser jobs
+
+# filter by kind and status
+gologin-local-agent-browser jobs --kind batch --status failed
+
+# get details for a specific job
+gologin-local-agent-browser job job-20260311123000-ab12cd34
+```
+
+---
+
+## Điều khiển hiển thị
+
+| Cờ | Hành vi |
+|---|---|
+| `--visible` / `--headed` | Khởi động Orbita với cửa sổ hiển thị |
+| `--background` / `--headless` | Chạy không có cửa sổ hiển thị |
+| Mặc định | Dùng biến môi trường `GOLOGIN_HEADLESS` hoặc chế độ hiển thị |
+
+Bí danh: `open-visible` = `open --visible`, `open-background` = `open --background`
+
+---
+
+## Trường hợp sử dụng và ví dụ
+
+### Warmup tài khoản mới
+
+Các profile trình duyệt mới trông "lạnh" — không có cookie, không có lịch sử duyệt web, không có phiên lưu trữ. Các trang như Facebook, Google và LinkedIn sẽ đánh dấu những profile lạnh. Hãy warmup chúng bằng cách duyệt web tự nhiên trước khi thực hiện bất kỳ việc quan trọng nào.
+
+```json
+{
+  "variables": { "url": "https://www.google.com" },
+  "steps": [
+    { "command": "open-visible", "args": ["${url}"] },
+    { "command": "wait", "args": [2000] },
+    { "command": "scroll", "args": ["down", 500] },
+    { "command": "wait", "args": [1500] },
+    { "command": "scroll", "args": ["down", 500] },
+    { "command": "wait", "args": [1000] },
+    { "command": "close" }
+  ]
+}
+```
+
+Chạy song song trên 20 profile:
+
+```bash
+gologin-local-agent-browser batch ./warmup.json \
+  --targets ./20-new-profiles.json \
+  --concurrency 5 --name daily-warmup
+```
+
+### Tiếp cận khách hàng trên LinkedIn với profile cố định
+
+Mỗi tài khoản LinkedIn nằm trong một profile riêng với cookie, proxy và fingerprint riêng. Chỉ cần đăng nhập một lần, phiên sẽ được giữ qua nhiều ngày.
+
+```bash
+# create a LinkedIn-optimized profile
+gologin-local-agent-browser profile-create "LinkedIn - Sales Rep 1" \
+  --template linkedin --proxy-country us
+
+# log in (visible mode to handle 2FA if needed)
+gologin-local-agent-browser open https://linkedin.com/login \
+  --profile profile_id --visible
+
+gologin-local-agent-browser snapshot
+gologin-local-agent-browser fill @e3 "email@company.com"
+gologin-local-agent-browser fill @e5 "password"
+gologin-local-agent-browser click @e7
+gologin-local-agent-browser wait 5000
+
+# verify login, then close — cookies are saved
+gologin-local-agent-browser snapshot
+gologin-local-agent-browser close
+
+# next day: reopen — already logged in
+gologin-local-agent-browser open https://linkedin.com/feed --profile profile_id
+gologin-local-agent-browser snapshot   # feed loads, no login needed
+```
+
+### Quản lý nhiều tài khoản quảng cáo
+
+Vận hành các tài khoản quảng cáo Facebook/Google bằng các profile được cách ly — mỗi tài khoản có fingerprint, proxy và kho cookie riêng.
+
+```bash
+# create profiles for each ad account
+gologin-local-agent-browser profile-create "FB Ads - Client A" --template ads --proxy-country us
+gologin-local-agent-browser profile-create "FB Ads - Client B" --template ads --proxy-country gb
+gologin-local-agent-browser profile-create "Google Ads - Client C" --template ads --proxy-country de
+
+# check proxy and fingerprint health before running
+gologin-local-agent-browser doctor --use-case ads --check-proxy profile_id_A
+```
+
+### Quản lý mạng xã hội
+
+Nhiều tài khoản Instagram, TikTok hoặc Reddit — mỗi tài khoản nằm trong một profile riêng. Đăng nội dung, tương tác, theo dõi — tất cả đều thực hiện qua CLI.
+
+```bash
+# create an SMM profile
+gologin-local-agent-browser profile-create "Reddit Account 3" --template smm
+
+# open, browse, interact
+gologin-local-agent-browser open https://reddit.com --profile profile_id --visible
+gologin-local-agent-browser snapshot
+gologin-local-agent-browser find "search input"
+gologin-local-agent-browser type @found "r/programming"
+gologin-local-agent-browser press Enter
+gologin-local-agent-browser wait 2000
+gologin-local-agent-browser snapshot
+gologin-local-agent-browser close
+```
+
+### Vận hành thương mại điện tử và sàn giao dịch
+
+Quản lý nhiều tài khoản người bán trên Amazon, eBay, Etsy — mỗi tài khoản được cách ly trong profile riêng.
+
+```bash
+# batch warmup across all marketplace profiles
+gologin-local-agent-browser batch ./marketplace-warmup.json \
+  --targets ./all-seller-profiles.json \
+  --concurrency 3 --name marketplace-warmup
+
+# check which jobs succeeded
+gologin-local-agent-browser jobs --kind batch --status completed
+gologin-local-agent-browser jobs --kind batch --status failed
+```
+
+### Kiểm thử địa lý cho sản phẩm của bạn
+
+Xem website của bạn hiển thị như thế nào từ các quốc gia khác nhau — giá có hiển thị đúng không? Chuyển hướng theo vị trí địa lý có hoạt động không?
+
+```bash
+# create profiles for each test region
+gologin-local-agent-browser profile-create "Test US" --template geo --proxy-country us
+gologin-local-agent-browser profile-create "Test DE" --template geo --proxy-country de
+gologin-local-agent-browser profile-create "Test JP" --template geo --proxy-country jp
+
+# open each, screenshot, compare
+gologin-local-agent-browser open https://yoursite.com --profile us_id
+gologin-local-agent-browser screenshot ./geo-us.png
+gologin-local-agent-browser close
+
+gologin-local-agent-browser open https://yoursite.com --profile de_id
+gologin-local-agent-browser screenshot ./geo-de.png
+gologin-local-agent-browser close
+```
+
+---
+
+## Lệnh tương tác với trình duyệt
+
+Tất cả các lệnh trình duyệt đều giống với [Agent Browser CLI](/vi/cli-tools/agent-browser) trên đám mây: `snapshot`, `click`, `type`, `fill`, `find`, `tabs`, `cookies`, `storage-export`, `storage-import`, `eval`, `screenshot`, `pdf`, `back`, `forward`, `reload`, `wait`, `press`, `scroll`, `upload` và nhiều lệnh khác.
+
+Xem [tài liệu tham khảo lệnh của Agent Browser CLI](/vi/cli-tools/agent-browser#tham-chi%E1%BA%BFu-%C4%91%E1%BA%A7y-%C4%91%E1%BB%A7-c%C3%A1c-l%E1%BB%87nh) để biết danh sách đầy đủ.
+
+---
+
+## Bí danh
+
+| Bí danh | Tương ứng với |
+|---|---|
+| `goto`, `navigate` | `open` |
+| `history` | `jobs` |
+| `open-visible` | `open --visible` |
+| `open-background` | `open --background` |
+| `tabnew` | `tabopen` |
+| `tabswitch` | `tabfocus` |
+| `js` | `eval` |
+| `key` | `press` |
+| `scrollinto` | `scrollintoview` |
+| `quit`, `exit` | `close` |
+
+---
+
+## Liên quan
+
+- [Agent Browser CLI](/vi/cli-tools/agent-browser) — phiên bản trình duyệt trên đám mây
+- [Gologin Web Access CLI](/vi/cli-tools/web-access) — CLI hợp nhất (scraping + trình duyệt)
+- [AI Skills](/vi/api-reference/ai-integrations/ai-skills) — các skill cắm là chạy dành cho Claude Code
+- [Node.js SDK](/vi/api-reference/sdks/nodejs-sdk) — quản lý profile bằng lập trình
+
+<Card title="Gói npm" icon="npm" href="https://www.npmjs.com/package/gologin-local-agent-browser-cli">
+  gologin-local-agent-browser-cli
+</Card>
+
+<Card title="Mã nguồn" icon="github" href="https://github.com/GologinLabs/gologin-local-agent-browser">
+  GologinLabs/gologin-local-agent-browser
+</Card>

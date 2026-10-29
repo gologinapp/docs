@@ -1,0 +1,41 @@
+---
+title: "Falscher Proxy-Standort auf einer Website oder in einem Checker"
+description: "Wenn der Proxy bei Ihren Proxys von Drittanbietern die falsche Geolokalisierung anzeigt"
+---
+
+## **Warum passiert das und wie funktioniert es?**
+
+Verschiedene Websites nutzen unterschiedliche IP-Geolokalisierungsdatenbanken, um das Land einer IP-Adresse zu bestimmen. Diese Datenbanken sind nicht miteinander synchronisiert. Dadurch kann es vorkommen, dass dieselbe IP mehreren verschiedenen Standorten zugeordnet wird.
+
+Ein weiterer wichtiger Faktor ist, ob eine IP als Datacenter, VPN oder anderer Dienst markiert ist.\
+Wird eine IP als Dienst erkannt, kann das ihren Trust Score drastisch senken. Dadurch steigt die Wahrscheinlichkeit, dass Websites sie markieren oder blockieren.
+
+Wir empfehlen nicht, Proxys mit den oben genannten Abweichungen zu verwenden.
+
+## **Wie überprüfe ich meinen Proxy?**
+
+1. Ermitteln Sie hier die ausgehende IP Ihres Proxys. Bewegen Sie dazu einfach den Mauszeiger über das Pfeilsymbol.
+
+   ![image (55).png](/images/image\(55\).png)
+2. Im Internet gibt es weitere Tools. Für konsistente Ergebnisse verwenden wir in der Regel diese beiden:
+   - Zur Prüfung der IP-Geolokalisierung: [<u>https://www.iplocation.net/ip-lookup</u>](https://www.iplocation.net/ip-lookup)
+
+     ❗Idealerweise sollte in allen Checkern dasselbe Land angezeigt werden.
+   - Zur Prüfung der Dienste auf der IP: [<u>https://whatismyipaddress.com/ip/</u>](https://whatismyipaddress.com/ip/)
+
+     ❗Es sollten keine Dienste für die IP angezeigt werden.
+
+   Beispiele zur Orientierung finden Sie unten:
+
+   ![image.png](/images/image.png)
+
+## **So vermeiden Sie Proxy-Probleme**
+
+So reduzieren Sie Probleme durch falsche Proxy-Standorte:
+
+- **Nutzen Sie seriöse Proxy-Anbieter** – Hochwertige Anbieter stellen sicher, dass ihre IPs korrekt kategorisiert und registriert sind. Sie können Gologin-Proxys oder [<u>die von uns empfohlenen Proxys</u>](https://gologin.com/proxies/proxy-type/) verwenden.
+- **Vermeiden Sie Datacenter-Proxys für sensible Aufgaben** – Residential- oder Mobile-Proxys haben in der Regel einen höheren Trust Score.
+- **Testen Sie Ihren Proxy vor der Verwendung** – Prüfen Sie ihn mit mehreren IP-Checkern, um sicherzustellen, dass die Ergebnisse übereinstimmen.
+- **Wechseln Sie bei Bedarf die IP** – Wird eine bestimmte IP fälschlicherweise markiert, kann der Wechsel zu einer anderen IP das Problem beheben.
+
+Wenn Sie auf diese Details achten, sorgen Sie für eine reibungslosere und zuverlässigere Nutzung von Gologin.

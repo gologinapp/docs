@@ -1,0 +1,149 @@
+---
+title: "Bắt đầu nhanh"
+---
+
+Hướng dẫn này giúp bạn thiết lập và sẵn sàng sử dụng Gologin API. Chúng tôi sẽ trình bày cách bắt đầu với một trong các API client của chúng tôi và cách thực hiện yêu cầu API đầu tiên. Chúng tôi cũng sẽ chỉ ra những nội dung nên xem tiếp theo để bạn tìm được mọi thông tin cần thiết và tận dụng tối đa REST API mạnh mẽ của chúng tôi.
+
+<Note>
+  Trước khi có thể gửi yêu cầu đến Gologin API, bạn cần lấy API key từ bảng điều khiển của mình. Bạn có thể tìm thấy key này tại [Cài đặt » API](https://app.gologin.com/personalArea/TokenApi).
+</Note>
+
+## Thực hiện yêu cầu scraping ẩn danh đầu tiên
+
+<CodeGroup>
+
+```js node.js
+import { GologinApi } from 'gologin';
+
+// Token can be passed here in code or from env 
+const token = process.env.GL_API_TOKEN || 'your dev token here';
+const gologin = GologinApi({
+  token,
+  // If you want to run particular profile you need to pass profileId param
+});
+
+async function main() {
+  // This line of code creates new profile that will be run. If you want to run existed profile - delete this line of code
+  const profile = await gologin.createProfileRandomFingerprint();
+  const profileId = profile.id;
+
+  // This line of code adds gologin proxy to the profile.
+  await gologin.addGologinProxyToProfile(profileId, 'US');
+
+  // This line of code starts the browser and return object that can be managed by puppeteer
+  const { browser } = await gologin.launch({ profileId });
+
+  // Opens new page in browser
+  const page = await browser.newPage();
+
+  // Goes to website and waits untill all parts of the website is loaded
+  await page.goto('https://iphey.com/', { waitUntil: 'networkidle2' });
+
+  // Reads profile check result in website
+  const status = await page.$eval('.trustworthy:not(.hide)',
+    (elt) => elt?.innerText?.trim(),
+  );
+
+  await new Promise((resolve) => setTimeout(resolve, 10000));
+  console.log('status', status);
+
+  // This line of code deletes used profile. If you dont want to delete used profie - remove this line
+  await gologin.deleteProfile(profileId);
+
+  return status;
+}
+
+main().catch(console.error)
+  .finally(gologin.exit);
+```
+
+
+```python Python
+import time
+import os
+from gologin import GoLogin
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+
+
+# Initialize GoLogin
+gl = GoLogin({
+	"token": os.environ.get('GL_API_TOKEN', 'your dev token'),
+	})
+profile = gl.createProfileRandomFingerprint({ "os": "win" })
+profile_id = profile.get('id')
+gl.setProfileId(profile_id)
+# Add proxy to the profile
+gl.addGologinProxyToProfile(profile_id, "us")
+
+# Start Browser and get websocket url
+debugger_address = gl.start()
+
+# Get Chromium version for webdriver
+chromium_version = gl.get_chromium_version()
+
+
+# Install webdriver
+service = Service(ChromeDriverManager(driver_version=chromium_version).install())
+
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_experimental_option("debuggerAddress", debugger_address)
+
+driver = webdriver.Chrome(service=service, options=chrome_options)
+
+# Give command to Selenium to open the page
+driver.get("http://www.python.org")
+
+time.sleep(30)
+driver.quit()
+time.sleep(10)
+
+gl.delete(profile_id)
+
+gl.stop()
+```
+
+</CodeGroup>
+
+## Tự chạy mã trong Node.js
+
+<CodeGroup>
+
+```bash bash
+# Install required packages
+npm i gologin
+
+# Run the code - change filename.js to your actual filename and add your token
+GL_API_TOKEN=[YOUR_GOLOGIN_API_TOKEN] node filename.js
+```
+
+</CodeGroup>
+
+## Tự chạy mã trong Python
+
+<CodeGroup>
+
+```bash bash
+# create local env for the project
+python3 -m venv venv
+
+# Install required packages
+source venv/bin/activate && pip install gologin selenium webdriver-manager
+
+# Run the script. Your file should not be named gologin.py as it will cause conflict with import
+GL_API_TOKEN=[YOUR_GOLOGIN_API_TOKEN] python3 filename.py
+```
+
+</CodeGroup>
+
+## Tiếp theo là gì?
+
+Tuyệt vời, bạn đã thiết lập xong API client và thực hiện yêu cầu đầu tiên tới API. Dưới đây là một số liên kết hữu ích khi bạn tìm hiểu sâu hơn về Gologin API:
+
+- [Lấy API key của bạn tại Cài đặt \> API](https://app.gologin.com/personalArea/TokenApi)
+- [Gologin Web Access CLI](/vi/cli-tools/web-access) — CLI thống nhất cho scraping và tự động hóa trình duyệt (không cần viết mã)
+- [Agent Browser CLI](/vi/cli-tools/agent-browser) — CLI trình duyệt đám mây được xây dựng cho các AI agent
+- [Local Agent Browser CLI](/vi/cli-tools/local-agent-browser) — CLI Orbita cục bộ với profile và runbook
+- [AI Skills](/vi/api-reference/ai-integrations/ai-skills) — các skill cắm là chạy dành cho Claude Code
+- [MCP Server](/vi/api-reference/ai-integrations/mcp-server) — quản lý profile thông qua các cuộc trò chuyện với AI

@@ -1,0 +1,49 @@
+---
+title: "Proxies estáticos vs rotativos"
+---
+
+### Proxies estáticos
+
+Os proxies estáticos usam um endereço IP fixo, que permanece o mesmo ao longo do tempo.
+
+Eles são recomendados para o gerenciamento de contas a longo prazo, quando é necessário manter um local de login estável.
+
+### Proxies sticky
+
+Os proxies sticky mantêm o mesmo endereço IP por um período limitado de sessão (geralmente de 10 a 30 minutos) antes de fazer a rotação.
+
+São úteis quando é necessária consistência de sessão no curto prazo e também são uma boa opção para o gerenciamento de contas.
+
+### Proxies rotativos
+
+Os proxies rotativos atribuem automaticamente um novo endereço IP a partir de um pool de proxies.
+
+A rotação pode ocorrer:
+
+- a cada requisição
+- após o término de uma sessão
+- após um intervalo de tempo definido
+
+Normalmente são usados para scraping ou coleta de dados em grande volume. Em geral, também podem ser usados para o gerenciamento de contas, desde que mantenham o mesmo IP durante a sessão.
+
+### Qual tipo usar em cada plataforma?
+
+| Plataforma | Tipo de proxy recomendado | Por quê |
+| --- | --- | --- |
+| LinkedIn | Residencial estático ou móvel | Mudanças de IP acionam uma revisão de segurança imediata |
+| Facebook / Meta Ads | Residencial estático ou sticky | Contas de anúncios exigem consistência geográfica |
+| Amazon / eBay / Etsy | ISP estático | IPs rotativos vinculam contas e levam a banimentos |
+| TikTok (contas novas) | Móvel | IPs móveis têm o maior nível de confiança na criação de contas |
+| Web scraping | Residencial rotativo ou datacenter | Velocidade e volume importam mais do que consistência |
+| Plataformas de apostas | Móvel | Nível de confiança mais alto; as plataformas são agressivas contra fingerprints de desktop |
+
+<Warning>
+  Usar proxies rotativos em contas de vendedor da Amazon é um erro comum que leva ao banimento das contas. A Amazon vincula contas pelo IP: se o seu IP muda, várias contas podem ser sinalizadas como conectadas.
+</Warning>
+
+Veja também
+
+- [O que são os proxies do Gologin](https://gologin.com/docs/proxy/gologin-proxies/what-are-gologin-proxies) — os proxies integrados do Gologin são rotativos por padrão
+- [Melhor proxy para o seu caso](https://gologin.com/docs/proxy/introduction/best-proxy-for-your-case)
+- [Amazon, eBay, Shopify](https://gologin.com/docs/amazon-e-bay-shopify) — contas de marketplaces exigem proxies estáticos
+- [LinkedIn](https://gologin.com/docs/linkedin) — o LinkedIn exige proxies estáticos

@@ -1,0 +1,49 @@
+---
+title: "Tổng quan về tiện ích mở rộng của trình duyệt"
+---
+
+Tiện ích mở rộng trong một profile Gologin cho phép bạn tùy chỉnh riêng từng môi trường trình duyệt. Vì mỗi profile trong Gologin hoạt động như một trình duyệt riêng biệt với fingerprint và bộ nhớ lưu trữ riêng, tiện ích mở rộng được cài đặt và quản lý **theo từng profile**, không áp dụng chung cho toàn bộ. Nhờ vậy, bạn có toàn quyền kiểm soát những công cụ nào chạy trong môi trường của từng tài khoản.
+
+## Tiện ích mở rộng của profile là gì?
+
+**Tiện ích mở rộng của profile** là các tiện ích trình duyệt **tương thích với Chrome**, được cài đặt **trực tiếp trong một profile Gologin cụ thể**.
+
+Mỗi profile:
+
+- Có danh sách tiện ích mở rộng riêng
+- Lưu trữ dữ liệu tiện ích riêng biệt
+- Giữ cài đặt tiện ích tách biệt
+- Không chia sẻ tiện ích với các profile khác
+
+Điều này có nghĩa là bạn có thể chạy các thiết lập khác nhau cho từng tài khoản mà không bị chồng chéo.
+
+## Vì sao nên dùng tiện ích mở rộng trong profile Gologin?
+
+Tiện ích mở rộng thường rất cần thiết cho:
+
+- Công cụ tự động hóa
+- Quản lý cookie
+- Xác minh quảng cáo
+- Hỗ trợ thu thập dữ liệu web
+- Quy trình làm việc nâng cao năng suất
+
+Vì các profile được tách biệt, bạn có thể yên tâm sử dụng các công cụ khác nhau cho từng tài khoản mà không lo dữ liệu bị lẫn vào nhau.
+
+## Tiện ích mở rộng và độ ổn định của fingerprint
+
+Tiện ích mở rộng có thể ảnh hưởng đến hành vi của trình duyệt.
+
+Một số tiện ích:
+
+- Chỉnh sửa header của request
+- Chèn script
+- Tương tác với WebRTC
+- Thay đổi hành vi của canvas
+
+Nếu bạn làm việc với các nền tảng nhạy cảm (quảng cáo, thương mại điện tử, tiền mã hóa), hãy kiểm tra kỹ các tiện ích mới trước khi dùng chúng trên những tài khoản đã được warm-up.
+
+## Các phương pháp hay nhất
+
+- Tránh cài đặt những tiện ích không cần thiết
+- Sử dụng tiện ích nhất quán cho từng loại tài khoản
+- Không thường xuyên thêm/gỡ tiện ích trên các profile đã hoạt động ổn định. Những thay đổi đột ngột trong bộ tiện ích có thể trông đáng ngờ trên các nền tảng có mức bảo mật cao.

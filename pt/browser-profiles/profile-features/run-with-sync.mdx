@@ -1,0 +1,88 @@
+---
+title: "Executar com Sync"
+---
+
+O Executar com Sync inicia vários perfis de navegador ao mesmo tempo e replica suas ações em todos eles em tempo real. Tudo o que você faz na janela principal — clicar, digitar, acessar uma URL — acontece automaticamente, e ao mesmo tempo, em todos os outros perfis.
+
+Isso é útil para trabalhos repetitivos com contas: aquecer contas, executar a mesma ação em vários perfis ou preencher formulários idênticos. Em vez de alternar entre janelas e repetir os mesmos passos, você os faz uma única vez.
+
+<Warning>
+  Os sites detectam comportamentos idênticos e simultâneos entre contas. Use o Executar com Sync apenas em tarefas em que ações idênticas são aceitáveis — aquecimento, configuração inicial, acesso a uma URL — e não para publicar, enviar mensagens ou qualquer atividade em que um conteúdo idêntico seria suspeito.
+</Warning>
+
+## Como usar
+
+### Etapa 1 — Selecione os perfis
+
+Na lista de perfis, marque as caixas ao lado dos perfis que você quer iniciar juntos.
+
+### Etapa 2 — Clique em Executar com Sync
+
+O painel de ações em massa aparece na parte superior da tela. Clique em Executar com Sync.
+
+Todos os perfis selecionados são abertos em janelas de navegador separadas.
+
+### Etapa 3 — Trabalhe na janela líder
+
+O primeiro perfil da sua lista de selecionados se torna o líder. Todas as suas ações na janela dele — cliques, digitação, navegação — são replicadas em tempo real em todos os outros perfis abertos. Os outros perfis são seguidores: eles espelham o líder, mas não podem controlá-lo.
+
+<Frame>
+  ![0331(1)](/images/0331\(1\).gif)
+</Frame>
+
+## Casos de uso práticos
+
+**Aquecimento de contas:** Abra de 10 a 20 contas novas e navegue pelas mesmas páginas em conjunto. Cada perfil navega de forma independente (fingerprint diferente, IP diferente), enquanto você só precisa navegar uma vez.
+
+**Configuração idêntica entre contas:** Acesse páginas de configurações, altere as mesmas opções e preencha os mesmos campos de informações do perfil. É útil para configurar várias contas novas com a mesma configuração inicial.
+
+**Acessar uma URL de trabalho:** Quando você precisa que todos os perfis abram uma página específica antes de começar a trabalhar neles individualmente, acesse a URL uma vez e todos os perfis chegam lá ao mesmo tempo.
+
+**Testar o comportamento do fingerprint entre perfis:** Abra sites de verificação ([iphey.com](http://iphey.com), [pixelscan.net](http://pixelscan.net)) em vários perfis ao mesmo tempo para comparar os resultados lado a lado.
+
+## O que evitar
+
+**Publicar conteúdo idêntico:** Se todos os perfis publicarem o mesmo texto, imagem ou link ao mesmo tempo, as plataformas vão vincular as contas imediatamente. Use o Executar com Sync apenas em ações cujo comportamento idêntico seja normal — navegar, clicar, acessar páginas — e não para criação de conteúdo.
+
+**Mensagens e prospecção:** Enviar mensagens idênticas para as mesmas pessoas, a partir de contas diferentes e ao mesmo tempo, é uma das formas mais rápidas de causar um banimento automático em todas elas.
+
+**Fluxos de login quando as contas são novas:** Cada perfil pode ter solicitações de 2FA, CAPTCHAs ou etapas de verificação diferentes durante o login. O sincronizador replica o que você digita, mas não consegue lidar com estados divergentes — um perfil pode estar em um CAPTCHA enquanto outro já está logado. Faça os logins individualmente antes de ativar o sincronizador.
+
+## Parar perfis
+
+Para fechar todos os perfis iniciados com o Executar com Sync:
+
+1. Selecione todos os perfis em execução usando as caixas de seleção
+2. Clique em **Parar perfis** no painel de ações em massa
+
+<Frame>
+  ![0331(1)(1)](/images/0331\(1\)\(1\).gif)
+</Frame>
+
+Ou feche cada janela do navegador individualmente. O Gologin sincroniza os dados de cada perfil à medida que ele é fechado.
+
+<Warning>
+  Aguarde cada perfil exibir o status **pronto** no app do Gologin antes de fechar o próprio app. Fechar o Gologin enquanto os perfis ainda estão sincronizando causará perda de dados dessas sessões.
+</Warning>
+
+## Diferenças em relação ao Executar (em massa) comum
+
+|  | Executar (em massa) | Executar com Sync |
+| :-- | :-- | :-- |
+| Os perfis agem de forma independente | ✅ | ❌ |
+| As ações são replicadas entre as janelas | ❌ | ✅ |
+| Ideal para | Abrir perfis para trabalhar separadamente | Repetir as mesmas ações em todos os perfis |
+
+Use o **Executar** comum quando quiser abrir vários perfis e depois trabalhar em cada um individualmente. Use o **Executar com Sync** quando quiser realizar exatamente as mesmas ações em todos eles ao mesmo tempo.
+
+## Veja também
+
+[Ações em massa](https://gologin.com/docs/browser-profiles/profile-management/bulk-actions) — lista completa das operações em massa disponíveis no Gologin
+
+[Criar perfis](https://gologin.com/docs/browser-profiles/profile-management/creating-and-launching-profiles) — como criar e iniciar perfis individualmente
+
+[Erros comuns a evitar](https://gologin.com/docs/common-mistakes-to-avoid) — padrões de comportamento que levam a banimentos nas plataformas
+
+[Como manter o trust score](https://gologin.com/docs/maintaining-trust-score) — como as plataformas avaliam a atividade das contas
+
+[Cookie Bot](https://gologin.com/docs/browser-profiles/profile-features/cookie-bot) — aquecimento automatizado de cookies para novos perfis

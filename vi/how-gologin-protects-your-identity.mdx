@@ -1,0 +1,44 @@
+---
+title: "Cách Gologin bảo vệ danh tính của bạn"
+---
+
+Gologin bảo vệ danh tính của bạn bằng cách tạo các hồ sơ trình duyệt riêng biệt, hoạt động như những thiết bị độc lập.
+
+Mỗi hồ sơ có vân tay trình duyệt, địa chỉ IP, cookie và dữ liệu phiên riêng. Nhờ đó, các nền tảng không thể liên kết nhiều tài khoản với nhau.
+
+## Các cơ chế chính
+
+- **Hồ sơ biệt lập** - Mỗi hồ sơ chạy trong một môi trường riêng. Không có cookie, bộ nhớ lưu trữ hay dữ liệu nào được chia sẻ giữa các hồ sơ.
+- **Giả lập vân tay trình duyệt** - Gologin gán các thông số trình duyệt và thiết bị thực tế, để mỗi hồ sơ trông giống một người dùng bình thường.
+- **Đồng bộ proxy** - Mỗi hồ sơ có thể dùng proxy riêng, khớp với địa chỉ IP, vị trí và cấu hình thiết bị.
+- **Phiên duy trì** - Dữ liệu hồ sơ được lưu giữa các phiên, giúp các trang web nhận diện hồ sơ như một người dùng quay lại.
+- **Môi trường nhất quán** - Hồ sơ luôn ổn định theo thời gian, giúp xây dựng độ tin cậy và giảm các bước kiểm tra bổ sung.
+
+## Tại sao điều này quan trọng
+
+Hầu hết các nền tảng đánh giá người dùng dựa trên sự kết hợp giữa vân tay trình duyệt, địa chỉ IP và hành vi.
+
+Nếu các tín hiệu này không nhất quán, nền tảng có thể:
+
+- yêu cầu xác minh bổ sung
+- đặt lại phiên đăng nhập
+- giảm độ tin cậy của tài khoản
+
+Gologin giữ cho các yếu tố này đồng bộ trong từng hồ sơ, giúp hoạt động của bạn trông nhất quán và tự nhiên.
+
+## Các lỗi thường gặp
+
+Hãy tránh những vấn đề điển hình sau:
+
+- Dùng một proxy cho nhiều tài khoản
+- Đăng nhập nhiều tài khoản trong cùng một hồ sơ
+- Thay đổi cài đặt vân tay trình duyệt sau khi đã đăng nhập
+- Dùng proxy chất lượng thấp hoặc không phù hợp
+- Thay đổi vị trí hoặc thiết bị quá thường xuyên
+
+Xem thêm
+
+- [Cách vân tay trình duyệt hoạt động](https://gologin.com/docs/how-browser-fingerprints-work)
+- [Duy trì điểm tin cậy](https://gologin.com/docs/maintaining-trust-score)
+- [VPN so với Proxy](https://gologin.com/docs/proxy/introduction/vpn-vs-proxy)
+- [Cài đặt vân tay trình duyệt của hồ sơ](https://gologin.com/docs/profile-fingerprint-settings)

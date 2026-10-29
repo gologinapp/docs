@@ -1,0 +1,371 @@
+---
+title: "Gologin 本地 Agent Browser CLI"
+description: "面向智能体的 CLI，用于运行本地 Gologin Orbita 配置文件，支持守护进程、快照、引用、运行手册和批量执行"
+---
+
+Gologin 本地 Agent Browser CLI 是一款面向智能体（Agent）的 CLI，通过常驻守护进程和精简的 Shell 接口来运行**本地 Gologin Orbita 配置文件**。
+
+它沿用了与云端 [Agent Browser CLI](/zh/cli-tools/agent-browser) 相同的交互模型：打开会话、读取快照、对引用（ref）执行操作。不同的是，它使用 Gologin Orbita 在您的机器上**本地**运行，而不是使用 Cloud Browser。
+
+---
+
+## 何时使用本地版，何时使用云端版
+
+| 适合使用本地版的场景 | 适合使用云端版的场景 |
+|---|---|
+| 配置文件养号预热 | 快速的无状态数据抓取 |
+| 账号登录流程 | 没有可用的本地机器 |
+| Cookie 积累 | 大规模并行会话 |
+| 在持久化配置文件中进行社交媒体/电商平台操作 | 一次性的浏览器任务 |
+| 复用同一本地身份的智能体循环 | 不需要保留配置文件状态 |
+
+---
+
+## 安装
+
+```bash
+npm install -g gologin-local-agent-browser-cli
+```
+
+需要 Node.js >= 20。
+
+---
+
+## 凭据
+
+| 变量 | 是否必填 | 说明 |
+|---|---|---|
+| `GOLOGIN_TOKEN` | 是（用于 `open`） | Gologin API 令牌 |
+| `GOLOGIN_PROFILE_ID` | 可选 | 默认配置文件 ID |
+| `GOLOGIN_DAEMON_PORT` | 可选 | 守护进程端口（默认：`44778`） |
+| `GOLOGIN_HEADLESS` | 可选 | `true` 或 `false`（默认：`false`） |
+| `GOLOGIN_EXECUTABLE_PATH` | 可选 | Orbita 可执行文件的路径 |
+| `GOLOGIN_TMPDIR` | 可选 | Gologin 临时文件/配置文件目录 |
+
+配置文件：`~/.gologin-local-agent-browser/config.json`
+
+---
+
+## 架构
+
+由两部分组成：
+
+1. **`gologin-local-agent-browser` CLI**：解析命令，并自动启动守护进程
+2. **本地常驻守护进程**：通过官方 Gologin SDK 启动本地 Orbita，使用 Playwright 的 `connectOverCDP` 连接到返回的 websocket 端点，并在内存中保留当前活动页面
+
+---
+
+## 快速开始
+
+```bash
+export GOLOGIN_TOKEN='your_token'
+
+# open a profile locally (visible window)
+gologin-local-agent-browser open https://example.com --profile your_profile_id
+
+# or headless
+gologin-local-agent-browser open https://example.com --profile your_profile_id --headless
+
+# read the page
+gologin-local-agent-browser snapshot
+
+# interact
+gologin-local-agent-browser click @e3
+gologin-local-agent-browser type @e5 "search terms"
+
+# save a screenshot
+gologin-local-agent-browser screenshot ./page.png
+
+# close
+gologin-local-agent-browser close
+```
+
+---
+
+## 配置文件管理
+
+可直接通过 CLI 管理 Gologin 配置文件。
+
+| 命令 | 说明 |
+|---|---|
+| `profiles` | 列出配置文件（本地、远程或全部） |
+| `profile <id>` | 显示配置文件详情 |
+| `profile-create <name>` | 创建新的配置文件 |
+| `profile-import <id>` | 将远程配置文件导入到本地 |
+| `profile-update <id>` | 更新配置文件设置 |
+| `profile-sync <id>` | 将本地配置文件同步到云端 |
+| `profile-delete <id>` | 删除配置文件 |
+
+**`profiles` 的筛选参数：** `--local`、`--remote`、`--all`、`--platform <os>`、`--status <status>`、`--tag <tag>`、`--search <query>`、`--json`
+
+---
+
+## 场景模板
+
+创建针对特定工作流预先配置好的配置文件：
+
+```bash
+gologin-local-agent-browser profile-create "My LinkedIn" --template linkedin
+gologin-local-agent-browser profile-create "Ad Account 1" --template ads
+gologin-local-agent-browser profile-create "Social Manager" --template smm
+```
+
+| 模板 | 用途 |
+|---|---|
+| `linkedin` | 面向养号预热的潜在客户开发配置文件 |
+| `ads` / `facebook` | 具有严格账号隔离的广告投放配置文件 |
+| `smm` | 用于 Cookie/存储交接的共享访问社交媒体配置文件 |
+| `scraping` | 面向自动化的本地配置文件 |
+| `geo` | 地理位置测试配置文件 |
+
+---
+
+## Doctor 诊断
+
+检查配置文件健康状况、代理连通性以及特定场景的就绪情况：
+
+```bash
+# basic health check
+gologin-local-agent-browser doctor
+
+# check for a specific use case
+gologin-local-agent-browser doctor --use-case linkedin
+
+# check proxy on a profile
+gologin-local-agent-browser doctor --use-case linkedin --check-proxy your_profile_id
+```
+
+---
+
+## 运行手册与批量执行
+
+### 单个运行手册
+
+```bash
+gologin-local-agent-browser run ./warmup.json --profile your_profile_id --name reddit-warmup
+```
+
+运行手册格式：
+
+```json
+{
+  "variables": { "url": "https://www.reddit.com" },
+  "steps": [
+    { "command": "open-visible", "args": ["${url}"] },
+    { "command": "wait", "args": [1500] },
+    { "command": "scroll", "args": ["down", 900] },
+    { "command": "wait", "args": [1000] },
+    { "command": "scroll", "args": ["down", 900] },
+    { "command": "close" }
+  ]
+}
+```
+
+### 批量执行
+
+对多个配置文件并行运行同一个运行手册：
+
+```bash
+gologin-local-agent-browser batch ./warmup.json \
+  --targets ./targets.json \
+  --concurrency 5 \
+  --name short-warmup
+```
+
+---
+
+## 任务与历史记录
+
+追踪运行手册和批量任务的执行情况：
+
+```bash
+# list all jobs
+gologin-local-agent-browser jobs
+
+# filter by kind and status
+gologin-local-agent-browser jobs --kind batch --status failed
+
+# get details for a specific job
+gologin-local-agent-browser job job-20260311123000-ab12cd34
+```
+
+---
+
+## 可见性控制
+
+| 参数 | 行为 |
+|---|---|
+| `--visible` / `--headed` | 以可见窗口启动 Orbita |
+| `--background` / `--headless` | 不显示窗口运行 |
+| 默认 | 回退到 `GOLOGIN_HEADLESS` 环境变量，否则使用可见模式 |
+
+别名：`open-visible` = `open --visible`，`open-background` = `open --background`
+
+---
+
+## 使用场景与示例
+
+### 为新账号养号预热
+
+新的浏览器配置文件看起来很"冷"：没有 Cookie、没有浏览历史、没有已保存的会话。Facebook、Google 和 LinkedIn 等网站会标记这类"冷"配置文件。在执行重要操作之前，先像正常用户一样浏览一段时间来进行预热。
+
+```json
+{
+  "variables": { "url": "https://www.google.com" },
+  "steps": [
+    { "command": "open-visible", "args": ["${url}"] },
+    { "command": "wait", "args": [2000] },
+    { "command": "scroll", "args": ["down", 500] },
+    { "command": "wait", "args": [1500] },
+    { "command": "scroll", "args": ["down", 500] },
+    { "command": "wait", "args": [1000] },
+    { "command": "close" }
+  ]
+}
+```
+
+并行对 20 个配置文件运行：
+
+```bash
+gologin-local-agent-browser batch ./warmup.json \
+  --targets ./20-new-profiles.json \
+  --concurrency 5 --name daily-warmup
+```
+
+### 使用持久化配置文件进行 LinkedIn 外联
+
+每个 LinkedIn 账号都使用独立的配置文件，拥有各自的 Cookie、代理和指纹。只需登录一次，会话即可跨天保持。
+
+```bash
+# create a LinkedIn-optimized profile
+gologin-local-agent-browser profile-create "LinkedIn - Sales Rep 1" \
+  --template linkedin --proxy-country us
+
+# log in (visible mode to handle 2FA if needed)
+gologin-local-agent-browser open https://linkedin.com/login \
+  --profile profile_id --visible
+
+gologin-local-agent-browser snapshot
+gologin-local-agent-browser fill @e3 "email@company.com"
+gologin-local-agent-browser fill @e5 "password"
+gologin-local-agent-browser click @e7
+gologin-local-agent-browser wait 5000
+
+# verify login, then close — cookies are saved
+gologin-local-agent-browser snapshot
+gologin-local-agent-browser close
+
+# next day: reopen — already logged in
+gologin-local-agent-browser open https://linkedin.com/feed --profile profile_id
+gologin-local-agent-browser snapshot   # feed loads, no login needed
+```
+
+### 管理多个广告账号
+
+使用相互隔离的配置文件运行 Facebook/Google 广告账号，每个账号都有独立的指纹、代理和 Cookie 存储。
+
+```bash
+# create profiles for each ad account
+gologin-local-agent-browser profile-create "FB Ads - Client A" --template ads --proxy-country us
+gologin-local-agent-browser profile-create "FB Ads - Client B" --template ads --proxy-country gb
+gologin-local-agent-browser profile-create "Google Ads - Client C" --template ads --proxy-country de
+
+# check proxy and fingerprint health before running
+gologin-local-agent-browser doctor --use-case ads --check-proxy profile_id_A
+```
+
+### 社交媒体管理
+
+管理多个 Instagram、TikTok 或 Reddit 账号，每个账号使用独立的配置文件。发布内容、互动、监控，全部可以通过 CLI 完成。
+
+```bash
+# create an SMM profile
+gologin-local-agent-browser profile-create "Reddit Account 3" --template smm
+
+# open, browse, interact
+gologin-local-agent-browser open https://reddit.com --profile profile_id --visible
+gologin-local-agent-browser snapshot
+gologin-local-agent-browser find "search input"
+gologin-local-agent-browser type @found "r/programming"
+gologin-local-agent-browser press Enter
+gologin-local-agent-browser wait 2000
+gologin-local-agent-browser snapshot
+gologin-local-agent-browser close
+```
+
+### 电商与交易平台运营
+
+管理 Amazon、eBay、Etsy 上的多个卖家账号，每个账号都通过独立的配置文件相互隔离。
+
+```bash
+# batch warmup across all marketplace profiles
+gologin-local-agent-browser batch ./marketplace-warmup.json \
+  --targets ./all-seller-profiles.json \
+  --concurrency 3 --name marketplace-warmup
+
+# check which jobs succeeded
+gologin-local-agent-browser jobs --kind batch --status completed
+gologin-local-agent-browser jobs --kind batch --status failed
+```
+
+### 对自己的产品进行地理位置测试
+
+查看您的网站在不同国家/地区的显示效果：价格显示是否正确？地理位置重定向是否正常工作？
+
+```bash
+# create profiles for each test region
+gologin-local-agent-browser profile-create "Test US" --template geo --proxy-country us
+gologin-local-agent-browser profile-create "Test DE" --template geo --proxy-country de
+gologin-local-agent-browser profile-create "Test JP" --template geo --proxy-country jp
+
+# open each, screenshot, compare
+gologin-local-agent-browser open https://yoursite.com --profile us_id
+gologin-local-agent-browser screenshot ./geo-us.png
+gologin-local-agent-browser close
+
+gologin-local-agent-browser open https://yoursite.com --profile de_id
+gologin-local-agent-browser screenshot ./geo-de.png
+gologin-local-agent-browser close
+```
+
+---
+
+## 浏览器交互命令
+
+所有浏览器命令都与云端 [Agent Browser CLI](/zh/cli-tools/agent-browser) 保持一致：`snapshot`、`click`、`type`、`fill`、`find`、`tabs`、`cookies`、`storage-export`、`storage-import`、`eval`、`screenshot`、`pdf`、`back`、`forward`、`reload`、`wait`、`press`、`scroll`、`upload` 等。
+
+完整列表请参阅 [Agent Browser CLI 命令参考](/zh/cli-tools/agent-browser#%E5%AE%8C%E6%95%B4%E5%91%BD%E4%BB%A4%E5%8F%82%E8%80%83)。
+
+---
+
+## 别名
+
+| 别名 | 对应命令 |
+|---|---|
+| `goto`、`navigate` | `open` |
+| `history` | `jobs` |
+| `open-visible` | `open --visible` |
+| `open-background` | `open --background` |
+| `tabnew` | `tabopen` |
+| `tabswitch` | `tabfocus` |
+| `js` | `eval` |
+| `key` | `press` |
+| `scrollinto` | `scrollintoview` |
+| `quit`、`exit` | `close` |
+
+---
+
+## 相关链接
+
+- [Agent Browser CLI](/zh/cli-tools/agent-browser)：云端浏览器版本
+- [Gologin Web Access CLI](/zh/cli-tools/web-access)：统一 CLI（数据抓取 + 浏览器）
+- [AI Skills](/zh/api-reference/ai-integrations/ai-skills)：适用于 Claude Code 的即插即用技能
+- [Node.js SDK](/zh/api-reference/sdks/nodejs-sdk)：以编程方式管理配置文件
+
+<Card title="npm 包" icon="npm" href="https://www.npmjs.com/package/gologin-local-agent-browser-cli">
+  gologin-local-agent-browser-cli
+</Card>
+
+<Card title="源代码" icon="github" href="https://github.com/GologinLabs/gologin-local-agent-browser">
+  GologinLabs/gologin-local-agent-browser
+</Card>

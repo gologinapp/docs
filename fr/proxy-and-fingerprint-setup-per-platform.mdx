@@ -1,0 +1,131 @@
+---
+title: "Configuration du proxy et de l'empreinte par plateforme"
+hidden: true
+---
+
+Référence rapide pour choisir le bon type de proxy et la bonne configuration d'empreinte pour chaque plateforme. Pour les étapes de configuration détaillées, consultez les guides dédiés à chaque plateforme.
+
+Un guide pratique pour configurer les proxys et les empreintes de navigateur selon les différents types de plateformes.
+
+La plupart des sites web modernes évaluent les sessions à partir d'une combinaison des éléments suivants :
+
+- l'adresse IP et la localisation
+- l'empreinte du navigateur
+- l'historique de session et les cookies
+- les habitudes de connexion
+
+Si ces signaux sont incohérents, les plateformes peuvent déclencher des vérifications ou restreindre l'activité.
+
+Dans Gologin, chaque profil de navigateur représente un appareil distinct. Pour garantir la stabilité, les paramètres du proxy et de l'empreinte doivent rester cohérents et réalistes.
+
+## Checklist rapide
+
+Avant de commencer :
+
+- 1 compte = 1 profil de navigateur
+- 1 profil = 1 proxy
+- Conservez une localisation de proxy stable
+- Ne modifiez pas l'empreinte après la configuration
+- Alignez la localisation du proxy sur les paramètres du navigateur
+
+## Pourquoi la cohérence est essentielle
+
+Les plateformes évaluent plusieurs signaux ensemble.
+
+Incohérences courantes qui déclenchent des vérifications :
+
+- la localisation de l'IP ne correspond pas au fuseau horaire
+- modifications fréquentes des paramètres de l'empreinte
+- plusieurs comptes qui partagent un même proxy
+
+Exemple :
+
+- proxy en Allemagne \+ fuseau horaire des États-Unis
+- même proxy utilisé pour plusieurs comptes
+
+Une configuration cohérente permet à vos sessions de ressembler à celles de vrais utilisateurs.
+
+## Étape 1. Configurer correctement le profil
+
+Lorsque vous créez un profil dans Gologin :
+
+- attribuez un proxy dédié
+- ne modifiez pas les paramètres de l'empreinte
+- veillez à utiliser des paramètres d'appareil réalistes
+
+Chaque profil doit se comporter comme un appareil physique distinct.
+
+À éviter :
+
+- réutiliser des profils pour plusieurs comptes
+- modifier les paramètres après la première utilisation
+
+## Étape 2. Choisir le type de proxy
+
+Chaque cas d'usage nécessite un type de proxy différent :
+
+| Type de plateforme | Proxy recommandé |
+| :-- | :-- |
+| Réseaux sociaux | Résidentiel / Mobile |
+| Publicité | Résidentiel |
+| Places de marché | Résidentiel |
+| Crypto | Résidentiel |
+| Web scraping | Datacenter / Rotatif |
+
+**Proxys résidentiels : niveau de confiance plus élevé**\
+**Proxys datacenter : vitesse plus élevée**
+
+## Étape 3. Conserver une empreinte stable
+
+La stabilité de l'empreinte est essentielle.
+
+Pour garantir la cohérence :
+
+- évitez de modifier les paramètres de l'empreinte
+- conservez le même type d'appareil
+- ne changez pas de système d'exploitation ni de paramètres majeurs
+
+Exemples de comportements à risque :
+
+- passer d'un profil Windows à un profil Mac
+- modifier radicalement la résolution d'écran
+
+## Étape 4. Aligner les paramètres du proxy et du navigateur
+
+Les paramètres de votre profil doivent correspondre à la localisation du proxy.
+
+Alignement recommandé :
+
+- Le fuseau horaire correspond au pays du proxy
+- La langue correspond à la région
+- La localisation de l'IP correspond à l'environnement du navigateur
+
+Des écarts importants peuvent déclencher des vérifications.
+
+## Erreurs de configuration courantes
+
+Les problèmes les plus fréquents :
+
+- utiliser plusieurs comptes avec un seul proxy
+- changer fréquemment de région de proxy
+- paramètres d'empreinte incohérents
+- décalage entre l'IP et les paramètres du navigateur
+
+## À retenir
+
+Les plateformes évaluent ensemble les signaux liés à l'appareil et au réseau.
+
+Pour garantir la stabilité :
+
+- conservez un proxy et une empreinte cohérents
+- évitez les modifications après la configuration
+- faites correspondre les paramètres d'environnement
+
+Des profils cohérents se comportent comme de vrais appareils, ce qui réduit les vérifications et améliore la stabilité à long terme.
+
+## Voir aussi
+
+- [Le meilleur proxy pour votre cas d’usage](https://gologin.com/docs/proxy/introduction/best-proxy-for-your-case)
+- [Proxys statiques ou rotatifs](https://gologin.com/docs/static-vs-dynamic-proxies)
+- [Paramètres de l’empreinte du profil](https://gologin.com/docs/profile-fingerprint-settings)
+- [Le proxy ne fonctionne pas](https://gologin.com/docs/general/troubleshooting/proxy-not-working)

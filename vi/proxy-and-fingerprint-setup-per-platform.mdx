@@ -1,0 +1,131 @@
+---
+title: "Thiết lập proxy và fingerprint theo từng nền tảng"
+hidden: true
+---
+
+Tài liệu tham khảo nhanh giúp bạn chọn loại proxy và cấu hình fingerprint phù hợp cho từng nền tảng. Để xem các bước thiết lập chi tiết, hãy tham khảo hướng dẫn riêng của từng nền tảng.
+
+Hướng dẫn thực tế về cách cấu hình proxy và fingerprint trình duyệt cho các loại nền tảng khác nhau.
+
+Hầu hết các website hiện đại đánh giá phiên truy cập dựa trên sự kết hợp của:
+
+- Địa chỉ IP và vị trí
+- Fingerprint trình duyệt
+- Lịch sử phiên và cookie
+- Mẫu đăng nhập
+
+Nếu các tín hiệu này không nhất quán, nền tảng có thể yêu cầu xác minh hoặc hạn chế hoạt động.
+
+Trong Gologin, mỗi profile trình duyệt đại diện cho một thiết bị riêng biệt. Để duy trì sự ổn định, cài đặt proxy và fingerprint phải luôn nhất quán và thực tế.
+
+## Danh sách kiểm tra nhanh
+
+Trước khi bắt đầu:
+
+- 1 tài khoản = 1 profile trình duyệt
+- 1 profile = 1 proxy
+- Giữ vị trí proxy ổn định
+- Không thay đổi fingerprint sau khi thiết lập
+- Đồng bộ vị trí proxy với cài đặt trình duyệt
+
+## Tại sao tính nhất quán quan trọng
+
+Các nền tảng đánh giá nhiều tín hiệu cùng lúc.
+
+Những điểm không nhất quán thường gặp có thể kích hoạt kiểm tra:
+
+- Vị trí IP không khớp với múi giờ
+- Thay đổi cài đặt fingerprint thường xuyên
+- Nhiều tài khoản dùng chung một proxy
+
+Ví dụ:
+
+- Proxy ở Đức \+ múi giờ ở Mỹ
+- Cùng một proxy được dùng cho nhiều tài khoản
+
+Duy trì tính nhất quán giúp phiên truy cập trông giống người dùng thật.
+
+## Bước 1. Thiết lập profile đúng cách
+
+Khi tạo profile trong Gologin:
+
+- Gán một proxy riêng
+- Giữ nguyên cài đặt fingerprint
+- Đảm bảo các thông số thiết bị thực tế
+
+Mỗi profile nên hoạt động như một thiết bị vật lý riêng biệt.
+
+Hãy tránh:
+
+- Dùng lại profile cho nhiều tài khoản
+- Sửa cài đặt sau lần sử dụng đầu tiên
+
+## Bước 2. Chọn loại proxy
+
+Mỗi trường hợp sử dụng cần một loại proxy khác nhau:
+
+| Loại nền tảng | Proxy khuyến nghị |
+| :-- | :-- |
+| Mạng xã hội | Residential / Mobile |
+| Quảng cáo | Residential |
+| Sàn thương mại điện tử | Residential |
+| Tiền mã hóa | Residential |
+| Thu thập dữ liệu web | Datacenter / Rotating |
+
+**Proxy Residential - độ tin cậy cao hơn**\
+**Proxy Datacenter - tốc độ cao hơn**
+
+## Bước 3. Giữ fingerprint ổn định
+
+Sự ổn định của fingerprint là yếu tố then chốt.
+
+Để duy trì tính nhất quán:
+
+- Tránh thay đổi các thông số fingerprint
+- Giữ loại thiết bị nhất quán
+- Không chuyển đổi hệ điều hành hoặc các cài đặt quan trọng
+
+Ví dụ về hành vi rủi ro:
+
+- Chuyển từ profile Windows sang profile Mac
+- Thay đổi độ phân giải màn hình quá nhiều
+
+## Bước 4. Đồng bộ cài đặt proxy và trình duyệt
+
+Cài đặt profile của bạn nên khớp với vị trí của proxy.
+
+Cách đồng bộ khuyến nghị:
+
+- Múi giờ khớp với quốc gia của proxy
+- Ngôn ngữ khớp với khu vực
+- Vị trí IP khớp với môi trường trình duyệt
+
+Sự chênh lệch lớn có thể kích hoạt kiểm tra xác minh.
+
+## Các lỗi thiết lập thường gặp
+
+Những vấn đề phổ biến nhất:
+
+- Dùng nhiều tài khoản trên một proxy
+- Thay đổi khu vực proxy thường xuyên
+- Cài đặt fingerprint không nhất quán
+- IP không khớp với cài đặt trình duyệt
+
+## Điểm cần ghi nhớ
+
+Các nền tảng đánh giá tín hiệu thiết bị và mạng cùng nhau.
+
+Để duy trì sự ổn định:
+
+- Giữ proxy và fingerprint nhất quán
+- Tránh thay đổi sau khi thiết lập
+- Đồng bộ các cài đặt môi trường
+
+Các profile nhất quán hoạt động giống thiết bị thật, giúp giảm các lần kiểm tra xác minh và cải thiện độ ổn định lâu dài.
+
+## Xem thêm
+
+- [Proxy tốt nhất cho trường hợp sử dụng của bạn](https://gologin.com/docs/proxy/introduction/best-proxy-for-your-case)
+- [Proxy tĩnh và proxy xoay vòng](https://gologin.com/docs/static-vs-dynamic-proxies)
+- [Cài đặt fingerprint của profile](https://gologin.com/docs/profile-fingerprint-settings)
+- [Proxy không hoạt động](https://gologin.com/docs/general/troubleshooting/proxy-not-working)

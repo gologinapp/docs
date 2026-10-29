@@ -1,0 +1,126 @@
+---
+title: "Fingerprint-Einstellungen für Profile"
+---
+
+Mit Gologin können Sie Fingerprint-Parameter konfigurieren, wenn Sie ein Browserprofil erstellen oder bearbeiten.
+
+Diese Einstellungen legen fest, wie Ihr Browserprofil gegenüber Websites und Anti-Fraud-Systemen erscheint.
+
+Websites erfassen mehrere technische Signale aus der Browserumgebung und kombinieren sie zu einem **Browser-Fingerprint**, mit dem Geräte identifiziert werden.
+
+Die Fingerprint-Einstellungen in Gologin sind in mehrere Kategorien gegliedert.
+
+## Navigator fingerprint
+
+Navigator-Parameter beschreiben die allgemeine Browser- und Geräteumgebung.
+
+Websites lesen diese Werte über JavaScript-APIs wie `navigator.userAgent` und `navigator.platform` aus.
+
+Zu den gängigen Navigator-Parametern gehören:
+
+- **User-Agent** – gibt Browsertyp, Version und Betriebssystem an
+- **Orbita version** – die vom Profil verwendete Chromium-Version
+- **Screen resolution** – die Bildschirmgröße, die an Websites gemeldet wird
+- **Languages** – bevorzugte Browsersprachen
+- **Platform** – Plattform des Betriebssystems
+- **CPU threads** – Anzahl der Prozessorkerne, die dem Browser gemeldet werden
+- **RAM** – verfügbarer Gerätespeicher
+- **DoNotTrack** – Signal für die Datenschutzpräferenz
+
+Anhand dieser Parameter können Websites erkennen, welche Art von Gerät verwendet wird.
+
+## Fonts
+
+Die in der Browserumgebung installierten Schriftarten sind ein weiteres Fingerprint-Signal.
+
+Websites können Schriftarten erkennen, indem sie messen, wie Text auf der Seite dargestellt wird. Verschiedene Betriebssysteme und Geräte haben unterschiedliche Schriftarten-Sets, was die Unterscheidung von Geräten erleichtert.
+
+Gologin kann die Schriftartenliste maskieren und so realistische Kombinationen erzeugen, die zum gewählten Betriebssystem passen.
+
+## Media devices
+
+Die Einstellungen für Mediengeräte legen fest, welche Kameras, Mikrofone und Audioausgänge für Websites sichtbar sind.
+
+Websites können diese Informationen über die API `navigator.mediaDevices` abrufen.
+
+Mit Gologin können Sie Folgendes maskieren:
+
+- Videoeingänge
+- Audioeingänge
+- Audioausgänge
+
+So wird verhindert, dass Websites Ihre tatsächliche Hardwarekonfiguration erkennen.
+
+## Hardware fingerprint
+
+Hardwarebezogene Signale liefern zusätzliche Entropie für das Browser-Fingerprinting.
+
+Zu diesen Parametern gehören die Eigenschaften der Grafik- und Audiowiedergabe.
+
+### Canvas
+
+Mit der Canvas-API können Websites unsichtbare Bilder im Browser zeichnen.\
+Da sich die Darstellung zwischen Geräten leicht unterscheidet, kann das resultierende Bild in einen Hash umgewandelt und für das Fingerprinting verwendet werden.
+
+### WebGL
+
+WebGL gibt Aufschluss über die Grafikhardware des Geräts.
+
+Websites können den WebGL-Bericht auswerten oder ein unsichtbares 3D-Objekt rendern, um einen Fingerprint zu erzeugen.
+
+### AudioContext
+
+Beim Audio-Fingerprinting werden Unterschiede in der Audioverarbeitung genutzt, um einen eindeutigen Hash zu erzeugen.
+
+### ClientRects
+
+Diese Methode misst, wie Elemente auf der Seite positioniert und dargestellt werden.
+
+Mit Gologin können Sie diese Signale verändern oder maskieren, um für jedes Profil einen konsistenten, aber einzigartigen Fingerprint zu erzeugen.
+
+## WebRTC
+
+WebRTC ist eine Technologie für die Echtzeitkommunikation in Browsern.
+
+Sie kann jedoch lokale oder echte IP-Adressen gegenüber Websites preisgeben.
+
+Mit Gologin können Sie das WebRTC-Verhalten steuern:
+
+- **Based on IP** – WebRTC meldet die Proxy-IP
+- **Off** – WebRTC ist deaktiviert
+
+So werden IP-Lecks verhindert, und der Fingerprint bleibt konsistent mit dem Proxy-Standort.
+
+## Bewährte Vorgehensweisen
+
+So behalten Sie stabile Browser-Identitäten bei:
+
+- Fingerprint-Einstellungen nach dem Erstellen der Konten unverändert lassen
+- Zeitzone und Sprache an den Proxy-Standort anpassen
+- häufige Änderungen an hardwarebezogenen Parametern vermeiden
+- für jedes Profil einen eigenen Proxy verwenden
+
+Stabile Fingerprints sorgen dafür, dass Websites das Profil als durchgängig dasselbe Gerät erkennen.
+
+## So überprüfen Sie Ihren Fingerprint
+
+Besuchen Sie nach dem Start eines Profils eine dieser Websites, um Ihren Fingerprint zu überprüfen:
+
+- [**iphey.com**](https://iphey.com) -- Zeigt eine allgemeine Vertrauensbewertung an. Ein grünes Ergebnis „Trusted“ bedeutet, dass Ihr Profil wie ein echter Browser aussieht.
+- [**pixelscan.net**](https://pixelscan.net) -- Detaillierte Aufschlüsselung der einzelnen Fingerprint-Parameter.
+
+### Häufige Probleme und ihre Bedeutung
+
+| Problem | Bedeutung | Lösung |
+| --- | --- | --- |
+| OS mismatch | Das Betriebssystem des Profils stimmt nicht mit dem Betriebssystem Ihres echten Geräts überein | Erstellen Sie ein neues Profil, das zu Ihrem tatsächlichen Betriebssystem passt |
+| WebGL mismatch | Die GPU-Informationen passen nicht zur angegebenen Hardware | Wird in der Regel automatisch korrekt konfiguriert. Wenn es dennoch markiert wird, probieren Sie in den Profileinstellungen einen anderen WebGL-Modus aus. |
+| Timezone mismatch | Die Zeitzone stimmt nicht mit dem Proxy-Standort überein | Gologin passt die Zeitzone automatisch an die Proxy-IP an. Wenn sie falsch ist, prüfen Sie Ihren Proxy-Standort. |
+| Canvas hash changed | Der Canvas-Fingerprint unterscheidet sich zwischen Sitzungen | Setzen Sie Canvas auf „Off“ oder „Block“ statt auf „Add Noise“, um Konsistenz über mehrere Geräte hinweg zu erreichen |
+
+Siehe auch
+
+- [Was Sie sicher ändern können](https://gologin.com/docs/whats-safe-to-change)
+- [Wie Browser-Fingerprints funktionieren](https://gologin.com/docs/how-browser-fingerprints-work)
+- [Proxy- und Fingerprint-Konfiguration je Plattform](https://gologin.com/docs/proxy-and-fingerprint-setup-per-platform)
+- [Häufige Fehler, die Sie vermeiden sollten](https://gologin.com/docs/common-mistakes-to-avoid)

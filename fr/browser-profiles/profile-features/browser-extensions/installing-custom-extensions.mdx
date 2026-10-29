@@ -1,0 +1,35 @@
+---
+title: "Installer des extensions personnalisées"
+---
+
+Les **extensions personnalisées** vous permettent d'utiliser des outils privés, modifiés ou développés en local dans vos profils Gologin. Contrairement aux extensions publiques, les extensions personnalisées s'installent manuellement à partir des fichiers de l'extension.
+
+## Vérifier la compatibilité de votre extension
+
+**Gologin ne prend pas en charge les archives .crx ou .zip.** Vous pouvez toutefois convertir ces fichiers en **dossier décompressé**, un format pris en charge par Gologin.
+
+Si vous avez une archive **.zip**, il vous suffit de l'extraire : le dossier obtenu peut être ajouté comme extension personnalisée.
+
+Si vous avez un fichier **.crx** :
+
+1. Renommez votre extension.crx en extension.zip
+2. Extrayez-le avec l'application 7-zip ou avec l'outil d'extraction intégré à votre système d'exploitation
+
+<Warning>
+  Assurez-vous que le dossier extrait contient le fichier **manifest.json** ainsi que les autres ressources de l'extension (js, html, icônes, etc.). \
+  Si vous ne parvenez pas à ajouter l'extension, vérifiez la présence du fichier manifext.json
+</Warning>
+
+## Installer une extension décompressée
+
+Gologin prend en charge les extensions sous forme de **dossiers décompressés**. Pour installer une telle extension :
+
+1. **Cliquez sur les 3 points du profil** sur lequel vous souhaitez installer l'extension, puis cliquez sur **Paramètres**
+2. Accédez à l'onglet **Extensions** et cliquez sur **Ajouter des extensions**
+3. Cliquez sur le bouton **Télécharger une extension personnalisée**
+4. Ouvrez le dossier qui contient l'extension et cliquez sur **Sélectionner le dossier**
+5. Cliquez sur **Sauvez** pour appliquer les modifications
+
+<Frame>
+  ![Installer une extension personnalisée](/images/installing_custom_extension.gif)
+</Frame>

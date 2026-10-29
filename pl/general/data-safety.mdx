@@ -1,0 +1,13 @@
+---
+title: "Bezpieczeństwo danych"
+---
+
+W Gologin stosujemy wiodące w branży praktyki bezpieczeństwa, aby zapewnić ochronę danych logowania użytkowników i danych wrażliwych.
+
+Korzystamy z **funkcji wyprowadzania klucza Argon2** – nowoczesnego i bardzo bezpiecznego standardu, który został zaprojektowany tak, aby odpierać ataki typu brute-force oraz ataki z użyciem procesorów graficznych (GPU), a jednocześnie zapewniać wysoką wydajność. Hasło każdego użytkownika jest przetwarzane na unikalny klucz kryptograficzny, który nigdy nie jest przechowywany w pierwotnej postaci. Co ważne, my również nie mamy dostępu do tych kluczy na żadnym etapie.
+
+Ze względu na jednokierunkowy charakter kryptograficznych funkcji skrótu odtworzenie oryginalnego hasła na podstawie wyniku jest matematycznie niewykonalne. Na naszych serwerach przechowywane są wyłącznie skróty, dzięki czemu hasła w postaci jawnej pozostają nieznane i nie da się ich odzyskać. Z tego powodu zdecydowanie zalecamy bezpieczne przechowywanie własnych haseł.
+
+W przeglądarce Orbita używamy szyfrowania **AES (Advanced Encryption Standard)**, aby bezpiecznie szyfrować przechowywane dane, w tym hasła i pliki cookie. Dzięki temu poufne informacje są chronione zarówno podczas przechowywania, jak i w trakcie użytkowania.
+
+Gologin został zaprojektowany w oparciu o rygorystyczną architekturę zerowego dostępu: nie mamy możliwości przeglądania, modyfikowania ani usuwania profili użytkowników oraz danych osobowych. Dostęp może zostać przyznany wyłącznie przez samego użytkownika, poprzez ręczne udostępnienie lub przeniesienie.

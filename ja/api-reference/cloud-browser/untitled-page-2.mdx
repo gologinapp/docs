@@ -1,0 +1,104 @@
+---
+title: "ブラウザセッションの管理"
+---
+
+## セッションを閉じる
+
+自動化の処理が完了したら、必ずセッションを閉じてください。クラウドリソースが解放され、同時接続数の上限に達するのを防げます。
+
+```javascript Puppeteer
+await browser.close();
+```
+
+```python Playwright
+await browser.close()
+```
+
+## 複数の操作でセッションを再利用する
+
+`puppeteer.connect()` や `connect_over_cdp()` を呼び出すたびに、新しいセッションが開始されます。複数の操作を順番に実行する場合(たとえばエージェントのワークフローなど)は、同じ接続を再利用してください。そうしないと、ステップ間でCookie、ローカルストレージ、ページの状態が失われます。
+
+**推奨パターン:セッションのシングルトン**
+
+```javascript Puppeteer
+// session.js
+const puppeteer = require('puppeteer-core');
+
+let _browser = null;
+let _page = null;
+
+async function getSession(token, profileId) {
+  if (_browser && _browser.isConnected()) {
+    return { browser: _browser, page: _page };
+  }
+
+  const url = `https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}`;
+  _browser = await puppeteer.connect({ browserWSEndpoint: url, defaultViewport: null });
+  const pages = await _browser.pages();
+  _page = pages[0] || await _browser.newPage();
+
+  return { browser: _browser, page: _page };
+}
+
+async function closeSession() {
+  if (_browser) {
+    await _browser.close();
+    _browser = null;
+    _page = null;
+  }
+}
+
+module.exports = { getSession, closeSession };
+```
+
+```python Playwright
+# session.py
+from playwright.async_api import async_playwright, Browser, Page
+
+_browser: Browser | None = None
+_page: Page | None = None
+_playwright = None
+
+async def get_session(token: str, profile_id: str):
+    global _browser, _page, _playwright
+
+    if _browser and _browser.is_connected():
+        return _browser, _page
+
+    url = f'https://cloudbrowser.gologin.com/connect?token={token}&profile={profile_id}'
+    _playwright = await async_playwright().start()
+    _browser = await _playwright.chromium.connect_over_cdp(url)
+    pages = _browser.contexts[0].pages if _browser.contexts else []
+    _page = pages[0] if pages else await _browser.new_page()
+
+    return _browser, _page
+
+async def close_session():
+    global _browser, _page, _playwright
+    if _browser:
+        await _browser.close()
+    if _playwright:
+        await _playwright.stop()
+    _browser = None
+    _page = None
+    _playwright = None
+```
+
+## 切断への対処
+
+ネットワークの中断やクラウド側のタイムアウトにより、接続が切断されることがあります。各操作の前に接続状態を確認し、必要に応じて再接続してください。
+
+```javascript Puppeteer
+if (!browser.isConnected()) {
+  // reconnect
+  const { browser: b, page: p } = await getSession(token, profileId);
+}
+```
+
+## 同時接続数
+
+アクティブなセッションは、それぞれご利用プランの同時接続数の上限にカウントされます。エラーを避けるには、次の点にご注意ください。
+- 使い終わったセッションは閉じる
+- 同じプロファイルに複数のプロセスから同時に接続しない
+
+レート制限については、こちらをご覧ください: https://gologin.com/docs/api-reference/limitations/rate-limits

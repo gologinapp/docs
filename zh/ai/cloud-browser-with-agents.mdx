@@ -1,0 +1,206 @@
+---
+title: "在 AI Agent 中使用 Cloud Browser"
+description: "如何通过 Puppeteer/Playwright 将 Gologin Cloud Browser 用作 AI Agent 的远程浏览器运行环境"
+---
+
+Gologin Cloud Browser 可以用作 AI Agent 的**远程浏览器运行环境**。
+Agent（Claude、Codex 或任何支持工具调用的 Agent）可以触发你的代码连接到 Cloud Browser 会话，并执行真实的浏览器操作，例如导航、点击、输入和数据提取。
+
+这使你能够实现以下 Agent 工作流：
+- 需要 JavaScript 渲染和真实用户交互（点击、滚动、填写表单）
+- 通过配置文件实现持久会话（Cookie/存储）
+- 代理路由和可重复使用的浏览器配置
+
+<Tip>
+  **不想从零开始编写工具？** 使用 [Agent Browser CLI](/zh/cli-tools/agent-browser) 或 [AI Skills](/zh/api-reference/ai-integrations/ai-skills)，即可获得现成的 Agent 能力，无需编写 Puppeteer/Playwright 代码。
+</Tip>
+
+> 注意：本页介绍的是一种技术集成模式，不会改变目标网站的规则，也不保证一定能够访问。
+
+## 集成模式概览
+
+AI Agent 通常不会直接"连接到浏览器"，而是按以下方式工作：
+
+1. 规划下一步要做什么
+2. 调用你提供的工具/函数（工具调用）
+3. 读取结构化结果并继续执行
+
+使用 Gologin Cloud Browser 时，你的工具/函数会执行以下操作：
+
+1. 连接到云端会话（令牌 + 可选的配置文件）
+2. 执行浏览器操作（导航、点击、提取、截图）
+3. 将结构化结果返回给 Agent
+
+## 推荐架构
+
+**AI Agent（Claude / Codex / 其他）**
+-> 调用你的**工具服务器**（你的 Node/Python 服务）
+-> 工具服务器使用 **Playwright/Puppeteer**
+-> 连接到 **Gologin Cloud Browser**（远程端点）
+-> 将结果（文本/JSON/截图引用）返回给 Agent
+
+采用这种模式的原因：
+- Gologin 令牌始终保存在服务器端
+- 你可以应用速率限制、重试、日志记录和安全检查
+- 你可以一致地复用配置文件和代理
+
+## 前提条件
+
+### 1) API 令牌（服务器端）
+
+在控制台中生成你的令牌：
+`个人区域 -> API 令牌`
+https://app.gologin.com/personalArea/TokenApi
+
+> 请将令牌视为机密信息，不要在客户端代码中暴露它。
+
+### 2)（推荐）通过 REST API 管理配置文件和代理
+
+Cloud Browser 是执行/运行时层。如需管理配置文件（创建/更新）并配置代理，请使用 REST API：
+- Profiles API：https://gologin.com/docs/api-reference/profile
+- Proxy API：https://gologin.com/docs/api-reference/proxy
+
+> **重要提示：** 如果配置文件的代理配置有误或无法访问，云浏览器会话将因代理超时错误而无法启动。连接前请确认代理可以访问，或在测试时将代理模式设置为 `none`。
+
+## 两种 URL——请注意区别
+
+Gologin 为 Cloud Browser 提供了两种不同的 URL，它们的用途不同：
+
+| URL | 用途 | 适用场景 |
+|-----|----------|---------|
+| `https://cloudbrowser.gologin.com/connect?token=...&profile=...` | CDP 端点 | Puppeteer/Playwright 自动化 |
+| `https://cloudbrowser.gologin.com/browsers/{profileId}/{sessionId}/` | 流式网页界面（实时查看） | 仅用于可视化调试 |
+
+**只有 `/connect` 端点可用于 Puppeteer/Playwright。** 实时查看 URL 返回的是 HTML 流式界面，不能用作 `browserWSEndpoint`。
+
+## 连接到云端会话
+
+请使用标准的 Cloud Browser 端点：
+
+```
+https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}
+```
+
+- `token` — 你的 Gologin API 令牌
+- `profile` — 配置文件 ID（可选）
+  - 需要持久会话和可控配置时，请使用 `profileId`
+  - 如果省略 `profile`，可能会为该会话创建一个新的配置文件
+
+`/connect` 端点会自动启动浏览器会话，连接前无需单独调用 API。
+
+实现示例（Puppeteer/Playwright）：
+https://gologin.com/docs/api-reference/cloud-browser/getting-started
+
+## 预置 CLI 工具与自定义工具
+
+为 Agent 提供浏览器访问能力有两种方式：
+
+### 方案 A：使用 Gologin CLI 工具（大多数情况下推荐）
+
+- **[Agent Browser CLI](/zh/cli-tools/agent-browser)** — 现成的 CLI，包含 `open`、`snapshot`、`click`、`type`、`fill`、`screenshot`、`close` 以及 30 多个其他命令。内置常驻守护进程、基于引用的交互方式，以及专为 Agent 循环设计的精简输出。
+- **[Web Access CLI](/zh/cli-tools/web-access)** — 统一的 CLI，将抓取（Web Unlocker）和浏览器交互整合在一个工具中。
+- **[AI Skills](/zh/api-reference/ai-integrations/ai-skills)** — 适用于 Claude Code 的即插即用技能，可自动处理所有事务。
+
+### 方案 B：使用 Puppeteer/Playwright 构建自定义工具
+
+如果你需要完全掌控，可以围绕 Playwright/Puppeteer 实现一小组封装，并将它们作为工具提供给 Agent。
+
+通常只需一组最小的工具集：
+- `open_url(url)`
+- `click(selector)`
+- `type(selector, text)`
+- `wait_for(selector | timeout)`
+- `extract_text(selector | page)`
+- `screenshot()`
+- `close_session()`
+
+这些并不是 Gologin 的专用 API，而是对标准 Playwright/Puppeteer 命令的轻量封装，并在 Cloud Browser 会话中执行。
+
+## 关键：跨工具调用的会话管理
+
+这是 Agent 工作流中最重要的架构问题。
+
+AI Agent 会在多个步骤中依次调用工具。每次工具调用都必须复用**同一个浏览器连接**——如果每次工具调用都新建一个 `puppeteer.connect()`，各步骤之间的 Cookie、本地存储和页面状态都会丢失。
+
+**推荐模式：** 在工具服务器上维护一个会话单例。
+
+```js
+// session.js — shared browser/page instance
+let _browser = null;
+let _page = null;
+
+const TOKEN = process.env.GOLOGIN_TOKEN;
+const PROFILE_ID = process.env.GOLOGIN_PROFILE_ID;
+
+async function getSession() {
+  if (_browser && _browser.isConnected()) {
+    return { browser: _browser, page: _page };
+  }
+
+  const cloudBrowserUrl = `https://cloudbrowser.gologin.com/connect?token=${TOKEN}&profile=${PROFILE_ID}`;
+  _browser = await puppeteer.connect({
+    browserWSEndpoint: cloudBrowserUrl,
+    defaultViewport: null,
+  });
+
+  const pages = await _browser.pages();
+  _page = pages[0] || await _browser.newPage();
+
+  return { browser: _browser, page: _page };
+}
+
+async function closeSession() {
+  if (_browser) {
+    await _browser.close();
+    _browser = null;
+    _page = null;
+  }
+}
+
+module.exports = { getSession, closeSession };
+```
+
+之后，每个工具都调用 `getSession()` 来获取共享实例：
+
+```js
+// tools.js
+const { getSession } = require('./session');
+
+async function open_url(url) {
+  const { page } = await getSession();
+  await page.goto(url, { waitUntil: 'domcontentloaded' });
+  return { url: page.url(), title: await page.title() };
+}
+
+async function extract_text(selector) {
+  const { page } = await getSession();
+  const el = await page.$(selector);
+  if (!el) return { found: false };
+  return { found: true, text: await el.evaluate(e => e.innerText) };
+}
+```
+
+## 工具应向 Agent 返回什么？
+
+请返回体量小且结构化的结果，以便 Agent 能够可靠地继续执行，例如：
+- 当前 URL
+- 提取的文本 / JSON
+- 是否找到了元素
+- 截图引用（如果你保存了截图）
+- 错误类型（超时、导航错误等）
+
+## 运维说明
+
+- **安全：** 令牌只保存在服务器端，切勿嵌入客户端应用。
+- **会话管理：** 使用完毕后请关闭会话，以免触及并发限制。Agent 工作流完成时，请调用 `closeSession()`。
+- **可靠性：** 针对暂时性故障（超时、导航错误）添加重试/退避机制。
+- **可观测性：** 调试时，可以在可用时打开实时查看。URL 格式示例：
+  `https://cloudbrowser.gologin.com/browsers/{profileId}/{sessionId-or-view-token}/`
+
+## 限制
+
+- 结果取决于目标网站和你的配置。
+- 网站可能会阻止自动化操作；Cloud Browser 只是运行环境，不提供任何保证。
+- 多个会话同时连接同一个配置文件可能会产生冲突，请确保每个配置文件同一时间只使用一个连接。
+- 适用配额和速率限制：
+  https://gologin.com/docs/api-reference/limitations/rate-limits

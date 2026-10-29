@@ -1,0 +1,41 @@
+---
+title: "Mauvaise localisation du proxy sur un site web ou un outil de vérification"
+description: "Lorsque le proxy affiche une géolocalisation incorrecte pour vos proxys tiers"
+---
+
+## **Pourquoi cela se produit-il et comment cela fonctionne-t-il ?**
+
+Les sites web utilisent différentes bases de données de géolocalisation IP pour déterminer le pays d'une adresse IP. Ces bases de données ne sont pas synchronisées entre elles, ce qui peut conduire à ce que la même adresse IP soit associée à plusieurs localisations différentes.
+
+Un autre facteur important est de savoir si une adresse IP est signalée comme appartenant à un datacenter, à un VPN ou à tout autre service.\
+Si une adresse IP est reconnue comme appartenant à un service, son score de confiance peut chuter fortement, ce qui augmente le risque qu'elle soit signalée ou bloquée par les sites web.
+
+Nous déconseillons d'utiliser des proxys présentant les écarts décrits ci-dessus.
+
+## **Comment vérifier mon proxy ?**
+
+1. Récupérez l'adresse IP sortante de votre proxy ici : il suffit de survoler l'icône en forme de flèches.
+
+   ![image (55).png](/images/image\(55\).png)
+2. Il existe d'autres outils sur Internet, mais nous utilisons généralement ces deux-là pour obtenir des résultats cohérents :
+   - Pour vérifier la géolocalisation de l'adresse IP : [<u>https://www.iplocation.net/ip-lookup</u>](https://www.iplocation.net/ip-lookup)
+
+     ❗Idéalement, le même pays doit s'afficher sur tous les outils de vérification.
+   - Pour vérifier les services associés à l'adresse IP : [<u>https://whatismyipaddress.com/ip/</u>](https://whatismyipaddress.com/ip/)
+
+     ❗Aucun service ne doit être indiqué pour cette adresse IP.
+
+   Vous trouverez ci-dessous des exemples pour vous aider à interpréter les résultats :
+
+   ![image.png](/images/image.png)
+
+## **Comment éviter les problèmes de proxy**
+
+Pour limiter les problèmes liés à une mauvaise localisation du proxy :
+
+- **Utilisez des fournisseurs de proxys réputés** – Les fournisseurs de qualité veillent à ce que leurs adresses IP soient correctement classées et enregistrées. Vous pouvez utiliser les proxys Gologin ou [<u>les proxys que nous recommandons</u>](https://gologin.com/proxies/proxy-type/).
+- **Évitez les proxys de datacenter pour les tâches sensibles** – Les proxys résidentiels ou mobiles ont généralement un meilleur score de confiance.
+- **Testez votre proxy avant de l'utiliser** – Vérifiez-le avec plusieurs outils de vérification d'IP pour vous assurer que les résultats sont cohérents.
+- **Changez d'adresse IP si nécessaire** – Si une adresse IP est signalée à tort, passer à une autre adresse IP peut résoudre le problème.
+
+En portant attention à ces détails, vous profiterez d'une expérience plus fluide et plus fiable avec Gologin.

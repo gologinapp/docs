@@ -1,0 +1,171 @@
+---
+title: "Serveur MCP"
+description: "Gérez vos profils de navigateur Gologin par des conversations avec une IA grâce au Model Context Protocol"
+---
+
+Le Serveur MCP de Gologin vous permet de gérer vos profils de navigateur par des conversations avec une IA, grâce au [Model Context Protocol](https://modelcontextprotocol.io/). Connectez-le à Claude Desktop, Cursor, Claude Code ou à tout client compatible MCP, et pilotez vos profils en langage naturel.
+
+---
+
+## Ce que vous pouvez faire
+
+- **Gestion des profils** — créer, modifier, supprimer et lister des profils de navigateur
+- **Configuration des proxys** — configurer des proxys sur vos profils
+- **Contrôle des empreintes** — personnaliser les empreintes du navigateur et les user agents
+- **Organisation en dossiers** — créer des dossiers et y classer vos profils
+- **Sessions de navigateur** — démarrer et arrêter des sessions de navigateur
+- **Informations du compte** — consulter l'état de votre abonnement et votre consommation
+
+---
+
+## Installation
+
+### Prérequis
+
+- Node.js 18 ou version supérieure
+- Un jeton d'API Gologin
+- Un compte Gologin actif
+
+### Obtenir votre jeton d'API
+
+1. Connectez-vous sur [gologin.com](https://gologin.com)
+2. Ouvrez **API & MCP** dans le tableau de bord
+3. Ouvrez l'onglet **API**
+4. Cliquez sur **Nouveau jeton** et copiez-le
+
+### Claude Desktop
+
+1. Ouvrez Claude Desktop → **Paramètres**
+2. Cliquez sur **Developer** dans la barre latérale, puis sur **Edit Config**
+3. Ajoutez ce qui suit dans `claude_desktop_config.json` :
+
+```json
+{
+  "mcpServers": {
+    "gologin-mcp": {
+      "command": "npx",
+      "args": ["gologin-mcp"],
+      "env": {
+        "API_TOKEN": "your-gologin-api-token-here"
+      }
+    }
+  }
+}
+```
+
+4. Redémarrez Claude Desktop
+5. Dans **Paramètres → Connectors**, vérifiez que « gologin-mcp LOCAL » apparaît
+
+### Claude Code
+
+Ajoutez ce qui suit dans les paramètres MCP de Claude Code :
+
+```json
+{
+  "mcpServers": {
+    "gologin-mcp": {
+      "command": "npx",
+      "args": ["gologin-mcp"],
+      "env": {
+        "API_TOKEN": "your-gologin-api-token-here"
+      }
+    }
+  }
+}
+```
+
+### Cursor
+
+Utilisez la même configuration JSON dans le fichier de paramètres MCP de Cursor.
+
+### Autres clients MCP
+
+Tout client compatible avec le Model Context Protocol peut utiliser la même structure de configuration.
+
+---
+
+## Exemples d'utilisation
+
+Une fois la connexion établie, parlez naturellement à votre assistant IA :
+
+**Compte**
+- « Quel est l'état de mon compte Gologin ? »
+- « Vérifie les détails de mon abonnement »
+
+**Création de profils**
+- « Crée un nouveau profil de navigateur avec un proxy américain »
+- « Configure 5 profils pour la gestion des réseaux sociaux »
+
+**Gestion des profils**
+- « Affiche-moi tous mes profils »
+- « Modifie le proxy du profil d'ID 123 pour utiliser un proxy britannique »
+- « Supprime le profil nommé 'test-profile' »
+
+**Organisation**
+- « Crée un dossier appelé 'Social Media Accounts' »
+- « Déplace le profil XYZ dans le dossier Social Media »
+
+**Sessions de navigateur**
+- « Démarre une session de navigateur pour mon profil »
+- « Arrête toutes les sessions de navigateur en cours »
+
+---
+
+## Scénarios concrets
+
+### Configurer des profils pour un nouveau client
+
+Vous accueillez un nouveau client qui a besoin de 10 profils de navigateur pour différents comptes publicitaires régionaux :
+
+> « Crée 10 profils de navigateur nommés 'Client X - US', 'Client X - UK', 'Client X - DE', etc. Configure chacun avec un proxy résidentiel du pays correspondant. Place-les tous dans un dossier appelé 'Client X'. »
+
+Claude crée les profils, configure les proxys et les organise, le tout en langage naturel.
+
+### Auditer votre configuration existante
+
+> « Affiche-moi tous les profils qui n'ont pas de proxy configuré. Et quels profils n'ont pas été utilisés au cours des 30 derniers jours ? »
+
+Un moyen rapide de repérer les profils mal configurés ou abandonnés sans parcourir le tableau de bord.
+
+### Préparer les profils avant une automatisation
+
+Le Serveur MCP s'occupe de la préparation, les outils CLI de l'exécution :
+
+1. **MCP :** « Crée 5 profils avec des proxys américains pour du scraping et place-les dans un dossier 'Scraping' »
+2. **CLI :** `gologin-agent-browser open https://target.com --profile profile_1` pour lancer l'automatisation
+3. **MCP :** « Supprime tous les profils du dossier 'Scraping' » une fois le travail terminé
+
+### Gestion d'équipe
+
+> « Combien de sessions actives sont en cours en ce moment ? Quelle est la limite de sessions de mon forfait ? »
+> « Vérifie mon abonnement : combien de profils me reste-t-il ? »
+
+Pratique pour les responsables d'équipe qui doivent suivre la consommation sans ouvrir le tableau de bord.
+
+---
+
+## Serveur MCP, outils CLI et AI Skills
+
+| Outil | Idéal pour | Fonctionnement |
+|---|---|---|
+| **Serveur MCP** | Gestion des profils, opérations sur le compte | Langage naturel via le protocole MCP |
+| [Outils CLI](/fr/cli-tools/web-access) | Web scraping, automatisation du navigateur, opérations par lot | Commandes shell |
+| [AI Skills](/fr/api-reference/ai-integrations/ai-skills) | Fonctionnalités d'agent prêtes à l'emploi dans Claude Code | Extensions de type skill qui encapsulent les outils CLI |
+
+Le Serveur MCP est dédié à la **gestion des profils et du compte**. Pour le web scraping et l'automatisation du navigateur, utilisez les [outils CLI](/fr/cli-tools/web-access) ou les [AI Skills](/fr/api-reference/ai-integrations/ai-skills).
+
+---
+
+## Voir aussi
+
+- [AI Skills](/fr/api-reference/ai-integrations/ai-skills) — skills d'accès web prêtes à l'emploi pour Claude Code
+- [Web Access CLI](/fr/cli-tools/web-access) — CLI unifiée de scraping et de navigateur
+- [Agent Browser CLI](/fr/cli-tools/agent-browser) — CLI de navigateur cloud pour agents IA
+
+<Card title="Package npm" icon="npm" href="https://www.npmjs.com/package/gologin-mcp">
+  gologin-mcp
+</Card>
+
+<Card title="Code source" icon="github" href="https://github.com/gologinapp/gologin-mcp">
+  gologinapp/gologin-mcp
+</Card>

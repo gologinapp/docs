@@ -1,0 +1,101 @@
+---
+title: "Cookie Bot"
+---
+
+Cookie Bot 是 Gologin 内置的工具，可以为简介自动生成浏览 Cookie。这个工具可以帮助您实现养号预热流程的自动化。
+
+它会访问热门网站，并执行滚动、点击等简单操作，以此模拟自然的浏览行为。这有助于在登录账号之前营造更真实的浏览器环境。
+
+使用 Cookie Bot 可以帮助您：
+
+- 生成初始浏览历史
+- 为网站创建自然的 Cookie
+- 预热新的浏览器简介
+- 为账号登录或自动化操作做好准备
+
+## Cookie Bot 的工作原理
+
+Cookie Bot 会访问一组常见网站，并模拟基本的用户交互。
+
+这些操作可能包括：
+
+- 加载页面
+- 滚动浏览内容
+- 点击按钮
+- 正在加载图像
+
+<Frame>
+  ![Cookie Bot](/images/cookie_bot.png)
+</Frame>
+
+这些活动会在简介中生成 Cookie 和浏览数据，使浏览器会话看起来更自然。
+
+## Cookie Bot 的功能和设置
+
+您目前可以配置以下设置：
+
+- **正在加载图像**\
+  开启 - 加载图像\
+  关闭 - 不加载图像，节省代理流量
+- **使用滚动**\
+  开启 - 机器人会滚动浏览页面，模拟人类行为\
+  关闭 - 机器人不会滚动页面，直接进入下一步
+- **使用自动点击**\
+  开启 - 会为您**接受 Cookie 请求**\
+  关闭 - 不会点击任何内容
+
+目前尚不支持：
+
+- 手动录制供机器人执行的工作流程
+- 自定义机器人的点击内容
+
+## 运行 Cookie Bot
+
+### 为单个简介运行 Cookie Bot
+
+1. 前往**所有简介**页面。
+2. 点击简介上的**三个点**。
+3. 选择**自动化**。
+4. 查看机器人将要访问的网站列表。
+5. 如有需要，调整可选设置。
+6. 点击**运行**。
+
+<Frame>
+  ![为简介运行 Cookie Bot](/images/run_cookie_bot_for_profile-1.gif)
+</Frame>
+
+Cookie Bot 将模拟浏览活动，并为该简介生成 Cookie。
+
+### 为多个简介运行 Cookie Bot
+
+Gologin 还支持**同时为多个简介**运行 Cookie Bot。
+
+操作方法：
+
+1. 在简介表格中选择多个简介。
+2. 选择**自动化**。
+3. 配置设置。
+4. 点击**运行**。
+
+<Frame>
+  ![为多个简介运行 Cookie Bot](/images/run_cookie_bot_for_multiple_profiles.gif)
+</Frame>
+
+所有选中的简介将同时开始执行该流程。
+
+## 最佳实践
+
+为获得最佳效果：
+
+- 在登录新账号之前运行 Cookie Bot
+- 在此过程中保持简介的代理处于启用状态
+- 避免对同一个简介过于频繁地运行 Cookie Bot
+
+这有助于保持自然的浏览环境。
+
+## 另请参阅
+
+- [同步运行](https://gologin.com/docs/browser-profiles/profile-features/run-with-sync)
+- [安全创建新账号](https://gologin.com/docs/creating-new-accounts-safely)
+- [维持信任评分](https://gologin.com/docs/maintaining-trust-score)
+- [从其他反检测浏览器迁移](https://gologin.com/docs/general/migration-from-other-tools)

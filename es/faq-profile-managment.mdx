@@ -1,0 +1,81 @@
+---
+title: "FAQ: Perfiles"
+---
+
+### ¿Puedo ejecutar varios perfiles al mismo tiempo?
+
+Sí. Gologin te permite ejecutar varios perfiles de navegador de forma simultánea, según los recursos de tu sistema y tu plan de suscripción.
+
+Cada perfil se ejecuta en un entorno de navegador aislado, con su propia huella digital, cookies y configuración de proxy.
+
+### ¿Puedo usar el mismo proxy para varios perfiles?
+
+Técnicamente sí, pero no se recomienda.
+
+Usar el mismo proxy para varios perfiles puede vincular las cuentas entre sí y reducir su nivel de confianza en determinadas plataformas.
+
+Para obtener los mejores resultados, usa **un proxy único para cada perfil**.
+
+### ¿Qué pasa si cierro un perfil de forma incorrecta?
+
+Si un perfil se cierra antes de que termine la sincronización, es posible que no se guarden los datos más recientes de la sesión.
+
+Esto puede provocar:
+
+- pérdida de cookies
+- pérdida del estado de la sesión
+- que los sitios web cierren tu sesión
+
+Cierra siempre los perfiles de forma normal y espera a que el estado del perfil vuelva a **Ready**.
+
+### ¿Puedo iniciar un mismo perfil en varios dispositivos al mismo tiempo?
+
+Es técnicamente posible, pero no se recomienda.
+
+Ejecutar el mismo perfil a la vez en distintos dispositivos puede causar conflictos de sincronización y aumentar el riesgo de problemas con las cuentas.
+
+### ¿Puedo copiar o duplicar un perfil?
+
+Sí. Gologin te permite **clonar perfiles**.
+
+Al clonar un perfil se copian su configuración, la configuración de la huella digital y su entorno, lo que te permite crear rápidamente perfiles similares.
+
+### ¿Puedo conectarme a los perfiles mediante RDP, VNC u otras herramientas remotas?
+
+Los perfiles de Gologin no están emulados: se ejecutan en tu dispositivo de forma local o en la nube. No tienen un sistema operativo subyacente, por lo que no hay nada a lo que conectarse. Sin embargo, si es necesario, puedes conectarte mediante RDP a un dispositivo en el que se estén ejecutando perfiles de Gologin.
+
+### ¿Puedo recuperar un perfil eliminado?
+
+Sí. Los perfiles eliminados se pueden restaurar durante un tiempo limitado desde la sección **Restore profiles** en Settings.
+
+Si el perfil no se ha eliminado de forma permanente, se puede recuperar con todos sus datos intactos.
+
+### ¿Por qué se cerró la sesión de mi cuenta después de iniciar un perfil?
+
+Esto puede ocurrir si:
+
+- cambió la ubicación del proxy
+- la huella digital cambió de forma significativa
+- las cookies no eran válidas o habían caducado
+
+Para reducir este riesgo, mantén coherentes la configuración del proxy, de la huella digital y de la zona horaria.
+
+### ¿Puedo activar las notificaciones en segundo plano de sitios web o extensiones en mis perfiles?
+
+Por ahora, Orbita no puede enviar notificaciones en segundo plano.
+
+### ¿Por qué no puedo ampliar la ventana del navegador a pantalla completa?
+
+La ventana del navegador de un perfil no puede ser más grande que la **Screen Resolution** definida en su configuración. Esto es intencional. Los sitios web pueden ver tanto el tamaño de pantalla que informa el perfil como el tamaño real de la ventana del navegador. En un dispositivo real, la ventana nunca es más grande que la pantalla, por lo que una discrepancia puede hacer que el perfil parezca sospechoso.
+
+Para hacer la ventana más grande:
+
+1. Abre **Settings** > **Advanced** del perfil.
+2. En **Screen Resolution**, elige un valor que coincida con la resolución de tu monitor o que sea ligeramente inferior.
+3. Guarda la configuración y vuelve a iniciar el perfil.
+
+Si ya tienes sesión iniciada en cuentas de este perfil, ten en cuenta que los sitios web pueden tratar un cambio de resolución como un dispositivo nuevo y pedir una verificación adicional.
+
+Para que los perfiles nuevos se abran con el tamaño adecuado desde el principio, define la resolución de pantalla en [Configuración predeterminada de perfiles](/es/default-profile-settings). Se aplicará a todos los perfiles que crees a partir de ese momento.
+
+Consulta también: [Configuración avanzada de perfiles](/es/general/account-and-billing/advanced-profile-settings), [Qué se puede cambiar de forma segura](/es/whats-safe-to-change)

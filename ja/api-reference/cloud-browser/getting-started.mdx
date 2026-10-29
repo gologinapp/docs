@@ -1,0 +1,136 @@
+---
+title: "はじめに"
+keywords: ["cloud browser", "headless browser"]
+---
+
+Gologin Cloud Browser を使うと、ブラウザセッションを**クラウド上**で実行し、1つの**接続 URL** を使って自動化ツール（Puppeteer / Playwright）から操作できます。
+
+<Tip>
+  **CLI をお探しですか？** [Gologin Agent Browser CLI](/ja/cli-tools/agent-browser) を使えば、コードを書かずにシェルから Cloud Browser を操作できます。スナップショット、参照（ref）、常駐デーモンを備えた AI エージェント向けのツールです。
+</Tip>
+
+## 接続 URL
+
+自動化ライブラリのリモートブラウザのエンドポイントとして、次の URL を使用します。
+
+```text
+https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}
+```
+
+- `token` — Gologin の**開発者トークン**です。
+- `profile` — **プロファイル ID**（省略可）：
+  - 指定した場合、Gologin はそのプロファイルをクラウドで実行します。
+  - 省略した場合、Gologin はセッション用に新しいプロファイルを作成します。
+
+> 注: この URL は、自動化ライブラリが **WebSocket 接続のエンドポイント**として使用します（たとえば Puppeteer の `browserWSEndpoint`）。\
+> トークンは Gologin のダッシュボードで生成できます: `個人エリア → API トークン`。
+
+<Frame>
+  ![Screenshotat Mar0514 27 28](/images/ScreenshotatMar0514-27-28.png)
+</Frame>
+
+## プロファイルの管理（代理人、指紋など）
+
+Cloud Browser は**接続レイヤー**（リモートブラウザセッション）にすぎません。\
+プロファイルの**作成・更新**、**代理人**の設定、**指紋**の構成、タグやその他のプロファイル設定を行うには、Gologin の **REST API** を使用してください。
+
+- Profiles API: https://gologin.com/docs/api-reference/profile
+- Proxies API: https://gologin.com/docs/api-reference/proxy
+
+# 使用例
+
+<CodeGroup>
+
+```javascript Puppeteer
+import puppeteer from 'puppeteer-core';
+
+const token = process.env.GL_API_TOKEN || 'your dev token here';
+const profileId = 'profile ID';
+
+const CLOUD_BROWSER_URL = `https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}`;
+const STOP_PROFILE_URL = `https://api.gologin.com/browser/${profileId}/web`;
+
+async function stopProfile() {
+  await fetch(STOP_PROFILE_URL, {
+    method: 'DELETE',
+    headers: { Authorization: `Bearer ${token}` },
+  });
+}
+
+async function main() {
+  const response = await fetch(CLOUD_BROWSER_URL);
+
+  if (!response.ok) {
+    const errorReason = response.headers.get('X-Error-Reason');
+    throw new Error(`Failed to start cloud browser: ${errorReason ?? response.statusText}`);
+  }
+
+  const browser = await puppeteer.connect({
+    browserWSEndpoint: CLOUD_BROWSER_URL,
+    ignoreHTTPSErrors: true,
+  });
+
+  const page = await browser.newPage();
+
+  await page.goto('https://iphey.com/', { waitUntil: 'networkidle2' });
+  const status = await page.$eval('.trustworthy:not(.hide)',
+    (elt) => elt?.innerText?.trim(),
+  );
+
+  return status;
+}
+
+main().catch(console.error).finally(stopProfile);
+```
+
+
+```python Playwright
+import asyncio
+import os
+
+import aiohttp
+from playwright.async_api import async_playwright
+
+token = os.environ.get('GL_API_TOKEN', 'your dev token here')
+profile_id = 'profile ID'
+
+CLOUD_BROWSER_URL = f'wss://cloudbrowser.gologin.com/connect?token={token}&profile={profile_id}'
+STOP_PROFILE_URL = f'https://api.gologin.com/browser/{profile_id}/web'
+
+
+async def stop_profile():
+    async with aiohttp.ClientSession() as session:
+        await session.delete(STOP_PROFILE_URL, headers={'Authorization': f'Bearer {token}'})
+
+
+async def main():
+    async with aiohttp.ClientSession() as session:
+        response = await session.get(CLOUD_BROWSER_URL.replace('wss://', 'https://'))
+        if response.status >= 400:
+            error_reason = response.headers.get('X-Error-Reason', response.reason)
+            raise RuntimeError(f'Failed to start cloud browser: {error_reason}')
+
+    async with async_playwright() as p:
+        browser = await p.chromium.connect_over_cdp(CLOUD_BROWSER_URL)
+
+        page = await browser.new_page()
+        await page.goto('https://iphey.com/', wait_until='networkidle')
+        status = await page.eval_on_selector(
+            '.trustworthy:not(.hide)',
+            '(elt) => elt?.innerText?.trim()',
+        )
+
+        print('status', status)
+
+        await browser.close()
+
+        return status
+
+if __name__ == '__main__':
+    try:
+        asyncio.run(main())
+    finally:
+        asyncio.run(stop_profile())
+```
+
+</CodeGroup>

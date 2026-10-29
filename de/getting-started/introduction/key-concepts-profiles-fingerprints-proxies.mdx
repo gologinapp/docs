@@ -1,0 +1,86 @@
+---
+title: "Grundlegende Konzepte"
+---
+
+Um Gologin effektiv zu nutzen, ist es wichtig, drei zentrale Konzepte zu verstehen. Sie bestimmen, wie Browserumgebungen voneinander getrennt und geschützt werden.
+
+Diese Komponenten arbeiten zusammen, um für jedes Konto eine eigene, unabhängige Browser-Identität zu schaffen.
+
+## Browserprofile
+
+Ein **Browserprofil** in Gologin ist eine isolierte Browserumgebung, die ein eigenes Gerät simuliert.
+
+Jedes Profil enthält seine eigenen:
+
+- Browser-Fingerprint
+- Cookies und Sitzungsdaten
+- Local Storage und Cache
+- Browser-Erweiterungen
+- Proxy-Verbindung
+
+Da die Profile voneinander isoliert sind, behandeln Websites sie als unterschiedliche Nutzer oder Geräte.
+
+So können Sie mehrere Konten verwalten, ohne dass sich Sitzungen gegenseitig beeinflussen. Das ist besonders wichtig, wenn Sie viele Konten gleichzeitig betreuen, wie in <br />[Bestehende Konten verwalten](https://gologin.com/docs/managing-existing-accounts) beschrieben.
+
+## Browser-Fingerprints
+
+Ein **Browser-Fingerprint** ist eine Reihe technischer Parameter, anhand derer Websites ein Gerät identifizieren.
+
+Dazu können gehören:
+
+- Betriebssystem
+- Browserversion
+- Bildschirmauflösung
+- installierte Schriftarten
+- Grafik- und WebGL-Daten
+- Zeitzone und Spracheinstellungen
+
+Gologin erzeugt für jedes Profil einen eindeutigen Fingerprint, sodass Websites jedes Profil als ein anderes Gerät wahrnehmen.
+
+Der Browser-Fingerprint bestimmt, wie Websites Ihr Gerät erkennen. Ausführliche Informationen finden Sie unter <br />[Wie Browser-Fingerprints funktionieren](https://gologin.com/docs/how-browser-fingerprints-work).
+
+## Proxys
+
+Ein **Proxy** weist einem Browserprofil eine andere IP-Adresse zu.
+
+Da Websites sowohl Browser-Fingerprints als auch IP-Adressen verfolgen, helfen Proxys dabei, die Netzwerk-Identitäten der Profile voneinander zu trennen.
+
+Mit Proxys kann jedes Profil so erscheinen, als würde es von einem anderen Standort oder Netzwerk aus verbunden.
+
+Die Kombination aus Proxy und eindeutigem Browser-Fingerprint hilft, eine konsistente und unabhängige Browser-Identität aufzubauen.
+
+Proxys dienen dazu, Konten auf Netzwerkebene zu trennen. Wenn Sie sich mit der Funktionsweise noch nicht auskennen, beginnen Sie mit [Was ist ein Proxy](https://gologin.com/docs/proxy/introduction/what-is-a-proxy).
+
+Sobald Sie diese Komponenten verstanden haben, wenden Sie sie im nächsten Schritt beim Erstellen von Profilen an. <br />Siehe [Profile erstellen](https://gologin.com/docs/browser-profiles/profile-management/creating-and-launching-profiles).
+
+## Das Profil-Betriebssystem muss zum Betriebssystem Ihres Geräts passen
+
+Das im Profil-Fingerprint eingestellte Betriebssystem sollte mit dem Betriebssystem des Geräts übereinstimmen, mit dem Sie das Profil öffnen. Zum Beispiel:
+
+- Wenn Sie ein Windows-Profil auf einem Mac öffnen, können erkennbare Unstimmigkeiten entstehen
+- Seiten wie iphey.com und pixelscan.net melden dies als Inkonsistenz im Fingerprint
+- LinkedIn und andere sensible Plattformen melden Sie unter Umständen sofort ab
+
+<Warning>
+  Wenn Sie an einem Mac arbeiten, erstellen Sie Mac-Profile. Wenn Sie unter Windows arbeiten, erstellen Sie Windows-Profile. Plattformübergreifende Nutzung (Erstellen auf einem Betriebssystem, Öffnen auf einem anderen) kann Ihre Konten gefährden.
+</Warning>
+
+## Die Standard-Fingerprint-Einstellungen sind sicher
+
+Gologin erzeugt automatisch realistische Fingerprint-Einstellungen für jedes neue Profil. Sie müssen WebGL, Canvas, Audio oder andere Fingerprint-Parameter nicht anpassen, es sei denn, Sie haben dafür einen bestimmten Grund.
+
+## So überprüfen Sie Ihren Fingerprint
+
+Rufen Sie nach dem Start eines Profils eine dieser Prüfseiten auf:
+
+- **iphey.com** -- zeigt eine allgemeine Vertrauensbewertung und weist auf Probleme hin
+- **pixelscan.net** -- detaillierte Fingerprint-Analyse
+
+Ein „grünes“ oder „vertrauenswürdiges“ Ergebnis bedeutet, dass Ihr Profil für Websites wie ein echter Browser aussieht.
+
+## Siehe auch
+
+- [Schnellstart: von null zum ersten Profil](https://gologin.com/docs/getting-started/introduction/quick-start-from-zero-to-your-first-profile)
+- [Checkliste für den ersten Start](https://gologin.com/docs/getting-started/setup/first-time-checklist)
+- [Was ist ein Proxy](https://gologin.com/docs/proxy/introduction/what-is-a-proxy)
+- [Fingerprint-Einstellungen des Profils](https://gologin.com/docs/profile-fingerprint-settings)

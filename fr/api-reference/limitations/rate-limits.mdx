@@ -1,0 +1,32 @@
+---
+title: 'Limites de débit'
+---
+Nous n'autorisons pas l'envoi d'un nombre illimité de requêtes à notre API. Si vous dépassez nos limites, vous devez attendre une période de refroidissement. <br />
+Nos limites de base :
+- Plans gratuits et d'essai : 300 requêtes par minute
+- Autres plans : 1200 requêtes par minute
+
+### Invalidation du token en cas de dépassement de la limite
+
+<Warning>
+Lorsque vous dépassez la limite de débit et recevez une réponse HTTP 429, votre token d'API est automatiquement invalidé. Cela signifie que votre token devient définitivement inutilisable et que vous devez en générer un nouveau.
+
+Il ne s'agit pas d'un simple délai d'attente temporaire : le token est révoqué. Planifiez soigneusement votre débit de requêtes et mettez en place un backoff exponentiel pour éviter cette situation.
+</Warning>
+
+### Erreurs de protection Cloudflare
+
+Si l'adresse IP de votre serveur envoie trop de requêtes, le CDN Cloudflare de Gologin peut bloquer complètement votre IP. Dans ce cas, les réponses de l'API sont des pages d'erreur HTML au lieu de JSON, ce qui provoque des erreurs telles que :
+
+```
+SyntaxError: Unexpected token 'e', "error code: 1015" is not valid JSON
+```
+
+Il s'agit d'une réponse de limitation de débit Cloudflare 1015. Elle se résout généralement d'elle-même en quelques minutes ou quelques heures. Pour l'éviter :
+- Mettez en place une limitation du débit des requêtes dans votre code
+- Utilisez un backoff exponentiel en cas d'échec
+- Évitez les rafales d'appels API en parallèle
+
+### Limites de création de profils
+
+Les nouveaux comptes sont limités à environ 300 créations de profils par jour. Cette limite peut varier selon le plan. Si vous avez besoin de limites plus élevées, contactez le support.

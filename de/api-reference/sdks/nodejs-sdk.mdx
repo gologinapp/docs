@@ -1,0 +1,116 @@
+---
+title: "Node.js SDK"
+description: "Gologin-Profile programmatisch mit dem Node.js SDK ausführen"
+---
+
+### Installation
+
+```bash
+npm i gologin
+```
+
+### Grundlegende Verwendung
+
+```javascript
+import GoLogin from 'gologin';
+
+const GL = new GoLogin({
+  token: 'your-api-token',
+  profile_id: 'your-profile-id',
+});
+
+const { status, wsUrl } = await GL.start();
+// Connect Puppeteer or Playwright using wsUrl
+// ... your automation code ...
+await GL.stop();
+```
+
+### Wichtige Parameter
+
+| Parameter | Standard | Beschreibung |
+|---|---|---|
+| `token` | erforderlich | Ihr Gologin API-Token |
+| `profile_id` | erforderlich | ID des Profils, das gestartet werden soll |
+| `executablePath` | auto | Pfad zur Orbita-Browser-Binärdatei |
+| `uploadCookiesToServer` | `false` | Lädt Cookies beim Stoppen des Profils in die Cloud hoch. Setzen Sie den Wert auf `true`, wenn Sie Sitzungen geräteübergreifend beibehalten möchten. |
+| `checkBrowserUpdate` | `true` | Prüft beim Start, ob für die Version dieses Profils ein Orbita-Update verfügbar ist. Setzen Sie den Wert auf `false`, um die aktuelle Version festzuhalten. |
+| `autoUpdateBrowser` | `true` | Lädt neue Orbita-Versionen automatisch herunter. Setzen Sie den Wert auf `false`, um unerwartete Updates zu verhindern. |
+| `extra_params` | `[]` | Zusätzliche Chromium-Flags, die an den Browser übergeben werden |
+
+### Profile stoppen
+
+```javascript
+// Stop and sync to cloud (default)
+await GL.stop();
+
+// Stop without syncing any data to cloud
+await GL.stop({ posting: false });
+```
+
+Hinweis: `posting: false` verhindert, dass Profildaten auf die Gologin-Server hochgeladen werden. Verwenden Sie diese Option auf Servern, auf denen Sie keine Cloud-Synchronisierung möchten.
+
+### Orbita-Browserversionen verwalten
+
+```javascript
+import { checkAndDownloadBrowserByOpts } from 'gologin';
+
+// Pre-download the latest Orbita version
+await checkAndDownloadBrowserByOpts({ lastActualCount: 1 });
+
+// Pre-download specific versions
+await checkAndDownloadBrowserByOpts({ majorVersions: [142, 143] });
+```
+
+Verwenden Sie `checkAndDownloadBrowserByOpts`, bevor Sie Profile parallel starten, um mehrere gleichzeitige Downloads zu vermeiden.
+
+### Mehr als 100 Profile parallel ausführen
+
+Wenn Sie viele Profile gleichzeitig auf einem Server ausführen:
+
+```javascript
+// Use a queue to limit concurrent launches
+const CONCURRENCY = 10;
+const queue = [...profileIds];
+const active = new Set();
+
+async function launchProfile(profileId) {
+  const gl = new GoLogin({ token, profile_id: profileId });
+  try {
+    const { wsUrl } = await gl.start();
+    // ... your automation ...
+  } finally {
+    await gl.stop();
+  }
+}
+
+async function processQueue() {
+  while (queue.length > 0) {
+    while (active.size >= CONCURRENCY) {
+      await new Promise(r => setTimeout(r, 1000));
+    }
+    const id = queue.shift();
+    active.add(id);
+    launchProfile(id).finally(() => active.delete(id));
+  }
+}
+```
+
+**Wichtig für Server:**
+- Begrenzen Sie die Anzahl gleichzeitiger Profilstarts (zu Beginn werden 10-20 empfohlen)
+- Laden Sie Orbita-Versionen vor dem Start herunter
+- Unter Linux: Installieren Sie Xvfb und setzen Sie `DISPLAY=:99`
+- Erhöhen Sie die Limits für Dateideskriptoren: `ulimit -n 65536`
+- Behalten Sie den Arbeitsspeicher im Blick: Jedes Profil benötigt ca. 300-500 MB
+
+### Debugging
+
+Setzen Sie die folgende Umgebungsvariable, um ausführliche Protokolle zu erhalten:
+
+```bash
+DEBUG=gologin node your-script.js
+```
+
+### GitHub & Changelog
+
+- Quellcode: https://github.com/gologinapp/gologin
+- [Changelog](/de/api-reference/sdks/nodejs-changelog)

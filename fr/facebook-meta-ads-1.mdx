@@ -1,0 +1,58 @@
+---
+title: "Gestion des CAPTCHA et de la 2FA"
+hidden: true
+---
+
+Les CAPTCHA et l'authentification à deux facteurs (2FA) sont des mécanismes de sécurité courants que les plateformes utilisent pour vérifier l'activité des utilisateurs.
+
+Ils font partie du fonctionnement normal des comptes et peuvent apparaître lors de la connexion, de l'inscription, ou lorsqu'une plateforme détecte des comportements inhabituels.
+
+Dans la plupart des cas, ces vérifications sont déclenchées par un changement d'environnement ou de comportement, plutôt que par une action précise.
+
+## Bonnes pratiques pour la 2FA
+
+L'authentification à deux facteurs ajoute une couche de sécurité supplémentaire à votre compte et est recommandée sur la plupart des plateformes.
+
+Voici un exemple de configuration de la 2FA dans Gologin à l'aide d'une application d'authentification :
+
+<Frame>
+  ![0319(14)](/images/0319\(14\).gif)
+</Frame>
+
+**Pour configurer la 2FA :**
+
+1. Ouvrez les paramètres de votre compte
+2. Activez la vérification en deux étapes
+3. Scannez le code QR à l'aide d'une application d'authentification (par exemple Google Authenticator)
+4. Saisissez le code à 6 chiffres pour confirmer la configuration
+
+## Quand la vérification apparaît
+
+Les plateformes demandent plus souvent une vérification lorsqu'un compte est consulté depuis un environnement nouveau ou incohérent.
+
+Les déclencheurs les plus courants sont les suivants :
+
+- Connexion depuis une adresse IP différente
+- Modification de la localisation ou des paramètres de l'appareil
+- Utilisation d'un profil sans historique d'activité
+- Actions rapides ou inhabituelles
+
+## Comment réduire la fréquence des vérifications
+
+Il est impossible d'éviter totalement les demandes de vérification, mais vous pouvez en réduire la fréquence en conservant une configuration cohérente.
+
+Pour limiter les vérifications :
+
+- Utilisez le même profil, le même proxy et la même localisation
+- Évitez de modifier fréquemment votre environnement
+- Développez l'activité progressivement dans le temps
+- Maintenez des sessions stables
+- Adoptez un comportement réaliste et non répétitif
+
+## À retenir
+
+Les CAPTCHA et la 2FA ne signalent pas un problème.
+
+Ils font partie de la manière dont les plateformes évaluent la confiance et confirment l'identité des utilisateurs.
+
+Un environnement stable et un comportement cohérent réduisent naturellement le besoin de vérifications répétées.

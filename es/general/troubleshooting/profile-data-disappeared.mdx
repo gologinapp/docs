@@ -1,0 +1,54 @@
+---
+title: "Los datos del perfil han desaparecido"
+description: "Por qué los datos de tu perfil de Gologin pueden parecer perdidos y cómo recuperarlos."
+---
+
+## Por qué pueden desaparecer los datos del perfil
+
+Hay varias razones por las que los datos de un perfil pueden parecer perdidos en Gologin. En la mayoría de los casos, los datos no se pierden de forma permanente.
+
+### Después de una actualización de Orbita
+
+Cuando Orbita (el navegador de Gologin) recibe una actualización de versión mayor, es posible que algunos datos locales se restablezcan. Esto incluye:
+
+- El historial del navegador
+- Los datos almacenados en caché localmente
+- Parte del almacenamiento específico de cada sitio
+
+<Info>
+Las cookies y los datos de sesión se conservan si el perfil se sincronizó con los servidores de Gologin antes de la actualización. Asegúrate siempre de que tus perfiles estén sincronizados antes de actualizar.
+</Info>
+
+### Mensaje "Profile already deleted"
+
+Este mensaje es engañoso. En la mayoría de los casos, **no** significa que tu perfil se haya eliminado realmente.
+
+Normalmente aparece cuando has alcanzado el límite de lanzamientos de perfiles en un plan de prueba o gratuito. Los datos de tu perfil siguen existiendo en los servidores de Gologin.
+
+**Solución:** pasa a un plan de pago o renueva tu suscripción para volver a acceder a tus perfiles.
+
+### Conservación de datos en el plan gratuito
+
+Cuando tu suscripción caduca, Gologin conserva los datos de tus perfiles en sus servidores durante un máximo de **180 días**. Pasado ese plazo, los datos se eliminan de forma permanente y no se pueden recuperar.
+
+<Warning>
+Si tu suscripción lleva mucho tiempo caducada, renuévala lo antes posible para evitar la pérdida permanente de datos. Los perfiles se eliminan 180 días después de la caducidad de la suscripción.
+</Warning>
+
+### Después de importar o exportar
+
+Cuando exportas un perfil y lo vuelves a importar, no todos los datos se incluyen en la exportación. Los siguientes datos **se conservan** en las exportaciones:
+
+- Cookies
+- Ajustes del proxy
+- Configuración del perfil (fingerprint, zona horaria, etc.)
+
+Los siguientes datos **no se incluyen** en las exportaciones:
+
+- El historial del navegador
+- Los datos de local storage e IndexedDB
+- Los archivos e imágenes en caché
+
+<Info>
+Si necesitas conservar los datos de sesión entre dispositivos, utiliza la sincronización en la nube integrada de Gologin en lugar de la exportación e importación manual. La sincronización en la nube conserva más datos del perfil que el formato del archivo de exportación.
+</Info>

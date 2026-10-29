@@ -1,0 +1,75 @@
+---
+title: "Sử dụng phiên trình duyệt"
+---
+
+Sau khi kết nối với một phiên Cloud Browser, bạn điều khiển phiên đó hoàn toàn thông qua thư viện tự động hóa của mình (Puppeteer hoặc Playwright). Gologin không cung cấp sẵn các phương thức thao tác riêng — mọi tương tác với trình duyệt đều là các lệnh gọi thư viện tiêu chuẩn.
+
+## Điều hướng
+
+```javascript Puppeteer
+await page.goto('https://example.com', { waitUntil: 'domcontentloaded' });
+console.log(await page.title());
+console.log(page.url());
+```
+
+```python Playwright
+await page.goto('https://example.com', wait_until='domcontentloaded')
+print(await page.title())
+print(page.url)
+```
+
+## Nhấp chuột và nhập văn bản
+
+```javascript Puppeteer
+await page.click('#search-input');
+await page.type('#search-input', 'hello world');
+await page.click('#submit-button');
+```
+
+```python Playwright
+await page.click('#search-input')
+await page.type('#search-input', 'hello world')
+await page.click('#submit-button')
+```
+
+## Chờ phần tử xuất hiện
+
+```javascript Puppeteer
+await page.waitForSelector('.results', { timeout: 5000 });
+```
+
+```python Playwright
+await page.wait_for_selector('.results', timeout=5000)
+```
+
+## Trích xuất văn bản
+
+```javascript Puppeteer
+const text = await page.$eval('.price', el => el.innerText);
+```
+
+```python Playwright
+text = await page.locator('.price').inner_text()
+```
+
+## Chụp ảnh màn hình
+
+```javascript Puppeteer
+await page.screenshot({ path: 'screenshot.png' });
+```
+
+```python Playwright
+await page.screenshot(path='screenshot.png')
+```
+
+## Làm việc với nhiều trang
+
+```javascript Puppeteer
+const page2 = await browser.newPage();
+await page2.goto('https://example.com/other');
+```
+
+```python Playwright
+page2 = await browser.new_page()
+await page2.goto('https://example.com/other')
+```

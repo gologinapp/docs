@@ -1,0 +1,93 @@
+---
+title: "Ile ruchu proxy potrzebuję?"
+---
+
+Plany Gologin zawierają limit ruchu proxy mierzony w gigabajtach (GB). Jest to ilość danych przesyłanych przez proxy, gdy Twoje profile przeglądają internet — nie chodzi tu o miejsce na dysku ani o pamięć RAM.
+
+## Co jest wliczane do ruchu
+
+Za każdym razem, gdy profil Gologin wysyła lub odbiera dane przez proxy, zużywa ruch. Dotyczy to między innymi:
+
+- Ładowania stron internetowych i obrazów
+- Oglądania filmów lub innych treści
+- Wysyłania formularzy
+- Uruchamiania skryptów automatyzacji
+
+Ruch jest liczony tylko wtedy, gdy korzystasz z proxy rezydencjalnych, mobilnych lub serwerowych (datacenter) Gologin.
+
+**Co nie jest wliczane do limitu:**
+
+- **Dedykowane adresy IP.** Dedykowany adres IP (Dedicated IP) nie ma limitu ruchu. Wszystko, co przechodzi przez taki adres, jest nielimitowane, niezależnie od ilości danych.
+- **Proxy zewnętrznych dostawców.** Jeśli podłączysz proxy od zewnętrznego dostawcy, ruch jest rozliczany przez tego dostawcę, a nie przez Gologin.
+
+## Orientacyjne szacunki dla różnych zastosowań
+
+| Zastosowanie | Szacowany ruch na profil |
+| --- | --- |
+| Przeglądanie LinkedIn i działania outreach (2 godz./dzień) | 0.3–0.5 GB / miesiąc |
+| Przeglądanie Facebooka / Instagramu (2 godz./dzień) | 0.5–1 GB / miesiąc |
+| Zarządzanie reklamami na Facebooku (aktywna praca) | 1–2 GB / miesiąc |
+| Platformy kryptowalutowe, operacje na portfelach | 0.1–0.3 GB / miesiąc |
+| Web scraping (lekkie strony, tylko tekst) | 0.5–2 GB / miesiąc |
+| Web scraping (strony z dużą ilością multimediów) | 2–5 GB / miesiąc |
+| E-commerce (przeglądanie Amazon, eBay) | 0.5–1.5 GB / miesiąc |
+
+To tylko szacunki. Rzeczywiste zużycie zależy od tego, jak długo profile są aktywne, jak dużo multimediów zawierają odwiedzane strony oraz czy działa automatyzacja.
+
+## Szybkie obliczenia
+
+Wzór: liczba profili × GB na profil miesięcznie = łączna potrzebna ilość GB
+
+Przykłady:
+
+| Scenariusz | Profile | GB/profil/miesiąc | Łącznie potrzeba |
+| --- | --- | --- | --- |
+| 5 kont LinkedIn, lekkie użycie | 5 | 0.4 GB | ~2 GB |
+| 10 kont Facebook Ads | 10 | 1.5 GB | ~15 GB |
+| 20 portfeli kryptowalutowych, sporadyczne użycie | 20 | 0.2 GB | ~4 GB |
+| 30 kont e-commerce | 30 | 1 GB | ~30 GB |
+
+## Jak zużywać mniej ruchu
+
+Obrazy i filmy zazwyczaj stanowią największą część ruchu zużywanego przez profil. Jeśli podczas pracy nie musisz widzieć multimediów — na przykład przy scrapingu lub automatyzacji — możesz włączyć opcje **Disable image loading** i **Disable video autoplay** w ustawieniach profilu. Zobacz [Advanced profile settings](/pl/general/account-and-billing/advanced-profile-settings#other).
+
+Możesz też włączyć te opcje w [Default profile settings](/pl/default-profile-settings), aby wszystkie nowe profile od początku zużywały mniej ruchu.
+
+Te opcje są dostępne tylko w planach płatnych.
+
+## Ruch czy Dedykowany adres IP?
+
+Niektórzy dostawcy proxy sprzedają ruch w GB (tak jak Gologin w przypadku proxy rezydencjalnych, mobilnych i serwerowych), inni natomiast sprzedają według liczby adresów IP lub okresu czasu. Gologin oferuje teraz obie opcje.
+
+- **Kup ruch**, gdy potrzebujesz wielu różnych adresów IP i nie ma dla Ciebie znaczenia, który z nich otrzymasz — scraping, badania, krótkie sesje, testowanie.
+- **Kup Dedykowany adres IP**, gdy jedno konto musi na stałe zachować ten sam adres IP — Amazon, eBay, LinkedIn, Meta Ads, PayPal, strony bukmacherskie, wszystko, co weryfikuje historię logowań. Dedykowany adres IP kosztuje \$5/miesiąc za adres i obejmuje nielimitowany ruch, więc jedno intensywnie używane konto może wyjść taniej na Dedykowanym adresie IP niż w planie opartym na GB.
+
+<Tip>
+  Jeśli liczysz zapotrzebowanie dla mieszanej konfiguracji: przy szacowaniu GB uwzględniaj tylko profile korzystające z rotujących proxy. Profile z Dedykowanym adresem IP w ogóle nie wchodzą do obliczeń.
+</Tip>
+
+## Kupiłem proxy rozliczane w GB od innego dostawcy — co to oznacza?
+
+Niektórzy dostawcy proxy sprzedają ruch w GB (tak jak Gologin), inni natomiast sprzedają według liczby adresów IP lub okresu czasu. Jeśli jesteś przyzwyczajony do kupowania adresów IP, a nie GB, możesz o tym myśleć w ten sposób:
+
+Proxy rozliczane w GB daje określoną ilość danych do wykorzystania na dowolnych adresach IP z puli. Płacisz za przepustowość, a nie za konkretny adres.
+
+Jeśli potrzebujesz stałego adresu IP, który nigdy się nie zmienia (wymagany w przypadku Amazon, eBay, LinkedIn i większości platform finansowych), potrzebujesz proxy statycznego — zwykle sprzedawanego w formie miesięcznej subskrypcji za każdy adres IP, a nie według GB.
+
+## Co się dzieje, gdy ruch się skończy
+
+Gdy limit ruchu proxy Gologin zostanie wykorzystany, profile korzystające z wbudowanych proxy Gologin nie będą mogły łączyć się przez te proxy. Zobaczysz błąd połączenia.
+
+Aby uniknąć przerw w działaniu:
+
+- Monitoruj zużycie w panelu Gologin
+- Doładuj saldo proxy, zanim się wyczerpie
+- Rozważ użycie proxy zewnętrznych dostawców dla kont generujących duży ruch (nie zużywają one limitu Gologin)
+
+## Zamiast tego użyj proxy zewnętrznych dostawców
+
+Jeśli zarządzasz kontami, które wymagają stałych, dedykowanych adresów IP, lub potrzebujesz więcej ruchu, niż zapewnia Twój plan, podłącz własne proxy od zewnętrznego dostawcy.
+
+Proxy zewnętrznych dostawców dodaje się w ustawieniach profilu i w ogóle nie wpływają one na saldo ruchu Gologin.
+
+Zobacz [Adding a proxy to a profile](https://gologin.com/docs/proxy/proxy-management/adding-proxies) oraz [Recommended proxy providers.](https://gologin.com/best-proxy-server-services/)

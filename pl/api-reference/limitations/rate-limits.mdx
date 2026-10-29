@@ -1,0 +1,32 @@
+---
+title: 'Limity zapytań'
+---
+Nie pozwalamy użytkownikom wysyłać do naszego API nieograniczonej liczby zapytań. Jeśli przekroczysz nasze limity, musisz odczekać, aż zostaną zresetowane. <br />
+Nasze podstawowe limity:
+- Plany Free i próbne: 300 zapytań na 1 minutę
+- Pozostałe plany: 1200 zapytań na 1 minutę
+
+### Unieważnienie tokenu po przekroczeniu limitu
+
+<Warning>
+Gdy przekroczysz limit zapytań i otrzymasz odpowiedź HTTP 429, Twój token API zostanie automatycznie unieważniony. Oznacza to, że token stanie się trwale bezużyteczny i musisz wygenerować nowy.
+
+To nie jest tymczasowa blokada — token zostaje cofnięty. Starannie planuj liczbę wysyłanych zapytań i zastosuj wykładniczy backoff (exponential backoff), aby tego uniknąć.
+</Warning>
+
+### Błędy ochrony Cloudflare
+
+Jeśli adres IP Twojego serwera wysyła zbyt wiele zapytań, sieć CDN Cloudflare używana przez Gologin może całkowicie zablokować ten adres IP. W takiej sytuacji odpowiedzi API będą stronami błędów HTML zamiast JSON, co powoduje błędy takie jak:
+
+```
+SyntaxError: Unexpected token 'e', "error code: 1015" is not valid JSON
+```
+
+To odpowiedź Cloudflare 1015 informująca o przekroczeniu limitu zapytań. Zwykle problem ustępuje samoczynnie w ciągu od kilku minut do kilku godzin. Aby go uniknąć:
+- Wprowadź w swoim kodzie ograniczanie liczby zapytań
+- Stosuj wykładniczy backoff przy błędach
+- Unikaj nagłych serii równoległych wywołań API
+
+### Limity tworzenia profili
+
+Nowe konta mają limit około 300 utworzonych profili dziennie. Limit ten może się różnić w zależności od planu. Jeśli potrzebujesz wyższych limitów, skontaktuj się z pomocą techniczną.

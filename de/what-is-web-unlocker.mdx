@@ -1,0 +1,113 @@
+---
+title: "Was ist Web Unlocker?"
+---
+
+Web Unlocker ist eine universelle Scraping-API. Sie senden eine beliebige URL und erhalten vollständig gerendertes HTML, einen Screenshot und ein Netzwerkarchiv zurück – ohne eigene Infrastruktur, ohne Blockaden und ohne fehlgeschlagene Anfragen.
+
+Web Unlocker ersetzt Ihren gesamten Scraping-Stack: Browser-Automatisierung, Proxy-Verwaltung, Fingerprinting und CAPTCHA-Lösung werden in einem einzigen API-Aufruf erledigt. Ob einfache statische Seite oder stark geschützte, per JavaScript gerenderte Website – derselbe Endpunkt übernimmt beides.
+
+---
+
+## Welche Probleme Web Unlocker löst
+
+Moderne Websites lassen sich nur schwer scrapen. Ein einfacher `curl`- oder `requests`-Aufruf liefert oft eine Challenge-Seite, eine leere Antwort oder defektes HTML, weil die Inhalte erst per JavaScript geladen werden. Web Unlocker erledigt all das automatisch:
+
+- **JavaScript-Rendering** – Seiten werden in einem echten Browser geladen und vollständig ausgeführt, bevor der Inhalt erfasst wird
+- **Anti-Bot-Umgehung** – Schutzmechanismen wie Cloudflare, DataDome, PerimeterX und ähnliche werden automatisch umgangen
+- **Intelligente IP-Rotation** – Anfragen werden über saubere Residential-IPs mit realistischen Browser-Fingerprints geleitet
+- **CAPTCHA-Lösung** – gängige CAPTCHA-Aufgaben werden ohne manuelles Eingreifen gelöst
+- **Preisstufen-Zuordnung** – Anfragen werden über die passende Proxy-Stufe für die Zielseite geleitet
+
+---
+
+## Was Sie zurückerhalten
+
+Jede erfolgreiche Aufgabe liefert drei Arten von Inhalten:
+
+| Inhalt | Format | Beschreibung |
+| --- | --- | --- |
+| **HTML** | Vollständiger HTML-String | Das komplette gerenderte DOM der Seite |
+| **Screenshot** | PNG-Bild | Ein Screenshot der Seite, wie sie im Browser dargestellt wurde |
+| **Archiv** | ZIP (HAR) | Netzwerkprotokoll mit allen Anfragen, Headern und Ressourcen |
+
+---
+
+## Preise
+
+Web Unlocker rechnet **erfolgsbasiert** ab – Sie zahlen nur, wenn die Anfrage erfolgreich war. Fehlgeschlagene Versuche sind kostenlos.
+
+Die Preise sinken mit steigendem Volumen:
+
+| Tarif | Preis pro 1.000 Anfragen | Monatspreis | Enthaltene Anfragen | Mehrverbrauch pro 1.000 |
+| --- | --- | --- | --- | --- |
+| Growth | \$0.98 | \$49/mo | 50,000 | \$1.20 |
+| Professional | \$0.75 | \$149/mo | 200,000 | \$1.00 |
+| Business | \$0.60 | \$299/mo | 500,000 | \$0.90 |
+| Premium | \$0.45 | \$899/mo | 2,000,000 | \$0.70 |
+
+Für individuelle Preise bei höherem Volumen wenden Sie sich an [**webunlocker@gologin.com**](mailto:webunlocker@gologin.com).
+
+---
+
+## Web Unlocker im Vergleich zu selbst verwalteten Proxys
+
+Eine eigene Proxy-Infrastruktur zu betreiben ist teuer und störanfällig. Web Unlocker übernimmt alles als Managed Service:
+
+|  | Web Unlocker | Selbst verwaltete Proxys |
+| --- | --- | --- |
+| Einrichtung | Ein API-Aufruf | Wochenlanger Infrastrukturaufwand |
+| CAPTCHA-Lösung | Integriert | Selbst entwickeln oder separat kaufen |
+| Browser-Fingerprinting | Integriert | Selbst entwickeln oder separat kaufen |
+| IP-Rotation | Automatisch | Manuelle Pool-Verwaltung |
+| Wartung | Keine | Laufend |
+| Abrechnung | Pro erfolgreicher Anfrage | Feste Kosten, unabhängig vom Erfolg |
+
+---
+
+## Typische Anwendungsfälle
+
+- **Preisüberwachung** – Scrapen Sie E-Commerce-Seiten, die automatisierte Anfragen blockieren
+- **Lead-Generierung** – Extrahieren Sie Kontaktdaten aus Verzeichnissen und Firmenlisten
+- **Marktforschung** – Sammeln Sie Produktdaten, Bewertungen oder Stellenanzeigen in großem Umfang
+- **Content-Aggregation** – Erstellen Sie News- oder Daten-Feeds aus Seiten ohne eigene API
+- **KI-Pipelines** – Übergeben Sie gerendertes HTML an LLMs zur Extraktion oder Zusammenfassung
+
+---
+
+## So funktioniert es
+
+Für jede Aufgabe startet Web Unlocker einen echten Chromium-Browser in der Cloud. Wenn Sie eine URL senden, passiert Folgendes:
+
+1. Ein Browser wird mit einer Residential-IP und einem realistischen Browser-Fingerprint gestartet
+2. Die Seite wird aufgerufen, JavaScript wird ausgeführt und dynamische Inhalte werden geladen
+3. Anti-Bot-Challenges und CAPTCHAs werden automatisch behandelt
+4. Das gerenderte HTML, ein Screenshot und ein Netzwerkarchiv werden erfasst und zurückgegeben
+
+Sie müssen keine Infrastruktur verwalten. Es gibt keine Browser, die Sie hochfahren müssen, keine Proxy-Listen, die Sie pflegen müssen, und keine Umgehungslogik, die Sie entwickeln müssen. Web Unlocker ersetzt einen kompletten Scraping-Stack – Framework für Browser-Automatisierung, Proxy-Anbieter und Anti-Bot-Lösung – durch eine einzige HTTP-Anfrage.
+
+---
+
+## So verwenden Sie Web Unlocker
+
+Senden Sie eine GET-Anfrage mit der Ziel-URL als Query-Parameter. Die Antwort ist das vollständig gerenderte HTML.
+
+```bash
+curl "https://parsing.webunlocker.gologin.com/v1/scrape?url=https%3A%2F%2Fexample.com" \
+  -H "apikey: YOUR_API_KEY"
+```
+
+Beispiele in Python und JavaScript finden Sie im [Quickstart](/de/web-unlocker-quick-start), gängige Integrationsmuster unter [Use Cases](./web-unlocker-use-cases.md).
+
+---
+
+## CLI und SDK
+
+Zusätzlich zur reinen HTTP-API bietet Gologin übergeordnete Tools für die Arbeit mit Web Unlocker:
+
+- [**Web Unlocker SDK and CLI**](/de/scraping-api-sdk-and-cli) – schlankes TypeScript-SDK (`gologin-webunlocker`) mit typisierten Methoden und einer CLI für schnelles Scraping
+- [**Gologin Web Access CLI**](/de/cli-tools/web-access) – einheitliche CLI, die Web Unlocker mit Cloud Browser kombiniert und Batch-Scraping, Crawling, Suche, Änderungsverfolgung und strukturierte Extraktion bietet
+- [**AI Skills**](/de/api-reference/ai-integrations/ai-skills) – sofort einsetzbare Skills für Claude Code Agents
+
+## Zugang erhalten
+
+Web Unlocker befindet sich derzeit im Early Access. Um einen API-Schlüssel zu erhalten, wenden Sie sich an: [**ermakova.t@gologin.com**](mailto:ermakova.t@gologin.com)

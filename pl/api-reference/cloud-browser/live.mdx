@@ -1,0 +1,51 @@
+---
+title: "Session Live View"
+---
+
+Session Live View pozwala otworzyć uruchomioną sesję Cloud Browser w zwykłej karcie przeglądarki, aby sprawdzić, czy sesja jest aktywna, i zobaczyć w czasie rzeczywistym, co robi profil.
+
+Sesje w chmurze możesz uruchomić na dwa sposoby:
+
+- z poziomu kodu automatyzacji (Puppeteer / Playwright) lub
+- bezpośrednio z interfejsu Gologin (karta Cloud Browser).
+
+## Uruchamianie sesji z interfejsu Gologin
+
+1. Otwórz **Profile sections** w aplikacji internetowej Gologin - [https://app.gologin.com/profileList](https://app.gologin.com/profileList)
+2. Wybierz profil.
+3. Kliknij **Run**.
+
+Po uruchomieniu sesji możesz otworzyć Live View, aby obserwować działającą przeglądarkę.
+
+<video src="/videos/0305.mp4" controls={true} />
+
+## Format adresu URL Live View
+
+Uruchomioną sesję można otworzyć za pomocą adresu URL w następującym formacie:
+
+`https://cloudbrowser.gologin.com/browsers/<profileId>/<sessionId-or-view-token>/`
+
+- `<profileId>` — profil użyty w sesji
+- `<sessionId-or-view-token>` — unikalny identyfikator danej uruchomionej sesji (identyfikator sesji lub token podglądu)
+
+> Dopóki sesja jest aktywna, traktuj ten adres URL jako poufny.
+
+## Kiedy warto używać Live View
+
+- Debugowanie przepływów automatyzacji (nawigacja, kliknięcia, selektory, limity czasu)
+- Sprawdzenie, czy sesja w chmurze faktycznie się uruchomiła
+- Obserwowanie interfejsu przeglądarki, gdy strona działa nieoczekiwanie
+- Potwierdzenie, który profil jest używany w uruchomionej sesji
+
+## Uwagi
+
+- Live View jest dostępny tylko wtedy, gdy sesja jest uruchomiona.
+- Zamknięcie połączenia automatyzacji może zakończyć sesję (zależy to od Twojego przepływu pracy i limitów planu).
+- Aby uzyskać powtarzalną konfigurację (proxy, odcisk przeglądarki itp.), skonfiguruj profil za pomocą REST API:
+  - Profiles API: [https://gologin.com/docs/api-reference/profile](https://gologin.com/docs/api-reference/profile)
+  - Proxy API: [https://gologin.com/docs/api-reference/proxy](https://gologin.com/docs/api-reference/proxy)
+
+## Następne kroki
+
+- Cloud Browser → Pierwsze kroki: [https://gologin.com/docs/api-reference/cloud-browser/getting-started](https://gologin.com/docs/api-reference/cloud-browser/getting-started)
+- Rozwiązanie do scrapingu: [https://gologin.com/docs/api-reference/cloud-browser/scraping](https://gologin.com/docs/api-reference/cloud-browser/scraping)

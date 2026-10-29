@@ -1,0 +1,206 @@
+---
+title: "Utiliser Cloud Browser avec des agents IA"
+description: "Comment utiliser Gologin Cloud Browser comme environnement d'exécution de navigateur distant pour des agents IA avec Puppeteer/Playwright"
+---
+
+Gologin Cloud Browser peut servir d'**environnement d'exécution de navigateur distant** pour des agents IA.
+Un agent (Claude, Codex ou tout agent capable d'appeler des outils) peut déclencher votre code pour se connecter à une session Cloud Browser et effectuer de vraies actions dans le navigateur : navigation, clics, saisie de texte et extraction de données.
+
+Cela permet de mettre en place des workflows d'agents qui nécessitent :
+- le rendu JavaScript et de véritables interactions utilisateur (clic, défilement, remplissage de formulaires)
+- des sessions persistantes (cookies/stockage) grâce aux profils
+- le routage par proxy et une configuration de navigateur reproductible
+
+<Tip>
+  **Vous ne voulez pas écrire des outils de zéro ?** Utilisez l'[Agent Browser CLI](/fr/cli-tools/agent-browser) ou les [AI Skills](/fr/api-reference/ai-integrations/ai-skills) pour disposer de fonctionnalités d'agent prêtes à l'emploi, sans code Puppeteer/Playwright.
+</Tip>
+
+> Remarque : cette page décrit un modèle d'intégration technique. Elle ne modifie pas les règles des sites web cibles et ne garantit pas l'accès à ces sites.
+
+## Modèle d'intégration général
+
+Les agents IA ne « se connectent » généralement pas directement à un navigateur. À la place, ils :
+
+1. planifient la prochaine action
+2. appellent les outils/fonctions que vous exposez (tool calling)
+3. lisent les résultats structurés et poursuivent
+
+Avec Gologin Cloud Browser, vos outils/fonctions :
+
+1. se connectent à une session cloud (token + profil facultatif)
+2. exécutent des actions dans le navigateur (navigation, clic, extraction, capture d'écran)
+3. renvoient des résultats structurés à l'agent
+
+## Architecture recommandée
+
+**Agent IA (Claude / Codex / autre)**
+-> appelle votre **serveur d'outils** (votre service Node/Python)
+-> le serveur d'outils utilise **Playwright/Puppeteer**
+-> se connecte à **Gologin Cloud Browser** (point de terminaison distant)
+-> renvoie les résultats (texte/JSON/référence de capture d'écran) à l'agent
+
+Pourquoi ce modèle :
+- votre token Gologin reste côté serveur
+- vous pouvez appliquer des limites de débit, des nouvelles tentatives, de la journalisation et des contrôles de sécurité
+- vous pouvez réutiliser les profils et les proxys de manière cohérente
+
+## Prérequis
+
+### 1) Token d'API (côté serveur)
+
+Générez votre token dans le tableau de bord :
+`Espace personnel -> Jeton API`
+https://app.gologin.com/personalArea/TokenApi
+
+> Traitez le token comme un secret. Ne l'exposez pas dans du code côté client.
+
+### 2) (Recommandé) Profils et proxys via l'API REST
+
+Cloud Browser est la couche d'exécution. Pour gérer les profils (création/mise à jour) et configurer les proxys, utilisez l'API REST :
+- API Profils : https://gologin.com/docs/api-reference/profile
+- API Proxy : https://gologin.com/docs/api-reference/proxy
+
+> **Important :** si un profil a un proxy mal configuré ou inaccessible, la session de navigateur cloud ne démarrera pas et renverra une erreur de délai d'attente du proxy. Vérifiez que votre proxy est accessible avant de vous connecter, ou définissez le mode proxy sur `none` pour les tests.
+
+## Deux URL : comprendre la différence
+
+Gologin expose deux URL différentes pour Cloud Browser. Elles ont des usages distincts :
+
+| URL | Objectif | À utiliser pour |
+|-----|----------|---------|
+| `https://cloudbrowser.gologin.com/connect?token=...&profile=...` | Point de terminaison CDP | Automatisation avec Puppeteer/Playwright |
+| `https://cloudbrowser.gologin.com/browsers/{profileId}/{sessionId}/` | Interface web de streaming (Live View) | Débogage visuel uniquement |
+
+**Seul le point de terminaison `/connect` fonctionne avec Puppeteer/Playwright.** L'URL Live View renvoie une interface de streaming HTML et ne peut pas être utilisée comme `browserWSEndpoint`.
+
+## Se connecter à une session cloud
+
+Utilisez le point de terminaison canonique de Cloud Browser :
+
+```
+https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}
+```
+
+- `token` : votre token d'API Gologin
+- `profile` : ID du profil (facultatif)
+  - Utilisez `profileId` si vous souhaitez des sessions persistantes et une configuration maîtrisée
+  - Si `profile` est omis, un nouveau profil peut être créé pour la session
+
+Le point de terminaison `/connect` démarre automatiquement la session de navigateur : aucun appel d'API distinct n'est nécessaire avant la connexion.
+
+Exemples d'implémentation (Puppeteer/Playwright) :
+https://gologin.com/docs/api-reference/cloud-browser/getting-started
+
+## Outils CLI prêts à l'emploi ou outils personnalisés
+
+Vous avez deux options pour donner accès au navigateur à vos agents :
+
+### Option A : utiliser les outils CLI de Gologin (recommandé dans la plupart des cas)
+
+- **[Agent Browser CLI](/fr/cli-tools/agent-browser)** : une CLI prête à l'emploi avec `open`, `snapshot`, `click`, `type`, `fill`, `screenshot`, `close` et plus de 30 autres commandes. Elle inclut un démon persistant, des interactions basées sur des références et une sortie compacte conçue pour les boucles d'agents.
+- **[Web Access CLI](/fr/cli-tools/web-access)** : une CLI unifiée qui combine le scraping (Web Unlocker) et l'interaction avec le navigateur dans un seul outil.
+- **[AI Skills](/fr/api-reference/ai-integrations/ai-skills)** : des skills prêts à brancher pour Claude Code, qui gèrent tout automatiquement.
+
+### Option B : créer des outils personnalisés avec Puppeteer/Playwright
+
+Si vous avez besoin d'un contrôle total, implémentez un petit ensemble de wrappers autour de Playwright/Puppeteer et exposez-les comme outils.
+
+Un ensemble minimal suffit généralement :
+- `open_url(url)`
+- `click(selector)`
+- `type(selector, text)`
+- `wait_for(selector | timeout)`
+- `extract_text(selector | page)`
+- `screenshot()`
+- `close_session()`
+
+Il ne s'agit pas d'API Gologin spécifiques : ce sont de fins wrappers autour des commandes standard de Playwright/Puppeteer, exécutées sur une session Cloud Browser.
+
+## Point essentiel : la gestion de session entre les appels d'outils
+
+C'est la considération d'architecture la plus importante pour les workflows d'agents.
+
+Un agent IA appelle les outils les uns après les autres, sur plusieurs étapes. Chaque appel d'outil doit réutiliser **la même connexion au navigateur** : si vous créez un nouveau `puppeteer.connect()` à chaque appel, vous perdez les cookies, le stockage local et l'état de la page entre les étapes.
+
+**Modèle recommandé :** maintenez un singleton de session sur votre serveur d'outils.
+
+```js
+// session.js — shared browser/page instance
+let _browser = null;
+let _page = null;
+
+const TOKEN = process.env.GOLOGIN_TOKEN;
+const PROFILE_ID = process.env.GOLOGIN_PROFILE_ID;
+
+async function getSession() {
+  if (_browser && _browser.isConnected()) {
+    return { browser: _browser, page: _page };
+  }
+
+  const cloudBrowserUrl = `https://cloudbrowser.gologin.com/connect?token=${TOKEN}&profile=${PROFILE_ID}`;
+  _browser = await puppeteer.connect({
+    browserWSEndpoint: cloudBrowserUrl,
+    defaultViewport: null,
+  });
+
+  const pages = await _browser.pages();
+  _page = pages[0] || await _browser.newPage();
+
+  return { browser: _browser, page: _page };
+}
+
+async function closeSession() {
+  if (_browser) {
+    await _browser.close();
+    _browser = null;
+    _page = null;
+  }
+}
+
+module.exports = { getSession, closeSession };
+```
+
+Chaque outil appelle ensuite `getSession()` pour obtenir l'instance partagée :
+
+```js
+// tools.js
+const { getSession } = require('./session');
+
+async function open_url(url) {
+  const { page } = await getSession();
+  await page.goto(url, { waitUntil: 'domcontentloaded' });
+  return { url: page.url(), title: await page.title() };
+}
+
+async function extract_text(selector) {
+  const { page } = await getSession();
+  const el = await page.$(selector);
+  if (!el) return { found: false };
+  return { found: true, text: await el.evaluate(e => e.innerText) };
+}
+```
+
+## Que doivent renvoyer les outils à l'agent ?
+
+Renvoyez des résultats courts et structurés afin que l'agent puisse poursuivre de manière fiable, par exemple :
+- l'URL actuelle
+- le texte extrait / du JSON
+- l'indication qu'un élément a été trouvé ou non
+- une référence de capture d'écran (si vous la stockez)
+- le type d'erreur (délai d'attente dépassé, erreur de navigation, etc.)
+
+## Remarques opérationnelles
+
+- **Sécurité :** gardez le token côté serveur ; ne l'intégrez jamais dans des applications clientes.
+- **Gestion des sessions :** fermez les sessions lorsque vous avez terminé pour éviter d'atteindre les limites de concurrence. Appelez `closeSession()` à la fin du workflow de l'agent.
+- **Fiabilité :** ajoutez des nouvelles tentatives avec temporisation progressive (backoff) pour les échecs temporaires (délais d'attente dépassés, erreurs de navigation).
+- **Observabilité :** pour le débogage, vous pouvez ouvrir Live View lorsqu'il est disponible. Exemple de format d'URL :
+  `https://cloudbrowser.gologin.com/browsers/{profileId}/{sessionId-or-view-token}/`
+
+## Limitations
+
+- Les résultats dépendent du site web cible et de votre configuration.
+- Les sites web peuvent bloquer l'automatisation ; Cloud Browser est un environnement d'exécution, pas une garantie.
+- Se connecter au même profil depuis plusieurs sessions simultanées peut provoquer des conflits : utilisez une seule connexion par profil à la fois.
+- Des quotas et des limites de débit s'appliquent :
+  https://gologin.com/docs/api-reference/limitations/rate-limits

@@ -1,0 +1,33 @@
+---
+title: "Zarządzanie pamięcią i pamięcią podręczną"
+description: "Jak zarządzać lokalnym magazynem danych Gologin, plikami pamięci podręcznej i zajętością dysku"
+---
+
+Gologin zapisuje lokalnie dane przeglądarki dla każdego uruchamianego profilu. Z czasem mogą one zajmować dużo miejsca na dysku.
+
+## Gdzie Gologin przechowuje dane
+
+- **Windows**: `C:\Users\<username>\AppData\Local\Temp\gologin_profile_*`
+- **Mac**: `/tmp/gologin_profile_*`
+- **Linux**: `/tmp/gologin_profile_*`
+
+Pliki binarne przeglądarki Orbita są przechowywane osobno i mogą zajmować od 500 MB do 2 GB na każdą wersję.
+
+## Czy można bezpiecznie usunąć pliki pamięci podręcznej?
+
+Tak, tymczasowe foldery profili można bezpiecznie usunąć, gdy żaden profil nie jest uruchomiony. Foldery te są tworzone ponownie przy następnym uruchomieniu profilu.
+
+**Przed usunięciem:**
+1. Upewnij się, że wszystkie profile Gologin są zamknięte
+2. Zamknij aplikację desktopową Gologin
+3. Usuń foldery pasujące do wzorca `gologin_profile_*` w katalogu tymczasowym
+
+<Warning>
+Nie usuwaj plików, gdy profile są uruchomione. Może to spowodować błędy "EBUSY: resource busy" w systemie Windows lub uszkodzić aktywne sesje.
+</Warning>
+
+## Jak zmniejszyć zajętość dysku
+
+- Zamykaj profile po zakończeniu pracy (nie zostawiaj ich uruchomionych na noc)
+- Odinstaluj nieużywane wersje przeglądarki Orbita w ustawieniach Gologin
+- Regularnie czyść tymczasowe foldery profili

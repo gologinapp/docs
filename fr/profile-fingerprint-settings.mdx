@@ -1,0 +1,126 @@
+---
+title: "Paramètres d'empreinte du profil"
+---
+
+Gologin vous permet de configurer les paramètres d'empreinte lors de la création ou de la modification d'un profil de navigateur.
+
+Ces paramètres définissent la manière dont votre profil de navigateur apparaît aux sites web et aux systèmes antifraude.
+
+Les sites web collectent de nombreux signaux techniques provenant de l'environnement du navigateur et les combinent en une **empreinte de navigateur** utilisée pour identifier les appareils.
+
+Les paramètres d'empreinte dans Gologin sont regroupés en plusieurs catégories.
+
+## Empreinte Navigator
+
+Les paramètres Navigator décrivent l'environnement général du navigateur et de l'appareil.
+
+Les sites web lisent ces valeurs à l'aide d'API JavaScript telles que `navigator.userAgent` et `navigator.platform`.
+
+Les paramètres Navigator courants sont les suivants :
+
+- **Agent-utilisateur** – identifie le type de navigateur, sa version et le système d'exploitation
+- **Version d'Orbita** – la version de Chromium utilisée par le profil
+- **Résolution d'écran** – la taille d'écran communiquée aux sites web
+- **Langues** – les langues préférées du navigateur
+- **Plateforme** – la plateforme du système d'exploitation
+- **Les threads de CPU** – nombre de cœurs de processeur communiqué au navigateur
+- **RAM** – mémoire disponible de l'appareil
+- **Ne pas suivre** – signal de préférence de confidentialité
+
+Ces paramètres aident les sites web à déterminer le type d'appareil utilisé.
+
+## Polices
+
+Les polices installées dans l'environnement du navigateur constituent un autre signal d'empreinte.
+
+Les sites web peuvent détecter les polices en mesurant le rendu du texte sur la page. Les systèmes d'exploitation et les appareils n'ont pas les mêmes jeux de polices, ce qui permet de distinguer les appareils.
+
+Gologin peut masquer la liste des polices afin de générer des combinaisons réalistes correspondant au système d'exploitation sélectionné.
+
+## Périphériques multimédias
+
+Les paramètres des périphériques multimédias définissent quelles caméras, quels microphones et quelles sorties audio sont visibles par les sites web.
+
+Les sites web peuvent accéder à ces informations via l'API `navigator.mediaDevices`.
+
+Gologin vous permet de masquer :
+
+- les entrées vidéo
+- les entrées audio
+- les sorties audio
+
+Cela empêche les sites web d'identifier la configuration matérielle réelle de votre appareil.
+
+## Empreinte matérielle
+
+Les signaux liés au matériel apportent une entropie supplémentaire à l'empreinte du navigateur.
+
+Ces paramètres incluent les caractéristiques de rendu graphique et audio.
+
+### Canvas
+
+L'API Canvas permet aux sites web de dessiner des images cachées dans le navigateur.\
+Comme le rendu varie légèrement d'un appareil à l'autre, l'image obtenue peut être convertie en hash et utilisée pour créer une empreinte.
+
+### WebGL
+
+WebGL révèle des informations sur le matériel graphique utilisé par l'appareil.
+
+Les sites web peuvent examiner le rapport WebGL ou afficher un objet 3D caché pour générer une empreinte.
+
+### AudioContext
+
+L'empreinte audio exploite les différences de traitement audio pour générer un hash unique.
+
+### ClientRects
+
+Cette méthode mesure la manière dont les éléments sont positionnés et affichés sur la page.
+
+Gologin vous permet de modifier ou de masquer ces signaux afin de générer une empreinte cohérente mais unique pour chaque profil.
+
+## WebRTC
+
+WebRTC est une technologie utilisée pour la communication en temps réel dans les navigateurs.
+
+Cependant, elle peut exposer aux sites web des adresses IP locales ou réelles.
+
+Gologin vous permet de contrôler le comportement de WebRTC :
+
+- **Basé sur l'IP** – WebRTC communique l'IP du proxy
+- **Arrêter** – WebRTC est désactivé
+
+Cela permet d'éviter les fuites d'IP et de garder l'empreinte cohérente avec l'emplacement du proxy.
+
+## Bonnes pratiques
+
+Pour conserver des identités de navigateur stables :
+
+- conservez des paramètres d'empreinte cohérents après la création des comptes
+- faites correspondre le fuseau horaire et la langue à l'emplacement du proxy
+- évitez de modifier fréquemment les paramètres liés au matériel
+- utilisez un proxy dédié pour chaque profil
+
+Des empreintes stables permettent aux sites web de reconnaître le profil comme un appareil cohérent.
+
+## Comment vérifier votre empreinte
+
+Après avoir lancé un profil, rendez-vous sur l'un de ces sites pour vérifier votre empreinte :
+
+- [**iphey.com**](https://iphey.com) -- Affiche un score de confiance global. Un résultat « Trusted » en vert signifie que votre profil ressemble à un vrai navigateur.
+- [**pixelscan.net**](https://pixelscan.net) -- Détail des différents paramètres de l'empreinte.
+
+### Problèmes courants et leur signification
+
+| Problème | Signification | Solution |
+| --- | --- | --- |
+| Incohérence du système d'exploitation | Le système d'exploitation du profil ne correspond pas à celui de votre appareil réel | Créez un nouveau profil correspondant à votre système d'exploitation réel |
+| Incohérence WebGL | Les informations sur le GPU ne correspondent pas au matériel annoncé | En général, la configuration automatique est correcte. Si le problème est signalé, essayez un autre mode WebGL dans les paramètres du profil. |
+| Incohérence du fuseau horaire | Le fuseau horaire ne correspond pas à l'emplacement du proxy | Gologin fait automatiquement correspondre le fuseau horaire à l'IP du proxy. En cas d'erreur, vérifiez l'emplacement de votre proxy. |
+| Hash Canvas modifié | L'empreinte Canvas diffère d'une session à l'autre | Réglez Canvas sur « Arrêter » ou « Bloquer » au lieu de « Ajouter du bruit » pour assurer la cohérence entre les appareils |
+
+Voir aussi
+
+- [Ce que vous pouvez modifier sans risque](https://gologin.com/docs/whats-safe-to-change)
+- [Comment fonctionnent les empreintes de navigateur](https://gologin.com/docs/how-browser-fingerprints-work)
+- [Configuration du proxy et de l'empreinte par plateforme](https://gologin.com/docs/proxy-and-fingerprint-setup-per-platform)
+- [Erreurs courantes à éviter](https://gologin.com/docs/common-mistakes-to-avoid)

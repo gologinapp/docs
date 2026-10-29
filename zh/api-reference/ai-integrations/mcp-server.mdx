@@ -1,0 +1,171 @@
+---
+title: "MCP 服务器"
+description: "通过 Model Context Protocol，在 AI 对话中管理 Gologin 浏览器配置文件"
+---
+
+Gologin MCP 服务器让你可以借助 [Model Context Protocol](https://modelcontextprotocol.io/)，在 AI 对话中管理浏览器配置文件。将它连接到 Claude Desktop、Cursor、Claude Code 或任何兼容 MCP 的客户端，即可用自然语言控制配置文件。
+
+---
+
+## 你可以做什么
+
+- **配置文件管理** — 创建、更新、删除和列出浏览器配置文件
+- **代理配置** — 为配置文件设置代理
+- **指纹控制** — 自定义浏览器指纹和 User Agent
+- **文件夹整理** — 创建文件夹并整理配置文件
+- **浏览器会话** — 启动和停止浏览器会话
+- **账户信息** — 查看订阅状态和使用情况
+
+---
+
+## 安装
+
+### 要求
+
+- Node.js 18 或更高版本
+- Gologin API 令牌
+- 有效的 Gologin 账户
+
+### 获取 API 令牌
+
+1. 登录 [gologin.com](https://gologin.com)
+2. 在控制台中打开 **API & MCP**
+3. 打开 **API** 标签页
+4. 点击 **新代币** 并复制
+
+### Claude Desktop
+
+1. 打开 Claude Desktop → **设置**
+2. 点击侧边栏中的 **Developer**，然后点击 **Edit Config**
+3. 将以下内容添加到 `claude_desktop_config.json`：
+
+```json
+{
+  "mcpServers": {
+    "gologin-mcp": {
+      "command": "npx",
+      "args": ["gologin-mcp"],
+      "env": {
+        "API_TOKEN": "your-gologin-api-token-here"
+      }
+    }
+  }
+}
+```
+
+4. 重启 Claude Desktop
+5. 在 **设置 → Connectors** 中查看是否出现 "gologin-mcp LOCAL"
+
+### Claude Code
+
+将以下内容添加到 Claude Code 的 MCP 设置中：
+
+```json
+{
+  "mcpServers": {
+    "gologin-mcp": {
+      "command": "npx",
+      "args": ["gologin-mcp"],
+      "env": {
+        "API_TOKEN": "your-gologin-api-token-here"
+      }
+    }
+  }
+}
+```
+
+### Cursor
+
+在 Cursor 的 MCP 设置文件中使用相同的 JSON 配置。
+
+### 其他 MCP 客户端
+
+任何支持 Model Context Protocol 的客户端都可以使用相同的配置结构。
+
+---
+
+## 使用示例
+
+连接成功后，直接用自然语言与 AI 助手交流：
+
+**账户**
+- "我的 Gologin 账户状态如何？"
+- "查看我的订阅详情"
+
+**创建配置文件**
+- "创建一个使用美国代理的新浏览器配置文件"
+- "为社交媒体管理设置 5 个配置文件"
+
+**管理配置文件**
+- "显示我所有的配置文件"
+- "将 ID 为 123 的配置文件的代理更新为英国代理"
+- "删除名为 'test-profile' 的配置文件"
+
+**整理**
+- "创建一个名为 'Social Media Accounts' 的文件夹"
+- "把配置文件 XYZ 移动到 Social Media 文件夹"
+
+**浏览器会话**
+- "为我的配置文件启动一个浏览器会话"
+- "停止所有正在运行的浏览器会话"
+
+---
+
+## 实际应用场景
+
+### 为新客户设置配置文件
+
+你正在为一位新客户办理入驻，对方需要 10 个浏览器配置文件，用于不同地区的广告账户：
+
+> "创建 10 个浏览器配置文件，分别命名为 'Client X - US'、'Client X - UK'、'Client X - DE' 等。为每个配置文件设置对应国家的住宅代理，并将它们全部放入名为 'Client X' 的文件夹。"
+
+Claude 会创建配置文件、配置代理并完成整理，全程只需使用自然语言。
+
+### 审查现有设置
+
+> "显示所有未配置代理的配置文件。另外，哪些配置文件在最近 30 天内没有使用过？"
+
+无需在控制台中逐个点击，就能快速找出配置有误或已被弃用的配置文件。
+
+### 在自动化之前准备配置文件
+
+MCP 服务器负责设置，CLI 工具负责执行：
+
+1. **MCP：** "创建 5 个使用美国代理的配置文件用于数据抓取，并放入 'Scraping' 文件夹"
+2. **CLI：** 使用 `gologin-agent-browser open https://target.com --profile profile_1` 运行自动化
+3. **MCP：** 完成后，"删除 'Scraping' 文件夹中的所有配置文件"
+
+### 团队管理
+
+> "现在有多少个活跃会话正在运行？我的套餐会话上限是多少？"
+> "查看我的订阅——我还剩多少个配置文件额度？"
+
+适用于需要在不打开控制台的情况下监控使用情况的团队负责人。
+
+---
+
+## MCP 服务器、CLI 工具与 AI Skills 对比
+
+| 工具 | 最适合 | 工作方式 |
+|---|---|---|
+| **MCP 服务器** | 配置文件管理、账户操作 | 通过 MCP 协议使用自然语言 |
+| [CLI 工具](/zh/cli-tools/web-access) | 网页抓取、浏览器自动化、批量操作 | Shell 命令 |
+| [AI Skills](/zh/api-reference/ai-integrations/ai-skills) | 在 Claude Code 中即插即用的智能体能力 | 封装 CLI 工具的技能扩展 |
+
+MCP 服务器专注于**配置文件和账户管理**。如需网页抓取和浏览器自动化，请使用 [CLI 工具](/zh/cli-tools/web-access)或 [AI Skills](/zh/api-reference/ai-integrations/ai-skills)。
+
+---
+
+## 相关内容
+
+- [AI Skills](/zh/api-reference/ai-integrations/ai-skills) — 适用于 Claude Code 的即插即用网络访问技能
+- [Web Access CLI](/zh/cli-tools/web-access) — 统一的抓取 + 浏览器 CLI
+- [Agent Browser CLI](/zh/cli-tools/agent-browser) — 面向 AI 智能体的云浏览器 CLI
+
+<Card title="npm 包" icon="npm" href="https://www.npmjs.com/package/gologin-mcp">
+  gologin-mcp
+</Card>
+
+<Card title="源代码" icon="github" href="https://github.com/gologinapp/gologin-mcp">
+  gologinapp/gologin-mcp
+</Card>

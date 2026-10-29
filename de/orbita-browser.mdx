@@ -1,0 +1,54 @@
+---
+title: "Orbita Browser"
+---
+
+Wenn du in Gologin bei einem Profil auf **Run** klickst, öffnet sich ein Browserfenster. Dieser Browser ist **Orbita**.
+
+Er sieht genau aus wie Google Chrome – mit demselben Layout, denselben Tabs und denselben Menüs. Der Unterschied liegt im Hintergrund, wenn eine Website versucht, dich zu identifizieren.
+
+<Frame>
+  ![Orbita Browser](/images/orbita_browser.png)
+</Frame>
+
+## Warum wir einen eigenen Browser entwickelt haben
+
+Jeder Browser hat ein Identitätsproblem. Wenn du eine Website besuchst, kann sie deinem Browser unbemerkt Dutzende Fragen zum verwendeten Gerät stellen: Welche GPU ist verbaut? Welche Schriftarten sind installiert? Welche Bildschirmauflösung wird verwendet? Wie stellt der Browser Grafiken dar? Und vieles mehr. Die Antworten auf diese Fragen ergeben einen Fingerprint, der dich identifiziert – selbst wenn du ein VPN nutzt oder deine Cookies löschst.
+
+Standard-Chrome versucht nicht, davon etwas zu verbergen. Es beantwortet jede Frage wahrheitsgemäß mit den Daten deines echten Geräts.
+
+## Was Orbita konkret verändert
+
+Wenn eine Website Orbita nach Informationen über das verwendete Gerät fragt, liefert Orbita die Werte des Profils und nicht die echten Werte deines Computers. Das betrifft unter anderem:
+
+- Die Browserversion und das Betriebssystem, die an Websites gemeldet werden
+- Bildschirmgröße und Auflösung
+- Details zur Grafikkarte
+- Die Liste der auf dem Gerät verfügbaren Schriftarten
+- Wie der Browser Grafiken und Audio darstellt (wird für Fingerprinting genutzt)
+- Deine Zeitzone und Sprache
+- Die Offenlegung deiner IP-Adresse über Video- und Audiofunktionen (WebRTC)
+- Und einige weitere Details im Hintergrund
+
+Aus Sicht der Website kommuniziert sie mit dem Gerät, als das das Profil konfiguriert ist – nicht mit deinem tatsächlichen Computer.
+
+## Jedes Profil ist vollständig isoliert
+
+Wenn du zwei Profile öffnest, läuft jedes in einer komplett getrennten Umgebung. Cookies, gespeicherte Logins, Browserverlauf und Sitzungsdaten stehen in keiner Verbindung zueinander. Beim Schließen eines Profils wird alles darin gespeichert, und beim nächsten Mal machst du genau dort weiter, wo du aufgehört hast.
+
+Diese Isolation macht Gologin so nützlich für die Verwaltung mehrerer Accounts. Auf Browserebene teilen die Accounts keinerlei Informationen.
+
+## Fühlt sich die Nutzung anders an?
+
+Nein. Orbita basiert auf derselben Open-Source-Grundlage wie Chrome, daher unterscheidet sich die Bedienung nicht von der in Chrome. Lesezeichen, Erweiterungen, Tastenkombinationen, Entwicklertools – alles funktioniert gleich. Die Änderungen, die Orbita vornimmt, sind für die Person am Bildschirm unsichtbar.
+
+## Orbita aktuell halten
+
+Orbita folgt den Versionsveröffentlichungen von Chrome. Das ist wichtig, weil ein Browser, der eine veraltete Version meldet, für Websites verdächtig wirkt. Gologin aktualisiert Orbita regelmäßig, und du kannst [einzelne Profile aktualisieren](/de/updating-your-browser-profile), um sie über das Profilmenü auf die neueste Browserversion zu bringen.
+
+<Tip>
+  Wenn du ältere Profile hast, lohnt es sich zu prüfen, ob sie die neueste Orbita-Version verwenden. Das kannst du über das Drei-Punkte-Menü neben jedem Profil tun.
+</Tip>
+
+## Orbita auf Android
+
+Gologin bietet auch eine Android-App, die Orbita als Browser-Engine verwendet. Auf einem Smartphone läuft Orbita nativ auf dem Gerät. Das bedeutet, dass die Sensordaten, die Websites erkennen können (Bewegung, Akku, Bildschirmtyp), von der echten Smartphone-Hardware stammen und nicht simuliert werden. So sind mobile Profile schwerer von echten mobilen Nutzern zu unterscheiden.

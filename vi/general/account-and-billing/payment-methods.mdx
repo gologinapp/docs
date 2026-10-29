@@ -1,0 +1,117 @@
+---
+title: "Phương thức thanh toán"
+---
+
+## Thay đổi phương thức thanh toán
+
+Hiện tại, bạn không thể thay đổi phương thức thanh toán mà không thực hiện thanh toán. Bạn có thể làm như sau:
+
+### Thay đổi phương thức thanh toán bằng cách mua gói
+
+1. Vào **menu chính ở góc trên bên trái \>** **Cài đặt & thành viên \> Kế hoạch thanh toán \> Phương thức thanh toán \> Thay đổi phương thức thanh toán.**
+   <Frame>
+     ![Thay đổi phương thức thanh toán](/images/change_payment_method.png)
+   </Frame>
+2. Gia hạn hoặc nâng cấp gói hiện tại. Phương thức thanh toán sẽ được cập nhật.
+   1. gói hiện tại của bạn sẽ được tính vào khi [nâng cấp gói](/vi/general/account-and-billing/change-plan)
+
+### Thay đổi phương thức thanh toán bằng cách xóa phương thức hiện tại
+
+1. Xóa phương thức thanh toán hiện tại trong **menu chính ở góc trên bên trái \>** **Cài đặt & thành viên \> Kế hoạch thanh toán \> Phương thức thanh toán \> Hủy đăng ký.**
+   <Frame>
+     ![Hủy đăng ký](/images/cancel_subscription.png)
+   </Frame>
+2. Chờ gói hiện tại hết hạn, sau đó mua gói mới bằng thẻ hoặc PayPal mới.
+
+## Hủy đăng ký
+
+Nếu muốn hủy đăng ký hiện tại, bạn chỉ cần xóa phương thức thanh toán khỏi tài khoản. Vào **menu chính ở góc trên bên trái \>** **Cài đặt & thành viên \> Kế hoạch thanh toán \> Phương thức thanh toán \> Hủy đăng ký.**
+
+## Các phương thức thanh toán khả dụng
+
+Gologin hỗ trợ nhiều phương thức thanh toán cho đăng ký gói và nạp lưu lượng proxy.
+
+### Đăng ký gói
+
+Thanh toán đăng ký có thể bao gồm các tiện ích bổ sung cho thành viên nhóm và lưu lượng proxy. Có hai loại thanh toán đăng ký: **định kỳ** và **một lần**.
+
+**Thanh toán định kỳ** được tự động trừ tiền trước khi mỗi kỳ thanh toán mới bắt đầu. Các phương thức sau hỗ trợ thanh toán định kỳ:
+
+- **Stripe** - thẻ tín dụng và thẻ ghi nợ, Google Pay, Apple Pay
+- **PayPal** - thanh toán từ số dư PayPal hoặc qua thẻ đã liên kết
+
+**Thanh toán một lần** được trừ tiền một lần tại thời điểm mua và không tự động gia hạn. Các phương thức sau hỗ trợ thanh toán một lần:
+
+- **Stripe** - WeChat Pay, Pix, Cash App, Amazon Pay, tài khoản ngân hàng Hoa Kỳ hoặc SEPA
+- **Cryptomus** - thanh toán bằng tiền mã hóa
+
+### Nạp lưu lượng proxy
+
+- **Paddle** - chỉ thẻ tín dụng và thẻ ghi nợ
+- **Cryptomus** - thanh toán bằng tiền mã hóa
+
+## Thông tin bổ sung về các phương thức thanh toán
+
+### Thanh toán bằng tiền mã hóa
+
+Gologin chấp nhận thanh toán bằng tiền mã hóa với các loại coin sau:
+
+- **BTC** (Bitcoin)
+- **LTC** (Litecoin)
+- **BCH** (Bitcoin Cash)
+- **DOGE** (Dogecoin)
+- **ETH** (Ethereum — chỉ mạng ERC-20)
+
+<Warning>
+  Chỉ gửi ETH qua **mạng ERC-20**. Nếu bạn gửi tiền mã hóa qua sai mạng (ví dụ: TRC-20, BEP-20), khoản thanh toán **sẽ không đến nơi và không thể khôi phục**. Hãy luôn kiểm tra kỹ mạng trước khi xác nhận giao dịch.
+</Warning>
+
+<Note>
+  Cryptomus, nhà cung cấp dịch vụ thanh toán bằng tiền mã hóa của chúng tôi, có thể không hoạt động ở tất cả các quốc gia. Hiện tại, Cryptomus không cung cấp dịch vụ cho người dùng từ Canada. Nếu trang thanh toán bằng tiền mã hóa không mở được, hãy dùng phương thức thanh toán khác.
+</Note>
+
+Sau khi gửi thanh toán bằng tiền mã hóa, hãy chờ một thời gian để giao dịch được xác nhận trên blockchain. Nếu đăng ký của bạn chưa được cập nhật sau khi giao dịch đã được xác nhận, hãy khởi động lại ứng dụng Gologin và chờ tối đa 24 giờ. Nếu sự cố vẫn tiếp diễn, hãy liên hệ bộ phận hỗ trợ và cung cấp mã băm giao dịch (transaction hash) của bạn.
+
+### Phí mạng khi thanh toán bằng tiền mã hóa
+
+Khi thanh toán bằng tiền mã hóa, bạn có thể thấy ghi chú "You pay network fee" trên màn hình thanh toán. Điều này chỉ có nghĩa là bạn tự chi trả phí mạng blockchain (còn gọi là phí gas) cho giao dịch của mình.
+
+Gologin và Cryptomus (nhà cung cấp dịch vụ thanh toán của chúng tôi) không tính thêm bất kỳ khoản phí nào vào khoản thanh toán của bạn. Phí mạng không phải của chúng tôi - khoản phí này do chính blockchain thu và được trả thông qua ví hoặc sàn giao dịch mà bạn dùng để gửi tiền. Số tiền cụ thể phụ thuộc vào loại coin và mạng bạn chọn, cũng như mức độ tắc nghẽn của mạng tại thời điểm đó.
+
+Chúng tôi khuyên bạn dùng mạng TRON (TRC-20) để thanh toán, vì đây là lựa chọn rẻ nhất và nhanh nhất.
+
+<Info>
+  Nếu bạn gửi từ sàn giao dịch thay vì ví cá nhân, sàn có thể áp dụng thêm phí rút tiền riêng ngoài phí mạng. Hãy kiểm tra tổng chi phí trước khi xác nhận.
+</Info>
+
+<Warning>
+  Một số ví và sàn giao dịch trừ phí mạng khỏi số tiền bạn nhập, nên số tiền thực tế đến nơi sẽ nhỏ hơn số tiền trên hóa đơn. Nếu số tiền nhận được ít hơn mức yêu cầu, khoản thanh toán của bạn có thể không được ghi nhận tự động.
+
+  Để tránh tình trạng này, hãy cộng thêm phí và gửi nhiều hơn một chút so với số tiền trên hóa đơn. Nếu bạn đã gửi thiếu, tiền của bạn không bị mất - hãy liên hệ bộ phận hỗ trợ để khoản thanh toán được áp dụng thủ công.
+</Warning>
+
+### Phương thức thanh toán theo khu vực
+
+Một số phương thức thanh toán chỉ khả dụng ở một số quốc gia nhất định. Ví dụ:
+
+- **WeChat Pay** khả dụng cho người dùng tại Trung Quốc
+- **Pix** khả dụng cho người dùng tại Brazil
+- Yookassa khả dụng cho người dùng tại Nga
+
+Để thấy các tùy chọn này trên trang thanh toán, hãy đảm bảo bạn đang kết nối bằng địa chỉ IP của quốc gia tương ứng - nếu không, tùy chọn sẽ không hiển thị.
+
+### Thanh toán bằng tài khoản ngân hàng Hoa Kỳ và SEPA
+
+Gologin chấp nhận thanh toán bằng tài khoản ngân hàng Hoa Kỳ và SEPA qua Stripe. Phương thức này hoạt động khác với thẻ - khoản thanh toán không được xử lý ngay lập tức.
+
+Sau khi hoàn tất thanh toán, bạn cần chờ **3–5 ngày làm việc** để khoản tiền được ghi có vào tài khoản của bạn. Đăng ký hoặc gói Gologin của bạn sẽ không được kích hoạt cho đến khi khoản tiền được xác nhận.
+
+Hãy lưu ý điều này nếu bạn đang gấp thời hạn - để truy cập ngay lập tức, hãy dùng thẻ hoặc một phương thức thanh toán tức thời khác.
+
+### Sự cố với thẻ doanh nghiệp
+
+Một số thẻ tín dụng doanh nghiệp có thể bị bên xử lý thanh toán của chúng tôi từ chối. Nếu thẻ doanh nghiệp của bạn không được chấp nhận:
+
+- Hãy thử dùng **thẻ tín dụng hoặc thẻ ghi nợ cá nhân**
+- Dùng **PayPal** làm phương thức thanh toán thay thế
+- Thanh toán bằng **tiền mã hóa** (xem phần trên)

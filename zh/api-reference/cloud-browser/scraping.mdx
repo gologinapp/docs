@@ -1,0 +1,102 @@
+---
+title: "抓取解决方案"
+---
+
+## 概述
+
+Gologin Cloud Browser 可用作托管的远程浏览器，适用于网页抓取和数据提取工作流。你的自动化代码（Puppeteer）通过 WebSocket 端点连接到远程浏览器会话，然后运行标准的页面导航和数据提取逻辑。
+
+Cloud Browser 是连接/执行层；配置文件和代理设置通过 REST API 管理。这种方式可以降低基础设施的维护成本，并有助于减少抓取过程中的阻碍，但实际效果取决于目标网站的行为和防护措施。
+
+## 功能亮点
+
+- 为 Puppeteer 连接提供远程浏览器会话。
+- 支持动态页面的 JavaScript 渲染。
+- 无需自建浏览器基础设施即可扩展。
+- 通过 API 管理配置文件和代理设置。
+- 使用统一的标准连接端点启动会话。
+
+## 典型工作流程
+
+1. 生成 API 令牌。
+2. （可选）通过 REST API 创建/配置配置文件（以及代理）。
+3. 使用 `token` 和可选的 `profile` 构建连接 URL。
+4. 通过 Puppeteer/Playwright 连接并执行数据提取。
+5. 保存输出结果并关闭浏览器会话。
+
+## 前提条件
+
+- 创建令牌：https://app.gologin.com/personalArea/TokenApi
+- Profiles API（建议用于可控配置）：https://gologin.com/docs/api-reference/profile
+- Proxy API：https://gologin.com/docs/api-reference/proxy
+
+## 标准连接端点
+
+```text
+https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}
+```
+
+- `token` 为必填项。
+- `profile` 为可选项。
+- 如果省略 `profile`，系统会为该会话创建一个新的配置文件。
+
+## 最简 Puppeteer 示例
+
+```javascript
+const puppeteer = require('puppeteer-core');
+
+(async () => {
+
+
+  const token = 'your_token_here';
+  const profileId = 'your_profile_id'; // Remove this line if you want to create a new profile
+  const cloudBrowserUrl = `https://cloudbrowser.gologin.com/connect?token=${token}${profileId ? `&profile=${profileId}` : ''}`;
+  const browser = await puppeteer.connect({
+  
+    browserWSEndpoint: cloudBrowserUrl,
+    defaultViewport: null
+  
+  });
+
+  const page = await browser.newPage();
+  await page.goto('https://example.com');
+  const title = await page.title();
+  console.log('Page title:', title);
+  await page.screenshot({ path: 'screenshot.png' });
+  await browser.close();
+
+})();
+```
+
+## 后续步骤
+
+- Cloud Browser 快速入门：https://gologin.com/docs/api-reference/cloud-browser/getting-started
+- Profiles API：https://gologin.com/docs/api-reference/profile
+- Proxy API：https://gologin.com/docs/api-reference/proxy
+
+## 最佳实践
+
+- 优先使用显式等待，而不是固定时长的休眠。
+- 实现带有退避上限和随机抖动的重试逻辑。
+- 保存结构化的提取结果（URL、字段、时间戳、状态）。
+- 在连接之前先配置好配置文件和代理，以便结果可复现。
+- 始终关闭会话，并在出现故障时做好清理处理。
+- 根据目标网站的限制调整请求和会话行为。
+
+## 限制与配额
+
+查看当前的限制与配额：https://gologin.com/docs/api-reference/limitations/rate-limits
+
+## 常见问题
+
+### 我需要配置文件吗？
+
+不需要。`profile` 参数是可选的。如果省略，系统会为该会话创建一个新的配置文件。当你需要可控且可重复的配置时，请使用配置文件。
+
+### 在哪里配置代理？
+
+通过 Proxy API 配置代理（相关的配置文件设置可通过 REST API 完成）：https://gologin.com/docs/api-reference/proxy
+
+### 这与 Cloud Browser 有区别吗？
+
+没有。本页面介绍的是 Cloud Browser 本身在网页抓取/数据提取方面的用法。Cloud Browser 负责连接/执行，而配置文件和代理设置通过 REST API 管理。

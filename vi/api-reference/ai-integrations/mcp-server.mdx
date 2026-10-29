@@ -1,0 +1,171 @@
+---
+title: "Máy chủ MCP"
+description: "Quản lý hồ sơ trình duyệt Gologin thông qua các cuộc trò chuyện với AI bằng Model Context Protocol"
+---
+
+Máy chủ MCP của Gologin cho phép bạn quản lý hồ sơ trình duyệt thông qua các cuộc trò chuyện với AI bằng [Model Context Protocol](https://modelcontextprotocol.io/). Hãy kết nối nó với Claude Desktop, Cursor, Claude Code hoặc bất kỳ ứng dụng khách nào tương thích với MCP để điều khiển hồ sơ bằng ngôn ngữ tự nhiên.
+
+---
+
+## Bạn có thể làm gì
+
+- **Quản lý hồ sơ** — tạo, cập nhật, xóa và liệt kê các hồ sơ trình duyệt
+- **Cấu hình proxy** — thiết lập proxy cho hồ sơ
+- **Kiểm soát vân tay** — tùy chỉnh vân tay trình duyệt và user agent
+- **Sắp xếp thư mục** — tạo thư mục và sắp xếp hồ sơ
+- **Phiên trình duyệt** — khởi động và dừng các phiên trình duyệt
+- **Thông tin tài khoản** — kiểm tra trạng thái gói đăng ký và mức sử dụng
+
+---
+
+## Cài đặt
+
+### Yêu cầu
+
+- Node.js 18 trở lên
+- Một mã thông báo API của Gologin
+- Một tài khoản Gologin đang hoạt động
+
+### Lấy mã thông báo API
+
+1. Đăng nhập tại [gologin.com](https://gologin.com)
+2. Mở **API & MCP** trong bảng điều khiển
+3. Mở tab **API**
+4. Nhấp **Mã thông báo mới** và sao chép mã thông báo
+
+### Claude Desktop
+
+1. Mở Claude Desktop → **Cài đặt**
+2. Nhấp **Developer** trong thanh bên, sau đó chọn **Edit Config**
+3. Thêm vào `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "gologin-mcp": {
+      "command": "npx",
+      "args": ["gologin-mcp"],
+      "env": {
+        "API_TOKEN": "your-gologin-api-token-here"
+      }
+    }
+  }
+}
+```
+
+4. Khởi động lại Claude Desktop
+5. Kiểm tra **Cài đặt → Connectors** để thấy "gologin-mcp LOCAL"
+
+### Claude Code
+
+Thêm vào cài đặt MCP của Claude Code:
+
+```json
+{
+  "mcpServers": {
+    "gologin-mcp": {
+      "command": "npx",
+      "args": ["gologin-mcp"],
+      "env": {
+        "API_TOKEN": "your-gologin-api-token-here"
+      }
+    }
+  }
+}
+```
+
+### Cursor
+
+Sử dụng cùng cấu hình JSON trong tệp cài đặt MCP của Cursor.
+
+### Các ứng dụng khách MCP khác
+
+Bất kỳ ứng dụng khách nào hỗ trợ Model Context Protocol đều có thể dùng cùng cấu trúc cấu hình này.
+
+---
+
+## Ví dụ sử dụng
+
+Sau khi kết nối, bạn chỉ cần trò chuyện tự nhiên với trợ lý AI:
+
+**Tài khoản**
+- "Trạng thái tài khoản Gologin của tôi là gì?"
+- "Kiểm tra thông tin chi tiết gói đăng ký của tôi"
+
+**Tạo hồ sơ**
+- "Tạo một hồ sơ trình duyệt mới với proxy Mỹ"
+- "Thiết lập 5 hồ sơ để quản lý mạng xã hội"
+
+**Quản lý hồ sơ**
+- "Hiển thị tất cả hồ sơ của tôi"
+- "Cập nhật proxy cho hồ sơ có ID 123 để sử dụng proxy Anh"
+- "Xóa hồ sơ có tên 'test-profile'"
+
+**Sắp xếp**
+- "Tạo một thư mục có tên 'Social Media Accounts'"
+- "Chuyển hồ sơ XYZ vào thư mục Social Media"
+
+**Phiên trình duyệt**
+- "Khởi động một phiên trình duyệt cho hồ sơ của tôi"
+- "Dừng tất cả các phiên trình duyệt đang chạy"
+
+---
+
+## Các tình huống thực tế
+
+### Thiết lập hồ sơ cho khách hàng mới
+
+Bạn đang tiếp nhận một khách hàng mới cần 10 hồ sơ trình duyệt cho các tài khoản quảng cáo ở nhiều khu vực khác nhau:
+
+> "Tạo 10 hồ sơ trình duyệt có tên 'Client X - US', 'Client X - UK', 'Client X - DE', v.v. Thiết lập cho mỗi hồ sơ một proxy dân cư từ quốc gia tương ứng. Đưa tất cả vào một thư mục có tên 'Client X'."
+
+Claude sẽ tạo hồ sơ, cấu hình proxy và sắp xếp chúng, tất cả chỉ bằng ngôn ngữ tự nhiên.
+
+### Kiểm tra thiết lập hiện có
+
+> "Hiển thị tất cả hồ sơ chưa được cấu hình proxy. Ngoài ra, những hồ sơ nào chưa được sử dụng trong 30 ngày qua?"
+
+Đây là cách nhanh để tìm các hồ sơ cấu hình sai hoặc không còn được sử dụng mà không cần nhấp qua từng mục trong bảng điều khiển.
+
+### Chuẩn bị hồ sơ trước khi tự động hóa
+
+Máy chủ MCP lo phần thiết lập; các công cụ CLI lo phần thực thi:
+
+1. **MCP:** "Tạo 5 hồ sơ với proxy Mỹ để thu thập dữ liệu, đưa chúng vào thư mục 'Scraping'"
+2. **CLI:** `gologin-agent-browser open https://target.com --profile profile_1` để chạy tự động hóa
+3. **MCP:** "Xóa tất cả hồ sơ trong thư mục 'Scraping'" khi hoàn tất
+
+### Quản lý nhóm
+
+> "Hiện có bao nhiêu phiên đang hoạt động? Giới hạn số phiên của gói tôi đang dùng là bao nhiêu?"
+> "Kiểm tra gói đăng ký của tôi — tôi còn có thể tạo bao nhiêu hồ sơ?"
+
+Hữu ích cho các trưởng nhóm cần theo dõi mức sử dụng mà không phải mở bảng điều khiển.
+
+---
+
+## Máy chủ MCP so với công cụ CLI và AI Skills
+
+| Công cụ | Phù hợp nhất cho | Cách hoạt động |
+|---|---|---|
+| **Máy chủ MCP** | Quản lý hồ sơ, các thao tác với tài khoản | Ngôn ngữ tự nhiên thông qua giao thức MCP |
+| [Công cụ CLI](/vi/cli-tools/web-access) | Thu thập dữ liệu web, tự động hóa trình duyệt, thao tác hàng loạt | Lệnh shell |
+| [AI Skills](/vi/api-reference/ai-integrations/ai-skills) | Các khả năng cắm là chạy cho agent trong Claude Code | Tiện ích mở rộng kỹ năng bọc quanh các công cụ CLI |
+
+Máy chủ MCP tập trung vào **quản lý hồ sơ và tài khoản**. Để thu thập dữ liệu web và tự động hóa trình duyệt, hãy dùng [công cụ CLI](/vi/cli-tools/web-access) hoặc [AI Skills](/vi/api-reference/ai-integrations/ai-skills).
+
+---
+
+## Liên quan
+
+- [AI Skills](/vi/api-reference/ai-integrations/ai-skills) — các kỹ năng truy cập web cắm là chạy cho Claude Code
+- [Web Access CLI](/vi/cli-tools/web-access) — CLI hợp nhất cho thu thập dữ liệu và trình duyệt
+- [Agent Browser CLI](/vi/cli-tools/agent-browser) — CLI trình duyệt đám mây dành cho AI agent
+
+<Card title="Gói npm" icon="npm" href="https://www.npmjs.com/package/gologin-mcp">
+  gologin-mcp
+</Card>
+
+<Card title="Mã nguồn" icon="github" href="https://github.com/gologinapp/gologin-mcp">
+  gologinapp/gologin-mcp
+</Card>

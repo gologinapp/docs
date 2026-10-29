@@ -1,0 +1,69 @@
+---
+title: "Proxy tốt nhất cho từng trường hợp sử dụng"
+---
+
+<Tip>
+  TL:DR - Hãy chọn proxy Residential và Mobile cho mạng xã hội và thương mại điện tử.
+</Tip>
+
+Chọn đúng loại proxy là yếu tố then chốt để đảm bảo hiệu quả, an toàn và thành công cho các hoạt động trực tuyến của bạn. Dù bạn đang quản lý tài khoản mạng xã hội, thu thập dữ liệu hay truy cập nội dung bị chặn theo vị trí địa lý, loại proxy bạn dùng có thể quyết định kết quả công việc. Dưới đây là phần phân tích các loại proxy phổ biến nhất cho từng trường hợp sử dụng.
+
+## Bảng lựa chọn
+
+| **Nền tảng / tác vụ** | **Loại proxy** | **Tĩnh hay xoay** | **Ghi chú** |
+| :-- | :-- | :-- | :-- |
+| LinkedIn | Residential hoặc mobile | **Tĩnh hoặc xoay cố định theo phiên (sticky)** | Đổi IP sẽ khiến phiên đăng nhập bị đăng xuất ngay lập tức |
+| Facebook / Meta Ads | Residential hoặc mobile | **Tĩnh hoặc xoay cố định theo phiên (sticky)** | Tài khoản quảng cáo yêu cầu vị trí địa lý nhất quán |
+| Instagram | Mobile | **Xoay** | IP di động có độ tin cậy cao nhất |
+| TikTok (tài khoản mới) | Mobile | **Xoay** | Nền tảng ưu tiên thiết bị di động, IP di động cho kết quả tốt hơn |
+| Amazon | Residential hoặc ISP | **Tĩnh** | IP xoay sẽ khiến các tài khoản bị liên kết với nhau — có nguy cơ bị khóa ngay lập tức |
+| eBay | Residential hoặc ISP | **Tĩnh** | Giống Amazon |
+| Etsy | Residential | **Tĩnh** |  |
+| PayPal / tài chính | Residential | **Tĩnh** | Đổi IP = bị nghi ngờ tài khoản bị xâm phạm |
+| Nền tảng cá cược | Mobile | **Tĩnh** | Tốc độ rất quan trọng; IP di động được tin cậy |
+| Nền tảng tiền mã hóa / KYC | Residential | **Tĩnh** | Hệ thống KYC kiểm tra tính nhất quán của IP |
+| Reddit | Residential | **Tĩnh hoặc xoay cố định theo phiên (sticky)** | Ít nghiêm ngặt hơn LinkedIn/Facebook |
+| Google Ads | Residential | **Tĩnh** |  |
+| Thu thập dữ liệu web (nhẹ) | Residential xoay | **Xoay** | Mỗi yêu cầu dùng một IP khác nhau giúp tránh bị chặn |
+| Thu thập dữ liệu web (nặng) | Datacenter xoay | **Xoay** | Nhanh hơn và rẻ hơn khi chạy ở quy mô lớn |
+| Kiểm thử vị trí địa lý / QA | Proxy tích hợp sẵn của Gologin | **Xoay** | Phù hợp cho các lần kiểm tra đơn lẻ |
+
+## Giải thích đơn giản về các loại proxy
+
+**Proxy Residential** dùng địa chỉ IP được đăng ký cho hộ gia đình thực và các nhà cung cấp dịch vụ internet (ISP). Các website tin cậy loại này nhất vì chúng trông giống kết nối của người dùng thật. Chúng chậm hơn và đắt hơn proxy datacenter, nhưng rất cần thiết cho các nền tảng nhạy cảm.
+
+**Proxy Mobile** định tuyến lưu lượng qua mạng của nhà mạng di động (4G/5G). IP di động được hàng nghìn người dùng thật dùng chung, nên các nền tảng rất khó chặn mà không ảnh hưởng đến người dùng hợp lệ. Phù hợp nhất cho mạng xã hội và các nền tảng nhắm mạnh vào người dùng di động.
+
+**Proxy ISP** được đặt trong trung tâm dữ liệu nhưng được đăng ký thông qua nhà cung cấp dịch vụ internet. Chúng kết hợp độ ổn định của proxy datacenter với mức độ tin cậy tốt hơn. Phù hợp cho các sàn thương mại điện tử.
+
+**Proxy Datacenter** nhanh và rẻ, được đặt trên các máy chủ đám mây. Các nền tảng có thể phát hiện chúng dễ hơn so với IP residential, nhưng chúng vẫn hoạt động tốt cho các tác vụ thu thập dữ liệu và kiểm thử, nơi mức độ tin cậy ít quan trọng hơn.
+
+**Proxy xoay và proxy tĩnh:** Proxy xoay cấp một IP mới cho mỗi kết nối hoặc sau các khoảng thời gian nhất định. Proxy tĩnh giữ nguyên một địa chỉ IP trong tất cả các phiên. Với bất kỳ nền tảng nào mà bạn duy trì tài khoản đăng nhập lâu dài, hãy luôn dùng proxy tĩnh.
+
+## Tôi cần bao nhiêu proxy?
+
+Mỗi profile một proxy. Không bao giờ dùng chung một proxy cho nhiều profile — các nền tảng sẽ liên kết những tài khoản dùng chung một địa chỉ IP.
+
+Nếu bạn có 20 profile LinkedIn, bạn cần 20 proxy tĩnh riêng biệt — mỗi profile một IP riêng.
+
+## Proxy tích hợp sẵn của Gologin so với proxy bên thứ ba
+
+Proxy tích hợp sẵn của Gologin là proxy residential xoay đi kèm với gói của bạn. Chúng tiện lợi cho việc kiểm thử và các tác vụ ít rủi ro, nhưng không nên dùng để quản lý tài khoản lâu dài trên các nền tảng nhạy cảm như Amazon, LinkedIn hoặc các dịch vụ tài chính.
+
+Với công việc nghiêm túc, hãy dùng dịch vụ proxy bên thứ ba chuyên dụng với IP tĩnh.
+
+Xem [Proxy tích hợp sẵn của Gologin — các hạn chế](https://gologin.com/docs/proxy/gologin-proxies/what-are-gologin-proxies#important-gologin-proxies-are-rotating) để biết giải thích đầy đủ về những trường hợp không nên dùng proxy tích hợp sẵn.
+
+## Nhà cung cấp được đề xuất
+
+Xem [Các nhà cung cấp proxy được đề xuất](https://gologin.com/best-proxy-server-services/) để có danh sách các dịch vụ mà người dùng Gologin thường dùng, được sắp xếp theo từng trường hợp sử dụng.
+
+## Xem thêm
+
+[Residential, Mobile hay Datacenter](https://gologin.com/docs/residential-mobile-or-datacenter)
+
+[Proxy tĩnh và proxy xoay](https://gologin.com/docs/static-vs-dynamic-proxies)
+
+[Lưu lượng proxy — tôi cần bao nhiêu](https://gologin.com/docs/proxy/gologin-proxies/how-much-proxy-traffic-do-i-need)
+
+[Thiết lập proxy và vân tay cho từng nền tảng](https://gologin.com/docs/proxy-and-fingerprint-setup-per-platform)

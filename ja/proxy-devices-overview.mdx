@@ -1,0 +1,70 @@
+---
+title: "プロキシデバイス"
+hidden: true
+---
+
+**プロキシデバイス**を使うと、従来のプロキシサーバーの代わりに、お持ちの Android スマートフォンを経由してブラウザプロフィールの通信をルーティングできます。
+
+簡単に言うと、スマートフォンがプロフィールのインターネット接続になります。
+
+## 使うメリット
+
+この機能は次のような場合に便利です。
+
+- (データセンターや住宅用プロキシではなく)**本物のモバイル IP アドレス**を使いたい
+- ウェブサイトから**より信頼されやすい** IP を使いたい
+- サードパーティのプロキシプロバイダーへの依存を減らしたい
+- お使いのデバイスのネットワークから、**実際のモバイルユーザー**として表示させたい
+
+## 仕組み
+
+- Android デバイスに専用のコンパニオンアプリをインストールします
+- アプリがスマートフォンのインターネット接続を共有します
+- プロフィールがそのデバイスにプロキシとして接続します
+- すべての通信がスマートフォンの IP を経由します
+
+<Warning>
+  同じプロキシデバイスを、複数のプロフィールで同時に使用しないでください。IP が同じになり、ウェブサイトから不審に見られる可能性があります。
+</Warning>
+
+## セットアップガイド
+
+### Gologin Devices モバイルアプリをインストールする
+
+1. Android スマートフォンの Google Play から Gologin Devices アプリを**ダウンロードしてインストール**します
+2. Gologin アカウントに**ログイン**します
+3. **プロキシを開始** を押します
+
+<Columns cols={4}>
+  <Column>
+    <Frame>
+      ![Gologin Devices Google Play](/images/gologin_devices_google_play.jpg)
+    </Frame>
+  </Column>
+  <Column>
+    <Frame>
+      ![Gologin Devices Log In](/images/gologin_devices_log_in-3.jpg)
+    </Frame>
+  </Column>
+  <Column>
+    <Frame>
+      ![Gologin Devices Logged In](/images/gologin_devices_logged_in.jpg)
+    </Frame>
+  </Column>
+  <Column>
+    <Frame>
+      ![Gologin Devices Proxy Running](/images/gologin_devices_proxy_running-1.jpg)
+    </Frame>
+  </Column>
+</Columns>
+
+### Gologin デスクトップアプリで続ける
+
+1. Gologin アプリで**プロキシデバイス**を開き、Android でログインした後に新しいデバイスが表示されていることを確認します
+   <Frame>
+     ![Proxy Devices Tab](/images/proxy_devices_tab.png)
+   </Frame>
+2. **すべてのプロフィール** \> 対象のプロフィールの**プロキシと場所**をクリック \> プロキシリストから新しいプロキシデバイスを選択します
+   <Frame>
+     ![Choosing A Proxy Device](/images/choosing_a_proxy_device.gif)
+   </Frame>

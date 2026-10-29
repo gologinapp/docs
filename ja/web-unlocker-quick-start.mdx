@@ -1,0 +1,138 @@
+---
+title: "クイックスタート"
+---
+
+このガイドでは、Web Unlocker を使って最初の URL をスクレイピングする方法を説明します。
+
+---
+
+## 前提条件
+
+- Web Unlocker の API キー(取得するには **ermakova.t@gologin.com** までお問い合わせください)
+- Python 3.x、Node.js、または任意の HTTP クライアント
+
+---
+
+## 認証
+
+すべてのリクエストで、`apikey` ヘッダーに API キーを指定する必要があります。
+
+```
+apikey: YOUR_API_KEY
+```
+
+すべての API リクエストのベース URL は次のとおりです。
+
+```
+https://parsing.webunlocker.gologin.com/v1
+```
+
+---
+
+## 最初のリクエストを送信する
+
+対象の URL をクエリパラメータに指定して GET リクエストを送信します。レスポンスは、ページの完全にレンダリングされた HTML です。
+
+### cURL
+
+```bash
+curl "https://parsing.webunlocker.gologin.com/v1/scrape?url=https%3A%2F%2Fexample.com" \
+  -H "apikey: YOUR_API_KEY"
+```
+
+### Python
+
+```python
+import requests
+
+response = requests.get(
+    "https://parsing.webunlocker.gologin.com/v1/scrape",
+    params={"url": "https://example.com"},
+    headers={"apikey": "YOUR_API_KEY"}
+)
+
+print(response.text)
+```
+
+### JavaScript (Node.js / Browser)
+
+```javascript
+const response = await fetch(
+  "https://parsing.webunlocker.gologin.com/v1/scrape?url=" +
+    encodeURIComponent("https://example.com"),
+  { headers: { apikey: "YOUR_API_KEY" } }
+);
+
+const html = await response.text();
+console.log(html);
+```
+
+---
+
+## レスポンスの内容
+
+レスポンスボディは、レンダリングされたページの生の HTML です。ブラウザーで URL を開いたときに表示される内容と同じです。JSON でラップされておらず、解析も不要です。
+
+```html
+<!DOCTYPE html>
+<html>
+  <head><title>Example Domain</title></head>
+  <body>...</body>
+</html>
+```
+
+---
+
+## エラーの処理
+
+レスポンスを処理する前に、HTTP ステータスコードを確認してください。
+
+| ステータス | 意味 |
+|---|---|
+| `200` | 成功 — レスポンスボディはページの HTML です |
+| `401` | API キーが無効、または指定されていません |
+| `422` | URL パラメータが無効、または指定されていません |
+| `429` | レート制限を超過しました |
+| `500` / `503` | サーバーエラー — バックオフを入れて再試行してください |
+
+```python
+response = requests.get(
+    "https://parsing.webunlocker.gologin.com/v1/scrape",
+    params={"url": "https://example.com"},
+    headers={"apikey": "YOUR_API_KEY"}
+)
+
+if response.status_code == 200:
+    html = response.text
+else:
+    print(f"Error {response.status_code}: {response.text}")
+```
+
+---
+
+## CLI でのクイックスタート
+
+コードを書かなくても、Gologin の CLI ツールでページをスクレイピングできます。
+
+### Web Unlocker CLI
+
+```bash
+npm install -g gologin-webunlocker
+
+GOLOGIN_WEBUNLOCKER_API_KEY=wu_... gologin-webunlocker scrape https://example.com
+GOLOGIN_WEBUNLOCKER_API_KEY=wu_... gologin-webunlocker text https://example.com
+GOLOGIN_WEBUNLOCKER_API_KEY=wu_... gologin-webunlocker markdown https://example.com
+```
+
+### Gologin Web Access CLI(統合版)
+
+```bash
+npm install -g gologin-web-access
+
+export GOLOGIN_WEB_UNLOCKER_API_KEY="wu_..."
+gologin-web-access read https://example.com
+gologin-web-access scrape-json https://example.com
+gologin-web-access batch-scrape https://example.com/page/1 https://example.com/page/2 --format text
+```
+
+詳細については、[Web Unlocker SDK and CLI](/ja/scraping-api-sdk-and-cli) と [Web Access CLI](/ja/cli-tools/web-access) をご覧ください。

@@ -1,0 +1,171 @@
+---
+title: "Servidor MCP"
+description: "Gerencie perfis de navegador do Gologin por meio de conversas com IA usando o Model Context Protocol"
+---
+
+O Servidor MCP do Gologin permite gerenciar perfis de navegador por meio de conversas com IA usando o [Model Context Protocol](https://modelcontextprotocol.io/). Conecte-o ao Claude Desktop, ao Cursor, ao Claude Code ou a qualquer cliente compatível com MCP e controle seus perfis em linguagem natural.
+
+---
+
+## O que você pode fazer
+
+- **Gerenciamento de perfis** — crie, atualize, exclua e liste perfis de navegador
+- **Configuração de proxies** — configure proxies nos perfis
+- **Controle de fingerprints** — personalize fingerprints do navegador e user agents
+- **Organização por pastas** — crie pastas e organize seus perfis
+- **Sessões do navegador** — inicie e encerre sessões do navegador
+- **Informações da conta** — consulte o status da assinatura e o uso
+
+---
+
+## Instalação
+
+### Requisitos
+
+- Node.js 18 ou superior
+- Um token de API do Gologin
+- Uma conta ativa do Gologin
+
+### Obtenha seu token de API
+
+1. Faça login em [gologin.com](https://gologin.com)
+2. Abra **API & MCP** no painel
+3. Abra a aba **API**
+4. Clique em **Novo Token** e copie o token
+
+### Claude Desktop
+
+1. Abra o Claude Desktop → **Configurações**
+2. Clique em **Developer** na barra lateral e depois em **Edit Config**
+3. Adicione ao arquivo `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "gologin-mcp": {
+      "command": "npx",
+      "args": ["gologin-mcp"],
+      "env": {
+        "API_TOKEN": "your-gologin-api-token-here"
+      }
+    }
+  }
+}
+```
+
+4. Reinicie o Claude Desktop
+5. Verifique em **Configurações → Connectors** se "gologin-mcp LOCAL" aparece
+
+### Claude Code
+
+Adicione às configurações de MCP do Claude Code:
+
+```json
+{
+  "mcpServers": {
+    "gologin-mcp": {
+      "command": "npx",
+      "args": ["gologin-mcp"],
+      "env": {
+        "API_TOKEN": "your-gologin-api-token-here"
+      }
+    }
+  }
+}
+```
+
+### Cursor
+
+Use a mesma configuração JSON no arquivo de configurações de MCP do Cursor.
+
+### Outros clientes MCP
+
+Qualquer cliente compatível com o Model Context Protocol pode usar a mesma estrutura de configuração.
+
+---
+
+## Exemplos de uso
+
+Depois de conectado, converse com seu assistente de IA de forma natural:
+
+**Conta**
+- "Qual é o status da minha conta do Gologin?"
+- "Confira os detalhes da minha assinatura"
+
+**Criação de perfis**
+- "Crie um novo perfil de navegador com um proxy dos EUA"
+- "Configure 5 perfis para gerenciamento de redes sociais"
+
+**Gerenciamento de perfis**
+- "Mostre todos os meus perfis"
+- "Atualize o proxy do perfil de ID 123 para usar um proxy do Reino Unido"
+- "Exclua o perfil chamado 'test-profile'"
+
+**Organização**
+- "Crie uma pasta chamada 'Social Media Accounts'"
+- "Mova o perfil XYZ para a pasta Social Media"
+
+**Sessões do navegador**
+- "Inicie uma sessão de navegador para o meu perfil"
+- "Encerre todas as sessões de navegador em execução"
+
+---
+
+## Cenários do mundo real
+
+### Configure perfis para um novo cliente
+
+Você está recebendo um novo cliente que precisa de 10 perfis de navegador para diferentes contas de anúncios regionais:
+
+> "Crie 10 perfis de navegador chamados 'Client X - US', 'Client X - UK', 'Client X - DE' e assim por diante. Configure cada um com um proxy residencial do respectivo país. Coloque todos em uma pasta chamada 'Client X'."
+
+O Claude cria os perfis, configura os proxies e os organiza, tudo em linguagem natural.
+
+### Faça uma auditoria da sua configuração atual
+
+> "Mostre todos os perfis que não têm um proxy configurado. Além disso, quais perfis não foram usados nos últimos 30 dias?"
+
+Uma forma rápida de encontrar perfis mal configurados ou abandonados sem precisar navegar pelo painel.
+
+### Prepare perfis antes da automação
+
+O Servidor MCP cuida da configuração; as ferramentas de CLI cuidam da execução:
+
+1. **MCP:** "Crie 5 perfis com proxies dos EUA para scraping e coloque-os em uma pasta chamada 'Scraping'"
+2. **CLI:** `gologin-agent-browser open https://target.com --profile profile_1` para executar a automação
+3. **MCP:** "Exclua todos os perfis da pasta 'Scraping'" quando terminar
+
+### Gerenciamento de equipe
+
+> "Quantas sessões ativas estão em execução agora? Qual é o limite de sessões do meu plano?"
+> "Confira minha assinatura — quantos perfis ainda tenho disponíveis?"
+
+Útil para líderes de equipe que precisam monitorar o uso sem abrir o painel.
+
+---
+
+## Servidor MCP vs ferramentas de CLI vs AI Skills
+
+| Ferramenta | Ideal para | Como funciona |
+|---|---|---|
+| **Servidor MCP** | Gerenciamento de perfis, operações da conta | Linguagem natural por meio do protocolo MCP |
+| [Ferramentas de CLI](/pt/cli-tools/web-access) | Web scraping, automação de navegador, operações em lote | Comandos de shell |
+| [AI Skills](/pt/api-reference/ai-integrations/ai-skills) | Recursos prontos para uso de agentes no Claude Code | Extensões de skills que encapsulam ferramentas de CLI |
+
+O Servidor MCP é voltado para o **gerenciamento de perfis e da conta**. Para web scraping e automação de navegador, use as [ferramentas de CLI](/pt/cli-tools/web-access) ou as [AI Skills](/pt/api-reference/ai-integrations/ai-skills).
+
+---
+
+## Veja também
+
+- [AI Skills](/pt/api-reference/ai-integrations/ai-skills) — skills de acesso à web prontas para uso no Claude Code
+- [Web Access CLI](/pt/cli-tools/web-access) — CLI unificada de scraping e navegador
+- [Agent Browser CLI](/pt/cli-tools/agent-browser) — CLI de navegador na nuvem para agentes de IA
+
+<Card title="Pacote npm" icon="npm" href="https://www.npmjs.com/package/gologin-mcp">
+  gologin-mcp
+</Card>
+
+<Card title="Código-fonte" icon="github" href="https://github.com/gologinapp/gologin-mcp">
+  gologinapp/gologin-mcp
+</Card>

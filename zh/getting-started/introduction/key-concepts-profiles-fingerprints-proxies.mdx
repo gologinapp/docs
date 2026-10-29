@@ -1,0 +1,86 @@
+---
+title: "核心概念"
+---
+
+要高效使用 Gologin，需要先了解三个核心概念，它们决定了浏览器环境如何被隔离和保护。
+
+这些组成部分协同工作，为每个账号创建相互独立的浏览身份。
+
+## 浏览器配置文件
+
+Gologin 中的**浏览器配置文件**是一个独立隔离的浏览器环境，用来模拟一台独立的设备。
+
+每个配置文件都包含各自独立的：
+
+- 浏览器指纹
+- Cookie 和会话数据
+- 本地存储和缓存
+- 浏览器扩展程序
+- 代理人连接
+
+由于配置文件之间相互隔离，网站会将它们视为不同的用户或设备。
+
+这样，您就可以管理多个账号，而不会出现会话相互干扰的情况。在大规模管理多个账号时，这一点尤为重要，详见 <br />[管理现有账号](https://gologin.com/docs/managing-existing-accounts)。
+
+## 浏览器指纹
+
+**浏览器指纹**是一组网站用来识别设备的技术参数。
+
+这些参数可能包括：
+
+- 操作系统
+- 浏览器版本
+- 屏幕分辨率
+- 已安装的字体
+- 显卡和 WebGL 数据
+- 时区和语言设置
+
+Gologin 会为每个配置文件生成唯一的指纹，使网站将每个配置文件视为不同的设备。
+
+浏览器指纹决定了网站如何识别您的设备。如需详细了解，请参阅 <br />[浏览器指纹的工作原理](https://gologin.com/docs/how-browser-fingerprints-work)。
+
+## 代理人
+
+**代理人**可以为浏览器配置文件分配不同的 IP 地址。
+
+由于网站会同时追踪浏览器指纹和 IP 地址，使用代理人有助于在各配置文件之间隔离网络身份。
+
+借助代理人，每个配置文件都可以显示为从不同的位置或网络连接。
+
+将代理人与唯一的浏览器指纹结合使用，有助于打造一致且独立的浏览身份。
+
+代理人用于在网络层面隔离账号。如果您还不了解其工作原理，请先阅读[什么是代理人](https://gologin.com/docs/proxy/introduction/what-is-a-proxy)。
+
+了解这些组成部分之后，下一步就是在创建配置文件时应用它们。<br />请参阅[创建配置文件](https://gologin.com/docs/browser-profiles/profile-management/creating-and-launching-profiles)。
+
+## 配置文件的操作系统必须与您设备的操作系统一致
+
+配置文件指纹中设置的操作系统，应与您打开该配置文件所用设备的操作系统一致。例如：
+
+- 在 Mac 上打开 Windows 配置文件，可能会产生可被检测到的不一致
+- iphey.com 和 pixelscan.net 等网站会将其标记为指纹不一致
+- LinkedIn 等敏感平台可能会立即将您登出
+
+<Warning>
+  如果您使用 Mac，请创建 Mac 配置文件；如果您使用 Windows，请创建 Windows 配置文件。跨平台使用（在一种操作系统上创建，在另一种操作系统上打开）可能会危及您的账号安全。
+</Warning>
+
+## 默认指纹设置是安全的
+
+Gologin 会为每个新配置文件自动生成真实可信的指纹设置。除非有特殊原因，否则您无需自定义 WebGL、Canvas、Audio 或其他指纹参数。
+
+## 如何验证您的指纹
+
+启动配置文件后，请访问以下任一检测网站：
+
+- **iphey.com** -- 显示整体信任评分并标记存在的问题
+- **pixelscan.net** -- 详细的指纹分析
+
+如果结果显示为“绿色”或“可信”，则说明您的配置文件在网站看来就像一个真实的浏览器。
+
+## 另请参阅
+
+- [快速入门：从零到创建第一个配置文件](https://gologin.com/docs/getting-started/introduction/quick-start-from-zero-to-your-first-profile)
+- [首次使用清单](https://gologin.com/docs/getting-started/setup/first-time-checklist)
+- [什么是代理人](https://gologin.com/docs/proxy/introduction/what-is-a-proxy)
+- [配置文件指纹设置](https://gologin.com/docs/profile-fingerprint-settings)
