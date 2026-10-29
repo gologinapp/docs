@@ -1,96 +1,117 @@
 ---
 title: "Common Errors"
-description: "Reference guide for common GoLogin error messages, their causes, and how to fix them."
+description: "Reference guide for common Gologin error messages, their causes, and how to fix them."
 ---
 
-## "Container not found"
+Find your error on this page with **Ctrl+F** (Windows) or **Cmd+F** (macOS) — most headings use the exact error text.
 
-**What it looks like:** You see "Container not found" when trying to launch a profile, especially in cloud mode.
+## Before you start
 
-**Why it happens:** The profile data is corrupted, or the cloud container failed to start on GoLogin's servers.
+- **See the full error.** Hover over the **Error** status of the profile in the profile list to see the full message.
+- **Fully quit the app.** Closing the Gologin window only hides it — the app keeps running in the background. To quit, click the Gologin icon in the system tray (bottom-right on Windows, menu bar on macOS) and select **Quit**.
+- **Update Gologin and the browser.** Download the latest version from [gologin.com/download](https://gologin.com/download) and install it over the current one — your profiles are kept. To update the browser of a profile, click the three dots next to the profile and select **Update browser**.
+- **Contacting support?** Include the profile ID (three dots next to the profile → **Copy ID**) and a screenshot of the error.
+
+## Profile launch errors
+
+### "The profile is being run by another user"
+
+**What it looks like:** The profile doesn't start and shows this message, even if nobody else seems to be using it.
+
+**Why it happens:** Gologin doesn't let the same profile run on several devices at the same time. This prevents synchronization conflicts and problems with cookies and sessions. You see this message when:
+
+- someone you've shared the profile with has it open right now;
+- the Gologin app is installing an update (you'll see a progress bar at the top of the app);
+- the previous session of the profile didn't close properly.
 
 **How to fix it:**
 
-1. Restart the GoLogin app and try launching the profile again.
+1. Make sure nobody you've shared the profile with has it open, and wait for any app update to finish.
+2. Click the Gologin logo in the top-left corner of the app and run the profile again.
+3. Fully quit Gologin from the system tray, start it again and run the profile.
+4. If the error persists, clone the profile (three dots next to the profile → **Clone**) and run the copy.
+
+### Profile is stuck on Downloading or Archiving
+
+**What it looks like:** The profile status stays on **Downloading** when you start the profile, or on **Archiving** when you stop it.
+
+**Why it happens:** Gologin can't finish loading or saving the profile data. The usual causes are a blocked connection to Gologin servers, antivirus software, or damaged browser files.
+
+**How to fix it:**
+
+1. Check your connection — see [Connection errors](#connection-errors) below.
+2. Turn off third-party antivirus software or add Gologin to its exceptions.
+3. Fully quit Gologin from the system tray.
+4. Delete the browser folder so Gologin downloads it again:
+   - **Windows:** `C:\Users\<YourUser>\.gologin\browser`
+   - **macOS:** `~/.gologin/browser` (in Terminal: `rm -r ~/.gologin/browser`)
+5. Start Gologin (on Windows, right-click it and select **Run as administrator**), wait for the browser to download, and run the profile.
+6. If nothing helps, reinstall Gologin from [gologin.com/download](https://gologin.com/download). Make sure no profiles are running before you uninstall the app — your profiles stay in your account.
+
+### "Seems like you don't have installed browser"
+
+**What it looks like:** The full message is "Seems like you don't have installed browser. We will try to install it. Please run the profile again after the installation is finished."
+
+**Why it happens:** Orbita, the browser that Gologin profiles run in, hasn't finished downloading yet, or its files were removed from your computer.
+
+**How to fix it:**
+
+1. Wait for the browser download to finish and run the profile again.
+2. If the message keeps coming back, check that your antivirus isn't removing Orbita files — see [Antivirus and security software](#antivirus-and-security-software) — and that you have free disk space.
+
+### "Seems like a GPU process has crashed"
+
+**What it looks like:** The full message is "Seems like a GPU process has crashed. Please try to restart the profile or restart your system".
+
+**How to fix it:**
+
+1. Run the profile again.
+2. Restart your computer.
+3. If it keeps happening, follow steps 2–5 for [a profile stuck on Downloading or Archiving](#profile-is-stuck-on-downloading-or-archiving).
+
+### "Your PC does not have enough memory or other system resource to run the browser"
+
+**Why it happens:** Your computer is out of memory or disk space. Errors that contain `ENOSPC` or `SQLITE_FULL` also mean the disk is full.
+
+**How to fix it:**
+
+1. Close the profiles and programs you don't need.
+2. Free up disk space — Gologin stores the data of running profiles on your disk.
+3. Restart Gologin and run the profile again.
+
+### "Container not found"
+
+**What it looks like:** You see "Container not found" when trying to launch a profile, especially in cloud mode.
+
+**Why it happens:** The profile data is corrupted, or the cloud container failed to start on Gologin's servers.
+
+**How to fix it:**
+
+1. Restart the Gologin app and try launching the profile again.
 2. Try launching the profile from the web version at [app.gologin.com](https://app.gologin.com).
 3. If the issue persists, contact support and provide your profile ID.
 
----
+### "Couldn't prepare your profile, contact support"
 
-## "Couldn't prepare your profile, contact support"
-
-**What it looks like:** This error appears when GoLogin fails to prepare your profile for launch.
+**What it looks like:** This error appears when Gologin fails to prepare your profile for launch.
 
 **Why it happens:** This is typically caused by a profile sync issue, corrupted profile data, or a mismatch between your Orbita browser version and the expected version.
 
 **How to fix it:**
 
-1. Update the GoLogin desktop app to the latest version.
-2. Check your internet connection -- an unstable connection can interrupt profile sync.
+1. Update the Gologin desktop app to the latest version.
+2. Check your internet connection — an unstable connection can interrupt profile sync.
 3. Try switching to a different network (for example, from WiFi to a mobile hotspot).
 4. If the error continues, contact support with your profile ID and app version.
 
----
+### "Profile has been deleted"
 
-## "The proxy is functional but not working on your device or network"
-
-**What it looks like:** GoLogin reports that the proxy passed its server-side check but cannot connect from your machine.
-
-**Why it happens:** Your local network or ISP is blocking the proxy connection. The proxy itself is working -- GoLogin verified it on their servers -- but the traffic cannot leave your device.
-
-**How to fix it:**
-
-1. Try enabling a VPN on your device, then launch the profile again.
-2. Switch to a different network (WiFi to mobile hotspot, or vice versa).
-3. Check your firewall or antivirus settings to ensure they are not blocking GoLogin or the proxy port.
-
----
-
-## "You have exceeded your traffic limit" / "exceeded request limit"
-
-**What it looks like:** One of two related messages appears when launching a profile or performing actions.
-
-**Why it happens:** This error has two possible causes:
-
-- **Traffic limit:** Your GoLogin built-in proxy traffic (measured in GB) is exhausted for the current billing period.
-- **Request/IP rate limit:** You have hit an IP-based rate limit, usually triggered by creating too many accounts from the same IP address in a short period.
-
-**How to fix it:**
-
-- **For traffic limits:** Top up your proxy traffic in GoLogin settings or upgrade your plan.
-- **For IP rate limits:** Wait approximately 1 hour for the IP block to expire, then try again.
-
----
-
-## "Run limit exceeded. Upgrade your plan"
-
-**What it looks like:** This error appears when trying to launch a profile in the cloud.
-
-**Why it happens:** You have reached the maximum number of concurrent cloud sessions allowed by your plan.
-
-The concurrent cloud session limits are:
-
-| Plan         | Concurrent Cloud Sessions |
-|--------------|--------------------------|
-| Professional | 1                        |
-| Business     | 2                        |
-| Enterprise   | 3                        |
-
-**How to fix it:**
-
-1. Close one or more running cloud profiles before launching a new one.
-2. Upgrade your plan if you need more concurrent cloud sessions.
-
----
-
-## "Profile already deleted"
-
-**What it looks like:** You see a message saying your profile has been deleted, even though you did not delete it.
+**What it looks like:** You see "Profile has been deleted" or "Profile has been already deleted", even though you did not delete the profile.
 
 **Why it happens:** This message is misleading. It does **not** mean your profile was actually deleted. It typically appears when you have reached the profile launch count limit on a trial or free plan.
 
 <Info>
-GoLogin stores profiles on its servers for up to 180 days after a subscription expires. Your profile data is not lost when you see this message.
+  Gologin stores profiles on its servers for up to 180 days after a subscription expires. Your profile data is not lost when you see this message.
 </Info>
 
 **How to fix it:**
@@ -98,9 +119,7 @@ GoLogin stores profiles on its servers for up to 180 days after a subscription e
 1. Upgrade to a paid plan or renew your subscription to restore access.
 2. If you believe this is an error, contact support with your account details.
 
----
-
-## ECONNREFUSED 127.0.0.1
+### ECONNREFUSED 127.0.0.1
 
 **What it looks like:** An error containing `ECONNREFUSED 127.0.0.1` appears when trying to launch a profile locally.
 
@@ -108,17 +127,15 @@ GoLogin stores profiles on its servers for up to 180 days after a subscription e
 
 - Corrupted Orbita download
 - Proxy incompatibility preventing the browser from initializing
-- Outdated GoLogin app version
+- Outdated Gologin app version
 
 **How to fix it:**
 
-1. Update the GoLogin desktop app to the latest version.
-2. Re-download Orbita: go to GoLogin settings and trigger a fresh Orbita download.
-3. Check your proxy settings -- try launching the profile without a proxy to isolate the issue.
+1. Update the Gologin desktop app to the latest version.
+2. Download Orbita again: fully quit Gologin and delete the browser folder, as described for [a profile stuck on Downloading or Archiving](#profile-is-stuck-on-downloading-or-archiving).
+3. Check your proxy settings — try launching the profile without a proxy to isolate the issue.
 
----
-
-## EBUSY: resource busy or locked (Windows)
+### EBUSY: resource busy or locked (Windows)
 
 **What it looks like:** On Windows, you see an `EBUSY: resource busy or locked` error, often referencing a Cookies file.
 
@@ -127,55 +144,276 @@ GoLogin stores profiles on its servers for up to 180 days after a subscription e
 **How to fix it:**
 
 1. Open **Task Manager** (Ctrl+Shift+Esc) and end all processes named `orbita` or `browser`.
-2. Delete the temporary profile folder. You can find it at `C:\Users\<YourUser>\AppData\Local\GoLogin\browser\orbita\profiles\` -- delete the folder matching the affected profile ID.
-3. Restart GoLogin and try again.
+2. Delete the local copy of the profile. Open `C:\Users\<YourUser>\AppData\Roaming\GoLogin\profiles\` and delete the folder that matches the affected profile ID.
+3. Restart Gologin and try again.
 
 <Warning>
-Deleting the temporary profile folder only removes local cached data. Your profile data stored on GoLogin servers is not affected.
+  Deleting this folder only removes the local copy of the profile. Your profile data stored on Gologin servers is not affected.
 </Warning>
 
----
+## Connection errors
 
-## SyntaxError: Unexpected token 'e'
+### "Timezone request error", "Profile loading error" and other connection errors
 
-**What it looks like:** A JavaScript-style error `SyntaxError: Unexpected token 'e'` appears, usually in the GoLogin app or API response.
+**What it looks like:** One of these messages appears, or the app shows a white or green screen instead of loading:
 
-**Why it happens:** This occurs when Cloudflare returns a 1015 rate limit error page (HTML) instead of the expected JSON response from the GoLogin API. The JSON parser encounters the HTML and fails at the first unexpected character.
+- "Timezone request error"
+- "Profile loading error. Check internet connection."
+- "Error in profile request. Check your internet connection and try again."
+- "Error uploading profile. Please check your internet connection and try again."
+- "Retrying your request due to internet connectivity issues. Thank you for your patience."
+
+**Why it happens:** Your network or internet provider blocks or breaks the connection between the Gologin app and Gologin servers. Other websites can still work normally on the same connection.
+
+**How to fix it:**
+
+1. Switch to a different network — for example, turn off WiFi and share mobile internet from your phone.
+2. Turn on a VPN on your computer. If the first VPN doesn't help, try another provider — sometimes it takes several.
+3. After you switch the network or VPN, fully quit Gologin from the system tray and start it again.
+
+<Tip>
+  If you see "SSL certificate error. Please check and adjust your system time or check your internet connection", first make sure the date, time and time zone on your computer are set automatically.
+</Tip>
+
+### "Something went wrong. Please try again later"
+
+**What it looks like:** You see "Something went wrong. Please try again later" or a page that says "Oops! Something went wrong…".
+
+**Why it happens:** A request to Gologin servers failed. It's a general error with many possible causes.
+
+**How to fix it:**
+
+1. Press **Ctrl+Shift+R** (Windows) or **Cmd+Shift+R** (macOS) to reload. This works both in the desktop app and in the web version.
+2. If the error repeats, fully quit Gologin from the system tray and start it again.
+3. If it still happens, follow the steps for [connection errors](#connection-errors).
+4. If nothing helps, reinstall Gologin from [gologin.com/download](https://gologin.com/download) or contact support with a screenshot.
+
+### "Internal server error"
+
+**Why it happens:** A temporary problem on Gologin's side.
+
+**How to fix it:**
+
+1. Wait a few minutes and try again.
+2. Update Gologin to the latest version.
+3. If the error doesn't go away, contact support.
+
+### "The proxy is functional but not working on your device or network"
+
+**What it looks like:** Gologin reports that the proxy passed its server-side check but cannot connect from your machine.
+
+**Why it happens:** Your local network or ISP is blocking the proxy connection. The proxy itself is working — Gologin verified it on its servers — but the traffic cannot leave your device.
+
+**How to fix it:**
+
+1. Try enabling a VPN on your device, then launch the profile again.
+2. Switch to a different network (WiFi to mobile hotspot, or vice versa).
+3. Check your firewall or antivirus settings to ensure they are not blocking Gologin or the proxy port.
+
+### SyntaxError: Unexpected token 'e'
+
+**What it looks like:** A JavaScript-style error `SyntaxError: Unexpected token 'e'` appears, usually in the Gologin app or API response.
+
+**Why it happens:** This occurs when Cloudflare returns a 1015 rate limit error page (HTML) instead of the expected JSON response from the Gologin API. The JSON parser encounters the HTML and fails at the first unexpected character.
 
 **How to fix it:**
 
 1. Reduce the frequency of your API requests or profile launches.
 2. Wait a few minutes before retrying.
-3. If you are using the GoLogin API programmatically, implement exponential backoff in your request logic.
+3. If you are using the Gologin API programmatically, implement exponential backoff in your request logic.
 
----
+## macOS errors
 
-## "To install add-ons, you'll need the new Microsoft Edge"
+### "Your macOS version is not supported by Chromium Engine"
 
-**What it looks like:** When trying to install a browser extension inside a GoLogin profile, you see a prompt about Microsoft Edge.
+**Why it happens:** Orbita 151 and newer don't support macOS 12 Monterey and older macOS versions.
+
+**How to fix it:**
+
+1. Update macOS to a newer version, **or**
+2. Create a new profile with Orbita 150 or older: click **Add profile**, open the **Advanced** tab and pick the browser version under **Old versions**.
+
+<Note>
+  You can't downgrade the browser version of an existing profile — create a new profile instead.
+</Note>
+
+### "Current browser version is not supported for ARM processor architecture"
+
+**What it looks like:** Profiles show this error, or Gologin is very slow or freezes on your Mac.
+
+**Why it happens:** The Intel version of Gologin is installed on a Mac with an Apple Silicon chip (M1 or newer), or the profile uses an old browser version.
+
+**How to fix it:**
+
+1. Check your chip: open the Apple menu → **About This Mac** and look at the **Chip** field.
+2. If it's an Apple M-series chip, move Gologin from **Applications** to the Trash and install the Apple Silicon version from [gologin.com/download](https://gologin.com/download).
+3. Update the browser of the profile: three dots next to the profile → **Update browser**.
+
+### "Cannot update while running on a read-only volume"
+
+**What it looks like:** Gologin can't install an update and shows "Cannot update while running on a read-only volume. The application is on a read-only volume. Please move the application and try again."
+
+**Why it happens:** Gologin is running from the downloaded disk image or from the **Downloads** folder instead of **Applications**.
+
+**How to fix it:**
+
+1. Quit Gologin.
+2. Drag Gologin into the **Applications** folder.
+3. Open Gologin from **Applications** and install the update.
+
+<Tip>
+  If an update gets stuck on any system, check your [connection](#connection-errors) or download the latest version from [gologin.com/download](https://gologin.com/download) and install it over the current one. Your profiles are kept.
+</Tip>
+
+## Antivirus and security software
+
+### "Seems like your antivirus is blocking access to the Orbita browser"
+
+**What it looks like:** You see one of these messages:
+
+- "Seems like your antivirus is blocking access to the Orbita browser. Please adjust your antivirus and restart the profile"
+- "Seems like something is blocking application access to the system. Please check your antivirus or other security software."
+- "Seems like your browser files are damaged or missing (possibly deleted by antivirus software)…"
+- "Permission denied" when you update the browser
+
+**Why it happens:** Your antivirus or other security software blocks Gologin or Orbita, or has moved their files to quarantine.
+
+**How to fix it:**
+
+1. On Windows, open **Windows Security** → **Virus & threat protection** → **Protection history** and check for blocked or quarantined Gologin or Orbita files. Restore them if you find any.
+2. Add Gologin to the exceptions of your antivirus, or turn the antivirus off.
+3. Restart Gologin and run the profile again — Gologin restores missing browser files automatically.
+
+## Plan and limit errors
+
+### "The owner of this profile has run out of subscription time"
+
+**What it looks like:** You can't run a profile someone shared with you. The full message is "The owner of this profile has run out of subscription time. To resume using this profile, the owner needs to renew their subscription."
+
+**Why it happens:** The subscription of the profile's owner has ended.
+
+**How to fix it:** Ask the profile owner to renew their subscription. After that, the profile runs again.
+
+### "The workspace subscription has ended. Please upgrade your plan to restore access"
+
+**Why it happens:** Your trial or paid plan has ended.
+
+**How to fix it:** Choose a plan in **Settings & Members** → **Billing Plans** → **Change plan**. To switch to the Forever Free plan, click **Forever Free** at the bottom of that page — your workspace must have no more than 3 profiles.
+
+### "You've exceeded your workspace limits"
+
+**Why it happens:** On the Forever Free plan, you can have up to 3 profiles at the same time and create up to 25 profiles per month.
+
+**How to fix it:**
+
+1. If you have 3 profiles, delete one you don't need. Deleting a profile doesn't give a creation back.
+2. If you've used all 25 creations, wait until the monthly limit resets or [upgrade to a paid plan](/general/account-and-billing/how-to-subscribe-to-gologin).
+
+See [Free Plan Limitations](/general/account-and-billing/pricing#free-plan-limitations) for details.
+
+### "You've reached max shares number. To share more update your plan"
+
+**Why it happens:** You've used all profile shares included in your plan.
+
+**How to fix it:** Remove shares you no longer need in the **Share** menu of your profiles, or upgrade your plan.
+
+### "You've reached max parallel cloud launches limit"
+
+**What it looks like:** This error, or "You've hit your parallel launch limit", appears when you try to launch a profile in the cloud.
+
+**Why it happens:** You have reached the maximum number of concurrent cloud sessions allowed by your plan.
+
+The concurrent cloud session limits are:
+
+| Plan         | Concurrent Cloud Sessions |
+|--------------|---------------------------|
+| Professional | 1                         |
+| Business     | 2                         |
+| Enterprise   | 3                         |
+| Custom       | 4                         |
+
+**How to fix it:**
+
+1. Close one or more running cloud profiles before launching a new one.
+2. Buy more parallel cloud launches: click your account name in the top-left corner → **Settings & Members** → **Cloud Browser Usage** → **Buy more limits**.
+3. Run profiles in the desktop app — local launches are not limited by your plan.
+
+<Note>
+  Running profiles in the cloud requires a paid plan.
+</Note>
+
+### "You've exceeded your traffic limit" / "exceeded request limit"
+
+**What it looks like:** One of two related messages appears when launching a profile or performing actions.
+
+**Why it happens:** This error has two possible causes:
+
+- **Traffic limit:** Your Gologin proxy traffic (measured in GB) is used up. Your subscription and proxy traffic are separate: an active plan doesn't mean you have traffic left.
+- **Request/IP rate limit:** You have hit an IP-based rate limit, usually triggered by creating too many accounts from the same IP address in a short period.
+
+**How to fix it:**
+
+- **For traffic limits:** Buy more traffic: open the **Proxies** tab on the left, choose the proxy type, click **+**, select the amount of GB and pay.
+- **If you just bought traffic:** Make sure your profiles use the same proxy type as the traffic you bought. For example, if you bought Datacenter traffic, switch the profile's proxy from Residential to Datacenter in the profile settings.
+- **For IP rate limits:** Wait approximately 1 hour for the IP block to expire, then try again.
+
+## Account errors
+
+### "Registration error. Please try again."
+
+**Why it happens:** There were too many registration attempts in a short time, or an account with this email already exists.
+
+**How to fix it:**
+
+1. Wait a while and try again.
+2. If you've registered with this email before, click **Log in** instead. If you don't remember the password, use **Forgot password?**.
+
+<Note>
+  "Invalid input data. Check field - "email"" means the email address wasn't accepted. Use an address with at least 3 characters before the @. Addresses with "+1", such as name+1@gmail.com, aren't accepted.
+</Note>
+
+### Can't sign in with Google
+
+**How to fix it:**
+
+1. On the sign-in screen, click **Forgot password?** and enter the email of your Gologin account.
+2. Enter the code from the email and set a password.
+3. Sign in with your email and password.
+
+## Cloud Android errors
+
+### "No available devices"
+
+**Why it happens:** All cloud phones are busy at the moment. This doesn't depend on your profile.
+
+**How to fix it:** Try again later.
+
+## Browser and extension errors
+
+### "To install add-ons, you'll need the new Microsoft Edge"
+
+**What it looks like:** When trying to install a browser extension inside a Gologin profile, you see a prompt about Microsoft Edge.
 
 **Why it happens:** The Orbita browser (based on Chromium) sometimes triggers this message when you attempt to install extensions from the Microsoft Edge Add-ons store or through an incompatible installation path.
 
 **How to fix it:**
 
 1. Install extensions from the [Chrome Web Store](https://chromewebstore.google.com/) instead of the Edge Add-ons store.
-2. Alternatively, use the GoLogin extension management UI to add extensions to your profile before launching it.
+2. Alternatively, use the Gologin extension management UI to add extensions to your profile before launching it.
 
----
-
-## Proxy authentication popup for geo.floppydata.com:10080
+### Proxy authentication popup for geo.floppydata.com:10080
 
 **What it looks like:** A proxy authentication dialog box appears asking for credentials for `geo.floppydata.com:10080` when launching a profile.
 
-**Why it happens:** The GoLogin built-in proxy is requesting authentication unexpectedly. This can occur when the proxy configuration is not passed correctly to the browser, often due to a network or VPN conflict.
+**Why it happens:** The Gologin built-in proxy is requesting authentication unexpectedly. This can occur when the proxy configuration is not passed correctly to the browser, often due to a network or VPN conflict.
 
 **How to fix it:**
 
-1. Fully exit GoLogin (check your system tray to make sure it is closed).
+1. Fully exit Gologin (check your system tray to make sure it is closed).
 2. Enable a VPN on your device.
-3. Restart GoLogin.
-4. Launch the profile again.
+3. Restart Gologin.
+4. Launch the profile again. With rotating residential proxies, restarting the profile also gets you a new IP.
 
 <Info>
-If the popup continues to appear, try switching to a different proxy provider or contact GoLogin support.
+  If the popup continues to appear, run the profile in the web version at [app.gologin.com](https://app.gologin.com), try a different proxy, or contact Gologin support.
 </Info>
