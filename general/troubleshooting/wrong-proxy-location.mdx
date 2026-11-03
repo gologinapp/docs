@@ -7,16 +7,17 @@ description: "When the proxy shows the wrong geolocation for your third-party pr
 
 Different websites use various IP geolocation databases to determine the country of an IP address. These databases are not synchronized, leading to situations where the same IP is detected as belonging to multiple different locations.
 
-Another key factor is whether an IP is flagged as belonging to a Datacenter / VPN / any other service.\
-If an IP is recognized as a service, it can drastically lower its trust score, making it more likely to be flagged or blocked by websites.
+Another key factor is whether an IP is flagged as belonging to a Datacenter / VPN / any other service.<br />If an IP is recognized as a service, it can drastically lower its trust score, making it more likely to be flagged or blocked by websites.
 
 We do not recommend using proxies with the discrepancies listed above.
 
+## **How Gologin determines the proxy location**
+
+The Gologin proxy check uses one third-party GeoIP database. When that database updates, the country shown for an IP can change. For new proxies, location data in GeoIP databases may not be updated yet, so the country can differ from the one you bought - check with your proxy provider. You can't change the database Gologin uses; if a website needs a specific country, use a proxy that is consistently detected as that country.
+
 ## **How do I check my proxy?**
 
-1. Get the outgoing IP of your proxy here, just hover over the arrows icon
-
-   ![image (55).png](/images/image\(55\).png)
+1. Get the outgoing IP of your proxy here, just hover over the arrows icon <img src="/images/image(55).png" alt="image (55).png" />
 2. There are more tools on the Internet, we usually use these two for consistent results:
    - To check the IP geolocation: [<u>https://www.iplocation.net/ip-lookup</u>](https://www.iplocation.net/ip-lookup)
 
@@ -25,9 +26,7 @@ We do not recommend using proxies with the discrepancies listed above.
 
      ❗It should not indicate any services on the IP
 
-   Examples to determine are below:
-
-   ![image.png](/images/image.png)
+   Examples to determine are below: <img src="/images/image.png" alt="image.png" />
 
 ## **How to avoid proxy issues**
 

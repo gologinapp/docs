@@ -42,7 +42,7 @@ The proxy you assign here determines the IP address that websites see when this 
 
 This tab sets the timezone the profile reports to websites.
 
-By default, the toggle **Fill timezone based on the external IP** is on, which means the profile automatically uses the timezone that matches its proxy's location. This keeps the profile internally consistent - a profile with a US proxy will report a US timezone, which is what a real user in that location would have.
+By default, the toggle **Fill timezone based on the external IP** is on, which means the profile automatically uses the timezone that matches its proxy's location. This keeps the profile internally consistent - a profile with a US proxy will report a US timezone, which is what a real user in that location would have. To make a profile look like it's from a specific country, add a proxy from that country and keep timezone and geolocation based on the IP - Gologin matches them to the proxy location automatically.
 
 <Note>
   It's recommended to leave this on auto and not change it manually. If the timezone doesn't match the proxy location, it can look suspicious to websites. Only change this if you have a specific reason to.

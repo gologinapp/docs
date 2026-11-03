@@ -22,6 +22,7 @@ Find your error on this page with **Ctrl+F** (Windows) or **Cmd+F** (macOS) — 
 
 - someone you've shared the profile with has it open right now;
 - the Gologin app is installing an update (you'll see a progress bar at the top of the app);
+- the profile was recently closed on another device - the lock is released within 1-2 minutes after the profile is closed;
 - the previous session of the profile didn't close properly.
 
 **How to fix it:**
@@ -224,13 +225,15 @@ Find your error on this page with **Ctrl+F** (Windows) or **Cmd+F** (macOS) — 
 
 ## macOS errors
 
-### "Your macOS version is not supported by Chromium Engine"
+### "Orbita quit unexpectedly" or "Your macOS version is not supported by Chromium Engine"
 
-**Why it happens:** Orbita 151 and newer don't support macOS 12 Monterey and older macOS versions.
+**What it looks like:** Orbita closes right after the profile starts and macOS shows the **Orbita quit unexpectedly** report, or you see the "not supported" message.
+
+**Why it happens:** Google stopped supporting macOS 12 Monterey after Chrome 150. Orbita 151 and newer don't work on macOS 12 Monterey and older macOS versions.
 
 **How to fix it:**
 
-1. Update macOS to a newer version, **or**
+1. Update macOS to 13 Ventura or newer, **or**
 2. Create a new profile with Orbita 150 or older: click **Add profile**, open the **Advanced** tab and pick the browser version under **Old versions**.
 
 <Note>
@@ -316,6 +319,12 @@ See [Free Plan Limitations](/general/account-and-billing/pricing#free-plan-limit
 **Why it happens:** You've used all profile shares included in your plan.
 
 **How to fix it:** Remove shares you no longer need in the **Share** menu of your profiles, or upgrade your plan.
+
+### "Bad Request" when sharing a profile
+
+**Why it happens:** There's no Gologin account with the email you entered, or the email has a typo.
+
+**How to fix it:** Check the email. If the person doesn't have a Gologin account yet, ask them to register first, then share the profile again.
 
 ### "You've reached max parallel cloud launches limit"
 

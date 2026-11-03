@@ -224,6 +224,14 @@
                 ]
               },
               {
+                "group": "Cloud Android",
+                "icon": "mobile-screen-button",
+                "pages": [
+                  "cloud-android/overview",
+                  "cloud-android/faq"
+                ]
+              },
+              {
                 "group": "Gologin Android app",
                 "icon": "mobile",
                 "pages": [
@@ -439,6 +447,13 @@
                 "group": "Overview",
                 "pages": [
                   "ai/overview"
+                ]
+              },
+              {
+                "group": "AI Assistant",
+                "pages": [
+                  "ai/ai-assistant",
+                  "ai/connected-accounts"
                 ]
               },
               {

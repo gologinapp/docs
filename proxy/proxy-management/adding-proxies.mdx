@@ -30,6 +30,8 @@ We support the following proxy pasting formats:
   ![Add Proxy Simple](/images/add_proxy_simple.gif)
 </Frame>
 
+You can also paste a full proxy string, such as `ip:port:login:password`, straight into the **Proxy & Location** column of a profile - Gologin adds the proxy with all its details. Note that the **IP** field in the proxy form accepts only the IP address, not the full string.
+
 You can paste proxies one by one or in bulk at the same page. Copy a few proxies and paste them all at once into the Location column. Use your system **hot keys** or the **Paste proxies** button. You will be able to rearrange your new proxies between the profiles later.
 
 <Frame>
@@ -61,3 +63,17 @@ Click **3 dots on the profile** \> **Settings** \> **Proxy** \> **Your proxy**
 <Frame>
   ![Proxy Profile Settings](/images/proxy_profile_settings.gif)
 </Frame>
+
+## Changing the IP with a change IP link
+
+Some third-party providers, usually of rotating mobile proxies, give you a link that changes the proxy's IP. If your provider gives you such a link, add it to the proxy settings (see the formats at the top of this page). Then hover over the proxy in the **Proxy & Location** column and click **Change IP**.
+
+Gologin proxies don't support changing the IP with a link.
+
+## Quick fix for a proxy that doesn't work
+
+If a third-party proxy fails the check when you launch a profile, Gologin shows **Proxy doesn't work** with a **Quick fix** button. Click **Quick fix** to replace your proxy with a Gologin proxy from the same country, and the profile will be able to run. Gologin proxies use your proxy traffic, so you need to have traffic available.
+
+![Proxy Quick Fix](/images/proxy_quick_fix.png "Proxy Quick Fix")
+
+If you want to keep using your own proxy, click **Not now** and fix or replace the proxy instead.

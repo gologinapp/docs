@@ -37,6 +37,10 @@ Because nearly every Android Chrome user in the world now reports `Android 10; K
 
 Websites that genuinely need to know the real Android version or device model now request it through a newer, more privacy-friendly channel (called Client Hints) rather than reading it from the User-Agent. So even though the User-Agent says `Android 10`, nothing is lost, and your Android version selection still applies where it matters.
 
+## Do all my Android profiles look the same?
+
+No. Profiles differ by screen resolution, WebGL, canvas and hardware parameters - only the User-Agent string is the same, just like on real Android devices.
+
 ## How you can test it yourself
 
 You can confirm this on any real Android device by comparing a Gologin profile with your regular Chrome browser side by side.
