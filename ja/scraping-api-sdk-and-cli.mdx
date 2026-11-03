@@ -2,16 +2,16 @@
 title: 'Scraping API SDK と CLI'
 ---
 
-Gologin Web Unlocker は、JavaScript を多用するサイトや保護されたサイト向けの**シングルエンドポイントの Scraping API** です。
+Gologin Web Unlocker は、JavaScript を多用するサイトや保護されたサイト向けの**単一エンドポイントの Scraping API** です。
 
-URL を送信すると、レンダリング済みのページ HTML/テキストが返されます。取得した内容は、お使いの抽出パイプラインで処理できます。
+URL を送信すると、レンダリング済みのページの HTML/テキストが返されます。取得した内容は、お使いの抽出パイプラインで処理できます。
 
 ## Scraping API として使う理由
 
 - あらゆる対象 URL に対応する 1 つのエンドポイント
-- API キー認証のみで、ブラウザのオーケストレーションは不要
-- 既存のパーサーにそのまま組み込める HTML ベースのレスポンス
-- ETL、モニタリング、AI へのデータ取り込み、データパイプラインに最適
+- API キー認証のみで利用でき、ブラウザのオーケストレーションは不要
+- デフォルトは HTML で、リクエストに応じて Markdown または JSON も取得可能。既存のパーサーにそのまま利用できます
+- ETL、モニタリング、AI へのデータ取り込み、データパイプラインに適しています
 
 ## エンドポイント
 
@@ -25,11 +25,12 @@ API キーをヘッダーで送信します。
 apikey: <API_KEY>
 ```
 
-## リクエストモデル
+## リクエストの仕様
 
 | 名前 | 場所 | 型 | 必須 | 説明 |
 |---|---|---|---|---|
 | `url` | クエリ | string (絶対 URL) | はい | スクレイピング対象の URL |
+| `format` | クエリ | string | いいえ | レスポンス形式: `html` (デフォルト)、`markdown`、`json` |
 
 ## クイックスタート
 
@@ -70,24 +71,34 @@ console.log(response.status, html.slice(0, 500));
 
 ## レスポンスの動作
 
-現在のレスポンスボディは、**レンダリング済みの生の HTML/テキスト**です。
+デフォルトでは、レスポンスボディはページの**レンダリング済みの生の HTML** です。`format=markdown` を指定すると Markdown、`format=json` を指定すると次のような JSON オブジェクトが返されます。
 
-- `200` -> 成功。ボディにページの HTML/テキストが含まれます
-- `401` / `403` -> API キーが無効、または指定されていません
-- `422` -> `url` が無効、または指定されていません
-- `429` -> レート制限
-- `500+` -> サーバー側の一時的なエラー
+```json
+{
+  "success": true,
+  "data": {
+    "url": "https://example.com",
+    "metadata": {
+      "response_time_ms": 297,
+      "status_code": 200
+    },
+    "html": "<!DOCTYPE html><html lang=\"en\">..."
+  }
+}
+```
 
-## リトライの推奨事項
+ステータスコード:
+
+- `200` -> 成功。ボディには、指定した形式のページが含まれます
+- `400` -> 不正なリクエスト。たとえば `url` が指定されていない場合です。ボディ: `{"success":false,"error":"Request failed"}`
+- `401` -> `apikey` ヘッダーがありません。ボディ: `{"message":"Missing API key in request"}`
+
+## リトライの指針
 
 次の場合は、指数バックオフでリトライしてください。
 
 - ネットワークエラー
 - `408`、`429`、`500`、`502`、`503`、`504`
-
-## 対応範囲に関する注意
-
-現在の公開エンドポイントは HTML を中心としたものです。スクリーンショット、クロール、検索、使用量取得などの追加のバックエンドエンドポイントは、ドキュメントに明記され、お使いのアカウントで有効化されている場合を除き、利用できるものと想定しないでください。
 
 ## 公式 Node.js SDK
 
@@ -97,7 +108,7 @@ console.log(response.status, html.slice(0, 500));
 npm i gologin-webunlocker
 ```
 
-### SDK クイックスタート
+### SDK のクイックスタート
 
 ```ts
 import { WebUnlocker } from "gologin-webunlocker";
@@ -128,14 +139,14 @@ new WebUnlocker({
 - `scrapeRaw(url)` -> ネイティブの `Response`
 - `buildScrapeUrl(url)` -> 完全なリクエスト URL
 
-### SDK 側で生成されるメソッド (返された HTML から生成)
+### SDK 側で生成するメソッド (返された HTML から生成)
 
-これらは**独立したバックエンドエンドポイントではありません**。API から返された HTML をもとに SDK 側で生成されます。
+これらは**バックエンドの別のエンドポイントではなく**、API が返した HTML から SDK 内で生成されます。SDK は `url` パラメーターのみを送信し、`format` は送信しないため、API 自体の `format=markdown` や `format=json` のレスポンスとは出力が異なる場合があります。
 
 - `scrapeText(url)` -> プレーンテキスト
 - `scrapeMarkdown(url)` -> Markdown
-- `scrapeJSON(url)` -> 構造化されたメタデータ (`title`、`meta`、`links`、`headings`)
-- `batchScrape(urls, { concurrency })` -> 複数のスクレイピング呼び出しをまとめて行うヘルパー
+- `scrapeJSON(url)` -> 構造化メタデータ (`title`、`description`、`canonical`、`meta`、`headings`、`links`)
+- `batchScrape(urls, { concurrency })` -> 複数のスクレイピング呼び出しをまとめて実行するヘルパー
 
 ### 型付きエラー
 
@@ -150,9 +161,9 @@ new WebUnlocker({
 
 - `401` / `403` -> `AuthenticationError`
 - `429` -> `RateLimitError`
-- `500+` -> `APIError`
+- `500` 以上、およびその他の 2xx 以外のステータス (たとえば `400`) -> `APIError`
 - タイムアウト/中断 -> `TimeoutError`
-- fetch/ネットワーク障害 -> `NetworkError`
+- fetch/ネットワークの失敗 -> `NetworkError`
 
 ## CLI
 
@@ -179,9 +190,9 @@ GOLOGIN_WEBUNLOCKER_API_KEY=wu_live_xxx gologin-webunlocker json https://example
 
 - 価格やカタログのモニタリング
 - リードやディレクトリ情報の拡充
-- マーケットインテリジェンスのパイプライン
+- 市場インテリジェンスのパイプライン
 - コンテンツの集約とインデックス作成
-- LLM へのデータ取り込みと抽出ワークフロー
+- LLM へのデータ取り込みと抽出のワークフロー
 
 ## Gologin Web Access CLI (統合版)
 

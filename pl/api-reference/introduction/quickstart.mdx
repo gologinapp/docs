@@ -2,14 +2,25 @@
 title: "Szybki start"
 ---
 
-Ten przewodnik pomoże Ci przygotować środowisko do pracy z Gologin API. Pokażemy, jak zacząć korzystać z jednego z naszych klientów API i jak wysłać pierwsze żądanie. Wskażemy też, gdzie szukać dalszych informacji, aby w pełni wykorzystać możliwości naszego REST API.
+Ten przewodnik pomoże Ci skonfigurować środowisko i zacząć korzystać z API Gologin. Pokażemy, jak zacząć pracę z jednym z naszych klientów API i jak wysłać pierwsze zapytanie. Wskażemy też, gdzie szukać dalszych informacji, aby w pełni wykorzystać możliwości naszego REST API.
 
 <Note>
-  Zanim zaczniesz wysyłać żądania do Gologin API, musisz pobrać swój
-  klucz API z panelu. Znajdziesz go w [Settings » API](https://app.gologin.com/personalArea/TokenApi).
+  Zanim wyślesz zapytania do API Gologin, potrzebujesz tokenu API.
+  W aplikacji Gologin otwórz [API & MCP](https://app.gologin.com/personalArea/TokenApi), przejdź do zakładki **API** i kliknij **New Token**.
 </Note>
 
-## Pierwsze anonimowe żądanie scrapingu
+## Wyślij swoje pierwsze zapytanie
+
+Przekaż swój token w nagłówku `Authorization` każdego zapytania wysyłanego na adres `https://api.gologin.com`. To wywołanie zwraca listę profili na Twoim koncie:
+
+```bash
+curl https://api.gologin.com/browser/v2 \
+  -H "Authorization: Bearer YOUR_API_TOKEN"
+```
+
+Odpowiedź zawiera tablicę `profiles` oraz pole `allProfilesCount`, czyli łączną liczbę profili. Na jednej stronie otrzymasz maksymalnie 30 profili: aby pobrać kolejną stronę, dodaj do adresu URL `?page=2`. Wszystkie parametry znajdziesz w sekcji [Get all profiles](https://gologin.com/docs/api-reference/profile/get-all-profiles).
+
+## Pierwsze anonimowe zapytanie scrapingowe
 
 <CodeGroup>
 
@@ -107,7 +118,7 @@ gl.stop()
 
 </CodeGroup>
 
-## Samodzielne uruchomienie kodu w Node.js
+## Samodzielne uruchamianie kodu w Node.js
 
 <CodeGroup>
 
@@ -121,7 +132,7 @@ GL_API_TOKEN=[YOUR_GOLOGIN_API_TOKEN] node filename.js
 
 </CodeGroup>
 
-## Samodzielne uruchomienie kodu w Pythonie
+## Samodzielne uruchamianie kodu w Pythonie
 
 <CodeGroup>
 
@@ -140,11 +151,11 @@ GL_API_TOKEN=[YOUR_GOLOGIN_API_TOKEN] python3 filename.py
 
 ## Co dalej?
 
-Gotowe! Masz już skonfigurowanego klienta API i za sobą pierwsze żądanie do API. Oto kilka linków, które mogą się przydać podczas dalszej pracy z Gologin API:
+Świetnie, masz już skonfigurowanego klienta API i wysłałeś(-aś) pierwsze zapytanie do API. Oto kilka linków, które mogą się przydać podczas dalszej pracy z API Gologin:
 
-- [Pobierz klucz API z Settings \> API](https://app.gologin.com/personalArea/TokenApi)
+- [Utwórz token API w API & MCP](https://app.gologin.com/personalArea/TokenApi)
 - [Gologin Web Access CLI](/pl/cli-tools/web-access) — jedno narzędzie CLI do scrapingu i automatyzacji przeglądarki (bez pisania kodu)
-- [Agent Browser CLI](/pl/cli-tools/agent-browser) — CLI do przeglądarki w chmurze, stworzone dla agentów AI
-- [Local Agent Browser CLI](/pl/cli-tools/local-agent-browser) — lokalne CLI Orbita z profilami i runbookami
+- [Agent Browser CLI](/pl/cli-tools/agent-browser) — przeglądarka CLI stworzona dla agentów AI, działająca w chmurze lub na Twoim komputerze
+- [Agent Browser CLI: local runtime](/pl/cli-tools/local-agent-browser) — lokalne profile Orbita, runbooki i zadania wsadowe
 - [AI Skills](/pl/api-reference/ai-integrations/ai-skills) — gotowe do użycia skille dla Claude Code
-- [MCP Server](/pl/api-reference/ai-integrations/mcp-server) — zarządzaj profilami podczas rozmów z AI
+- [MCP Server](/pl/api-reference/ai-integrations/mcp-server) — zarządzaj profilami za pomocą rozmów z AI

@@ -4,31 +4,31 @@ title: "スクレイピングソリューション"
 
 ## 概要
 
-Gologin の Cloud Browser は、スクレイピングやデータ抽出のワークフロー向けのマネージド型リモートブラウザとして利用できます。自動化コード（Puppeteer）が WebSocket エンドポイント経由でリモートブラウザセッションに接続し、標準的なページ遷移とデータ抽出のロジックを実行します。
+Gologin Cloud Browser は、スクレイピングやデータ抽出のワークフロー向けに、マネージド型のリモートブラウザとして利用できます。自動化コード (Puppeteer) が WebSocket エンドポイント経由でリモートのブラウザセッションに接続し、標準的なページ遷移とデータ抽出の処理を実行します。
 
-Cloud Browser は接続と実行を担うレイヤーであり、プロファイルとプロキシの設定は REST API で管理します。この構成により、インフラ運用の負担を減らし、スクレイピング時の障害を抑えられる場合があります。ただし、結果は対象サイトの挙動や制御の内容によって異なります。
+Cloud Browser は接続と実行を担うレイヤーで、プロファイルとプロキシの設定は REST API で管理します。この構成により、インフラの運用負荷を軽減でき、スクレイピング時の障害も減らせる可能性があります。ただし、結果は対象サイトの挙動や制御によって異なります。
 
 ## 利用できる機能
 
 - Puppeteer から接続できるリモートブラウザセッション。
-- 動的ページ向けの JavaScript レンダリング。
-- 独自のブラウザインフラを運用せずにスケールできる環境。
-- API で管理できるプロファイルとプロキシの設定。
+- 動的ページに対応する JavaScript レンダリング。
+- 独自のブラウザインフラを運用せずにスケールアップ可能。
+- API で管理するプロファイルとプロキシの設定。
 - セッション開始用の単一の標準接続エンドポイント。
 
 ## 基本的なワークフロー
 
 1. API トークンを生成します。
-2. 必要に応じて、REST API でプロファイル（およびプロキシ）を作成・設定します。
-3. `token` と、任意で `profile` を指定して接続 URL を組み立てます。
+2. 必要に応じて、REST API でプロファイル (およびプロキシ) を作成・設定します。
+3. `token` と、任意の `profile` を指定して接続 URL を組み立てます。
 4. Puppeteer/Playwright から接続し、データ抽出を実行します。
 5. 出力を保存し、ブラウザセッションを閉じます。
 
 ## 前提条件
 
-- トークンの作成: https://app.gologin.com/personalArea/TokenApi
-- Profiles API（設定を細かく管理する場合に推奨）: https://gologin.com/docs/api-reference/profile
-- Proxy API: https://gologin.com/docs/api-reference/proxy
+- トークンの作成: Gologin アプリで [API & MCP](https://app.gologin.com/personalArea/TokenApi) → **API** → **新しいトークン** の順に開きます
+- Profiles API (設定を細かく管理する場合に推奨): [プロファイルを作成](https://gologin.com/docs/api-reference/profile/create-profile-with-partial-parameters)、[プロファイルを更新](https://gologin.com/docs/api-reference/profile/update-profile-with-partial-parameters)
+- Proxy API: [プロファイルに Gologin プロキシを追加](https://gologin.com/docs/api-reference/proxy/create-gologin-high-quality-proxy)、[プロファイルに独自のプロキシを設定](https://gologin.com/docs/api-reference/profile/update-proxy-for-multiple-profiles)
 
 ## 標準の接続エンドポイント
 
@@ -40,7 +40,7 @@ https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}
 - `profile` は任意です。
 - `profile` を省略すると、セッション用に新しいプロファイルが作成されます。
 
-## Puppeteer の最小構成の例
+## Puppeteer の最小サンプル
 
 ```javascript
 const puppeteer = require('puppeteer-core');
@@ -49,7 +49,7 @@ const puppeteer = require('puppeteer-core');
 
 
   const token = 'your_token_here';
-  const profileId = 'your_profile_id'; // Remove this line if you want to create a new profile
+  const profileId = 'your_profile_id'; // Set to '' to create a new profile for this session
   const cloudBrowserUrl = `https://cloudbrowser.gologin.com/connect?token=${token}${profileId ? `&profile=${profileId}` : ''}`;
   const browser = await puppeteer.connect({
   
@@ -70,33 +70,33 @@ const puppeteer = require('puppeteer-core');
 
 ## 次のステップ
 
-- Cloud Browser のはじめ方: https://gologin.com/docs/api-reference/cloud-browser/getting-started
-- Profiles API: https://gologin.com/docs/api-reference/profile
-- Proxy API: https://gologin.com/docs/api-reference/proxy
+- Cloud Browser はじめに: https://gologin.com/docs/api-reference/cloud-browser/getting-started
+- Profiles API: [すべてのプロファイルを取得](https://gologin.com/docs/api-reference/profile/get-all-profiles)、[プロファイルを作成](https://gologin.com/docs/api-reference/profile/create-profile-with-partial-parameters)
+- Proxy API: [プロファイルに Gologin プロキシを追加](https://gologin.com/docs/api-reference/proxy/create-gologin-high-quality-proxy)、[すべてのプロキシを取得](https://gologin.com/docs/api-reference/proxy/get-list-of-all-proxies)
 
 ## ベストプラクティス
 
 - 固定時間のスリープではなく、明示的な待機を使用してください。
-- 上限付きのバックオフとジッターを組み合わせたリトライ処理を実装してください。
-- 抽出結果は構造化して保存してください（URL、フィールド、タイムスタンプ、ステータス）。
-- 再現性を確保するため、接続前にプロファイルとプロキシを設定してください。
+- 上限付きのバックオフとジッターを備えたリトライ処理を実装してください。
+- 抽出結果は構造化して保存してください (URL、フィールド、タイムスタンプ、ステータス)。
+- 再現性を確保するため、接続前にプロファイルとプロキシを設定しておいてください。
 - セッションは必ず閉じ、失敗時にもクリーンアップを行ってください。
-- 対象サイトの制約に合わせて、リクエストやセッションの動作を調整してください。
+- 対象サイトの制約に応じて、リクエストやセッションの挙動を調整してください。
 
 ## 制限とクォータ
 
-現在の制限とクォータについては、こちらをご覧ください: https://gologin.com/docs/api-reference/limitations/rate-limits
+現在の制限とクォータはこちらをご覧ください: https://gologin.com/docs/api-reference/limitations/rate-limits
 
 ## FAQ
 
-### プロファイルは必要ですか？
+### プロファイルは必要ですか?
 
-いいえ。`profile` パラメータは任意です。省略すると、セッション用に新しいプロファイルが作成されます。設定を細かく管理したい場合や、同じ設定を繰り返し使いたい場合は、プロファイルを指定してください。
+いいえ。`profile` パラメータは任意です。省略すると、セッション用に新しいプロファイルが作成されます。設定を細かく管理したい場合や、同じ設定を繰り返し使いたい場合は、プロファイルを使用してください。
 
-### プロキシはどこで設定しますか？
+### プロキシはどこで設定しますか?
 
-プロキシは Proxy API で設定します（関連するプロファイル設定も REST API で行います）: https://gologin.com/docs/api-reference/proxy
+プロキシは REST API で設定します。[プロファイルに Gologin プロキシを追加](https://gologin.com/docs/api-reference/proxy/create-gologin-high-quality-proxy)するか、[プロファイルに独自のプロキシを設定](https://gologin.com/docs/api-reference/profile/update-proxy-for-multiple-profiles)してください。
 
-### Cloud Browser とは別のものですか？
+### Cloud Browser とは別のものですか?
 
-いいえ。このページは、Cloud Browser そのものをスクレイピングやデータ抽出に使う方法を説明するものです。Cloud Browser が接続と実行を担当し、プロファイルとプロキシの設定は REST API で管理します。
+いいえ。このページは、Cloud Browser 自体をスクレイピングやデータ抽出に使う方法を説明するものです。Cloud Browser が接続と実行を担当し、プロファイルとプロキシの設定は REST API で管理します。

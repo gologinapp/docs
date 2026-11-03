@@ -2,18 +2,18 @@
 title: 'SDK et CLI de Scraping API'
 ---
 
-Gologin Web Unlocker est une **API de scraping à point d'accès unique** conçue pour les sites web riches en JavaScript et protégés.
+Gologin Web Unlocker est une **Scraping API à point de terminaison unique** conçue pour les sites web riches en JavaScript et protégés.
 
-Vous envoyez une URL, vous recevez le HTML/texte de la page rendue, puis vous le traitez dans votre propre pipeline d'extraction.
+Vous envoyez une URL, vous recevez le HTML ou le texte de la page rendue, puis vous le traitez dans votre propre pipeline d'extraction.
 
 ## Pourquoi l'utiliser comme Scraping API
 
-- Un seul point d'accès pour n'importe quelle URL cible
-- Authentification par clé API, aucune orchestration de navigateur requise
-- Réponse centrée sur le HTML, compatible avec vos parseurs existants
+- Un seul point de terminaison pour n'importe quelle URL cible
+- Authentification par clé API, sans orchestration de navigateur
+- HTML par défaut, ou Markdown ou JSON sur demande, prêt pour vos parseurs existants
 - Idéal pour l'ETL, la surveillance, l'ingestion par IA et les pipelines de données
 
-## Point d'accès
+## Point de terminaison
 
 `GET https://parsing.webunlocker.gologin.com/v1/scrape?url={encoded_url}`
 
@@ -29,7 +29,8 @@ apikey: <API_KEY>
 
 | Nom | Emplacement | Type | Obligatoire | Description |
 |---|---|---|---|---|
-| `url` | query | chaîne de caractères (URL absolue) | oui | URL cible à scraper |
+| `url` | query | string (URL absolue) | oui | URL cible à scraper |
+| `format` | query | string | non | Format de la réponse : `html` (par défaut), `markdown` ou `json` |
 
 ## Démarrage rapide
 
@@ -70,24 +71,34 @@ console.log(response.status, html.slice(0, 500));
 
 ## Comportement de la réponse
 
-Le corps de la réponse actuelle est le **HTML/texte brut rendu**.
+Par défaut, le corps de la réponse est le **HTML brut rendu** de la page. Avec `format=markdown`, le corps est en Markdown. Avec `format=json`, le corps est un objet JSON :
 
-- `200` -> succès, le corps contient le HTML/texte de la page
-- `401` / `403` -> clé API invalide ou manquante
-- `422` -> `url` invalide ou manquante
-- `429` -> limite de requêtes atteinte
-- `500+` -> erreur temporaire côté serveur
+```json
+{
+  "success": true,
+  "data": {
+    "url": "https://example.com",
+    "metadata": {
+      "response_time_ms": 297,
+      "status_code": 200
+    },
+    "html": "<!DOCTYPE html><html lang=\"en\">..."
+  }
+}
+```
+
+Codes de statut :
+
+- `200` -> succès, le corps contient la page dans le format demandé
+- `400` -> requête incorrecte, par exemple si `url` est absent ; corps : `{"success":false,"error":"Request failed"}`
+- `401` -> l'en-tête `apikey` est absent ; corps : `{"message":"Missing API key in request"}`
 
 ## Recommandations pour les nouvelles tentatives
 
-Réessayez avec un délai d'attente exponentiel (exponential backoff) en cas de :
+Effectuez de nouvelles tentatives avec un backoff exponentiel en cas de :
 
 - erreurs réseau
 - `408`, `429`, `500`, `502`, `503`, `504`
-
-## Remarque sur le périmètre
-
-Le point d'accès public actuel est centré sur le HTML. Ne supposez pas l'existence d'autres points d'accès backend (par exemple capture d'écran, crawl, recherche ou usage), sauf s'ils sont explicitement documentés et activés pour votre compte.
 
 ## SDK Node.js officiel
 
@@ -125,16 +136,16 @@ new WebUnlocker({
 ### Méthodes principales du SDK
 
 - `scrape(url)` -> objet de réponse normalisé
-- `scrapeRaw(url)` -> objet `Response` natif
+- `scrapeRaw(url)` -> `Response` natif
 - `buildScrapeUrl(url)` -> URL complète de la requête
 
 ### Méthodes dérivées côté SDK (à partir du HTML renvoyé)
 
-Il ne s'agit **pas de points d'accès backend distincts** : elles sont dérivées du HTML de l'API au sein du SDK :
+Il ne s'agit **pas de points de terminaison backend distincts** : elles sont dérivées du HTML de l'API au sein du SDK. Le SDK envoie uniquement le paramètre `url`, et non `format`. Ce résultat peut donc différer de la réponse `format=markdown` ou `format=json` de l'API elle-même :
 
 - `scrapeText(url)` -> texte brut
 - `scrapeMarkdown(url)` -> markdown
-- `scrapeJSON(url)` -> métadonnées structurées (`title`, `meta`, `links`, `headings`)
+- `scrapeJSON(url)` -> métadonnées structurées (`title`, `description`, `canonical`, `meta`, `headings`, `links`)
 - `batchScrape(urls, { concurrency })` -> utilitaire pour effectuer plusieurs appels de scraping
 
 ### Erreurs typées
@@ -150,9 +161,9 @@ Correspondances :
 
 - `401` / `403` -> `AuthenticationError`
 - `429` -> `RateLimitError`
-- `500+` -> `APIError`
-- délai dépassé/abandon -> `TimeoutError`
-- échec de fetch/réseau -> `NetworkError`
+- `500+` et les autres statuts non 2xx (par exemple `400`) -> `APIError`
+- délai dépassé ou abandon -> `TimeoutError`
+- échec de fetch ou du réseau -> `NetworkError`
 
 ## CLI
 
@@ -179,13 +190,13 @@ GOLOGIN_WEBUNLOCKER_API_KEY=wu_live_xxx gologin-webunlocker json https://example
 
 - surveillance des prix et des catalogues
 - enrichissement de leads et d'annuaires
-- pipelines de veille de marché
+- pipelines de veille économique
 - agrégation et indexation de contenu
-- workflows d'ingestion et d'extraction pour LLM
+- workflows d'ingestion et d'extraction pour les LLM
 
-## CLI Gologin Web Access (unifiée)
+## Gologin Web Access CLI (unifiée)
 
-Pour une CLI plus puissante qui combine Web Unlocker et Cloud Browser dans une seule interface de commandes, utilisez `gologin-web-access` :
+Pour une CLI plus puissante qui combine Web Unlocker et Cloud Browser dans un seul ensemble de commandes, utilisez `gologin-web-access` :
 
 ```bash
 npm install -g gologin-web-access
@@ -206,9 +217,9 @@ gologin-web-access snapshot
 gologin-web-access click e3
 ```
 
-Consultez la [CLI Gologin Web Access](/fr/cli-tools/web-access) pour la référence complète.
+Consultez [Gologin Web Access CLI](/fr/cli-tools/web-access) pour la référence complète.
 
-## Documentation associée
+## Documentation source
 
 - [Qu'est-ce que Web Unlocker](/fr/what-is-web-unlocker)
 - [Démarrage rapide de Web Unlocker](/fr/web-unlocker-quick-start)

@@ -1,47 +1,55 @@
 ---
 title: "Gologin Proxy-Navigation"
+description: "Erstelle eine neue Gologin Proxy-Verbindung mit einer anderen Stadt, einem anderen Namen, Proxy-Typ oder Protokoll (HTTP/SOCKS5); bestehende Verbindungen lassen sich nicht bearbeiten. Proxys prüfen, trennen, löschen und kopieren."
 ---
 
 ## Verfügbare Proxy-Einstellungen
 
-Wenn Sie bestimmte Proxy-Parameter konfigurieren möchten, müssen Sie eine **neue Proxy-Verbindung erstellen**.
+Wenn du bestimmte Proxy-Parameter konfigurieren möchtest, musst du **eine neue Proxy-Verbindung erstellen**.
 
 <Info>
   Hinweis: Die Einstellungen einer bestehenden Proxy-Verbindung können nicht geändert werden.
 </Info>
 
-So erstellen Sie einen neuen benutzerdefinierten Gologin Proxy:
+So erstellst du einen neuen benutzerdefinierten Gologin Proxy:
 
-1. Klicken Sie im Browserprofil auf **Choose location or proxy**.
-2. Klicken Sie auf den **Pfeil** neben dem ausgewählten Proxy-Land.
-3. Wählen Sie **Add new server** aus.<br />Hier können Sie die folgenden Parameter konfigurieren:
+1. Klicke im Browserprofil auf **Choose location or proxy**.
+2. Klicke auf den **Pfeil** neben dem ausgewählten Proxy-Land.
+3. Wähle **Add new server**.<br />Hier kannst du die folgenden Parameter konfigurieren:
    - **City** - für einige der beliebtesten Länder verfügbar
    - **Name** - ein frei wählbarer Name für die Proxy-Verbindung
    - **Proxy type** - Residential, Mobile oder Datacenter
-4. Klicken Sie auf **Connect**, um den neuen Proxy zu übernehmen.
+4. Klicke auf **Connect**, um den neuen Proxy zu übernehmen.
 
 <Frame>
   ![Settings Gologin Proxy](/images/settings_gologin_proxy.gif)
 </Frame>
 
+## Proxy-Protokoll wählen (HTTP oder SOCKS5)
+
+Gologin Proxys unterstützen HTTP und **SOCKS5**. Du kannst das Protokoll wie folgt auswählen:
+
+- **Beim Erstellen eines Profils:** Klicke auf **Add profile** > **Proxy** > **Gologin proxy**, wähle das Land und den Proxy-Typ und anschließend das Protokoll.
+- **Bei einem bestehenden Profil:** Klicke auf die drei Punkte beim Profil > **Settings** > **Proxy** und wähle das Protokoll auf dieselbe Weise.
+
 ## Verbindung prüfen und Proxy-Informationen anzeigen
 
-Um zu überprüfen, ob der Proxy korrekt funktioniert und ob noch genügend Traffic verfügbar ist, klicken Sie auf das Symbol mit den **kreisförmigen Pfeilen** neben der Proxy-Flagge. In diesem Menü können Sie außerdem Folgendes einsehen:
+Um zu überprüfen, ob der Proxy korrekt funktioniert und ob dir noch genügend Traffic zur Verfügung steht, klicke auf das Symbol mit den **kreisförmigen Pfeilen** neben der Proxy-Flagge. In diesem Menü kannst du außerdem Folgendes einsehen:
 
 - **City**
 - **IP address**
 - **Proxy type**
 - **Remaining traffic**
 
-So können Sie schnell bestätigen, dass der Proxy aktiv und wie gewünscht konfiguriert ist.
+So kannst du schnell bestätigen, dass der Proxy aktiv und wie erwartet konfiguriert ist.
 
 <Frame>
   ![Checking Gologin Proxy](/images/checking_gologin_proxy.png)
 </Frame>
 
-## Proxy vom Profil trennen
+## Proxy trennen
 
-Wenn Sie einen Gologin Proxy vom Profil trennen möchten, **klicken Sie einmal auf den Proxy** und dann auf das **X**. Der Proxy wird vom Profil getrennt, bleibt aber in der Liste des Proxy-Managers erhalten.
+Wenn du einen Gologin Proxy vom Profil trennen möchtest: **Klicke einmal auf den Proxy** und dann auf das **X**. Der Proxy wird vom Profil getrennt, bleibt aber in der Liste des Proxy-Managers erhalten.
 
 <Frame>
   ![Unlink Gologin Proxy](/images/unlink_gologin_proxy.gif)
@@ -49,7 +57,7 @@ Wenn Sie einen Gologin Proxy vom Profil trennen möchten, **klicken Sie einmal a
 
 ## Proxy löschen
 
-So löschen Sie einen Proxy: **Klicken Sie in einem Profil einmal auf den Proxy**, um den Proxy-Manager zu öffnen, **klicken Sie dann mit der rechten Maustaste darauf** \> **Delete proxy** \> **bestätigen Sie Ihre Auswahl**. Der Proxy wird aus Ihrer Proxy-Liste entfernt und kann über das [Proxy Archive](/de/proxy/proxy-management/proxy-manager/proxy-archive) wiederhergestellt werden.
+So löschst du einen Proxy: **Klicke einmal im Profil auf den Proxy**, um den Proxy-Manager zu öffnen, **klicke ihn dann mit der rechten Maustaste an** \> **Delete proxy** \> **bestätige die Auswahl**. Der Proxy wird aus deiner Proxy-Liste entfernt und kann aus dem [Proxy Archive](/de/proxy/proxy-management/proxy-manager/proxy-archive) wiederhergestellt werden.
 
 <Frame>
   ![Delete Gologin Proxy](/images/delete_gologin_proxy.gif)
@@ -57,21 +65,23 @@ So löschen Sie einen Proxy: **Klicken Sie in einem Profil einmal auf den Proxy*
 
 ## Proxy-Zugangsdaten kopieren
 
-Sie können die Zugangsdaten eines Gologin Proxys (Host, Port, Login, Passwort) kopieren, um sie an anderer Stelle zu verwenden. Gehen Sie dazu so vor: **Klicken Sie auf einen Proxy**, um den Proxy-Manager zu öffnen \> **klicken Sie mit der rechten Maustaste darauf** \> **Copy proxy**.
+Du kannst die Zugangsdaten eines Gologin Proxys (Host, Port, Login, Passwort) kopieren, um sie anderweitig zu verwenden. So geht's: **Klicke auf einen Proxy**, um den Proxy-Manager zu öffnen \> **klicke ihn mit der rechten Maustaste an** \> **Copy proxy**.
+
+Das funktioniert für jeden Proxy in der Liste, auch für deine eigenen. Um einen Proxy zu prüfen, benötigst du sein Protokoll, den Host, den Port, den Login und das Passwort.
 
 <Frame>
   ![Copy Gologin Proxy](/images/copy_gologin_proxy.gif)
 </Frame>
 
-## Massenaktionen für Proxys
+## Proxy-Massenaktionen
 
-Sie können im Proxy-Manager mehrere Proxys auswählen und Aktionen ausführen, zum Beispiel:
+Du kannst im Proxy-Manager mehrere Proxys auswählen und Aktionen ausführen, zum Beispiel:
 
 - alle Proxys auswählen
 - Proxys kopieren
 - Proxys löschen
 
-So gehen Sie vor: **Klicken Sie auf der Seite All profiles auf einen beliebigen Proxy** \> **klicken Sie mit der rechten Maustaste darauf** \> klicken Sie auf **Select proxy**. Anschließend können Sie die gewünschten Proxys anhaken und die Aktionen über die Schaltflächen am unteren Rand des Proxy-Managers ausführen.
+So geht's: **Klicke auf der Seite All profiles auf einen beliebigen Proxy** \> **klicke ihn mit der rechten Maustaste an** \> klicke auf **Select proxy**. Anschließend kannst du die Proxys anhaken und die Aktionen über die Schaltflächen am unteren Rand des Proxy-Managers ausführen.
 
 <Frame>
   ![Bulk Actions Gologin Proxy](/images/bulk_actions_gologin_proxy.gif)

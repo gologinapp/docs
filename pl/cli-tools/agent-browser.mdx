@@ -1,31 +1,32 @@
 ---
 title: "Gologin Agent Browser CLI"
-description: "Narzędzie CLI do automatyzacji przeglądarki w chmurze, stworzone dla agentów AI, z migawkami stron, referencjami elementów i trwałym demonem"
+description: "CLI do automatyzacji przeglądarki dla agentów AI, które uruchamia profile Gologin w Cloud Browser lub lokalnie w Orbita, z migawkami stron, odnośnikami ref i stale działającym demonem"
 ---
 
-Gologin Agent Browser CLI zamienia Gologin Cloud Browser w trwałe środowisko uruchomieniowe, którym można sterować za pomocą skryptów i które jest przeznaczone dla agentów AI. Udostępnia zwięzłe migawki stron, interakcję opartą na referencjach, pamięć sesji oraz dane wyjściowe przyjazne dla powłoki.
+Gologin Agent Browser CLI zamienia profile przeglądarki Gologin w trwałe środowisko uruchomieniowe, którym agenci AI mogą sterować za pomocą skryptów. Sesje działają w Gologin Cloud Browser lub w Orbita na Twoim komputerze. Narzędzie udostępnia zwięzłe migawki stron, interakcję opartą na refach, pamięć sesji oraz wynik przyjazny dla powłoki.
 
-W odróżnieniu od pisania kodu w Puppeteer/Playwright od zera, to narzędzie CLI daje agentom gotowy zestaw poleceń do automatyzacji przeglądarki — bez zbędnego kodu startowego i bez kodu do zarządzania sesjami.
+W przeciwieństwie do pisania kodu Puppeteer/Playwright od zera, to CLI daje agentom gotowy zestaw poleceń do automatyzacji przeglądarki — bez kodu szablonowego i bez własnej obsługi sesji.
 
 ---
 
-## Dlaczego przeglądarka w chmurze
+## Środowisko w chmurze lub lokalne
 
-Automatyzacja w lokalnej przeglądarce ma poważne ograniczenia w przepływach pracy agentów:
+CLI ma dwa środowiska uruchomieniowe z tymi samymi poleceniami. Oba korzystają z profili, fingerprintów i proxy Gologin, a demon utrzymuje sesje przy życiu między kolejnymi wywołaniami CLI.
 
-- Lokalne przeglądarki łatwiej wykryć
-- Brak fingerprintingu opartego na profilach
-- Brak trwałych profili przeglądarki w chmurze
-- Brak wbudowanej warstwy proxy
-- Trudno ujednolicić działanie w różnych agentach i środowiskach
+| | `cloud` (domyślne) | `local` |
+|---|---|---|
+| Gdzie działa przeglądarka | Gologin Cloud Browser | Orbita na Twoim komputerze |
+| ID profilu | Opcjonalne: bez niego tworzony jest tymczasowy profil w chmurze | Wymagane |
+| Dobre do | Sesji równoległych, sesji zdalnych, maszyn, na których nie powinna działać przeglądarka | Rozgrzewania profili, pierwszych logowań, lokalnych ciasteczek i stanu profilu, dopasowania do Twojego systemu operacyjnego |
 
-Agent Browser CLI przyjmuje odwrotne podejście:
+Środowisko wybierasz dla pojedynczego polecenia za pomocą `--runtime cloud|local|auto` albo ustawiasz raz zmienną `GOLOGIN_AGENT_BROWSER_RUNTIME`:
 
-- Przeglądarka działa w chmurze, a nie jako proces lokalny
-- Profile Gologin pełnią rolę warstwy tożsamości sesji
-- Sesje obsługują proxy
-- Możliwości anti-detect są odziedziczone z Gologin
-- Trwały demon utrzymuje sesje aktywne pomiędzy kolejnymi wywołaniami CLI
+```bash
+gologin-agent-browser open https://example.com
+gologin-agent-browser open https://example.com --runtime local --profile your_profile_id
+```
+
+Domyślnie (`auto`) polecenia profili, runbooków i zadań działają lokalnie, a wszystkie pozostałe w chmurze. Po otwarciu sesji lokalnej przekazuj `--runtime local` także do kolejnych poleceń. Wymagania i polecenia dostępne tylko lokalnie znajdziesz w sekcji [Local runtime](/pl/cli-tools/local-agent-browser).
 
 ---
 
@@ -41,7 +42,7 @@ Lub uruchom bez instalacji globalnej:
 npx gologin-agent-browser-cli --help
 ```
 
-Wymagany jest Node.js >= 18.
+Wymaga Node.js w wersji 18 lub nowszej. Środowisko lokalne wymaga Node.js w wersji 20 lub nowszej.
 
 ---
 
@@ -49,10 +50,12 @@ Wymagany jest Node.js >= 18.
 
 | Zmienna | Wymagana | Opis |
 |---|---|---|
-| `GOLOGIN_TOKEN` | Tak (dla `open`) | Token API Gologin |
-| `GOLOGIN_PROFILE_ID` | Opcjonalnie | Domyślny identyfikator profilu |
-| `GOLOGIN_DAEMON_PORT` | Opcjonalnie | Port demona (domyślnie: `44777`) |
-| `GOLOGIN_CONNECT_BASE` | Opcjonalnie | Punkt końcowy Cloud Browser |
+| `GOLOGIN_TOKEN` | Tak (dla `open` i poleceń API) | Token API Gologin |
+| `GOLOGIN_PROFILE_ID` | Opcjonalna | Domyślne ID profilu |
+| `GOLOGIN_AGENT_BROWSER_RUNTIME` | Opcjonalna | Domyślne środowisko: `cloud`, `local` lub `auto` |
+| `GOLOGIN_DAEMON_PORT` | Opcjonalna | Port demona (domyślnie: `44777` dla chmury, `44778` dla środowiska lokalnego) |
+| `GOLOGIN_CONNECT_BASE` | Opcjonalna | Punkt końcowy Cloud Browser (domyślnie: `https://cloudbrowser.gologin.com/connect`) |
+| `GOLOGIN_EXECUTABLE_PATH` | Opcjonalna | Ścieżka do pliku wykonywalnego Orbita dla środowiska lokalnego |
 
 ### Jak uzyskać token
 
@@ -74,22 +77,22 @@ export GOLOGIN_TOKEN='your_gologin_token'
 
 ## Architektura
 
-Narzędzie składa się z dwóch części:
+Składa się z dwóch części:
 
-1. **CLI `gologin-agent-browser`** — przetwarza polecenia, automatycznie uruchamia demona i wypisuje zwięzłe dane wyjściowe
-2. **Trwały lokalny demon** — zarządza aktywnymi sesjami przeglądarki, łączy się z Gologin Cloud Browser przez Playwright `connectOverCDP`, przechowuje aktywną stronę w pamięci, tworzy migawki, rozwiązuje referencje i śledzi metadane sesji
+1. **CLI `gologin-agent-browser`** — analizuje polecenia, wybiera środowisko, automatycznie uruchamia odpowiedni demon i wyświetla zwięzły wynik
+2. **Trwałe lokalne demony**, po jednym na każde środowisko — zarządzają aktywnymi sesjami przeglądarki, łączą się z Gologin Cloud Browser lub lokalną Orbita przez Playwright `connectOverCDP`, trzymają aktywną stronę w pamięci, budują migawki, rozwiązują refy i śledzą metadane sesji
 
-Transport jest wyłącznie lokalny:
-- Gniazdo Unix pod adresem `${TMPDIR:-/tmp}/gologin-agent-browser.sock`
-- Lokalny HTTP pod adresem `127.0.0.1:${GOLOGIN_DAEMON_PORT:-44777}`
+Transport jest wyłącznie lokalny. Demon chmurowy nasłuchuje na:
+- gnieździe Unix pod ścieżką `${TMPDIR:-/tmp}/gologin-agent-browser.sock`
+- lokalnym HTTP pod adresem `127.0.0.1:${GOLOGIN_DAEMON_PORT:-44777}`
 
-Jeśli nie podasz identyfikatora profilu, demon utworzy tymczasowy profil chmurowy Gologin za pośrednictwem API.
+W środowisku chmurowym, jeśli nie podasz ID profilu, demon tworzy tymczasowy profil Gologin w chmurze za pośrednictwem API.
 
 ---
 
-## Jak działają referencje
+## Jak działają refy
 
-`snapshot` wypisuje zwięzły widok strony i przypisuje elementom interaktywnym referencje, takie jak `@e1`, `@e2`, `@e3`. Możesz się do nich odwoływać bezpośrednio:
+`snapshot` wyświetla zwięzły widok strony i przypisuje refy, takie jak `@e1`, `@e2`, `@e3`, elementom interaktywnym. Możesz działać na nich bezpośrednio:
 
 ```bash
 gologin-agent-browser snapshot
@@ -100,7 +103,12 @@ gologin-agent-browser type @e5 "search query"
 gologin-agent-browser fill @e7 "username"
 ```
 
-Referencje działają na zasadzie „best effort” i należy je wygenerować ponownie po nawigacji lub większych zmianach w DOM. Na stronach dynamicznych lepszym rozwiązaniem zapasowym niż nieaktualne referencje jest zazwyczaj `find`.
+Refy działają w trybie „best-effort" i po nawigacji lub większych zmianach w DOM należy wygenerować je ponownie. Polecenia przyjmują też selektory CSS zamiast refów. Na stronach dynamicznych lepszym rozwiązaniem zapasowym niż nieaktualne refy jest zwykle `find`: lokalizuje element na aktywnej stronie i wykonuje na nim akcję w jednym kroku.
+
+```bash
+gologin-agent-browser find label "Email" fill "user@example.com"
+gologin-agent-browser find role button click --name "Submit"
+```
 
 ---
 
@@ -156,16 +164,16 @@ Typowa pętla agenta AI:
 
 | Polecenie | Opis |
 |---|---|
-| `open <url>` | Otwiera adres URL w sesji przeglądarki w chmurze |
-| `close` | Zamyka bieżącą sesję |
-| `sessions` | Wyświetla listę aktywnych sesji |
+| `open <url>` | Otwiera adres URL w sesji przeglądarki |
+| `close` | Zamyka bieżącą sesję (`--all` zamyka wszystkie sesje tego demona) |
+| `sessions` | Wyświetla listę aktywnych sesji (`--prune` usuwa nieaktualne) |
 | `current` | Pokazuje informacje o bieżącej sesji |
 
 ### Odczyt strony
 
 | Polecenie | Opis |
 |---|---|
-| `snapshot` | Zwięzła tekstowa migawka z referencjami elementów |
+| `snapshot` | Zwięzła tekstowa migawka z refami elementów |
 | `screenshot <path>` | Zapisuje zrzut ekranu strony |
 | `pdf <path>` | Zapisuje stronę jako PDF |
 | `get <kind> [target]` | Pobiera właściwości strony |
@@ -175,20 +183,20 @@ Typowa pętla agenta AI:
 | Polecenie | Opis |
 |---|---|
 | `click <ref>` | Klika element |
-| `dblclick <ref>` | Podwójne kliknięcie |
+| `dblclick <ref>` | Klika dwukrotnie |
 | `type <ref> <text>` | Wpisuje tekst (dopisuje) |
 | `fill <ref> <text>` | Wypełnia pole (zastępuje zawartość) |
 | `hover <ref>` | Najeżdża kursorem na element |
 | `select <ref> <value>` | Wybiera wartość z listy rozwijanej |
 | `check <ref>` / `uncheck <ref>` | Zaznacza lub odznacza pole wyboru |
 | `focus <ref>` | Ustawia fokus na elemencie |
-| `find ...` | Semantyczne wyszukiwanie elementów |
+| `find <by> <locator> <action> [value]` | Znajduje element według `role`, `text`, `label`, `placeholder`, `first`, `last` lub `nth` i wykonuje na nim `click`, `fill`, `type` lub `hover`, albo odczytuje jego `text` |
 
 ### Klawiatura i przewijanie
 
 | Polecenie | Opis |
 |---|---|
-| `press <key> [target]` | Naciska klawisz na klawiaturze |
+| `press <key> [target]` | Naciska klawisz |
 | `scroll <direction> [pixels]` | Przewija stronę |
 | `scrollintoview <ref>` | Przewija do elementu, aby był widoczny |
 
@@ -196,10 +204,10 @@ Typowa pętla agenta AI:
 
 | Polecenie | Opis |
 |---|---|
-| `back` | Przechodzi wstecz |
-| `forward` | Przechodzi do przodu |
+| `back` | Wraca do poprzedniej strony |
+| `forward` | Przechodzi do następnej strony |
 | `reload` | Odświeża stronę |
-| `wait <target\|ms>` | Czeka na element lub upłynięcie limitu czasu |
+| `wait <target\|ms>` | Czeka na element lub upływ czasu |
 
 ### Karty
 
@@ -207,16 +215,16 @@ Typowa pętla agenta AI:
 |---|---|
 | `tabs` | Wyświetla listę otwartych kart |
 | `tabopen [url]` | Otwiera nową kartę |
-| `tabfocus <index>` | Przełącza na wybraną kartę |
+| `tabfocus <index>` | Przełącza na kartę |
 | `tabclose [index]` | Zamyka kartę |
 
-### Pliki cookie i pamięć
+### Ciasteczka i pamięć lokalna
 
 | Polecenie | Opis |
 |---|---|
-| `cookies` | Eksportuje pliki cookie |
-| `cookies-import <file>` | Importuje pliki cookie |
-| `cookies-clear` | Czyści pliki cookie |
+| `cookies` | Eksportuje ciasteczka |
+| `cookies-import <file>` | Importuje ciasteczka |
+| `cookies-clear` | Czyści ciasteczka |
 | `storage-export [path]` | Eksportuje localStorage |
 | `storage-import <file>` | Importuje localStorage |
 | `storage-clear` | Czyści localStorage |
@@ -225,8 +233,35 @@ Typowa pętla agenta AI:
 
 | Polecenie | Opis |
 |---|---|
-| `eval <expression>` | Wykonuje kod JavaScript na stronie |
+| `eval <expression>` | Wykonuje JavaScript na stronie |
 | `upload <ref> <file...>` | Przesyła pliki |
+
+### Profile, proxy i API Gologin
+
+Te polecenia wywołują API Gologin z użyciem Twojego tokena i nie wymagają demona przeglądarki.
+
+| Polecenie | Opis |
+|---|---|
+| `api <METHOD> <path>` | Wywołuje dowolny punkt końcowy REST API Gologin |
+| `browser <action>` | Profile: lista, pobieranie, tworzenie, aktualizacja, usuwanie, ciasteczka, proxy, uruchamianie i zatrzymywanie w chmurze, import i eksport |
+| `proxy <action>` | Proxy: lista, dodawanie proxy Gologin, aktualizacja, usuwanie, ruch |
+| `workspace`, `folder`, `share`, `template` | Workspace'y i ich członkowie, foldery, udostępnianie, szablony profili |
+| `user`, `deleted-profile` | Informacje o koncie i tokeny deweloperskie, przywracanie usuniętych profili |
+| `cloud-usage` | Użycie Cloud Browser dla profilu lub workspace'u |
+| `profile-cloud`, `profile-cookies`, `profile-fingerprint`, `profile-proxy`, `profile-ua` | Skróty: uruchamianie lub zatrzymywanie profilu w chmurze, eksport lub import jego ciasteczek, odświeżanie jego fingerprintu, dodawanie proxy, aktualizacja jego user agenta |
+
+```bash
+gologin-agent-browser browser list --page 1
+gologin-agent-browser proxy add-gologin your_profile_id --country us --type residential
+gologin-agent-browser cloud-usage --profile your_profile_id
+gologin-agent-browser api GET /browser/your_profile_id
+```
+
+Dodaj `--help` do dowolnego polecenia, aby wyświetlić jego sposób użycia.
+
+### Tylko środowisko lokalne
+
+`profiles`, `profile`, `profile-create`, `profile-update`, `profile-import`, `profile-sync`, `profile-delete`, `run`, `batch`, `jobs` i `job` służą do zarządzania lokalnymi profilami, runbookami i historią zadań. Zobacz [Local runtime](/pl/cli-tools/local-agent-browser#profile-commands).
 
 ### Aliasy
 
@@ -242,9 +277,9 @@ Typowa pętla agenta AI:
 
 ---
 
-## Przypadki użycia i przykłady
+## Zastosowania i przykłady
 
-### Sprawdzanie, czy Twoja strona przechodzi testy anti-detect
+### Sprawdź, czy Twoja strona przechodzi testy anti-detect
 
 ```bash
 gologin-agent-browser open https://iphey.com/ --profile your_profile_id
@@ -254,7 +289,7 @@ gologin-agent-browser screenshot ./iphey-result.png
 gologin-agent-browser close
 ```
 
-### Logowanie do aplikacji webowej i pobieranie danych z panelu
+### Zaloguj się do aplikacji webowej i pobierz dane z panelu
 
 ```bash
 gologin-agent-browser open https://app.example.com/login
@@ -276,7 +311,7 @@ gologin-agent-browser screenshot ./report.png
 gologin-agent-browser close
 ```
 
-### Wypełnianie wieloetapowego formularza
+### Wypełnij wieloetapowy formularz
 
 ```bash
 gologin-agent-browser open https://forms.example.com/apply
@@ -300,7 +335,7 @@ gologin-agent-browser snapshot     # confirm success
 gologin-agent-browser close
 ```
 
-### Wykonywanie zrzutów ekranu stron konkurencji
+### Rób zrzuty ekranu stron konkurencji
 
 ```bash
 # use different profiles with different geos
@@ -314,13 +349,12 @@ done
 
 ### Wyszukiwanie na stronie, która blokuje scraping
 
-Niektóre strony wymagają wykonania JavaScriptu, zalogowania się lub interakcji, zanim pokażą wyniki. Użyj przeglądarki, aby wyszukać:
+Niektóre strony wymagają wykonania JavaScriptu, zalogowania się lub interakcji, zanim pokażą wyniki. Użyj przeglądarki, aby przeprowadzić wyszukiwanie:
 
 ```bash
 gologin-agent-browser open https://protected-directory.com
 gologin-agent-browser snapshot
-gologin-agent-browser find "search input"
-gologin-agent-browser type @found "machine learning engineer San Francisco"
+gologin-agent-browser find placeholder "Search" fill "machine learning engineer San Francisco"
 gologin-agent-browser press Enter
 gologin-agent-browser wait 3000
 gologin-agent-browser snapshot     # agent reads search results
@@ -330,7 +364,7 @@ gologin-agent-browser close
 
 ### Zapisywanie i przywracanie stanu sesji
 
-Wyeksportuj pliki cookie i pamięć, aby użyć ich ponownie w kolejnych sesjach:
+Wyeksportuj ciasteczka i pamięć lokalną, aby użyć ich w kolejnych sesjach:
 
 ```bash
 # after logging in
@@ -350,22 +384,23 @@ gologin-agent-browser snapshot     # already logged in
 
 ## Sesje równoległe
 
-Używaj jawnych identyfikatorów `--session` dla niezależnych zadań w chmurze. Porządki robisz za pomocą `close --all` lub `sessions --prune --older-than-ms`.
+Używaj jawnych identyfikatorów `--session` dla niezależnych zadań w chmurze. Porządkuj za pomocą `close --all` lub `sessions --prune --older-than-ms`.
 
 ---
 
 ## Zasady dotyczące proxy
 
-- Profile wstępnie skonfigurowane: proxy jest ustawione w profilu w panelu Gologin lub przez API
-- Profile tymczasowe: obsługują brak proxy lub niestandardowy host/port proxy
-- `--proxy-country` jest dostępne wyłącznie dla profili wstępnie skonfigurowanych
+- Profile ze skonfigurowanym proxy: proxy jest ustawione w profilu w panelu Gologin lub przez API, na przykład `proxy add-gologin <profileId> --country us`
+- Tymczasowe profile w chmurze: bez proxy albo z własnym proxy za pomocą `--proxy-host` i `--proxy-port` (oraz `--proxy-mode http|socks4|socks5`, `--proxy-user`, `--proxy-pass`)
+- W środowisku chmurowym `open` nie przyjmuje `--proxy-country`. Aby korzystać z ruchu proxy Gologin z danego kraju, dodaj proxy Gologin do profilu i otwórz go z `--profile`
+- W środowisku lokalnym `open`, `profile-create` i `profile-update` przyjmują `--proxy-country`
 
 ---
 
 ## Powiązane materiały
 
-- [Gologin Web Access CLI](/pl/cli-tools/web-access) — jedno narzędzie CLI (scraping + przeglądarka)
-- [Local Agent Browser CLI](/pl/cli-tools/local-agent-browser) — lokalna alternatywa oparta na Orbita
+- [Gologin Web Access CLI](/pl/cli-tools/web-access) — zunifikowane CLI (scraping + przeglądarka)
+- [Local runtime](/pl/cli-tools/local-agent-browser) — uruchamianie lokalnych profili Orbita za pomocą tego CLI
 - [Cloud Browser Getting Started](/pl/api-reference/cloud-browser/getting-started) — przykłady dla Puppeteer/Playwright
 - [AI Skills](/pl/api-reference/ai-integrations/ai-skills) — gotowe do użycia umiejętności dla Claude Code
 

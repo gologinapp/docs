@@ -23,7 +23,7 @@ These capabilities are available at multiple integration levels — pick what fi
     Plug-and-play extensions for Claude Code. Install a skill and your agent gets web scraping and browser automation out of the box.
   </Card>
   <Card title="CLI Tools" icon="terminal" href="/cli-tools/web-access">
-    Shell commands that AI agents call directly. Scrape, browse, interact — no code to write. Three CLIs for different workflows.
+    Shell commands that AI agents call directly. Scrape, browse, interact — no code to write. One CLI for scraping, one for live browser sessions in the cloud or on your machine.
   </Card>
   <Card title="SDKs + Cloud Browser API" icon="code" href="/api-reference/cloud-browser/getting-started">
     Full programmatic control. Build custom agent tools with Puppeteer/Playwright connected to Gologin Cloud Browser.
@@ -40,7 +40,7 @@ These capabilities are available at multiple integration levels — pick what fi
 | Give Claude Code web access with zero setup | [AI Skills](/api-reference/ai-integrations/ai-skills) |
 | Scrape pages, crawl sites, batch extract | [Web Access CLI](/cli-tools/web-access) |
 | Open a cloud browser, click, type, screenshot | [Agent Browser CLI](/cli-tools/agent-browser) |
-| Warm up local profiles, run login flows | [Local Agent Browser CLI](/cli-tools/local-agent-browser) |
+| Warm up local profiles, run login flows | [Agent Browser CLI, local runtime](/cli-tools/local-agent-browser) |
 | Build custom tools with Puppeteer/Playwright | [Cloud Browser API](/api-reference/cloud-browser/getting-started) |
 | Call the scraping API from my own code | [Web Unlocker SDK](/scraping-api-sdk-and-cli) |
 
@@ -71,7 +71,7 @@ Web Unlocker              Cloud Browser
 
 - **Web Unlocker** handles stateless read/extraction — send a URL, get rendered HTML back
 - **Cloud Browser** handles stateful interaction — open a session, click, type, navigate, persist cookies
-- **Local Orbita** handles persistent local profiles — warmup, login flows, social/marketplace actions
+- **Local Orbita** handles persistent local profiles — warmup, login flows, social/marketplace actions — through the local runtime of Agent Browser CLI
 
 All three share the same Gologin infrastructure: residential proxies, anti-detect fingerprinting, and profile management.
 
@@ -112,15 +112,15 @@ gologin-web-access extract https://example.com/company/123 --schema ./lead-schem
 
 ### Multi-account management
 
-Run 50+ social media accounts, ad accounts, or marketplace seller accounts — each with its own browser profile, fingerprint, proxy, and cookies. Local Agent Browser manages the profiles, warms them up with runbooks, and keeps sessions alive across agent calls.
+Run 50+ social media accounts, ad accounts, or marketplace seller accounts — each with its own browser profile, fingerprint, proxy, and cookies. The local runtime of Agent Browser CLI manages the profiles, warms them up with runbooks, and keeps sessions alive across agent calls. Profile and runbook commands run locally without extra flags.
 
 ```bash
 # create profiles for each account
-gologin-local-agent-browser profile-create "FB Ads Account 1" --template ads
-gologin-local-agent-browser profile-create "FB Ads Account 2" --template ads
+gologin-agent-browser profile-create "FB Ads Account 1" --template ads
+gologin-agent-browser profile-create "FB Ads Account 2" --template ads
 
 # warm up profiles in batch
-gologin-local-agent-browser batch ./warmup-runbook.json \
+gologin-agent-browser batch ./warmup-runbook.json \
   --targets ./all-profiles.json --concurrency 5
 ```
 
@@ -173,9 +173,9 @@ Check how your website looks from different countries. Open the same URL through
 
 ```bash
 # create geo-specific profiles
-gologin-local-agent-browser profile-create "US Test" --template geo --proxy-country us
-gologin-local-agent-browser profile-create "DE Test" --template geo --proxy-country de
-gologin-local-agent-browser profile-create "JP Test" --template geo --proxy-country jp
+gologin-agent-browser profile-create "US Test" --template geo --proxy-country us
+gologin-agent-browser profile-create "DE Test" --template geo --proxy-country de
+gologin-agent-browser profile-create "JP Test" --template geo --proxy-country jp
 
 # screenshot from each location
 gologin-agent-browser open https://yoursite.com --profile us_profile_id
@@ -211,7 +211,7 @@ gologin-agent-browser close
 ### Install an AI Skill (Claude Code)
 
 ```bash
-npx skills add GologinLabs/gologin-web-access-skill
+npx skills add GologinLabs/agent-skills@gologin-web-access-skill
 ```
 
 Then just ask Claude Code to scrape a page or interact with a site — the skill handles the rest.

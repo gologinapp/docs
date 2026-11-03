@@ -6,22 +6,22 @@ Hướng dẫn này chỉ cách thu thập dữ liệu từ URL đầu tiên c�
 
 ---
 
-## Điều kiện tiên quyết
+## Điều kiện cần có
 
-- Khóa API của Web Unlocker (liên hệ **ermakova.t@gologin.com** để nhận)
+- Một API key của Web Unlocker. Bạn có thể nhận key bằng biểu mẫu trên [trang Web Unlocker](https://gologin.com/web-unlocker/#web_unlocker_form). Key sẽ được gửi trong vòng một ngày làm việc, kèm các yêu cầu miễn phí để bạn thử nghiệm trên chính các trang mục tiêu của mình. Không cần thẻ thanh toán.
 - Python 3.x, Node.js hoặc bất kỳ HTTP client nào
 
 ---
 
 ## Xác thực
 
-Mọi yêu cầu đều cần có khóa API của bạn trong header `apikey`:
+Mọi yêu cầu đều cần có API key của bạn trong header `apikey`:
 
 ```
 apikey: YOUR_API_KEY
 ```
 
-URL cơ sở cho tất cả các yêu cầu API là:
+URL gốc cho tất cả các yêu cầu API là:
 
 ```
 https://parsing.webunlocker.gologin.com/v1
@@ -31,7 +31,7 @@ https://parsing.webunlocker.gologin.com/v1
 
 ## Gửi yêu cầu đầu tiên
 
-Gửi một yêu cầu GET với URL đích làm tham số truy vấn. Phản hồi là mã HTML của trang đã được hiển thị đầy đủ.
+Gửi một yêu cầu GET với URL mục tiêu làm tham số truy vấn. Phản hồi là mã HTML đã được hiển thị đầy đủ của trang.
 
 ### cURL
 
@@ -71,7 +71,7 @@ console.log(html);
 
 ## Kết quả nhận được
 
-Nội dung phản hồi là mã HTML thô đã được hiển thị của trang — giống hệt nội dung bạn thấy khi mở URL đó trong trình duyệt. Không có lớp bọc JSON và không cần phân tích cú pháp.
+Nội dung phản hồi là mã HTML thô đã được hiển thị của trang — giống với nội dung bạn thấy khi mở URL đó trong trình duyệt. Không có lớp bao JSON và không cần phân tích cú pháp thêm.
 
 ```html
 <!DOCTYPE html>
@@ -81,19 +81,48 @@ Nội dung phản hồi là mã HTML thô đã được hiển thị của trang
 </html>
 ```
 
+### Các định dạng khác
+
+Thêm tham số truy vấn `format` để nhận trang ở định dạng khác:
+
+| `format` | Nội dung phản hồi |
+|---|---|
+| `html` | HTML của trang (mặc định) |
+| `markdown` | Nội dung trang dưới dạng Markdown |
+| `json` | Đối tượng JSON chứa URL, siêu dữ liệu của yêu cầu và HTML của trang |
+
+```bash
+curl "https://parsing.webunlocker.gologin.com/v1/scrape?url=https%3A%2F%2Fexample.com&format=json" \
+  -H "apikey: YOUR_API_KEY"
+```
+
+```json
+{
+  "success": true,
+  "data": {
+    "url": "https://example.com",
+    "metadata": {
+      "response_time_ms": 297,
+      "status_code": 200
+    },
+    "html": "<!DOCTYPE html><html lang=\"en\">..."
+  }
+}
+```
+
 ---
 
 ## Xử lý lỗi
 
 Hãy kiểm tra mã trạng thái HTTP trước khi xử lý phản hồi:
 
-| Trạng thái | Ý nghĩa |
-|---|---|
-| `200` | Thành công — nội dung phản hồi là HTML của trang |
-| `401` | Khóa API không hợp lệ hoặc bị thiếu |
-| `422` | Tham số URL không hợp lệ hoặc bị thiếu |
-| `429` | Vượt quá giới hạn tốc độ |
-| `500` / `503` | Lỗi máy chủ — hãy thử lại với backoff |
+| Trạng thái | Ý nghĩa | Nội dung phản hồi |
+|---|---|---|
+| `200` | Thành công | Trang ở định dạng bạn yêu cầu |
+| `400` | Yêu cầu không hợp lệ, ví dụ thiếu tham số `url` | `{"success":false,"error":"Request failed"}` |
+| `401` | Thiếu header `apikey` | `{"message":"Missing API key in request"}` |
+
+Nếu nhận được trạng thái `429` hoặc `5xx`, hãy thử lại với cơ chế exponential backoff (tăng dần thời gian chờ giữa các lần thử).
 
 ```python
 response = requests.get(

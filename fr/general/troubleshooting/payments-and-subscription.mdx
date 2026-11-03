@@ -2,16 +2,58 @@
 title: "Paiements et abonnement"
 ---
 
-### J'obtiens l'erreur « You've reached max payment attempts (10) »
+### Le paiement par carte a été refusé
 
-Vous avez essayé d'acheter un abonnement 10 fois, le paiement n'a pas abouti et vous ne pouvez plus réessayer pendant 24 heures. Nous ne pouvons pas lever cette restriction. Dans ce cas, réessayez d'acheter l'abonnement demain ; utiliser un autre moyen de paiement peut également aider. Si vous avez absolument besoin de continuer à travailler sur vos profils, contactez le support.
+La plupart des refus proviennent de la banque émettrice de la carte. Le formulaire de paiement affiche le motif reçu :
 
-### J'ai payé en crypto un montant inférieur au montant requis
+| Message | Signification | Que faire |
+| :-- | :-- | :-- |
+| Les fonds de votre carte sont insuffisants. | Le solde de la carte est insuffisant | Vérifiez le solde et le montant à payer, puis réessayez |
+| Votre carte a été refusée. | La banque a refusé le paiement sans donner de motif | Contactez votre banque ou autorisez les paiements en ligne et internationaux dans votre application bancaire, puis réessayez |
+| Votre carte ne prend pas en charge ce type d'achat. | La banque n'autorise pas ce type de paiement avec la carte | Contactez votre banque ou utilisez une autre carte |
+| ... la limite a été dépassée. Contactez l'émetteur de votre carte. | Vous avez atteint une limite fixée par votre banque | Contactez votre banque ou utilisez une autre carte |
+| Votre numéro de carte est incorrect. / Votre carte a expiré. | Les informations de la carte sont incorrectes ou la carte n'est plus valide | Vérifiez les informations ou utilisez une autre carte |
 
-Si vous avez effectué un paiement insuffisant, l'abonnement ou le trafic proxy ne sera pas ajouté automatiquement. Vous pouvez toujours finaliser le paiement en utilisant la même adresse de portefeuille du destinataire dans les 60 minutes suivant le début du processus de paiement. Vérifiez si le lien de paiement Cryptomus est toujours actif : s'il affiche le montant de votre paiement actuel et invite à effectuer d'autres paiements, vous pouvez le finaliser. Si le délai de paiement est dépassé et que Cryptomus vous invite à contacter la boutique, contactez le support Gologin.
+Gologin peut aussi afficher son propre message : **Erreur de paiement. Réessayez plus tard ou utilisez une autre carte** ou **Le paiement a échoué. Veuillez réessayer ou contacter l'équipe d'assistance pour obtenir de l'aide.**
 
-### Je vois le message « Your payment is blocked » sur la page de paiement après un paiement en crypto
+Si la carte est refusée à chaque tentative, payez avec une autre carte, avec PayPal ou en crypto - voir [Moyens de paiement](/fr/general/account-and-billing/payment-methods). Chaque tentative échouée compte dans la limite de 10 tentatives de paiement par jour.
 
-Ce message signifie que votre transaction a été signalée et bloquée par notre processeur de paiement, Cryptomus, avant d'arriver jusqu'à nous. Gologin n'a pas reçu vos fonds et n'a pris aucune part à la décision de bloquer le paiement.
+### La banque me demande de confirmer le paiement (3D Secure)
 
-Cryptomus applique ses propres procédures de conformité de manière indépendante, et nous ne sommes pas informés du motif précis pour lequel une transaction est signalée. Veuillez contacter directement le **support client de Cryptomus** : c'est le seul à pouvoir préciser l'état de votre paiement et vous indiquer les prochaines étapes, comme un déblocage ou un remboursement. Une fois le problème résolu de leur côté, n'hésitez pas à contacter le support Gologin pour confirmer l'activation de votre abonnement.
+La plupart des banques demandent de confirmer un paiement en ligne dans l'application bancaire ou avec un code reçu par SMS. Confirmez-le sans fermer la fenêtre de paiement.
+
+Si le message **3D Secure n'est pas disponible. Essayez une autre carte ou contactez l'assistance** s'affiche, votre carte ne prend pas en charge cette vérification. Utilisez une autre carte ou un autre moyen de paiement.
+
+### Le bouton Payer maintenant ne répond pas, ou les forfaits ou la fenêtre de paiement ne se chargent pas
+
+Ce problème survient généralement avec les anciennes versions de l'application de bureau.
+
+1. Fermez la fenêtre de paiement, puis rouvrez-la.
+2. Quittez complètement Gologin depuis la zone de notification du système, puis relancez-le.
+3. Mettez Gologin à jour vers la dernière version depuis [gologin.com/download](https://gologin.com/download).
+
+Vous pouvez aussi payer dans l'application web sur [app.gologin.com](https://app.gologin.com). Si la page ne se charge pas correctement, appuyez sur **Ctrl+Shift+R** (**Cmd+Shift+R** sur macOS) pour la recharger sans cache.
+
+### J'ai payé, mais mon forfait ou mon trafic n'a pas changé
+
+1. Quittez complètement Gologin depuis la zone de notification du système, puis relancez-le. Dans l'application web, appuyez sur **Ctrl+Shift+R** (**Cmd+Shift+R** sur macOS).
+2. Vérifiez que vous avez sélectionné, en haut à gauche, l'espace de travail pour lequel vous avez payé : un abonnement appartient à l'espace de travail pour lequel il a été acheté. Si vous avez payé pour le mauvais espace de travail, contactez le support.
+3. Si vous avez payé en crypto, attendez que la transaction soit confirmée sur la blockchain. Si le forfait n'a toujours pas changé, contactez le support et envoyez le hash de la transaction, l'adresse vers laquelle vous avez envoyé les fonds et le réseau utilisé.
+
+### J'obtiens l'erreur « Vous avez atteint le nombre maximal de tentatives de paiement (10) »
+
+Vous avez tenté d'acheter un abonnement 10 fois, le paiement n'a pas abouti et vous ne pouvez plus réessayer pendant 24 heures. Nous ne pouvons pas lever cette restriction. Dans ce cas, réessayez d'acheter l'abonnement demain ; utiliser un autre moyen de paiement peut aider. S'il est essentiel pour vous de continuer à travailler sur vos profils, contactez le support.
+
+### J'ai payé en crypto un montant inférieur à celui requis
+
+Si vous avez payé un montant insuffisant, l'abonnement ou le trafic proxy ne sera pas ajouté automatiquement. Vous pouvez tout de même finaliser le paiement vers la même adresse de portefeuille du destinataire dans les 60 minutes suivant le début du paiement. Vérifiez si le lien de paiement Cryptomus est toujours actif : s'il affiche le montant de votre paiement actuel et propose d'effectuer d'autres paiements, vous pouvez le finaliser. Si le délai de paiement est dépassé et que Cryptomus vous invite à contacter la boutique, contactez le support Gologin.
+
+### Le message « Votre paiement est bloqué » s'affiche sur la page de paiement après un paiement en crypto
+
+Ce message signifie que votre transaction a été signalée et bloquée par notre prestataire de paiement, Cryptomus, avant de nous parvenir. Gologin n'a pas reçu vos fonds et n'a pas participé à la décision de bloquer le paiement.
+
+Cryptomus applique ses propres procédures de conformité de manière indépendante, et nous ne sommes pas informés du motif précis pour lequel une transaction est signalée. Contactez directement le **support client de Cryptomus** : c'est la seule partie en mesure de préciser l'état de votre paiement et de vous indiquer les prochaines étapes, comme un déblocage ou un remboursement. Une fois le problème résolu de leur côté, n'hésitez pas à contacter le support Gologin pour confirmer l'activation de votre abonnement.
+
+### Mon compte a été bloqué après l'ouverture d'un litige auprès de ma banque
+
+Lorsqu'un litige (rétrofacturation ou chargeback) est ouvert pour un paiement Gologin, le compte est bloqué jusqu'à la clôture du litige. Votre compte n'a pas été piraté. Pour rétablir l'accès ou discuter d'un remboursement, contactez le support Gologin.

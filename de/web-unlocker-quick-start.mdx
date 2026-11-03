@@ -2,20 +2,20 @@
 title: "Schnellstart"
 ---
 
-Diese Anleitung zeigt, wie Sie mit Web Unlocker Ihre erste URL scrapen.
+Diese Anleitung zeigt, wie Sie Ihre erste URL mit Web Unlocker scrapen.
 
 ---
 
 ## Voraussetzungen
 
-- Ein Web Unlocker API-Schlüssel (schreiben Sie an **ermakova.t@gologin.com**, um einen zu erhalten)
+- Ein Web Unlocker API-Schlüssel. Sie erhalten ihn über das Formular auf der [Web Unlocker-Seite](https://gologin.com/web-unlocker/#web_unlocker_form). Der Schlüssel kommt innerhalb eines Werktags an, inklusive kostenloser Anfragen, mit denen Sie Ihre eigenen Ziele testen können. Eine Kreditkarte ist nicht erforderlich.
 - Python 3.x, Node.js oder ein beliebiger HTTP-Client
 
 ---
 
 ## Authentifizierung
 
-Alle Anfragen benötigen Ihren API-Schlüssel im Header `apikey`:
+Alle Anfragen erfordern Ihren API-Schlüssel im Header `apikey`:
 
 ```
 apikey: YOUR_API_KEY
@@ -71,7 +71,7 @@ console.log(html);
 
 ## Was Sie als Antwort erhalten
 
-Der Antwort-Body enthält das gerenderte Roh-HTML der Seite – denselben Inhalt, den Sie sehen würden, wenn Sie die URL in einem Browser öffnen. Es gibt keinen JSON-Wrapper, und es ist kein Parsing nötig.
+Der Antwort-Body ist das unveränderte, gerenderte HTML der Seite – derselbe Inhalt, den Sie sehen würden, wenn Sie die URL in einem Browser öffnen. Es gibt keinen JSON-Wrapper und kein Parsing ist nötig.
 
 ```html
 <!DOCTYPE html>
@@ -81,19 +81,48 @@ Der Antwort-Body enthält das gerenderte Roh-HTML der Seite – denselben Inhalt
 </html>
 ```
 
+### Weitere Formate
+
+Fügen Sie den Query-Parameter `format` hinzu, um die Seite in einem anderen Format zu erhalten:
+
+| `format` | Antwort-Body |
+|---|---|
+| `html` | Seiten-HTML (Standard) |
+| `markdown` | Seiteninhalt als Markdown |
+| `json` | JSON-Objekt mit der URL, den Anfrage-Metadaten und dem Seiten-HTML |
+
+```bash
+curl "https://parsing.webunlocker.gologin.com/v1/scrape?url=https%3A%2F%2Fexample.com&format=json" \
+  -H "apikey: YOUR_API_KEY"
+```
+
+```json
+{
+  "success": true,
+  "data": {
+    "url": "https://example.com",
+    "metadata": {
+      "response_time_ms": 297,
+      "status_code": 200
+    },
+    "html": "<!DOCTYPE html><html lang=\"en\">..."
+  }
+}
+```
+
 ---
 
 ## Fehlerbehandlung
 
 Prüfen Sie den HTTP-Statuscode, bevor Sie die Antwort verarbeiten:
 
-| Status | Bedeutung |
-|---|---|
-| `200` | Erfolg – der Antwort-Body ist das HTML der Seite |
-| `401` | Ungültiger oder fehlender API-Schlüssel |
-| `422` | Ungültiger oder fehlender URL-Parameter |
-| `429` | Ratenlimit überschritten |
-| `500` / `503` | Serverfehler – erneut versuchen, mit zunehmendem Abstand (Backoff) |
+| Status | Bedeutung | Antwort-Body |
+|---|---|---|
+| `200` | Erfolg | Die Seite im angeforderten Format |
+| `400` | Ungültige Anfrage, zum Beispiel fehlt der Parameter `url` | `{"success":false,"error":"Request failed"}` |
+| `401` | Der Header `apikey` fehlt | `{"message":"Missing API key in request"}` |
+
+Wenn Sie `429` oder einen `5xx`-Status erhalten, wiederholen Sie die Anfrage mit exponentiellem Backoff.
 
 ```python
 response = requests.get(
@@ -112,7 +141,7 @@ else:
 
 ## Schnellstart mit der CLI
 
-Sie können Seiten auch mit den Gologin CLI-Tools scrapen, ohne Code zu schreiben:
+Sie können Seiten auch ohne eigenen Code mit den Gologin CLI-Tools scrapen:
 
 ### Web Unlocker CLI
 

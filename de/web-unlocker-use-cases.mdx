@@ -2,7 +2,7 @@
 title: "Anwendungsfälle für Web Unlocker"
 ---
 
-Web Unlocker ist eine Scraping API: Sie senden eine URL und erhalten das vollständig gerenderte HTML zurück. Diese Seite zeigt die gängigsten Einsatzmöglichkeiten.
+Web Unlocker ist eine Scraping API – Sie senden eine URL und erhalten das vollständig gerenderte HTML zurück. Diese Seite zeigt die häufigsten Einsatzmöglichkeiten.
 
 ---
 
@@ -37,20 +37,24 @@ const html = await fetch(
 console.log(html);
 ```
 
-Sie müssen keinen Browser starten, keinen Proxy konfigurieren und sich nicht mit Cloudflare herumschlagen. Ein Aufruf genügt, und Sie erhalten die Seite.
+Kein Browser, der gestartet werden muss, kein Proxy, der konfiguriert werden muss, kein Kampf gegen Cloudflare. Ein Aufruf genügt, und Sie erhalten die Seite.
 
-**Geeignet für:**
+**Gut geeignet für:**
 
-- Preise auf der Website eines Mitbewerbers prüfen
+- Preise auf der Website eines Wettbewerbers prüfen
 - Stellenanzeigen, Bewertungen oder Produktdaten abrufen
 - Seiten auf Änderungen überwachen
-- Einmalige Skripte zur Datenerfassung
+- Skripte für einmalige Datenerhebungen
 
 ---
 
 ## Inhalte an eine KI übergeben
 
-Web Unlocker liefert rohes HTML. Übergeben Sie dieses an ein LLM, um strukturierte Daten zu extrahieren, Inhalte zusammenzufassen oder Fragen zur Seite zu beantworten – ganz ohne eigene Parsing-Logik.
+Web Unlocker liefert rohes HTML. Übergeben Sie es an ein LLM, um strukturierte Daten zu extrahieren, Inhalte zusammenzufassen oder Fragen zur Seite zu beantworten – ganz ohne eigene Parsing-Logik.
+
+<Tip>
+Damit das Modell weniger Markup verarbeiten muss, fügen Sie der Anfrage `format=markdown` hinzu. Sie erhalten die Seite dann als Markdown statt als HTML.
+</Tip>
 
 ### Python \+ OpenAI
 
@@ -91,7 +95,7 @@ const html = await fetch(
 
 const client = new Anthropic();
 const message = await client.messages.create({
-  model: "claude-opus-4-5",
+  model: "claude-opus-5-5",
   max_tokens: 1024,
   messages: [
     {
@@ -104,18 +108,18 @@ const message = await client.messages.create({
 console.log(message.content[0].text);
 ```
 
-**Geeignet für:**
+**Gut geeignet für:**
 
 - Strukturierte Daten (Preise, Namen, Datumsangaben) extrahieren, ohne Parser zu schreiben
 - Artikel oder Produktseiten zusammenfassen
-- Mehrere Seiten vergleichen und Schlüsse daraus ziehen
+- Mehrere Seiten vergleichen und Schlussfolgerungen ziehen
 - KI-gestützte Recherche- oder Monitoring-Tools entwickeln
 
 ---
 
 ## In einem KI-Agenten verwenden
 
-Geben Sie Ihrem KI-Agenten ein `scrape`-Tool, das auf Web Unlocker basiert. Der Agent kann dann selbstständig im Web navigieren – Seiten abrufen, Inhalte lesen und Aktionen ausführen –, ohne dass Sie eine eigene Browsing-Logik schreiben müssen.
+Geben Sie Ihrem KI-Agenten ein `scrape`-Tool, das auf Web Unlocker basiert. Der Agent kann dann selbstständig im Web surfen – Seiten abrufen, Inhalte lesen und Aktionen ausführen –, ohne dass Sie Browsing-Logik schreiben müssen.
 
 ```python
 import requests
@@ -150,7 +154,7 @@ messages = [
 
 while True:
     response = client.messages.create(
-        model="claude-opus-4-5",
+        model="claude-opus-5-5",
         max_tokens=1024,
         tools=tools,
         messages=messages
@@ -174,11 +178,11 @@ while True:
     messages.append({"role": "user", "content": tool_results})
 ```
 
-Der Agent entscheidet, wann er scrapt und welche URL er abruft. Web Unlocker übernimmt den eigentlichen Abruf.
+Der Agent entscheidet selbst, wann er scrapt und welche URL er abruft. Web Unlocker übernimmt den eigentlichen Abruf.
 
-**Geeignet für:**
+**Gut geeignet für:**
 
-- Recherche-Agenten, die selbstständig im Web browsen
+- Recherche-Agenten, die autonom im Web unterwegs sind
 - Bots für Preisvergleiche oder die Suche nach Angeboten
 - Pipelines für Wettbewerbsanalysen
 - Jeden Agenten, der Echtzeit-Webdaten benötigt
@@ -187,7 +191,7 @@ Der Agent entscheidet, wann er scrapt und welche URL er abruft. Web Unlocker üb
 
 ## Viele Seiten gleichzeitig scrapen
 
-Führen Sie Anfragen parallel aus, um Daten von mehreren URLs gleichzeitig zu erfassen.
+Führen Sie Anfragen parallel aus, um Daten von mehreren URLs gleichzeitig zu sammeln.
 
 ```python
 import requests
@@ -217,28 +221,17 @@ for url, html in results:
     print(f"{url}: {len(html)} chars")
 ```
 
-**Geeignet für:**
+**Gut geeignet für:**
 
 - Komplette Produktkataloge oder Listenseiten scrapen
-- Massenhafte Datenerfassung für Trainingsdatensätze
+- Massenhafte Datenerhebung für Trainingsdatensätze
 - Viele Seiten gleichzeitig überwachen
-
----
-
-## Zusammenfassung
-
-| Anwendungsfall | Was Sie tun | Was Sie erhalten |
-| --- | --- | --- |
-| Einzelne Seite scrapen | GET mit URL-Parameter | Gerendertes HTML |
-| An ein LLM übergeben | Scrapen → an Modell übergeben | Extrahierte Daten oder Zusammenfassung |
-| Tool für KI-Agenten | Agent ruft es bei Bedarf auf | Echtzeit-Webinhalte |
-| Massen-Scraping | Parallele Anfragen | HTML für jede URL |
 
 ---
 
 ## Über die CLI verwenden
 
-Kommen Sie ganz ohne eigenen Code aus – nutzen Sie die Gologin Web Access CLI für gängige Scraping-Workflows:
+Sie müssen gar keinen Code schreiben – nutzen Sie die Gologin Web Access CLI für gängige Scraping-Workflows:
 
 ```bash
 npm install -g gologin-web-access
@@ -278,4 +271,4 @@ Die vollständige Befehlsreferenz finden Sie unter [Web Access CLI](/de/cli-tool
 | Massen-Scraping | Parallele Anfragen | HTML für jede URL |
 | CLI-Workflows | `gologin-web-access`-Befehle | Text, Markdown, JSON, Batch-Ergebnisse |
 
-Unter [Quickstart](/de/web-unlocker-quick-start) erfahren Sie, wie Sie Ihre erste Anfrage senden.
+Informationen zur ersten Anfrage finden Sie in der [Kurzanleitung](/de/web-unlocker-quick-start).

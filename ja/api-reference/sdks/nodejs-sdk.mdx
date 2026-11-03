@@ -1,6 +1,6 @@
 ---
 title: "Node.js SDK"
-description: "Node.js SDK を使って Gologin プロファイルをプログラムから実行します"
+description: "Node.js SDKでGologinプロファイルをプログラムから実行する"
 ---
 
 ### インストール
@@ -8,6 +8,8 @@ description: "Node.js SDK を使って Gologin プロファイルをプログラ
 ```bash
 npm i gologin
 ```
+
+Node.js 20以降が必要です。SDKのバージョン3はESM専用です。`import`で読み込んでください。`require('gologin')`は使用できません。
 
 ### 基本的な使い方
 
@@ -25,45 +27,73 @@ const { status, wsUrl } = await GL.start();
 await GL.stop();
 ```
 
+### GologinApiで起動する
+
+`GologinApi`は、プロファイルを起動してPuppeteerへの接続まで自動で行います。`launch()`はPuppeteerの`browser`を返します。`cloud: true`を指定すると、ローカルのOrbitaブラウザではなく[Gologin Cloud Browser](/ja/api-reference/cloud-browser/what-is-gologin-cloud-browser)でプロファイルを実行できます。
+
+```javascript
+import { GologinApi } from 'gologin';
+
+const gologin = GologinApi({ token: 'your-api-token' });
+
+// local Orbita on this machine
+const { browser } = await gologin.launch({ profileId: 'your-profile-id' });
+
+// or Gologin Cloud Browser
+// const { browser } = await gologin.launch({ cloud: true, profileId: 'your-profile-id' });
+
+const page = await browser.newPage();
+await page.goto('https://example.com');
+
+// close the browser and stop the profile
+await gologin.exit();
+```
+
+`profileId`を指定しない場合、`launch()`は最初に新しいプロファイルを作成します。`GologinApi`には、`createProfileRandomFingerprint()`、`addGologinProxyToProfile()`、`addCookiesToProfile()`、`deleteProfile()`などのヘルパーも用意されています。完全なサンプルは[クイックスタート](/ja/api-reference/introduction/quickstart)をご覧ください。
+
 ### 主なパラメーター
 
 | パラメーター | デフォルト | 説明 |
 |---|---|---|
-| `token` | 必須 | Gologin の API トークン |
-| `profile_id` | 必須 | 起動するプロファイルの ID |
-| `executablePath` | 自動 | Orbita ブラウザのバイナリのパス |
-| `uploadCookiesToServer` | `false` | プロファイルの停止時に Cookie をクラウドにアップロードします。デバイス間でセッションを維持する必要がある場合は `true` に設定してください。 |
-| `checkBrowserUpdate` | `true` | 起動時に、このプロファイルのバージョンに対する Orbita の更新を確認します。現在のバージョンに固定する場合は `false` に設定してください。 |
-| `autoUpdateBrowser` | `true` | 新しい Orbita バージョンを自動でダウンロードします。予期しない更新を防ぐには `false` に設定してください。 |
-| `extra_params` | `[]` | ブラウザに渡す追加の Chromium フラグ |
+| `token` | 必須 | Gologin APIトークン |
+| `profile_id` | 必須 | 起動するプロファイルのID |
+| `executablePath` | 自動 | Orbitaブラウザのバイナリのパス |
+| `uploadCookiesToServer` | `false` | プロファイルの停止時にCookieをクラウドへアップロードします。デバイス間でセッションを維持したい場合は`true`に設定してください。 |
+| `extra_params` | `[]` | ブラウザに渡す追加のChromiumフラグ |
 
 ### プロファイルの停止
 
 ```javascript
-// Stop and sync to cloud (default)
+// Stop and sync to cloud
 await GL.stop();
 
-// Stop without syncing any data to cloud
-await GL.stop({ posting: false });
+// Stop without syncing profile data to cloud
+await GL.stopLocal({ posting: false });
 ```
 
-注: `posting: false` を指定すると、プロファイルデータが Gologin のサーバーにアップロードされなくなります。クラウド同期を行いたくないサーバー上で実行する場合に使用してください。
+まず、自動化ツール側で`browser.close()`などを使ってブラウザを閉じてください。`stop()`はオプションを受け取らず、常にプロファイルをGologinへアップロードします。`stopLocal({ posting: false })`は、プロファイルデータをアップロードせずにセッションを終了します。クラウド同期が不要なサーバーで使用してください。`uploadCookiesToServer: true`を設定している場合、Cookieは引き続きアップロードされます。
 
-### Orbita ブラウザのバージョン管理
+### Orbitaブラウザのバージョン管理
+
+プロファイルの起動時に、SDKはプロファイルのユーザーエージェントに必要なOrbitaのバージョンを確認します。そのバージョンが`~/.gologin/browser`にまだない場合はSDKがダウンロードし、すでにある場合はインストール済みのものを再利用します。特定のビルドを実行するには、`executablePath`を指定してください。`autoUpdateBrowser`(デフォルトは`false`)と`checkBrowserUpdate`の各オプションは現在も指定できますが、現行のSDK(3.0.7)ではこの動作には影響しません。
+
+Orbitaを事前にダウンロードするには、`GoLogin`インスタンスの`checkAndDownloadBrowserByOpts()`を呼び出します。これは個別のエクスポートではなく、メソッドです。
 
 ```javascript
-import { checkAndDownloadBrowserByOpts } from 'gologin';
+import { GoLogin } from 'gologin';
+
+const GL = new GoLogin({ token: 'your-api-token' });
 
 // Pre-download the latest Orbita version
-await checkAndDownloadBrowserByOpts({ lastActualCount: 1 });
+await GL.checkAndDownloadBrowserByOpts({ lastActualCount: 1 });
 
 // Pre-download specific versions
-await checkAndDownloadBrowserByOpts({ majorVersions: [142, 143] });
+await GL.checkAndDownloadBrowserByOpts({ majorVersions: [142, 143] });
 ```
 
-プロファイルを並列で起動する前に `checkAndDownloadBrowserByOpts` を使用すると、複数のダウンロードが同時に発生するのを避けられます。
+オプションを指定しない場合は、最新の5バージョンをダウンロードします。プロファイルを並列で起動する前にこの処理を実行しておくと、複数のダウンロードが同時に発生するのを避けられます。
 
-### 100 個以上のプロファイルを並列実行する
+### 100個以上のプロファイルを並列実行する
 
 サーバー上で多数のプロファイルを同時に実行する場合:
 
@@ -95,22 +125,22 @@ async function processQueue() {
 }
 ```
 
-**サーバーでの重要なポイント:**
-- プロファイルの同時起動数を制限してください(最初は 10〜20 を推奨)
-- 起動前に Orbita のバージョンをあらかじめダウンロードしておいてください
-- Linux では、Xvfb をインストールして `DISPLAY=:99` を設定してください
+**サーバーでの重要な注意点:**
+- プロファイルの同時起動数を制限してください(最初は10〜20を推奨)
+- 起動前にOrbitaのバージョンを事前にダウンロードしてください
+- Linuxの場合: Xvfbをインストールし、`DISPLAY=:99`を設定してください
 - ファイルディスクリプタの上限を引き上げてください: `ulimit -n 65536`
-- RAM を監視してください。各プロファイルは約 300〜500 MB を使用します
+- RAMを監視してください。1プロファイルあたり約300〜500 MBを使用します
 
 ### デバッグ
 
-詳細なログを出力するには、環境変数を設定します。
+詳細なログを出力するには、次の環境変数を設定します。
 
 ```bash
 DEBUG=gologin node your-script.js
 ```
 
-### GitHub と変更履歴
+### GitHubと変更履歴
 
 - ソースコード: https://github.com/gologinapp/gologin
 - [変更履歴](/ja/api-reference/sdks/nodejs-changelog)

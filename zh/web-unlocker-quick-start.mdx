@@ -8,7 +8,7 @@ title: "快速入门"
 
 ## 前提条件
 
-- Web Unlocker API 密钥(请联系 **ermakova.t@gologin.com** 获取)
+- 一个 Web Unlocker API 密钥。请通过 [Web Unlocker 页面](https://gologin.com/web-unlocker/#web_unlocker_form)上的表单获取。密钥将在一个工作日内发送给你,并附带免费请求额度,可用于测试你自己的目标网站。无需绑定银行卡。
 - Python 3.x、Node.js 或任意 HTTP 客户端
 
 ---
@@ -31,7 +31,7 @@ https://parsing.webunlocker.gologin.com/v1
 
 ## 发送第一个请求
 
-发送 GET 请求,并将目标 URL 作为查询参数传入。响应内容为页面完整渲染后的 HTML。
+发送一个 GET 请求,并将目标 URL 作为查询参数传入。响应内容为页面完整渲染后的 HTML。
 
 ### cURL
 
@@ -69,9 +69,9 @@ console.log(html);
 
 ---
 
-## 返回结果
+## 返回内容
 
-响应正文是页面渲染后的原始 HTML,与你在浏览器中打开该 URL 时看到的内容相同。没有 JSON 封装,也无需额外解析。
+响应正文是页面渲染后的原始 HTML,与你在浏览器中打开该 URL 时看到的内容一致。没有 JSON 外层包装,也无需额外解析。
 
 ```html
 <!DOCTYPE html>
@@ -81,19 +81,48 @@ console.log(html);
 </html>
 ```
 
+### 其他格式
+
+添加 `format` 查询参数,即可获取其他格式的页面内容:
+
+| `format` | 响应正文 |
+|---|---|
+| `html` | 页面 HTML(默认值) |
+| `markdown` | Markdown 格式的页面内容 |
+| `json` | 包含 URL、请求元数据和页面 HTML 的 JSON 对象 |
+
+```bash
+curl "https://parsing.webunlocker.gologin.com/v1/scrape?url=https%3A%2F%2Fexample.com&format=json" \
+  -H "apikey: YOUR_API_KEY"
+```
+
+```json
+{
+  "success": true,
+  "data": {
+    "url": "https://example.com",
+    "metadata": {
+      "response_time_ms": 297,
+      "status_code": 200
+    },
+    "html": "<!DOCTYPE html><html lang=\"en\">..."
+  }
+}
+```
+
 ---
 
 ## 错误处理
 
 处理响应之前,请先检查 HTTP 状态码:
 
-| 状态码 | 含义 |
-|---|---|
-| `200` | 成功——响应正文为页面 HTML |
-| `401` | API 密钥无效或缺失 |
-| `422` | URL 参数无效或缺失 |
-| `429` | 超出速率限制 |
-| `500` / `503` | 服务器错误——请使用退避策略重试 |
+| 状态码 | 含义 | 响应正文 |
+|---|---|---|
+| `200` | 成功 | 所请求格式的页面内容 |
+| `400` | 请求错误,例如缺少 `url` 参数 | `{"success":false,"error":"Request failed"}` |
+| `401` | 缺少 `apikey` 请求头 | `{"message":"Missing API key in request"}` |
+
+如果收到 `429` 或 `5xx` 状态码,请使用指数退避策略重试。
 
 ```python
 response = requests.get(
@@ -135,4 +164,4 @@ gologin-web-access scrape-json https://example.com
 gologin-web-access batch-scrape https://example.com/page/1 https://example.com/page/2 --format text
 ```
 
-更多详情请参阅 [Web Unlocker SDK 和 CLI](/zh/scraping-api-sdk-and-cli) 以及 [Web Access CLI](/zh/cli-tools/web-access)。
+详细信息请参阅 [Web Unlocker SDK 和 CLI](/zh/scraping-api-sdk-and-cli) 以及 [Web Access CLI](/zh/cli-tools/web-access)。

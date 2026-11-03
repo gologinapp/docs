@@ -1,41 +1,40 @@
 ---
-title: "Vị trí proxy hiển thị sai trên website hoặc trang kiểm tra"
-description: "Khi proxy hiển thị sai vị trí địa lý đối với proxy bên thứ ba của bạn"
+title: "Vị trí proxy hiển thị sai trên website hoặc công cụ kiểm tra"
+description: "Khi proxy hiển thị sai vị trí địa lý đối với proxy của bên thứ ba"
 ---
 
-## **Nguyên nhân và cách hoạt động**
+## **Vì sao xảy ra và cơ chế hoạt động**
 
-Mỗi website sử dụng một cơ sở dữ liệu định vị địa lý IP khác nhau để xác định quốc gia của một địa chỉ IP. Các cơ sở dữ liệu này không đồng bộ với nhau, nên có trường hợp cùng một IP bị nhận diện là thuộc nhiều vị trí khác nhau.
+Mỗi website sử dụng một cơ sở dữ liệu định vị địa lý IP khác nhau để xác định quốc gia của một địa chỉ IP. Các cơ sở dữ liệu này không đồng bộ với nhau, nên cùng một IP có thể bị nhận diện là thuộc nhiều vị trí khác nhau.
 
-Một yếu tố quan trọng khác là IP có bị gắn nhãn thuộc Datacenter / VPN / một dịch vụ nào khác hay không.\
-Nếu một IP bị nhận diện là IP của dịch vụ, điểm tin cậy của IP đó có thể giảm mạnh, khiến website dễ gắn cờ hoặc chặn IP hơn.
+Một yếu tố quan trọng khác là việc IP có bị gắn cờ là thuộc về Datacenter / VPN / bất kỳ dịch vụ nào khác hay không.<br />Nếu một IP bị nhận diện là IP của dịch vụ, điểm tin cậy của IP đó có thể giảm mạnh, khiến website dễ gắn cờ hoặc chặn IP này hơn.
 
 Chúng tôi không khuyến nghị sử dụng các proxy có những sai lệch nêu trên.
 
-## **Cách kiểm tra proxy của bạn**
+## **Gologin xác định vị trí proxy như thế nào**
 
-1. Lấy IP đầu ra của proxy tại đây, chỉ cần di chuột qua biểu tượng mũi tên
+Công cụ kiểm tra proxy của Gologin sử dụng một cơ sở dữ liệu GeoIP của bên thứ ba. Khi cơ sở dữ liệu đó được cập nhật, quốc gia hiển thị cho một IP có thể thay đổi. Với các proxy mới, dữ liệu vị trí trong các cơ sở dữ liệu GeoIP có thể chưa được cập nhật, vì vậy quốc gia hiển thị có thể khác với quốc gia bạn đã mua - hãy liên hệ nhà cung cấp proxy của bạn để kiểm tra. Bạn không thể thay đổi cơ sở dữ liệu mà Gologin sử dụng; nếu một website yêu cầu một quốc gia cụ thể, hãy dùng proxy luôn được nhận diện là thuộc quốc gia đó.
 
-   ![image (55).png](/images/image\(55\).png)
-2. Trên Internet còn nhiều công cụ khác, nhưng chúng tôi thường dùng hai công cụ sau để có kết quả nhất quán:
+## **Làm thế nào để kiểm tra proxy của tôi?**
+
+1. Lấy IP đầu ra của proxy tại đây, chỉ cần di chuột qua biểu tượng mũi tên <img src="/images/image(55).png" alt="image (55).png" />
+2. Có nhiều công cụ khác trên Internet, chúng tôi thường dùng hai công cụ sau để có kết quả nhất quán:
    - Để kiểm tra vị trí địa lý của IP: [<u>https://www.iplocation.net/ip-lookup</u>](https://www.iplocation.net/ip-lookup)
 
-     ❗Lý tưởng nhất là tất cả các trang kiểm tra đều hiển thị cùng một quốc gia
-   - Để kiểm tra các dịch vụ trên IP: [<u>https://whatismyipaddress.com/ip/</u>](https://whatismyipaddress.com/ip/)
+     ❗Lý tưởng nhất là tất cả các công cụ kiểm tra đều hiển thị cùng một quốc gia
+   - Để kiểm tra các dịch vụ gắn với IP: [<u>https://whatismyipaddress.com/ip/</u>](https://whatismyipaddress.com/ip/)
 
-     ❗Không được hiển thị bất kỳ dịch vụ nào trên IP
+     ❗Không được hiển thị bất kỳ dịch vụ nào gắn với IP
 
-   Dưới đây là các ví dụ để bạn đối chiếu:
+   Các ví dụ để bạn đối chiếu ở bên dưới: <img src="/images/image.png" alt="image.png" />
 
-   ![image.png](/images/image.png)
+## **Cách tránh sự cố về proxy**
 
-## **Cách tránh các sự cố về proxy**
+Để giảm thiểu các sự cố do vị trí proxy không chính xác:
 
-Để hạn chế các sự cố do vị trí proxy không chính xác:
-
-- **Sử dụng nhà cung cấp proxy uy tín** – Các nhà cung cấp chất lượng cao đảm bảo IP của họ được phân loại và đăng ký chính xác. Bạn có thể dùng proxy của Gologin hoặc [<u>các proxy chúng tôi khuyên dùng</u>](https://gologin.com/proxies/proxy-type/).
+- **Sử dụng nhà cung cấp proxy uy tín** – Các nhà cung cấp chất lượng cao đảm bảo IP của họ được phân loại và đăng ký chính xác. Bạn có thể dùng proxy của Gologin hoặc [<u>các proxy mà chúng tôi đề xuất</u>](https://gologin.com/proxies/proxy-type/).
 - **Tránh dùng proxy data center cho các tác vụ nhạy cảm** – Proxy residential hoặc mobile thường có điểm tin cậy cao hơn.
 - **Kiểm tra proxy trước khi sử dụng** – Chạy proxy qua nhiều công cụ kiểm tra IP để đảm bảo kết quả nhất quán.
-- **Đổi IP khi cần** – Nếu một IP bị gắn cờ sai, việc chuyển sang IP khác có thể giải quyết vấn đề.
+- **Đổi IP khi cần** – Nếu một IP bị gắn cờ không chính xác, việc chuyển sang IP khác có thể giải quyết vấn đề.
 
-Khi chú ý đến những chi tiết này, bạn sẽ có trải nghiệm mượt mà và ổn định hơn khi sử dụng Gologin.
+Khi chú ý đến những chi tiết này, bạn có thể có trải nghiệm mượt mà và ổn định hơn khi sử dụng Gologin.

@@ -3,7 +3,7 @@ title: "Obsługiwane platformy i instalacja"
 description: "Wymagania systemowe Gologin i proces instalacji"
 ---
 
-Aplikację Gologin na każdy obsługiwany system możesz pobrać, korzystając z poniższego linku:
+Aplikację Gologin na każdy obsługiwany system możesz pobrać pod poniższym linkiem:
 
 👉 [**Pobierz Gologin**](https://gologin.com/download/)
 
@@ -20,14 +20,14 @@ Aplikację Gologin na każdy obsługiwany system możesz pobrać, korzystając z
 - Windows 10
 - Windows Server 2016
 
-### Mac OS (procesory z serii M, Mac Neo i Intel)
+### Mac OS (procesory serii M, Mac Neo i Intel)
 
 - macOS 27 Golden Gate
 - macOS 26 Tahoe
-- macOS 15 Sequoia **(przeglądarka w wersji 122 i nowszej)**
+- macOS 15 Sequoia (przeglądarka w wersji 122 i nowszej)
 - macOS 14 Sonoma
 - macOS 13 Ventura
-- macOS 12 Monterey
+- macOS 12 Monterey (przeglądarka w wersji 150 i starszej)
 
 ### Linux
 
@@ -57,18 +57,18 @@ Aplikację Gologin na każdy obsługiwany system możesz pobrać, korzystając z
 2. Przejdź do folderu **Downloads**
 3. Kliknij dwukrotnie plik i postępuj zgodnie z instrukcjami
 
-### Linux, przykład dla Ubuntu
+### Linux, przykład na Ubuntu
 
-Gologin dla systemu Linux jest dostarczany jako plik **AppImage**. Jest to samodzielny plik wykonywalny, który nie wymaga tradycyjnej instalacji. Aplikację możesz zawsze uruchomić za pomocą tego pliku.
+Gologin dla systemu Linux jest dostarczany jako archiwum `.tar`. Aplikacja w środku jest samodzielna i nie wymaga tradycyjnej instalacji: wystarczy rozpakować archiwum i uruchomić Gologin z rozpakowanego folderu.
 
-1. Pobierz plik AppImage, korzystając z tego [linku](https://gologin.com/download)
+1. Pobierz archiwum za pomocą tego [linku](https://gologin.com/download)
 2. Przejdź do folderu **Downloads**
 3. Kliknij prawym przyciskiem myszy plik `gologin.tar` \> **Extract**
 4. Przejdź do folderu **gologin** \> uruchom Gologin dwukrotnym kliknięciem
 
 **Jeśli aplikacja się nie otwiera**
 
-- jeśli system rozpoznaje aplikację jako plik tekstowy, uruchom ją jednorazowo przez terminal z parametrem --no-sandbox
+- jeśli system traktuje aplikację jako plik tekstowy, uruchom ją raz w terminalu z parametrem --no-sandbox
   ```bash bash
   cd ~/Downloads/gologin
   ./<filename> --no-sandbox
@@ -78,7 +78,7 @@ Gologin dla systemu Linux jest dostarczany jako plik **AppImage**. Jest to samod
   cd ~/Downloads/gologin
   chmod +x <filename>
   ```
-  zastąp `<filename>` rzeczywistą nazwą pliku
+  zamień `<filename>` na rzeczywistą nazwę pliku
 - w nowszych systemach może być potrzebny pakiet **libfuse2**. Wklej do terminala poniższe polecenie i spróbuj ponownie uruchomić aplikację.
   ```bash bash
     sudo apt install libfuse2
@@ -87,7 +87,7 @@ Gologin dla systemu Linux jest dostarczany jako plik **AppImage**. Jest to samod
 **Jeśli profile nie uruchamiają się po kliknięciu Run**
 
 - otwórz terminal i przejdź do folderu przeglądarki, na przykład w wersji Orbita 145
-- ustaw nowe uprawnienia dla **chrome-sandbox**
+- ustaw nowe uprawnienia dla pliku **chrome-sandbox**
   ```bash bash
   cd ~/.gologin/browser/orbita-browser-145
   sudo chown root:root chrome-sandbox
@@ -96,12 +96,12 @@ Gologin dla systemu Linux jest dostarczany jako plik **AppImage**. Jest to samod
 
 ### Android
 
-Aby korzystać z Gologin na Androidzie, wystarczy zainstalować **aplikację Gologin** ze sklepu **Google Play**.
+Aby korzystać z Gologin na Androidzie, wystarczy zainstalować **aplikację Gologin** ze **sklepu Google Play**.
 
-1. Otwórz **Google Play** na telefonie
-2. Znajdź pasek wyszukiwania u góry i wpisz **Gologin** \> **install the app**
+1. Otwórz **sklep Google Play** na telefonie
+2. Znajdź pasek wyszukiwania u góry i wpisz **Gologin** \> **zainstaluj aplikację**
 
-Po zainstalowaniu aplikacji możesz od razu z niej korzystać, ponieważ ma wbudowaną przeglądarkę.
+Po zainstalowaniu aplikacji możesz od razu z niej korzystać, ponieważ przeglądarka jest już wbudowana.
 
 ## Nieobsługiwane konfiguracje
 
@@ -115,6 +115,6 @@ Gologin **nie** obsługuje następujących platform:
 ## Zobacz także
 
 - [Lista kontrolna na start](https://gologin.com/docs/getting-started/setup/first-time-checklist)
-- [Gologin Web, Chrome OS](https://gologin.com/docs/general/gologin-web-and-mobile)
+- [Gologin Web, Chrome OS](/pl/general/gologin-web-and-chrome-os)
 - [Kluczowe pojęcia](https://gologin.com/docs/getting-started/introduction/key-concepts-profiles-fingerprints-proxies)
-- [Aktualizacja aplikacji Gologin](https://gologin.com/docs/general/updating-the-gologin-app)
+- [Aktualizowanie aplikacji Gologin](https://gologin.com/docs/general/updating-the-gologin-app)

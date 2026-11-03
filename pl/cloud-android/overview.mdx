@@ -1,0 +1,53 @@
+---
+title: "Cloud Android"
+description: "Uruchamiaj prawdziwe telefony z Androidem w chmurze z poziomu aplikacji Gologin: kto może z nich korzystać, limity, jak uruchomić telefon, zainstalować aplikacje i dodać proxy."
+---
+
+**Cloud Android** pozwala uruchamiać prawdziwe telefony z Androidem w chmurze, bezpośrednio z aplikacji Gologin - bez potrzeby posiadania fizycznego telefonu. Każdy profil Cloud Android to osobny telefon z własnymi aplikacjami i danymi, więc z aplikacjami mobilnymi (na przykład Instagramem) pracujesz tak samo jak z profilami przeglądarki.
+
+## Kto może z niego korzystać
+
+Cloud Android jest bezpłatny we wszystkich płatnych planach Gologin. Użytkownicy okresu próbnego również mogą z niego korzystać w trakcie okresu próbnego, jeśli zarejestrowali się przez Google.
+
+| | Telefony działające jednocześnie | Limit czasu |
+| --- | --- | --- |
+| Okres próbny (rejestracja przez Google) | 1 | Brak limitu |
+| Plany płatne | do 10 | Brak limitu |
+
+## Tworzenie i uruchamianie profilu Cloud Android
+
+![Cloud Android](/images/cloud_android.png "Cloud Android")
+
+1. Kliknij **Cloud Android** w menu po lewej stronie.
+2. Kliknij **Add Android Profile**.
+3. Skonfiguruj proxy i pozostałe ustawienia.
+3. Kliknij **Run** przy profilu. Uruchomienie telefonu może potrwać **do 2 minut**.
+4. Gdy profil jest **running**, kliknij **View**, aby otworzyć okno telefonu.
+5. Aby zakończyć pracę, kliknij **Stop**.
+
+Liczba aktualnie działających telefonów jest wyświetlana u góry strony (**Currently running**).
+
+## Praca z telefonem
+
+W oknie telefonu znajdziesz standardowe przyciski Androida oraz narzędzia po prawej stronie - na przykład zrzuty ekranu, wysyłanie i pobieranie plików, obracanie ekranu, głośność, lokalizację i zasilanie.
+
+Aplikacje instaluj za pomocą sklepów z aplikacjami dostępnych na telefonie, takich jak **Aurora Store**, **F-Droid** lub **Uptodown**. Aplikacje, loginy i inne dane pozostają w profilu między kolejnymi uruchomieniami.
+
+![Cloud Android Prone Ui](/images/cloud_android_prone_ui.png "Cloud Android Prone Ui")
+
+<Note>
+  Nie każda aplikacja na Androida działa w Cloud Android. Jeśli aplikacja się nie otwiera, spróbuj zamiast tego otworzyć jej stronę internetową w przeglądarce.
+</Note>
+
+## Proxy
+
+Telefony Cloud Android działają na serwerach Gologin, więc bez proxy strony internetowe i aplikacje widzą adres IP serwera, a nie Twój. Dodaj proxy do profilu tak samo jak w przypadku profili przeglądarki - obsługiwane są wszystkie typy proxy, w tym proxy Gologin i Twoje własne. Mobilne proxy wyglądają najbardziej naturalnie w przypadku telefonu, ale działa każdy typ.
+
+## Limit czasu bezczynności
+
+Jeśli działający telefon nie wykazuje aktywności przez **15 minut**, zatrzymuje się automatycznie. Twoje dane zostaną zapisane.
+
+## Zobacz także
+
+- [FAQ: Cloud Android](/pl/cloud-android/faq)
+- [Dodawanie proxy i zarządzanie nimi](/pl/proxy/proxy-management/adding-proxies)

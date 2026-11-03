@@ -1,9 +1,9 @@
 ---
 title: "Plataformas compatibles e instalación"
-description: "Requisitos del sistema e instalación de Gologin"
+description: "Requisitos del sistema de Gologin y proceso de instalación"
 ---
 
-Puedes descargar la aplicación Gologin para cualquier sistema compatible con el siguiente enlace:
+Puedes descargar la app de Gologin para cualquier sistema compatible mediante el siguiente enlace:
 
 👉 [**Descargar Gologin**](https://gologin.com/download/)
 
@@ -24,10 +24,10 @@ Puedes descargar la aplicación Gologin para cualquier sistema compatible con el
 
 - macOS 27 Golden Gate
 - macOS 26 Tahoe
-- macOS 15 Sequoia **(versión del navegador 122 y superior)**
+- macOS 15 Sequoia (versión del navegador 122 o superior)
 - macOS 14 Sonoma
 - macOS 13 Ventura
-- macOS 12 Monterey
+- macOS 12 Monterey (versión del navegador 150 o inferior)
 
 ### Linux
 
@@ -36,39 +36,39 @@ Puedes descargar la aplicación Gologin para cualquier sistema compatible con el
 
 ### Android
 
-- Android 10.0 y superior
+- Android 10.0 o superior
 - 3\+ GB de RAM
 
 ### iOS
 
-- iPhone o iPad con iOS 17 y superior
+- iPhone o iPad con iOS 17 o superior
 
 ## Proceso de instalación
 
 ### Windows
 
-1. Descarga el instalador de la aplicación desde [aquí](https://gologin.com/download/)
+1. Descarga el instalador de la app desde [aquí](https://gologin.com/download/)
 2. Ve a tu carpeta **Downloads**
 3. Haz doble clic en el archivo descargado y sigue las indicaciones de instalación
 
 ### Mac OS
 
-1. Descarga el instalador de la aplicación desde [aquí](https://gologin.com/download/)
+1. Descarga el instalador de la app desde [aquí](https://gologin.com/download/)
 2. Ve a tu carpeta **Downloads**
 3. Haz doble clic en el archivo y sigue las instrucciones
 
 ### Linux, ejemplo con Ubuntu
 
-Gologin para Linux se distribuye como un archivo **AppImage**. Es un archivo ejecutable autónomo que no requiere una instalación tradicional. Siempre puedes acceder a la aplicación mediante este archivo.
+Gologin para Linux se suministra como un archivo `.tar`. La app que contiene es autónoma y no requiere una instalación tradicional: extrae el archivo e inicia Gologin desde la carpeta extraída.
 
-1. Descarga el archivo AppImage con este [enlace](https://gologin.com/download)
+1. Descarga el archivo con este [enlace](https://gologin.com/download)
 2. Ve a tu carpeta **Downloads**
 3. Haz clic derecho en `gologin.tar` \> **Extract**
-4. Ve a la carpeta **gologin** \> abre Gologin con doble clic
+4. Entra en la carpeta **gologin** \> inicia Gologin con un doble clic
 
-**Si la aplicación no se abre**
+**Si la app no se abre**
 
-- si tu sistema detecta la aplicación como un archivo de texto, ejecútala una vez desde la terminal con el parámetro --no-sandbox
+- si tu sistema reconoce la app como un archivo de texto, ejecútala una vez desde la terminal con el parámetro --no-sandbox
   ```bash bash
   cd ~/Downloads/gologin
   ./<filename> --no-sandbox
@@ -79,7 +79,7 @@ Gologin para Linux se distribuye como un archivo **AppImage**. Es un archivo eje
   chmod +x <filename>
   ```
   sustituye `<filename>` por el nombre real del archivo
-- es posible que necesites el paquete **libfuse2** en sistemas más recientes. Pega lo siguiente en la terminal e intenta abrir la aplicación de nuevo.
+- en sistemas más recientes puede que necesites el paquete **libfuse2**. Pega lo siguiente en la terminal e intenta iniciar la app de nuevo.
   ```bash bash
     sudo apt install libfuse2
   ```
@@ -96,25 +96,25 @@ Gologin para Linux se distribuye como un archivo **AppImage**. Es un archivo eje
 
 ### Android
 
-Para usar Gologin en Android, solo tienes que instalar la **aplicación Gologin** desde **Google Play Store**.
+Para usar Gologin en Android, solo tienes que instalar la **app de Gologin** desde **Google Play Store**.
 
 1. Abre **Google Play Store** en tu teléfono
-2. Busca la barra de búsqueda en la parte superior y escribe **Gologin** \> **instala la aplicación**
+2. Busca la barra de búsqueda en la parte superior y escribe **Gologin** \> **instala la app**
 
-Una vez instalada la aplicación, puedes usarla de inmediato con el navegador integrado.
+Una vez instalada la app, puedes usarla de inmediato con el navegador integrado.
 
 ## Configuraciones no compatibles
 
 Gologin **no** es compatible con las siguientes plataformas:
 
-- Ningún sistema de 32 bits
-- Windows 7, 8, 8.1, Server 2012 (cualquier revisión) o anteriores
-- macOS El Captain, Sierra, High-Sierra, Mojave, Catalina, Big Sur o anteriores
+- Cualquier sistema de 32 bits
+- Windows 7, 8, 8.1, Server 2012 (cualquier revisión) o versiones anteriores
+- macOS El Captain, Sierra, High-Sierra, Mojave, Catalina, Big Sur o versiones anteriores
 - Chrome OS (puedes usar la versión [Gologin web](/es/gologin-web-overview))
 
 ## Véase también
 
 - [Lista de verificación para el primer uso](https://gologin.com/docs/getting-started/setup/first-time-checklist)
-- [Gologin Web, Chrome OS](https://gologin.com/docs/general/gologin-web-and-mobile)
+- [Gologin Web, Chrome OS](/es/general/gologin-web-and-chrome-os)
 - [Conceptos clave](https://gologin.com/docs/getting-started/introduction/key-concepts-profiles-fingerprints-proxies)
-- [Actualización de la aplicación Gologin](https://gologin.com/docs/general/updating-the-gologin-app)
+- [Actualización de la app de Gologin](https://gologin.com/docs/general/updating-the-gologin-app)

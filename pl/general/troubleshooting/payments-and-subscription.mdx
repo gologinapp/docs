@@ -2,16 +2,58 @@
 title: "Płatności i subskrypcja"
 ---
 
+### Moja płatność kartą została odrzucona
+
+Większość odmów pochodzi od banku, który wydał kartę. Formularz płatności pokazuje powód, który otrzymuje od banku:
+
+| Komunikat | Co to oznacza | Co zrobić |
+| :-- | :-- | :-- |
+| Your card has insufficient funds. | Na karcie nie ma wystarczających środków | Sprawdź saldo i kwotę do zapłaty, a następnie spróbuj ponownie |
+| Your card was declined. | Bank odrzucił płatność bez podania przyczyny | Skontaktuj się z bankiem lub zezwól na płatności online i międzynarodowe w aplikacji bankowej, a następnie spróbuj ponownie |
+| Your card does not support this type of purchase. | Bank nie zezwala na tego rodzaju płatność tą kartą | Skontaktuj się z bankiem lub użyj innej karty |
+| ... limit was exceeded. Contact your card issuer. | Osiągnięto limit ustawiony przez bank | Skontaktuj się z bankiem lub użyj innej karty |
+| Your card number is incorrect. / Your card has expired. | Dane karty są nieprawidłowe lub karta jest już nieważna | Sprawdź dane lub użyj innej karty |
+
+Gologin może też wyświetlić własny komunikat: **Payment error. Try later or use another card** lub **Payment failed. Please try again or contact support team for assistance.**
+
+Jeśli karta nadal jest odrzucana, zapłać inną kartą, przez PayPal lub kryptowalutą – zobacz [Metody płatności](/pl/general/account-and-billing/payment-methods). Każda nieudana próba wlicza się do limitu 10 prób płatności dziennie.
+
+### Bank prosi o potwierdzenie płatności (3D Secure)
+
+Większość banków prosi o potwierdzenie płatności online w aplikacji bankowej lub kodem z SMS-a. Potwierdź ją, nie zamykając okna płatności.
+
+Jeśli zobaczysz komunikat **3D Secure is unavailable. Try another card or contact support**, Twoja karta nie obsługuje tej weryfikacji. Użyj innej karty lub innej metody płatności.
+
+### Przycisk Pay now nie reaguje albo plany lub okno płatności się nie ładują
+
+Zwykle zdarza się to w starych wersjach aplikacji desktopowej.
+
+1. Zamknij okno płatności i otwórz je ponownie.
+2. Całkowicie zamknij Gologin z zasobnika systemowego i uruchom go ponownie.
+3. Zaktualizuj Gologin do najnowszej wersji ze strony [gologin.com/download](https://gologin.com/download).
+
+Możesz też zapłacić w aplikacji internetowej pod adresem [app.gologin.com](https://app.gologin.com). Jeśli strona nie ładuje się poprawnie, naciśnij **Ctrl+Shift+R** (**Cmd+Shift+R** w macOS), aby odświeżyć ją bez pamięci podręcznej.
+
+### Zapłaciłem, ale mój plan lub transfer się nie zmienił
+
+1. Całkowicie zamknij Gologin z zasobnika systemowego i uruchom go ponownie. W aplikacji internetowej naciśnij **Ctrl+Shift+R** (**Cmd+Shift+R** w macOS).
+2. Upewnij się, że w lewym górnym rogu wybrany jest workspace, za który zapłaciłeś: subskrypcja należy do workspace'u, dla którego została kupiona. Jeśli zapłaciłeś za niewłaściwy workspace, skontaktuj się z pomocą techniczną.
+3. Jeśli płaciłeś kryptowalutą, poczekaj, aż transakcja zostanie potwierdzona w blockchainie. Jeśli plan nadal się nie zmienił, skontaktuj się z pomocą techniczną i prześlij hash transakcji, adres, na który wysłałeś środki, oraz sieć.
+
 ### Widzę błąd „You've reached max payment attempts (10)"
 
-Próbowano kupić subskrypcję 10 razy, ale płatność nie przeszła, więc przez 24 godziny nie można ponowić próby. Nie mamy możliwości zdjęcia tego ograniczenia. W takiej sytuacji spróbuj kupić subskrypcję ponownie następnego dnia. Pomóc może także użycie innej metody płatności. Jeśli musisz pilnie kontynuować pracę z profilami, skontaktuj się z pomocą techniczną.
+Próbowałeś kupić subskrypcję 10 razy, płatność nie przeszła i możliwość ponownej próby została zablokowana na 24 godziny. Nie możemy zdjąć tego ograniczenia. W takiej sytuacji spróbuj kupić subskrypcję ponownie jutro – pomóc może użycie innej metody płatności. Jeśli musisz pilnie kontynuować pracę z profilami, skontaktuj się z pomocą techniczną.
 
-### Zapłaciłem(-am) kryptowalutą kwotę niższą niż wymagana
+### Zapłaciłem kryptowalutą mniej niż wymagana kwota
 
-Jeśli wpłacona kwota była za niska, subskrypcja lub ruch proxy nie zostaną dodane automatycznie. Nadal możesz dokończyć płatność, korzystając z tego samego adresu portfela odbiorcy, w ciągu 60 minut od rozpoczęcia płatności. Sprawdź, czy link płatności Cryptomus jest nadal aktywny. Jeśli wyświetla aktualną kwotę płatności i zachęca do dalszych wpłat, możesz ją dokończyć. Jeśli okno płatności już minęło, a Cryptomus zachęca do kontaktu ze sklepem, skontaktuj się z pomocą techniczną Gologin.
+Jeśli kwota była za niska, subskrypcja ani transfer proxy nie zostaną dodane automatycznie. Nadal możesz dokończyć płatność, korzystając z tego samego adresu portfela odbiorcy, w ciągu 60 minut od rozpoczęcia płatności. Sprawdź, czy link płatności Cryptomus jest nadal aktywny: jeśli pokazuje Twoją bieżącą kwotę płatności i zachęca do dopłaty, możesz ją dokończyć. Jeśli okno płatności już minęło, a Cryptomus prosi o kontakt ze sklepem, skontaktuj się z pomocą techniczną Gologin.
 
-### Po zapłaceniu kryptowalutą widzę na stronie płatności komunikat „Your payment is blocked"
+### Na stronie płatności po zapłaceniu kryptowalutą widzę komunikat „Your payment is blocked"
 
-Ten komunikat oznacza, że transakcja została oznaczona i zablokowana przez naszego operatora płatności, Cryptomus, zanim do nas dotarła. Gologin nie otrzymał Twoich środków i nie miał żadnego udziału w decyzji o zablokowaniu płatności.
+Ten komunikat oznacza, że Twoja transakcja została oznaczona i zablokowana przez naszego operatora płatności, Cryptomus, zanim do nas dotarła. Gologin nie otrzymał Twoich środków i nie miał żadnego udziału w decyzji o zablokowaniu płatności.
 
-Cryptomus stosuje własne procedury zgodności niezależnie od nas, a my nie otrzymujemy informacji o konkretnej przyczynie oznaczenia transakcji. Skontaktuj się bezpośrednio z **obsługą klienta Cryptomus** — tylko ona może wyjaśnić status Twojej płatności i doradzić dalsze kroki, takie jak odblokowanie środków lub zwrot. Gdy sprawa zostanie rozwiązana po ich stronie, napisz do pomocy technicznej Gologin, aby potwierdzić aktywację subskrypcji.
+Cryptomus stosuje własne procedury zgodności, niezależnie od nas, a my nie jesteśmy informowani o konkretnej przyczynie oznaczenia transakcji. Skontaktuj się bezpośrednio z **obsługą klienta Cryptomus** – tylko ona może wyjaśnić status Twojej płatności i doradzić dalsze kroki, takie jak zwolnienie środków lub zwrot. Gdy sprawa zostanie rozwiązana po ich stronie, napisz do pomocy technicznej Gologin, aby potwierdzić aktywację subskrypcji.
+
+### Moje konto zostało zablokowane po zgłoszeniu sporu w banku
+
+Gdy zostanie otwarty spór (chargeback) dotyczący płatności za Gologin, konto jest blokowane do czasu zamknięcia sporu. Twoje konto nie zostało zhakowane. Aby przywrócić dostęp lub omówić zwrot środków, skontaktuj się z pomocą techniczną Gologin.

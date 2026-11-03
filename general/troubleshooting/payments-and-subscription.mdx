@@ -2,6 +2,44 @@
 title: "Payments & Subscription"
 ---
 
+### My card payment was declined
+
+Most declines come from the bank that issued the card. The payment form shows the reason it receives:
+
+| Message | What it means | What to do |
+| :-- | :-- | :-- |
+| Your card has insufficient funds. | There isn't enough money on the card | Check the balance and the amount to pay, then try again |
+| Your card was declined. | The bank declined the payment without giving a reason | Contact your bank or allow online and international payments in your banking app, then try again |
+| Your card does not support this type of purchase. | The bank doesn't allow this kind of payment with the card | Contact your bank or use another card |
+| ... limit was exceeded. Contact your card issuer. | You've reached a limit set by your bank | Contact your bank or use another card |
+| Your card number is incorrect. / Your card has expired. | The card details are wrong or the card is no longer valid | Check the details or use another card |
+
+Gologin can also show its own message instead: **Payment error. Try later or use another card** or **Payment failed. Please try again or contact support team for assistance.**
+
+If the card keeps failing, pay with another card, PayPal or crypto - see [Payment methods](/general/account-and-billing/payment-methods). Each failed attempt counts toward the limit of 10 payment attempts per day.
+
+### The bank asks me to confirm the payment (3D Secure)
+
+Most banks ask you to confirm an online payment in the banking app or with a code from an SMS. Confirm it without closing the payment window.
+
+If you see **3D Secure is unavailable. Try another card or contact support**, your card doesn't support this check. Use another card or another payment method.
+
+### The Pay now button doesn't respond, or the plans or the payment window don't load
+
+This usually happens in old versions of the desktop app.
+
+1. Close the payment window and open it again.
+2. Fully quit Gologin from the system tray and start it again.
+3. Update Gologin to the latest version from [gologin.com/download](https://gologin.com/download).
+
+You can also pay in the web app at [app.gologin.com](https://app.gologin.com). If the page doesn't load correctly, press **Ctrl+Shift+R** (**Cmd+Shift+R** on macOS) to reload it without cache.
+
+### I paid, but my plan or traffic didn't change
+
+1. Fully quit Gologin from the system tray and start it again. In the web app, press **Ctrl+Shift+R** (**Cmd+Shift+R** on macOS).
+2. Make sure you've selected the workspace you paid for in the top-left corner: a subscription belongs to the workspace it was bought for. If you paid for the wrong workspace, contact support.
+3. If you paid with crypto, wait until the transaction is confirmed on the blockchain. If the plan still hasn't changed, contact support and send the transaction hash, the address you sent the funds to, and the network.
+
 ### I get a "You've reached max payment attempts (10)" error
 
 You've tried to purchase a subscription 10 times, the payment did not get through and you got restricted from trying again for 24 hours. We cannot lift that restriction. In that case, please try purchasing the subscription again tomorrow, using a different payment method might help. In case it's crucial for you to keep working on the profiles, contact support.
@@ -15,3 +53,7 @@ In case you've underpaid, the subscription or proxy traffic will not get added a
 This message means your transaction was flagged and blocked by our payment processor, Cryptomus, before it reached us. Gologin did not receive your funds and had no involvement in the decision to block the payment.
 
 Cryptomus operates its own compliance procedures independently, and we are not informed of the specific reason a transaction is flagged. Please contact **Cryptomus customer support** directly - they are the only party who can clarify the status of your payment and advise on next steps such as a release or refund. Once the issue is resolved on their end, feel free to reach out to Gologin support to confirm your subscription is activated.
+
+### My account was blocked after I opened a dispute with my bank
+
+When a dispute (chargeback) is opened for a Gologin payment, the account is blocked until the dispute is closed. Your account wasn't hacked. To restore access or to discuss a refund, contact Gologin support.

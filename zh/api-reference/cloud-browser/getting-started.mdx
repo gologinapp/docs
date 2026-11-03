@@ -3,27 +3,27 @@ title: "快速入门"
 keywords: ["cloud browser", "headless browser"]
 ---
 
-Gologin Cloud Browser 让你可以**在云端**运行浏览器会话，并通过一个**连接 URL**，使用自动化工具（Puppeteer / Playwright）对其进行控制。
+Gologin Cloud Browser 让您可以**在云端**运行浏览器会话，并通过一个**连接 URL**，使用自动化工具（Puppeteer / Playwright）对其进行控制。
 
 <Tip>
-  **更喜欢使用 CLI？** 使用 [Gologin Agent Browser CLI](/zh/cli-tools/agent-browser)，无需编写代码即可在命令行中控制 Cloud Browser——专为 AI 智能体打造，支持快照、引用（refs）和持久化守护进程。
+  **更喜欢使用命令行？** 使用 [Gologin Agent Browser CLI](/zh/cli-tools/agent-browser)，无需编写代码即可通过 shell 控制 Cloud Browser——专为 AI 智能体打造，支持快照、引用（refs）和常驻守护进程。
 </Tip>
 
 ## 连接 URL
 
-在自动化库中，将此 URL 用作远程浏览器端点：
+在您的自动化库中，将此 URL 用作远程浏览器端点：
 
 ```text
 https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}
 ```
 
-- `token` — 你的 Gologin **开发者令牌（dev token）**。
+- `token` — 您的 Gologin **开发者令牌**。
 - `profile` — **配置文件 ID**（可选）：
   - 如果提供，Gologin 将在云端运行该配置文件；
   - 如果省略，Gologin 将为该会话创建一个新的配置文件。
 
 > 注意：自动化库会将此 URL 用作 **WebSocket 连接端点**（例如 Puppeteer 中的 `browserWSEndpoint`）。\
-> 请在 Gologin 控制台中生成你的令牌：`个人中心 → API 令牌`。
+> 请在 Gologin 应用中创建您的令牌：[API & MCP](https://app.gologin.com/personalArea/TokenApi) → **API** → **新代币**。
 
 <Frame>
   ![Screenshotat Mar0514 27 28](/images/ScreenshotatMar0514-27-28.png)
@@ -31,11 +31,11 @@ https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}
 
 ## 管理配置文件（代理、指纹等）
 
-Cloud Browser 只是**连接层**（远程浏览器会话）。\
-如需**创建/更新配置文件**、绑定**代理**、配置**指纹**、标签以及其他配置文件设置，请使用 Gologin **REST API**：
+Cloud Browser 仅是**连接层**（远程浏览器会话）。\
+如需**创建/更新配置文件**、关联**代理**、配置**指纹**、标签以及其他配置文件设置，请使用 Gologin **REST API**：
 
-- 配置文件 API： https://gologin.com/docs/api-reference/profile
-- 代理 API： https://gologin.com/docs/api-reference/proxy
+- 配置文件 API：https://gologin.com/docs/api-reference/profile
+- 代理 API：https://gologin.com/docs/api-reference/proxy
 
 # 示例
 

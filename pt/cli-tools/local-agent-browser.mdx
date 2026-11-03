@@ -1,57 +1,91 @@
 ---
-title: "CLI Gologin Local Agent Browser"
-description: "CLI para agentes que executa perfis locais do Gologin Orbita com daemon, snapshots, refs, runbooks e execução em lote"
+title: "Agent Browser CLI: Runtime local"
+description: "Execute perfis locais do Gologin Orbita com gologin-agent-browser --runtime local. Ele substitui a Local Agent Browser CLI separada."
 ---
 
-O Gologin Local Agent Browser CLI é uma CLI para agentes, criada para executar **perfis locais do Gologin Orbita** por meio de um daemon persistente e de uma interface de shell compacta.
+<Note>
+  A Local Agent Browser CLI agora faz parte da [Agent Browser CLI](/pt/cli-tools/agent-browser). O pacote npm `gologin-local-agent-browser-cli` está obsoleto: instale `gologin-agent-browser-cli` e use `--runtime local`. Os scripts que chamam `gologin-local-agent-browser` continuam funcionando; veja [Migrar da Local Agent Browser CLI](#migrate-from-local-agent-browser-cli).
+</Note>
 
-Ele mantém o mesmo modelo de interação do [Agent Browser CLI](/pt/cli-tools/agent-browser) na nuvem — abrir uma sessão, ler snapshots, agir sobre refs — mas é executado **localmente** na sua máquina, usando o Gologin Orbita em vez do Cloud Browser.
+A Agent Browser CLI tem dois runtimes com os mesmos comandos. O runtime `cloud` executa as sessões no Gologin Cloud Browser. O runtime `local` as executa no Orbita, o navegador do Gologin, na sua própria máquina. Esta página trata do runtime local. Snapshots, refs e os demais comandos funcionam como descrito na página da [Agent Browser CLI](/pt/cli-tools/agent-browser).
 
 ---
 
-## Quando usar o modo local ou o modo na nuvem
+## Quando usar local ou cloud
 
-| Use o modo local quando | Use o modo na nuvem quando |
+| Use `local` para | Use `cloud` para |
 |---|---|
-| Aquecimento de perfis | Scraping rápido e sem estado |
-| Fluxos de login em contas | Não houver uma máquina local disponível |
-| Acúmulo de cookies | Sessões paralelas em grande escala |
-| Ações em redes sociais e marketplaces dentro de um perfil persistente | Tarefas pontuais no navegador |
-| Loops de agentes que reutilizam a mesma identidade local | Não houver necessidade de manter o estado do perfil |
+| Aquecimento de perfis | Muitas sessões em paralelo |
+| Primeiros logins e verificações que você faz manualmente | Sessões de navegador remotas |
+| Reutilizar o estado local e os cookies de um perfil | Máquinas que não devem executar o Orbita |
+| Combinar o navegador com o sistema operacional do seu computador | Perfis temporários, sem necessidade de ID de perfil |
+| Runbooks e tarefas em lote em vários perfis | Capturas de tela e PDFs de um navegador remoto |
+
+---
+
+## Requisitos
+
+- Node.js 20 ou superior. O runtime local inicia o Orbita por meio do SDK Node.js do Gologin, que exige o Node.js 20.
+- Um token de API do Gologin em `GOLOGIN_TOKEN`. Veja [Obter um token](/pt/cli-tools/agent-browser#get-a-token).
+- Um ID de perfil para cada sessão. Diferentemente do runtime cloud, o runtime local não cria perfis temporários.
+- Orbita. Se ele ainda não estiver instalado, o SDK do Gologin o baixa para `~/.gologin/browser` na primeira inicialização. Se o Orbita estiver em outro local, defina `GOLOGIN_EXECUTABLE_PATH`.
 
 ---
 
 ## Instalação
 
 ```bash
-npm install -g gologin-local-agent-browser-cli
+npm install -g gologin-agent-browser-cli
 ```
 
-Requer Node.js >= 20.
+O pacote instala dois comandos:
+
+- `gologin-agent-browser` executa sessões de navegador na nuvem, a menos que você escolha o runtime local.
+- `gologin-local-agent-browser` é um alias de compatibilidade que executa comandos no runtime local.
 
 ---
 
-## Credenciais
+## Escolher o runtime local
 
-| Variável | Obrigatória | Descrição |
-|---|---|---|
-| `GOLOGIN_TOKEN` | Sim (para `open`) | Token de API do Gologin |
-| `GOLOGIN_PROFILE_ID` | Opcional | ID do perfil padrão |
-| `GOLOGIN_DAEMON_PORT` | Opcional | Porta do daemon (padrão: `44778`) |
-| `GOLOGIN_HEADLESS` | Opcional | `true` ou `false` (padrão: `false`) |
-| `GOLOGIN_EXECUTABLE_PATH` | Opcional | Caminho para o executável do Orbita |
-| `GOLOGIN_TMPDIR` | Opcional | Diretório temporário/de perfis do Gologin |
+Passe `--runtime local` em um comando ou defina o runtime uma única vez para todo o shell:
 
-Arquivo de configuração: `~/.gologin-local-agent-browser/config.json`
+```bash
+# one command
+gologin-agent-browser open https://example.com --runtime local --profile your_profile_id
+
+# every command in this shell
+export GOLOGIN_AGENT_BROWSER_RUNTIME=local
+```
+
+`--local` e um `local` no início do comando também funcionam: `gologin-agent-browser local open https://example.com --profile your_profile_id`.
+
+<Warning>
+  Comandos de sessão como `snapshot`, `click` e `close` vão para o runtime cloud, a menos que você escolha o local. Depois de abrir uma sessão local, passe `--runtime local` em todos os comandos seguintes ou defina `GOLOGIN_AGENT_BROWSER_RUNTIME=local`.
+</Warning>
+
+| `--runtime` | O que faz |
+|---|---|
+| `local` | Os comandos de navegador e de perfil são executados no Orbita local |
+| `cloud` | Os comandos de navegador são executados no Gologin Cloud Browser |
+| `auto` (padrão) | Os comandos de perfil, runbook e tarefa são executados localmente; todo o resto, na nuvem |
+
+Comandos da API do Gologin, como `api`, `browser` e `proxy`, sempre chamam a API diretamente, independentemente do runtime.
 
 ---
 
-## Arquitetura
+## Variáveis de ambiente
 
-São duas partes:
+| Variável | Descrição |
+|---|---|
+| `GOLOGIN_TOKEN` | Token de API do Gologin. Obrigatório para `open` e para os comandos de perfil |
+| `GOLOGIN_PROFILE_ID` | ID de perfil padrão |
+| `GOLOGIN_AGENT_BROWSER_RUNTIME` | Runtime padrão: `cloud`, `local` ou `auto` |
+| `GOLOGIN_EXECUTABLE_PATH` | Caminho do executável do Orbita, caso ele não esteja em `~/.gologin/browser` |
+| `GOLOGIN_HEADLESS` | `true` executa o Orbita sem janela. Padrão: `false` |
+| `GOLOGIN_DAEMON_PORT` | Porta do daemon local. Padrão: `44778` |
+| `GOLOGIN_TMPDIR` | Pasta para arquivos temporários de perfil |
 
-1. **CLI `gologin-local-agent-browser`** — interpreta os comandos e inicia o daemon automaticamente
-2. **Daemon local persistente** — inicia o Orbita local por meio do SDK oficial do Gologin, conecta-se ao endpoint websocket retornado com o `connectOverCDP` do Playwright e mantém a página ativa na memória
+O runtime local mantém sua configuração, a lista de perfis e o histórico de tarefas em `~/.gologin-local-agent-browser/`, a mesma pasta usada pela CLI antiga.
 
 ---
 
@@ -59,155 +93,75 @@ São duas partes:
 
 ```bash
 export GOLOGIN_TOKEN='your_token'
+export GOLOGIN_AGENT_BROWSER_RUNTIME=local
 
-# open a profile locally (visible window)
-gologin-local-agent-browser open https://example.com --profile your_profile_id
+# open a profile in a visible Orbita window
+gologin-agent-browser open https://example.com --profile your_profile_id
 
-# or headless
-gologin-local-agent-browser open https://example.com --profile your_profile_id --headless
+# or open it without a window
+gologin-agent-browser open https://example.com --profile your_profile_id --headless
 
-# read the page
-gologin-local-agent-browser snapshot
+# read the page and act on refs
+gologin-agent-browser snapshot -i
+gologin-agent-browser click @e3
 
-# interact
-gologin-local-agent-browser click @e3
-gologin-local-agent-browser type @e5 "search terms"
+gologin-agent-browser screenshot ./page.png
+gologin-agent-browser close
+```
 
-# save a screenshot
-gologin-local-agent-browser screenshot ./page.png
+`--visible` (ou `--headed`) e `--headless` (ou `--background`) escolhem o modo de janela para um único `open`. `open-visible` e `open-background` são atalhos para eles.
 
-# close
-gologin-local-agent-browser close
+---
+
+## Comandos de navegador
+
+Os comandos de sessão são os mesmos do runtime cloud: `snapshot`, `click`, `type`, `fill`, `find`, `wait`, `press`, `scroll`, `tabs`, `cookies`, `storage-export`, `eval`, `screenshot`, `pdf`, `upload` e outros. Veja a [referência de comandos](/pt/cli-tools/agent-browser#full-command-reference). Por enquanto, `back`, `forward` e `reload` funcionam apenas no runtime cloud.
+
+`find` localiza um elemento na página ativa e age sobre ele em uma única etapa. Use-o quando as refs ficarem desatualizadas em páginas dinâmicas:
+
+```bash
+gologin-agent-browser find placeholder "Search" fill "r/programming"
+gologin-agent-browser find role button click --name "Submit"
 ```
 
 ---
 
-## Gerenciamento de perfis
+## Comandos de perfil
 
-Gerencie os perfis do Gologin diretamente pela CLI.
+Estes comandos são executados no runtime local mesmo sem `--runtime local`:
 
 | Comando | Descrição |
 |---|---|
-| `profiles` | Lista perfis (locais, remotos ou todos) |
-| `profile <id>` | Mostra os detalhes de um perfil |
-| `profile-create <name>` | Cria um novo perfil |
-| `profile-import <id>` | Importa um perfil remoto para o ambiente local |
-| `profile-update <id>` | Atualiza as configurações de um perfil |
-| `profile-sync <id>` | Sincroniza um perfil local com a nuvem |
-| `profile-delete <id>` | Exclui um perfil |
+| `profiles` | Lista perfis: `--local`, `--remote` ou `--all`. Filtros: `--platform`, `--status`, `--tag`, `--search` |
+| `profile <id>` | Mostra um perfil |
+| `profile-create <name>` | Cria um perfil na sua conta Gologin e o adiciona à lista local |
+| `profile-import <id>` | Adiciona um perfil existente do Gologin à lista local |
+| `profile-update <id>` | Altera o modelo, o nome, as tags, as notas ou o proxy |
+| `profile-sync <id>` | Atualiza o registro local a partir da sua conta Gologin |
+| `profile-delete <id>` | Remove o perfil da lista local. Adicione `--remote` para excluí-lo também no Gologin |
 
-**Filtros para `profiles`:** `--local`, `--remote`, `--all`, `--platform <os>`, `--status <status>`, `--tag <tag>`, `--search <query>`, `--json`
+`profile-create` e `profile-update` aceitam um modelo por caso de uso e um proxy. `--proxy-country us` adiciona um proxy do Gologin; `--proxy-host` com `--proxy-port` define o seu próprio.
 
----
-
-## Modelos por caso de uso
-
-Crie perfis pré-configurados para fluxos de trabalho específicos:
-
-```bash
-gologin-local-agent-browser profile-create "My LinkedIn" --template linkedin
-gologin-local-agent-browser profile-create "Ad Account 1" --template ads
-gologin-local-agent-browser profile-create "Social Manager" --template smm
-```
-
-| Modelo | Finalidade |
+| Modelo | Para |
 |---|---|
-| `linkedin` | Perfil de geração de leads voltado ao aquecimento |
-| `ads` / `facebook` | Perfil de operador de anúncios com forte isolamento de contas |
-| `smm` | Perfil social de acesso compartilhado para transferência de cookies e armazenamento |
-| `scraping` | Perfil local voltado à automação |
-| `geo` | Perfil para testes de geolocalização |
-
----
-
-## Diagnóstico com o Doctor
-
-Verifique a integridade do perfil, a conectividade do proxy e a prontidão para cada caso de uso:
+| `linkedin` | Geração de leads ou recrutamento no LinkedIn, com ciclos curtos de aquecimento |
+| `ads` (alias `facebook`) | Contas de anúncios que exigem isolamento rigoroso e um proxy estável |
+| `smm` | Perfis de redes sociais compartilhados entre pessoas, com cookies e armazenamento estáveis |
+| `scraping` | Scraping renderizado repetido que reutiliza cookies |
+| `geo` | Testes geográficos e QA de mercados locais |
 
 ```bash
-# basic health check
-gologin-local-agent-browser doctor
+gologin-agent-browser profile-create "LinkedIn - Sales 1" --template linkedin --proxy-country us
 
-# check for a specific use case
-gologin-local-agent-browser doctor --use-case linkedin
-
-# check proxy on a profile
-gologin-local-agent-browser doctor --use-case linkedin --check-proxy your_profile_id
+# check Orbita, the token, the profile and its proxy for this use case
+gologin-agent-browser doctor --runtime local --use-case linkedin --check-proxy your_profile_id
 ```
 
 ---
 
-## Runbooks e execução em lote
+## Runbooks e tarefas em lote
 
-### Runbook único
-
-```bash
-gologin-local-agent-browser run ./warmup.json --profile your_profile_id --name reddit-warmup
-```
-
-Formato do runbook:
-
-```json
-{
-  "variables": { "url": "https://www.reddit.com" },
-  "steps": [
-    { "command": "open-visible", "args": ["${url}"] },
-    { "command": "wait", "args": [1500] },
-    { "command": "scroll", "args": ["down", 900] },
-    { "command": "wait", "args": [1000] },
-    { "command": "scroll", "args": ["down", 900] },
-    { "command": "close" }
-  ]
-}
-```
-
-### Execução em lote
-
-Execute um runbook em vários perfis em paralelo:
-
-```bash
-gologin-local-agent-browser batch ./warmup.json \
-  --targets ./targets.json \
-  --concurrency 5 \
-  --name short-warmup
-```
-
----
-
-## Jobs e histórico
-
-Acompanhe a execução de runbooks e lotes:
-
-```bash
-# list all jobs
-gologin-local-agent-browser jobs
-
-# filter by kind and status
-gologin-local-agent-browser jobs --kind batch --status failed
-
-# get details for a specific job
-gologin-local-agent-browser job job-20260311123000-ab12cd34
-```
-
----
-
-## Controles de visibilidade
-
-| Flag | Comportamento |
-|---|---|
-| `--visible` / `--headed` | Inicia o Orbita com uma janela visível |
-| `--background` / `--headless` | Executa sem janela visível |
-| Padrão | Usa a variável de ambiente `GOLOGIN_HEADLESS` ou o modo visível |
-
-Aliases: `open-visible` = `open --visible`, `open-background` = `open --background`
-
----
-
-## Casos de uso e exemplos
-
-### Aquecer contas novas
-
-Perfis de navegador novos parecem "frios": sem cookies, sem histórico de navegação, sem sessões armazenadas. Sites como Facebook, Google e LinkedIn sinalizam perfis frios. Aqueça-os navegando de forma natural antes de fazer qualquer ação importante.
+Um runbook é um arquivo JSON com uma lista de etapas da CLI:
 
 ```json
 {
@@ -217,155 +171,61 @@ Perfis de navegador novos parecem "frios": sem cookies, sem histórico de navega
     { "command": "wait", "args": [2000] },
     { "command": "scroll", "args": ["down", 500] },
     { "command": "wait", "args": [1500] },
-    { "command": "scroll", "args": ["down", 500] },
-    { "command": "wait", "args": [1000] },
     { "command": "close" }
   ]
 }
 ```
 
-Execute em 20 perfis em paralelo:
+Execute-o em um perfil ou em vários perfis em paralelo:
 
 ```bash
-gologin-local-agent-browser batch ./warmup.json \
-  --targets ./20-new-profiles.json \
-  --concurrency 5 --name daily-warmup
+gologin-agent-browser run ./warmup.json --profile your_profile_id
+gologin-agent-browser batch ./warmup.json --targets ./targets.json --concurrency 5 --name daily-warmup
 ```
 
-### Prospecção no LinkedIn com perfis persistentes
+`targets.json` lista os perfis:
 
-Cada conta do LinkedIn fica em um perfil próprio, com seus próprios cookies, proxy e fingerprint. Faça login uma vez e a sessão persiste ao longo dos dias.
-
-```bash
-# create a LinkedIn-optimized profile
-gologin-local-agent-browser profile-create "LinkedIn - Sales Rep 1" \
-  --template linkedin --proxy-country us
-
-# log in (visible mode to handle 2FA if needed)
-gologin-local-agent-browser open https://linkedin.com/login \
-  --profile profile_id --visible
-
-gologin-local-agent-browser snapshot
-gologin-local-agent-browser fill @e3 "email@company.com"
-gologin-local-agent-browser fill @e5 "password"
-gologin-local-agent-browser click @e7
-gologin-local-agent-browser wait 5000
-
-# verify login, then close — cookies are saved
-gologin-local-agent-browser snapshot
-gologin-local-agent-browser close
-
-# next day: reopen — already logged in
-gologin-local-agent-browser open https://linkedin.com/feed --profile profile_id
-gologin-local-agent-browser snapshot   # feed loads, no login needed
+```json
+{
+  "targets": [
+    { "name": "account-1", "profileId": "profile_id_1" },
+    { "name": "account-2", "profileId": "profile_id_2" }
+  ]
+}
 ```
 
-### Gerenciar várias contas de anúncios
-
-Gerencie contas de anúncios do Facebook e do Google com perfis isolados: cada conta tem seu próprio fingerprint, proxy e conjunto de cookies.
+Confira os resultados com `jobs` e `job <jobId>`. `--status` aceita `running`, `ok`, `partial` ou `failed`:
 
 ```bash
-# create profiles for each ad account
-gologin-local-agent-browser profile-create "FB Ads - Client A" --template ads --proxy-country us
-gologin-local-agent-browser profile-create "FB Ads - Client B" --template ads --proxy-country gb
-gologin-local-agent-browser profile-create "Google Ads - Client C" --template ads --proxy-country de
-
-# check proxy and fingerprint health before running
-gologin-local-agent-browser doctor --use-case ads --check-proxy profile_id_A
-```
-
-### Gerenciamento de redes sociais
-
-Várias contas de Instagram, TikTok ou Reddit, cada uma em seu próprio perfil. Publique conteúdo, interaja e monitore, tudo pela CLI.
-
-```bash
-# create an SMM profile
-gologin-local-agent-browser profile-create "Reddit Account 3" --template smm
-
-# open, browse, interact
-gologin-local-agent-browser open https://reddit.com --profile profile_id --visible
-gologin-local-agent-browser snapshot
-gologin-local-agent-browser find "search input"
-gologin-local-agent-browser type @found "r/programming"
-gologin-local-agent-browser press Enter
-gologin-local-agent-browser wait 2000
-gologin-local-agent-browser snapshot
-gologin-local-agent-browser close
-```
-
-### Operações de e-commerce e marketplaces
-
-Gerencie várias contas de vendedor na Amazon, no eBay e na Etsy, cada uma isolada em seu próprio perfil.
-
-```bash
-# batch warmup across all marketplace profiles
-gologin-local-agent-browser batch ./marketplace-warmup.json \
-  --targets ./all-seller-profiles.json \
-  --concurrency 3 --name marketplace-warmup
-
-# check which jobs succeeded
-gologin-local-agent-browser jobs --kind batch --status completed
-gologin-local-agent-browser jobs --kind batch --status failed
-```
-
-### Testes de geolocalização do seu próprio produto
-
-Veja como o seu site aparece em diferentes países: os preços são exibidos corretamente? Os redirecionamentos geográficos funcionam?
-
-```bash
-# create profiles for each test region
-gologin-local-agent-browser profile-create "Test US" --template geo --proxy-country us
-gologin-local-agent-browser profile-create "Test DE" --template geo --proxy-country de
-gologin-local-agent-browser profile-create "Test JP" --template geo --proxy-country jp
-
-# open each, screenshot, compare
-gologin-local-agent-browser open https://yoursite.com --profile us_id
-gologin-local-agent-browser screenshot ./geo-us.png
-gologin-local-agent-browser close
-
-gologin-local-agent-browser open https://yoursite.com --profile de_id
-gologin-local-agent-browser screenshot ./geo-de.png
-gologin-local-agent-browser close
+gologin-agent-browser jobs --kind batch --status failed
 ```
 
 ---
 
-## Comandos de interação com o navegador
+<h2 id="migrate-from-local-agent-browser-cli">Migrar da Local Agent Browser CLI</h2>
 
-Todos os comandos de navegador são os mesmos do [Agent Browser CLI](/pt/cli-tools/agent-browser) na nuvem: `snapshot`, `click`, `type`, `fill`, `find`, `tabs`, `cookies`, `storage-export`, `storage-import`, `eval`, `screenshot`, `pdf`, `back`, `forward`, `reload`, `wait`, `press`, `scroll`, `upload` e outros.
+```bash
+npm uninstall -g gologin-local-agent-browser-cli
+npm install -g gologin-agent-browser-cli
+```
 
-Consulte a [referência de comandos do Agent Browser CLI](/pt/cli-tools/agent-browser#refer%C3%AAncia-completa-de-comandos) para ver a lista completa.
-
----
-
-## Aliases
-
-| Alias | Equivale a |
-|---|---|
-| `goto`, `navigate` | `open` |
-| `history` | `jobs` |
-| `open-visible` | `open --visible` |
-| `open-background` | `open --background` |
-| `tabnew` | `tabopen` |
-| `tabswitch` | `tabfocus` |
-| `js` | `eval` |
-| `key` | `press` |
-| `scrollinto` | `scrollintoview` |
-| `quit`, `exit` | `close` |
+- Os scripts que chamam `gologin-local-agent-browser` continuam funcionando. O comando agora vem de `gologin-agent-browser-cli`.
+- Os perfis, a configuração e o histórico de tarefas em `~/.gologin-local-agent-browser/` permanecem onde estão.
+- Para agentes de IA, instale a [skill Agent Browser](/pt/api-reference/ai-integrations/ai-skills). Ela cobre os dois runtimes, e a skill separada Local Agent Browser está obsoleta.
 
 ---
 
-## Veja também
+## Relacionado
 
-- [Agent Browser CLI](/pt/cli-tools/agent-browser) — versão com Cloud Browser
-- [Gologin Web Access CLI](/pt/cli-tools/web-access) — CLI unificada (scraping + navegador)
-- [AI Skills](/pt/api-reference/ai-integrations/ai-skills) — skills plug-and-play para o Claude Code
-- [Node.js SDK](/pt/api-reference/sdks/nodejs-sdk) — gerenciamento programático de perfis
+- [Agent Browser CLI](/pt/cli-tools/agent-browser) — referência completa de comandos e o runtime cloud
+- [Gologin Web Access CLI](/pt/cli-tools/web-access) — comandos de scraping e de navegador em uma única CLI
+- [AI Skills](/pt/api-reference/ai-integrations/ai-skills) — skills para Claude Code e outros agentes
+- [Node.js SDK](/pt/api-reference/sdks/nodejs-sdk) — execute perfis a partir do seu próprio código
 
-<Card title="Pacote npm" icon="npm" href="https://www.npmjs.com/package/gologin-local-agent-browser-cli">
-  gologin-local-agent-browser-cli
+<Card title="Pacote npm" icon="npm" href="https://www.npmjs.com/package/gologin-agent-browser-cli">
+  gologin-agent-browser-cli
 </Card>
 
-<Card title="Código-fonte" icon="github" href="https://github.com/GologinLabs/gologin-local-agent-browser">
-  GologinLabs/gologin-local-agent-browser
+<Card title="Código-fonte" icon="github" href="https://github.com/GologinLabs/agent-browser">
+  GologinLabs/agent-browser
 </Card>

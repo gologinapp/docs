@@ -2,11 +2,23 @@
 title: "Быстрый старт"
 ---
 
-Это руководство поможет вам подготовиться к работе с API Gologin. Мы расскажем, как начать работу с одним из наших API-клиентов и как отправить первый запрос к API. Также вы узнаете, где найти всю информацию, необходимую для полноценного использования нашего мощного REST API.
+Это руководство поможет вам настроить всё необходимое и начать работу с API Gologin. Мы расскажем, как начать работу с одним из наших API-клиентов и как выполнить первый запрос к API. Также вы узнаете, где найти всю информацию, которая понадобится, чтобы в полной мере использовать возможности нашего REST API.
 
 <Note>
-  Прежде чем отправлять запросы к API Gologin, нужно получить API-ключ в личном кабинете. Он находится в разделе [Настройки » API](https://app.gologin.com/personalArea/TokenApi).
+  Чтобы отправлять запросы к API Gologin, вам понадобится API-токен.
+  В приложении Gologin откройте раздел [API & MCP](https://app.gologin.com/personalArea/TokenApi), перейдите на вкладку **API** и нажмите **Новый токен**.
 </Note>
+
+## Выполните первый запрос
+
+Передавайте токен в заголовке `Authorization` в каждом запросе к `https://api.gologin.com`. Этот запрос возвращает список профилей в вашем аккаунте:
+
+```bash
+curl https://api.gologin.com/browser/v2 \
+  -H "Authorization: Bearer YOUR_API_TOKEN"
+```
+
+В ответе приходит массив `profiles` и поле `allProfilesCount` — общее количество профилей. На одной странице возвращается до 30 профилей: чтобы получить следующую страницу, добавьте к URL `?page=2`. Все параметры описаны в разделе [Получить все профили](https://gologin.com/docs/api-reference/profile/get-all-profiles).
 
 ## Первый анонимный запрос для скрапинга
 
@@ -139,11 +151,11 @@ GL_API_TOKEN=[YOUR_GOLOGIN_API_TOKEN] python3 filename.py
 
 ## Что дальше?
 
-Отлично, вы настроили API-клиент и отправили первый запрос к API. Вот несколько ссылок, которые могут пригодиться при дальнейшей работе с API Gologin:
+Отлично, вы настроили API-клиент и выполнили первый запрос к API. Вот несколько ссылок, которые пригодятся вам при дальнейшем изучении API Gologin:
 
-- [Получите API-ключ в разделе Настройки \> API](https://app.gologin.com/personalArea/TokenApi)
+- [Создайте API-токен в разделе API & MCP](https://app.gologin.com/personalArea/TokenApi)
 - [Gologin Web Access CLI](/ru/cli-tools/web-access) — единый CLI для скрапинга и автоматизации браузера (без написания кода)
-- [Agent Browser CLI](/ru/cli-tools/agent-browser) — CLI облачного браузера, созданный для ИИ-агентов
-- [Local Agent Browser CLI](/ru/cli-tools/local-agent-browser) — локальный CLI на базе Orbita с профилями и ранбуками
+- [Agent Browser CLI](/ru/cli-tools/agent-browser) — браузерный CLI для ИИ-агентов, работает в облаке или на вашем компьютере
+- [Agent Browser CLI: локальная среда выполнения](/ru/cli-tools/local-agent-browser) — локальные профили Orbita, runbook-сценарии и пакетные задачи
 - [AI Skills](/ru/api-reference/ai-integrations/ai-skills) — готовые навыки для Claude Code
 - [MCP Server](/ru/api-reference/ai-integrations/mcp-server) — управление профилями через диалог с ИИ

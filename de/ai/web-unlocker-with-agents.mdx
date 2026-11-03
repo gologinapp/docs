@@ -3,17 +3,17 @@ title: "Web Unlocker mit KI-Agenten verwenden"
 description: "So nutzen Sie Gologin Web Unlocker als Scraping-Tool für KI-Agenten und LLM-Pipelines"
 ---
 
-Gologin Web Unlocker ist eine Scraping-API, die für jede URL vollständig gerendertes HTML zurückgibt. Für KI-Agenten bedeutet das zuverlässigen Webzugriff ohne Browser-Orchestrierung – ein HTTP-Aufruf pro Seite.
+Gologin Web Unlocker ist eine Scraping-API, die für jede beliebige URL vollständig gerendertes HTML zurückgibt. Für KI-Agenten bedeutet das zuverlässigen Webzugriff ohne Browser-Orchestrierung – ein HTTP-Aufruf pro Seite.
 
 <Tip>
-  **Sie möchten keinen Code schreiben?** Nutzen Sie die [Web Access CLI](/de/cli-tools/web-access) oder den [Scraping Skill](/de/api-reference/ai-integrations/ai-skills), um Ihrem Agenten sofort Scraping-Funktionen zu geben.
+  **Sie möchten keinen Code schreiben?** Nutzen Sie die [Web Access CLI](/de/cli-tools/web-access) oder den [Scraping Skill](/de/api-reference/ai-integrations/ai-skills), um Ihrem Agenten Scraping-Funktionen sofort einsatzbereit bereitzustellen.
 </Tip>
 
 ---
 
 ## Seiteninhalte an ein LLM übergeben
 
-Rufen Sie eine Seite ab und übergeben Sie das HTML an ein Modell für Extraktion, Zusammenfassung oder Analyse – ganz ohne Parsing-Logik.
+Scrapen Sie eine Seite und übergeben Sie das HTML an ein Modell, um Daten zu extrahieren, Inhalte zusammenzufassen oder zu analysieren – ganz ohne eigene Parsing-Logik.
 
 ### Python + Claude
 
@@ -29,8 +29,8 @@ html = requests.get(
 
 client = anthropic.Anthropic()
 message = client.messages.create(
-    model="claude-sonnet-4-5-20250514",
-    max_tokens=1024,
+    model="claude-sonnet-5-5",
+    max_tokens=16000,
     messages=[
         {
             "role": "user",
@@ -39,7 +39,8 @@ message = client.messages.create(
     ]
 )
 
-print(message.content[0].text)
+# the response can also contain thinking blocks, so print only the text
+print("".join(block.text for block in message.content if block.type == "text"))
 ```
 
 ### JavaScript + Claude
@@ -55,8 +56,8 @@ const html = await fetch(
 
 const client = new Anthropic();
 const message = await client.messages.create({
-  model: "claude-sonnet-4-5-20250514",
-  max_tokens: 1024,
+  model: "claude-sonnet-5-5",
+  max_tokens: 16000,
   messages: [
     {
       role: "user",
@@ -65,12 +66,13 @@ const message = await client.messages.create({
   ],
 });
 
-console.log(message.content[0].text);
+// the response can also contain thinking blocks, so print only the text
+console.log(message.content.find((block) => block.type === "text")?.text);
 ```
 
 ---
 
-## Ihrem Agenten ein Scrape-Tool geben
+## Ihrem Agenten ein Scrape-Tool bereitstellen
 
 Definieren Sie ein `scrape`-Tool auf Basis von Web Unlocker. Der Agent entscheidet selbst, wann er eine Seite abruft und welche URL er scrapt.
 
@@ -107,14 +109,14 @@ messages = [
 
 while True:
     response = client.messages.create(
-        model="claude-sonnet-4-5-20250514",
-        max_tokens=1024,
+        model="claude-sonnet-5-5",
+        max_tokens=16000,
         tools=tools,
         messages=messages
     )
 
-    if response.stop_reason == "end_turn":
-        print(response.content[0].text)
+    if response.stop_reason != "tool_use":
+        print("".join(block.text for block in response.content if block.type == "text"))
         break
 
     tool_results = []
@@ -193,10 +195,10 @@ Alle Befehle finden Sie in der [Web Access CLI-Referenz](/de/cli-tools/web-acces
 
 | Muster | Vorgehen |
 |---|---|
-| Recherche-Agent | Agent ruft das `scrape`-Tool auf → liest Seiten → fasst Ergebnisse zusammen |
-| Preisüberwachung | `batch-scrape` auf Produktseiten nach Zeitplan → Vergleich mit dem vorherigen Durchlauf |
-| Wettbewerbsanalyse | `crawl` auf Websites von Mitbewerbern → Übergabe an ein LLM zur Analyse |
-| Lead-Anreicherung | `scrape-json` auf Unternehmensseiten → strukturierte Daten extrahieren |
+| Recherche-Agent | Der Agent ruft das `scrape`-Tool auf → liest Seiten → fasst die Ergebnisse zusammen |
+| Preisüberwachung | `batch-scrape` für Produktseiten nach Zeitplan → Vergleich mit dem vorherigen Durchlauf |
+| Wettbewerbsanalyse | `crawl` von Websites der Konkurrenz → Übergabe an ein LLM zur Analyse |
+| Lead-Anreicherung | `scrape-json` für Unternehmensseiten → strukturierte Daten extrahieren |
 | Content-Aggregation | `search` + `scrape-text` → kuratierte Feeds erstellen |
 
 ---

@@ -1,19 +1,19 @@
 ---
 title: "在 AI 智能体中使用 Web Unlocker"
-description: "如何将 Gologin Web Unlocker 用作 AI 智能体和 LLM 流水线的网页抓取工具"
+description: "如何将 Gologin Web Unlocker 用作 AI 智能体和 LLM 流水线的抓取工具"
 ---
 
-Gologin Web Unlocker 是一个抓取 API，可为任意 URL 返回完整渲染后的 HTML。对于 AI 智能体来说，这意味着无需编排浏览器，就能稳定地访问网页——每个页面只需一次 HTTP 调用。
+Gologin Web Unlocker 是一个抓取 API，可以为任意 URL 返回完整渲染后的 HTML。对于 AI 智能体来说，这意味着无需编排浏览器即可稳定访问网页——每个页面只需一次 HTTP 调用。
 
 <Tip>
-  **不想写代码？** 使用 [Web Access CLI](/zh/cli-tools/web-access) 或 [Scraping Skill](/zh/api-reference/ai-integrations/ai-skills)，即可让您的智能体开箱即用地获得抓取能力。
+  **不想写代码？** 使用 [Web Access CLI](/zh/cli-tools/web-access) 或 [Scraping Skill](/zh/api-reference/ai-integrations/ai-skills)，即可让你的智能体开箱即用地获得抓取能力。
 </Tip>
 
 ---
 
 ## 将页面内容输入 LLM
 
-抓取页面后，将 HTML 交给模型进行信息提取、摘要或分析——无需编写任何解析逻辑。
+抓取页面后，将 HTML 交给模型进行信息提取、摘要或分析，无需编写任何解析逻辑。
 
 ### Python + Claude
 
@@ -29,8 +29,8 @@ html = requests.get(
 
 client = anthropic.Anthropic()
 message = client.messages.create(
-    model="claude-sonnet-4-5-20250514",
-    max_tokens=1024,
+    model="claude-sonnet-5-5",
+    max_tokens=16000,
     messages=[
         {
             "role": "user",
@@ -39,7 +39,8 @@ message = client.messages.create(
     ]
 )
 
-print(message.content[0].text)
+# the response can also contain thinking blocks, so print only the text
+print("".join(block.text for block in message.content if block.type == "text"))
 ```
 
 ### JavaScript + Claude
@@ -55,8 +56,8 @@ const html = await fetch(
 
 const client = new Anthropic();
 const message = await client.messages.create({
-  model: "claude-sonnet-4-5-20250514",
-  max_tokens: 1024,
+  model: "claude-sonnet-5-5",
+  max_tokens: 16000,
   messages: [
     {
       role: "user",
@@ -65,14 +66,15 @@ const message = await client.messages.create({
   ],
 });
 
-console.log(message.content[0].text);
+// the response can also contain thinking blocks, so print only the text
+console.log(message.content.find((block) => block.type === "text")?.text);
 ```
 
 ---
 
 ## 为智能体提供抓取工具
 
-定义一个由 Web Unlocker 驱动的 `scrape` 工具。智能体会自行决定何时获取页面，以及要抓取哪个 URL。
+定义一个由 Web Unlocker 支持的 `scrape` 工具。智能体会自行决定何时获取页面以及要抓取的 URL。
 
 ```python
 import requests
@@ -107,14 +109,14 @@ messages = [
 
 while True:
     response = client.messages.create(
-        model="claude-sonnet-4-5-20250514",
-        max_tokens=1024,
+        model="claude-sonnet-5-5",
+        max_tokens=16000,
         tools=tools,
         messages=messages
     )
 
-    if response.stop_reason == "end_turn":
-        print(response.content[0].text)
+    if response.stop_reason != "tool_use":
+        print("".join(block.text for block in response.content if block.type == "text"))
         break
 
     tool_results = []
@@ -131,7 +133,7 @@ while True:
     messages.append({"role": "user", "content": tool_results})
 ```
 
-智能体会自行决定何时抓取以及获取哪个 URL。Web Unlocker 负责完成页面获取——包括 JavaScript 渲染、绕过反爬机制、代理轮换和验证码求解。
+智能体会自行决定何时抓取以及抓取哪个 URL。Web Unlocker 负责完成页面获取——包括 JavaScript 渲染、反机器人检测绕过、代理轮换和验证码破解。
 
 ---
 
@@ -166,7 +168,7 @@ const results = await client.batchScrape(
 
 ## 使用 CLI
 
-对于需要调用 shell 命令的智能体（例如 Claude Code），CLI 是最简单的方式：
+对于会调用 shell 命令的智能体（如 Claude Code），CLI 是最简单的方式：
 
 ```bash
 # plain text — good for LLM context
@@ -191,19 +193,19 @@ gologin-web-access extract https://example.com --schema ./schema.json
 
 ## 常见智能体模式
 
-| 模式 | 实现方式 |
+| 模式 | 方式 |
 |---|---|
-| 调研智能体 | 智能体调用 `scrape` 工具 → 阅读页面 → 综合整理结论 |
+| 研究智能体 | 智能体调用 `scrape` 工具 → 阅读页面 → 综合整理发现 |
 | 价格监控 | 定时对商品页面执行 `batch-scrape` → 与上一次结果对比 |
-| 竞品情报 | 使用 `crawl` 爬取竞品网站 → 交给 LLM 分析 |
-| 线索补全 | 使用 `scrape-json` 抓取公司页面 → 提取结构化数据 |
-| 内容聚合 | `search` + `scrape-text` → 构建精选内容源 |
+| 竞品情报 | `crawl` 竞争对手网站 → 交给 LLM 分析 |
+| 线索补全 | 对公司页面执行 `scrape-json` → 提取结构化数据 |
+| 内容聚合 | `search` + `scrape-text` → 构建精选内容流 |
 
 ---
 
 ## 相关内容
 
-- [什么是 Web Unlocker](/zh/what-is-web-unlocker) — 产品概述与定价
+- [什么是 Web Unlocker](/zh/what-is-web-unlocker) — 产品概览与定价
 - [Web Unlocker SDK](/zh/scraping-api-sdk-and-cli) — TypeScript SDK 参考
-- [Web Access CLI](/zh/cli-tools/web-access) — 统一 CLI
+- [Web Access CLI](/zh/cli-tools/web-access) — 统一的 CLI
 - [AI Skills](/zh/api-reference/ai-integrations/ai-skills) — 适用于 Claude Code 的即插即用技能

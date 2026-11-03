@@ -10,8 +10,8 @@ Você envia uma URL, recebe o HTML/texto renderizado da página e o processa no 
 
 - Um único endpoint para qualquer URL de destino
 - Autenticação por chave de API, sem necessidade de orquestrar navegadores
-- Resposta focada em HTML, que se encaixa nos parsers já existentes
-- Ideal para ETL, monitoramento, ingestão para IA e pipelines de dados
+- HTML por padrão, ou Markdown ou JSON sob demanda, pronto para os parsers que você já usa
+- Ideal para ETL, monitoramento, ingestão de dados para IA e pipelines de dados
 
 ## Endpoint
 
@@ -19,7 +19,7 @@ Você envia uma URL, recebe o HTML/texto renderizado da página e o processa no 
 
 ## Autenticação
 
-Envie sua chave de API nos headers:
+Envie sua chave de API nos cabeçalhos:
 
 ```http
 apikey: <API_KEY>
@@ -30,6 +30,7 @@ apikey: <API_KEY>
 | Nome | Onde | Tipo | Obrigatório | Descrição |
 |---|---|---|---|---|
 | `url` | query | string (URL absoluta) | sim | URL de destino a ser extraída |
+| `format` | query | string | não | Formato da resposta: `html` (padrão), `markdown` ou `json` |
 
 ## Início rápido
 
@@ -70,24 +71,34 @@ console.log(response.status, html.slice(0, 500));
 
 ## Comportamento da resposta
 
-Atualmente, o corpo da resposta é **HTML/texto renderizado bruto**.
+Por padrão, o corpo da resposta é o **HTML renderizado bruto** da página. Com `format=markdown`, o corpo é Markdown. Com `format=json`, o corpo é um objeto JSON:
 
-- `200` -> sucesso, o corpo contém o HTML/texto da página
-- `401` / `403` -> chave de API inválida ou ausente
-- `422` -> `url` inválida ou ausente
-- `429` -> limite de requisições atingido
-- `500+` -> erro temporário do lado do servidor
+```json
+{
+  "success": true,
+  "data": {
+    "url": "https://example.com",
+    "metadata": {
+      "response_time_ms": 297,
+      "status_code": 200
+    },
+    "html": "<!DOCTYPE html><html lang=\"en\">..."
+  }
+}
+```
 
-## Orientações para novas tentativas
+Códigos de status:
+
+- `200` -> sucesso, o corpo contém a página no formato solicitado
+- `400` -> requisição inválida, por exemplo, quando `url` não foi informada; corpo: `{"success":false,"error":"Request failed"}`
+- `401` -> o cabeçalho `apikey` está ausente; corpo: `{"message":"Missing API key in request"}`
+
+## Orientações sobre novas tentativas
 
 Tente novamente com backoff exponencial nos seguintes casos:
 
 - erros de rede
 - `408`, `429`, `500`, `502`, `503`, `504`
-
-## Observação sobre o escopo
-
-O endpoint público atual é focado em HTML. Não presuma a existência de outros endpoints de backend (por exemplo, captura de tela, rastreamento, busca ou uso), a menos que estejam explicitamente documentados e habilitados para a sua conta.
 
 ## SDK oficial para Node.js
 
@@ -130,11 +141,11 @@ new WebUnlocker({
 
 ### Métodos derivados no SDK (a partir do HTML retornado)
 
-Eles **não são endpoints de backend separados**; são derivados no SDK a partir do HTML retornado pela API:
+Estes **não são endpoints separados no backend**; eles são derivados no SDK a partir do HTML retornado pela API. O SDK envia apenas o parâmetro `url`, e não `format`, portanto essa saída pode ser diferente da resposta de `format=markdown` ou `format=json` da própria API:
 
 - `scrapeText(url)` -> texto simples
 - `scrapeMarkdown(url)` -> markdown
-- `scrapeJSON(url)` -> metadados estruturados (`title`, `meta`, `links`, `headings`)
+- `scrapeJSON(url)` -> metadados estruturados (`title`, `description`, `canonical`, `meta`, `headings`, `links`)
 - `batchScrape(urls, { concurrency })` -> auxiliar para várias chamadas de scrape
 
 ### Erros tipados
@@ -150,7 +161,7 @@ Mapeamento:
 
 - `401` / `403` -> `AuthenticationError`
 - `429` -> `RateLimitError`
-- `500+` -> `APIError`
+- `500+` e outros status que não sejam 2xx (por exemplo, `400`) -> `APIError`
 - timeout/abort -> `TimeoutError`
 - falha de fetch/rede -> `NetworkError`
 
@@ -206,7 +217,7 @@ gologin-web-access snapshot
 gologin-web-access click e3
 ```
 
-Veja a [Gologin Web Access CLI](/pt/cli-tools/web-access) para a referência completa.
+Consulte a [CLI Gologin Web Access](/pt/cli-tools/web-access) para ver a referência completa.
 
 ## Documentação relacionada
 

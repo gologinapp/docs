@@ -1,111 +1,109 @@
 ---
 title: "AIエージェントでCloud Browserを使う"
-description: "Puppeteer/Playwrightを使って、Gologin Cloud BrowserをAIエージェント向けのリモートブラウザ実行環境として利用する方法"
+description: "Puppeteer/Playwrightを使って、Gologin Cloud BrowserをAIエージェント用のリモートブラウザ実行環境として利用する方法"
 ---
 
 Gologin Cloud Browserは、AIエージェント向けの**リモートブラウザ実行環境**として利用できます。
-エージェント(Claude、Codex、その他のツール呼び出し対応エージェント)は、お客様のコードを介してCloud Browserセッションに接続し、ページ移動、クリック、入力、データ抽出といった実際のブラウザ操作を行えます。
+エージェント（Claude、Codex、またはツール呼び出しに対応した任意のエージェント）が、お客様のコードを介してCloud Browserセッションに接続し、ページ遷移、クリック、文字入力、データ抽出といった実際のブラウザ操作を実行できます。
 
 これにより、次のようなエージェントのワークフローが可能になります。
-- JavaScriptのレンダリングと、実際のユーザー操作(クリック、スクロール、フォーム入力)
-- プロファイルによる永続的なセッション(Cookie/ストレージ)
-- プロキシ経由の接続と、再現性のあるブラウザ設定
+- JavaScriptのレンダリングや、実際のユーザー操作（クリック、スクロール、フォーム入力）
+- プロファイルによる永続的なセッション（Cookie/ストレージ）
+- プロキシ経由の通信と、再現性のあるブラウザ設定
 
 <Tip>
-  **ツールを一から作りたくない場合は、** [Agent Browser CLI](/ja/cli-tools/agent-browser)または[AI Skills](/ja/api-reference/ai-integrations/ai-skills)をご利用ください。すぐに使えるエージェント機能が揃っており、Puppeteer/Playwrightのコードは不要です。
+  **ツールを一から作りたくない場合は、** [Agent Browser CLI](/ja/cli-tools/agent-browser) または [AI Skills](/ja/api-reference/ai-integrations/ai-skills) をご利用ください。すぐに使えるエージェント機能が揃っており、Puppeteer/Playwrightのコードは不要です。
 </Tip>
 
-> 注意: このページでは、技術的な連携パターンを説明しています。対象サイトのルールを変更するものではなく、アクセスを保証するものでもありません。
+> 注: このページでは、技術的な連携パターンについて説明しています。対象ウェブサイトのルールを変更するものではなく、アクセスを保証するものでもありません。
 
 ## 連携パターンの概要
 
-AIエージェントは通常、ブラウザに直接「接続」することはありません。代わりに、次の流れで動作します。
+AIエージェントは通常、ブラウザに「直接接続」するわけではありません。代わりに、次の流れで動作します。
 
-1. 次に何をするかを計画する
-2. お客様が公開したツール/関数を呼び出す(ツール呼び出し)
+1. 次に行うことを計画する
+2. お客様が公開したツール/関数を呼び出す（ツール呼び出し）
 3. 構造化された結果を読み取り、処理を続ける
 
-Gologin Cloud Browserを使う場合、お客様のツール/関数が行う処理は次のとおりです。
+Gologin Cloud Browserを使う場合、ツール/関数は次の処理を行います。
 
-1. クラウドセッションに接続する(トークン+任意のプロファイル)
-2. ブラウザ操作を実行する(ページ移動、クリック、データ抽出、スクリーンショット)
+1. クラウドセッションに接続する（トークン＋任意のプロファイル）
+2. ブラウザ操作を実行する（ページ遷移、クリック、抽出、スクリーンショット）
 3. 構造化された結果をエージェントに返す
 
 ## 推奨アーキテクチャ
 
-**AIエージェント(Claude / Codex / その他)**
--> お客様の**ツールサーバー**(Node/Pythonサービス)を呼び出す
+**AIエージェント（Claude / Codex / その他）**
+-> お客様の**ツールサーバー**（Node/Pythonサービス）を呼び出す
 -> ツールサーバーが**Playwright/Puppeteer**を使用する
--> **Gologin Cloud Browser**(リモートエンドポイント)に接続する
--> 結果(テキスト/JSON/スクリーンショットの参照)をエージェントに返す
+-> **Gologin Cloud Browser**（リモートエンドポイント）に接続する
+-> 結果（テキスト/JSON/スクリーンショットの参照）をエージェントに返す
 
-このパターンを使う理由:
-- Gologinトークンをサーバー側に保持できる
+このパターンを採用する理由:
+- Gologinのトークンをサーバー側だけで管理できる
 - レート制限、リトライ、ログ記録、安全性チェックを適用できる
 - プロファイルとプロキシを一貫して再利用できる
 
 ## 前提条件
 
-### 1) APIトークン(サーバー側)
+### 1) APIトークン（サーバー側）
 
-ダッシュボードでトークンを生成します。
-`個人エリア -> APIトークン`
-https://app.gologin.com/personalArea/TokenApi
+Gologinアプリでトークンを作成します: [API & MCP](https://app.gologin.com/personalArea/TokenApi) → **API** → **新しいトークン**。
 
 > トークンは機密情報として扱ってください。クライアント側のコードで公開しないでください。
 
-### 2) (推奨)REST APIによるプロファイルとプロキシの管理
+### 2)（推奨）REST APIによるプロファイルとプロキシの管理
 
-Cloud Browserは実行/ランタイム層です。プロファイルの管理(作成/更新)やプロキシの設定には、REST APIを使用します。
+Cloud Browserは実行（ランタイム）層です。プロファイルの管理（作成/更新）やプロキシの設定には、REST APIを使用します。
 - Profiles API: https://gologin.com/docs/api-reference/profile
 - Proxy API: https://gologin.com/docs/api-reference/proxy
 
-> **重要:** プロファイルのプロキシが誤って設定されている、または到達できない場合、クラウドブラウザのセッションはプロキシのタイムアウトエラーで起動に失敗します。接続する前にプロキシに到達できることを確認するか、テスト時はプロキシモードを`none`に設定してください。
+> **重要:** プロファイルのプロキシ設定に誤りがある場合や、プロキシに到達できない場合、クラウドブラウザのセッションはプロキシのタイムアウトエラーで起動に失敗します。接続する前にプロキシに到達できることを確認するか、テスト時はプロキシモードを `none` に設定してください。
 
 ## 2種類のURLの違い
 
-Gologinでは、Cloud Browser向けに2種類のURLを提供しています。用途が異なります。
+Gologinは、Cloud Browser用に2種類のURLを提供しています。それぞれ用途が異なります。
 
-| URL | 用途 | 使いどころ |
+| URL | 用途 | 使用場面 |
 |-----|----------|---------|
 | `https://cloudbrowser.gologin.com/connect?token=...&profile=...` | CDPエンドポイント | Puppeteer/Playwrightによる自動化 |
-| `https://cloudbrowser.gologin.com/browsers/{profileId}/{sessionId}/` | ストリーミングWeb UI(Live View) | ビジュアルなデバッグ専用 |
+| `https://cloudbrowser.gologin.com/browsers/{profileId}/{sessionId}/` | ストリーミングWeb UI（ライブビュー） | 視覚的なデバッグ専用 |
 
-**Puppeteer/Playwrightで使えるのは`/connect`エンドポイントのみです。** Live ViewのURLはHTMLのストリーミング画面を返すため、`browserWSEndpoint`として使用できません。
+**Puppeteer/Playwrightで使えるのは `/connect` エンドポイントだけです。** ライブビューのURLはHTMLのストリーミングインターフェースを返すため、`browserWSEndpoint` として使用することはできません。
 
 ## クラウドセッションへの接続
 
-標準のCloud Browserエンドポイントを使用します。
+Cloud Browserの標準エンドポイントを使用します。
 
 ```
 https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}
 ```
 
-- `token` — Gologin APIトークン
-- `profile` — プロファイルID(任意)
-  - 永続的なセッションや管理された設定が必要な場合は、`profileId`を指定します
-  - `profile`を省略すると、セッション用に新しいプロファイルが作成される場合があります
+- `token` — GologinのAPIトークン
+- `profile` — プロファイルID（任意）
+  - 永続的なセッションや制御された設定が必要な場合は、`profileId` を指定します
+  - `profile` を省略すると、セッション用に新しいプロファイルが作成されることがあります
 
-`/connect`エンドポイントはブラウザセッションを自動的に開始します。接続前に別途APIを呼び出す必要はありません。
+`/connect` エンドポイントはブラウザセッションを自動的に開始します。接続前に別途APIを呼び出す必要はありません。
 
-実装例(Puppeteer/Playwright):
+実装例（Puppeteer/Playwright）:
 https://gologin.com/docs/api-reference/cloud-browser/getting-started
 
-## 既製のCLIツールとカスタムツール
+## 既製のCLIツールとカスタムツールの比較
 
-エージェントにブラウザへのアクセスを与える方法は2つあります。
+エージェントにブラウザへのアクセス手段を与える方法は2つあります。
 
-### オプションA: GologinのCLIツールを使う(ほとんどの場合に推奨)
+### オプションA: GologinのCLIツールを使う（ほとんどの場合に推奨）
 
-- **[Agent Browser CLI](/ja/cli-tools/agent-browser)** — `open`、`snapshot`、`click`、`type`、`fill`、`screenshot`、`close`に加え、さらに30以上のコマンドを備えた既製のCLIです。永続デーモン、参照(ref)ベースの操作、エージェントのループ向けに設計されたコンパクトな出力を備えています。
-- **[Web Access CLI](/ja/cli-tools/web-access)** — スクレイピング(Web Unlocker)とブラウザ操作を1つにまとめた統合CLIです。
-- **[AI Skills](/ja/api-reference/ai-integrations/ai-skills)** — Claude Code向けのプラグアンドプレイのスキルで、すべてを自動的に処理します。
+- **[Agent Browser CLI](/ja/cli-tools/agent-browser)** — `open`、`snapshot`、`click`、`type`、`fill`、`screenshot`、`close` に加え、さらに30以上のコマンドを備えた既製のCLIです。常駐デーモン、参照（ref）ベースの操作、エージェントのループ処理向けにコンパクトにまとめた出力を備えています。
+- **[Web Access CLI](/ja/cli-tools/web-access)** — スクレイピング（Web Unlocker）とブラウザ操作を1つにまとめた統合CLIです。
+- **[AI Skills](/ja/api-reference/ai-integrations/ai-skills)** — Claude Code向けのプラグアンドプレイ型スキルで、すべて自動的に処理します。
 
-### オプションB: Puppeteer/Playwrightでカスタムツールを作る
+### オプションB: Puppeteer/Playwrightでカスタムツールを作成する
 
-すべてを自分で制御したい場合は、Playwright/Puppeteerを包む小さなラッパー群を実装し、ツールとして公開します。
+完全な制御が必要な場合は、Playwright/Puppeteerを包む小さなラッパーをいくつか実装し、ツールとして公開します。
 
-通常は、最小限の次のセットで十分です。
+通常は、次の最小構成で十分です。
 - `open_url(url)`
 - `click(selector)`
 - `type(selector, text)`
@@ -114,13 +112,13 @@ https://gologin.com/docs/api-reference/cloud-browser/getting-started
 - `screenshot()`
 - `close_session()`
 
-これらはGologin独自のAPIではなく、標準のPlaywright/Puppeteerのコマンドを薄くラップしたもので、Cloud Browserセッションに対して実行されます。
+これらはGologin独自のAPIではありません。Cloud Browserセッションに対して実行される、標準的なPlaywright/Puppeteerコマンドの薄いラッパーです。
 
 ## 重要: ツール呼び出し間のセッション管理
 
-エージェントのワークフローにおいて、これは最も重要な設計上のポイントです。
+これは、エージェントのワークフローにおいて最も重要な設計上の課題です。
 
-AIエージェントは、複数のステップにわたって順番にツールを呼び出します。各ツール呼び出しでは、**同じブラウザ接続**を再利用する必要があります。ツールを呼び出すたびに新しく`puppeteer.connect()`を実行すると、ステップ間でCookie、ローカルストレージ、ページの状態が失われます。
+AIエージェントは、複数のステップにわたって順番にツールを呼び出します。各ツール呼び出しでは**同じブラウザ接続**を再利用する必要があります。ツールを呼び出すたびに新しく `puppeteer.connect()` を実行すると、ステップ間でCookie、ローカルストレージ、ページの状態が失われます。
 
 **推奨パターン:** ツールサーバー上でセッションのシングルトンを保持します。
 
@@ -160,7 +158,7 @@ async function closeSession() {
 module.exports = { getSession, closeSession };
 ```
 
-各ツールは`getSession()`を呼び出して、共有インスタンスを取得します。
+各ツールは `getSession()` を呼び出して、共有インスタンスを取得します。
 
 ```js
 // tools.js
@@ -182,25 +180,25 @@ async function extract_text(selector) {
 
 ## ツールがエージェントに返すべき内容
 
-エージェントが確実に処理を続けられるよう、小さく構造化された結果を返します。例:
+エージェントが確実に処理を続けられるよう、小さく構造化された結果を返してください。例:
 - 現在のURL
 - 抽出したテキスト/JSON
 - 要素が見つかったかどうか
-- スクリーンショットの参照(保存している場合)
-- エラーの種類(タイムアウト、ナビゲーションエラーなど)
+- スクリーンショットの参照（保存している場合）
+- エラーの種類（タイムアウト、ナビゲーションエラーなど）
 
-## 運用上の注意
+## 運用上の注意点
 
-- **セキュリティ:** トークンはサーバー側に保持し、クライアントアプリには決して埋め込まないでください。
-- **セッション管理:** 同時接続数の上限に達しないよう、使い終わったセッションは閉じてください。エージェントのワークフローが完了したら`closeSession()`を呼び出します。
-- **信頼性:** 一時的な障害(タイムアウト、ナビゲーションエラー)に備えて、リトライやバックオフを追加してください。
-- **可観測性:** デバッグ時には、利用可能であればLive Viewを開けます。URLの形式の例:
+- **セキュリティ:** トークンはサーバー側で管理し、クライアントアプリには決して埋め込まないでください。
+- **セッション管理:** 同時接続数の上限に達しないよう、使い終わったセッションは閉じてください。エージェントのワークフローが完了したら `closeSession()` を呼び出します。
+- **信頼性:** 一時的な障害（タイムアウト、ナビゲーションエラー）に備えて、リトライやバックオフを追加してください。
+- **可観測性:** デバッグ時は、利用可能であればライブビューを開けます。URLの形式の例:
   `https://cloudbrowser.gologin.com/browsers/{profileId}/{sessionId-or-view-token}/`
 
 ## 制限事項
 
-- 結果は対象サイトやお客様の設定によって異なります。
-- サイトによっては自動化がブロックされる場合があります。Cloud Browserはあくまで実行環境であり、アクセスを保証するものではありません。
-- 同じプロファイルに複数のセッションから同時に接続すると、競合が発生する場合があります。1つのプロファイルにつき、同時に使う接続は1つにしてください。
+- 結果は、対象ウェブサイトやお客様の設定によって異なります。
+- ウェブサイトによっては自動化をブロックする場合があります。Cloud Browserは実行環境であり、アクセスを保証するものではありません。
+- 同じプロファイルに複数のセッションから同時に接続すると、競合が発生する場合があります。1つのプロファイルにつき、同時に1つの接続のみを使用してください。
 - クォータとレート制限が適用されます:
   https://gologin.com/docs/api-reference/limitations/rate-limits

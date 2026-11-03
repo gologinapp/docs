@@ -4,14 +4,14 @@ title: 'Scraping API SDK và CLI'
 
 Gologin Web Unlocker là một **scraping API chỉ với một endpoint** dành cho các trang web nặng JavaScript và có cơ chế bảo vệ.
 
-Bạn gửi một URL, nhận về HTML/văn bản của trang đã được render, rồi xử lý bằng quy trình trích xuất dữ liệu của riêng bạn.
+Bạn gửi một URL, nhận về HTML/văn bản của trang đã được render, rồi xử lý trong quy trình trích xuất dữ liệu của riêng bạn.
 
 ## Vì sao nên dùng như một Scraping API
 
-- Một endpoint cho mọi URL đích
+- Một endpoint duy nhất cho mọi URL đích
 - Xác thực bằng API key, không cần điều phối trình duyệt
-- Phản hồi ưu tiên HTML, dễ tích hợp với các bộ phân tích cú pháp (parser) hiện có
-- Phù hợp với ETL, giám sát, nạp dữ liệu cho AI và các pipeline dữ liệu
+- Mặc định trả về HTML, hoặc Markdown hay JSON theo yêu cầu, sẵn sàng cho các trình phân tích cú pháp hiện có
+- Dễ tích hợp vào ETL, giám sát, nạp dữ liệu cho AI và các pipeline dữ liệu
 
 ## Endpoint
 
@@ -29,7 +29,8 @@ apikey: <API_KEY>
 
 | Tên | Vị trí | Kiểu | Bắt buộc | Mô tả |
 |---|---|---|---|---|
-| `url` | tham số truy vấn | chuỗi (URL tuyệt đối) | có | URL đích cần thu thập dữ liệu |
+| `url` | query | string (URL tuyệt đối) | có | URL đích cần scrape |
+| `format` | query | string | không | Định dạng phản hồi: `html` (mặc định), `markdown` hoặc `json` |
 
 ## Bắt đầu nhanh
 
@@ -68,26 +69,36 @@ const html = await response.text();
 console.log(response.status, html.slice(0, 500));
 ```
 
-## Hành vi của phản hồi
+## Cách phản hồi hoạt động
 
-Nội dung phản hồi hiện tại là **HTML/văn bản thô đã được render**.
+Theo mặc định, nội dung phản hồi là **HTML thô đã được render** của trang. Với `format=markdown`, nội dung là Markdown. Với `format=json`, nội dung là một đối tượng JSON:
 
-- `200` -> thành công, nội dung chứa HTML/văn bản của trang
-- `401` / `403` -> API key không hợp lệ hoặc bị thiếu
-- `422` -> `url` không hợp lệ hoặc bị thiếu
-- `429` -> vượt giới hạn tốc độ (rate limit)
-- `500+` -> lỗi tạm thời từ phía máy chủ
+```json
+{
+  "success": true,
+  "data": {
+    "url": "https://example.com",
+    "metadata": {
+      "response_time_ms": 297,
+      "status_code": 200
+    },
+    "html": "<!DOCTYPE html><html lang=\"en\">..."
+  }
+}
+```
+
+Mã trạng thái:
+
+- `200` -> thành công, nội dung chứa trang ở định dạng đã yêu cầu
+- `400` -> yêu cầu không hợp lệ, ví dụ thiếu `url`; nội dung: `{"success":false,"error":"Request failed"}`
+- `401` -> thiếu header `apikey`; nội dung: `{"message":"Missing API key in request"}`
 
 ## Hướng dẫn thử lại
 
-Hãy thử lại với cơ chế exponential backoff (tăng dần thời gian chờ) khi gặp:
+Hãy thử lại với exponential backoff (thời gian chờ tăng dần theo cấp số nhân) khi gặp:
 
 - lỗi mạng
 - `408`, `429`, `500`, `502`, `503`, `504`
-
-## Lưu ý về phạm vi
-
-Endpoint công khai hiện tại ưu tiên HTML. Đừng mặc định rằng có thêm các endpoint backend khác (ví dụ chụp ảnh màn hình/crawl/tìm kiếm/usage), trừ khi chúng được nêu rõ trong tài liệu và đã được bật cho tài khoản của bạn.
 
 ## SDK Node.js chính thức
 
@@ -122,22 +133,22 @@ new WebUnlocker({
 });
 ```
 
-### Các phương thức chính của SDK
+### Các phương thức cốt lõi của SDK
 
 - `scrape(url)` -> đối tượng phản hồi đã được chuẩn hóa
 - `scrapeRaw(url)` -> `Response` gốc
 - `buildScrapeUrl(url)` -> URL yêu cầu đầy đủ
 
-### Các phương thức suy ra ở phía SDK (từ HTML trả về)
+### Các phương thức phái sinh phía SDK (từ HTML trả về)
 
-Đây **không phải là các endpoint backend riêng biệt**; chúng được SDK suy ra từ HTML mà API trả về:
+Đây **không phải là các endpoint backend riêng biệt**; chúng được SDK tạo ra từ HTML mà API trả về. SDK chỉ gửi tham số `url`, không gửi `format`, nên kết quả này có thể khác với phản hồi `format=markdown` hoặc `format=json` của chính API:
 
 - `scrapeText(url)` -> văn bản thuần
 - `scrapeMarkdown(url)` -> markdown
-- `scrapeJSON(url)` -> siêu dữ liệu có cấu trúc (`title`, `meta`, `links`, `headings`)
-- `batchScrape(urls, { concurrency })` -> hàm hỗ trợ gọi scrape cho nhiều URL
+- `scrapeJSON(url)` -> metadata có cấu trúc (`title`, `description`, `canonical`, `meta`, `headings`, `links`)
+- `batchScrape(urls, { concurrency })` -> hàm hỗ trợ cho nhiều lệnh gọi scrape
 
-### Lỗi có kiểu xác định
+### Lỗi có kiểu
 
 - `WebUnlockerError`
 - `AuthenticationError`
@@ -146,11 +157,11 @@ new WebUnlocker({
 - `TimeoutError`
 - `NetworkError`
 
-Ánh xạ lỗi:
+Ánh xạ:
 
 - `401` / `403` -> `AuthenticationError`
 - `429` -> `RateLimitError`
-- `500+` -> `APIError`
+- `500+` và các mã trạng thái khác không thuộc nhóm 2xx (ví dụ `400`) -> `APIError`
 - hết thời gian chờ/bị hủy -> `TimeoutError`
 - lỗi fetch/mạng -> `NetworkError`
 
@@ -163,9 +174,9 @@ gologin-webunlocker <command> <url> [options]
 Các lệnh:
 
 - `scrape` (HTML/văn bản thô)
-- `text` (văn bản được suy ra)
-- `markdown` (markdown được suy ra)
-- `json` (siêu dữ liệu được suy ra)
+- `text` (văn bản phái sinh)
+- `markdown` (markdown phái sinh)
+- `json` (metadata phái sinh)
 
 Ví dụ:
 
@@ -178,14 +189,14 @@ GOLOGIN_WEBUNLOCKER_API_KEY=wu_live_xxx gologin-webunlocker json https://example
 ## Các trường hợp sử dụng scraping điển hình
 
 - giám sát giá và danh mục sản phẩm
-- bổ sung dữ liệu cho danh sách khách hàng tiềm năng và danh bạ
+- làm giàu dữ liệu khách hàng tiềm năng và danh bạ
 - các pipeline thu thập thông tin thị trường
 - tổng hợp và lập chỉ mục nội dung
 - quy trình nạp dữ liệu và trích xuất cho LLM
 
 ## Gologin Web Access CLI (hợp nhất)
 
-Nếu bạn cần một CLI mạnh mẽ hơn, kết hợp Web Unlocker với Cloud Browser trong cùng một bộ lệnh, hãy dùng `gologin-web-access`:
+Nếu bạn cần một CLI mạnh hơn, kết hợp Web Unlocker với Cloud Browser trong cùng một bộ lệnh, hãy dùng `gologin-web-access`:
 
 ```bash
 npm install -g gologin-web-access

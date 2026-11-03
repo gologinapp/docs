@@ -9,6 +9,8 @@ description: "使用 Node.js SDK 以编程方式运行 Gologin 配置文件"
 npm i gologin
 ```
 
+需要 Node.js 20 或更高版本。SDK 的第 3 版仅支持 ESM：请使用 `import` 加载，`require('gologin')` 无法使用。
+
 ### 基本用法
 
 ```javascript
@@ -25,47 +27,75 @@ const { status, wsUrl } = await GL.start();
 await GL.stop();
 ```
 
-### 关键参数
+### 使用 GologinApi 启动
+
+`GologinApi` 会为你启动配置文件并连接 Puppeteer。`launch()` 会返回一个 Puppeteer `browser`。传入 `cloud: true` 可让配置文件在 [Gologin Cloud Browser](/zh/api-reference/cloud-browser/what-is-gologin-cloud-browser) 中运行，而不是在本地的 Orbita 浏览器中运行：
+
+```javascript
+import { GologinApi } from 'gologin';
+
+const gologin = GologinApi({ token: 'your-api-token' });
+
+// local Orbita on this machine
+const { browser } = await gologin.launch({ profileId: 'your-profile-id' });
+
+// or Gologin Cloud Browser
+// const { browser } = await gologin.launch({ cloud: true, profileId: 'your-profile-id' });
+
+const page = await browser.newPage();
+await page.goto('https://example.com');
+
+// close the browser and stop the profile
+await gologin.exit();
+```
+
+如果不传 `profileId`，`launch()` 会先创建一个新的配置文件。`GologinApi` 还提供了一些辅助方法，例如 `createProfileRandomFingerprint()`、`addGologinProxyToProfile()`、`addCookiesToProfile()` 和 `deleteProfile()`。完整示例请参阅[快速入门](/zh/api-reference/introduction/quickstart)。
+
+### 主要参数
 
 | 参数 | 默认值 | 说明 |
 |---|---|---|
-| `token` | 必填 | 您的 Gologin API 令牌 |
+| `token` | 必填 | 你的 Gologin API 令牌 |
 | `profile_id` | 必填 | 要启动的配置文件 ID |
 | `executablePath` | 自动 | Orbita 浏览器可执行文件的路径 |
-| `uploadCookiesToServer` | `false` | 停止配置文件时将 Cookie 上传到云端。如果需要在多台设备之间保持会话，请设置为 `true`。 |
-| `checkBrowserUpdate` | `true` | 启动时检查此配置文件所用版本的 Orbita 更新。设置为 `false` 可固定当前版本。 |
-| `autoUpdateBrowser` | `true` | 自动下载新版本的 Orbita。设置为 `false` 可避免意外更新。 |
-| `extra_params` | `[]` | 传递给浏览器的额外 Chromium 启动参数 |
+| `uploadCookiesToServer` | `false` | 在配置文件停止时将 Cookie 上传到云端。如果需要在多台设备之间保持会话，请设置为 `true`。 |
+| `extra_params` | `[]` | 传递给浏览器的其他 Chromium 启动参数 |
 
 ### 停止配置文件
 
 ```javascript
-// Stop and sync to cloud (default)
+// Stop and sync to cloud
 await GL.stop();
 
-// Stop without syncing any data to cloud
-await GL.stop({ posting: false });
+// Stop without syncing profile data to cloud
+await GL.stopLocal({ posting: false });
 ```
 
-注意:`posting: false` 会阻止配置文件数据上传到 Gologin 服务器。如果您在服务器上运行配置文件,且不希望进行云端同步,请使用此选项。
+请先在自动化工具中关闭浏览器，例如使用 `browser.close()`。`stop()` 不接受任何选项，并且始终会将配置文件上传到 Gologin。`stopLocal({ posting: false })` 会结束会话，但不上传配置文件数据，适用于不希望进行云端同步的服务器。如果你设置了 `uploadCookiesToServer: true`，Cookie 仍然会被上传。
 
 ### 管理 Orbita 浏览器版本
 
+配置文件启动时，SDK 会检查该配置文件的 user agent 需要哪个版本的 Orbita。如果 `~/.gologin/browser` 中还没有该版本，SDK 会自动下载；否则会直接使用已安装的版本。如需运行指定的版本，请传入 `executablePath`。`autoUpdateBrowser`（默认为 `false`）和 `checkBrowserUpdate` 选项仍可传入，但在当前 SDK（3.0.7）中，它们不会改变上述行为。
+
+如需提前下载 Orbita，请在 `GoLogin` 实例上调用 `checkAndDownloadBrowserByOpts()`。它是一个方法，而不是单独的导出：
+
 ```javascript
-import { checkAndDownloadBrowserByOpts } from 'gologin';
+import { GoLogin } from 'gologin';
+
+const GL = new GoLogin({ token: 'your-api-token' });
 
 // Pre-download the latest Orbita version
-await checkAndDownloadBrowserByOpts({ lastActualCount: 1 });
+await GL.checkAndDownloadBrowserByOpts({ lastActualCount: 1 });
 
 // Pre-download specific versions
-await checkAndDownloadBrowserByOpts({ majorVersions: [142, 143] });
+await GL.checkAndDownloadBrowserByOpts({ majorVersions: [142, 143] });
 ```
 
-在并行启动配置文件之前,请先使用 `checkAndDownloadBrowserByOpts`,以避免同时进行多个下载任务。
+如果不传入选项，它会下载最新的 5 个版本。在并行启动配置文件之前使用它，可以避免同时进行多个下载。
 
 ### 并行运行 100 个以上的配置文件
 
-在服务器上同时运行大量配置文件时:
+在服务器上同时运行大量配置文件时：
 
 ```javascript
 // Use a queue to limit concurrent launches
@@ -95,16 +125,16 @@ async function processQueue() {
 }
 ```
 
-**服务器使用注意事项:**
-- 限制并发启动的配置文件数量(建议从 10-20 个开始)
+**服务器使用注意事项：**
+- 限制同时启动的配置文件数量（建议从 10-20 个开始）
 - 在启动之前预先下载 Orbita 版本
-- 在 Linux 上:安装 Xvfb 并设置 `DISPLAY=:99`
-- 提高文件描述符限制:`ulimit -n 65536`
-- 监控内存:每个配置文件约占用 300-500 MB
+- 在 Linux 上：安装 Xvfb 并设置 `DISPLAY=:99`
+- 提高文件描述符限制：`ulimit -n 65536`
+- 监控内存：每个配置文件约占用 300-500 MB
 
 ### 调试
 
-设置环境变量以启用详细日志:
+设置环境变量以输出详细日志：
 
 ```bash
 DEBUG=gologin node your-script.js
@@ -112,5 +142,5 @@ DEBUG=gologin node your-script.js
 
 ### GitHub 与更新日志
 
-- 源代码:https://github.com/gologinapp/gologin
+- 源代码：https://github.com/gologinapp/gologin
 - [更新日志](/zh/api-reference/sdks/nodejs-changelog)

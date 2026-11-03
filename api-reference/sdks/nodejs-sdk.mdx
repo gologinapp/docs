@@ -1,6 +1,6 @@
 ---
 title: "Node.js SDK"
-description: "Run GoLogin profiles programmatically with the Node.js SDK"
+description: "Run Gologin profiles programmatically with the Node.js SDK"
 ---
 
 ### Installation
@@ -8,6 +8,8 @@ description: "Run GoLogin profiles programmatically with the Node.js SDK"
 ```bash
 npm i gologin
 ```
+
+Requires Node.js 20 or later. Version 3 of the SDK is ESM-only: load it with `import`, `require('gologin')` doesn't work.
 
 ### Basic usage
 
@@ -25,43 +27,71 @@ const { status, wsUrl } = await GL.start();
 await GL.stop();
 ```
 
+### Launch with GologinApi
+
+`GologinApi` starts a profile and connects Puppeteer for you. `launch()` returns a Puppeteer `browser`. Pass `cloud: true` to run the profile in [Gologin Cloud Browser](/api-reference/cloud-browser/what-is-gologin-cloud-browser) instead of a local Orbita browser:
+
+```javascript
+import { GologinApi } from 'gologin';
+
+const gologin = GologinApi({ token: 'your-api-token' });
+
+// local Orbita on this machine
+const { browser } = await gologin.launch({ profileId: 'your-profile-id' });
+
+// or Gologin Cloud Browser
+// const { browser } = await gologin.launch({ cloud: true, profileId: 'your-profile-id' });
+
+const page = await browser.newPage();
+await page.goto('https://example.com');
+
+// close the browser and stop the profile
+await gologin.exit();
+```
+
+Without `profileId`, `launch()` creates a new profile first. `GologinApi` also has helpers such as `createProfileRandomFingerprint()`, `addGologinProxyToProfile()`, `addCookiesToProfile()`, and `deleteProfile()`. See the [Quickstart](/api-reference/introduction/quickstart) for a full example.
+
 ### Key parameters
 
 | Parameter | Default | Description |
 |---|---|---|
-| `token` | required | Your GoLogin API token |
+| `token` | required | Your Gologin API token |
 | `profile_id` | required | Profile ID to launch |
 | `executablePath` | auto | Path to Orbita browser binary |
 | `uploadCookiesToServer` | `false` | Upload cookies to cloud on profile stop. Set to `true` if you need session persistence across devices. |
-| `checkBrowserUpdate` | `true` | Check for Orbita updates for this profile's version on launch. Set to `false` to pin the current version. |
-| `autoUpdateBrowser` | `true` | Automatically download new Orbita versions. Set to `false` to prevent unexpected updates. |
 | `extra_params` | `[]` | Additional Chromium flags passed to the browser |
 
 ### Stopping profiles
 
 ```javascript
-// Stop and sync to cloud (default)
+// Stop and sync to cloud
 await GL.stop();
 
-// Stop without syncing any data to cloud
-await GL.stop({ posting: false });
+// Stop without syncing profile data to cloud
+await GL.stopLocal({ posting: false });
 ```
 
-Note: `posting: false` prevents profile data from being uploaded to GoLogin servers. Use this when running on servers where you don't want cloud sync.
+Close the browser in your automation tool first, for example with `browser.close()`. `stop()` takes no options and always uploads the profile to Gologin. `stopLocal({ posting: false })` finishes the session without uploading profile data. Use it on servers where you don't want cloud sync. Cookies are still uploaded if you set `uploadCookiesToServer: true`.
 
 ### Managing Orbita browser versions
 
+When a profile starts, the SDK checks which Orbita version the profile's user agent needs. If that version isn't in `~/.gologin/browser` yet, the SDK downloads it, otherwise it reuses the installed copy. To run a specific build, pass `executablePath`. The `autoUpdateBrowser` (default `false`) and `checkBrowserUpdate` options are still accepted, but in the current SDK (3.0.7) they don't change this behavior.
+
+To download Orbita in advance, call `checkAndDownloadBrowserByOpts()` on a `GoLogin` instance. It is a method, not a separate export:
+
 ```javascript
-import { checkAndDownloadBrowserByOpts } from 'gologin';
+import { GoLogin } from 'gologin';
+
+const GL = new GoLogin({ token: 'your-api-token' });
 
 // Pre-download the latest Orbita version
-await checkAndDownloadBrowserByOpts({ lastActualCount: 1 });
+await GL.checkAndDownloadBrowserByOpts({ lastActualCount: 1 });
 
 // Pre-download specific versions
-await checkAndDownloadBrowserByOpts({ majorVersions: [142, 143] });
+await GL.checkAndDownloadBrowserByOpts({ majorVersions: [142, 143] });
 ```
 
-Use `checkAndDownloadBrowserByOpts` before launching profiles in parallel to avoid multiple simultaneous downloads.
+Without options, it downloads the 5 latest versions. Use it before launching profiles in parallel to avoid multiple simultaneous downloads.
 
 ### Running 100+ profiles in parallel
 

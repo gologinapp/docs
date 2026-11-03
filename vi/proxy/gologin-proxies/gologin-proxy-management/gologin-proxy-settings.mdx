@@ -1,13 +1,14 @@
 ---
 title: "Điều hướng proxy Gologin"
+description: "Tạo kết nối proxy Gologin mới với thành phố, tên, loại proxy hoặc giao thức (HTTP/SOCKS5) khác; không thể chỉnh sửa các kết nối hiện có. Kiểm tra, gỡ liên kết, xóa và sao chép proxy."
 ---
 
-## Các cài đặt proxy có sẵn
+## Các cài đặt proxy khả dụng
 
-Nếu cần cấu hình các thông số proxy cụ thể, bạn phải **tạo một kết nối proxy mới**.
+Nếu bạn cần cấu hình các thông số proxy cụ thể, bạn phải **tạo một kết nối proxy mới**.
 
 <Info>
-  Lưu ý: Bạn không thể thay đổi cài đặt của một kết nối proxy đã có.
+  Lưu ý: Bạn không thể thay đổi cài đặt của một kết nối proxy hiện có.
 </Info>
 
 Để tạo một proxy Gologin tùy chỉnh mới:
@@ -17,39 +18,46 @@ Nếu cần cấu hình các thông số proxy cụ thể, bạn phải **tạo 
 3. Chọn **Thêm máy chủ mới**.<br />Tại đây, bạn có thể cấu hình các thông số sau:
    - **Thành phố** - có sẵn cho một số quốc gia phổ biến nhất
    - **Tên** - tên tùy chỉnh cho kết nối proxy
-   - **Loại proxy** - dân cư, di động hoặc trung tâm dữ liệu
+   - **Loại proxy** - residential (dân cư), mobile (di động) hoặc datacenter (trung tâm dữ liệu)
 4. Nhấp vào **Kết nối** để áp dụng proxy mới.
 
 <Frame>
   ![Cài đặt proxy Gologin](/images/settings_gologin_proxy.gif)
 </Frame>
 
+## Chọn giao thức proxy (HTTP hoặc SOCKS5)
+
+Proxy Gologin hỗ trợ HTTP và **SOCKS5**. Bạn có thể chọn giao thức:
+
+- **Khi tạo hồ sơ:** nhấp vào **Thêm hồ sơ** > **Ủy quyền** > **Proxy Gologin**, chọn quốc gia và loại proxy, sau đó chọn giao thức.
+- **Với hồ sơ hiện có:** nhấp vào ba dấu chấm trên hồ sơ > **Cài đặt** > **Ủy quyền**, rồi chọn giao thức theo cách tương tự.
+
 ## Kiểm tra kết nối và xem thông tin proxy
 
-Để xác minh proxy đang hoạt động đúng và bạn còn đủ lưu lượng, hãy nhấp vào biểu tượng **mũi tên tròn** bên cạnh cờ của proxy. Từ menu này, bạn cũng có thể xem:
+Để xác minh proxy đang hoạt động bình thường và bạn còn đủ lưu lượng khả dụng, hãy nhấp vào biểu tượng **mũi tên tròn** bên cạnh cờ của proxy. Từ menu này, bạn cũng có thể xem:
 
 - **Thành phố**
 - **Địa chỉ IP**
 - **Loại proxy**
 - **Lưu lượng còn lại**
 
-Nhờ vậy, bạn có thể nhanh chóng xác nhận proxy đang hoạt động và được cấu hình như mong muốn.
+Điều này giúp bạn nhanh chóng xác nhận proxy đang hoạt động và được cấu hình đúng như mong muốn.
 
 <Frame>
   ![Kiểm tra proxy Gologin](/images/checking_gologin_proxy.png)
 </Frame>
 
-## Hủy liên kết proxy
+## Gỡ liên kết proxy
 
-Nếu muốn hủy liên kết proxy Gologin khỏi hồ sơ: **nhấp vào proxy** một lần rồi **nhấp vào dấu X** trên proxy đó. Proxy sẽ được hủy liên kết khỏi hồ sơ nhưng vẫn nằm trong danh sách của trình quản lý proxy.
+Nếu bạn muốn gỡ liên kết proxy Gologin khỏi hồ sơ: **nhấp vào proxy** một lần rồi **nhấp vào dấu X** trên proxy đó. Proxy sẽ được gỡ khỏi hồ sơ nhưng vẫn nằm trong danh sách của trình quản lý proxy.
 
 <Frame>
-  ![Hủy liên kết proxy Gologin](/images/unlink_gologin_proxy.gif)
+  ![Gỡ liên kết proxy Gologin](/images/unlink_gologin_proxy.gif)
 </Frame>
 
 ## Xóa proxy
 
-Để xóa một proxy: chỉ cần **nhấp vào proxy trong hồ sơ** một lần để vào trình quản lý proxy, sau đó **nhấp chuột phải vào proxy** \> **Xóa proxy** \> **xác nhận lựa chọn**. Proxy sẽ bị xóa khỏi danh sách proxy của bạn và có thể khôi phục từ [Kho lưu trữ proxy](/vi/proxy/proxy-management/proxy-manager/proxy-archive).
+Để xóa một proxy: chỉ cần **nhấp vào proxy trên hồ sơ** một lần để vào trình quản lý proxy, sau đó **nhấp chuột phải vào proxy** \> **Xóa proxy** \> **xác nhận lựa chọn**. Proxy sẽ bị xóa khỏi danh sách proxy của bạn và có thể khôi phục từ [Kho lưu trữ proxy](/vi/proxy/proxy-management/proxy-manager/proxy-archive).
 
 <Frame>
   ![Xóa proxy Gologin](/images/delete_gologin_proxy.gif)
@@ -57,7 +65,9 @@ Nếu muốn hủy liên kết proxy Gologin khỏi hồ sơ: **nhấp vào prox
 
 ## Sao chép thông tin đăng nhập proxy
 
-Bạn có thể sao chép thông tin đăng nhập proxy Gologin (máy chủ, cổng, tên đăng nhập, mật khẩu) để sử dụng ở nơi khác. Để thực hiện: **nhấp vào proxy** để vào trình quản lý proxy \> **nhấp chuột phải vào proxy** \> **Sao chép proxy**.
+Bạn có thể sao chép thông tin đăng nhập proxy Gologin (máy chủ, cổng, tên đăng nhập, mật khẩu) để sử dụng ở nơi khác. Để làm vậy: **nhấp vào một proxy** để vào trình quản lý proxy \> **nhấp chuột phải vào proxy** \> **Sao chép proxy**.
+
+Thao tác này áp dụng cho mọi proxy trong danh sách, kể cả proxy của riêng bạn. Để kiểm tra một proxy, bạn cần có giao thức, máy chủ, cổng, tên đăng nhập và mật khẩu của proxy đó.
 
 <Frame>
   ![Sao chép proxy Gologin](/images/copy_gologin_proxy.gif)
@@ -71,7 +81,7 @@ Bạn có thể chọn nhiều proxy trong trình quản lý proxy và thực hi
 - sao chép proxy
 - xóa proxy
 
-Để thực hiện: **nhấp vào bất kỳ proxy nào trên trang Tất cả hồ sơ** \> **nhấp chuột phải vào proxy** \> nhấp **Chọn proxy**. Sau đó, bạn có thể bắt đầu đánh dấu các proxy và thực hiện thao tác bằng các nút ở cuối trình quản lý proxy.
+Để làm vậy: **nhấp vào bất kỳ proxy nào trên trang Tất cả hồ sơ** \> **nhấp chuột phải vào proxy** \> nhấp vào **Chọn proxy**. Sau đó, bạn có thể bắt đầu đánh dấu các proxy và thực hiện thao tác bằng các nút ở cuối trình quản lý proxy.
 
 <Frame>
   ![Thao tác hàng loạt với proxy Gologin](/images/bulk_actions_gologin_proxy.gif)

@@ -1,31 +1,32 @@
 ---
 title: "Gologin Agent Browser CLI"
-description: "CLI de automatización de navegador en la nube creada para agentes de IA, con snapshots, refs y un daemon persistente"
+description: "CLI de automatización del navegador para agentes de IA que ejecuta perfiles de Gologin en Cloud Browser o en Orbita local, con snapshots, refs y un daemon persistente"
 ---
 
-Gologin Agent Browser CLI convierte Gologin Cloud Browser en un entorno de ejecución persistente y programable para agentes de IA. Ofrece snapshots compactos de las páginas, interacción basada en refs, memoria de sesión y una salida pensada para la línea de comandos.
+Gologin Agent Browser CLI convierte los perfiles de navegador de Gologin en un entorno de ejecución persistente y programable para agentes de IA. Las sesiones se ejecutan en Gologin Cloud Browser o en Orbita en tu propio equipo. Ofrece snapshots compactos de la página, interacción basada en refs, memoria de sesión y una salida pensada para la terminal.
 
-A diferencia de escribir código de Puppeteer/Playwright desde cero, esta CLI ofrece a los agentes un conjunto de comandos listo para usar en la automatización del navegador, sin código repetitivo ni código para gestionar sesiones.
+A diferencia de escribir código de Puppeteer/Playwright desde cero, esta CLI da a los agentes un conjunto de comandos listo para usar en la automatización del navegador, sin código repetitivo ni lógica de gestión de sesiones.
 
 ---
 
-## Por qué un navegador en la nube
+## Entorno de ejecución en la nube o local
 
-La automatización con navegadores locales tiene límites importantes en los flujos de trabajo con agentes:
+La CLI tiene dos entornos de ejecución con los mismos comandos. Ambos usan perfiles, fingerprints y proxies de Gologin, y un daemon mantiene las sesiones activas entre llamadas a la CLI.
 
-- Los navegadores locales son más fáciles de detectar
-- No hay huellas digitales basadas en perfiles
-- No hay perfiles de navegador persistentes en la nube
-- No incluyen una capa de proxy integrada
-- Es difícil estandarizarlos entre agentes y entornos
+| | `cloud` (predeterminado) | `local` |
+|---|---|---|
+| Dónde se ejecuta el navegador | Gologin Cloud Browser | Orbita en tu equipo |
+| ID del perfil | Opcional: si no lo indicas, se crea un perfil temporal en la nube | Obligatorio |
+| Ideal para | Sesiones en paralelo, sesiones remotas, equipos que no deberían ejecutar un navegador | Calentamiento de perfiles, primeros inicios de sesión, cookies y estado del perfil locales, coincidir con tu sistema operativo |
 
-Agent Browser CLI adopta el enfoque contrario:
+Elige el entorno de ejecución en cada comando con `--runtime cloud|local|auto`, o define `GOLOGIN_AGENT_BROWSER_RUNTIME` una sola vez:
 
-- Un entorno de navegador en la nube en lugar de un proceso local
-- Perfiles de Gologin como capa de identidad de la sesión
-- Sesiones compatibles con proxies
-- Capacidades anti-detección heredadas de Gologin
-- Un daemon persistente que mantiene las sesiones activas entre llamadas a la CLI
+```bash
+gologin-agent-browser open https://example.com
+gologin-agent-browser open https://example.com --runtime local --profile your_profile_id
+```
+
+De forma predeterminada (`auto`), los comandos de perfiles, runbooks y trabajos se ejecutan en local, y todo lo demás se ejecuta en la nube. Una vez que abras una sesión local, indica también `--runtime local` en los comandos siguientes. Consulta [Local runtime](/es/cli-tools/local-agent-browser) para ver los requisitos y los comandos exclusivos del entorno local.
 
 ---
 
@@ -41,7 +42,7 @@ O ejecútala sin instalación global:
 npx gologin-agent-browser-cli --help
 ```
 
-Requiere Node.js >= 18.
+Requiere Node.js >= 18. El entorno de ejecución local necesita Node.js 20 o posterior.
 
 ---
 
@@ -49,15 +50,17 @@ Requiere Node.js >= 18.
 
 | Variable | Obligatoria | Descripción |
 |---|---|---|
-| `GOLOGIN_TOKEN` | Sí (para `open`) | Token de API de Gologin |
+| `GOLOGIN_TOKEN` | Sí (para `open` y los comandos de la API) | Token de la API de Gologin |
 | `GOLOGIN_PROFILE_ID` | Opcional | ID de perfil predeterminado |
-| `GOLOGIN_DAEMON_PORT` | Opcional | Puerto del daemon (por defecto: `44777`) |
-| `GOLOGIN_CONNECT_BASE` | Opcional | Endpoint de Cloud Browser |
+| `GOLOGIN_AGENT_BROWSER_RUNTIME` | Opcional | Entorno de ejecución predeterminado: `cloud`, `local` o `auto` |
+| `GOLOGIN_DAEMON_PORT` | Opcional | Puerto del daemon (predeterminado: `44777` para cloud, `44778` para local) |
+| `GOLOGIN_CONNECT_BASE` | Opcional | Endpoint de Cloud Browser (predeterminado: `https://cloudbrowser.gologin.com/connect`) |
+| `GOLOGIN_EXECUTABLE_PATH` | Opcional | Ruta al ejecutable de Orbita para el entorno de ejecución local |
 
 ### Obtener un token
 
 1. Regístrate o inicia sesión en [gologin.com](https://gologin.com)
-2. Abre **API & MCP** en el panel de control
+2. Abre **API & MCP** en el panel
 3. Abre la pestaña **API**
 4. Haz clic en **New Token**
 5. Copia el token de acceso generado
@@ -76,18 +79,18 @@ export GOLOGIN_TOKEN='your_gologin_token'
 
 Consta de dos partes:
 
-1. **CLI `gologin-agent-browser`**: interpreta los comandos, inicia el daemon automáticamente e imprime una salida compacta
-2. **Daemon local persistente**: gestiona las sesiones activas del navegador, se conecta a Gologin Cloud Browser mediante `connectOverCDP` de Playwright, mantiene la página activa en memoria, genera los snapshots, resuelve las refs y registra los metadatos de la sesión
+1. **La CLI `gologin-agent-browser`**: interpreta los comandos, elige el entorno de ejecución, inicia automáticamente el daemon correspondiente e imprime una salida compacta
+2. **Daemons locales persistentes**, uno por cada entorno de ejecución: gestionan las sesiones de navegador activas, se conectan a Gologin Cloud Browser o a Orbita local mediante `connectOverCDP` de Playwright, mantienen la página activa en memoria, generan snapshots, resuelven refs y registran los metadatos de la sesión
 
-El transporte es exclusivamente local:
-- Socket Unix en `${TMPDIR:-/tmp}/gologin-agent-browser.sock`
-- HTTP en localhost, en `127.0.0.1:${GOLOGIN_DAEMON_PORT:-44777}`
+El transporte es solo local. El daemon de cloud escucha en:
+- Un socket Unix en `${TMPDIR:-/tmp}/gologin-agent-browser.sock`
+- HTTP local en `127.0.0.1:${GOLOGIN_DAEMON_PORT:-44777}`
 
-Si no indicas un ID de perfil, el daemon crea un perfil temporal en la nube de Gologin a través de la API.
+En el entorno de ejecución cloud, si no indicas un ID de perfil, el daemon crea un perfil temporal de Gologin en la nube a través de la API.
 
 ---
 
-## Cómo funcionan las refs
+## Cómo funcionan los refs
 
 `snapshot` imprime una vista compacta de la página y asigna refs como `@e1`, `@e2`, `@e3` a los elementos interactivos. Puedes actuar directamente sobre ellos:
 
@@ -100,7 +103,12 @@ gologin-agent-browser type @e5 "search query"
 gologin-agent-browser fill @e7 "username"
 ```
 
-Las refs funcionan en la medida de lo posible y conviene regenerarlas después de navegar o de cambios importantes en el DOM. En páginas dinámicas, `find` suele ser una mejor alternativa que usar refs obsoletas.
+Los refs funcionan con el mejor esfuerzo y conviene regenerarlos tras navegar o después de cambios importantes en el DOM. Los comandos también aceptan selectores CSS en lugar de refs. En páginas dinámicas, `find` suele ser una mejor alternativa que los refs obsoletos: localiza el elemento en la página activa y actúa sobre él en un solo paso.
+
+```bash
+gologin-agent-browser find label "Email" fill "user@example.com"
+gologin-agent-browser find role button click --name "Submit"
+```
 
 ---
 
@@ -156,12 +164,12 @@ Un bucle típico de un agente de IA:
 
 | Comando | Descripción |
 |---|---|
-| `open <url>` | Abre una URL en una sesión de navegador en la nube |
-| `close` | Cierra la sesión actual |
-| `sessions` | Muestra las sesiones activas |
-| `current` | Muestra información de la sesión actual |
+| `open <url>` | Abre una URL en una sesión de navegador |
+| `close` | Cierra la sesión actual (`--all` cierra todas las sesiones de este daemon) |
+| `sessions` | Lista las sesiones activas (`--prune` elimina las obsoletas) |
+| `current` | Muestra la información de la sesión actual |
 
-### Lectura de páginas
+### Lectura de la página
 
 | Comando | Descripción |
 |---|---|
@@ -180,9 +188,9 @@ Un bucle típico de un agente de IA:
 | `fill <ref> <text>` | Rellena un campo (reemplaza el contenido) |
 | `hover <ref>` | Coloca el cursor sobre un elemento |
 | `select <ref> <value>` | Selecciona un valor de una lista desplegable |
-| `check <ref>` / `uncheck <ref>` | Activa o desactiva una casilla |
+| `check <ref>` / `uncheck <ref>` | Marca o desmarca una casilla |
 | `focus <ref>` | Da el foco a un elemento |
-| `find ...` | Búsqueda semántica de elementos |
+| `find <by> <locator> <action> [value]` | Encuentra un elemento por `role`, `text`, `label`, `placeholder`, `first`, `last` o `nth` y le aplica `click`, `fill`, `type` o `hover`, o lee su `text` |
 
 ### Teclado y desplazamiento
 
@@ -190,22 +198,22 @@ Un bucle típico de un agente de IA:
 |---|---|
 | `press <key> [target]` | Pulsa una tecla |
 | `scroll <direction> [pixels]` | Desplaza la página |
-| `scrollintoview <ref>` | Desplaza la página hasta que el elemento sea visible |
+| `scrollintoview <ref>` | Desplaza hasta que el elemento sea visible |
 
 ### Navegación
 
 | Comando | Descripción |
 |---|---|
-| `back` | Vuelve a la página anterior |
-| `forward` | Avanza a la página siguiente |
+| `back` | Retrocede |
+| `forward` | Avanza |
 | `reload` | Recarga la página |
-| `wait <target\|ms>` | Espera a un elemento o a que pase un tiempo determinado |
+| `wait <target\|ms>` | Espera a un elemento o a que pase un tiempo |
 
 ### Pestañas
 
 | Comando | Descripción |
 |---|---|
-| `tabs` | Muestra las pestañas abiertas |
+| `tabs` | Lista las pestañas abiertas |
 | `tabopen [url]` | Abre una pestaña nueva |
 | `tabfocus <index>` | Cambia a una pestaña |
 | `tabclose [index]` | Cierra una pestaña |
@@ -227,6 +235,33 @@ Un bucle típico de un agente de IA:
 |---|---|
 | `eval <expression>` | Evalúa JavaScript en la página |
 | `upload <ref> <file...>` | Sube archivos |
+
+### Perfiles, proxies y la API de Gologin
+
+Estos comandos llaman a la API de Gologin con tu token y no necesitan el daemon del navegador.
+
+| Comando | Descripción |
+|---|---|
+| `api <METHOD> <path>` | Llama a cualquier endpoint de la API REST de Gologin |
+| `browser <action>` | Perfiles: listar, obtener, crear, actualizar, eliminar, cookies, proxy, inicio y detención en la nube, importación y exportación |
+| `proxy <action>` | Proxies: listar, añadir un proxy de Gologin, actualizar, eliminar, tráfico |
+| `workspace`, `folder`, `share`, `template` | Workspaces y miembros, carpetas, uso compartido, plantillas de perfil |
+| `user`, `deleted-profile` | Información de la cuenta y tokens de desarrollo, restauración de perfiles eliminados |
+| `cloud-usage` | Uso de Cloud Browser de un perfil o workspace |
+| `profile-cloud`, `profile-cookies`, `profile-fingerprint`, `profile-proxy`, `profile-ua` | Atajos: iniciar o detener un perfil en la nube, exportar o importar sus cookies, actualizar su fingerprint, añadir un proxy, actualizar su user agent |
+
+```bash
+gologin-agent-browser browser list --page 1
+gologin-agent-browser proxy add-gologin your_profile_id --country us --type residential
+gologin-agent-browser cloud-usage --profile your_profile_id
+gologin-agent-browser api GET /browser/your_profile_id
+```
+
+Añade `--help` a cualquier comando para ver cómo se usa.
+
+### Solo entorno de ejecución local
+
+`profiles`, `profile`, `profile-create`, `profile-update`, `profile-import`, `profile-sync`, `profile-delete`, `run`, `batch`, `jobs` y `job` gestionan perfiles locales, runbooks y el historial de trabajos. Consulta [Local runtime](/es/cli-tools/local-agent-browser#profile-commands).
 
 ### Alias
 
@@ -314,13 +349,12 @@ done
 
 ### Busca en un sitio que bloquea el scraping
 
-Algunos sitios requieren ejecutar JavaScript, iniciar sesión o interactuar con la página antes de mostrar los resultados. Usa el navegador para hacer la búsqueda:
+Algunos sitios exigen ejecutar JavaScript, iniciar sesión o interactuar antes de mostrar resultados. Usa el navegador para buscar:
 
 ```bash
 gologin-agent-browser open https://protected-directory.com
 gologin-agent-browser snapshot
-gologin-agent-browser find "search input"
-gologin-agent-browser type @found "machine learning engineer San Francisco"
+gologin-agent-browser find placeholder "Search" fill "machine learning engineer San Francisco"
 gologin-agent-browser press Enter
 gologin-agent-browser wait 3000
 gologin-agent-browser snapshot     # agent reads search results
@@ -330,7 +364,7 @@ gologin-agent-browser close
 
 ### Guarda y restaura el estado de la sesión
 
-Exporta las cookies y el almacenamiento para reutilizarlos en otras sesiones:
+Exporta las cookies y el almacenamiento para reutilizarlos entre sesiones:
 
 ```bash
 # after logging in
@@ -350,24 +384,25 @@ gologin-agent-browser snapshot     # already logged in
 
 ## Sesiones en paralelo
 
-Usa IDs `--session` explícitos para tareas independientes en la nube. Limpia con `close --all` o `sessions --prune --older-than-ms`.
+Usa IDs de `--session` explícitos para tareas independientes en la nube. Limpia con `close --all` o `sessions --prune --older-than-ms`.
 
 ---
 
 ## Reglas de proxy
 
-- Perfiles preconfigurados: el proxy se establece en el perfil desde el panel de Gologin o mediante la API
-- Perfiles temporales: admiten no usar proxy o un host/puerto de proxy personalizado
-- `--proxy-country` solo está disponible para perfiles preconfigurados
+- Perfiles preconfigurados: el proxy se define en el perfil desde el panel de Gologin o la API, por ejemplo `proxy add-gologin <profileId> --country us`
+- Perfiles temporales en la nube: sin proxy, o con tu propio proxy mediante `--proxy-host` y `--proxy-port` (además de `--proxy-mode http|socks4|socks5`, `--proxy-user`, `--proxy-pass`)
+- En el entorno de ejecución cloud, `open` no acepta `--proxy-country`. Para usar tráfico de proxy de Gologin de un país, añade un proxy de Gologin a un perfil y ábrelo con `--profile`
+- En el entorno de ejecución local, `open`, `profile-create` y `profile-update` aceptan `--proxy-country`
 
 ---
 
 ## Relacionado
 
-- [Gologin Web Access CLI](/es/cli-tools/web-access): CLI unificada (scraping + navegador)
-- [Local Agent Browser CLI](/es/cli-tools/local-agent-browser): alternativa local con Orbita
-- [Cloud Browser Getting Started](/es/api-reference/cloud-browser/getting-started): ejemplos con Puppeteer/Playwright
-- [AI Skills](/es/api-reference/ai-integrations/ai-skills): skills listas para usar con Claude Code
+- [Gologin Web Access CLI](/es/cli-tools/web-access) — CLI unificada (scraping + navegador)
+- [Local runtime](/es/cli-tools/local-agent-browser) — ejecuta perfiles locales de Orbita con esta CLI
+- [Cloud Browser Getting Started](/es/api-reference/cloud-browser/getting-started) — ejemplos de Puppeteer/Playwright
+- [AI Skills](/es/api-reference/ai-integrations/ai-skills) — skills listas para usar con Claude Code
 
 <Card title="Paquete de npm" icon="npm" href="https://www.npmjs.com/package/gologin-agent-browser-cli">
   gologin-agent-browser-cli

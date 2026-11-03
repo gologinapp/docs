@@ -4,51 +4,57 @@ title: "Przeglądarka Orbita"
 
 Gdy w Gologin klikniesz **Run** przy profilu, otworzy się okno przeglądarki. Tą przeglądarką jest **Orbita**.
 
-Wygląda dokładnie jak Google Chrome – ma ten sam układ, te same karty i te same menu. Różnica dotyczy tego, co dzieje się w tle, gdy strona internetowa próbuje Cię zidentyfikować.
+Wygląda dokładnie jak Google Chrome - ma ten sam układ, te same karty i te same menu. Różnica polega na tym, co dzieje się w tle, gdy strona internetowa próbuje Cię zidentyfikować.
 
 <Frame>
-  ![Przeglądarka Orbita](/images/orbita_browser.png)
+  ![Orbita Browser](/images/orbita_browser.png)
 </Frame>
 
 ## Dlaczego stworzyliśmy własną przeglądarkę
 
-Każda przeglądarka ma problem z tożsamością. Gdy odwiedzasz stronę, może ona po cichu zadać przeglądarce dziesiątki pytań o urządzenie, na którym działa: jaką ma kartę graficzną, jakie czcionki są zainstalowane, jaka jest rozdzielczość ekranu, jak przeglądarka renderuje grafikę i wiele innych. Odpowiedzi na te pytania tworzą odcisk cyfrowy (fingerprint), który Cię identyfikuje – nawet jeśli korzystasz z VPN-a lub czyścisz pliki cookie.
+Każda przeglądarka ma problem z tożsamością. Gdy odwiedzasz stronę, może ona po cichu zadać przeglądarce dziesiątki pytań o urządzenie, na którym działa: jaką masz kartę graficzną, jakie czcionki są zainstalowane, jaka jest rozdzielczość ekranu, jak przeglądarka renderuje grafikę i wiele więcej. Odpowiedzi na te pytania tworzą odcisk cyfrowy (fingerprint), który Cię identyfikuje - nawet jeśli korzystasz z VPN-a lub czyścisz pliki cookie.
 
 Standardowy Chrome nie próbuje niczego ukrywać. Odpowiada na każde pytanie zgodnie z prawdą, podając dane Twojego prawdziwego urządzenia.
 
 ## Co dokładnie zmienia Orbita
 
-Gdy strona internetowa pyta Orbitę o informacje o urządzeniu, na którym działa przeglądarka, Orbita zwraca wartości zapisane w profilu, a nie rzeczywiste wartości Twojego komputera. Dotyczy to między innymi:
+Gdy strona internetowa pyta przeglądarkę Orbita o informacje o urządzeniu, na którym działa, Orbita zwraca wartości z profilu, a nie prawdziwe wartości Twojego komputera. Dotyczy to na przykład:
 
-- wersji przeglądarki i systemu operacyjnego raportowanych stronom,
+- wersji przeglądarki i systemu operacyjnego zgłaszanych stronom,
 - rozmiaru i rozdzielczości ekranu,
-- danych karty graficznej,
+- szczegółów karty graficznej,
 - listy czcionek dostępnych na urządzeniu,
-- sposobu, w jaki przeglądarka renderuje grafikę i dźwięk (wykorzystywanego do fingerprintingu),
-- strefy czasowej i języka,
-- ujawniania adresu IP przez funkcje wideo i audio (WebRTC),
-- oraz kilku innych elementów działających "pod maską".
+- sposobu renderowania grafiki i dźwięku (wykorzystywanego do tworzenia odcisku cyfrowego),
+- Twojej strefy czasowej i języka,
+- ujawniania Twojego adresu IP przez funkcje wideo i audio (WebRTC),
+- oraz kilku innych elementów działających w tle.
 
-Z punktu widzenia strony internetowej komunikuje się ona z takim urządzeniem, jakim skonfigurowano profil – a nie z Twoim prawdziwym komputerem.
+Z perspektywy strony internetowej komunikuje się ona z takim urządzeniem, jakie zostało skonfigurowane w profilu, a nie z Twoim prawdziwym komputerem.
 
 ## Każdy profil jest w pełni odizolowany
 
-Gdy otwierasz dwa profile, każdy z nich działa w całkowicie oddzielnym środowisku. Ich pliki cookie, zapisane dane logowania, historia przeglądania i dane sesji nie mają ze sobą nic wspólnego. Zamknięcie profilu zapisuje wszystko, co się w nim znajduje, a przy następnym uruchomieniu możesz kontynuować dokładnie od miejsca, w którym skończyłeś.
+Gdy otwierasz dwa profile, każdy z nich działa w całkowicie osobnym środowisku. Ich pliki cookie, zapisane loginy, historia przeglądania i dane sesji nie mają ze sobą nic wspólnego. Zamknięcie profilu zapisuje wszystko, co się w nim znajduje, a przy następnym uruchomieniu wracasz dokładnie tam, gdzie skończyłeś.
 
-Ta izolacja sprawia, że Gologin świetnie sprawdza się przy zarządzaniu wieloma kontami. Konta nie współdzielą żadnych informacji na poziomie przeglądarki.
+Ta izolacja sprawia, że Gologin sprawdza się przy zarządzaniu wieloma kontami. Konta nie współdzielą żadnych informacji na poziomie przeglądarki.
 
-## Czy korzystanie z niej różni się od zwykłej przeglądarki?
+## Czy korzystanie z niej wygląda inaczej?
 
-Nie. Orbita bazuje na tej samej otwartoźródłowej podstawie co Chrome, więc korzystanie z niej wygląda identycznie. Zakładki, rozszerzenia, skróty klawiszowe, narzędzia deweloperskie – wszystko działa tak samo. Zmiany wprowadzane przez Orbitę są niewidoczne dla osoby przeglądającej strony.
+Nie. Orbita powstała na tej samej otwartoźródłowej podstawie co Chrome, więc korzystanie z niej wygląda identycznie jak z Chrome. Zakładki, rozszerzenia, skróty klawiszowe, narzędzia deweloperskie — wszystko działa tak samo. Zmiany wprowadzane przez przeglądarkę Orbita są niewidoczne dla osoby przeglądającej strony.
 
-## Aktualizowanie Orbity
+## Wersje przeglądarki
 
-Orbita nadąża za wydaniami kolejnych wersji Chrome. Ma to znaczenie, ponieważ przeglądarka zgłaszająca nieaktualną wersję wygląda dla stron podejrzanie. Gologin regularnie aktualizuje Orbitę, a [pojedyncze profile możesz zaktualizować](/pl/updating-your-browser-profile) do najnowszej wersji przeglądarki z poziomu menu profilu.
+Profile Gologin działają wyłącznie w Orbita, która bazuje na Chromium. Profile oparte na Firefoksie nie są dostępne, a profilu nie można przekonwertować na inną przeglądarkę.
+
+Wersję Orbita wybierasz tylko podczas tworzenia nowego profilu: **Add profile** > **Advanced** > **Orbita version**. Po utworzeniu profilu nie można zmienić jego wersji na inną - można go jedynie zaktualizować do najnowszej wersji: kliknij trzy kropki obok profilu > **Update browser**. Jeśli nie widzisz opcji **Update browser**, profil ma już najnowszą wersję.
+
+## Aktualizowanie Orbita
+
+Orbita nadąża za wydaniami kolejnych wersji Chrome. Ma to znaczenie, ponieważ przeglądarka zgłaszająca nieaktualną wersję wygląda podejrzanie dla stron internetowych. Gologin regularnie aktualizuje Orbita, a [poszczególne profile](/pl/updating-your-browser-profile) możesz zaktualizować do najnowszej wersji przeglądarki z poziomu menu profilu.
 
 <Tip>
-  Jeśli masz starsze profile, warto sprawdzić, czy działają na najnowszej wersji Orbity. Możesz to zrobić z menu trzech kropek obok dowolnego profilu.
+  Jeśli masz starsze profile, warto sprawdzić, czy działają na najnowszej wersji Orbita. Możesz to zrobić z menu trzech kropek obok dowolnego profilu.
 </Tip>
 
-## Orbita na Androidzie
+## Orbita w systemie Android
 
-Gologin ma także aplikację na Android, która używa Orbity jako silnika przeglądarki. Na telefonie Orbita działa natywnie na urządzeniu – oznacza to, że dane z czujników, które mogą wykryć strony internetowe (ruch, bateria, typ ekranu), pochodzą z prawdziwego sprzętu telefonu, a nie z symulacji. Dzięki temu profile mobilne trudniej odróżnić od prawdziwego użytkownika urządzenia mobilnego.
+Gologin ma także aplikację na Android, która używa Orbita jako silnika przeglądarki. Na telefonie Orbita działa natywnie na urządzeniu - dzięki temu dane z czujników, które mogą wykrywać strony internetowe (ruch, bateria, typ ekranu), pochodzą z prawdziwego sprzętu telefonu, a nie z symulacji. Dzięki temu profile mobilne trudniej odróżnić od prawdziwego użytkownika mobilnego.

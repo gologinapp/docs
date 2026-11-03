@@ -1,6 +1,6 @@
 ---
 title: "Node.js SDK"
-description: "Gologin-Profile programmatisch mit dem Node.js SDK ausführen"
+description: "Gologin Profile programmatisch mit dem Node.js SDK ausführen"
 ---
 
 ### Installation
@@ -8,6 +8,8 @@ description: "Gologin-Profile programmatisch mit dem Node.js SDK ausführen"
 ```bash
 npm i gologin
 ```
+
+Erfordert Node.js 20 oder höher. Version 3 des SDK ist ausschließlich ESM: Laden Sie es mit `import`, `require('gologin')` funktioniert nicht.
 
 ### Grundlegende Verwendung
 
@@ -25,43 +27,71 @@ const { status, wsUrl } = await GL.start();
 await GL.stop();
 ```
 
+### Start mit GologinApi
+
+`GologinApi` startet ein Profil und verbindet Puppeteer automatisch. `launch()` gibt einen Puppeteer-`browser` zurück. Übergeben Sie `cloud: true`, um das Profil im [Gologin Cloud Browser](/de/api-reference/cloud-browser/what-is-gologin-cloud-browser) statt in einem lokalen Orbita-Browser auszuführen:
+
+```javascript
+import { GologinApi } from 'gologin';
+
+const gologin = GologinApi({ token: 'your-api-token' });
+
+// local Orbita on this machine
+const { browser } = await gologin.launch({ profileId: 'your-profile-id' });
+
+// or Gologin Cloud Browser
+// const { browser } = await gologin.launch({ cloud: true, profileId: 'your-profile-id' });
+
+const page = await browser.newPage();
+await page.goto('https://example.com');
+
+// close the browser and stop the profile
+await gologin.exit();
+```
+
+Ohne `profileId` erstellt `launch()` zunächst ein neues Profil. `GologinApi` bietet außerdem Hilfsfunktionen wie `createProfileRandomFingerprint()`, `addGologinProxyToProfile()`, `addCookiesToProfile()` und `deleteProfile()`. Ein vollständiges Beispiel finden Sie im [Quickstart](/de/api-reference/introduction/quickstart).
+
 ### Wichtige Parameter
 
-| Parameter | Standard | Beschreibung |
+| Parameter | Standardwert | Beschreibung |
 |---|---|---|
 | `token` | erforderlich | Ihr Gologin API-Token |
 | `profile_id` | erforderlich | ID des Profils, das gestartet werden soll |
 | `executablePath` | auto | Pfad zur Orbita-Browser-Binärdatei |
-| `uploadCookiesToServer` | `false` | Lädt Cookies beim Stoppen des Profils in die Cloud hoch. Setzen Sie den Wert auf `true`, wenn Sie Sitzungen geräteübergreifend beibehalten möchten. |
-| `checkBrowserUpdate` | `true` | Prüft beim Start, ob für die Version dieses Profils ein Orbita-Update verfügbar ist. Setzen Sie den Wert auf `false`, um die aktuelle Version festzuhalten. |
-| `autoUpdateBrowser` | `true` | Lädt neue Orbita-Versionen automatisch herunter. Setzen Sie den Wert auf `false`, um unerwartete Updates zu verhindern. |
+| `uploadCookiesToServer` | `false` | Lädt Cookies beim Beenden des Profils in die Cloud hoch. Setzen Sie den Wert auf `true`, wenn Sie Sitzungen geräteübergreifend beibehalten möchten. |
 | `extra_params` | `[]` | Zusätzliche Chromium-Flags, die an den Browser übergeben werden |
 
-### Profile stoppen
+### Profile beenden
 
 ```javascript
-// Stop and sync to cloud (default)
+// Stop and sync to cloud
 await GL.stop();
 
-// Stop without syncing any data to cloud
-await GL.stop({ posting: false });
+// Stop without syncing profile data to cloud
+await GL.stopLocal({ posting: false });
 ```
 
-Hinweis: `posting: false` verhindert, dass Profildaten auf die Gologin-Server hochgeladen werden. Verwenden Sie diese Option auf Servern, auf denen Sie keine Cloud-Synchronisierung möchten.
+Schließen Sie zuerst den Browser in Ihrem Automatisierungstool, zum Beispiel mit `browser.close()`. `stop()` akzeptiert keine Optionen und lädt das Profil immer zu Gologin hoch. `stopLocal({ posting: false })` beendet die Sitzung, ohne Profildaten hochzuladen. Verwenden Sie diese Methode auf Servern, auf denen Sie keine Cloud-Synchronisierung wünschen. Cookies werden weiterhin hochgeladen, wenn Sie `uploadCookiesToServer: true` gesetzt haben.
 
 ### Orbita-Browserversionen verwalten
 
+Beim Start eines Profils prüft das SDK, welche Orbita-Version der User-Agent des Profils benötigt. Ist diese Version noch nicht in `~/.gologin/browser` vorhanden, lädt das SDK sie herunter, andernfalls verwendet es die installierte Kopie. Um einen bestimmten Build auszuführen, übergeben Sie `executablePath`. Die Optionen `autoUpdateBrowser` (Standardwert `false`) und `checkBrowserUpdate` werden weiterhin akzeptiert, ändern dieses Verhalten im aktuellen SDK (3.0.7) jedoch nicht.
+
+Um Orbita im Voraus herunterzuladen, rufen Sie `checkAndDownloadBrowserByOpts()` auf einer `GoLogin`-Instanz auf. Dies ist eine Methode und kein separater Export:
+
 ```javascript
-import { checkAndDownloadBrowserByOpts } from 'gologin';
+import { GoLogin } from 'gologin';
+
+const GL = new GoLogin({ token: 'your-api-token' });
 
 // Pre-download the latest Orbita version
-await checkAndDownloadBrowserByOpts({ lastActualCount: 1 });
+await GL.checkAndDownloadBrowserByOpts({ lastActualCount: 1 });
 
 // Pre-download specific versions
-await checkAndDownloadBrowserByOpts({ majorVersions: [142, 143] });
+await GL.checkAndDownloadBrowserByOpts({ majorVersions: [142, 143] });
 ```
 
-Verwenden Sie `checkAndDownloadBrowserByOpts`, bevor Sie Profile parallel starten, um mehrere gleichzeitige Downloads zu vermeiden.
+Ohne Optionen werden die 5 neuesten Versionen heruntergeladen. Verwenden Sie die Methode, bevor Sie Profile parallel starten, um mehrere gleichzeitige Downloads zu vermeiden.
 
 ### Mehr als 100 Profile parallel ausführen
 
@@ -96,15 +126,15 @@ async function processQueue() {
 ```
 
 **Wichtig für Server:**
-- Begrenzen Sie die Anzahl gleichzeitiger Profilstarts (zu Beginn werden 10-20 empfohlen)
+- Begrenzen Sie die Anzahl gleichzeitiger Profilstarts (zum Einstieg werden 10-20 empfohlen)
 - Laden Sie Orbita-Versionen vor dem Start herunter
 - Unter Linux: Installieren Sie Xvfb und setzen Sie `DISPLAY=:99`
 - Erhöhen Sie die Limits für Dateideskriptoren: `ulimit -n 65536`
-- Behalten Sie den Arbeitsspeicher im Blick: Jedes Profil benötigt ca. 300-500 MB
+- Überwachen Sie den Arbeitsspeicher: Jedes Profil benötigt ca. 300-500 MB
 
 ### Debugging
 
-Setzen Sie die folgende Umgebungsvariable, um ausführliche Protokolle zu erhalten:
+Setzen Sie die Umgebungsvariable für ausführliche Protokollierung:
 
 ```bash
 DEBUG=gologin node your-script.js

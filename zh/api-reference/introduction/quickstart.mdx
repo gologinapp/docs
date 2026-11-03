@@ -2,13 +2,25 @@
 title: "快速入门"
 ---
 
-本指南将帮助您完成所有准备工作，开始使用 Gologin API。我们将介绍如何使用我们的 API 客户端，以及如何发起您的第一个 API 请求。我们还会告诉您接下来可以去哪里查找所需的全部信息，帮助您充分发挥我们强大的 REST API 的功能。
+本指南将帮助您完成所有设置,并开始使用 Gologin API。我们将介绍如何使用我们的 API 客户端,以及如何发出您的第一个 API 请求。我们还会告诉您接下来可以去哪里查找所需的全部信息,以便充分利用我们功能强大的 REST API。
 
 <Note>
-  在向 Gologin API 发起请求之前，您需要先从控制面板中获取您的 API 密钥。您可以在[设置 » API](https://app.gologin.com/personalArea/TokenApi)中找到它。
+  在向 Gologin API 发出请求之前,您需要先获取一个 API 令牌。
+  在 Gologin 应用中,打开 [API & MCP](https://app.gologin.com/personalArea/TokenApi),进入 **API** 标签页,然后点击 **新代币**。
 </Note>
 
-## 发起您的第一个匿名抓取请求
+## 发出您的第一个请求
+
+在向 `https://api.gologin.com` 发送的每个请求的 `Authorization` 请求头中携带您的令牌。以下调用会列出您账户中的配置文件:
+
+```bash
+curl https://api.gologin.com/browser/v2 \
+  -H "Authorization: Bearer YOUR_API_TOKEN"
+```
+
+响应中包含一个 `profiles` 数组和 `allProfilesCount`(配置文件总数)。每页最多返回 30 个配置文件:在 URL 中添加 `?page=2` 即可获取下一页。有关全部参数,请参阅[获取所有配置文件](https://gologin.com/docs/api-reference/profile/get-all-profiles)。
+
+## 发出您的第一个匿名抓取请求
 
 <CodeGroup>
 
@@ -137,13 +149,13 @@ GL_API_TOKEN=[YOUR_GOLOGIN_API_TOKEN] python3 filename.py
 
 </CodeGroup>
 
-## 下一步
+## 接下来做什么?
 
-太好了，您已经配置好 API 客户端，并完成了第一次 API 请求。以下链接可以在您深入使用 Gologin API 时提供帮助：
+太棒了,您现在已经设置好 API 客户端,并发出了第一个 API 请求。在您进一步探索 Gologin API 时,以下链接可能会对您有所帮助:
 
-- [在设置 \> API 中获取您的 API 密钥](https://app.gologin.com/personalArea/TokenApi)
-- [Gologin Web Access CLI](/zh/cli-tools/web-access) — 用于抓取和浏览器自动化的统一 CLI（无需编写代码）
-- [Agent Browser CLI](/zh/cli-tools/agent-browser) — 专为 AI 智能体打造的云端浏览器 CLI
-- [Local Agent Browser CLI](/zh/cli-tools/local-agent-browser) — 支持配置文件和运行手册的本地 Orbita CLI
+- [在 API & MCP 中创建 API 令牌](https://app.gologin.com/personalArea/TokenApi)
+- [Gologin Web Access CLI](/zh/cli-tools/web-access) — 用于抓取和浏览器自动化的统一 CLI(无需编写代码)
+- [Agent Browser CLI](/zh/cli-tools/agent-browser) — 专为 AI 智能体打造的浏览器 CLI,可在云端或您的本机上运行
+- [Agent Browser CLI:本地运行时](/zh/cli-tools/local-agent-browser) — 本地 Orbita 配置文件、运行手册和批量任务
 - [AI Skills](/zh/api-reference/ai-integrations/ai-skills) — 适用于 Claude Code 的即插即用技能
 - [MCP Server](/zh/api-reference/ai-integrations/mcp-server) — 通过 AI 对话管理配置文件

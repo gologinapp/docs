@@ -1,51 +1,55 @@
 ---
 title: "User-Agent trên Android"
-description: "Hồ sơ Android luôn báo cáo Android 10; K trong User-Agent, bất kể bạn chọn phiên bản nào. Dưới đây là lý do và vì sao đây là hành vi bình thường."
+description: "Hồ sơ Android luôn báo Android 10; K trong User-Agent, bất kể bạn chọn phiên bản nào. Đây là lý do và vì sao điều này là bình thường."
 ---
 
-Nếu bạn tạo một hồ sơ Android trong Gologin và kiểm tra User-Agent của nó, bạn sẽ thấy nó luôn báo cáo `Android 10; K`, ngay cả khi hồ sơ được đặt là Android 14, 15 hoặc 16. Chuỗi này có dạng như sau:
+Nếu bạn tạo một hồ sơ Android trong Gologin và kiểm tra User-Agent của hồ sơ đó, bạn sẽ thấy nó luôn hiển thị `Android 10; K`, ngay cả khi hồ sơ được đặt là Android 14, 15 hoặc 16. Chuỗi này trông như sau:
 
 ```text
 Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/... Mobile Safari/537.36
 ```
 
-Đây là hành vi bình thường, không phải lỗi. **Mọi trình duyệt dựa trên Chrome hiện đại trên Android đều báo cáo giống nhau.**
+Đây là hành vi bình thường, không phải lỗi. **Mọi trình duyệt nền tảng Chrome hiện đại trên Android đều báo cùng một giá trị như vậy.**
 
 ## Vì sao điều này xảy ra
 
-Bắt đầu từ Chrome 110 vào đầu năm 2023, Google đã đưa ra một thay đổi gọi là **User-Agent Reduction** (Rút gọn User-Agent). Để khiến trình duyệt khó bị theo dõi và nhận dạng bằng dấu vân tay hơn, Chrome đã ngừng chia sẻ phiên bản Android và mẫu thiết bị thực trong User-Agent. Thay vào đó, Chrome hiện gửi các giá trị giữ chỗ cố định cho tất cả mọi người:
+Bắt đầu từ Chrome 110 vào đầu năm 2023, Google đã đưa ra một thay đổi gọi là **User-Agent Reduction** (Rút gọn User-Agent). Để khiến trình duyệt khó bị theo dõi và nhận dạng vân tay hơn, Chrome đã ngừng chia sẻ phiên bản Android và mẫu thiết bị thực trong User-Agent. Thay vào đó, Chrome hiện gửi các giá trị giữ chỗ cố định cho tất cả mọi người:
 
-- Phiên bản Android được cố định là `Android 10`
+- Phiên bản Android bị cố định ở `Android 10`
 - Mẫu thiết bị được thay bằng chữ cái `K`
 - Các số phiên bản phụ của Chrome được đặt thành `0.0.0`
 
-Chỉ có số phiên bản chính của Chrome vẫn được cập nhật theo từng bản phát hành. Mọi phần còn lại trong đoạn chuỗi đó đều giống nhau trên mọi thiết bị.
+Chỉ có số phiên bản chính của Chrome vẫn được cập nhật theo mỗi bản phát hành. Mọi phần còn lại trong đoạn chuỗi đó đều giống nhau trên mọi thiết bị.
 
-Trình duyệt Android của Gologin dựa trên Chromium, nên tuân theo cùng một tiêu chuẩn. Chrome, Edge, Opera và Samsung Internet cũng đều hiển thị `Android 10; K`. Điều này không riêng gì Gologin - đây là cách web di động hiện đại vận hành.
+Trình duyệt Android của Gologin dựa trên Chromium, nên cũng tuân theo tiêu chuẩn này. Chrome, Edge, Opera và Samsung Internet đều hiển thị `Android 10; K`. Điều này không riêng gì Gologin - đó là cách web di động hiện đại vận hành.
 
 <Info>
   `K` không phải là phiên bản Android hay lỗi đánh máy. Đó là giá trị giữ chỗ mà Chrome hiện dùng thay cho mẫu thiết bị thực.
 </Info>
 
-## Vì sao điều này thực ra có lợi cho bạn
+## Vì sao điều này thực sự có lợi cho bạn
 
-Vì gần như mọi người dùng Chrome trên Android trên thế giới hiện đều báo cáo `Android 10; K`, hồ sơ của bạn hòa lẫn vào đám đông. Nếu Gologin báo cáo phiên bản Android thực, hồ sơ của bạn sẽ nổi bật so với lưu lượng truy cập thông thường và trông bất thường đối với các trang web. Khớp với hành vi tiêu chuẩn chính là điều bạn cần ở một hồ sơ trình duyệt phải trông như một khách truy cập bình thường.
+Vì hầu hết người dùng Chrome trên Android trên thế giới hiện đều báo `Android 10; K`, hồ sơ của bạn hòa lẫn vào đám đông. Nếu Gologin báo phiên bản Android thực, hồ sơ của bạn sẽ nổi bật so với lưu lượng truy cập thông thường và trông bất thường đối với các trang web. Việc khớp với hành vi tiêu chuẩn chính là điều bạn cần ở một hồ sơ trình duyệt phải trông giống một khách truy cập bình thường.
 
 <Check>
-  Một hồ sơ Android hiển thị `Android 10; K` đang hoạt động đúng và trông giống một thiết bị Android thực điển hình.
+  Hồ sơ Android hiển thị `Android 10; K` đang hoạt động đúng và trông giống một thiết bị Android thật điển hình.
 </Check>
 
-Những trang web thực sự cần biết phiên bản Android hoặc mẫu thiết bị thực hiện nay yêu cầu thông tin này qua một kênh mới hơn, thân thiện với quyền riêng tư hơn (gọi là Client Hints) thay vì đọc từ User-Agent. Vì vậy, dù User-Agent ghi `Android 10`, bạn không mất gì cả, và lựa chọn phiên bản Android của bạn vẫn được áp dụng ở những nơi quan trọng.
+Các trang web thực sự cần biết phiên bản Android hoặc mẫu thiết bị thực hiện yêu cầu thông tin này qua một kênh mới hơn, thân thiện hơn với quyền riêng tư (gọi là Client Hints) thay vì đọc từ User-Agent. Vì vậy, dù User-Agent ghi `Android 10`, bạn không mất gì cả, và lựa chọn phiên bản Android của bạn vẫn được áp dụng ở những nơi quan trọng.
+
+## Tất cả hồ sơ Android của tôi có giống nhau không?
+
+Không. Các hồ sơ khác nhau về độ phân giải màn hình, WebGL, canvas và thông số phần cứng - chỉ chuỗi User-Agent là giống nhau, giống như trên các thiết bị Android thật.
 
 ## Cách tự kiểm tra
 
 Bạn có thể xác nhận điều này trên bất kỳ thiết bị Android thật nào bằng cách so sánh song song một hồ sơ Gologin với trình duyệt Chrome thông thường của bạn.
 
-Mở [iphey.com](https://iphey.com) hoặc bất kỳ công cụ kiểm tra dấu vân tay đáng tin cậy nào khác trong trình duyệt Chrome thông thường của bạn và chuyển sang tab **trình duyệt**. Sau đó mở cùng trang đó trong một hồ sơ Android của Gologin. Hãy xem dòng **Đại lý người dùng** ở cả hai.
+Mở [iphey.com](https://iphey.com) hoặc bất kỳ công cụ kiểm tra vân tay đáng tin cậy nào khác trong trình duyệt Chrome thông thường của bạn và chuyển sang tab **trình duyệt**. Sau đó mở cùng trang đó trong một hồ sơ Android của Gologin. Xem dòng **Đại lý người dùng** ở cả hai nơi.
 
-Bạn sẽ thấy giá trị `Android 10; K` hoàn toàn giống nhau ở cả hai trình duyệt, dù chúng đang chạy trên một thiết bị Android hiện đại. Điểm khác biệt duy nhất là số phiên bản Chrome, vốn chỉ phản ánh bản phát hành của từng trình duyệt.
+Bạn sẽ thấy cùng một giá trị `Android 10; K` ở cả hai trình duyệt, dù chúng đang chạy trên một thiết bị Android hiện đại. Điểm khác biệt duy nhất là số phiên bản Chrome, vốn chỉ phản ánh bản phát hành của từng trình duyệt.
 
-Vì cả hai trình duyệt đều báo cáo giống nhau, cách kiểm tra song song này là cách dễ nhất để thấy rằng Gologin đang làm đúng những gì một trình duyệt Chrome bình thường làm.
+Vì cả hai trình duyệt đều báo cùng một giá trị, cách so sánh song song này là cách dễ nhất để thấy rằng Gologin đang làm đúng như một trình duyệt Chrome bình thường.
 
 <Columns cols={2}>
   <Column>

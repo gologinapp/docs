@@ -2,7 +2,7 @@
 title: "Casos de uso do Web Unlocker"
 ---
 
-O Web Unlocker é uma Scraping API: você envia uma URL e ele retorna o HTML totalmente renderizado. Esta página mostra as formas mais comuns de usá-lo.
+O Web Unlocker é uma API de scraping: você envia uma URL e ele retorna o HTML totalmente renderizado. Esta página mostra as formas mais comuns de aproveitar esse recurso.
 
 ---
 
@@ -37,20 +37,24 @@ const html = await fetch(
 console.log(html);
 ```
 
-Sem navegador para iniciar, sem proxy para configurar, sem precisar lutar contra o Cloudflare. Com uma única chamada, você recebe a página.
+Sem navegador para abrir, sem proxy para configurar, sem Cloudflare para enfrentar. Uma única chamada e você recebe a página.
 
 **Ideal para:**
 
 - Verificar preços no site de um concorrente
 - Coletar vagas de emprego, avaliações ou dados de produtos
 - Monitorar alterações em páginas
-- Scripts pontuais de coleta de dados
+- Scripts de coleta de dados pontuais
 
 ---
 
 ## Envie conteúdo para uma IA
 
-O Web Unlocker retorna HTML bruto. Passe esse HTML para um LLM para extrair dados estruturados, resumir conteúdo ou responder perguntas sobre a página, sem necessidade de lógica de parsing.
+O Web Unlocker retorna HTML bruto. Passe esse HTML para um LLM para extrair dados estruturados, resumir conteúdo ou responder perguntas sobre a página, sem precisar escrever lógica de parsing.
+
+<Tip>
+Para enviar menos marcação ao modelo, adicione `format=markdown` à requisição e receba a página em Markdown em vez de HTML.
+</Tip>
 
 ### Python \+ OpenAI
 
@@ -91,7 +95,7 @@ const html = await fetch(
 
 const client = new Anthropic();
 const message = await client.messages.create({
-  model: "claude-opus-4-5",
+  model: "claude-opus-5-5",
   max_tokens: 1024,
   messages: [
     {
@@ -150,7 +154,7 @@ messages = [
 
 while True:
     response = client.messages.create(
-        model="claude-opus-4-5",
+        model="claude-opus-5-5",
         max_tokens=1024,
         tools=tools,
         messages=messages
@@ -174,7 +178,7 @@ while True:
     messages.append({"role": "user", "content": tool_results})
 ```
 
-O agente decide quando fazer scraping e qual URL buscar. O Web Unlocker cuida da obtenção em si.
+O agente decide quando fazer scraping e qual URL buscar. O Web Unlocker cuida da recuperação em si.
 
 **Ideal para:**
 
@@ -185,7 +189,7 @@ O agente decide quando fazer scraping e qual URL buscar. O Web Unlocker cuida da
 
 ---
 
-## Faça scraping de várias páginas de uma vez
+## Faça scraping de várias páginas ao mesmo tempo
 
 Execute requisições de forma concorrente para coletar dados de várias URLs em paralelo.
 
@@ -219,26 +223,15 @@ for url, html in results:
 
 **Ideal para:**
 
-- Fazer scraping de catálogos de produtos completos ou páginas de listagem
+- Fazer scraping de catálogos de produtos ou páginas de listagem inteiras
 - Coleta de dados em massa para conjuntos de dados de treinamento
 - Monitorar muitas páginas simultaneamente
 
 ---
 
-## Resumo
-
-| Caso de uso | O que você faz | O que você recebe |
-| --- | --- | --- |
-| Scraping de uma única página | GET com o parâmetro URL | HTML renderizado |
-| Envio para um LLM | Scraping → envio ao modelo | Dados extraídos ou resumo |
-| Ferramenta para agente de IA | O agente a chama sob demanda | Conteúdo da web em tempo real |
-| Scraping em massa | Requisições concorrentes | HTML de cada URL |
-
----
-
 ## Use pela CLI
 
-Dispense a escrita de código: use a CLI Gologin Web Access para fluxos de scraping comuns:
+Dispense a escrita de código: use a CLI Gologin Web Access para os fluxos de scraping mais comuns:
 
 ```bash
 npm install -g gologin-web-access
@@ -264,7 +257,7 @@ gologin-web-access extract https://example.com/product/123 --schema ./product-sc
 gologin-web-access search "best antidetect browser 2026" --limit 10
 ```
 
-Consulte [Web Access CLI](/pt/cli-tools/web-access) para ver a referência completa de comandos.
+Consulte a [Web Access CLI](/pt/cli-tools/web-access) para ver a referência completa de comandos.
 
 ---
 
@@ -272,10 +265,10 @@ Consulte [Web Access CLI](/pt/cli-tools/web-access) para ver a referência compl
 
 | Caso de uso | O que você faz | O que você recebe |
 | --- | --- | --- |
-| Scraping de uma única página | GET com o parâmetro URL | HTML renderizado |
-| Envio para um LLM | Scraping → envio ao modelo | Dados extraídos ou resumo |
-| Ferramenta para agente de IA | O agente a chama sob demanda | Conteúdo da web em tempo real |
+| Scraping de uma única página | GET com o parâmetro de URL | HTML renderizado |
+| Envio para um LLM | Scraping → passar para o modelo | Dados extraídos ou resumo |
+| Ferramenta para agente de IA | O agente faz a chamada sob demanda | Conteúdo da web em tempo real |
 | Scraping em massa | Requisições concorrentes | HTML de cada URL |
 | Fluxos de trabalho na CLI | Comandos `gologin-web-access` | Texto, markdown, JSON e resultados em lote |
 
-Consulte o [Quickstart](/pt/web-unlocker-quick-start) para fazer sua primeira requisição.
+Consulte o [Início rápido](/pt/web-unlocker-quick-start) para fazer sua primeira requisição.

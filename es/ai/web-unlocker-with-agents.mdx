@@ -6,14 +6,14 @@ description: "Cómo usar Gologin Web Unlocker como herramienta de scraping para 
 Gologin Web Unlocker es una API de scraping que devuelve el HTML completamente renderizado de cualquier URL. Para los agentes de IA, esto significa acceso web fiable sin necesidad de orquestar un navegador: una sola llamada HTTP por página.
 
 <Tip>
-  **¿No quieres escribir código?** Usa la [Web Access CLI](/es/cli-tools/web-access) o el [Scraping Skill](/es/api-reference/ai-integrations/ai-skills) para darle a tu agente capacidades de scraping desde el primer momento.
+  **¿No quieres escribir código?** Usa la [Web Access CLI](/es/cli-tools/web-access) o el [Scraping Skill](/es/api-reference/ai-integrations/ai-skills) para dotar a tu agente de capacidades de scraping desde el primer momento.
 </Tip>
 
 ---
 
-## Pasar el contenido de una página a un LLM
+## Pasa el contenido de una página a un LLM
 
-Haz scraping de una página y pasa el HTML a un modelo para extraer datos, resumir o analizar, sin necesidad de lógica de parseo.
+Haz scraping de una página y pasa el HTML a un modelo para extraer información, resumirla o analizarla, sin necesidad de lógica de parseo.
 
 ### Python + Claude
 
@@ -29,8 +29,8 @@ html = requests.get(
 
 client = anthropic.Anthropic()
 message = client.messages.create(
-    model="claude-sonnet-4-5-20250514",
-    max_tokens=1024,
+    model="claude-sonnet-5-5",
+    max_tokens=16000,
     messages=[
         {
             "role": "user",
@@ -39,7 +39,8 @@ message = client.messages.create(
     ]
 )
 
-print(message.content[0].text)
+# the response can also contain thinking blocks, so print only the text
+print("".join(block.text for block in message.content if block.type == "text"))
 ```
 
 ### JavaScript + Claude
@@ -55,8 +56,8 @@ const html = await fetch(
 
 const client = new Anthropic();
 const message = await client.messages.create({
-  model: "claude-sonnet-4-5-20250514",
-  max_tokens: 1024,
+  model: "claude-sonnet-5-5",
+  max_tokens: 16000,
   messages: [
     {
       role: "user",
@@ -65,14 +66,15 @@ const message = await client.messages.create({
   ],
 });
 
-console.log(message.content[0].text);
+// the response can also contain thinking blocks, so print only the text
+console.log(message.content.find((block) => block.type === "text")?.text);
 ```
 
 ---
 
-## Dar a tu agente una herramienta de scraping
+## Dale a tu agente una herramienta de scraping
 
-Define una herramienta `scrape` respaldada por Web Unlocker. El agente decide cuándo obtener una página y qué URL scrapear.
+Define una herramienta `scrape` basada en Web Unlocker. El agente decide cuándo obtener una página y qué URL consultar.
 
 ```python
 import requests
@@ -107,14 +109,14 @@ messages = [
 
 while True:
     response = client.messages.create(
-        model="claude-sonnet-4-5-20250514",
-        max_tokens=1024,
+        model="claude-sonnet-5-5",
+        max_tokens=16000,
         tools=tools,
         messages=messages
     )
 
-    if response.stop_reason == "end_turn":
-        print(response.content[0].text)
+    if response.stop_reason != "tool_use":
+        print("".join(block.text for block in response.content if block.type == "text"))
         break
 
     tool_results = []
@@ -131,11 +133,11 @@ while True:
     messages.append({"role": "user", "content": tool_results})
 ```
 
-El agente decide cuándo hacer scraping y qué URL obtener. Web Unlocker se encarga de la obtención de los datos: renderizado de JavaScript, elusión de sistemas antibot, rotación de proxies y resolución de CAPTCHA.
+El agente decide cuándo hacer scraping y qué URL consultar. Web Unlocker se encarga de la obtención de la página: renderizado de JavaScript, evasión de sistemas antibot, rotación de proxies y resolución de CAPTCHA.
 
 ---
 
-## Usar el SDK de Web Unlocker
+## Usa el SDK de Web Unlocker
 
 Para agentes en TypeScript/Node.js, el SDK `gologin-webunlocker` ofrece métodos tipados:
 
@@ -164,7 +166,7 @@ Consulta la [referencia del SDK de Web Unlocker](/es/scraping-api-sdk-and-cli) p
 
 ---
 
-## Usar la CLI
+## Usa la CLI
 
 Para agentes que ejecutan comandos de shell (como Claude Code), la CLI es el camino más sencillo:
 
@@ -189,21 +191,21 @@ Consulta la [referencia de Web Access CLI](/es/cli-tools/web-access) para ver to
 
 ---
 
-## Patrones comunes para agentes
+## Patrones habituales con agentes
 
 | Patrón | Cómo |
 |---|---|
 | Agente de investigación | El agente llama a la herramienta `scrape` → lee las páginas → sintetiza los hallazgos |
-| Monitoreo de precios | `batch-scrape` de páginas de producto de forma programada → comparar con la ejecución anterior |
-| Inteligencia competitiva | `crawl` de sitios de la competencia → pasar al LLM para su análisis |
-| Enriquecimiento de leads | `scrape-json` de páginas de empresas → extraer datos estructurados |
-| Agregación de contenido | `search` + `scrape-text` → crear feeds curados |
+| Monitorización de precios | `batch-scrape` de páginas de producto de forma programada → comparación con la ejecución anterior |
+| Inteligencia competitiva | `crawl` de los sitios de la competencia → envío al LLM para su análisis |
+| Enriquecimiento de leads | `scrape-json` de páginas de empresas → extracción de datos estructurados |
+| Agregación de contenido | `search` + `scrape-text` → creación de feeds seleccionados |
 
 ---
 
 ## Relacionado
 
-- [Qué es Web Unlocker](/es/what-is-web-unlocker) — descripción general del producto y precios
-- [SDK de Web Unlocker](/es/scraping-api-sdk-and-cli) — referencia del SDK de TypeScript
-- [Web Access CLI](/es/cli-tools/web-access) — CLI unificada
-- [AI Skills](/es/api-reference/ai-integrations/ai-skills) — skills listos para usar con Claude Code
+- [Qué es Web Unlocker](/es/what-is-web-unlocker): descripción general del producto y precios
+- [SDK de Web Unlocker](/es/scraping-api-sdk-and-cli): referencia del SDK de TypeScript
+- [Web Access CLI](/es/cli-tools/web-access): CLI unificada
+- [AI Skills](/es/api-reference/ai-integrations/ai-skills): skills listos para usar con Claude Code

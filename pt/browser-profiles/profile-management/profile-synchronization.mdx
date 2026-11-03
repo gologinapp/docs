@@ -2,29 +2,31 @@
 title: "Sincronização de perfis"
 ---
 
-A **sincronização de perfis** no Gologin permite que seus perfis de navegador, com todos os fingerprints, cookies, armazenamento local e extensões, sejam salvos automaticamente na nuvem. Isso significa que:
+A **sincronização de perfis** no Gologin permite que seus perfis de navegador, com todas as impressões digitais, cookies, armazenamento local e extensões, sejam salvos automaticamente na nuvem. Isso significa que:
 
 - Você pode **acessar o mesmo perfil pela web ou em qualquer dispositivo** com o Gologin instalado
 - Os membros da sua equipe podem **colaborar em perfis compartilhados**
-- Os perfis permanecem **consistentes**, independentemente de onde são iniciados
+- Os perfis permanecem **consistentes**, independentemente de onde forem iniciados
 
 ## Como a sincronização funciona
 
 Quando um perfil é fechado corretamente, o Gologin envia os dados mais recentes do perfil para os servidores na nuvem. Na próxima vez que o perfil for iniciado, o estado salvo será restaurado. Isso garante que os dados da sessão, os cookies e o estado do navegador permaneçam consistentes.
 
+Os perfis ficam armazenados na nuvem do Gologin e vinculados à sua conta, por isso continuam disponíveis se você reinstalar o app ou fizer login em outro computador. Os dados de sessão que não foram sincronizados antes do fechamento podem ser perdidos.
+
 ## Como usar seus perfis com segurança
 
 - **Certifique-se de que o processo de sincronização foi concluído antes de desligar.**\
   O status deve indicar **pronto** e o botão **Executar** deve estar ativo no perfil. Isso significa que os dados do perfil foram sincronizados.
-- **Feche os perfis antes de desligar o computador ou fechar o aplicativo.**\
-  Feche os perfis **fechando a janela do perfil** ou clicando em **Parar** no aplicativo para concluir a sincronização.
-- **Não use o mesmo perfil em diferentes dispositivos ao mesmo tempo.**\
-  Embora seja possível, isso não é recomendado: apenas um dos perfis iniciados simultaneamente pode ser sincronizado com os servidores na nuvem. Isso pode gerar discrepâncias entre o que é salvo no perfil e o que o site espera encontrar, o que pode reduzir seu trust score.
+- **Feche os perfis antes de desligar o computador ou fechar o app.**\
+  Feche os perfis **fechando a janela do perfil** ou clicando em **Parar** no app para concluir a sincronização.
+- **Não use um mesmo perfil em dispositivos diferentes ao mesmo tempo.**\
+  Embora seja possível, isso não é recomendado: apenas um dos perfis iniciados simultaneamente poderá ser sincronizado com os servidores na nuvem. Isso pode gerar discrepâncias entre o que é salvo no perfil e o que o site espera ver, o que pode reduzir sua pontuação de confiança.
 - **Não feche o perfil enquanto estiver sem conexão com a Internet.**\
   Se a sincronização não for concluída, você pode perder o progresso atual e precisará recuperar os dados de sessões anteriores.
 
 <Frame>
-  ![Aguardar o status pronto na sincronização do perfil](/images/profile_sync_wait_for_ready.gif)
+  ![Profile Sync Wait For Ready](/images/profile_sync_wait_for_ready.gif)
 </Frame>
 
 ## Regras de segurança da sincronização
@@ -35,6 +37,6 @@ Para garantir que os dados do perfil permaneçam intactos, siga estas regras:
 - Aguarde até que o status do perfil mostre pronto
 - Sempre feche os perfis antes de desligar o computador
 - Não execute o mesmo perfil em vários dispositivos ao mesmo tempo
-- Evite fechar os perfis quando a conexão com a internet estiver instável
+- Evite fechar os perfis quando sua conexão com a Internet estiver instável
 
 Executar o mesmo perfil em dispositivos diferentes ao mesmo tempo pode gerar inconsistências nos dados de sessão armazenados.

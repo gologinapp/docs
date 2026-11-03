@@ -2,16 +2,58 @@
 title: "Zahlungen & Abonnement"
 ---
 
-### Ich erhalte die Fehlermeldung „You've reached max payment attempts (10)"
+### Meine Kartenzahlung wurde abgelehnt
 
-Sie haben 10-mal versucht, ein Abonnement zu kaufen, die Zahlung wurde jedoch nicht abgeschlossen, und Sie wurden für 24 Stunden für weitere Versuche gesperrt. Wir können diese Sperre nicht aufheben. Versuchen Sie in diesem Fall bitte morgen erneut, das Abonnement zu kaufen. Eine andere Zahlungsmethode kann dabei helfen. Falls Sie dringend weiter mit Ihren Profilen arbeiten müssen, wenden Sie sich an den Support.
+Die meisten Ablehnungen gehen auf die Bank zurück, die die Karte ausgestellt hat. Das Zahlungsformular zeigt den Grund an, den es erhält:
 
-### Ich habe mit Kryptowährung zu wenig bezahlt
+| Meldung | Bedeutung | Was zu tun ist |
+| :-- | :-- | :-- |
+| Your card has insufficient funds. | Auf der Karte ist nicht genug Guthaben vorhanden | Prüfen Sie das Guthaben und den zu zahlenden Betrag und versuchen Sie es dann erneut |
+| Your card was declined. | Die Bank hat die Zahlung ohne Angabe eines Grundes abgelehnt | Wenden Sie sich an Ihre Bank oder erlauben Sie Online- und internationale Zahlungen in Ihrer Banking-App und versuchen Sie es dann erneut |
+| Your card does not support this type of purchase. | Die Bank erlaubt diese Art von Zahlung mit der Karte nicht | Wenden Sie sich an Ihre Bank oder verwenden Sie eine andere Karte |
+| ... limit was exceeded. Contact your card issuer. | Sie haben ein von Ihrer Bank festgelegtes Limit erreicht | Wenden Sie sich an Ihre Bank oder verwenden Sie eine andere Karte |
+| Your card number is incorrect. / Your card has expired. | Die Kartendaten sind falsch oder die Karte ist nicht mehr gültig | Prüfen Sie die Angaben oder verwenden Sie eine andere Karte |
 
-Wenn Sie zu wenig bezahlt haben, werden das Abonnement oder das Proxy-Datenvolumen nicht automatisch hinzugefügt. Sie können die Zahlung aber noch innerhalb von 60 Minuten nach Beginn des Zahlungsvorgangs abschließen, indem Sie dieselbe Empfänger-Wallet-Adresse verwenden. Prüfen Sie, ob der Cryptomus-Zahlungslink noch aktiv ist: Wenn dort Ihr aktueller Zahlungsbetrag angezeigt wird und weitere Zahlungen angefordert werden, können Sie die Zahlung abschließen. Wenn das Zahlungsfenster abgelaufen ist und Cryptomus Sie auffordert, den Shop zu kontaktieren, wenden Sie sich bitte an den Gologin-Support.
+Gologin kann stattdessen auch eine eigene Meldung anzeigen: **Payment error. Try later or use another card** oder **Payment failed. Please try again or contact support team for assistance.**
 
-### Ich sehe auf der Zahlungsseite „Your payment is blocked", nachdem ich mit Kryptowährung bezahlt habe
+Wenn die Zahlung mit der Karte weiterhin fehlschlägt, zahlen Sie mit einer anderen Karte, per PayPal oder mit Kryptowährung – siehe [Zahlungsmethoden](/de/general/account-and-billing/payment-methods). Jeder fehlgeschlagene Versuch zählt zum Limit von 10 Zahlungsversuchen pro Tag.
 
-Diese Meldung bedeutet, dass Ihre Transaktion von unserem Zahlungsdienstleister Cryptomus markiert und blockiert wurde, bevor sie uns erreicht hat. Gologin hat Ihr Geld nicht erhalten und war an der Entscheidung, die Zahlung zu blockieren, nicht beteiligt.
+### Die Bank fordert mich auf, die Zahlung zu bestätigen (3D Secure)
 
-Cryptomus arbeitet mit eigenen Compliance-Verfahren, und wir erfahren nicht, aus welchem konkreten Grund eine Transaktion markiert wird. Bitte wenden Sie sich direkt an den **Cryptomus-Kundensupport**. Nur dort kann der Status Ihrer Zahlung geklärt werden, und dort erhalten Sie auch Auskunft zu den nächsten Schritten, etwa einer Freigabe oder Rückerstattung. Sobald das Problem dort gelöst ist, können Sie sich an den Gologin-Support wenden, um sich bestätigen zu lassen, dass Ihr Abonnement aktiviert ist.
+Die meisten Banken verlangen, dass Sie eine Online-Zahlung in der Banking-App oder mit einem Code per SMS bestätigen. Bestätigen Sie die Zahlung, ohne das Zahlungsfenster zu schließen.
+
+Wenn **3D Secure is unavailable. Try another card or contact support** angezeigt wird, unterstützt Ihre Karte diese Prüfung nicht. Verwenden Sie eine andere Karte oder eine andere Zahlungsmethode.
+
+### Die Schaltfläche „Pay now“ reagiert nicht oder die Tarife bzw. das Zahlungsfenster werden nicht geladen
+
+Das passiert meist in älteren Versionen der Desktop-App.
+
+1. Schließen Sie das Zahlungsfenster und öffnen Sie es erneut.
+2. Beenden Sie Gologin vollständig über die Taskleiste (System Tray) und starten Sie die App erneut.
+3. Aktualisieren Sie Gologin auf die neueste Version von [gologin.com/download](https://gologin.com/download).
+
+Sie können auch in der Web-App unter [app.gologin.com](https://app.gologin.com) bezahlen. Wenn die Seite nicht korrekt geladen wird, drücken Sie **Ctrl+Shift+R** (unter macOS **Cmd+Shift+R**), um sie ohne Cache neu zu laden.
+
+### Ich habe bezahlt, aber mein Tarif oder mein Traffic hat sich nicht geändert
+
+1. Beenden Sie Gologin vollständig über die Taskleiste (System Tray) und starten Sie die App erneut. Drücken Sie in der Web-App **Ctrl+Shift+R** (unter macOS **Cmd+Shift+R**).
+2. Stellen Sie sicher, dass Sie oben links den Workspace ausgewählt haben, für den Sie bezahlt haben: Ein Abonnement gehört zu dem Workspace, für den es gekauft wurde. Wenn Sie für den falschen Workspace bezahlt haben, wenden Sie sich an den Support.
+3. Wenn Sie mit Kryptowährung bezahlt haben, warten Sie, bis die Transaktion in der Blockchain bestätigt ist. Wenn sich der Tarif danach immer noch nicht geändert hat, wenden Sie sich an den Support und senden Sie den Transaktions-Hash, die Adresse, an die Sie die Mittel gesendet haben, sowie das verwendete Netzwerk.
+
+### Ich erhalte die Fehlermeldung „You've reached max payment attempts (10)“
+
+Sie haben 10-mal versucht, ein Abonnement zu kaufen, die Zahlung ist nicht durchgegangen, und Sie wurden für 24 Stunden für weitere Versuche gesperrt. Wir können diese Sperre nicht aufheben. Versuchen Sie in diesem Fall, das Abonnement morgen erneut zu kaufen. Es kann helfen, eine andere Zahlungsmethode zu verwenden. Wenn es für Sie wichtig ist, weiter an Ihren Profilen zu arbeiten, wenden Sie sich an den Support.
+
+### Ich habe mit Kryptowährung weniger als den erforderlichen Betrag gezahlt
+
+Bei einer Unterzahlung werden das Abonnement oder der Proxy-Traffic nicht automatisch hinzugefügt. Sie können die Zahlung dennoch abschließen, indem Sie innerhalb von 60 Minuten nach Beginn des Zahlungsvorgangs an dieselbe Empfängeradresse (Wallet) senden. Prüfen Sie, ob der Cryptomus-Zahlungslink noch aktiv ist: Wenn er Ihren aktuellen Zahlungsbetrag anzeigt und zu weiteren Zahlungen auffordert, können Sie die Zahlung abschließen. Wenn das Zahlungsfenster abgelaufen ist und Cryptomus dazu auffordert, den Shop zu kontaktieren, wenden Sie sich bitte an den Gologin-Support.
+
+### Auf der Zahlungsseite wird nach der Zahlung mit Kryptowährung „Your payment is blocked“ angezeigt
+
+Diese Meldung bedeutet, dass Ihre Transaktion von unserem Zahlungsdienstleister Cryptomus markiert und blockiert wurde, bevor sie uns erreicht hat. Gologin hat Ihre Mittel nicht erhalten und war an der Entscheidung, die Zahlung zu blockieren, nicht beteiligt.
+
+Cryptomus arbeitet mit eigenen Compliance-Verfahren, und uns wird der konkrete Grund für die Markierung einer Transaktion nicht mitgeteilt. Bitte wenden Sie sich direkt an den **Cryptomus-Kundensupport** – nur dieser kann den Status Ihrer Zahlung klären und über nächste Schritte wie eine Freigabe oder Rückerstattung informieren. Sobald das Problem dort geklärt ist, können Sie sich gern an den Gologin-Support wenden, damit die Aktivierung Ihres Abonnements bestätigt wird.
+
+### Mein Konto wurde gesperrt, nachdem ich bei meiner Bank einen Streitfall eröffnet habe
+
+Wenn für eine Gologin-Zahlung ein Streitfall (Chargeback) eröffnet wird, wird das Konto gesperrt, bis der Streitfall abgeschlossen ist. Ihr Konto wurde nicht gehackt. Um den Zugriff wiederherzustellen oder eine Rückerstattung zu besprechen, wenden Sie sich an den Gologin-Support.

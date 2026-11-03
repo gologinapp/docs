@@ -3,100 +3,107 @@ title: "Gologin Cloud Browser とは"
 keywords: ["cloud browser", "headless browser"]
 ---
 
-Gologin Cloud Browser を使うと、Gologin (Orbita) ブラウザを**クラウド上**で実行し、1 つの**接続 URL** を使って自動化コード (Puppeteer / Playwright) から操作できます。
+Gologin Cloud Browser を使うと、Gologin (Orbita) ブラウザを**クラウド上**で実行し、1 つの**接続 URL** で自動化コード (Puppeteer / Playwright) から操作できます。
 
-これは [ヘッドレスブラウザ](./what-is-headless-browser)、つまりグラフィカルインターフェースを持たず、コードだけで制御されるブラウザで、Gologin がホスティングと管理を行います。永続的なプロファイル、フィンガープリントの設定、代理人経由のルーティングを標準でサポートしています。
+これは Gologin がホスティング・管理する[ヘッドレスブラウザ](./what-is-headless-browser)です。ヘッドレスブラウザとは、グラフィカルインターフェースを持たず、コードだけで操作するブラウザのことです。永続的なプロファイル、フィンガープリントの設定、プロキシ経由のルーティングを標準でサポートしています。
 
 ## Cloud Browser でできること
 
-- クラウド上で複数のブラウザセッションを並行して実行
-- 既存の環境 (Puppeteer / Playwright) でそのまま自動化
-- Gologin の**プロファイル**を使って、ログイン情報、Cookie、ストレージなどの状態を保持
-- プロファイルに設定した**代理人**を経由して通信
-- AI エージェント用のリモートブラウザ実行環境として利用
+- クラウド上で複数のブラウザセッションを並列実行する
+- 既存の技術スタック (Puppeteer / Playwright) で自動化する
+- Gologin の**プロファイル**を使って、ログイン情報、Cookie、ストレージなどの状態を保持する
+- プロファイルに設定した**代理人**を経由して通信をルーティングする
+- AI エージェント向けのリモートブラウザ実行環境として利用する
 
 ## 通常のヘッドレスブラウザとの違い
 
-通常のヘッドレス Chrome は検出されやすいという問題があります。ウェブサイトはブラウザフィンガープリントを使って自動化されたトラフィックを識別します。canvas の描画、WebGL パラメータ、フォント、タイムゾーン、画面サイズなど、数十種類のシグナルがチェックされます。
+通常のヘッドレス Chrome は検出されやすいという問題があります。ウェブサイトはブラウザフィンガープリントを使って自動化されたトラフィックを識別します。Canvas のレンダリング、WebGL のパラメーター、フォント、タイムゾーン、画面サイズなど、数十種類のシグナルが確認されます。
 
-Gologin Cloud Browser は **Orbita** を実行します。Orbita は、一貫性のある現実的なブラウザプロファイルに合わせてフィンガープリントのシグナルを管理する、改良版の Chromium です。各プロファイルに保存された永続的な Cookie や代理人の設定と組み合わせることで、繰り返しアクセスしても、セッションは安定した人間らしいものに見えます。
+Gologin Cloud Browser は **Orbita** を実行します。Orbita は Chromium を改良したブラウザで、フィンガープリントのシグナルを管理し、一貫性のある現実的なブラウザプロファイルに合わせます。各プロファイルに保存された永続的な Cookie やプロキシ設定と組み合わせることで、繰り返しアクセスしてもセッションが安定した、人間らしいものに見えます。
 
 ## Gologin Cloud Browser を選ぶ理由
 
 ### アンチディテクトを標準搭載 — プラグイン不要
 
-通常のヘッドレス Chrome は簡単に検出されます。他のクラウドブラウザサービスは標準の Chromium を実行しており、フィンガープリントのシグナルを減らすにはサードパーティ製のステルスプラグインが必要で、効果にもばらつきがあります。
+標準のヘッドレス Chrome は簡単に検出されてしまいます。他のクラウドブラウザサービスは標準の Chromium を実行するため、フィンガープリントのシグナルを減らすにはサードパーティ製のステルスプラグインが必要で、効果にもばらつきがあります。
 
-Gologin Cloud Browser は **Orbita** を実行します。Orbita は強化された Chromium ビルドで、canvas、WebGL、フォント、タイムゾーン、画面解像度などのフィンガープリント管理が中核に組み込まれています。アンチディテクトは後付けのパッチではなく、ブラウザそのものです。
+Gologin Cloud Browser は、フィンガープリント管理を中核に据えた強化版 Chromium である **Orbita** を実行します。対象は Canvas、WebGL、フォント、タイムゾーン、画面解像度などです。アンチディテクトは後付けのパッチではなく、ブラウザそのものです。
 
-### 永続的なプロファイル — セッションを記憶
+### 永続的なプロファイル — 記憶するセッション
 
-多くのクラウドブラウザサービスは、各セッションをステートレスに扱います。セッションを閉じると、Cookie やストレージは破棄されます。
+多くのクラウドブラウザサービスでは、各セッションはステートレスとして扱われます。セッションを閉じると、Cookie やストレージは破棄されます。
 
-Gologin のプロファイルは保持されます。一度ログインしてセッションを閉じ、後で再接続しても、プロファイルには Cookie、ローカルストレージ、設定内容がそのまま残っています。再認証やセッションのウォームアップは不要です。
+Gologin のプロファイルは永続します。一度ログインしてセッションを閉じ、後で再接続しても、プロファイルには Cookie、ローカルストレージ、設定したすべての内容が保持されています。再認証もセッションのウォームアップも不要です。
 
 ### 予測しやすい料金 — トラフィックではなく時間で課金
 
-|                     | Gologin Cloud Browser               | 一般的な他社サービス          |
-| ------------------- | ----------------------------------- | ---------------------------- |
-| **セッション課金** | 時間単位 ( 0.048/h、プランによって異なります) | セッション単位または時間単位      |
-| **プロキシトラフィック**   | \$1.99 / GB                         | MB 単位 (セッションごとに最低料金あり) |
-| **ISP 代理人**     | \$5 / IP、トラフィック無制限         | GB 単位                       |
-| **含まれる時間**  | 20–200 時間/月、プランによって異なります    | 通常なし                       |
+|                          | Gologin Cloud Browser                                                    | 一般的な他社サービス          |
+| ------------------------ | ------------------------------------------------------------------------ | ---------------------------- |
+| **セッション課金**        | 時間単位: 追加 1 時間あたり \$0.05–0.09 (プランにより異なります)             | セッション単位または時間単位   |
+| **含まれる時間**          | 月 100–400 時間 (プランにより異なります)                                    | 通常は含まれません            |
+| **プロキシトラフィック**   | 有料プランでは月 2 GB のレジデンシャルトラフィックが含まれ、超過後は \$1 / GB から | MB 単位 (セッションごとに最低料金あり) |
+| **専用 IP (ISP)**        | IP 1 つにつき月 \$5、トラフィック無制限                                     | GB 単位                      |
+
+各プランに含まれる内容は[料金](/ja/general/account-and-billing/pricing)を、追加の時間やセッションについては [Cloud Browser の利用状況](/ja/general/account-and-billing/cloud-browser-usage)をご覧ください。
 
 ### ベンダーロックインなし
 
-Gologin Cloud Browser は標準的な CDP エンドポイントです。Puppeteer や Playwright のコードは、他のリモート Chrome インスタンスに接続するのと同じ方法で接続できます。独自 SDK や専用 API を覚える必要はありません。URL を 1 つ変更するだけで、導入も乗り換えも可能です。
+Gologin Cloud Browser は標準的な CDP エンドポイントです。Puppeteer や Playwright のコードは、他のリモート Chrome インスタンスに接続するのと同じ方法で接続できます。独自の SDK や専用 API を覚える必要はありません。URL を 1 つ変更するだけで、導入も切り替えも行えます。
 
-### 拡張できる並列セッション
+### スケールする並列セッション
 
-プランには、最初から 1〜4 件の並列セッションが含まれています。さらに必要な場合は、カスタムプランについてお問い合わせください。
+各プランには 1〜4 の並列セッションが標準で含まれています。Professional は 1、Business は 2、Enterprise は 3、Custom は 4 です。さらに必要な場合は、**設定とメンバー** > **Cloud Browser の利用状況** > **購入上限を増やす**からご自身で追加購入できます。
 
-## 主な利用シナリオ
+- **同時セッション数** — 1 セッションにつき月 \$2
+- **追加のクラウド時間** — 1 時間あたり、Professional は \$0.09、Business は \$0.08、Enterprise は \$0.07、Custom は \$0.05
+
+詳細は [Cloud Browser の利用状況](/ja/general/account-and-billing/cloud-browser-usage)をご覧ください。
+
+## 主な技術的なユースケース
 
 Cloud Browser は、次のようなワークフローでよく使われます。
 
 - ウェブアカウントに一度ログインし、プロファイルを通じてセッションを保持する
-- 多数のプロファイルで、同じウェブサイトに対して繰り返し操作を実行する
-- ローカルマシンに依存せず、安定した長時間のセッションを必要とする
+- 多数のプロファイルで、同じウェブサイトに対する操作を繰り返し実行する
+- ローカルマシンに依存せず、安定した長時間のセッションが必要である
 
-たとえば、Web アプリ、マーケットプレイス、ソーシャルプラットフォームなど、セッションの永続性と一貫したプロファイル設定が重要なログイン済みセッションの自動化があります。
+たとえば、永続性や一貫したプロファイル設定が重要になるウェブアプリ、マーケットプレイス、ソーシャルプラットフォームで、ログイン済みセッションを自動化する用途があります。
 
 ## 基本概念
 
-- **プロフィール** — 再利用可能なブラウザ ID (Cookie / ストレージ、フィンガープリントと代理人の設定)。
+- **プロフィール** — 再利用可能なブラウザ ID (Cookie / ストレージに加え、フィンガープリントとプロキシの設定)。
 - **クラウドセッション** — Gologin のクラウド上で実行されているプロファイルのインスタンス。
-- **接続 URL** — クラウドセッションを操作するために、自動化ツールに渡すエンドポイント。
+- **接続 URL** — クラウドセッションを操作するために、自動化ツールへ渡すエンドポイント。
 
 ## 仕組み (概要)
 
-1. (推奨) Gologin REST API を使ってプロファイルを作成し、設定します (代理人、フィンガープリントなど)。
-2. **dev トークン**と、任意の `profileId` を使って Cloud Browser に接続します。
+1. (推奨) Gologin REST API で、プロファイルを作成して設定します (プロキシ、フィンガープリントなど)。
+2. **dev トークン**と、必要に応じて `profileId` を指定して Cloud Browser に接続します。
 3. Puppeteer または Playwright でセッションを自動化します。
 4. 作業が終わったら接続を閉じます。
 
 ## 接続 URL
 
-リモートブラウザのエンドポイントとして、次の URL を使用します。
+この URL をリモートブラウザのエンドポイントとして使用します。
 
 ```text
-https://cloudbrowser.gologin.com/connect?token=${token}&profile=${params.profileId}
+https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}
 ```
 
-- `token` — Gologin の **dev トークン** (ダッシュボードで生成します: `個人エリア → API トークン`)。
+- `token` — Gologin の **dev トークン** (Gologin アプリで作成します: [API & MCP](https://app.gologin.com/personalArea/TokenApi) → **API** → **新しいトークン**)。
 - `profile` — **プロファイル ID** (任意)。省略すると、セッション用に新しいプロファイルが作成されます。
 
-## プロファイルの管理 (代理人、フィンガープリントなど)
+## プロファイルの管理 (プロキシ、フィンガープリントなど)
 
 Cloud Browser は**接続レイヤー**です。\
-プロファイルの作成や更新、代理人の割り当て、プロファイル設定の構成には、Gologin REST API を使用します。
+プロファイルの作成・更新、プロキシの割り当て、プロファイル設定の構成には、Gologin REST API を使用します。
 
-- プロファイル API: https://gologin.com/docs/api-reference/profile
-- プロキシ API: https://gologin.com/docs/api-reference/proxy
+- プロファイル API: [プロファイルを作成](https://gologin.com/docs/api-reference/profile/create-profile-with-partial-parameters)、[プロファイルを更新](https://gologin.com/docs/api-reference/profile/update-profile-with-partial-parameters)
+- プロキシ API: [プロファイルに Gologin のプロキシを追加](https://gologin.com/docs/api-reference/proxy/create-gologin-high-quality-proxy)、[プロファイルに独自のプロキシを設定](https://gologin.com/docs/api-reference/profile/update-proxy-for-multiple-profiles)
 
 ## CLI から Cloud Browser を使う
 
-Puppeteer / Playwright のコードを書くよりシェルコマンドを使いたい場合は、Gologin が提供するエージェント向け CLI ツールをご利用ください。
+Puppeteer/Playwright のコードを書くよりシェルコマンドを使いたい場合は、Gologin が提供するエージェント向けの CLI ツールを利用できます。
 
 - **[Gologin Agent Browser CLI](/ja/cli-tools/agent-browser)** — デーモン、ページスナップショット、参照ベースの操作を備えたクラウドブラウザ CLI。AI エージェント向けに作られています。
 - **[Gologin Web Access CLI](/ja/cli-tools/web-access)** — Web Unlocker によるスクレイピングと Cloud Browser の操作を 1 つにまとめた統合 CLI。
@@ -116,5 +123,5 @@ gologin-agent-browser close
 
 - [はじめに](/ja/api-reference/cloud-browser/getting-started) — Puppeteer/Playwright の接続例
 - [API クイックスタート](/ja/api-reference/introduction/quickstart) — REST API のセットアップ
-- [Agent Browser CLI](/ja/cli-tools/agent-browser) — AI エージェント向け CLI
-- [AI Skills](/ja/api-reference/ai-integrations/ai-skills) — Claude Code 向けのプラグアンドプレイ スキル
+- [Agent Browser CLI](/ja/cli-tools/agent-browser) — AI エージェント向けの CLI
+- [AI スキル](/ja/api-reference/ai-integrations/ai-skills) — Claude Code 向けのすぐに使えるスキル

@@ -2,13 +2,13 @@
 title: "Các trường hợp sử dụng Web Unlocker"
 ---
 
-Web Unlocker là một scraping API — bạn gửi một URL và nhận lại HTML đã được hiển thị đầy đủ. Trang này giới thiệu những cách sử dụng phổ biến nhất.
+Web Unlocker là một scraping API — bạn gửi một URL, nó trả về HTML đã được hiển thị đầy đủ. Trang này giới thiệu những cách phổ biến nhất để tận dụng tính năng này.
 
 ---
 
 ## Tự thu thập dữ liệu một trang
 
-Trường hợp đơn giản nhất: bạn cần lấy nội dung của một trang web chặn các yêu cầu HTTP thông thường.
+Trường hợp đơn giản nhất: bạn cần nội dung của một trang web chặn các yêu cầu HTTP thông thường.
 
 ### Python
 
@@ -37,20 +37,24 @@ const html = await fetch(
 console.log(html);
 ```
 
-Không cần khởi chạy trình duyệt, không cần cấu hình proxy, không phải vật lộn với Cloudflare. Chỉ một lệnh gọi là bạn có được trang web.
+Không cần khởi chạy trình duyệt, không cần cấu hình proxy, không phải vật lộn với Cloudflare. Chỉ một lệnh gọi là bạn nhận được trang.
 
-**Phù hợp để:**
+**Phù hợp với:**
 
 - Kiểm tra giá trên trang của đối thủ cạnh tranh
 - Lấy danh sách việc làm, đánh giá hoặc dữ liệu sản phẩm
 - Theo dõi sự thay đổi của các trang
-- Viết các script thu thập dữ liệu dùng một lần
+- Các script thu thập dữ liệu dùng một lần
 
 ---
 
 ## Đưa nội dung vào AI
 
-Web Unlocker trả về HTML thô. Hãy chuyển HTML đó cho một LLM để trích xuất dữ liệu có cấu trúc, tóm tắt nội dung hoặc trả lời các câu hỏi về trang — không cần viết logic phân tích cú pháp.
+Web Unlocker trả về HTML thô. Hãy chuyển HTML đó cho một LLM để trích xuất dữ liệu có cấu trúc, tóm tắt nội dung hoặc trả lời câu hỏi về trang — không cần viết logic phân tích cú pháp.
+
+<Tip>
+Để gửi ít mã đánh dấu hơn cho mô hình, hãy thêm `format=markdown` vào yêu cầu để nhận trang ở dạng Markdown thay vì HTML.
+</Tip>
 
 ### Python \+ OpenAI
 
@@ -91,7 +95,7 @@ const html = await fetch(
 
 const client = new Anthropic();
 const message = await client.messages.create({
-  model: "claude-opus-4-5",
+  model: "claude-opus-5-5",
   max_tokens: 1024,
   messages: [
     {
@@ -104,18 +108,18 @@ const message = await client.messages.create({
 console.log(message.content[0].text);
 ```
 
-**Phù hợp để:**
+**Phù hợp với:**
 
 - Trích xuất dữ liệu có cấu trúc (giá, tên, ngày tháng) mà không cần viết trình phân tích cú pháp
 - Tóm tắt bài viết hoặc trang sản phẩm
 - So sánh nhiều trang và rút ra kết luận
-- Xây dựng các công cụ nghiên cứu hoặc giám sát được vận hành bằng AI
+- Xây dựng các công cụ nghiên cứu hoặc giám sát được vận hành bởi AI
 
 ---
 
 ## Sử dụng trong một AI agent
 
-Hãy cung cấp cho AI agent của bạn một công cụ `scrape` dựa trên Web Unlocker. Khi đó, agent có thể tự duyệt web — tải trang, đọc nội dung và thực hiện hành động — mà bạn không cần viết bất kỳ logic duyệt web nào.
+Hãy trang bị cho AI agent của bạn một công cụ `scrape` dựa trên Web Unlocker. Khi đó, agent có thể tự duyệt web — lấy trang, đọc nội dung và thực hiện hành động — mà bạn không cần viết bất kỳ logic duyệt web nào.
 
 ```python
 import requests
@@ -150,7 +154,7 @@ messages = [
 
 while True:
     response = client.messages.create(
-        model="claude-opus-4-5",
+        model="claude-opus-5-5",
         max_tokens=1024,
         tools=tools,
         messages=messages
@@ -174,18 +178,18 @@ while True:
     messages.append({"role": "user", "content": tool_results})
 ```
 
-Agent tự quyết định khi nào cần thu thập dữ liệu và tải URL nào. Web Unlocker đảm nhận việc lấy dữ liệu thực tế.
+Agent tự quyết định khi nào cần thu thập dữ liệu và lấy URL nào. Web Unlocker đảm nhận việc truy xuất thực tế.
 
-**Phù hợp để:**
+**Phù hợp với:**
 
-- Các agent nghiên cứu tự động duyệt web
+- Các research agent tự động duyệt web
 - Bot so sánh giá hoặc tìm ưu đãi
-- Các quy trình thu thập thông tin cạnh tranh
+- Quy trình thu thập thông tin cạnh tranh
 - Bất kỳ agent nào cần dữ liệu web theo thời gian thực
 
 ---
 
-## Thu thập nhiều trang cùng lúc
+## Thu thập dữ liệu nhiều trang cùng lúc
 
 Chạy các yêu cầu đồng thời để thu thập dữ liệu từ nhiều URL song song.
 
@@ -217,28 +221,17 @@ for url, html in results:
     print(f"{url}: {len(html)} chars")
 ```
 
-**Phù hợp để:**
+**Phù hợp với:**
 
 - Thu thập toàn bộ danh mục sản phẩm hoặc các trang danh sách
-- Thu thập dữ liệu hàng loạt để tạo bộ dữ liệu huấn luyện
-- Theo dõi nhiều trang cùng lúc
-
----
-
-## Tóm tắt
-
-| Trường hợp sử dụng | Bạn làm gì | Bạn nhận được gì |
-| --- | --- | --- |
-| Thu thập một trang | GET kèm tham số URL | HTML đã hiển thị |
-| Đưa vào LLM | Thu thập → chuyển cho mô hình | Dữ liệu đã trích xuất hoặc bản tóm tắt |
-| Công cụ cho AI agent | Agent gọi khi cần | Nội dung web theo thời gian thực |
-| Thu thập hàng loạt | Các yêu cầu đồng thời | HTML cho từng URL |
+- Thu thập dữ liệu hàng loạt để tạo tập dữ liệu huấn luyện
+- Giám sát đồng thời nhiều trang
 
 ---
 
 ## Sử dụng từ CLI
 
-Bạn không cần viết code — hãy dùng Gologin Web Access CLI cho các quy trình thu thập dữ liệu phổ biến:
+Bỏ qua việc viết code — hãy dùng Gologin Web Access CLI cho các quy trình thu thập dữ liệu phổ biến:
 
 ```bash
 npm install -g gologin-web-access
@@ -264,7 +257,7 @@ gologin-web-access extract https://example.com/product/123 --schema ./product-sc
 gologin-web-access search "best antidetect browser 2026" --limit 10
 ```
 
-Xem [Web Access CLI](/vi/cli-tools/web-access) để biết đầy đủ danh sách lệnh.
+Xem [Web Access CLI](/vi/cli-tools/web-access) để biết đầy đủ tham chiếu các lệnh.
 
 ---
 
@@ -272,10 +265,10 @@ Xem [Web Access CLI](/vi/cli-tools/web-access) để biết đầy đủ danh s�
 
 | Trường hợp sử dụng | Bạn làm gì | Bạn nhận được gì |
 | --- | --- | --- |
-| Thu thập một trang | GET kèm tham số URL | HTML đã hiển thị |
-| Đưa vào LLM | Thu thập → chuyển cho mô hình | Dữ liệu đã trích xuất hoặc bản tóm tắt |
+| Thu thập dữ liệu một trang | GET kèm tham số URL | HTML đã hiển thị |
+| Đưa vào LLM | Thu thập dữ liệu → chuyển cho mô hình | Dữ liệu được trích xuất hoặc bản tóm tắt |
 | Công cụ cho AI agent | Agent gọi khi cần | Nội dung web theo thời gian thực |
-| Thu thập hàng loạt | Các yêu cầu đồng thời | HTML cho từng URL |
+| Thu thập hàng loạt | Các yêu cầu đồng thời | HTML của từng URL |
 | Quy trình CLI | Các lệnh `gologin-web-access` | Văn bản, markdown, JSON, kết quả hàng loạt |
 
 Xem [Bắt đầu nhanh](/vi/web-unlocker-quick-start) để thực hiện yêu cầu đầu tiên của bạn.

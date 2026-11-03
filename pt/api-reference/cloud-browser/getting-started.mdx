@@ -6,7 +6,7 @@ keywords: ["cloud browser", "headless browser"]
 O Gologin Cloud Browser permite executar uma sessão de navegador **na nuvem** e controlá-la a partir da sua ferramenta de automação (Puppeteer / Playwright) usando uma única **URL de conexão**.
 
 <Tip>
-  **Prefere uma CLI?** Use a [Gologin Agent Browser CLI](/pt/cli-tools/agent-browser) para controlar o Cloud Browser pelo terminal sem escrever código — criada para agentes de IA, com snapshots, refs e um daemon persistente.
+  **Prefere uma CLI?** Use a [Gologin Agent Browser CLI](/pt/cli-tools/agent-browser) para controlar o Cloud Browser pelo terminal sem escrever código. Ela foi criada para agentes de IA, com snapshots, refs e um daemon persistente.
 </Tip>
 
 ## URL de conexão
@@ -17,22 +17,22 @@ Use esta URL na sua biblioteca de automação como endpoint de navegador remoto:
 https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}
 ```
 
-- `token` — seu **token de desenvolvedor** do Gologin.
-- `profile` — **ID do perfil** (opcional):
+- `token`: seu **token de desenvolvedor** do Gologin.
+- `profile`: **ID do perfil** (opcional):
   - se informado, o Gologin executará esse perfil na nuvem;
   - se omitido, o Gologin criará um novo perfil para a sessão.
 
 > Observação: esta URL é usada como **endpoint de conexão WebSocket** pelas bibliotecas de automação (por exemplo, `browserWSEndpoint` no Puppeteer).\
-> Gere seu token no painel do Gologin: `Área pessoal → Token de API`.
+> Crie seu token no app do Gologin: [API & MCP](https://app.gologin.com/personalArea/TokenApi) → **API** → **Novo Token**.
 
 <Frame>
-  ![Screenshotat Mar0514 27 28](/images/ScreenshotatMar0514-27-28.png)
+  ![Captura de tela de 05 de março, 14:27:28](/images/ScreenshotatMar0514-27-28.png)
 </Frame>
 
-## Gerenciamento de perfis (proxy, impressão digital etc.)
+## Gerenciando perfis (proxy, impressão digital etc.)
 
 O Cloud Browser é apenas a **camada de conexão** (sessão de navegador remoto).\
-Para **criar/atualizar perfis**, anexar **proxies**, configurar a **impressão digital**, tags e outras configurações do perfil, use a **API REST** do Gologin:
+Para **criar/atualizar perfis**, associar **proxies**, configurar a **impressão digital**, tags e outras configurações do perfil, use a **API REST** do Gologin:
 
 - API de perfis: https://gologin.com/docs/api-reference/profile
 - API de proxies: https://gologin.com/docs/api-reference/proxy

@@ -3,15 +3,15 @@ title: "Erste Schritte"
 keywords: ["cloud browser", "headless browser"]
 ---
 
-Mit Gologin Cloud Browser können Sie eine Browsersitzung **in der Cloud** ausführen und sie über eine einzige **Verbindungs-URL** mit Ihrem Automatisierungstool (Puppeteer / Playwright) steuern.
+Mit Gologin Cloud Browser führen Sie eine Browsersitzung **in der Cloud** aus und steuern sie über eine einzige **Verbindungs-URL** aus Ihrem Automatisierungstool (Puppeteer / Playwright).
 
 <Tip>
-  **Lieber per CLI?** Mit dem [Gologin Agent Browser CLI](/de/cli-tools/agent-browser) steuern Sie Cloud Browser direkt über die Shell, ganz ohne Code – entwickelt für KI-Agenten, mit Snapshots, Refs und einem dauerhaften Daemon.
+  **Lieber per CLI?** Mit dem [Gologin Agent Browser CLI](/de/cli-tools/agent-browser) steuern Sie Cloud Browser direkt über die Shell, ganz ohne Code. Es wurde für KI-Agenten entwickelt und bietet Snapshots, Refs und einen persistenten Daemon.
 </Tip>
 
 ## Verbindungs-URL
 
-Verwenden Sie diese URL in Ihrer Automatisierungsbibliothek als Remote-Browser-Endpunkt:
+Verwenden Sie diese URL in Ihrer Automatisierungsbibliothek als Endpunkt für einen Remote-Browser:
 
 ```text
 https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}
@@ -19,20 +19,20 @@ https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}
 
 - `token` – Ihr Gologin **Dev-Token**.
 - `profile` – **Profil-ID** (optional):
-  - Wenn angegeben, führt Gologin dieses Profil in der Cloud aus.
+  - Wenn angegeben, startet Gologin dieses Profil in der Cloud.
   - Wenn nicht angegeben, erstellt Gologin für die Sitzung ein neues Profil.
 
 > Hinweis: Diese URL wird von Automatisierungsbibliotheken als **WebSocket-Verbindungsendpunkt** verwendet (zum Beispiel als `browserWSEndpoint` in Puppeteer).\
-> Erstellen Sie Ihren Token im Gologin-Dashboard unter: `Personal Area → API Token`.
+> Erstellen Sie Ihren Token in der Gologin App: [API & MCP](https://app.gologin.com/personalArea/TokenApi) → **API** → **New Token**.
 
 <Frame>
-  ![Screenshot vom 5. März, 14:27:28](/images/ScreenshotatMar0514-27-28.png)
+  ![Screenshotat Mar0514 27 28](/images/ScreenshotatMar0514-27-28.png)
 </Frame>
 
 ## Profile verwalten (Proxy, Fingerprint usw.)
 
-Cloud Browser ist nur die **Verbindungsebene** (Remote-Browsersitzung).\
-Um **Profile zu erstellen oder zu aktualisieren**, **Proxys** zuzuweisen, den **Fingerprint** zu konfigurieren sowie Tags und weitere Profileinstellungen festzulegen, verwenden Sie die Gologin **REST API**:
+Cloud Browser ist nur die **Verbindungsschicht** (Remote-Browsersitzung).\
+Um **Profile zu erstellen oder zu aktualisieren**, **Proxys** zuzuweisen, den **Fingerprint** zu konfigurieren sowie Tags und andere Profileinstellungen zu verwalten, nutzen Sie die Gologin **REST API**:
 
 - Profiles API: https://gologin.com/docs/api-reference/profile
 - Proxies API: https://gologin.com/docs/api-reference/proxy

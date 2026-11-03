@@ -8,7 +8,7 @@ title: "クイックスタート"
 
 ## 前提条件
 
-- Web Unlocker の API キー(取得するには **ermakova.t@gologin.com** までお問い合わせください)
+- Web Unlocker の API キー。[Web Unlocker のページ](https://gologin.com/web-unlocker/#web_unlocker_form)にあるフォームから取得できます。キーは1営業日以内に届き、ご自身の対象サイトで試せる無料リクエストが付いています。カードの登録は不要です。
 - Python 3.x、Node.js、または任意の HTTP クライアント
 
 ---
@@ -31,7 +31,7 @@ https://parsing.webunlocker.gologin.com/v1
 
 ## 最初のリクエストを送信する
 
-対象の URL をクエリパラメータに指定して GET リクエストを送信します。レスポンスは、ページの完全にレンダリングされた HTML です。
+対象の URL をクエリパラメータに指定して GET リクエストを送信します。レスポンスには、ページの完全にレンダリングされた HTML が返されます。
 
 ### cURL
 
@@ -71,7 +71,7 @@ console.log(html);
 
 ## レスポンスの内容
 
-レスポンスボディは、レンダリングされたページの生の HTML です。ブラウザーで URL を開いたときに表示される内容と同じです。JSON でラップされておらず、解析も不要です。
+レスポンスボディには、ブラウザーでその URL を開いたときに表示されるものと同じ、レンダリング済みの生の HTML が返されます。JSON でラップされることはなく、パース処理も不要です。
 
 ```html
 <!DOCTYPE html>
@@ -81,19 +81,48 @@ console.log(html);
 </html>
 ```
 
+### その他の形式
+
+`format` クエリパラメータを追加すると、ページを別の形式で取得できます。
+
+| `format` | レスポンスボディ |
+|---|---|
+| `html` | ページの HTML(デフォルト) |
+| `markdown` | Markdown 形式のページコンテンツ |
+| `json` | URL、リクエストのメタデータ、ページの HTML を含む JSON オブジェクト |
+
+```bash
+curl "https://parsing.webunlocker.gologin.com/v1/scrape?url=https%3A%2F%2Fexample.com&format=json" \
+  -H "apikey: YOUR_API_KEY"
+```
+
+```json
+{
+  "success": true,
+  "data": {
+    "url": "https://example.com",
+    "metadata": {
+      "response_time_ms": 297,
+      "status_code": 200
+    },
+    "html": "<!DOCTYPE html><html lang=\"en\">..."
+  }
+}
+```
+
 ---
 
 ## エラーの処理
 
 レスポンスを処理する前に、HTTP ステータスコードを確認してください。
 
-| ステータス | 意味 |
-|---|---|
-| `200` | 成功 — レスポンスボディはページの HTML です |
-| `401` | API キーが無効、または指定されていません |
-| `422` | URL パラメータが無効、または指定されていません |
-| `429` | レート制限を超過しました |
-| `500` / `503` | サーバーエラー — バックオフを入れて再試行してください |
+| ステータス | 意味 | レスポンスボディ |
+|---|---|---|
+| `200` | 成功 | 指定した形式のページ |
+| `400` | 不正なリクエスト(例: `url` パラメータがない) | `{"success":false,"error":"Request failed"}` |
+| `401` | `apikey` ヘッダーがない | `{"message":"Missing API key in request"}` |
+
+`429` または `5xx` のステータスが返された場合は、指数バックオフを使って再試行してください。
 
 ```python
 response = requests.get(
@@ -112,7 +141,7 @@ else:
 
 ## CLI でのクイックスタート
 
-コードを書かなくても、Gologin の CLI ツールでページをスクレイピングできます。
+コードを書かなくても、Gologin の CLI ツールを使ってページをスクレイピングできます。
 
 ### Web Unlocker CLI
 
@@ -135,4 +164,4 @@ gologin-web-access scrape-json https://example.com
 gologin-web-access batch-scrape https://example.com/page/1 https://example.com/page/2 --format text
 ```
 
-詳細については、[Web Unlocker SDK and CLI](/ja/scraping-api-sdk-and-cli) と [Web Access CLI](/ja/cli-tools/web-access) をご覧ください。
+詳細は [Web Unlocker SDK と CLI](/ja/scraping-api-sdk-and-cli) および [Web Access CLI](/ja/cli-tools/web-access) をご覧ください。

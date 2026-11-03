@@ -9,6 +9,8 @@ description: "Exécutez des profils Gologin par programmation avec le SDK Node.j
 npm i gologin
 ```
 
+Node.js 20 ou version ultérieure est requis. La version 3 du SDK est uniquement ESM : chargez-la avec `import`, car `require('gologin')` ne fonctionne pas.
+
 ### Utilisation de base
 
 ```javascript
@@ -25,47 +27,75 @@ const { status, wsUrl } = await GL.start();
 await GL.stop();
 ```
 
+### Lancer avec GologinApi
+
+`GologinApi` démarre un profil et connecte Puppeteer à votre place. `launch()` renvoie un `browser` Puppeteer. Passez `cloud: true` pour exécuter le profil dans [Gologin Cloud Browser](/fr/api-reference/cloud-browser/what-is-gologin-cloud-browser) plutôt que dans un navigateur Orbita local :
+
+```javascript
+import { GologinApi } from 'gologin';
+
+const gologin = GologinApi({ token: 'your-api-token' });
+
+// local Orbita on this machine
+const { browser } = await gologin.launch({ profileId: 'your-profile-id' });
+
+// or Gologin Cloud Browser
+// const { browser } = await gologin.launch({ cloud: true, profileId: 'your-profile-id' });
+
+const page = await browser.newPage();
+await page.goto('https://example.com');
+
+// close the browser and stop the profile
+await gologin.exit();
+```
+
+Sans `profileId`, `launch()` commence par créer un nouveau profil. `GologinApi` propose également des fonctions utilitaires telles que `createProfileRandomFingerprint()`, `addGologinProxyToProfile()`, `addCookiesToProfile()` et `deleteProfile()`. Consultez le [Guide de démarrage rapide](/fr/api-reference/introduction/quickstart) pour un exemple complet.
+
 ### Paramètres principaux
 
 | Paramètre | Valeur par défaut | Description |
 |---|---|---|
 | `token` | obligatoire | Votre jeton d'API Gologin |
 | `profile_id` | obligatoire | ID du profil à lancer |
-| `executablePath` | auto | Chemin vers le binaire du navigateur Orbita |
-| `uploadCookiesToServer` | `false` | Envoie les cookies vers le cloud à l'arrêt du profil. Définissez-le sur `true` si vous avez besoin de conserver la session d'un appareil à l'autre. |
-| `checkBrowserUpdate` | `true` | Vérifie les mises à jour d'Orbita pour la version de ce profil au lancement. Définissez-le sur `false` pour conserver la version actuelle. |
-| `autoUpdateBrowser` | `true` | Télécharge automatiquement les nouvelles versions d'Orbita. Définissez-le sur `false` pour éviter les mises à jour inattendues. |
-| `extra_params` | `[]` | Indicateurs Chromium supplémentaires transmis au navigateur |
+| `executablePath` | auto | Chemin du fichier exécutable du navigateur Orbita |
+| `uploadCookiesToServer` | `false` | Envoie les cookies vers le cloud à l'arrêt du profil. Définissez-le sur `true` si vous avez besoin de conserver la session entre plusieurs appareils. |
+| `extra_params` | `[]` | Options Chromium supplémentaires transmises au navigateur |
 
 ### Arrêter des profils
 
 ```javascript
-// Stop and sync to cloud (default)
+// Stop and sync to cloud
 await GL.stop();
 
-// Stop without syncing any data to cloud
-await GL.stop({ posting: false });
+// Stop without syncing profile data to cloud
+await GL.stopLocal({ posting: false });
 ```
 
-Remarque : `posting: false` empêche l'envoi des données du profil vers les serveurs Gologin. Utilisez cette option lorsque vous exécutez des profils sur des serveurs où vous ne souhaitez pas de synchronisation avec le cloud.
+Fermez d'abord le navigateur dans votre outil d'automatisation, par exemple avec `browser.close()`. `stop()` n'accepte aucune option et envoie toujours le profil vers Gologin. `stopLocal({ posting: false })` termine la session sans envoyer les données du profil. Utilisez-le sur les serveurs où vous ne souhaitez pas de synchronisation avec le cloud. Les cookies sont tout de même envoyés si vous avez défini `uploadCookiesToServer: true`.
 
 ### Gérer les versions du navigateur Orbita
 
+Au démarrage d'un profil, le SDK vérifie quelle version d'Orbita correspond à l'user agent du profil. Si cette version ne se trouve pas encore dans `~/.gologin/browser`, le SDK la télécharge ; sinon, il réutilise la copie déjà installée. Pour exécuter une version précise, passez `executablePath`. Les options `autoUpdateBrowser` (`false` par défaut) et `checkBrowserUpdate` sont toujours acceptées, mais dans le SDK actuel (3.0.7), elles ne modifient pas ce comportement.
+
+Pour télécharger Orbita à l'avance, appelez `checkAndDownloadBrowserByOpts()` sur une instance de `GoLogin`. Il s'agit d'une méthode, et non d'un export distinct :
+
 ```javascript
-import { checkAndDownloadBrowserByOpts } from 'gologin';
+import { GoLogin } from 'gologin';
+
+const GL = new GoLogin({ token: 'your-api-token' });
 
 // Pre-download the latest Orbita version
-await checkAndDownloadBrowserByOpts({ lastActualCount: 1 });
+await GL.checkAndDownloadBrowserByOpts({ lastActualCount: 1 });
 
 // Pre-download specific versions
-await checkAndDownloadBrowserByOpts({ majorVersions: [142, 143] });
+await GL.checkAndDownloadBrowserByOpts({ majorVersions: [142, 143] });
 ```
 
-Utilisez `checkAndDownloadBrowserByOpts` avant de lancer des profils en parallèle afin d'éviter plusieurs téléchargements simultanés.
+Sans options, elle télécharge les 5 dernières versions. Utilisez-la avant de lancer des profils en parallèle afin d'éviter plusieurs téléchargements simultanés.
 
 ### Exécuter plus de 100 profils en parallèle
 
-Lorsque vous exécutez de nombreux profils en même temps sur un serveur :
+Lorsque vous exécutez de nombreux profils simultanément sur un serveur :
 
 ```javascript
 // Use a queue to limit concurrent launches
@@ -95,9 +125,9 @@ async function processQueue() {
 }
 ```
 
-**Important pour les serveurs :**
+**Points importants pour les serveurs :**
 - Limitez le nombre de lancements de profils simultanés (10 à 20 recommandés pour commencer)
-- Téléchargez les versions d'Orbita à l'avance avant de lancer les profils
+- Téléchargez les versions d'Orbita à l'avance, avant de lancer les profils
 - Sous Linux : installez Xvfb et définissez `DISPLAY=:99`
 - Augmentez les limites de descripteurs de fichiers : `ulimit -n 65536`
 - Surveillez la RAM : chaque profil utilise environ 300 à 500 Mo

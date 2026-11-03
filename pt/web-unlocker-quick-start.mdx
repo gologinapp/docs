@@ -2,26 +2,26 @@
 title: "Início rápido"
 ---
 
-Este guia mostra como fazer o scraping da sua primeira URL usando o Web Unlocker.
+Este guia mostra como extrair (fazer scraping) da sua primeira URL usando o Web Unlocker.
 
 ---
 
 ## Pré-requisitos
 
-- Uma chave de API do Web Unlocker (entre em contato com **ermakova.t@gologin.com** para obter uma)
+- Uma chave de API do Web Unlocker. Obtenha uma pelo formulário na [página do Web Unlocker](https://gologin.com/web-unlocker/#web_unlocker_form). A chave chega em até um dia útil, com requisições gratuitas para você testar nos seus próprios alvos. Não é necessário cartão.
 - Python 3.x, Node.js ou qualquer cliente HTTP
 
 ---
 
 ## Autenticação
 
-Todas as requisições exigem sua chave de API no cabeçalho `apikey`:
+Todas as requisições exigem a sua chave de API no cabeçalho `apikey`:
 
 ```
 apikey: YOUR_API_KEY
 ```
 
-A URL base para todas as requisições da API é:
+A URL base para todas as requisições à API é:
 
 ```
 https://parsing.webunlocker.gologin.com/v1
@@ -81,19 +81,48 @@ O corpo da resposta é o HTML bruto renderizado da página, o mesmo conteúdo qu
 </html>
 ```
 
+### Outros formatos
+
+Adicione o parâmetro de consulta `format` para receber a página em outro formato:
+
+| `format` | Corpo da resposta |
+|---|---|
+| `html` | HTML da página (o padrão) |
+| `markdown` | Conteúdo da página em Markdown |
+| `json` | Objeto JSON com a URL, os metadados da requisição e o HTML da página |
+
+```bash
+curl "https://parsing.webunlocker.gologin.com/v1/scrape?url=https%3A%2F%2Fexample.com&format=json" \
+  -H "apikey: YOUR_API_KEY"
+```
+
+```json
+{
+  "success": true,
+  "data": {
+    "url": "https://example.com",
+    "metadata": {
+      "response_time_ms": 297,
+      "status_code": 200
+    },
+    "html": "<!DOCTYPE html><html lang=\"en\">..."
+  }
+}
+```
+
 ---
 
 ## Tratamento de erros
 
 Verifique o código de status HTTP antes de processar a resposta:
 
-| Status | Significado |
-|---|---|
-| `200` | Sucesso — o corpo da resposta é o HTML da página |
-| `401` | Chave de API inválida ou ausente |
-| `422` | Parâmetro de URL inválido ou ausente |
-| `429` | Limite de requisições excedido |
-| `500` / `503` | Erro do servidor — tente novamente com backoff |
+| Status | Significado | Corpo da resposta |
+|---|---|---|
+| `200` | Sucesso | A página no formato solicitado |
+| `400` | Requisição inválida, por exemplo, quando o parâmetro `url` está ausente | `{"success":false,"error":"Request failed"}` |
+| `401` | O cabeçalho `apikey` está ausente | `{"message":"Missing API key in request"}` |
+
+Se você receber `429` ou um status `5xx`, tente novamente com backoff exponencial.
 
 ```python
 response = requests.get(
@@ -112,7 +141,7 @@ else:
 
 ## Início rápido com a CLI
 
-Você também pode fazer scraping de páginas usando as ferramentas de CLI da Gologin, sem escrever código:
+Você também pode extrair páginas usando as ferramentas de CLI da Gologin, sem escrever código:
 
 ### CLI do Web Unlocker
 
@@ -135,4 +164,4 @@ gologin-web-access scrape-json https://example.com
 gologin-web-access batch-scrape https://example.com/page/1 https://example.com/page/2 --format text
 ```
 
-Consulte [Web Unlocker SDK e CLI](/pt/scraping-api-sdk-and-cli) e [Web Access CLI](/pt/cli-tools/web-access) para mais detalhes.
+Veja o [SDK e a CLI do Web Unlocker](/pt/scraping-api-sdk-and-cli) e a [CLI do Web Access](/pt/cli-tools/web-access) para mais detalhes.

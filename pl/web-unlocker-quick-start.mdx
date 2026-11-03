@@ -8,20 +8,20 @@ Ten przewodnik pokazuje, jak pobrać dane z pierwszego adresu URL za pomocą Web
 
 ## Wymagania wstępne
 
-- Klucz API Web Unlocker (aby go otrzymać, skontaktuj się z **ermakova.t@gologin.com**)
+- Klucz API Web Unlocker. Otrzymasz go, wypełniając formularz na [stronie Web Unlocker](https://gologin.com/web-unlocker/#web_unlocker_form). Klucz dotrze w ciągu jednego dnia roboczego, wraz z darmowymi zapytaniami do przetestowania na własnych celach. Karta nie jest wymagana.
 - Python 3.x, Node.js lub dowolny klient HTTP
 
 ---
 
 ## Uwierzytelnianie
 
-Każde żądanie wymaga podania klucza API w nagłówku `apikey`:
+Każde zapytanie wymaga podania klucza API w nagłówku `apikey`:
 
 ```
 apikey: YOUR_API_KEY
 ```
 
-Bazowy adres URL dla wszystkich żądań API to:
+Bazowy adres URL dla wszystkich zapytań API to:
 
 ```
 https://parsing.webunlocker.gologin.com/v1
@@ -29,9 +29,9 @@ https://parsing.webunlocker.gologin.com/v1
 
 ---
 
-## Wyślij pierwsze żądanie
+## Wyślij pierwsze zapytanie
 
-Wyślij żądanie GET, podając docelowy adres URL jako parametr zapytania. W odpowiedzi otrzymasz w pełni wyrenderowany kod HTML strony.
+Wyślij zapytanie GET z docelowym adresem URL jako parametrem zapytania. W odpowiedzi otrzymasz w pełni wyrenderowany kod HTML strony.
 
 ### cURL
 
@@ -54,7 +54,7 @@ response = requests.get(
 print(response.text)
 ```
 
-### JavaScript (Node.js / przeglądarka)
+### JavaScript (Node.js / Browser)
 
 ```javascript
 const response = await fetch(
@@ -71,7 +71,7 @@ console.log(html);
 
 ## Co otrzymasz w odpowiedzi
 
-Treścią odpowiedzi jest surowy, wyrenderowany kod HTML strony — dokładnie ta sama zawartość, którą zobaczyłbyś po otwarciu adresu URL w przeglądarce. Bez opakowania w JSON i bez konieczności parsowania.
+Treścią odpowiedzi jest surowy, wyrenderowany kod HTML strony — dokładnie to, co zobaczyłbyś po otwarciu adresu URL w przeglądarce. Bez opakowania w JSON i bez konieczności parsowania.
 
 ```html
 <!DOCTYPE html>
@@ -81,19 +81,48 @@ Treścią odpowiedzi jest surowy, wyrenderowany kod HTML strony — dokładnie t
 </html>
 ```
 
+### Inne formaty
+
+Dodaj parametr zapytania `format`, aby otrzymać stronę w innym formacie:
+
+| `format` | Treść odpowiedzi |
+|---|---|
+| `html` | Kod HTML strony (domyślnie) |
+| `markdown` | Treść strony w formacie Markdown |
+| `json` | Obiekt JSON z adresem URL, metadanymi zapytania i kodem HTML strony |
+
+```bash
+curl "https://parsing.webunlocker.gologin.com/v1/scrape?url=https%3A%2F%2Fexample.com&format=json" \
+  -H "apikey: YOUR_API_KEY"
+```
+
+```json
+{
+  "success": true,
+  "data": {
+    "url": "https://example.com",
+    "metadata": {
+      "response_time_ms": 297,
+      "status_code": 200
+    },
+    "html": "<!DOCTYPE html><html lang=\"en\">..."
+  }
+}
+```
+
 ---
 
 ## Obsługa błędów
 
 Przed przetworzeniem odpowiedzi sprawdź kod statusu HTTP:
 
-| Status | Znaczenie |
-|---|---|
-| `200` | Sukces — treścią odpowiedzi jest kod HTML strony |
-| `401` | Nieprawidłowy lub brakujący klucz API |
-| `422` | Nieprawidłowy lub brakujący parametr URL |
-| `429` | Przekroczono limit żądań |
-| `500` / `503` | Błąd serwera — spróbuj ponownie ze stopniowo wydłużanymi odstępami |
+| Status | Znaczenie | Treść odpowiedzi |
+|---|---|---|
+| `200` | Sukces | Strona w żądanym formacie |
+| `400` | Nieprawidłowe zapytanie, na przykład brakuje parametru `url` | `{"success":false,"error":"Request failed"}` |
+| `401` | Brakuje nagłówka `apikey` | `{"message":"Missing API key in request"}` |
+
+Jeśli otrzymasz status `429` lub `5xx`, ponów zapytanie, stosując wykładniczy backoff.
 
 ```python
 response = requests.get(
@@ -124,7 +153,7 @@ GOLOGIN_WEBUNLOCKER_API_KEY=wu_... gologin-webunlocker text https://example.com
 GOLOGIN_WEBUNLOCKER_API_KEY=wu_... gologin-webunlocker markdown https://example.com
 ```
 
-### Gologin Web Access CLI (wersja zunifikowana)
+### Gologin Web Access CLI (zunifikowane)
 
 ```bash
 npm install -g gologin-web-access
@@ -135,4 +164,4 @@ gologin-web-access scrape-json https://example.com
 gologin-web-access batch-scrape https://example.com/page/1 https://example.com/page/2 --format text
 ```
 
-Więcej informacji znajdziesz w artykułach [Web Unlocker SDK and CLI](/pl/scraping-api-sdk-and-cli) oraz [Web Access CLI](/pl/cli-tools/web-access).
+Więcej szczegółów znajdziesz w artykułach [Web Unlocker SDK i CLI](/pl/scraping-api-sdk-and-cli) oraz [Web Access CLI](/pl/cli-tools/web-access).

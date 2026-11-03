@@ -9,6 +9,8 @@ description: "Execute perfis do Gologin de forma programática com o SDK para No
 npm i gologin
 ```
 
+Requer Node.js 20 ou superior. A versão 3 do SDK é somente ESM: carregue-a com `import`, pois `require('gologin')` não funciona.
+
 ### Uso básico
 
 ```javascript
@@ -25,45 +27,73 @@ const { status, wsUrl } = await GL.start();
 await GL.stop();
 ```
 
+### Iniciar com o GologinApi
+
+O `GologinApi` inicia um perfil e conecta o Puppeteer para você. O `launch()` retorna um `browser` do Puppeteer. Passe `cloud: true` para executar o perfil no [Gologin Cloud Browser](/pt/api-reference/cloud-browser/what-is-gologin-cloud-browser) em vez de usar um navegador Orbita local:
+
+```javascript
+import { GologinApi } from 'gologin';
+
+const gologin = GologinApi({ token: 'your-api-token' });
+
+// local Orbita on this machine
+const { browser } = await gologin.launch({ profileId: 'your-profile-id' });
+
+// or Gologin Cloud Browser
+// const { browser } = await gologin.launch({ cloud: true, profileId: 'your-profile-id' });
+
+const page = await browser.newPage();
+await page.goto('https://example.com');
+
+// close the browser and stop the profile
+await gologin.exit();
+```
+
+Sem `profileId`, o `launch()` cria um novo perfil primeiro. O `GologinApi` também tem funções auxiliares, como `createProfileRandomFingerprint()`, `addGologinProxyToProfile()`, `addCookiesToProfile()` e `deleteProfile()`. Veja o [Quickstart](/pt/api-reference/introduction/quickstart) para um exemplo completo.
+
 ### Principais parâmetros
 
 | Parâmetro | Padrão | Descrição |
 |---|---|---|
 | `token` | obrigatório | Seu token de API do Gologin |
 | `profile_id` | obrigatório | ID do perfil a ser iniciado |
-| `executablePath` | automático | Caminho do binário do navegador Orbita |
+| `executablePath` | auto | Caminho do binário do navegador Orbita |
 | `uploadCookiesToServer` | `false` | Envia os cookies para a nuvem ao parar o perfil. Defina como `true` se precisar manter a sessão entre dispositivos. |
-| `checkBrowserUpdate` | `true` | Verifica atualizações do Orbita para a versão deste perfil ao iniciar. Defina como `false` para fixar a versão atual. |
-| `autoUpdateBrowser` | `true` | Baixa automaticamente novas versões do Orbita. Defina como `false` para evitar atualizações inesperadas. |
 | `extra_params` | `[]` | Flags adicionais do Chromium passadas ao navegador |
 
-### Parando perfis
+### Parar perfis
 
 ```javascript
-// Stop and sync to cloud (default)
+// Stop and sync to cloud
 await GL.stop();
 
-// Stop without syncing any data to cloud
-await GL.stop({ posting: false });
+// Stop without syncing profile data to cloud
+await GL.stopLocal({ posting: false });
 ```
 
-Observação: `posting: false` impede que os dados do perfil sejam enviados aos servidores do Gologin. Use essa opção ao executar em servidores nos quais você não deseja a sincronização com a nuvem.
+Feche primeiro o navegador na sua ferramenta de automação, por exemplo com `browser.close()`. O `stop()` não aceita opções e sempre envia o perfil para o Gologin. O `stopLocal({ posting: false })` encerra a sessão sem enviar os dados do perfil. Use-o em servidores em que você não quer a sincronização com a nuvem. Os cookies ainda são enviados se você definir `uploadCookiesToServer: true`.
 
-### Gerenciando versões do navegador Orbita
+### Gerenciar versões do navegador Orbita
+
+Quando um perfil é iniciado, o SDK verifica qual versão do Orbita o user agent do perfil exige. Se essa versão ainda não estiver em `~/.gologin/browser`, o SDK a baixa; caso contrário, reutiliza a cópia instalada. Para executar uma build específica, passe `executablePath`. As opções `autoUpdateBrowser` (padrão `false`) e `checkBrowserUpdate` ainda são aceitas, mas, no SDK atual (3.0.7), elas não alteram esse comportamento.
+
+Para baixar o Orbita com antecedência, chame `checkAndDownloadBrowserByOpts()` em uma instância de `GoLogin`. Trata-se de um método, não de uma exportação separada:
 
 ```javascript
-import { checkAndDownloadBrowserByOpts } from 'gologin';
+import { GoLogin } from 'gologin';
+
+const GL = new GoLogin({ token: 'your-api-token' });
 
 // Pre-download the latest Orbita version
-await checkAndDownloadBrowserByOpts({ lastActualCount: 1 });
+await GL.checkAndDownloadBrowserByOpts({ lastActualCount: 1 });
 
 // Pre-download specific versions
-await checkAndDownloadBrowserByOpts({ majorVersions: [142, 143] });
+await GL.checkAndDownloadBrowserByOpts({ majorVersions: [142, 143] });
 ```
 
-Use `checkAndDownloadBrowserByOpts` antes de iniciar perfis em paralelo para evitar vários downloads simultâneos.
+Sem opções, ele baixa as 5 versões mais recentes. Use-o antes de iniciar perfis em paralelo para evitar vários downloads simultâneos.
 
-### Executando mais de 100 perfis em paralelo
+### Executar mais de 100 perfis em paralelo
 
 Ao executar muitos perfis simultaneamente em um servidor:
 
@@ -96,11 +126,11 @@ async function processQueue() {
 ```
 
 **Importante para servidores:**
-- Limite o número de perfis iniciados simultaneamente (recomendamos começar com 10-20)
-- Baixe previamente as versões do Orbita antes de iniciar os perfis
+- Limite as inicializações simultâneas de perfis (recomendamos começar com 10 a 20)
+- Baixe as versões do Orbita antes de iniciar os perfis
 - No Linux: instale o Xvfb e defina `DISPLAY=:99`
 - Aumente os limites de descritores de arquivo: `ulimit -n 65536`
-- Monitore a RAM: cada perfil usa cerca de 300-500 MB
+- Monitore a RAM: cada perfil usa ~300-500 MB
 
 ### Depuração
 

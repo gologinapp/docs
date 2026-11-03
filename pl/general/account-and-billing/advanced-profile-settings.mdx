@@ -2,83 +2,83 @@
 title: "Zaawansowane ustawienia profilu"
 ---
 
-Karta **Advanced** daje bezpośrednią kontrolę nad poszczególnymi parametrami fingerprintu, którymi Gologin zarządza dla każdego profilu. Większość użytkowników nie musi zmieniać żadnego z nich - profile działają prawidłowo z ustawieniami domyślnymi na większości stron.
+Karta **Advanced** daje bezpośrednią kontrolę nad poszczególnymi parametrami fingerprintu, którymi Gologin zarządza w każdym profilu. Większość użytkowników nie musi niczego tu zmieniać - profile działają dobrze z ustawieniami domyślnymi na większości stron.
 
 <Warning>
-  Zmieniaj te ustawienia tylko wtedy, gdy masz ku temu konkretny powód i rozumiesz, co dokładnie modyfikujesz. Niektóre zmiany mogą poprawić sposób, w jaki profil jest postrzegany przez daną stronę, ale nieprawidłowe wartości mogą też sprawić, że profil będzie wyglądał podejrzanie lub że strona przestanie działać poprawnie. Zanim zaczniesz eksperymentować, zalecamy najpierw zapoznać się z praktykami multikontowania na odpowiednich forach i w grupach społecznościowych.
+  Zmieniaj te ustawienia tylko wtedy, gdy masz konkretny powód i rozumiesz, co zmieniasz. Niektóre zmiany mogą poprawić to, jak profil wygląda dla danej strony, ale nieprawidłowe wartości mogą też sprawić, że profil będzie wyglądał podejrzanie lub że strona przestanie działać poprawnie. Zanim zaczniesz eksperymentować, zalecamy najpierw zapoznać się z praktykami dotyczącymi multikont na odpowiednich forach i w grupach społecznościowych.
 </Warning>
 
-Kartę Advanced otworzysz, klikając **3 dots on the profile** \> **Settings** \> **Advanced**.
+Do zaawansowanych ustawień przejdziesz, klikając **3 dots on the profile** \> **Settings** \> **Advanced**.
 
 ## Navigator
 
-Ta sekcja kontroluje parametry przeglądarki i systemu, które profil przekazuje stronom internetowym.
+Ta sekcja określa parametry przeglądarki i systemu, które profil przekazuje stronom internetowym.
 
-**User-Agent** - Ciąg znaków, który identyfikuje Twoją przeglądarkę i system operacyjny na każdej odwiedzanej stronie. Jeśli masz kilka profili z tym samym systemem i wersją przeglądarki, mogą one mieć ten sam user-agent - to normalne. Istnieje tylko ograniczona liczba poprawnych kombinacji, a Gologin odróżnia profile za pomocą innych parametrów fingerprintu.
+**User-Agent** - Ciąg znaków identyfikujący Twoją przeglądarkę i system operacyjny na każdej odwiedzanej stronie. Jeśli masz kilka profili z tym samym systemem i tą samą wersją przeglądarki, mogą mieć ten sam user-agent - to normalne. Istnieje tylko ograniczona liczba prawidłowych kombinacji, a Gologin odróżnia profile za pomocą innych parametrów fingerprintu.
 
-**Screen Resolution** - Rozmiar ekranu zgłaszany przez profil. Unikaj ustawiania wartości wyższej niż rzeczywista rozdzielczość Twojego monitora, ponieważ taka rozbieżność może zostać wykryta. Okna przeglądarki nie można powiększyć ponad tę wartość, więc jeśli potrzebujesz większego okna, zwiększ tutaj rozdzielczość. Zobacz [Dlaczego nie mogę powiększyć okna przeglądarki do pełnego ekranu?](/pl/faq-profile-managment#why-cant-i-expand-the-browser-window-to-full-screen)
+**Screen Resolution** - Rozmiar ekranu, który raportuje profil. Unikaj ustawiania wartości wyższej niż rzeczywista rozdzielczość Twojego monitora, ponieważ taka niezgodność może zostać wykryta. Okna przeglądarki nie da się powiększyć ponad tę wartość, więc jeśli potrzebujesz większego okna, zwiększ tutaj rozdzielczość. Zobacz [Dlaczego nie mogę powiększyć okna przeglądarki do pełnego ekranu?](/pl/faq-profile-managment#why-can%E2%80%99t-i-expand-the-browser-window-to-full-screen)
 
-**Languages** - Język systemu zgłaszany stronom internetowym. Po ustawieniu opcji **Based on IP** język jest automatycznie dopasowywany do lokalizacji serwera proxy. Jeśli ustawisz go ręcznie, pamiętaj, że we wszystkich systemach poza macOS zmienia to również język interfejsu przeglądarki - w macOS przeglądarka zawsze korzysta z rzeczywistych ustawień językowych systemu.
+**Languages** - Język systemu przekazywany stronom. Gdy ustawiona jest opcja **Based on IP**, profil automatycznie używa języka powiązanego z lokalizacją proxy. Jeśli ustawisz język ręcznie, pamiętaj, że we wszystkich systemach poza macOS zmienia to również język interfejsu przeglądarki - w macOS przeglądarka zawsze korzysta z rzeczywistych ustawień językowych systemu.
 
-**Platform** - Przekazuje stronom informację o systemie operacyjnym. Odzwierciedla system wybrany podczas tworzenia profilu i nie można go zmienić w już istniejącym profilu.
+**Platform** - Przekazuje stronom informację o systemie operacyjnym. Odzwierciedla system wybrany podczas tworzenia profilu i nie można go zmienić w istniejącym profilu.
 
-**CPU Threads** i **RAM** - To wartości sprzętowe, które przeglądarka zgłasza stronom. Ich zmiana nie wpływa na rzeczywistą wydajność przeglądarki - są to wyłącznie wartości raportowane, a nie faktycznie wykorzystywane.
+**CPU Threads** i **RAM** - To wartości sprzętowe, które przeglądarka raportuje stronom. Ich zmiana nie wpływa na rzeczywistą wydajność przeglądarki - są to wyłącznie wartości raportowane, a nie faktycznie wykorzystywane.
 
-**DoNotTrack** - Wysyła stronom sygnał „Do Not Track". Większość stron ignoruje ten sygnał, a jego włączenie może samo w sobie stać się elementem fingerprintu, ponieważ nie jest popularne wśród zwykłych użytkowników.
+**DoNotTrack** - Wysyła stronom sygnał „Do Not Track". Większość stron ignoruje ten sygnał, a jego włączenie może samo w sobie być elementem fingerprintu, ponieważ nie jest popularne wśród zwykłych użytkowników.
 
 ## Fonts
 
-Strony internetowe mogą zapytać przeglądarkę, jakie czcionki są zainstalowane w systemie, i wykorzystać otrzymaną listę jako fingerprint.
+Strony mogą zapytać przeglądarkę, jakie czcionki są zainstalowane w systemie, i wykorzystać otrzymaną listę jako fingerprint.
 
-**Enable fonts list masking** - Gdy ta opcja jest włączona, Gologin przekazuje stronom własną, dobraną listę czcionek profilu zamiast czcionek faktycznie zainstalowanych na Twoim komputerze. Aktualna lista jest wyświetlana pod przełącznikiem i można ją edytować ręcznie przyciskiem **Edit**.
+**Enable fonts list masking** - Po włączeniu Gologin przekazuje stronom własną, przygotowaną listę czcionek profilu zamiast czcionek faktycznie zainstalowanych na Twoim komputerze. Aktualna lista jest wyświetlana pod przełącznikiem i można ją edytować ręcznie przyciskiem **Edit**.
 
-Zalecamy pozostawienie tej opcji włączonej. Jej wyłączenie ujawnia prawdziwe czcionki systemowe każdej stronie odwiedzanej przez profil.
+Zalecamy pozostawienie tej opcji włączonej. Jej wyłączenie ujawnia rzeczywiste czcionki systemowe każdej stronie odwiedzanej przez profil.
 
 ## Mask Media Devices
 
 Strony i aplikacje internetowe mogą wykryć, ile kamer, mikrofonów i głośników jest podłączonych do Twojego urządzenia.
 
-**Mask Media Devices** - Po włączeniu profil zgłasza stały zestaw urządzeń multimedialnych zamiast Twoich prawdziwych. Możesz niezależnie ustawić zgłaszaną liczbę **Video Inputs** (kamery), **Audio Inputs** (mikrofony) i **Audio Outputs** (głośniki).
+**Mask Media Devices** - Po włączeniu profil raportuje stały zestaw urządzeń multimedialnych zamiast Twoich rzeczywistych. Możesz niezależnie ustawić raportowaną liczbę **Video Inputs** (kamery), **Audio Inputs** (mikrofony) i **Audio Outputs** (głośniki).
 
-Wartość domyślna to 1 dla każdego typu, co odpowiada typowej konfiguracji z jednym urządzeniem.
+Domyślnie dla każdego typu ustawiona jest wartość 1, co odpowiada typowej konfiguracji z jednym urządzeniem każdego rodzaju.
 
 ## Hardware
 
-Ta sekcja kontroluje, jak profil reaguje na techniki fingerprintingu, które badają sposób renderowania grafiki i dźwięku w przeglądarce. Sygnały te są generowane przez uruchamianie małych zadań w silniku renderującym przeglądarki i porównywanie wyników - każde urządzenie daje nieco inne rezultaty.
+Ta sekcja określa, jak profil reaguje na techniki fingerprintingu badające renderowanie grafiki i dźwięku w przeglądarce. Sygnały te powstają przez uruchamianie w silniku renderującym przeglądarki niewielkich zadań i porównywanie wyników - każde urządzenie daje nieco inne rezultaty.
 
 <Note>
-  Ustawienia domyślne są bezpieczne w większości zastosowań. Są to zaawansowane mechanizmy kontroli fingerprintingu, a ich nieprawidłowa zmiana częściej sprawi, że profil będzie wyglądał nietypowo, niż go ulepszy.
+  Ustawienia domyślne są bezpieczne w większości zastosowań. To zaawansowane opcje kontroli fingerprintingu, a ich nieprawidłowa zmiana z większym prawdopodobieństwem sprawi, że profil będzie wyglądał nietypowo, niż go ulepszy.
 </Note>
 
-**Canvas** - Określa, jak profil obsługuje fingerprinting przez canvas. Dostępne opcje to **Noise** (dodaje niewielkie losowe zmiany do wyniku renderowania), **Off** (zwraca normalny wynik bez modyfikacji) oraz **Block** (całkowicie blokuje dostęp do API canvas). Blokowanie canvas samo w sobie jest wykrywalne i nie jest zalecane.
+**Canvas** - Określa, jak profil obsługuje fingerprinting przez canvas. Dostępne opcje to **Noise** (dodaje drobne losowe zmiany do wyniku renderowania), **Off** (zwraca normalny wynik bez modyfikacji) oraz **Block** (całkowicie blokuje dostęp do API canvas). Blokowanie canvas jest samo w sobie wykrywalne i nie jest zalecane.
 
-**Client Rects** - Działa podobnie do canvas, ale dotyczy sposobu, w jaki przeglądarka mierzy położenie i rozmiar elementów na stronie. Dostępne opcje: **Noise** lub **Off**.
+**Client Rects** - Działa podobnie jak canvas, ale dotyczy sposobu, w jaki przeglądarka mierzy położenie i rozmiar elementów na stronie. Dostępne opcje: **Noise** lub **Off**.
 
-**Audio Context** - Kontroluje fingerprint renderowania dźwięku. Przeglądarkę można poprosić o przetworzenie dźwięku, a wynik jest nieco inny na każdym urządzeniu. **Noise** dodaje niewielkie zmiany, a **Off** pozostawia wynik bez modyfikacji.
+**Audio Context** - Określa fingerprint renderowania dźwięku. Przeglądarkę można poprosić o przetworzenie dźwięku, a wynik jest nieznacznie inny na każdym urządzeniu. **Noise** dodaje niewielkie zmiany, a **Off** pozostawia wynik bez modyfikacji.
 
-**WebGL Image** - Kontroluje wizualny wynik renderowania WebGL, który różni się w zależności od karty graficznej. Dostępne opcje: **Noise** lub **Off**.
+**WebGL Image** - Określa wizualny wynik renderowania WebGL, który zależy od karty graficznej. Dostępne opcje: **Noise** lub **Off**.
 
-**WebGL Metadata** - Kontroluje ciągi znaków producenta i renderera GPU zgłaszane przez WebGL. **Mask** zastępuje prawdziwe wartości tymi, które podano w polach **WebGL Vendor** i **WebGL Renderer** poniżej. **Real** przekazuje rzeczywiste informacje o Twoim GPU.
+**WebGL Metadata** - Określa ciągi znaków producenta GPU i renderera raportowane przez WebGL. **Mask** zastępuje rzeczywiste wartości tymi, które podasz w polach **WebGL Vendor** i **WebGL Renderer** poniżej. **Real** przekazuje rzeczywiste informacje o Twoim GPU.
 
 ## Storage Options
 
 Te przełączniki określają, co każdy profil może zapisywać między sesjami.
 
-**Enable Local Storage** - Pozwala stronom zapisywać dane w lokalnej pamięci przeglądarki. Wiele stron polega na niej przy sesjach logowania i zapisywaniu preferencji. Jej wyłączenie może zakłócić działanie niektórych aplikacji internetowych.
+**Enable Local Storage** - Pozwala stronom zapisywać dane w pamięci lokalnej przeglądarki (local storage). Wiele stron korzysta z niej do obsługi sesji logowania i preferencji. Jej wyłączenie może zakłócić działanie niektórych aplikacji internetowych.
 
-**Enable IndexedDB** - Pozwala stronom korzystać z bardziej uporządkowanej bazy danych po stronie przeglądarki. Jest również używana przez wiele nowoczesnych aplikacji internetowych. Włącz ją, jeśli masz problemy z utrzymaniem sesji.
+**Enable IndexedDB** - Pozwala stronom korzystać z bardziej uporządkowanej bazy danych po stronie przeglądarki. Używa jej również wiele nowoczesnych aplikacji internetowych. Włącz, jeśli występują problemy z zachowywaniem sesji.
 
 **Enable Extension storage** - Pozwala zainstalowanym rozszerzeniom zapisywać własne dane między sesjami.
 
 ## Browser Plugins
 
-**Enable potentially vulnerable plugins** - Włącza wtyczki przeglądarki, takie jak przeglądarka PDF Adobe i Widevine (używany do wideo chronionego DRM). Są one domyślnie wyłączone, ponieważ starsze interfejsy wtyczek były historycznie wykorzystywane do fingerprintingu. Włącz tę opcję, jeśli potrzebujesz przeglądać pliki PDF lub odtwarzać chronione wideo w profilu.
+**Enable potentially vulnerable plugins** - Włącza wtyczki przeglądarki, takie jak przeglądarka PDF Adobe i Widevine (używany do wideo chronionego DRM). Są one domyślnie wyłączone, ponieważ starsze interfejsy wtyczek były w przeszłości źródłem danych do fingerprintingu. Włącz, jeśli potrzebujesz przeglądania plików PDF lub odtwarzania chronionych treści wideo w profilu.
 
 ## Other
 
 **Enable Google services** - Pozwala profilowi łączyć się w tle z usługami Google (sprawdzanie pisowni, Safe Browsing itp.). Większość użytkowników może zostawić tę opcję włączoną.
 
-**Disable image loading** i **Disable video autoplay** - Po włączeniu profil nie ładuje obrazów ani nie odtwarza automatycznie filmów na stronach. Zmniejsza to ilość ruchu proxy wykorzystywanego przez profil, co jest przydatne przy scrapingu, automatyzacji lub wszędzie tam, gdzie nie musisz oglądać multimediów. Obie opcje są domyślnie wyłączone. Dostępne tylko w planach płatnych.
+**Disable image loading** i **Disable video autoplay** - Po włączeniu profil nie ładuje obrazów ani nie odtwarza automatycznie filmów na stronach. Zmniejsza to ilość ruchu przesyłanego przez proxy, co jest przydatne przy scrapingu, automatyzacji i wszędzie tam, gdzie nie musisz oglądać multimediów. Obie opcje są domyślnie wyłączone. Dostępne tylko w płatnych planach. Przy wyłączonych obrazach niektóre strony mogą nie działać poprawnie - na przykład niektóre strony ustawień. Jeśli strona się nie otwiera, ponownie włącz ładowanie obrazów.
 
 **Enable browser bookmark saving** - Określa, czy zakładki utworzone lub zmienione podczas sesji są zapisywane po zamknięciu profilu.
 
@@ -88,10 +88,10 @@ Te przełączniki określają, co każdy profil może zapisywać między sesjami
 
 **Enable System Extensions** - Po włączeniu rozszerzenia zainstalowane w Twoim rzeczywistym systemie operacyjnym są automatycznie importowane do profilu podczas jego uruchamiania. Spowoduje to wyświetlenie monitów o instalację przy starcie. Opcja jest domyślnie wyłączona i najlepiej tak ją zostawić, chyba że naprawdę jej potrzebujesz.
 
-**Start URL** - Określa, co przeglądarka otwiera po uruchomieniu profilu. Dostępne są trzy opcje: **Previously opened tabs** przywraca karty otwarte ostatnim razem, **Open new tab page** zaczyna od czystej karty, a **Open specified pages** otwiera zdefiniowany przez Ciebie adres URL.
+**Start URL** - Określa, co przeglądarka otwiera po uruchomieniu profilu. Dostępne są trzy opcje: **Previously opened tabs** przywraca karty otwarte ostatnim razem, **Open new tab page** zaczyna od nowa, a **Open specified pages** otwiera zdefiniowany przez Ciebie adres URL.
 
-**Launch arguments** - Flagi przekazywane przeglądarce przy uruchomieniu, takie same jak w zwykłej przeglądarce Chrome (na przykład `--disable-gpu` lub `--start-maximized`). Zostaw to pole puste, jeśli nie wiesz, czego potrzebujesz. Pamiętaj, że niektóre argumenty są zablokowane i nie zadziałają, nawet jeśli je wpiszesz.
+**Launch arguments** - Flagi przekazywane przeglądarce podczas uruchamiania, takie same jak w zwykłym Chrome (na przykład `--disable-gpu` lub `--start-maximized`). Pozostaw puste, chyba że wiesz, czego potrzebujesz. Pamiętaj, że niektóre argumenty są zablokowane i nie zadziałają nawet po ich wpisaniu.
 
 **Custom DNS** - Pozwala określić serwer DNS dla tego profilu. Działa z proxy SOCKS, połączeniami VPN i połączeniami bezpośrednimi. Nie działa z proxy HTTP ani HTTPS.
 
-**WebRTC** - Określa, jak przeglądarka obsługuje WebRTC, czyli technologię używaną do komunikacji audio i wideo w czasie rzeczywistym, która może ujawnić Twój prawdziwy adres IP nawet przy aktywnym proxy. **Based on IP** dopasowuje działanie WebRTC do adresu IP proxy. **Off** całkowicie wyłącza WebRTC, co może uniemożliwiać prawidłowe działanie niektórych stron, które tego wymagają.
+**WebRTC** - Określa, jak przeglądarka obsługuje WebRTC, technologię używaną do komunikacji audio i wideo w czasie rzeczywistym, która może ujawnić Twój prawdziwy adres IP nawet przy aktywnym proxy. **Based on IP** dopasowuje działanie WebRTC do adresu IP proxy. **Off** całkowicie wyłącza WebRTC, choć niektóre strony wymagają jego włączenia do prawidłowego działania.

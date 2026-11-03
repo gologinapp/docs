@@ -1,18 +1,19 @@
 ---
 title: "Restaurar sesiones del navegador"
+description: "Restaura una sesión anterior desde Profile History: recupera cookies, inicios de sesión y pestañas perdidos de las últimas 5 sesiones."
 ---
 
-Cada vez que ejecutas y cierras un perfil de Gologin, el sistema crea automáticamente una **instantánea de sesión**. El **Profile history** de Gologin te permite restaurar hasta las **5 últimas sesiones**.
+Cada vez que ejecutas y cierras un perfil de Gologin, el sistema crea automáticamente una **instantánea de sesión**. **Profile history** en Gologin te permite restaurar hasta las **5 últimas sesiones**.
 
 Una instantánea de sesión incluye:
 
 - Cookies
 - Almacenamiento de sesión
-- Estado de inicio de sesión
+- Estado de sesión iniciada
 - Tokens de sitios web
 - Datos del navegador de esa sesión
 
-Si lo necesitas, puedes restaurar el perfil a cualquiera de estos estados de sesión anteriores.
+Si lo necesitas, puedes restaurar el perfil a cualquiera de estos estados de sesión anteriores. Si el perfil no se cerró correctamente, esa sesión no se guarda y no se puede restaurar.
 
 ## ¿Cómo restaurar la sesión de un perfil?
 
@@ -20,11 +21,11 @@ Para restaurar tu perfil a una de las 5 últimas sesiones, solo tienes que:
 
 1. Hacer clic en los **3 dots** del perfil
 2. Seleccionar **History**
-3. Elegir la sesión que quieras
+3. Elegir la sesión deseada
 4. Hacer clic en **Restore**
 
 <Frame>
-  ![Restaurar sesión desde el historial del perfil](/images/profile_history_restore_session.gif)
+  ![Restaurar sesión desde Profile History](/images/profile_history_restore_session.gif)
 </Frame>
 
 ## ¿Cuándo usar el historial del perfil?
@@ -37,15 +38,16 @@ Restaurar desde instantáneas puede ser útil cuando:
    Si no ves las pestañas abiertas recientemente o sospechas que la última sincronización del perfil no se realizó correctamente por problemas de conexión de red.
 3. **Estado dañado del sitio web**\
    Si ves que el sitio web no funciona como debería debido a cambios en la caché o a la intervención de una extensión.
-4. **Perfil que no funciona** Si no puedes iniciar un perfil por cualquier motivo no relacionado con el proxy, por ejemplo, si la sesión anterior no se sincronizó correctamente.
+4. **Perfil que no funciona**\
+   Si no puedes iniciar un perfil por cualquier motivo no relacionado con el proxy, por ejemplo, si la sesión anterior no se sincronizó correctamente.
 
-## Buenas prácticas
+## Mejores prácticas
 
 - **Cierra siempre los perfiles correctamente**\
-  Los cierres bruscos pueden generar instantáneas inestables.
-- **No abuses de las restauraciones**
+  Los cierres abruptos pueden generar instantáneas inestables.
+- **No abuses de las restauraciones**\
   Saltar constantemente entre sesiones puede parecer poco natural.
-- **Mantén la coherencia del proxy**
-  Restaurar una sesión de EE. UU. mientras usas un proxy nuevo de la UE puede invalidar las cookies.
+- **Mantén la coherencia del proxy**\
+  Restaurar una sesión de EE. UU. mientras usas un nuevo proxy de la UE puede invalidar las cookies.
 - **Úsalo como herramienta de recuperación**\
   Es ideal para corregir errores o revertir inestabilidad.

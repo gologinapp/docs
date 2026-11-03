@@ -1,11 +1,11 @@
 ---
 title: "Storage & Cache Management"
-description: "How to manage GoLogin's local storage, cache files, and disk usage"
+description: "How to manage Gologin's local storage, cache files, and disk usage"
 ---
 
-GoLogin stores browser data locally for each profile you run. Over time, this can consume significant disk space.
+Gologin stores browser data locally for each profile you run. Over time, this can consume significant disk space.
 
-## Where GoLogin stores data
+## Where Gologin stores data
 
 - **Windows**: `C:\Users\<username>\AppData\Local\Temp\gologin_profile_*`
 - **Mac**: `/tmp/gologin_profile_*`
@@ -18,8 +18,8 @@ Orbita browser binaries are stored separately and can take 500 MB-2 GB per versi
 Yes, you can safely delete temporary profile folders when no profiles are running. These folders are recreated when you launch a profile.
 
 **Before deleting:**
-1. Make sure all GoLogin profiles are closed
-2. Close the GoLogin desktop app
+1. Make sure all Gologin profiles are closed
+2. Close the Gologin desktop app
 3. Delete folders matching `gologin_profile_*` in your temp directory
 
 <Warning>
@@ -29,5 +29,5 @@ Do not delete files while profiles are running. This can cause "EBUSY: resource 
 ## How to reduce disk usage
 
 - Close profiles when you're done (don't leave them running overnight)
-- Uninstall unused Orbita browser versions via GoLogin settings
+- Uninstall unused Orbita browser versions via Gologin settings
 - Periodically clear temporary profile folders

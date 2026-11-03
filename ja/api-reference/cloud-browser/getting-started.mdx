@@ -3,41 +3,41 @@ title: "はじめに"
 keywords: ["cloud browser", "headless browser"]
 ---
 
-Gologin Cloud Browser を使うと、ブラウザセッションを**クラウド上**で実行し、1つの**接続 URL** を使って自動化ツール（Puppeteer / Playwright）から操作できます。
+Gologin Cloud Browser を使うと、**クラウド上で**ブラウザセッションを実行し、1 つの**接続 URL** で自動化ツール (Puppeteer / Playwright) から操作できます。
 
 <Tip>
-  **CLI をお探しですか？** [Gologin Agent Browser CLI](/ja/cli-tools/agent-browser) を使えば、コードを書かずにシェルから Cloud Browser を操作できます。スナップショット、参照（ref）、常駐デーモンを備えた AI エージェント向けのツールです。
+  **CLI のほうがお好みですか?** [Gologin Agent Browser CLI](/ja/cli-tools/agent-browser) を使えば、コードを書かずにシェルから Cloud Browser を操作できます。スナップショット、参照 (refs)、常駐デーモンを備えた、AI エージェント向けのツールです。
 </Tip>
 
 ## 接続 URL
 
-自動化ライブラリのリモートブラウザのエンドポイントとして、次の URL を使用します。
+この URL を、自動化ライブラリのリモートブラウザのエンドポイントとして使用します。
 
 ```text
 https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}
 ```
 
-- `token` — Gologin の**開発者トークン**です。
-- `profile` — **プロファイル ID**（省略可）：
-  - 指定した場合、Gologin はそのプロファイルをクラウドで実行します。
+- `token` — Gologin の**開発者トークン**。
+- `profile` — **プロファイル ID** (省略可):
+  - 指定した場合、Gologin はそのプロファイルをクラウド上で実行します。
   - 省略した場合、Gologin はセッション用に新しいプロファイルを作成します。
 
-> 注: この URL は、自動化ライブラリが **WebSocket 接続のエンドポイント**として使用します（たとえば Puppeteer の `browserWSEndpoint`）。\
-> トークンは Gologin のダッシュボードで生成できます: `個人エリア → API トークン`。
+> 注: この URL は、自動化ライブラリが **WebSocket 接続のエンドポイント**として使用します (たとえば Puppeteer の `browserWSEndpoint`)。\
+> トークンは Gologin アプリで作成できます: [API & MCP](https://app.gologin.com/personalArea/TokenApi) → **API** → **新しいトークン**。
 
 <Frame>
   ![Screenshotat Mar0514 27 28](/images/ScreenshotatMar0514-27-28.png)
 </Frame>
 
-## プロファイルの管理（代理人、指紋など）
+## プロファイルの管理 (代理人、指紋など)
 
-Cloud Browser は**接続レイヤー**（リモートブラウザセッション）にすぎません。\
-プロファイルの**作成・更新**、**代理人**の設定、**指紋**の構成、タグやその他のプロファイル設定を行うには、Gologin の **REST API** を使用してください。
+Cloud Browser は**接続レイヤー** (リモートブラウザセッション) にすぎません。\
+プロファイルの**作成・更新**、**代理人**の割り当て、**指紋**の設定、タグやその他のプロファイル設定を行うには、Gologin の **REST API** を使用してください。
 
 - Profiles API: https://gologin.com/docs/api-reference/profile
 - Proxies API: https://gologin.com/docs/api-reference/proxy
 
-# 使用例
+# 例
 
 <CodeGroup>
 

@@ -6,9 +6,9 @@ Web Unlocker はスクレイピング API です。URL を送信すると、完�
 
 ---
 
-## 自分でページをスクレイピングする
+## ページを自分でスクレイピングする
 
-最もシンプルなユースケースです。通常の HTTP リクエストをブロックするウェブページのコンテンツを取得したい場合に使います。
+最もシンプルなユースケースです。通常の HTTP リクエストをブロックするウェブページの内容を取得したい場合に使います。
 
 ### Python
 
@@ -37,7 +37,7 @@ const html = await fetch(
 console.log(html);
 ```
 
-ブラウザの起動もプロキシの設定も不要で、Cloudflare と格闘する必要もありません。1 回の呼び出しでページを取得できます。
+ブラウザを起動する必要も、プロキシを設定する必要も、Cloudflare と戦う必要もありません。1 回の呼び出しでページを取得できます。
 
 **こんな用途に最適:**
 
@@ -50,7 +50,11 @@ console.log(html);
 
 ## コンテンツを AI に渡す
 
-Web Unlocker は生の HTML を返します。これを LLM に渡せば、パース処理を書かなくても、構造化データの抽出、コンテンツの要約、ページに関する質問への回答ができます。
+Web Unlocker は生の HTML を返します。それを LLM に渡せば、構造化データの抽出、内容の要約、ページに関する質問への回答が可能です。解析ロジックを書く必要はありません。
+
+<Tip>
+モデルに送るマークアップを減らすには、リクエストに `format=markdown` を追加します。ページが HTML ではなく Markdown で返されます。
+</Tip>
 
 ### Python \+ OpenAI
 
@@ -91,7 +95,7 @@ const html = await fetch(
 
 const client = new Anthropic();
 const message = await client.messages.create({
-  model: "claude-opus-4-5",
+  model: "claude-opus-5-5",
   max_tokens: 1024,
   messages: [
     {
@@ -106,16 +110,16 @@ console.log(message.content[0].text);
 
 **こんな用途に最適:**
 
-- パーサーを書かずに、価格、名前、日付などの構造化データを抽出する
+- パーサーを書かずに、構造化データ(価格、名前、日付など)を抽出する
 - 記事や商品ページを要約する
-- 複数のページを比較して結論を導き出す
-- AI を活用したリサーチツールや監視ツールを構築する
+- 複数のページを比較して結論を導く
+- AI を活用したリサーチ/監視ツールを構築する
 
 ---
 
 ## AI エージェント内で使う
 
-Web Unlocker を利用した `scrape` ツールを AI エージェントに与えます。すると、ブラウジング用のロジックを自分で書かなくても、エージェントが自律的にウェブを閲覧し、ページの取得、コンテンツの読み取り、アクションの実行を行えるようになります。
+Web Unlocker を基盤とする `scrape` ツールを AI エージェントに持たせることができます。これにより、エージェントはページの取得、内容の読み取り、アクションの実行を自律的に行えます。ブラウジングのロジックを自分で書く必要はありません。
 
 ```python
 import requests
@@ -150,7 +154,7 @@ messages = [
 
 while True:
     response = client.messages.create(
-        model="claude-opus-4-5",
+        model="claude-opus-5-5",
         max_tokens=1024,
         tools=tools,
         messages=messages
@@ -174,18 +178,18 @@ while True:
     messages.append({"role": "user", "content": tool_results})
 ```
 
-スクレイピングするタイミングと取得する URL はエージェントが判断し、実際の取得は Web Unlocker が担当します。
+スクレイピングを行うタイミングと取得する URL はエージェントが判断します。実際の取得処理は Web Unlocker が担当します。
 
 **こんな用途に最適:**
 
 - ウェブを自律的に閲覧するリサーチエージェント
 - 価格比較やお得な商品を探すボット
 - 競合インテリジェンスのパイプライン
-- リアルタイムのウェブデータを必要とするあらゆるエージェント
+- リアルタイムのウェブデータが必要なあらゆるエージェント
 
 ---
 
-## 多数のページを一度にスクレイピングする
+## 多数のページを一括でスクレイピングする
 
 リクエストを並列で実行して、複数の URL からデータを同時に収集します。
 
@@ -225,20 +229,9 @@ for url, html in results:
 
 ---
 
-## まとめ
-
-| ユースケース | 操作 | 取得できるもの |
-| --- | --- | --- |
-| 単一ページのスクレイピング | URL パラメータを指定して GET | レンダリング済みの HTML |
-| LLM への入力 | スクレイピング → モデルに渡す | 抽出されたデータまたは要約 |
-| AI エージェントのツール | エージェントが必要に応じて呼び出す | リアルタイムのウェブコンテンツ |
-| 大量スクレイピング | 並列リクエスト | 各 URL の HTML |
-
----
-
 ## CLI から使う
 
-コードを書かなくても、Gologin Web Access CLI を使えば、よく使うスクレイピングのワークフローを実行できます。
+コードをまったく書かなくても、Gologin Web Access CLI を使えば、よくあるスクレイピングのワークフローを実行できます。
 
 ```bash
 npm install -g gologin-web-access
@@ -264,18 +257,18 @@ gologin-web-access extract https://example.com/product/123 --schema ./product-sc
 gologin-web-access search "best antidetect browser 2026" --limit 10
 ```
 
-コマンドの詳細は [Web Access CLI](/ja/cli-tools/web-access) をご覧ください。
+コマンドの一覧は [Web Access CLI](/ja/cli-tools/web-access) をご覧ください。
 
 ---
 
 ## まとめ
 
-| ユースケース | 操作 | 取得できるもの |
+| ユースケース | 操作 | 得られるもの |
 | --- | --- | --- |
-| 単一ページのスクレイピング | URL パラメータを指定して GET | レンダリング済みの HTML |
-| LLM への入力 | スクレイピング → モデルに渡す | 抽出されたデータまたは要約 |
+| 単一ページのスクレイピング | URL パラメーターを付けて GET | レンダリング済みの HTML |
+| LLM に渡す | スクレイピング → モデルに渡す | 抽出されたデータまたは要約 |
 | AI エージェントのツール | エージェントが必要に応じて呼び出す | リアルタイムのウェブコンテンツ |
-| 大量スクレイピング | 並列リクエスト | 各 URL の HTML |
+| 一括スクレイピング | 並列リクエスト | 各 URL の HTML |
 | CLI ワークフロー | `gologin-web-access` コマンド | テキスト、Markdown、JSON、一括処理の結果 |
 
-最初のリクエストを送信するには、[クイックスタート](/ja/web-unlocker-quick-start)をご覧ください。
+最初のリクエストを送信するには、[クイックスタート](/ja/web-unlocker-quick-start) をご覧ください。

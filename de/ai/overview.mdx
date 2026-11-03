@@ -1,15 +1,15 @@
 ---
 title: "Gologin für KI-Agenten"
-description: "Verschaffen Sie Ihren KI-Agenten zuverlässigen Webzugriff – Scraping, Browser-Automatisierung und persistente Sessions mit Gologin"
+description: "Verschaffen Sie Ihren KI-Agenten zuverlässigen Webzugriff – Scraping, Browser-Automatisierung und persistente Sitzungen mit Gologin"
 ---
 
 Gologin bietet KI-Agenten drei Dinge, die sie für die zuverlässige Arbeit im Web benötigen:
 
-1. **Das Web lesen** – Scrapen Sie beliebige Seiten, auch JS-lastige und geschützte Websites, mit Web Unlocker
-2. **Mit dem Web interagieren** – Öffnen Sie echte Browser-Sessions mit Klicks, Eingaben, Navigation und persistenten Cookies über Cloud Browser
-3. **Unentdeckt bleiben** – Anti-Detect-Fingerprinting, Residential-Proxys und profilbasiertes Identitätsmanagement
+1. **Das Web lesen** – Scrapen Sie jede Seite, auch JS-lastige und geschützte Websites, mit Web Unlocker
+2. **Mit dem Web interagieren** – Öffnen Sie echte Browser-Sitzungen mit Klicks, Eingaben, Navigation und persistenten Cookies über Cloud Browser
+3. **Unentdeckt bleiben** – Anti-Detect-Fingerprinting, Residential-Proxys und profilbasierte Identitätsverwaltung
 
-Diese Funktionen stehen auf mehreren Integrationsebenen zur Verfügung – wählen Sie die Variante, die zu Ihrem Stack passt.
+Diese Funktionen stehen auf mehreren Integrationsebenen zur Verfügung – wählen Sie, was zu Ihrem Stack passt.
 
 ---
 
@@ -17,16 +17,16 @@ Diese Funktionen stehen auf mehreren Integrationsebenen zur Verfügung – wähl
 
 <CardGroup cols={2}>
   <Card title="MCP Server" icon="plug" href="/de/api-reference/ai-integrations/mcp-server">
-    Verbinden Sie Gologin mit Claude Desktop, Cursor oder einem beliebigen MCP-Client. Verwalten Sie Profile und Sessions per natürlicher Sprache.
+    Verbinden Sie Gologin mit Claude Desktop, Cursor oder einem beliebigen MCP-Client. Verwalten Sie Profile und Sitzungen per natürlicher Sprache.
   </Card>
   <Card title="AI Skills" icon="wand-magic-sparkles" href="/de/api-reference/ai-integrations/ai-skills">
     Plug-and-play-Erweiterungen für Claude Code. Installieren Sie einen Skill, und Ihr Agent erhält Web-Scraping und Browser-Automatisierung sofort einsatzbereit.
   </Card>
   <Card title="CLI Tools" icon="terminal" href="/de/cli-tools/web-access">
-    Shell-Befehle, die KI-Agenten direkt aufrufen. Scrapen, browsen, interagieren – ganz ohne Code. Drei CLIs für unterschiedliche Workflows.
+    Shell-Befehle, die KI-Agenten direkt aufrufen. Scrapen, browsen, interagieren – ganz ohne Code. Eine CLI für das Scraping und eine für Live-Browser-Sitzungen in der Cloud oder auf Ihrem Rechner.
   </Card>
   <Card title="SDKs + Cloud Browser API" icon="code" href="/de/api-reference/cloud-browser/getting-started">
-    Volle programmatische Kontrolle. Entwickeln Sie eigene Agent-Tools mit Puppeteer/Playwright, verbunden mit Gologin Cloud Browser.
+    Volle programmatische Kontrolle. Erstellen Sie eigene Agent-Tools mit Puppeteer/Playwright, verbunden mit Gologin Cloud Browser.
   </Card>
 </CardGroup>
 
@@ -36,17 +36,17 @@ Diese Funktionen stehen auf mehreren Integrationsebenen zur Verfügung – wähl
 
 | Ich möchte ... | Verwenden |
 |---|---|
-| Profile aus Claude Desktop / Cursor verwalten | [MCP Server](/de/api-reference/ai-integrations/mcp-server) |
-| Claude Code ohne Einrichtungsaufwand Webzugriff geben | [AI Skills](/de/api-reference/ai-integrations/ai-skills) |
+| Profile über Claude Desktop / Cursor verwalten | [MCP Server](/de/api-reference/ai-integrations/mcp-server) |
+| Claude Code ohne Einrichtung Webzugriff geben | [AI Skills](/de/api-reference/ai-integrations/ai-skills) |
 | Seiten scrapen, Websites crawlen, Daten im Batch extrahieren | [Web Access CLI](/de/cli-tools/web-access) |
-| Einen Cloud-Browser öffnen, klicken, tippen, Screenshots machen | [Agent Browser CLI](/de/cli-tools/agent-browser) |
-| Lokale Profile aufwärmen, Login-Abläufe ausführen | [Local Agent Browser CLI](/de/cli-tools/local-agent-browser) |
-| Eigene Tools mit Puppeteer/Playwright entwickeln | [Cloud Browser API](/de/api-reference/cloud-browser/getting-started) |
-| Die Scraping-API aus meinem eigenen Code aufrufen | [Web Unlocker SDK](/de/scraping-api-sdk-and-cli) |
+| Einen Cloud-Browser öffnen, klicken, tippen, Screenshots erstellen | [Agent Browser CLI](/de/cli-tools/agent-browser) |
+| Lokale Profile aufwärmen, Login-Abläufe ausführen | [Agent Browser CLI, lokale Runtime](/de/cli-tools/local-agent-browser) |
+| Eigene Tools mit Puppeteer/Playwright erstellen | [Cloud Browser API](/de/api-reference/cloud-browser/getting-started) |
+| Die Scraping API aus dem eigenen Code aufrufen | [Web Unlocker SDK](/de/scraping-api-sdk-and-cli) |
 
 ---
 
-## So greift alles ineinander
+## Wie alles zusammenspielt
 
 ```
 ┌─────────────────────────────────────────────────┐
@@ -70,18 +70,18 @@ Web Unlocker              Cloud Browser
 ```
 
 - **Web Unlocker** übernimmt zustandsloses Lesen und Extrahieren – Sie senden eine URL und erhalten gerendertes HTML zurück
-- **Cloud Browser** übernimmt zustandsbehaftete Interaktion – Sie öffnen eine Session, klicken, tippen, navigieren und speichern Cookies dauerhaft
-- **Local Orbita** übernimmt persistente lokale Profile – Warmup, Login-Abläufe, Aktionen in sozialen Netzwerken und auf Marktplätzen
+- **Cloud Browser** übernimmt zustandsbehaftete Interaktion – Sitzung öffnen, klicken, tippen, navigieren, Cookies beibehalten
+- **Lokales Orbita** übernimmt persistente lokale Profile – Aufwärmen, Login-Abläufe, Aktionen in sozialen Netzwerken und auf Marktplätzen – über die lokale Runtime der Agent Browser CLI
 
 Alle drei nutzen dieselbe Gologin-Infrastruktur: Residential-Proxys, Anti-Detect-Fingerprinting und Profilverwaltung.
 
 ---
 
-## Was man damit umsetzen kann
+## Was Nutzer damit umsetzen
 
 ### Recherche und Wettbewerbsanalyse
 
-Ein KI-Agent, der Preise, Produkteinführungen und Inhaltsänderungen der Konkurrenz auf Dutzenden Websites überwacht – täglich und automatisch. Der Agent scrapt Wettbewerberseiten über Web Unlocker, extrahiert strukturierte Daten, vergleicht sie mit dem Snapshot vom Vortag und erstellt eine tägliche Zusammenfassung. Es sind keine Browser-Sessions nötig, sondern nur zustandslose Extraktion in großem Maßstab.
+Ein KI-Agent, der Preise, Produkteinführungen und Content-Änderungen der Konkurrenz auf Dutzenden Websites überwacht – täglich und automatisch. Der Agent scrapt die Seiten der Wettbewerber mit Web Unlocker, extrahiert strukturierte Daten, vergleicht sie mit dem Stand von gestern und erstellt eine tägliche Zusammenfassung. Es sind keine Browser-Sitzungen nötig, sondern nur zustandslose Extraktion in großem Maßstab.
 
 ```bash
 # scrape 20 competitor pricing pages and get structured output
@@ -98,9 +98,9 @@ gologin-web-access batch-change-track \
   --format markdown --output ./changes.json
 ```
 
-### Lead-Generierung und -Anreicherung
+### Lead-Generierung und Anreicherung
 
-Scrapen Sie Branchenverzeichnisse, LinkedIn-Unternehmensseiten und Bewertungsportale – und übergeben Sie das HTML an Claude, um Namen, E-Mail-Adressen, Telefonnummern, Unternehmensgröße und Tech-Stack zu extrahieren. Das funktioniert als Tool innerhalb einer KI-Agent-Schleife: Der Agent entscheidet, welche Seiten er scrapt, ruft das Tool auf und erhält strukturierte Daten zurück.
+Scrapen Sie Branchenverzeichnisse, LinkedIn-Unternehmensseiten und Bewertungsportale – und geben Sie das HTML anschließend an Claude, um Namen, E-Mail-Adressen, Telefonnummern, Unternehmensgröße und Tech-Stack zu extrahieren. Das funktioniert als Tool innerhalb einer KI-Agent-Schleife: Der Agent entscheidet, welche Seiten gescrapt werden, ruft das Tool auf und erhält strukturierte Daten zurück.
 
 ```bash
 # search for leads
@@ -112,21 +112,21 @@ gologin-web-access extract https://example.com/company/123 --schema ./lead-schem
 
 ### Verwaltung mehrerer Accounts
 
-Betreiben Sie mehr als 50 Social-Media-Accounts, Werbekonten oder Verkäufer-Accounts auf Marktplätzen – jeweils mit eigenem Browserprofil, Fingerprint, Proxy und eigenen Cookies. Local Agent Browser verwaltet die Profile, wärmt sie mit Runbooks auf und hält Sessions über mehrere Agent-Aufrufe hinweg aktiv.
+Betreiben Sie 50+ Social-Media-Accounts, Werbekonten oder Verkäuferkonten auf Marktplätzen – jeweils mit eigenem Browser-Profil, Fingerprint, Proxy und eigenen Cookies. Die lokale Runtime der Agent Browser CLI verwaltet die Profile, wärmt sie mit Runbooks auf und hält Sitzungen über mehrere Agent-Aufrufe hinweg aktiv. Profil- und Runbook-Befehle laufen lokal ohne zusätzliche Flags.
 
 ```bash
 # create profiles for each account
-gologin-local-agent-browser profile-create "FB Ads Account 1" --template ads
-gologin-local-agent-browser profile-create "FB Ads Account 2" --template ads
+gologin-agent-browser profile-create "FB Ads Account 1" --template ads
+gologin-agent-browser profile-create "FB Ads Account 2" --template ads
 
 # warm up profiles in batch
-gologin-local-agent-browser batch ./warmup-runbook.json \
+gologin-agent-browser batch ./warmup-runbook.json \
   --targets ./all-profiles.json --concurrency 5
 ```
 
 ### Automatisches Ausfüllen von Formularen und Dateneingabe
 
-Ein KI-Agent, der sich in interne Dashboards einloggt, Formulare ausfüllt, Berichte einreicht und Exporte herunterlädt – alles in einer echten Cloud-Browser-Session. Der Agent liest die Seite als Snapshot, findet die richtigen Felder anhand ihrer Referenz, tippt Werte ein, klickt auf „submit“ und prüft das Ergebnis.
+Ein KI-Agent, der sich in interne Dashboards einloggt, Formulare ausfüllt, Berichte einreicht und Exporte herunterlädt – alles über eine echte Cloud-Browser-Sitzung. Der Agent liest die Seite als Snapshot, findet die passenden Felder anhand ihrer Ref, gibt Werte ein, klickt auf „Senden“ und prüft das Ergebnis.
 
 ```bash
 gologin-agent-browser open https://internal-dashboard.com/login --profile my_profile
@@ -141,7 +141,7 @@ gologin-agent-browser screenshot ./logged-in.png
 
 ### Content-Monitoring und Benachrichtigungen
 
-Verfolgen Sie Änderungen auf Seiten mit behördlichen Vorschriften, Wettbewerber-Blogs, Jobbörsen oder anderen Seiten, die für Ihr Unternehmen wichtig sind. Führen Sie die Überwachung täglich per Cron oder mit einem geplanten Agenten aus, vergleichen Sie mit der vorherigen Version und lassen Sie sich bei relevanten Änderungen benachrichtigen.
+Verfolgen Sie Änderungen auf Seiten mit behördlichen Vorschriften, Blogs von Wettbewerbern, Jobbörsen oder jeder anderen Seite, die für Ihr Unternehmen wichtig ist. Führen Sie den Vorgang täglich per Cron oder über einen geplanten Agenten aus, vergleichen Sie ihn mit der vorherigen Version und lassen Sie sich bei relevanten Änderungen benachrichtigen.
 
 ```bash
 # track changes on key pages
@@ -154,7 +154,7 @@ gologin-web-access batch-change-track \
 
 ### KI-gestützte Web-Scraping-Pipelines
 
-Bauen Sie eine durchgängige Pipeline auf: Crawlen Sie eine Dokumentationswebsite, konvertieren Sie sie in Markdown und übergeben Sie sie an ein LLM für Zusammenfassungen oder Q&A. Nutzen Sie die CLI für die Extraktion und Ihren eigenen Code für den LLM-Teil.
+Bauen Sie eine durchgängige Pipeline: Crawlen Sie eine Dokumentations-Website, konvertieren Sie sie in Markdown und übergeben Sie sie an ein LLM für Zusammenfassungen oder Q&A. Nutzen Sie die CLI für die Extraktion und Ihren eigenen Code für den LLM-Teil.
 
 ```bash
 # crawl an entire docs site
@@ -169,13 +169,13 @@ gologin-web-access batch-scrape url1 url2 url3 --format text --output ./selected
 
 ### Geo-Tests und Lokalisierungs-QA
 
-Prüfen Sie, wie Ihre Website in verschiedenen Ländern aussieht. Öffnen Sie dieselbe URL über Profile, die mit Proxys in verschiedenen Regionen konfiguriert sind, machen Sie Screenshots und vergleichen Sie sie.
+Prüfen Sie, wie Ihre Website in verschiedenen Ländern aussieht. Öffnen Sie dieselbe URL über Profile, die mit Proxys in unterschiedlichen Regionen konfiguriert sind, erstellen Sie Screenshots und vergleichen Sie sie.
 
 ```bash
 # create geo-specific profiles
-gologin-local-agent-browser profile-create "US Test" --template geo --proxy-country us
-gologin-local-agent-browser profile-create "DE Test" --template geo --proxy-country de
-gologin-local-agent-browser profile-create "JP Test" --template geo --proxy-country jp
+gologin-agent-browser profile-create "US Test" --template geo --proxy-country us
+gologin-agent-browser profile-create "DE Test" --template geo --proxy-country de
+gologin-agent-browser profile-create "JP Test" --template geo --proxy-country jp
 
 # screenshot from each location
 gologin-agent-browser open https://yoursite.com --profile us_profile_id
@@ -211,14 +211,14 @@ gologin-agent-browser close
 ### Einen AI Skill installieren (Claude Code)
 
 ```bash
-npx skills add GologinLabs/gologin-web-access-skill
+npx skills add GologinLabs/agent-skills@gologin-web-access-skill
 ```
 
-Bitten Sie anschließend Claude Code einfach, eine Seite zu scrapen oder mit einer Website zu interagieren – den Rest übernimmt der Skill.
+Bitten Sie anschließend einfach Claude Code, eine Seite zu scrapen oder mit einer Website zu interagieren – den Rest erledigt der Skill.
 
 ### MCP verbinden (Claude Desktop)
 
-Fügen Sie Folgendes zu `claude_desktop_config.json` hinzu:
+Fügen Sie Folgendes zur Datei `claude_desktop_config.json` hinzu:
 
 ```json
 {
@@ -232,4 +232,4 @@ Fügen Sie Folgendes zu `claude_desktop_config.json` hinzu:
 }
 ```
 
-Bitten Sie dann Claude: „Erstelle ein neues Browserprofil mit einem US-Proxy.“
+Bitten Sie dann Claude: „Erstelle ein neues Browser-Profil mit einem US-Proxy.“

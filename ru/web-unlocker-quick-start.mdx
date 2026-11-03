@@ -6,16 +6,16 @@ title: "Быстрый старт"
 
 ---
 
-## Что понадобится
+## Предварительные требования
 
-- API-ключ Web Unlocker (чтобы его получить, напишите на **ermakova.t@gologin.com**)
+- API-ключ Web Unlocker. Получите его через форму на [странице Web Unlocker](https://gologin.com/web-unlocker/#web_unlocker_form). Ключ приходит в течение одного рабочего дня, вместе с ним вы получаете бесплатные запросы, чтобы протестировать сервис на своих целевых сайтах. Банковская карта не нужна.
 - Python 3.x, Node.js или любой HTTP-клиент
 
 ---
 
 ## Аутентификация
 
-Во всех запросах нужно передавать ваш API-ключ в заголовке `apikey`:
+Во всех запросах необходимо передавать ваш API-ключ в заголовке `apikey`:
 
 ```
 apikey: YOUR_API_KEY
@@ -29,9 +29,9 @@ https://parsing.webunlocker.gologin.com/v1
 
 ---
 
-## Отправьте первый запрос
+## Выполните первый запрос
 
-Отправьте GET-запрос, передав целевой URL в параметре запроса. В ответе вы получите полностью отрендеренный HTML-код страницы.
+Отправьте GET-запрос, указав целевой URL в параметре запроса. В ответ вы получите полностью отрендеренный HTML страницы.
 
 ### cURL
 
@@ -71,7 +71,7 @@ console.log(html);
 
 ## Что вы получите в ответ
 
-Тело ответа — это необработанный отрендеренный HTML страницы, тот же контент, который вы увидели бы, открыв URL в браузере. Ответ не оборачивается в JSON и не требует дополнительного разбора.
+Тело ответа — это готовый отрендеренный HTML страницы, то есть тот же контент, который вы увидели бы, открыв этот URL в браузере. Нет JSON-обёртки, дополнительный разбор не нужен.
 
 ```html
 <!DOCTYPE html>
@@ -81,19 +81,48 @@ console.log(html);
 </html>
 ```
 
+### Другие форматы
+
+Добавьте параметр запроса `format`, чтобы получить страницу в другом формате:
+
+| `format` | Тело ответа |
+|---|---|
+| `html` | HTML страницы (по умолчанию) |
+| `markdown` | Содержимое страницы в формате Markdown |
+| `json` | JSON-объект с URL, метаданными запроса и HTML страницы |
+
+```bash
+curl "https://parsing.webunlocker.gologin.com/v1/scrape?url=https%3A%2F%2Fexample.com&format=json" \
+  -H "apikey: YOUR_API_KEY"
+```
+
+```json
+{
+  "success": true,
+  "data": {
+    "url": "https://example.com",
+    "metadata": {
+      "response_time_ms": 297,
+      "status_code": 200
+    },
+    "html": "<!DOCTYPE html><html lang=\"en\">..."
+  }
+}
+```
+
 ---
 
 ## Обработка ошибок
 
-Перед обработкой ответа проверьте код состояния HTTP:
+Перед обработкой ответа проверяйте HTTP-статус:
 
-| Статус | Значение |
-|---|---|
-| `200` | Успешно — тело ответа содержит HTML страницы |
-| `401` | Неверный или отсутствующий API-ключ |
-| `422` | Неверный или отсутствующий параметр URL |
-| `429` | Превышен лимит запросов |
-| `500` / `503` | Ошибка сервера — повторите запрос с увеличивающимися интервалами |
+| Статус | Значение | Тело ответа |
+|---|---|---|
+| `200` | Успешно | Страница в запрошенном формате |
+| `400` | Некорректный запрос, например отсутствует параметр `url` | `{"success":false,"error":"Request failed"}` |
+| `401` | Отсутствует заголовок `apikey` | `{"message":"Missing API key in request"}` |
+
+Если вы получили статус `429` или `5xx`, повторите запрос с экспоненциальной задержкой.
 
 ```python
 response = requests.get(
@@ -112,7 +141,7 @@ else:
 
 ## Быстрый старт через CLI
 
-Вы также можете получать данные со страниц с помощью CLI-инструментов Gologin, не написав ни строчки кода:
+Вы также можете получать данные со страниц с помощью CLI-инструментов Gologin без написания кода:
 
 ### Web Unlocker CLI
 
@@ -124,7 +153,7 @@ GOLOGIN_WEBUNLOCKER_API_KEY=wu_... gologin-webunlocker text https://example.com
 GOLOGIN_WEBUNLOCKER_API_KEY=wu_... gologin-webunlocker markdown https://example.com
 ```
 
-### Gologin Web Access CLI (единый инструмент)
+### Gologin Web Access CLI (единый)
 
 ```bash
 npm install -g gologin-web-access
@@ -135,4 +164,4 @@ gologin-web-access scrape-json https://example.com
 gologin-web-access batch-scrape https://example.com/page/1 https://example.com/page/2 --format text
 ```
 
-Подробнее читайте в разделах [Web Unlocker SDK и CLI](/ru/scraping-api-sdk-and-cli) и [Web Access CLI](/ru/cli-tools/web-access).
+Подробнее см. в разделах [Web Unlocker SDK и CLI](/ru/scraping-api-sdk-and-cli) и [Web Access CLI](/ru/cli-tools/web-access).

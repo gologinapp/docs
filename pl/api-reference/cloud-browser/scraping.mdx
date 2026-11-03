@@ -4,33 +4,33 @@ title: "Rozwiązanie do scrapingu"
 
 ## Przegląd
 
-Gologin Cloud Browser może służyć jako zarządzana przeglądarka zdalna do scrapingu i pobierania danych. Twój kod automatyzacji (Puppeteer) łączy się ze zdalną sesją przeglądarki przez punkt końcowy WebSocket, a następnie wykonuje standardową logikę nawigacji i pobierania danych.
+Gologin Cloud Browser może służyć jako zarządzana zdalna przeglądarka do scrapingu i pobierania danych. Twój kod automatyzujący (Puppeteer) łączy się ze zdalną sesją przeglądarki przez endpoint WebSocket, a następnie wykonuje standardową logikę nawigacji i pobierania danych.
 
-Cloud Browser stanowi warstwę połączenia i wykonania, a ustawienia profilu i proxy są zarządzane przez REST API. Takie rozwiązanie może zmniejszyć nakład pracy związany z infrastrukturą i pomóc ograniczyć trudności ze scrapingiem, jednak wyniki zależą od zachowania i zabezpieczeń docelowej witryny.
+Cloud Browser stanowi warstwę połączenia i wykonywania, a ustawieniami profilu i proxy zarządza się przez REST API. Takie rozwiązanie może zmniejszyć nakłady na infrastrukturę i pomóc ograniczyć problemy ze scrapingiem, ale wyniki zależą od zachowania i zabezpieczeń docelowej witryny.
 
 ## Co otrzymujesz
 
 - Zdalne sesje przeglądarki dla połączeń Puppeteer.
-- Renderowanie JavaScript dla stron dynamicznych.
+- Renderowanie JavaScript dla dynamicznych stron.
 - Skalowanie bez konieczności utrzymywania własnej infrastruktury przeglądarek.
 - Konfigurację profili i proxy zarządzaną przez API.
-- Jeden kanoniczny punkt końcowy połączenia do uruchamiania sesji.
+- Jeden kanoniczny endpoint połączenia do uruchamiania sesji.
 
 ## Typowy przebieg pracy
 
 1. Wygeneruj token API.
 2. Opcjonalnie utwórz lub skonfiguruj profil (oraz proxy) przez REST API.
-3. Zbuduj adres URL połączenia z parametrem `token` i opcjonalnie `profile`.
+3. Zbuduj adres URL połączenia z parametrem `token` i opcjonalnym parametrem `profile`.
 4. Połącz się z poziomu Puppeteer/Playwright i uruchom pobieranie danych.
 5. Zapisz wyniki i zamknij sesję przeglądarki.
 
 ## Wymagania wstępne
 
-- Utwórz token: https://app.gologin.com/personalArea/TokenApi
-- Profiles API (zalecane dla kontrolowanej konfiguracji): https://gologin.com/docs/api-reference/profile
-- Proxy API: https://gologin.com/docs/api-reference/proxy
+- Utwórz token: w aplikacji Gologin otwórz [API & MCP](https://app.gologin.com/personalArea/TokenApi) → **API** → **New Token**
+- API profili (zalecane do kontrolowanej konfiguracji): [Utwórz profil](https://gologin.com/docs/api-reference/profile/create-profile-with-partial-parameters), [Zaktualizuj profil](https://gologin.com/docs/api-reference/profile/update-profile-with-partial-parameters)
+- API proxy: [Dodaj proxy Gologin do profilu](https://gologin.com/docs/api-reference/proxy/create-gologin-high-quality-proxy), [Ustaw własne proxy w profilach](https://gologin.com/docs/api-reference/profile/update-proxy-for-multiple-profiles)
 
-## Kanoniczny punkt końcowy połączenia
+## Kanoniczny endpoint połączenia
 
 ```text
 https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}
@@ -38,7 +38,7 @@ https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}
 
 - Parametr `token` jest wymagany.
 - Parametr `profile` jest opcjonalny.
-- Jeśli pominiesz `profile`, dla sesji zostanie utworzony nowy profil.
+- Jeśli pominiesz `profile`, na potrzeby sesji zostanie utworzony nowy profil.
 
 ## Minimalny przykład dla Puppeteer
 
@@ -49,7 +49,7 @@ const puppeteer = require('puppeteer-core');
 
 
   const token = 'your_token_here';
-  const profileId = 'your_profile_id'; // Remove this line if you want to create a new profile
+  const profileId = 'your_profile_id'; // Set to '' to create a new profile for this session
   const cloudBrowserUrl = `https://cloudbrowser.gologin.com/connect?token=${token}${profileId ? `&profile=${profileId}` : ''}`;
   const browser = await puppeteer.connect({
   
@@ -70,33 +70,33 @@ const puppeteer = require('puppeteer-core');
 
 ## Kolejne kroki
 
-- Cloud Browser Getting Started: https://gologin.com/docs/api-reference/cloud-browser/getting-started
-- Profiles API: https://gologin.com/docs/api-reference/profile
-- Proxy API: https://gologin.com/docs/api-reference/proxy
+- Pierwsze kroki z Cloud Browser: https://gologin.com/docs/api-reference/cloud-browser/getting-started
+- API profili: [Pobierz wszystkie profile](https://gologin.com/docs/api-reference/profile/get-all-profiles), [Utwórz profil](https://gologin.com/docs/api-reference/profile/create-profile-with-partial-parameters)
+- API proxy: [Dodaj proxy Gologin do profilu](https://gologin.com/docs/api-reference/proxy/create-gologin-high-quality-proxy), [Pobierz wszystkie proxy](https://gologin.com/docs/api-reference/proxy/get-list-of-all-proxies)
 
-## Dobre praktyki
+## Najlepsze praktyki
 
-- Preferuj jawne oczekiwanie na warunki zamiast stałych opóźnień.
-- Zaimplementuj logikę ponawiania prób z ograniczonym backoffem i jitterem.
-- Zapisuj uporządkowane wyniki pobierania danych (URL, pola, znacznik czasu, status).
-- Skonfiguruj profil i proxy przed połączeniem, aby zapewnić powtarzalność.
-- Zawsze zamykaj sesje i zadbaj o poprawne czyszczenie zasobów w razie błędów.
-- Dostosuj sposób wysyłania żądań i obsługi sesji do ograniczeń docelowej witryny.
+- Preferuj jawne oczekiwanie na zdarzenia zamiast stałych opóźnień.
+- Zaimplementuj ponawianie prób z ograniczonym opóźnieniem między próbami i losowym rozrzutem (jitter).
+- Zapisuj ustrukturyzowane wyniki pobierania danych (URL, pola, znacznik czasu, status).
+- Skonfiguruj profil i proxy przed nawiązaniem połączenia, aby zapewnić powtarzalność.
+- Zawsze zamykaj sesje i obsługuj czyszczenie zasobów w przypadku błędów.
+- Dostosuj zachowanie żądań i sesji do ograniczeń docelowej witryny.
 
-## Limity i kwoty
+## Limity i przydziały
 
-Aktualne limity i kwoty znajdziesz tutaj: https://gologin.com/docs/api-reference/limitations/rate-limits
+Aktualne limity i przydziały znajdziesz tutaj: https://gologin.com/docs/api-reference/limitations/rate-limits
 
 ## FAQ
 
 ### Czy potrzebuję profilu?
 
-Nie. Parametr `profile` jest opcjonalny. Jeśli go pominiesz, dla sesji zostanie utworzony nowy profil. Użyj profilu, gdy potrzebujesz kontrolowanej i powtarzalnej konfiguracji.
+Nie. Parametr `profile` jest opcjonalny. Jeśli go pominiesz, na potrzeby sesji zostanie utworzony nowy profil. Profilu warto użyć, gdy potrzebujesz kontrolowanej i powtarzalnej konfiguracji.
 
 ### Gdzie skonfigurować proxy?
 
-Skonfiguruj proxy przez Proxy API (oraz powiązane ustawienia profilu przez REST API): https://gologin.com/docs/api-reference/proxy
+Proxy konfiguruje się przez REST API: [dodaj proxy Gologin do profilu](https://gologin.com/docs/api-reference/proxy/create-gologin-high-quality-proxy) lub [ustaw własne proxy w profilach](https://gologin.com/docs/api-reference/profile/update-proxy-for-multiple-profiles).
 
 ### Czy to coś innego niż Cloud Browser?
 
-Nie. Ta strona opisuje zastosowanie samego Cloud Browser do scrapingu i pobierania danych. Cloud Browser odpowiada za połączenie i wykonanie, a ustawienia profilu i proxy są zarządzane przez REST API.
+Nie. To strona o wykorzystaniu samego Cloud Browser do scrapingu i pobierania danych. Cloud Browser odpowiada za połączenie i wykonywanie, a ustawieniami profilu i proxy zarządza się przez REST API.

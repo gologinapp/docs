@@ -37,12 +37,14 @@ Gologin profiles persist. Log in once, close the session, reconnect later — th
 
 ### Predictable pricing — billed by time, not by traffic
 
-|                     | Gologin Cloud Browser               | Typical alternative          |
-| ------------------- | ----------------------------------- | ---------------------------- |
-| **Session billing** | Hourly ( 0.048/h depending on plan) | Per session or per hour      |
-| **Proxy traffic**   | \$1.99 / GB                         | Per MB (minimum per session) |
-| **ISP proxies**     | \$5 / IP, unlimited traffic         | Per GB                       |
-| **Included hours**  | 20–200 h/month depending on plan    | Usually none                 |
+|                          | Gologin Cloud Browser                                                    | Typical alternative          |
+| ------------------------ | ------------------------------------------------------------------------ | ---------------------------- |
+| **Session billing**      | Hourly: \$0.05–0.09 per extra hour depending on plan                     | Per session or per hour      |
+| **Included hours**       | 100–400 h/month depending on plan                                        | Usually none                 |
+| **Proxy traffic**        | 2 GB of residential traffic per month on paid plans, then from \$1 / GB | Per MB (minimum per session) |
+| **Dedicated IPs (ISP)**  | \$5 per IP per month, unlimited traffic                                  | Per GB                       |
+
+See [Pricing](/general/account-and-billing/pricing) for what each plan includes and [Cloud Browser Usage](/general/account-and-billing/cloud-browser-usage) for extra hours and sessions.
 
 ### No vendor lock-in
 
@@ -50,7 +52,12 @@ Gologin Cloud Browser is a standard CDP endpoint. Your Puppeteer or Playwright c
 
 ### Parallel sessions that scale
 
-Plans include 1–4 parallel sessions out of the box. Need more — contact us for a custom plan.
+Plans include 1–4 parallel sessions out of the box: 1 on Professional, 2 on Business, 3 on Enterprise, and 4 on Custom. Need more? Buy them yourself in **Settings & Members** > **Cloud Browser Usage** > **Buy more limits**:
+
+- **Concurrent sessions** — \$2 per session per month
+- **Extra cloud hours** — \$0.09 per hour on Professional, \$0.08 on Business, \$0.07 on Enterprise, and \$0.05 on Custom
+
+See [Cloud Browser Usage](/general/account-and-billing/cloud-browser-usage) for details.
 
 ## Common technical scenarios
 
@@ -65,7 +72,7 @@ Examples include automating logged-in sessions for web apps, marketplaces, or so
 ## Core concepts
 
 - **Profile** — a reusable browser identity (cookies/storage + fingerprint and proxy settings).
-- **Cloud session** — a running instance of a profile in GoLogin's cloud.
+- **Cloud session** — a running instance of a profile in Gologin's cloud.
 - **Connect URL** — the endpoint you pass to your automation tool to control the cloud session.
 
 ## How it works (high level)
@@ -80,10 +87,10 @@ Examples include automating logged-in sessions for web apps, marketplaces, or so
 Use this URL as the remote browser endpoint:
 
 ```text
-https://cloudbrowser.gologin.com/connect?token=${token}&profile=${params.profileId}
+https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}
 ```
 
-- `token` — your Gologin **dev token** (generate it in the dashboard: `Personal Area → API Token`).
+- `token` — your Gologin **dev token** (create it in the Gologin app: [API & MCP](https://app.gologin.com/personalArea/TokenApi) → **API** → **New Token**).
 - `profile` — **profile ID** (optional). If omitted, a new profile will be created for the session.
 
 ## Managing profiles (proxy, fingerprint, etc.)
@@ -91,8 +98,8 @@ https://cloudbrowser.gologin.com/connect?token=${token}&profile=${params.profile
 Cloud Browser is the **connection layer**.\
 To create/update profiles, attach proxies, and configure profile settings, use the Gologin REST API:
 
-- Profiles API: https://gologin.com/docs/api-reference/profile
-- Proxy API: https://gologin.com/docs/api-reference/proxy
+- Profiles API: [Create profile](https://gologin.com/docs/api-reference/profile/create-profile-with-partial-parameters), [Update profile](https://gologin.com/docs/api-reference/profile/update-profile-with-partial-parameters)
+- Proxy API: [Add a Gologin proxy to a profile](https://gologin.com/docs/api-reference/proxy/create-gologin-high-quality-proxy), [Set your own proxy on profiles](https://gologin.com/docs/api-reference/profile/update-proxy-for-multiple-profiles)
 
 ## Use Cloud Browser from the CLI
 

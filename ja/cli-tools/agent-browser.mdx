@@ -1,31 +1,32 @@
 ---
 title: "Gologin Agent Browser CLI"
-description: "スナップショット、ref、常駐デーモンを備えた、AIエージェント向けのクラウドブラウザ自動化CLI"
+description: "Gologin プロファイルを Cloud Browser またはローカルの Orbita で実行する、AI エージェント向けのブラウザ自動化 CLI。スナップショット、ref、常駐デーモンに対応しています"
 ---
 
-Gologin Agent Browser CLI は、Gologin Cloud Browser を、AIエージェント向けの永続的でスクリプト化できる実行環境に変えます。コンパクトなページスナップショット、ref ベースの操作、セッションの記憶、シェルで扱いやすい出力を提供します。
+Gologin Agent Browser CLI は、Gologin のブラウザプロファイルを、AI エージェント向けの永続的でスクリプト化しやすい実行環境に変えます。セッションは Gologin Cloud Browser、またはお使いのマシン上の Orbita で実行されます。コンパクトなページスナップショット、ref ベースの操作、セッションメモリ、シェルで扱いやすい出力を提供します。
 
-Puppeteer/Playwright のコードをゼロから書く場合と異なり、この CLI はブラウザ自動化のためのコマンドをあらかじめ用意しています。定型コードもセッション管理コードも不要です。
+Puppeteer/Playwright のコードをゼロから書く場合と違い、この CLI はブラウザ自動化のためのコマンド群をあらかじめ用意しています。定型コードやセッション管理のコードは不要です。
 
 ---
 
-## クラウドブラウザを使う理由
+## クラウドランタイムとローカルランタイム
 
-ローカルブラウザによる自動化には、エージェントのワークフローにおいて次のような明確な限界があります。
+CLI には、同じコマンドで使える 2 つのランタイムがあります。どちらも Gologin のプロファイル、フィンガープリント、プロキシを使用し、デーモンが CLI の呼び出しをまたいでセッションを維持します。
 
-- ローカルブラウザは検出されやすい
-- プロファイル単位のフィンガープリントを利用できない
-- クラウド上に永続的なブラウザプロファイルを持てない
-- プロキシ層が組み込まれていない
-- エージェントや環境をまたいで標準化するのが難しい
+| | `cloud`(デフォルト) | `local` |
+|---|---|---|
+| ブラウザの実行場所 | Gologin Cloud Browser | お使いのマシン上の Orbita |
+| プロファイル ID | 任意: 指定しない場合は一時的なクラウドプロファイルが作成されます | 必須 |
+| 向いている用途 | 並列セッション、リモートセッション、ブラウザを実行したくないマシン | プロファイルのウォームアップ、初回ログイン、ローカルの Cookie やプロファイルの状態、OS の一致 |
 
-Agent Browser CLI は、これとは反対のアプローチを取ります。
+ランタイムはコマンドごとに `--runtime cloud|local|auto` で選択できます。または `GOLOGIN_AGENT_BROWSER_RUNTIME` を一度設定してください。
 
-- ローカルプロセスではなく、クラウドブラウザの実行環境を使用
-- セッションの ID 層として Gologin プロファイルを使用
-- プロキシに対応したセッション
-- Gologin から引き継がれるアンチ検出機能
-- CLI の呼び出しをまたいでセッションを維持する常駐デーモン
+```bash
+gologin-agent-browser open https://example.com
+gologin-agent-browser open https://example.com --runtime local --profile your_profile_id
+```
+
+デフォルト(`auto`)では、プロファイル、ランブック、ジョブのコマンドはローカルで実行され、それ以外はクラウドで実行されます。ローカルセッションを開いた後は、続くコマンドにも `--runtime local` を指定してください。要件とローカル専用コマンドについては、[ローカルランタイム](/ja/cli-tools/local-agent-browser)をご覧ください。
 
 ---
 
@@ -35,13 +36,13 @@ Agent Browser CLI は、これとは反対のアプローチを取ります。
 npm install -g gologin-agent-browser-cli
 ```
 
-グローバルにインストールせずに実行することもできます。
+グローバルインストールなしで実行することもできます。
 
 ```bash
 npx gologin-agent-browser-cli --help
 ```
 
-Node.js 18 以上が必要です。
+Node.js 18 以上が必要です。ローカルランタイムには Node.js 20 以降が必要です。
 
 ---
 
@@ -49,10 +50,12 @@ Node.js 18 以上が必要です。
 
 | 変数 | 必須 | 説明 |
 |---|---|---|
-| `GOLOGIN_TOKEN` | はい（`open` の場合） | Gologin API トークン |
+| `GOLOGIN_TOKEN` | はい(`open` と API コマンドの場合) | Gologin API トークン |
 | `GOLOGIN_PROFILE_ID` | 任意 | デフォルトのプロファイル ID |
-| `GOLOGIN_DAEMON_PORT` | 任意 | デーモンのポート（デフォルト: `44777`） |
-| `GOLOGIN_CONNECT_BASE` | 任意 | Cloud Browser のエンドポイント |
+| `GOLOGIN_AGENT_BROWSER_RUNTIME` | 任意 | デフォルトのランタイム: `cloud`、`local`、または `auto` |
+| `GOLOGIN_DAEMON_PORT` | 任意 | デーモンのポート(デフォルト: クラウドは `44777`、ローカルは `44778`) |
+| `GOLOGIN_CONNECT_BASE` | 任意 | Cloud Browser のエンドポイント(デフォルト: `https://cloudbrowser.gologin.com/connect`) |
+| `GOLOGIN_EXECUTABLE_PATH` | 任意 | ローカルランタイム用の Orbita 実行ファイルのパス |
 
 ### トークンを取得する
 
@@ -74,22 +77,22 @@ export GOLOGIN_TOKEN='your_gologin_token'
 
 ## アーキテクチャ
 
-構成は次の2つの部分からなります。
+次の 2 つの部分で構成されています。
 
-1. **`gologin-agent-browser` CLI** — コマンドを解析し、デーモンを自動起動して、コンパクトな出力を表示します
-2. **常駐ローカルデーモン** — ライブのブラウザセッションを管理し、Playwright の `connectOverCDP` を通じて Gologin Cloud Browser に接続します。また、アクティブなページをメモリ上に保持し、スナップショットの作成、ref の解決、セッションメタデータの追跡を行います
+1. **`gologin-agent-browser` CLI** — コマンドを解析し、ランタイムを選択し、対応するデーモンを自動起動して、コンパクトな出力を表示します
+2. **常駐ローカルデーモン**(ランタイムごとに 1 つ) — 稼働中のブラウザセッションを管理し、Playwright の `connectOverCDP` を通じて Gologin Cloud Browser またはローカルの Orbita に接続します。アクティブなページをメモリ上に保持し、スナップショットの作成、ref の解決、セッションメタデータの追跡を行います
 
-通信はローカルのみです。
+通信はローカルのみです。クラウドデーモンは次の場所で待ち受けます。
 - `${TMPDIR:-/tmp}/gologin-agent-browser.sock` の Unix ソケット
 - `127.0.0.1:${GOLOGIN_DAEMON_PORT:-44777}` のローカルホスト HTTP
 
-プロファイル ID を指定しない場合、デーモンは API を通じて一時的な Gologin クラウドプロファイルを作成します。
+クラウドランタイムでプロファイル ID を指定しない場合、デーモンは API を通じて一時的な Gologin クラウドプロファイルを作成します。
 
 ---
 
 ## ref の仕組み
 
-`snapshot` はコンパクトなページビューを出力し、操作可能な要素に `@e1`、`@e2`、`@e3` のような ref を割り当てます。これらを直接指定して操作できます。
+`snapshot` はコンパクトなページビューを出力し、操作可能な要素に `@e1`、`@e2`、`@e3` のような ref を割り当てます。これらを直接指定して操作します。
 
 ```bash
 gologin-agent-browser snapshot
@@ -100,7 +103,12 @@ gologin-agent-browser type @e5 "search query"
 gologin-agent-browser fill @e7 "username"
 ```
 
-ref はベストエフォートで割り当てられるため、ページ遷移後や DOM が大きく変化した後は再生成してください。動的なページでは、古くなった ref よりも `find` を使うほうが確実な場合が多くあります。
+ref はベストエフォートで割り当てられるため、ページ遷移や DOM の大きな変更の後は再生成してください。コマンドでは ref の代わりに CSS セレクタも使用できます。動的なページでは、古くなった ref よりも `find` を代替手段として使うほうが適していることが多くあります。`find` は実際のページ上で要素を探し、そのまま 1 ステップで操作します。
+
+```bash
+gologin-agent-browser find label "Email" fill "user@example.com"
+gologin-agent-browser find role button click --name "Submit"
+```
 
 ---
 
@@ -130,7 +138,7 @@ gologin-agent-browser close
 
 ## エージェントループの例
 
-典型的な AI エージェントのループは次のとおりです。
+一般的な AI エージェントのループは次のとおりです。
 
 ```
 1. open <url>
@@ -144,7 +152,7 @@ gologin-agent-browser close
 
 ---
 
-## コマンドリファレンス（全一覧）
+## コマンドリファレンス(全一覧)
 
 ### 診断
 
@@ -156,9 +164,9 @@ gologin-agent-browser close
 
 | コマンド | 説明 |
 |---|---|
-| `open <url>` | クラウドブラウザのセッションで URL を開きます |
-| `close` | 現在のセッションを閉じます |
-| `sessions` | アクティブなセッションを一覧表示します |
+| `open <url>` | ブラウザセッションで URL を開きます |
+| `close` | 現在のセッションを閉じます(`--all` でこのデーモンのすべてのセッションを閉じます) |
+| `sessions` | アクティブなセッションを一覧表示します(`--prune` で古いセッションを削除します) |
 | `current` | 現在のセッション情報を表示します |
 
 ### ページの読み取り
@@ -176,13 +184,13 @@ gologin-agent-browser close
 |---|---|
 | `click <ref>` | 要素をクリックします |
 | `dblclick <ref>` | ダブルクリックします |
-| `type <ref> <text>` | テキストを入力します（追記） |
-| `fill <ref> <text>` | 入力欄に入力します（置換） |
+| `type <ref> <text>` | テキストを入力します(追記) |
+| `fill <ref> <text>` | 入力欄に入力します(置換) |
 | `hover <ref>` | 要素にカーソルを合わせます |
 | `select <ref> <value>` | ドロップダウンの値を選択します |
-| `check <ref>` / `uncheck <ref>` | チェックボックスのオン／オフを切り替えます |
+| `check <ref>` / `uncheck <ref>` | チェックボックスを切り替えます |
 | `focus <ref>` | 要素にフォーカスします |
-| `find ...` | 意味に基づいて要素を検索します |
+| `find <by> <locator> <action> [value]` | `role`、`text`、`label`、`placeholder`、`first`、`last`、`nth` のいずれかで要素を探し、`click`、`fill`、`type`、`hover` のいずれかを実行するか、`text` で内容を読み取ります |
 
 ### キーボードとスクロール
 
@@ -228,6 +236,33 @@ gologin-agent-browser close
 | `eval <expression>` | ページ内で JavaScript を評価します |
 | `upload <ref> <file...>` | ファイルをアップロードします |
 
+### プロファイル、プロキシ、Gologin API
+
+これらのコマンドは、お使いのトークンで Gologin API を呼び出すため、ブラウザデーモンは不要です。
+
+| コマンド | 説明 |
+|---|---|
+| `api <METHOD> <path>` | 任意の Gologin REST API エンドポイントを呼び出します |
+| `browser <action>` | プロファイル: 一覧、取得、作成、更新、削除、Cookie、プロキシ、クラウドの開始と停止、インポートとエクスポート |
+| `proxy <action>` | プロキシ: 一覧、Gologin プロキシの追加、更新、削除、トラフィック |
+| `workspace`, `folder`, `share`, `template` | ワークスペースとメンバー、フォルダ、共有、プロファイルテンプレート |
+| `user`, `deleted-profile` | アカウント情報と開発用トークン、削除したプロファイルの復元 |
+| `cloud-usage` | プロファイルまたはワークスペースの Cloud Browser 使用量 |
+| `profile-cloud`, `profile-cookies`, `profile-fingerprint`, `profile-proxy`, `profile-ua` | ショートカット: クラウドでのプロファイルの開始または停止、Cookie のエクスポートまたはインポート、フィンガープリントの更新、プロキシの追加、ユーザーエージェントの更新 |
+
+```bash
+gologin-agent-browser browser list --page 1
+gologin-agent-browser proxy add-gologin your_profile_id --country us --type residential
+gologin-agent-browser cloud-usage --profile your_profile_id
+gologin-agent-browser api GET /browser/your_profile_id
+```
+
+任意のコマンドに `--help` を付けると、その使い方が表示されます。
+
+### ローカルランタイム専用
+
+`profiles`、`profile`、`profile-create`、`profile-update`、`profile-import`、`profile-sync`、`profile-delete`、`run`、`batch`、`jobs`、`job` は、ローカルのプロファイル、ランブック、ジョブ履歴を管理します。[ローカルランタイム](/ja/cli-tools/local-agent-browser#profile-commands)をご覧ください。
+
 ### エイリアス
 
 | エイリアス | 対応するコマンド |
@@ -244,7 +279,7 @@ gologin-agent-browser close
 
 ## ユースケースと例
 
-### サイトがアンチ検出テストに合格するか確認する
+### サイトがアンチディテクトのテストに合格するか確認する
 
 ```bash
 gologin-agent-browser open https://iphey.com/ --profile your_profile_id
@@ -314,13 +349,12 @@ done
 
 ### スクレイピングをブロックするサイトで検索する
 
-サイトによっては、結果を表示する前に JavaScript の実行、ログイン、または操作が必要になります。そのような場合は、ブラウザを使って検索します。
+サイトによっては、結果を表示する前に JavaScript の実行、ログイン、または操作が必要です。そのような場合は、ブラウザを使って検索します。
 
 ```bash
 gologin-agent-browser open https://protected-directory.com
 gologin-agent-browser snapshot
-gologin-agent-browser find "search input"
-gologin-agent-browser type @found "machine learning engineer San Francisco"
+gologin-agent-browser find placeholder "Search" fill "machine learning engineer San Francisco"
 gologin-agent-browser press Enter
 gologin-agent-browser wait 3000
 gologin-agent-browser snapshot     # agent reads search results
@@ -330,7 +364,7 @@ gologin-agent-browser close
 
 ### セッション状態を保存して復元する
 
-Cookie とストレージをエクスポートしておけば、別のセッションで再利用できます。
+Cookie とストレージをエクスポートして、別のセッションで再利用できます。
 
 ```bash
 # after logging in
@@ -350,24 +384,25 @@ gologin-agent-browser snapshot     # already logged in
 
 ## 並列セッション
 
-独立したクラウドタスクには、明示的に `--session` ID を指定します。後片付けには `close --all` または `sessions --prune --older-than-ms` を使用します。
+独立したクラウドタスクには、明示的な `--session` ID を使用します。後片付けには `close --all` または `sessions --prune --older-than-ms` を使います。
 
 ---
 
 ## プロキシのルール
 
-- 事前設定済みのプロファイル: プロキシは Gologin のダッシュボードまたは API でプロファイルに設定します
-- 一時プロファイル: プロキシなし、またはカスタムのプロキシホスト／ポートに対応します
-- `--proxy-country` は事前設定済みのプロファイルでのみ利用できます
+- 事前設定済みのプロファイル: プロキシは Gologin のダッシュボードまたは API でプロファイルに設定します(例: `proxy add-gologin <profileId> --country us`)
+- 一時的なクラウドプロファイル: プロキシなし、または `--proxy-host` と `--proxy-port` で指定した独自のプロキシ(`--proxy-mode http|socks4|socks5`、`--proxy-user`、`--proxy-pass` も併用できます)
+- クラウドランタイムでは、`open` は `--proxy-country` を受け付けません。特定の国の Gologin プロキシのトラフィックを使うには、プロファイルに Gologin プロキシを追加し、`--profile` を指定してそのプロファイルを開いてください
+- ローカルランタイムでは、`open`、`profile-create`、`profile-update` が `--proxy-country` を受け付けます
 
 ---
 
 ## 関連情報
 
-- [Gologin Web Access CLI](/ja/cli-tools/web-access) — 統合 CLI（スクレイピング + ブラウザ）
-- [Local Agent Browser CLI](/ja/cli-tools/local-agent-browser) — ローカルの Orbita を使う代替手段
-- [Cloud Browser Getting Started](/ja/api-reference/cloud-browser/getting-started) — Puppeteer/Playwright の例
-- [AI Skills](/ja/api-reference/ai-integrations/ai-skills) — Claude Code 向けのプラグアンドプレイ スキル
+- [Gologin Web Access CLI](/ja/cli-tools/web-access) — 統合 CLI(スクレイピング + ブラウザ)
+- [ローカルランタイム](/ja/cli-tools/local-agent-browser) — この CLI でローカルの Orbita プロファイルを実行します
+- [Cloud Browser はじめに](/ja/api-reference/cloud-browser/getting-started) — Puppeteer/Playwright の例
+- [AI Skills](/ja/api-reference/ai-integrations/ai-skills) — Claude Code 向けのすぐに使えるスキル
 
 <Card title="npm パッケージ" icon="npm" href="https://www.npmjs.com/package/gologin-agent-browser-cli">
   gologin-agent-browser-cli

@@ -2,16 +2,58 @@
 title: "Thanh toán & Gói đăng ký"
 ---
 
+### Thanh toán bằng thẻ của tôi bị từ chối
+
+Hầu hết các trường hợp từ chối đến từ ngân hàng phát hành thẻ. Biểu mẫu thanh toán sẽ hiển thị lý do mà nó nhận được:
+
+| Thông báo | Ý nghĩa | Cần làm gì |
+| :-- | :-- | :-- |
+| Thẻ của bạn không đủ tiền. | Thẻ không đủ tiền | Kiểm tra số dư và số tiền cần thanh toán, sau đó thử lại |
+| Thẻ của bạn đã bị từ chối. | Ngân hàng từ chối thanh toán nhưng không nêu lý do | Liên hệ ngân hàng hoặc bật thanh toán trực tuyến và thanh toán quốc tế trong ứng dụng ngân hàng, sau đó thử lại |
+| Thẻ của bạn không hỗ trợ loại giao dịch mua này. | Ngân hàng không cho phép loại thanh toán này với thẻ | Liên hệ ngân hàng hoặc dùng thẻ khác |
+| ... đã vượt quá hạn mức. Hãy liên hệ ngân hàng phát hành thẻ của bạn. | Bạn đã đạt đến hạn mức do ngân hàng đặt ra | Liên hệ ngân hàng hoặc dùng thẻ khác |
+| Số thẻ của bạn không chính xác. / Thẻ của bạn đã hết hạn. | Thông tin thẻ không đúng hoặc thẻ không còn hiệu lực | Kiểm tra lại thông tin hoặc dùng thẻ khác |
+
+Gologin cũng có thể hiển thị thông báo riêng: **Lỗi thanh toán. Hãy thử lại sau hoặc dùng thẻ khác** hoặc **Thanh toán thất bại. Vui lòng thử lại hoặc liên hệ bộ phận hỗ trợ để được trợ giúp.**
+
+Nếu thẻ liên tục thanh toán thất bại, hãy thanh toán bằng thẻ khác, PayPal hoặc tiền mã hóa - xem [Phương thức thanh toán](/vi/general/account-and-billing/payment-methods). Mỗi lần thanh toán thất bại đều được tính vào giới hạn 10 lần thử thanh toán mỗi ngày.
+
+### Ngân hàng yêu cầu tôi xác nhận thanh toán (3D Secure)
+
+Hầu hết các ngân hàng yêu cầu bạn xác nhận thanh toán trực tuyến trong ứng dụng ngân hàng hoặc bằng mã gửi qua SMS. Hãy xác nhận mà không đóng cửa sổ thanh toán.
+
+Nếu bạn thấy **3D Secure không khả dụng. Hãy thử thẻ khác hoặc liên hệ bộ phận hỗ trợ**, nghĩa là thẻ của bạn không hỗ trợ bước xác thực này. Hãy dùng thẻ khác hoặc phương thức thanh toán khác.
+
+### Nút Thanh toán ngay không phản hồi, hoặc các gói hay cửa sổ thanh toán không tải được
+
+Sự cố này thường xảy ra ở các phiên bản cũ của ứng dụng máy tính.
+
+1. Đóng cửa sổ thanh toán rồi mở lại.
+2. Thoát hoàn toàn Gologin từ khay hệ thống rồi khởi động lại.
+3. Cập nhật Gologin lên phiên bản mới nhất từ [gologin.com/download](https://gologin.com/download).
+
+Bạn cũng có thể thanh toán trên ứng dụng web tại [app.gologin.com](https://app.gologin.com). Nếu trang không tải đúng cách, hãy nhấn **Ctrl+Shift+R** (**Cmd+Shift+R** trên macOS) để tải lại trang mà không dùng bộ nhớ đệm.
+
+### Tôi đã thanh toán nhưng gói hoặc dung lượng lưu lượng của tôi không thay đổi
+
+1. Thoát hoàn toàn Gologin từ khay hệ thống rồi khởi động lại. Trên ứng dụng web, hãy nhấn **Ctrl+Shift+R** (**Cmd+Shift+R** trên macOS).
+2. Đảm bảo bạn đã chọn đúng workspace mà bạn đã thanh toán ở góc trên bên trái: gói đăng ký thuộc về workspace mà nó được mua cho. Nếu bạn đã thanh toán nhầm workspace, hãy liên hệ bộ phận hỗ trợ.
+3. Nếu bạn thanh toán bằng tiền mã hóa, hãy đợi cho đến khi giao dịch được xác nhận trên blockchain. Nếu gói vẫn chưa thay đổi, hãy liên hệ bộ phận hỗ trợ và gửi mã băm giao dịch (transaction hash), địa chỉ mà bạn đã gửi tiền đến và mạng lưới (network) đã dùng.
+
 ### Tôi gặp lỗi "Bạn đã đạt số lần thử thanh toán tối đa (10)"
 
-Bạn đã thử mua gói đăng ký 10 lần nhưng thanh toán không thành công, nên hệ thống tạm khóa không cho bạn thử lại trong 24 giờ. Chúng tôi không thể gỡ bỏ hạn chế này. Trong trường hợp đó, vui lòng thử mua lại gói đăng ký vào ngày hôm sau; việc dùng phương thức thanh toán khác cũng có thể giúp ích. Nếu bạn cần gấp để tiếp tục làm việc với các profile, hãy liên hệ bộ phận hỗ trợ.
+Bạn đã thử mua gói đăng ký 10 lần nhưng thanh toán không thành công, nên bạn bị chặn thử lại trong 24 giờ. Chúng tôi không thể gỡ bỏ hạn chế này. Trong trường hợp đó, vui lòng thử mua gói đăng ký lại vào ngày mai, và việc dùng phương thức thanh toán khác có thể giúp ích. Nếu việc tiếp tục làm việc với các profile là rất quan trọng đối với bạn, hãy liên hệ bộ phận hỗ trợ.
 
-### Tôi đã thanh toán bằng tiền điện tử nhưng số tiền thấp hơn mức cần thiết
+### Tôi đã thanh toán thiếu số tiền cần thiết bằng tiền mã hóa
 
-Nếu bạn thanh toán thiếu, gói đăng ký hoặc lưu lượng proxy sẽ không được thêm vào tự động. Bạn vẫn có thể hoàn tất thanh toán bằng cùng địa chỉ ví nhận trong vòng 60 phút kể từ khi quá trình thanh toán bắt đầu. Hãy kiểm tra xem liên kết thanh toán Cryptomus còn hoạt động hay không: nếu liên kết hiển thị số tiền thanh toán hiện tại của bạn và yêu cầu thanh toán thêm, bạn có thể hoàn tất giao dịch. Nếu đã quá thời hạn thanh toán và Cryptomus yêu cầu bạn liên hệ cửa hàng, vui lòng liên hệ bộ phận hỗ trợ của Gologin.
+Nếu bạn thanh toán thiếu, gói đăng ký hoặc lưu lượng proxy sẽ không được cộng tự động. Bạn vẫn có thể hoàn tất thanh toán bằng cùng địa chỉ ví người nhận trong vòng 60 phút kể từ khi quá trình thanh toán bắt đầu. Hãy kiểm tra xem liên kết thanh toán Cryptomus còn hoạt động hay không: nếu liên kết hiển thị số tiền thanh toán hiện tại của bạn và yêu cầu thanh toán thêm, bạn có thể hoàn tất thanh toán. Nếu đã quá thời gian thanh toán và Cryptomus yêu cầu liên hệ cửa hàng, vui lòng liên hệ bộ phận hỗ trợ của Gologin.
 
-### Tôi thấy thông báo "Khoản thanh toán của bạn đã bị chặn" trên trang thanh toán sau khi thanh toán bằng tiền điện tử
+### Tôi thấy thông báo "Thanh toán của bạn bị chặn" trên trang thanh toán sau khi thanh toán bằng tiền mã hóa
 
-Thông báo này có nghĩa là giao dịch của bạn đã bị đánh dấu và chặn bởi đơn vị xử lý thanh toán của chúng tôi là Cryptomus, trước khi đến được chúng tôi. Gologin chưa nhận được tiền của bạn và không tham gia vào quyết định chặn khoản thanh toán này.
+Thông báo này có nghĩa là giao dịch của bạn đã bị đánh dấu và chặn bởi đơn vị xử lý thanh toán của chúng tôi, Cryptomus, trước khi đến được chỗ chúng tôi. Gologin không nhận được tiền của bạn và không tham gia vào quyết định chặn thanh toán này.
 
-Cryptomus có quy trình tuân thủ riêng và hoạt động độc lập, nên chúng tôi không được thông báo lý do cụ thể khiến giao dịch bị đánh dấu. Vui lòng liên hệ trực tiếp với **bộ phận hỗ trợ khách hàng của Cryptomus** - đây là bên duy nhất có thể làm rõ trạng thái khoản thanh toán của bạn và tư vấn các bước tiếp theo như giải phóng giao dịch hoặc hoàn tiền. Sau khi vấn đề được giải quyết ở phía họ, bạn có thể liên hệ bộ phận hỗ trợ của Gologin để xác nhận gói đăng ký đã được kích hoạt.
+Cryptomus vận hành các quy trình tuân thủ riêng một cách độc lập, và chúng tôi không được thông báo lý do cụ thể khiến giao dịch bị đánh dấu. Vui lòng liên hệ trực tiếp **bộ phận hỗ trợ khách hàng của Cryptomus** - họ là bên duy nhất có thể làm rõ trạng thái thanh toán của bạn và tư vấn các bước tiếp theo như giải phóng giao dịch hoặc hoàn tiền. Khi vấn đề đã được giải quyết từ phía họ, hãy liên hệ bộ phận hỗ trợ của Gologin để xác nhận gói đăng ký của bạn đã được kích hoạt.
+
+### Tài khoản của tôi bị khóa sau khi tôi mở khiếu nại với ngân hàng
+
+Khi một khiếu nại (chargeback) được mở cho một khoản thanh toán của Gologin, tài khoản sẽ bị khóa cho đến khi khiếu nại được đóng. Tài khoản của bạn không bị hack. Để khôi phục quyền truy cập hoặc trao đổi về việc hoàn tiền, hãy liên hệ bộ phận hỗ trợ của Gologin.

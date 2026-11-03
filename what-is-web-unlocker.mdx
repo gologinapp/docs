@@ -2,7 +2,7 @@
 title: "What is web unlocker?"
 ---
 
-Web Unlocker is a universal scraping API. Send any URL, get back fully rendered HTML, a screenshot, and a network archive — no infrastructure to manage, no blocks, no failed requests.
+Web Unlocker is a universal scraping API. Send any URL, get back fully rendered HTML or the page as Markdown or JSON — no infrastructure to manage, no blocks, no failed requests.
 
 It works as a complete replacement for your scraping stack: browser automation, proxy management, fingerprinting, CAPTCHA solving — all handled in a single API call. Whether you're scraping a simple static page or a heavily protected JavaScript-rendered site, the same endpoint handles it.
 
@@ -22,13 +22,13 @@ Modern websites are hard to scrape. A plain `curl` or `requests` call often retu
 
 ## What you get back
 
-Every successful task returns three types of content:
+A successful request returns the page in one format. Choose it with the `format` query parameter:
 
-| Content | Format | Description |
-| --- | --- | --- |
-| **HTML** | Full HTML string | The complete rendered DOM of the page |
-| **Screenshot** | PNG image | A screenshot of the page as it appeared in the browser |
-| **Archive** | ZIP (HAR) | Network log with all requests, headers, and resources |
+| `format` | What you get |
+| --- | --- |
+| `html` (default) | The complete rendered DOM of the page |
+| `markdown` | The page content as Markdown |
+| `json` | A JSON object with the page URL, request metadata, and the HTML |
 
 ---
 
@@ -81,7 +81,7 @@ Web Unlocker runs a real Chromium browser in the cloud for each task. When you s
 1. A browser is launched with a residential IP and realistic browser fingerprint
 2. The page is navigated, JavaScript is executed, and dynamic content is loaded
 3. Anti-bot challenges and CAPTCHAs are handled automatically
-4. The rendered HTML, a screenshot, and a network archive are captured and returned
+4. The rendered HTML is returned, or Markdown or JSON if you ask for it with `format`
 
 You never manage infrastructure. There are no browsers to spin up, no proxy lists to maintain, and no bypass logic to build. Web Unlocker effectively replaces an entire scraping stack — browser automation framework, proxy provider, anti-bot solution — with a single HTTP request.
 
@@ -96,7 +96,9 @@ curl "https://parsing.webunlocker.gologin.com/v1/scrape?url=https%3A%2F%2Fexampl
   -H "apikey: YOUR_API_KEY"
 ```
 
-See the [Quickstart](/web-unlocker-quick-start) for examples in Python and JavaScript, or [Use Cases](./web-unlocker-use-cases.md) for common integration patterns.
+To get Markdown or JSON instead, add `format=markdown` or `format=json` to the query.
+
+See the [Quickstart](/web-unlocker-quick-start) for examples in Python and JavaScript and for [error codes](/web-unlocker-quick-start#handling-errors), or [Use Cases](/web-unlocker-use-cases) for common integration patterns.
 
 ---
 
@@ -110,4 +112,4 @@ In addition to the raw HTTP API, Gologin provides higher-level tools for working
 
 ## Get access
 
-Web Unlocker is currently in early access. To get an API key, contact: [**ermakova.t@gologin.com**](mailto:ermakova.t@gologin.com)
+To get an API key, fill in the form on the [Web Unlocker page](https://gologin.com/web-unlocker/#web_unlocker_form). You get the key within one business day, along with free requests to test on your own targets. No card is needed.

@@ -2,14 +2,25 @@
 title: "Quickstart"
 ---
 
-This guide will get you all set up and ready to use the GoLogin API. We'll cover how to get started using one of our API clients and how to make your first API request. We'll also look at where to go next to find all the information you need to take full advantage of our powerful REST API.
+This guide will get you all set up and ready to use the Gologin API. We'll cover how to get started using one of our API clients and how to make your first API request. We'll also look at where to go next to find all the information you need to take full advantage of our powerful REST API.
 
 <Note>
-  Before you can make requests to the GoLogin API, you will need to grab your
-  API key from your dashboard. You find it under [Settings » API](https://app.gologin.com/personalArea/TokenApi).
+  Before you can make requests to the Gologin API, you will need an API token.
+  In the Gologin app, open [API & MCP](https://app.gologin.com/personalArea/TokenApi), go to the **API** tab, and click **New Token**.
 </Note>
 
-## Making your first anonymous scrapping request
+## Make your first request
+
+Send your token in the `Authorization` header of every request to `https://api.gologin.com`. This call lists the profiles in your account:
+
+```bash
+curl https://api.gologin.com/browser/v2 \
+  -H "Authorization: Bearer YOUR_API_TOKEN"
+```
+
+The response contains a `profiles` array and `allProfilesCount`, the total number of profiles. You get up to 30 profiles per page: add `?page=2` to the URL for the next page. See [Get all profiles](https://gologin.com/docs/api-reference/profile/get-all-profiles) for all parameters.
+
+## Making your first anonymous scraping request
 
 <CodeGroup>
 
@@ -142,9 +153,9 @@ GL_API_TOKEN=[YOUR_GOLOGIN_API_TOKEN] python3 filename.py
 
 Great, you're now set up with an API client and have made your first request to the API. Here are a few links that might be handy as you venture further into the Gologin API:
 
-- [Grab your API key from the Settings \> API](https://app.gologin.com/personalArea/TokenApi)
+- [Create an API token in API & MCP](https://app.gologin.com/personalArea/TokenApi)
 - [Gologin Web Access CLI](/cli-tools/web-access) — unified CLI for scraping and browser automation (no code needed)
-- [Agent Browser CLI](/cli-tools/agent-browser) — cloud browser CLI built for AI agents
-- [Local Agent Browser CLI](/cli-tools/local-agent-browser) — local Orbita CLI with profiles and runbooks
+- [Agent Browser CLI](/cli-tools/agent-browser) — browser CLI built for AI agents, in the cloud or on your machine
+- [Agent Browser CLI: local runtime](/cli-tools/local-agent-browser) — local Orbita profiles, runbooks, and batch jobs
 - [AI Skills](/api-reference/ai-integrations/ai-skills) — plug-and-play skills for Claude Code
 - [MCP Server](/api-reference/ai-integrations/mcp-server) — manage profiles through AI conversations

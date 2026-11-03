@@ -3,39 +3,39 @@ title: "Bắt đầu"
 keywords: ["cloud browser", "headless browser"]
 ---
 
-Gologin Cloud Browser cho phép bạn chạy một phiên trình duyệt **trên đám mây** và điều khiển nó từ công cụ tự động hóa của bạn (Puppeteer / Playwright) chỉ với một **URL kết nối** duy nhất.
+Gologin Cloud Browser cho phép bạn chạy một phiên trình duyệt **trên đám mây** và điều khiển nó từ công cụ tự động hóa của bạn (Puppeteer / Playwright) chỉ bằng một **URL kết nối** duy nhất.
 
 <Tip>
-  **Bạn thích dùng CLI hơn?** Hãy dùng [Gologin Agent Browser CLI](/vi/cli-tools/agent-browser) để điều khiển Cloud Browser từ shell mà không cần viết code — được xây dựng cho các AI agent với snapshot, ref và daemon chạy liên tục.
+  **Bạn thích dùng CLI hơn?** Hãy dùng [Gologin Agent Browser CLI](/vi/cli-tools/agent-browser) để điều khiển Cloud Browser từ shell mà không cần viết mã — được xây dựng cho các AI agent với snapshot, ref và một daemon chạy liên tục.
 </Tip>
 
 ## URL kết nối
 
-Sử dụng URL này trong thư viện tự động hóa của bạn làm endpoint trình duyệt từ xa:
+Sử dụng URL này trong thư viện tự động hóa của bạn làm điểm cuối trình duyệt từ xa:
 
 ```text
 https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}
 ```
 
-- `token` — **dev token** Gologin của bạn.
+- `token` — **mã thông báo dev** Gologin của bạn.
 - `profile` — **ID hồ sơ** (không bắt buộc):
   - nếu được cung cấp, Gologin sẽ chạy hồ sơ này trên đám mây;
-  - nếu bỏ qua, Gologin sẽ tạo một hồ sơ mới cho phiên làm việc.
+  - nếu bỏ qua, Gologin sẽ tạo một hồ sơ mới cho phiên.
 
-> Lưu ý: URL này được các thư viện tự động hóa dùng làm **endpoint kết nối WebSocket** (ví dụ `browserWSEndpoint` trong Puppeteer).\
-> Hãy tạo token của bạn trong bảng điều khiển Gologin: `Khu vực cá nhân → Token API`.
+> Lưu ý: URL này được các thư viện tự động hóa sử dụng làm **điểm cuối kết nối WebSocket** (ví dụ `browserWSEndpoint` trong Puppeteer).\
+> Hãy tạo token của bạn trong ứng dụng Gologin: [API & MCP](https://app.gologin.com/personalArea/TokenApi) → **API** → **Mã thông báo mới**.
 
 <Frame>
-  ![Screenshotat Mar0514 27 28](/images/ScreenshotatMar0514-27-28.png)
+  ![Ảnh chụp màn hình Mar0514 27 28](/images/ScreenshotatMar0514-27-28.png)
 </Frame>
 
 ## Quản lý hồ sơ (proxy, Vân tay, v.v.)
 
 Cloud Browser chỉ là **lớp kết nối** (phiên trình duyệt từ xa).\
-Để **tạo/cập nhật hồ sơ**, gắn **proxy**, cấu hình **Vân tay**, thẻ và các cài đặt hồ sơ khác, hãy sử dụng **API REST** của Gologin:
+Để **tạo/cập nhật hồ sơ**, gắn **proxy**, cấu hình **Vân tay**, thẻ và các cài đặt hồ sơ khác, hãy dùng **API REST** của Gologin:
 
-- API hồ sơ: https://gologin.com/docs/api-reference/profile
-- API proxy: https://gologin.com/docs/api-reference/proxy
+- Profiles API: https://gologin.com/docs/api-reference/profile
+- Proxies API: https://gologin.com/docs/api-reference/proxy
 
 # Ví dụ
 

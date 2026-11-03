@@ -1,23 +1,23 @@
 ---
-title: 'Scraping API SDK 和 CLI'
+title: 'Scraping API SDK 与 CLI'
 ---
 
-Gologin Web Unlocker 是一个**单端点抓取 API**，适用于大量依赖 JS 渲染以及有防护机制的网站。
+Gologin Web Unlocker 是一个面向大量使用 JS 的网站和受保护网站的**单端点抓取 API**。
 
 你只需发送一个 URL，即可获得渲染后的页面 HTML/文本，然后在自己的数据提取流程中进行处理。
 
-## 为什么将它用作 Scraping API
+## 为什么将其用作 Scraping API
 
-- 任意目标 URL 只需一个端点
+- 一个端点即可处理任意目标 URL
 - 使用 API 密钥认证，无需编排浏览器
-- 以 HTML 为主的响应，可直接接入现有解析器
-- 适合 ETL、监控、AI 数据摄取和数据管道
+- 默认返回 HTML，也可按需返回 Markdown 或 JSON，可直接对接现有解析器
+- 轻松适配 ETL、监控、AI 数据摄取和数据管道
 
 ## 端点
 
 `GET https://parsing.webunlocker.gologin.com/v1/scrape?url={encoded_url}`
 
-## 身份验证
+## 认证
 
 在请求头中发送你的 API 密钥：
 
@@ -25,11 +25,12 @@ Gologin Web Unlocker 是一个**单端点抓取 API**，适用于大量依赖 JS
 apikey: <API_KEY>
 ```
 
-## 请求模型
+## 请求参数
 
 | 名称 | 位置 | 类型 | 是否必填 | 说明 |
 |---|---|---|---|---|
-| `url` | query | string（绝对 URL） | 是 | 要抓取的目标 URL |
+| `url` | query | string (absolute URL) | 是 | 要抓取的目标 URL |
+| `format` | query | string | 否 | 响应格式：`html`（默认）、`markdown` 或 `json` |
 
 ## 快速开始
 
@@ -70,24 +71,34 @@ console.log(response.status, html.slice(0, 500));
 
 ## 响应行为
 
-当前响应体为**原始的渲染后 HTML/文本**。
+默认情况下，响应体是页面渲染后的**原始 HTML**。使用 `format=markdown` 时，响应体为 Markdown。使用 `format=json` 时，响应体为 JSON 对象：
 
-- `200` -> 成功，响应体包含页面 HTML/文本
-- `401` / `403` -> API 密钥无效或缺失
-- `422` -> `url` 无效或缺失
-- `429` -> 触发速率限制
-- `500+` -> 服务端临时错误
+```json
+{
+  "success": true,
+  "data": {
+    "url": "https://example.com",
+    "metadata": {
+      "response_time_ms": 297,
+      "status_code": 200
+    },
+    "html": "<!DOCTYPE html><html lang=\"en\">..."
+  }
+}
+```
+
+状态码：
+
+- `200` -> 成功，响应体包含所请求格式的页面内容
+- `400` -> 请求错误，例如缺少 `url`；响应体：`{"success":false,"error":"Request failed"}`
+- `401` -> 缺少 `apikey` 请求头；响应体：`{"message":"Missing API key in request"}`
 
 ## 重试建议
 
-对以下情况，请使用指数退避策略进行重试：
+出现以下情况时，请使用指数退避策略重试：
 
 - 网络错误
 - `408`、`429`、`500`、`502`、`503`、`504`
-
-## 范围说明
-
-当前公开的端点以 HTML 为主。除非文档明确说明且已为你的账户启用，否则请不要假定存在其他后端端点（例如截图/爬取/搜索/用量）。
 
 ## 官方 Node.js SDK
 
@@ -130,11 +141,11 @@ new WebUnlocker({
 
 ### SDK 端派生方法（基于返回的 HTML）
 
-这些**不是独立的后端端点**，而是 SDK 基于 API 返回的 HTML 派生出来的：
+这些方法**不是独立的后端端点**，而是由 SDK 基于 API 返回的 HTML 派生而来。SDK 只发送 `url` 参数，不发送 `format`，因此其输出可能与 API 自身的 `format=markdown` 或 `format=json` 响应有所不同：
 
 - `scrapeText(url)` -> 纯文本
 - `scrapeMarkdown(url)` -> Markdown
-- `scrapeJSON(url)` -> 结构化元数据（`title`、`meta`、`links`、`headings`）
+- `scrapeJSON(url)` -> 结构化元数据（`title`、`description`、`canonical`、`meta`、`headings`、`links`）
 - `batchScrape(urls, { concurrency })` -> 用于多次抓取调用的辅助方法
 
 ### 类型化错误
@@ -150,7 +161,7 @@ new WebUnlocker({
 
 - `401` / `403` -> `AuthenticationError`
 - `429` -> `RateLimitError`
-- `500+` -> `APIError`
+- `500+` 及其他非 2xx 状态码（例如 `400`）-> `APIError`
 - 超时/中止 -> `TimeoutError`
 - fetch/网络故障 -> `NetworkError`
 
@@ -163,9 +174,9 @@ gologin-webunlocker <command> <url> [options]
 命令：
 
 - `scrape`（原始 HTML/文本）
-- `text`（派生的文本）
-- `markdown`（派生的 Markdown）
-- `json`（派生的元数据）
+- `text`（派生文本）
+- `markdown`（派生 Markdown）
+- `json`（派生元数据）
 
 示例：
 
@@ -178,14 +189,14 @@ GOLOGIN_WEBUNLOCKER_API_KEY=wu_live_xxx gologin-webunlocker json https://example
 ## 典型抓取使用场景
 
 - 价格和商品目录监控
-- 线索和名录信息补全
-- 市场情报数据管道
-- 内容聚合与索引
+- 潜在客户和目录信息补全
+- 市场情报管道
+- 内容聚合和索引
 - LLM 数据摄取和提取工作流
 
 ## Gologin Web Access CLI（统一版）
 
-如果你需要功能更强大的 CLI，在同一套命令中结合使用 Web Unlocker 和 Cloud Browser，请使用 `gologin-web-access`：
+如果需要功能更强大的 CLI，可使用 `gologin-web-access`，它在同一套命令中整合了 Web Unlocker 和 Cloud Browser：
 
 ```bash
 npm install -g gologin-web-access
@@ -208,7 +219,7 @@ gologin-web-access click e3
 
 完整参考请参阅 [Gologin Web Access CLI](/zh/cli-tools/web-access)。
 
-## 相关文档
+## 源文档
 
 - [什么是 Web Unlocker](/zh/what-is-web-unlocker)
 - [Web Unlocker 快速开始](/zh/web-unlocker-quick-start)

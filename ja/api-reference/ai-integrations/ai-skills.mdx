@@ -1,9 +1,9 @@
 ---
-title: "Claude Code向けAIスキル"
-description: "Gologinを通じて、Claude Codeエージェントにウェブスクレイピング、ブラウザ自動化、ローカルOrbita機能を追加できるプラグアンドプレイのスキル"
+title: "Claude Code 向け AI スキル"
+description: "Gologin を通じて、Claude Code エージェントに Web スクレイピング、ブラウザ自動化、ローカル Orbita の機能を追加する、すぐに使えるスキル"
 ---
 
-Gologin AIスキルは、[Claude Code](https://claude.ai/code)向けのプラグアンドプレイ拡張機能で、AIエージェントにウェブスクレイピングとブラウザ自動化の機能を提供します。各スキルはGologin CLIツールをラップし、エージェントが呼び出せる一連の関数として公開します。
+Gologin AI スキルは、[Claude Code](https://claude.ai/code) に Web スクレイピングとブラウザ自動化の機能を追加する、すぐに使える拡張機能です。各スキルは Gologin CLI ツールをラップし、エージェントが呼び出せる一連の関数として提供します。
 
 ```
 agent → skill → Gologin CLI → Web Unlocker API / Cloud Browser / Local Orbita
@@ -14,69 +14,70 @@ agent → skill → Gologin CLI → Web Unlocker API / Cloud Browser / Local Orb
 ## 利用可能なスキル
 
 <CardGroup cols={2}>
-  <Card title="Web Accessスキル" icon="globe" href="https://github.com/GologinLabs/gologin-web-access-skill">
-    既知のサイトの閲覧、データ抽出、クロール、監視、スクレイピングとブラウザ操作を組み合わせたハイブリッドタスク向けの標準スキルです。
+  <Card title="Web Access スキル" icon="globe" href="https://github.com/GologinLabs/agent-skills/tree/main/gologin-web-access-skill">
+    既知のサイトの閲覧、データ抽出、クロール、監視、スクレイピングとブラウザ操作を組み合わせたタスク向けの標準スキルです。
   </Card>
-  <Card title="Agent Browserスキル" icon="browser" href="https://github.com/GologinLabs/gologin-agent-browser-skill">
-    ライブのクラウドセッション、参照ベースの操作、スクリーンショット、PDFに対応したブラウザ専用スキルです。
+  <Card title="Agent Browser スキル" icon="browser" href="https://github.com/GologinLabs/agent-skills/tree/main/gologin-agent-browser-skill">
+    Gologin Cloud Browser またはローカルの Orbita でライブブラウザセッションを実行します。ref ベースの操作、スクリーンショット、PDF、プロフィールのウォームアップ、ランブックに対応しています。
   </Card>
-  <Card title="Scrapingスキル" icon="code" href="https://github.com/GologinLabs/gologin-scraping-skill">
-    Web Unlocker SDKをラップしたスクレイピング専用スキルです。最小構成で利用できます。
-  </Card>
-  <Card title="Local Agent Browserスキル" icon="desktop" href="https://github.com/GologinLabs/gologin-local-agent-browser-skill">
-    永続プロファイル、ランブック、バッチ実行に対応した、ローカルOrbitaの自動化スキルです。
+  <Card title="Scraping スキル" icon="code" href="https://github.com/GologinLabs/agent-skills/tree/main/gologin-scraping-skill">
+    Web Unlocker SDK をラップした、スクレイピング専用のスキルです。最小構成で動作します。
   </Card>
 </CardGroup>
+
+<Note>
+  Local Agent Browser スキルは非推奨になりました。ローカルの Orbita プロフィールは、Agent Browser スキルが `gologin-agent-browser --runtime local` を通じて処理します。
+</Note>
 
 ---
 
 ## インストール
 
+Gologin のスキルはすべて [GologinLabs/agent-skills](https://github.com/GologinLabs/agent-skills) リポジトリからインストールできます。
+
 ```bash
 # install any skill
-npx skills add GologinLabs/gologin-web-access-skill
-npx skills add GologinLabs/gologin-agent-browser-skill
-npx skills add GologinLabs/gologin-scraping-skill
-npx skills add GologinLabs/gologin-local-agent-browser-skill
+npx skills add GologinLabs/agent-skills@gologin-web-access-skill
+npx skills add GologinLabs/agent-skills@gologin-agent-browser-skill
+npx skills add GologinLabs/agent-skills@gologin-scraping-skill
 ```
 
-各スキルを使用するには、基盤となるCLIがインストールされている必要があります。
+各スキルには、対応する CLI のインストールが必要です。
 
-| スキル | 必要なCLI |
+| スキル | 必要な CLI |
 |---|---|
-| Web Accessスキル | `npm i -g gologin-web-access` |
-| Agent Browserスキル | `npm i -g gologin-agent-browser-cli` |
-| Scrapingスキル | `npm i gologin-webunlocker` |
-| Local Agent Browserスキル | `npm i -g gologin-local-agent-browser-cli` |
+| Web Access スキル | `npm i -g gologin-web-access` |
+| Agent Browser スキル | `npm i -g gologin-agent-browser-cli` (クラウドとローカルの両ランタイム) |
+| Scraping スキル | `npm i gologin-webunlocker` |
 
 ---
 
-## どのスキルを使うか
+## 使用するスキルの選び方
 
 | タスク | スキル |
 |---|---|
-| ドキュメントページ、記事、既知のURLを読み取る | Web Access |
+| ドキュメントページ、記事、既知の URL を読む | Web Access |
 | 構造化データをスクレイピングして抽出する | Web Access |
-| 多数のURLをバッチでスクレイピングする | Web Access |
-| サイトをクロールし、URLをマッピングする | Web Access |
+| 多数の URL を一括でスクレイピングする | Web Access |
+| サイトをクロールし、URL をマッピングする | Web Access |
 | ページの変更を監視する | Web Access |
-| ページを読み取ってから、ブラウザで操作する | Web Access（ハイブリッドモード） |
+| ページを読んだ後、ブラウザで操作する | Web Access (ハイブリッドモード) |
 | ライブのクラウドブラウザセッションを開く | Agent Browser |
 | ダッシュボードにログインし、スクリーンショットを撮る | Agent Browser |
-| フォームに入力し、一連の操作を進める | Agent Browser |
-| スクレイピングのみで、ブラウザ不要のNode.jsアプリ | Scraping |
-| ローカルプロファイルをウォームアップする | Local Agent Browser |
-| Cookieを保持したままアカウントにログインする | Local Agent Browser |
-| ローカルOrbitaでのSNS／マーケットプレイス操作 | Local Agent Browser |
-| 多数のローカルプロファイルでランブックをバッチ実行する | Local Agent Browser |
+| フォームに入力し、一連の画面を操作する | Agent Browser |
+| スクレイピングのみ、ブラウザ不要、Node.js アプリ | Scraping |
+| ローカルプロフィールをウォームアップする | Agent Browser (ローカルランタイム) |
+| Cookie を保持したままアカウントにログインする | Agent Browser (ローカルランタイム) |
+| ローカルの Orbita で SNS やマーケットプレイスの操作を行う | Agent Browser (ローカルランタイム) |
+| 多数のローカルプロフィールでランブックを一括実行する | Agent Browser (ローカルランタイム) |
 
 ---
 
-## Web Accessスキル
+## Web Access スキル
 
-**インストール:** `npx skills add GologinLabs/gologin-web-access-skill`
+**インストール:** `npx skills add GologinLabs/agent-skills@gologin-web-access-skill`
 
-最も汎用性が高い標準スキルです。`gologin-web-access` CLIに処理を委譲します。
+最も汎用性が高い標準スキルです。処理は `gologin-web-access` CLI に委任されます。
 
 **スクレイピングツール:** `scrape_url`, `read_page`, `scrape_markdown`, `scrape_text`, `scrape_json`, `batch_scrape`, `batch_extract`, `search_web`, `map_site`, `crawl_site`, `crawl_site_async`, `extract_structured`, `track_changes`, `batch_track_changes`, `parse_document`
 
@@ -84,109 +85,103 @@ npx skills add GologinLabs/gologin-local-agent-browser-skill
 
 **組み込みワークフロー:** browser-ref-loop, hybrid-read-then-interact, search-discover-and-scrape, lead-enrichment, competitive-monitoring, docs-ingestion, geo-testing, login-and-navigate-dashboard
 
-コマンドの詳細は[Web Access CLIリファレンス](/ja/cli-tools/web-access)をご覧ください。
+コマンドの詳細は [Web Access CLI リファレンス](/ja/cli-tools/web-access)をご覧ください。
 
 ---
 
-## Agent Browserスキル
+## Agent Browser スキル
 
-**インストール:** `npx skills add GologinLabs/gologin-agent-browser-skill`
+**インストール:** `npx skills add GologinLabs/agent-skills@gologin-agent-browser-skill`
 
-ライブのクラウドセッション向けのブラウザ専用スキルです。スクレイピングを行わず、対話的なブラウジングが必要な場合に使用します。
+Gologin Cloud Browser (デフォルト)、または `--runtime local` を指定したローカルの Orbita プロフィールでライブセッションを実行する、ブラウザ専用のスキルです。スクレイピングを行わず、対話的にブラウジングしたい場合に使用します。
 
 **機能:** `doctor`, `open`, `sessions`, `current`, `snapshot`, `click`, `type`, `fill`, `find`, `get`, `tabs`, `tabopen`, `tabfocus`, `tabclose`, `cookies`, `cookies-import`, `storage-export`, `storage-import`, `eval`, `back`, `forward`, `reload`, `upload`, `screenshot`, `pdf`
 
-コマンドの詳細は[Agent Browser CLIリファレンス](/ja/cli-tools/agent-browser)をご覧ください。
+**ローカルランタイムで追加される機能:** プロフィール管理 (`profiles`, `profile-create`, `profile-import`, `profile-update`, `profile-sync`, `profile-delete`)、ランブック (`run`, `batch`)、ジョブ (`jobs`, `job`)、ユースケース別テンプレート (`linkedin`, `ads`, `smm`, `scraping`, `geo`)、診断 (`doctor --use-case --check-proxy`)。
+
+コマンドの詳細は [Agent Browser CLI リファレンス](/ja/cli-tools/agent-browser)と[ローカルランタイム](/ja/cli-tools/local-agent-browser)をご覧ください。
 
 ---
 
-## Scrapingスキル
+## Scraping スキル
 
-**インストール:** `npx skills add GologinLabs/gologin-scraping-skill`
+**インストール:** `npx skills add GologinLabs/agent-skills@gologin-scraping-skill`
 
-最小構成のスキルで、Web Unlocker SDKによるスクレイピングのみに対応します。ブラウザセッションもデーモンも不要です。
+Web Unlocker SDK を通じたスクレイピングのみを行う、最小構成のスキルです。ブラウザセッションもデーモンも不要です。
 
-**機能:** 生のHTML（`scrape`）、テキスト（`text`）、Markdown（`markdown`）、構造化メタデータ（`json`）。SDKメソッド: `scrapeRaw()`, `scrape()`, `scrapeText()`, `scrapeMarkdown()`, `scrapeJSON()`, `batchScrape()`。
+**機能:** 生の HTML (`scrape`)、テキスト (`text`)、Markdown (`markdown`)、構造化メタデータ (`json`)。SDK メソッド: `scrapeRaw()`, `scrape()`, `scrapeText()`, `scrapeMarkdown()`, `scrapeJSON()`, `batchScrape()`。
 
-タスクがスクレイピングのみで、依存関係をできるだけ小さくしたい場合に使用します。
+タスクがスクレイピングのみで、依存関係をできるだけ減らしたい場合に使用します。
 
-APIの詳細は[Web Unlocker SDKリファレンス](/ja/scraping-api-sdk-and-cli)をご覧ください。
+API の詳細は [Web Unlocker SDK リファレンス](/ja/scraping-api-sdk-and-cli)をご覧ください。
 
 ---
 
-## Local Agent Browserスキル
+## Local Agent Browser スキル (非推奨)
 
-**インストール:** `npx skills add GologinLabs/gologin-local-agent-browser-skill`
-
-ウォームアップ、ログインフロー、SNS／マーケットプレイスでの操作など、永続的なローカルOrbitaの自動化に対応します。
-
-**機能:** すべてのブラウザ操作コマンドに加え、プロファイル管理（`profiles`, `profile-create`, `profile-import`, `profile-update`, `profile-sync`, `profile-delete`）、ランブック（`run`, `batch`）、ジョブ（`jobs`, `job`）、診断（`doctor --use-case --check-proxy`）を利用できます。
-
-**ユースケーステンプレート:** `linkedin`, `ads`, `smm`, `scraping`, `geo`
-
-コマンドの詳細は[Local Agent Browser CLIリファレンス](/ja/cli-tools/local-agent-browser)をご覧ください。
+エージェントに `gologin-local-agent-browser-skill` が残っている場合、このスキルは Agent Browser スキルを案内するだけです。代わりに `gologin-agent-browser-skill` をインストールしてください。ローカルの Orbita プロフィール、ウォームアップ、ログインフロー、ランブック、バッチジョブに対応しています。
 
 ---
 
 ## エージェントに依頼できること
 
-スキルをインストールすると、Claude Codeに自然言語で指示できるようになります。各スキルでできることの例を紹介します。
+スキルをインストールすると、Claude Code に自然な言葉で指示できます。各スキルでできることの例を紹介します。
 
-### Web Accessスキルの場合
+### Web Access スキルの場合
 
-- 「competitor.comの料金ページを読んで、各プランを要約して」
-- 「この15件のURLをスクレイピングして、それぞれの商品名と価格を抽出して」
-- 「docs.example.comのドキュメントをクロールして、各セクションの概要を教えて」
-- 「『best CRM tools 2026』を検索して、上位5件の結果をスクレイピングして」
-- 「competitor.com/pricingが昨日から変更されたか確認して」
-- 「このサイトからブログ記事のタイトルとURLをすべて抽出して」
-- 「example.comをブラウザで開き、この認証情報でログインして、ダッシュボードのスクリーンショットを撮って」
+- 「competitor.com の料金ページを読んで、各プランを要約して」
+- 「この 15 件の URL をスクレイピングして、それぞれの商品名と価格を抽出して」
+- 「docs.example.com のドキュメントをクロールして、各セクションの概要をまとめて」
+- 「『best CRM tools 2026』を検索して、上位 5 件の結果をスクレイピングして」
+- 「competitor.com/pricing が昨日から変更されたか確認して」
+- 「このサイトのブログ記事のタイトルと URL をすべて抽出して」
+- 「ブラウザで example.com を開き、この認証情報でログインして、ダッシュボードのスクリーンショットを撮って」
 
-### Agent Browserスキルの場合
+### Agent Browser スキルの場合
 
-- 「管理ダッシュボードを開いて、設定画面に移動し、現在の設定のスクリーンショットを撮って」
+- 「管理ダッシュボードを開いて設定に移動し、現在の設定のスクリーンショットを撮って」
 - 「ステージング環境にログインして、新機能がデプロイされているか確認して」
-- 「example.comの登録フォームに、このテスト用の情報を入力して」
+- 「example.com のサインアップフォームに、このテスト用の情報を入力して」
 - 「レポートページに移動して、月次エクスポートをダウンロードし、サマリーのスクリーンショットを撮って」
-- 「このブラウザプロファイルでiphey.comに何が表示されるか確認して」
+- 「このブラウザプロフィールで iphey.com に何が表示されるか確認して」
 
-### Scrapingスキルの場合
+### Scraping スキルの場合
 
-- 「このURLをスクレイピングして、テキスト内容を教えて」
-- 「この10ページから、タイトル、説明、見出しを取得して」
-- 「このページをMarkdownとして取得して、分析できるようにして」
+- 「この URL をスクレイピングして、テキストの内容を教えて」
+- 「この 10 ページから、タイトル、説明、見出しを取得して」
+- 「分析できるように、このページを Markdown 形式で取得して」
 
-### Local Agent Browserスキルの場合
+### Agent Browser スキル (ローカルランタイム) の場合
 
-- 「米国のプロキシを使った新しいLinkedInプロファイルを作成して、ウォームアップして」
-- 「Redditアカウントを開いて、フィードをスクロールしてから閉じて」
-- 「20個すべてのプロファイルで、並列数5でウォームアップのランブックを実行して」
-- 「Facebook広告用プロファイルのプロキシの状態を確認して」
+- 「米国のプロキシを設定した新しい LinkedIn プロフィールを作成して、ウォームアップして」
+- 「Reddit のアカウントを開いて、フィードをスクロールしてから閉じて」
+- 「20 個すべてのプロフィールで、並列数 5 でウォームアップのランブックを実行して」
+- 「Facebook 広告用プロフィールのプロキシの状態を確認して」
 - 「このマーケットプレイスのアカウントにログインして、販売者ダッシュボードのスクリーンショットを撮って」
 
 ---
 
 ## ワークフローの例
 
-### 競合調査（Web Accessスキル）
+### 競合調査 (Web Access スキル)
 
 1. エージェントが競合を検索します: `search_web("saas project management tools")`
 2. エージェントが競合サイトをマッピングします: `map_site("https://competitor.com")`
-3. エージェントが主要ページをバッチでスクレイピングします: `batch_scrape(pricing, features, about)`
-4. エージェントが取得したコンテンツをClaudeに渡し、分析と比較を行います
+3. エージェントが主要ページを一括スクレイピングします: `batch_scrape(pricing, features, about)`
+4. エージェントが取得した内容を Claude に渡し、分析と比較を行います
 
-### アカウントのウォームアップ（Local Agent Browserスキル）
+### アカウントのウォームアップ (Agent Browser スキル、ローカルランタイム)
 
-1. エージェントがプロファイルを作成します: `profile-create "Account 1" --template linkedin`
+1. エージェントがプロフィールを作成します: `profile-create "Account 1" --template linkedin`
 2. エージェントがウォームアップのランブックを実行します: `batch ./warmup.json --targets ./profiles.json`
-3. エージェントがジョブの結果を確認します: `jobs --kind batch --status completed`
-4. エージェントが準備のできたプロファイルを報告します
+3. エージェントがジョブの結果を確認します: `jobs --kind batch --status ok`
+4. エージェントが準備のできたプロフィールを報告します
 
-### ダッシュボードの監視（Agent Browserスキル）
+### ダッシュボードの監視 (Agent Browser スキル)
 
 1. エージェントがダッシュボードを開きます: `open https://dashboard.example.com --profile saved_login`
 2. エージェントがページを読み取ります: `snapshot`
-3. エージェントが指標のページに移動します: `click @e5`（レポートのリンク）
+3. エージェントが指標のページに移動します: `click @e5` (Reports リンク)
 4. エージェントがレポートのスクリーンショットを撮ります: `screenshot ./daily-metrics.png`
 5. エージェントがセッションを閉じます: `close`
 6. エージェントがスナップショットのデータから指標を要約します
@@ -195,19 +190,19 @@ APIの詳細は[Web Unlocker SDKリファレンス](/ja/scraping-api-sdk-and-cli
 
 ## 必須のプリフライトチェック
 
-タスクを実行する前に、スキルは作業内容を次のように分類します。
+スキルはタスクを実行する前に、作業内容を次のように分類します。
 
-1. **既知の1つのサイトか、複数ソースにわたる幅広い調査か？** — スクレイピングと検索のどちらが必要かを判断します
-2. **読み取り専用の抽出、監視、対話的なブラウザ操作のどれか？** — スクレイピングとブラウザのどちらを使うかを判断します
-3. **Web Unlockerのみか、Web UnlockerとCloud Browserの両方か？** — 必要な認証情報を判断します
-4. **地域依存か、Gologinをエンドツーエンドで使うべきブロックの厳しさか？** — プロキシとプロファイルの要件を判断します
+1. **既知の 1 つのサイトか、複数ソースにわたる幅広い調査か?** — スクレイピングか検索のどちらが必要かを判断します
+2. **読み取り専用の抽出、監視、対話的なブラウザ操作のどれか?** — スクレイピングとブラウザのどちらを使うかを判断します
+3. **Web Unlocker のみか、Web Unlocker と Cloud Browser の両方か?** — 必要な認証情報を判断します
+4. **地域依存、またはブロックが厳しく Gologin によるエンドツーエンドの対応が必要か?** — プロキシとプロフィールの要件を判断します
 
 ---
 
 ## 関連情報
 
-- [MCP Server](/ja/api-reference/ai-integrations/mcp-server) — AIエージェント向けのGologin MCPサーバー
-- [Web Access CLI](/ja/cli-tools/web-access) — 基盤となる統合CLI
-- [Agent Browser CLI](/ja/cli-tools/agent-browser) — 基盤となるクラウドブラウザCLI
-- [Local Agent Browser CLI](/ja/cli-tools/local-agent-browser) — 基盤となるローカルOrbita CLI
-- [Web Unlocker SDK](/ja/scraping-api-sdk-and-cli) — 基盤となるTypeScript SDK
+- [MCP サーバー](/ja/api-reference/ai-integrations/mcp-server) — AI エージェント向けの Gologin MCP サーバー
+- [Web Access CLI](/ja/cli-tools/web-access) — 基盤となる統合 CLI
+- [Agent Browser CLI](/ja/cli-tools/agent-browser) — 基盤となるブラウザ CLI (クラウドとローカル)
+- [ローカルランタイム](/ja/cli-tools/local-agent-browser) — Agent Browser CLI のローカル Orbita プロフィール
+- [Web Unlocker SDK](/ja/scraping-api-sdk-and-cli) — 基盤となる TypeScript SDK

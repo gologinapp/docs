@@ -46,11 +46,13 @@ Store credentials in `~/.gologin-web-access/config.json`:
 }
 ```
 
-Initialize config interactively:
+Or create the file with `config init`. It isn't interactive: pass the keys as flags, or it takes them from the environment variables above. Then it checks the keys against the Gologin APIs:
 
 ```bash
 gologin-web-access config init --web-unlocker-api-key wu_... --token gl_...
 ```
+
+Add `--no-validate` to skip the key check. If the config file already exists, `config init` leaves it as is unless you add `--force`.
 
 ---
 
@@ -107,7 +109,7 @@ These commands use Web Unlocker. They are stateless — no browser session is ma
 | `scrape-text <url>` | Plain text extraction |
 | `scrape-markdown <url>` | Markdown extraction |
 | `scrape-json <url>` | Structured metadata (title, description, headings, links) |
-| `extract <url> --schema <file>` | Extract data matching a JSON schema |
+| `extract <url> --schema <file>` | Extract fields with a CSS selector schema |
 | `parse-document <url-or-path>` | Parse PDF, DOCX, XLSX, HTML files |
 
 **Common options:** `--format text|markdown|html`, `--source auto|unlocker|browser`, `--fallback none|browser`
@@ -284,18 +286,29 @@ Run daily via cron. Compare diffs to detect pricing changes, new features, or re
 
 ### Extract structured data with a schema
 
-Define what you want to extract:
+Define what you want to extract. The schema maps each output field to a CSS selector:
 
 ```json
 {
-  "type": "object",
-  "properties": {
-    "product_name": { "type": "string" },
-    "price": { "type": "string" },
-    "features": { "type": "array", "items": { "type": "string" } }
+  "product_name": "h1",
+  "price": ".price",
+  "features": { "selector": ".features li", "all": true },
+  "image": { "selector": "img.product-photo", "type": "attr", "attribute": "src" },
+  "reviews": {
+    "selector": ".review",
+    "all": true,
+    "fields": { "author": ".review-author", "text": ".review-text" }
   }
 }
 ```
+
+A plain string returns the text of the first matching element. An object takes:
+
+- `selector` — CSS selector
+- `type` — `text` (default), `html`, `attr`, or `exists`
+- `attribute` — attribute name when `type` is `attr`
+- `all` — `true` returns every match as a list
+- `fields` — a nested schema applied inside each match
 
 Then extract:
 
@@ -354,8 +367,7 @@ Define a sequence of steps in JSON and replay them:
     { "command": "open", "args": ["${url}"] },
     { "command": "wait", "args": [1000] },
     { "command": "snapshot" },
-    { "command": "find", "args": ["search input"] },
-    { "command": "type", "args": ["@found", "${query}"] },
+    { "command": "find", "args": ["placeholder", "Search", "fill", "${query}"] },
     { "command": "press", "args": ["Enter"] },
     { "command": "wait", "args": [2000] },
     { "command": "screenshot", "args": ["./result.png"] },
@@ -399,7 +411,7 @@ Commands that support `--source` can route through different backends:
 - [Web Unlocker SDK](/scraping-api-sdk-and-cli) — TypeScript SDK for programmatic use
 - [What is Web Unlocker](/what-is-web-unlocker) — product overview
 - [Agent Browser CLI](/cli-tools/agent-browser) — browser-only CLI for AI agents
-- [Local Agent Browser CLI](/cli-tools/local-agent-browser) — local Orbita CLI
+- [Local runtime](/cli-tools/local-agent-browser) — Agent Browser CLI with local Orbita profiles
 - [AI Skills](/api-reference/ai-integrations/ai-skills) — plug-and-play skills for Claude Code
 
 <Card title="npm package" icon="npm" href="https://www.npmjs.com/package/gologin-web-access">

@@ -9,6 +9,8 @@ description: "Запускайте профили Gologin программно �
 npm i gologin
 ```
 
+Требуется Node.js 20 или новее. Третья версия SDK поддерживает только ESM: подключайте его через `import`, а `require('gologin')` не сработает.
+
 ### Базовое использование
 
 ```javascript
@@ -25,47 +27,75 @@ const { status, wsUrl } = await GL.start();
 await GL.stop();
 ```
 
+### Запуск через GologinApi
+
+`GologinApi` запускает профиль и сам подключает Puppeteer. Метод `launch()` возвращает `browser` Puppeteer. Передайте `cloud: true`, чтобы запустить профиль в [Gologin Cloud Browser](/ru/api-reference/cloud-browser/what-is-gologin-cloud-browser), а не в локальном браузере Orbita:
+
+```javascript
+import { GologinApi } from 'gologin';
+
+const gologin = GologinApi({ token: 'your-api-token' });
+
+// local Orbita on this machine
+const { browser } = await gologin.launch({ profileId: 'your-profile-id' });
+
+// or Gologin Cloud Browser
+// const { browser } = await gologin.launch({ cloud: true, profileId: 'your-profile-id' });
+
+const page = await browser.newPage();
+await page.goto('https://example.com');
+
+// close the browser and stop the profile
+await gologin.exit();
+```
+
+Если `profileId` не указан, `launch()` сначала создаёт новый профиль. В `GologinApi` также есть вспомогательные методы, например `createProfileRandomFingerprint()`, `addGologinProxyToProfile()`, `addCookiesToProfile()` и `deleteProfile()`. Полный пример смотрите в разделе [Быстрый старт](/ru/api-reference/introduction/quickstart).
+
 ### Основные параметры
 
-| Параметр | Значение по умолчанию | Описание |
+| Параметр | По умолчанию | Описание |
 |---|---|---|
 | `token` | обязательный | Ваш API-токен Gologin |
-| `profile_id` | обязательный | ID профиля, который нужно запустить |
-| `executablePath` | авто | Путь к исполняемому файлу браузера Orbita |
+| `profile_id` | обязательный | ID профиля для запуска |
+| `executablePath` | auto | Путь к исполняемому файлу браузера Orbita |
 | `uploadCookiesToServer` | `false` | Загружать cookies в облако при остановке профиля. Установите `true`, если нужно сохранять сессию между устройствами. |
-| `checkBrowserUpdate` | `true` | Проверять наличие обновлений Orbita для версии этого профиля при запуске. Установите `false`, чтобы зафиксировать текущую версию. |
-| `autoUpdateBrowser` | `true` | Автоматически загружать новые версии Orbita. Установите `false`, чтобы избежать неожиданных обновлений. |
-| `extra_params` | `[]` | Дополнительные флаги Chromium, передаваемые браузеру |
+| `extra_params` | `[]` | Дополнительные флаги Chromium, которые передаются браузеру |
 
 ### Остановка профилей
 
 ```javascript
-// Stop and sync to cloud (default)
+// Stop and sync to cloud
 await GL.stop();
 
-// Stop without syncing any data to cloud
-await GL.stop({ posting: false });
+// Stop without syncing profile data to cloud
+await GL.stopLocal({ posting: false });
 ```
 
-Примечание: `posting: false` предотвращает загрузку данных профиля на серверы Gologin. Используйте этот параметр при работе на серверах, где синхронизация с облаком не нужна.
+Сначала закройте браузер в вашем инструменте автоматизации, например через `browser.close()`. Метод `stop()` не принимает параметров и всегда загружает профиль в Gologin. Метод `stopLocal({ posting: false })` завершает сеанс без загрузки данных профиля. Используйте его на серверах, где синхронизация с облаком не нужна. Cookies по-прежнему загружаются, если вы указали `uploadCookiesToServer: true`.
 
 ### Управление версиями браузера Orbita
 
+При запуске профиля SDK проверяет, какая версия Orbita нужна для user agent этого профиля. Если этой версии ещё нет в `~/.gologin/browser`, SDK скачивает её, а если есть, использует установленную копию. Чтобы запустить конкретную сборку, передайте `executablePath`. Параметры `autoUpdateBrowser` (по умолчанию `false`) и `checkBrowserUpdate` по-прежнему принимаются, но в текущей версии SDK (3.0.7) на это поведение не влияют.
+
+Чтобы скачать Orbita заранее, вызовите `checkAndDownloadBrowserByOpts()` у экземпляра `GoLogin`. Это метод, а не отдельный экспорт:
+
 ```javascript
-import { checkAndDownloadBrowserByOpts } from 'gologin';
+import { GoLogin } from 'gologin';
+
+const GL = new GoLogin({ token: 'your-api-token' });
 
 // Pre-download the latest Orbita version
-await checkAndDownloadBrowserByOpts({ lastActualCount: 1 });
+await GL.checkAndDownloadBrowserByOpts({ lastActualCount: 1 });
 
 // Pre-download specific versions
-await checkAndDownloadBrowserByOpts({ majorVersions: [142, 143] });
+await GL.checkAndDownloadBrowserByOpts({ majorVersions: [142, 143] });
 ```
 
-Используйте `checkAndDownloadBrowserByOpts` перед параллельным запуском профилей, чтобы избежать одновременной загрузки браузера несколько раз.
+Без параметров метод скачивает 5 последних версий. Используйте его перед параллельным запуском профилей, чтобы избежать нескольких одновременных загрузок.
 
-### Параллельный запуск 100+ профилей
+### Запуск 100+ профилей параллельно
 
-При одновременном запуске большого числа профилей на сервере:
+Если на сервере одновременно работает много профилей:
 
 ```javascript
 // Use a queue to limit concurrent launches
@@ -95,16 +125,16 @@ async function processQueue() {
 }
 ```
 
-**Важно при работе на серверах:**
-- Ограничивайте число одновременных запусков профилей (для начала рекомендуется 10–20)
-- Заранее загружайте версии Orbita перед запуском
+**Важно для серверов:**
+- Ограничивайте число одновременных запусков профилей (для начала рекомендуется 10-20)
+- Скачивайте версии Orbita заранее, до запуска профилей
 - В Linux: установите Xvfb и задайте `DISPLAY=:99`
 - Увеличьте лимиты файловых дескрипторов: `ulimit -n 65536`
 - Следите за оперативной памятью: каждый профиль использует ~300-500 МБ
 
 ### Отладка
 
-Задайте переменную окружения для подробного логирования:
+Чтобы включить подробное логирование, задайте переменную окружения:
 
 ```bash
 DEBUG=gologin node your-script.js

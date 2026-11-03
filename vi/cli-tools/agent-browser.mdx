@@ -1,31 +1,32 @@
 ---
 title: "Gologin Agent Browser CLI"
-description: "CLI tự động hóa trình duyệt đám mây dành cho AI agent, với snapshot, ref và daemon chạy liên tục"
+description: "CLI tự động hóa trình duyệt dành cho AI agent, chạy hồ sơ Gologin trong Cloud Browser hoặc Orbita cục bộ, với snapshot, ref và daemon chạy liên tục"
 ---
 
-Gologin Agent Browser CLI biến Gologin Cloud Browser thành một môi trường chạy bền vững, có thể điều khiển bằng script dành cho AI agent. CLI cung cấp snapshot trang gọn nhẹ, tương tác dựa trên ref, bộ nhớ phiên và đầu ra thân thiện với shell.
+Gologin Agent Browser CLI biến các hồ sơ trình duyệt Gologin thành một môi trường chạy liên tục, có thể điều khiển bằng script cho AI agent. Các phiên chạy trong Gologin Cloud Browser hoặc trong Orbita trên chính máy của bạn. CLI cung cấp snapshot trang gọn nhẹ, tương tác dựa trên ref, bộ nhớ phiên và đầu ra thân thiện với shell.
 
-Khác với việc tự viết mã Puppeteer/Playwright từ đầu, CLI này cung cấp cho agent một bộ lệnh dựng sẵn để tự động hóa trình duyệt — không cần mã mẫu, không cần mã quản lý phiên.
+Khác với việc tự viết mã Puppeteer/Playwright từ đầu, CLI này cung cấp cho agent sẵn một bộ lệnh để tự động hóa trình duyệt — không cần mã mẫu, không cần mã quản lý phiên.
 
 ---
 
-## Vì sao nên dùng trình duyệt đám mây
+## Môi trường chạy Cloud hoặc cục bộ
 
-Tự động hóa bằng trình duyệt cục bộ có những giới hạn lớn đối với quy trình làm việc của agent:
+CLI có hai môi trường chạy với cùng một bộ lệnh. Cả hai đều dùng hồ sơ, dấu vân tay và proxy của Gologin, và một daemon giữ các phiên luôn hoạt động giữa các lần gọi CLI.
 
-- Trình duyệt cục bộ dễ bị phát hiện hơn
-- Không có vân tay (fingerprint) theo từng profile
-- Không có profile trình duyệt đám mây lưu trữ lâu dài
-- Không có lớp proxy tích hợp sẵn
-- Khó chuẩn hóa giữa các agent và môi trường
+| | `cloud` (mặc định) | `local` |
+|---|---|---|
+| Nơi trình duyệt chạy | Gologin Cloud Browser | Orbita trên máy của bạn |
+| ID hồ sơ | Tùy chọn: nếu không có, một hồ sơ cloud tạm thời sẽ được tạo | Bắt buộc |
+| Phù hợp cho | Phiên song song, phiên từ xa, các máy không nên chạy trình duyệt | Làm nóng hồ sơ, đăng nhập lần đầu, cookie và trạng thái hồ sơ cục bộ, khớp với hệ điều hành của bạn |
 
-Agent Browser CLI đi theo hướng ngược lại:
+Chọn môi trường chạy cho từng lệnh bằng `--runtime cloud|local|auto`, hoặc đặt `GOLOGIN_AGENT_BROWSER_RUNTIME` một lần:
 
-- Môi trường chạy trình duyệt đám mây thay cho tiến trình cục bộ
-- Profile Gologin đóng vai trò lớp định danh của phiên
-- Phiên hỗ trợ proxy
-- Kế thừa khả năng chống phát hiện từ Gologin
-- Daemon chạy liên tục giúp duy trì phiên giữa các lần gọi CLI
+```bash
+gologin-agent-browser open https://example.com
+gologin-agent-browser open https://example.com --runtime local --profile your_profile_id
+```
+
+Theo mặc định (`auto`), các lệnh về hồ sơ, runbook và job chạy cục bộ, còn tất cả lệnh khác chạy trên cloud. Sau khi mở một phiên cục bộ, hãy truyền `--runtime local` cho cả các lệnh tiếp theo. Xem [Môi trường chạy cục bộ](/vi/cli-tools/local-agent-browser) để biết các yêu cầu và những lệnh chỉ dành cho local.
 
 ---
 
@@ -41,7 +42,7 @@ Hoặc chạy mà không cần cài đặt toàn cục:
 npx gologin-agent-browser-cli --help
 ```
 
-Yêu cầu Node.js >= 18.
+Yêu cầu Node.js >= 18. Môi trường chạy cục bộ cần Node.js 20 trở lên.
 
 ---
 
@@ -49,17 +50,19 @@ Yêu cầu Node.js >= 18.
 
 | Biến | Bắt buộc | Mô tả |
 |---|---|---|
-| `GOLOGIN_TOKEN` | Có (đối với `open`) | Mã thông báo API của Gologin |
-| `GOLOGIN_PROFILE_ID` | Không bắt buộc | ID profile mặc định |
-| `GOLOGIN_DAEMON_PORT` | Không bắt buộc | Cổng của daemon (mặc định: `44777`) |
-| `GOLOGIN_CONNECT_BASE` | Không bắt buộc | Điểm cuối (endpoint) của Cloud Browser |
+| `GOLOGIN_TOKEN` | Có (cho `open` và các lệnh API) | Mã thông báo API của Gologin |
+| `GOLOGIN_PROFILE_ID` | Tùy chọn | ID hồ sơ mặc định |
+| `GOLOGIN_AGENT_BROWSER_RUNTIME` | Tùy chọn | Môi trường chạy mặc định: `cloud`, `local` hoặc `auto` |
+| `GOLOGIN_DAEMON_PORT` | Tùy chọn | Cổng của daemon (mặc định: `44777` cho cloud, `44778` cho local) |
+| `GOLOGIN_CONNECT_BASE` | Tùy chọn | Endpoint của Cloud Browser (mặc định: `https://cloudbrowser.gologin.com/connect`) |
+| `GOLOGIN_EXECUTABLE_PATH` | Tùy chọn | Đường dẫn đến tệp thực thi Orbita cho môi trường chạy cục bộ |
 
 ### Lấy mã thông báo
 
 1. Đăng ký hoặc đăng nhập tại [gologin.com](https://gologin.com)
 2. Mở **API & MCP** trong bảng điều khiển
 3. Mở tab **API**
-4. Nhấp vào **Mã thông báo mới**
+4. Nhấp **Mã thông báo mới**
 5. Sao chép mã thông báo truy cập vừa được tạo
 
 ```bash
@@ -76,20 +79,20 @@ export GOLOGIN_TOKEN='your_gologin_token'
 
 Gồm hai phần:
 
-1. **CLI `gologin-agent-browser`** — phân tích lệnh, tự động khởi động daemon, in ra đầu ra gọn nhẹ
-2. **Daemon cục bộ chạy liên tục** — quản lý các phiên trình duyệt đang hoạt động, kết nối với Gologin Cloud Browser thông qua `connectOverCDP` của Playwright, giữ trang đang hoạt động trong bộ nhớ, tạo snapshot, phân giải ref và theo dõi siêu dữ liệu của phiên
+1. **CLI `gologin-agent-browser`** — phân tích lệnh, chọn môi trường chạy, tự động khởi động daemon tương ứng và in ra kết quả gọn nhẹ
+2. **Các daemon cục bộ chạy liên tục**, mỗi môi trường chạy một daemon — quản lý các phiên trình duyệt đang hoạt động, kết nối với Gologin Cloud Browser hoặc Orbita cục bộ qua `connectOverCDP` của Playwright, giữ trang đang hoạt động trong bộ nhớ, tạo snapshot, phân giải ref và theo dõi siêu dữ liệu phiên
 
-Kênh truyền tải chỉ hoạt động cục bộ:
+Kênh truyền tải chỉ ở phạm vi cục bộ. Daemon cloud lắng nghe tại:
 - Unix socket tại `${TMPDIR:-/tmp}/gologin-agent-browser.sock`
 - HTTP localhost tại `127.0.0.1:${GOLOGIN_DAEMON_PORT:-44777}`
 
-Nếu bạn không cung cấp ID profile, daemon sẽ tạo một profile đám mây Gologin tạm thời thông qua API.
+Trong môi trường chạy cloud, nếu bạn không cung cấp ID hồ sơ, daemon sẽ tạo một hồ sơ cloud Gologin tạm thời thông qua API.
 
 ---
 
-## Cách hoạt động của ref
+## Cách ref hoạt động
 
-`snapshot` in ra một bản xem trang gọn nhẹ và gán các ref như `@e1`, `@e2`, `@e3` cho các phần tử có thể tương tác. Bạn thao tác trực tiếp trên các ref này:
+`snapshot` in ra chế độ xem trang gọn nhẹ và gán các ref như `@e1`, `@e2`, `@e3` cho các phần tử có thể tương tác. Bạn thao tác trực tiếp trên chúng:
 
 ```bash
 gologin-agent-browser snapshot
@@ -100,7 +103,12 @@ gologin-agent-browser type @e5 "search query"
 gologin-agent-browser fill @e7 "username"
 ```
 
-Ref chỉ mang tính nỗ lực tối đa (best-effort) và cần được tạo lại sau khi điều hướng hoặc khi DOM thay đổi lớn. Trên các trang động, `find` thường là phương án dự phòng tốt hơn so với các ref đã lỗi thời.
+Ref chỉ hoạt động theo kiểu cố gắng tối đa và nên được tạo lại sau khi điều hướng hoặc khi DOM thay đổi lớn. Các lệnh cũng chấp nhận bộ chọn CSS thay cho ref. Trên các trang động, `find` thường là lựa chọn dự phòng tốt hơn so với ref đã lỗi thời: lệnh này tìm phần tử trên trang đang hiển thị và thao tác với nó chỉ trong một bước.
+
+```bash
+gologin-agent-browser find label "Email" fill "user@example.com"
+gologin-agent-browser find role button click --name "Submit"
+```
 
 ---
 
@@ -130,7 +138,7 @@ gologin-agent-browser close
 
 ## Ví dụ vòng lặp của agent
 
-Một vòng lặp AI agent điển hình:
+Một vòng lặp điển hình của AI agent:
 
 ```
 1. open <url>
@@ -150,22 +158,22 @@ Một vòng lặp AI agent điển hình:
 
 | Lệnh | Mô tả |
 |---|---|
-| `doctor` | Kiểm tra tình trạng và kết nối của daemon |
+| `doctor` | Kiểm tra tình trạng và khả năng kết nối của daemon |
 
 ### Quản lý phiên
 
 | Lệnh | Mô tả |
 |---|---|
-| `open <url>` | Mở URL trong một phiên trình duyệt đám mây |
-| `close` | Đóng phiên hiện tại |
-| `sessions` | Liệt kê các phiên đang hoạt động |
+| `open <url>` | Mở URL trong một phiên trình duyệt |
+| `close` | Đóng phiên hiện tại (`--all` đóng mọi phiên của daemon này) |
+| `sessions` | Liệt kê các phiên đang hoạt động (`--prune` xóa các phiên đã cũ) |
 | `current` | Hiển thị thông tin phiên hiện tại |
 
 ### Đọc trang
 
 | Lệnh | Mô tả |
 |---|---|
-| `snapshot` | Snapshot văn bản gọn nhẹ kèm ref của các phần tử |
+| `snapshot` | Snapshot văn bản gọn nhẹ kèm ref của phần tử |
 | `screenshot <path>` | Lưu ảnh chụp màn hình trang |
 | `pdf <path>` | Lưu trang dưới dạng PDF |
 | `get <kind> [target]` | Lấy các thuộc tính của trang |
@@ -177,14 +185,14 @@ Một vòng lặp AI agent điển hình:
 | `click <ref>` | Nhấp vào một phần tử |
 | `dblclick <ref>` | Nhấp đúp |
 | `type <ref> <text>` | Nhập văn bản (nối thêm) |
-| `fill <ref> <text>` | Điền vào ô nhập liệu (thay thế nội dung cũ) |
+| `fill <ref> <text>` | Điền vào ô nhập liệu (thay thế nội dung) |
 | `hover <ref>` | Di chuột lên phần tử |
 | `select <ref> <value>` | Chọn một giá trị trong danh sách thả xuống |
 | `check <ref>` / `uncheck <ref>` | Bật/tắt hộp kiểm |
 | `focus <ref>` | Đặt tiêu điểm vào một phần tử |
-| `find ...` | Tìm kiếm phần tử theo ngữ nghĩa |
+| `find <by> <locator> <action> [value]` | Tìm một phần tử theo `role`, `text`, `label`, `placeholder`, `first`, `last` hoặc `nth` rồi `click`, `fill`, `type` hoặc `hover` phần tử đó, hoặc đọc `text` của nó |
 
-### Bàn phím và cuộn
+### Bàn phím và cuộn trang
 
 | Lệnh | Mô tả |
 |---|---|
@@ -197,9 +205,9 @@ Một vòng lặp AI agent điển hình:
 | Lệnh | Mô tả |
 |---|---|
 | `back` | Quay lại |
-| `forward` | Đi tới |
+| `forward` | Đi tiếp |
 | `reload` | Tải lại trang |
-| `wait <target\|ms>` | Chờ phần tử xuất hiện hoặc hết thời gian chờ |
+| `wait <target\|ms>` | Chờ phần tử hoặc hết thời gian chờ |
 
 ### Tab
 
@@ -228,6 +236,33 @@ Một vòng lặp AI agent điển hình:
 | `eval <expression>` | Thực thi JavaScript trong trang |
 | `upload <ref> <file...>` | Tải tệp lên |
 
+### Hồ sơ, proxy và Gologin API
+
+Các lệnh này gọi Gologin API bằng mã thông báo của bạn và không cần daemon trình duyệt.
+
+| Lệnh | Mô tả |
+|---|---|
+| `api <METHOD> <path>` | Gọi bất kỳ endpoint REST API nào của Gologin |
+| `browser <action>` | Hồ sơ: liệt kê, lấy thông tin, tạo, cập nhật, xóa, cookie, proxy, khởi động và dừng trên cloud, nhập và xuất |
+| `proxy <action>` | Proxy: liệt kê, thêm proxy Gologin, cập nhật, xóa, lưu lượng |
+| `workspace`, `folder`, `share`, `template` | Không gian làm việc và thành viên, thư mục, chia sẻ, mẫu hồ sơ |
+| `user`, `deleted-profile` | Thông tin tài khoản và mã thông báo dành cho nhà phát triển, khôi phục hồ sơ đã xóa |
+| `cloud-usage` | Mức sử dụng Cloud Browser của một hồ sơ hoặc không gian làm việc |
+| `profile-cloud`, `profile-cookies`, `profile-fingerprint`, `profile-proxy`, `profile-ua` | Lệnh tắt: khởi động hoặc dừng hồ sơ trên cloud, xuất hoặc nhập cookie của hồ sơ, làm mới dấu vân tay, thêm proxy, cập nhật user agent |
+
+```bash
+gologin-agent-browser browser list --page 1
+gologin-agent-browser proxy add-gologin your_profile_id --country us --type residential
+gologin-agent-browser cloud-usage --profile your_profile_id
+gologin-agent-browser api GET /browser/your_profile_id
+```
+
+Thêm `--help` vào bất kỳ lệnh nào để in cách sử dụng của lệnh đó.
+
+### Chỉ dành cho môi trường chạy cục bộ
+
+`profiles`, `profile`, `profile-create`, `profile-update`, `profile-import`, `profile-sync`, `profile-delete`, `run`, `batch`, `jobs` và `job` quản lý hồ sơ cục bộ, runbook và lịch sử job. Xem [Môi trường chạy cục bộ](/vi/cli-tools/local-agent-browser#profile-commands).
+
 ### Bí danh
 
 | Bí danh | Tương ứng với |
@@ -244,7 +279,7 @@ Một vòng lặp AI agent điển hình:
 
 ## Trường hợp sử dụng và ví dụ
 
-### Kiểm tra xem trang web của bạn có vượt qua các bài kiểm tra chống phát hiện hay không
+### Kiểm tra xem trang web của bạn có vượt qua các bài kiểm tra anti-detect không
 
 ```bash
 gologin-agent-browser open https://iphey.com/ --profile your_profile_id
@@ -312,15 +347,14 @@ for profile in us_profile de_profile jp_profile; do
 done
 ```
 
-### Tìm kiếm trên trang web chặn thu thập dữ liệu
+### Tìm kiếm trên trang web chặn scraping
 
 Một số trang web yêu cầu thực thi JavaScript, đăng nhập hoặc tương tác trước khi hiển thị kết quả. Hãy dùng trình duyệt để tìm kiếm:
 
 ```bash
 gologin-agent-browser open https://protected-directory.com
 gologin-agent-browser snapshot
-gologin-agent-browser find "search input"
-gologin-agent-browser type @found "machine learning engineer San Francisco"
+gologin-agent-browser find placeholder "Search" fill "machine learning engineer San Francisco"
 gologin-agent-browser press Enter
 gologin-agent-browser wait 3000
 gologin-agent-browser snapshot     # agent reads search results
@@ -330,7 +364,7 @@ gologin-agent-browser close
 
 ### Lưu và khôi phục trạng thái phiên
 
-Xuất cookie và bộ nhớ lưu trữ để dùng lại giữa các phiên:
+Xuất cookie và bộ nhớ lưu trữ để tái sử dụng giữa các phiên:
 
 ```bash
 # after logging in
@@ -350,23 +384,24 @@ gologin-agent-browser snapshot     # already logged in
 
 ## Phiên song song
 
-Hãy dùng các ID `--session` tường minh cho các tác vụ đám mây độc lập. Dọn dẹp bằng `close --all` hoặc `sessions --prune --older-than-ms`.
+Dùng các ID `--session` rõ ràng cho các tác vụ cloud độc lập. Dọn dẹp bằng `close --all` hoặc `sessions --prune --older-than-ms`.
 
 ---
 
 ## Quy tắc về proxy
 
-- Profile được cấu hình sẵn: proxy được thiết lập trên profile thông qua bảng điều khiển Gologin hoặc API
-- Profile tạm thời: hỗ trợ không dùng proxy hoặc proxy tùy chỉnh với host/port
-- `--proxy-country` chỉ khả dụng cho các profile được cấu hình sẵn
+- Hồ sơ được cấu hình sẵn: proxy được đặt trên hồ sơ thông qua bảng điều khiển hoặc API của Gologin, ví dụ `proxy add-gologin <profileId> --country us`
+- Hồ sơ cloud tạm thời: không dùng proxy, hoặc dùng proxy của riêng bạn với `--proxy-host` và `--proxy-port` (cùng với `--proxy-mode http|socks4|socks5`, `--proxy-user`, `--proxy-pass`)
+- Trong môi trường chạy cloud, `open` không chấp nhận `--proxy-country`. Để dùng lưu lượng proxy Gologin từ một quốc gia, hãy thêm proxy Gologin vào một hồ sơ và mở hồ sơ đó bằng `--profile`
+- Trong môi trường chạy cục bộ, `open`, `profile-create` và `profile-update` chấp nhận `--proxy-country`
 
 ---
 
 ## Liên quan
 
-- [Gologin Web Access CLI](/vi/cli-tools/web-access) — CLI hợp nhất (thu thập dữ liệu + trình duyệt)
-- [Local Agent Browser CLI](/vi/cli-tools/local-agent-browser) — giải pháp thay thế chạy cục bộ với Orbita
-- [Bắt đầu với Cloud Browser](/vi/api-reference/cloud-browser/getting-started) — ví dụ Puppeteer/Playwright
+- [Gologin Web Access CLI](/vi/cli-tools/web-access) — CLI hợp nhất (scraping + trình duyệt)
+- [Môi trường chạy cục bộ](/vi/cli-tools/local-agent-browser) — chạy hồ sơ Orbita cục bộ với CLI này
+- [Bắt đầu với Cloud Browser](/vi/api-reference/cloud-browser/getting-started) — ví dụ về Puppeteer/Playwright
 - [AI Skills](/vi/api-reference/ai-integrations/ai-skills) — các skill cắm là chạy cho Claude Code
 
 <Card title="Gói npm" icon="npm" href="https://www.npmjs.com/package/gologin-agent-browser-cli">

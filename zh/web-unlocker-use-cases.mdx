@@ -2,13 +2,13 @@
 title: "Web Unlocker 使用场景"
 ---
 
-Web Unlocker 是一个 Scraping API——您发送一个 URL，它就会返回完整渲染后的 HTML。本页介绍几种最常见的使用方式。
+Web Unlocker 是一个 Scraping API——你只需发送一个 URL，它就会返回完整渲染后的 HTML。本页介绍几种最常见的使用方式。
 
 ---
 
 ## 自行抓取页面
 
-最简单的使用场景：您需要获取某个会拦截普通 HTTP 请求的网页内容。
+最简单的使用场景：你需要获取某个会拦截普通 HTTP 请求的网页内容。
 
 ### Python
 
@@ -37,7 +37,7 @@ const html = await fetch(
 console.log(html);
 ```
 
-无需启动浏览器，无需配置代理，也无需与 Cloudflare 对抗。一次调用，即可获得页面内容。
+无需启动浏览器，无需配置代理，也不必与 Cloudflare 周旋。一次调用，即可获得页面。
 
 **适用于：**
 
@@ -50,7 +50,11 @@ console.log(html);
 
 ## 将内容输入 AI
 
-Web Unlocker 返回的是原始 HTML。将它传给大语言模型（LLM），即可提取结构化数据、总结内容或回答与页面相关的问题，无需编写任何解析逻辑。
+Web Unlocker 返回的是原始 HTML。你可以把它交给大语言模型（LLM），用来提取结构化数据、总结内容或回答与页面相关的问题，无需编写任何解析逻辑。
+
+<Tip>
+如果想减少发送给模型的标记内容，可以在请求中添加 `format=markdown`，让页面以 Markdown 而不是 HTML 的形式返回。
+</Tip>
 
 ### Python \+ OpenAI
 
@@ -91,7 +95,7 @@ const html = await fetch(
 
 const client = new Anthropic();
 const message = await client.messages.create({
-  model: "claude-opus-4-5",
+  model: "claude-opus-5-5",
   max_tokens: 1024,
   messages: [
     {
@@ -115,7 +119,7 @@ console.log(message.content[0].text);
 
 ## 在 AI 智能体中使用
 
-为您的 AI 智能体提供一个由 Web Unlocker 支持的 `scrape` 工具。这样，智能体就能自主浏览网页——获取页面、阅读内容并采取行动——而您无需编写任何浏览逻辑。
+为你的 AI 智能体提供一个由 Web Unlocker 支持的 `scrape` 工具。这样，智能体就可以自行浏览网页——获取页面、阅读内容并采取行动——而你无需编写任何浏览逻辑。
 
 ```python
 import requests
@@ -150,7 +154,7 @@ messages = [
 
 while True:
     response = client.messages.create(
-        model="claude-opus-4-5",
+        model="claude-opus-5-5",
         max_tokens=1024,
         tools=tools,
         messages=messages
@@ -174,18 +178,18 @@ while True:
     messages.append({"role": "user", "content": tool_results})
 ```
 
-智能体自行决定何时抓取以及抓取哪个 URL，实际的获取工作则由 Web Unlocker 完成。
+智能体自行决定何时抓取以及抓取哪个 URL，而实际的获取工作由 Web Unlocker 完成。
 
 **适用于：**
 
-- 能够自主浏览网页的研究型智能体
-- 比价或优惠发现机器人
+- 能自主浏览网页的研究型智能体
+- 比价或寻找优惠的机器人
 - 竞争情报流程
-- 任何需要实时网页数据的智能体
+- 任何需要实时网络数据的智能体
 
 ---
 
-## 一次抓取多个页面
+## 同时抓取多个页面
 
 并发发送请求，同时从多个 URL 采集数据。
 
@@ -219,24 +223,13 @@ for url, html in results:
 
 **适用于：**
 
-- 抓取整个商品目录或列表页面
-- 为训练数据集进行批量数据采集
-- 同时监控多个页面
+- 抓取完整的商品目录或列表页面
+- 为训练数据集批量采集数据
+- 同时监控大量页面
 
 ---
 
-## 小结
-
-| 使用场景 | 您需要做什么 | 您将获得什么 |
-| --- | --- | --- |
-| 抓取单个页面 | 使用 URL 参数发送 GET 请求 | 渲染后的 HTML |
-| 输入 LLM | 抓取 → 传给模型 | 提取的数据或摘要 |
-| AI 智能体工具 | 智能体按需调用 | 实时网页内容 |
-| 批量抓取 | 并发请求 | 每个 URL 对应的 HTML |
-
----
-
-## 通过命令行使用
+## 通过 CLI 使用
 
 完全无需编写代码——使用 Gologin Web Access CLI 即可完成常见的抓取工作流：
 
@@ -268,14 +261,14 @@ gologin-web-access search "best antidetect browser 2026" --limit 10
 
 ---
 
-## 小结
+## 总结
 
-| 使用场景 | 您需要做什么 | 您将获得什么 |
+| 使用场景 | 操作方式 | 获得结果 |
 | --- | --- | --- |
 | 抓取单个页面 | 使用 URL 参数发送 GET 请求 | 渲染后的 HTML |
 | 输入 LLM | 抓取 → 传给模型 | 提取的数据或摘要 |
 | AI 智能体工具 | 智能体按需调用 | 实时网页内容 |
 | 批量抓取 | 并发请求 | 每个 URL 对应的 HTML |
-| 命令行工作流 | `gologin-web-access` 命令 | 文本、Markdown、JSON、批量结果 |
+| CLI 工作流 | `gologin-web-access` 命令 | 文本、Markdown、JSON、批量结果 |
 
-要发出您的第一个请求，请参阅[快速入门](/zh/web-unlocker-quick-start)。
+请参阅[快速入门](/zh/web-unlocker-quick-start)，发送你的第一个请求。

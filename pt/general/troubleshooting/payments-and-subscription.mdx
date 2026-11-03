@@ -1,17 +1,59 @@
 ---
-title: "Pagamentos e Assinatura"
+title: "Pagamentos e assinatura"
 ---
 
-### Aparece o erro "Você atingiu o número máximo de tentativas de pagamento (10)"
+### O pagamento com meu cartão foi recusado
 
-Você tentou comprar uma assinatura 10 vezes, o pagamento não foi concluído e você ficou impedido de tentar novamente por 24 horas. Não podemos remover essa restrição. Nesse caso, tente comprar a assinatura novamente amanhã. Usar outra forma de pagamento pode ajudar. Se for essencial continuar trabalhando nos perfis, entre em contato com o suporte.
+A maioria das recusas vem do banco emissor do cartão. O formulário de pagamento mostra o motivo recebido:
 
-### Paguei um valor menor que o necessário com criptomoeda
+| Mensagem | O que significa | O que fazer |
+| :-- | :-- | :-- |
+| Seu cartão não tem saldo suficiente. | Não há saldo suficiente no cartão | Verifique o saldo e o valor a pagar e tente novamente |
+| Seu cartão foi recusado. | O banco recusou o pagamento sem informar o motivo | Entre em contato com seu banco ou permita pagamentos online e internacionais no aplicativo do banco e tente novamente |
+| Seu cartão não permite esse tipo de compra. | O banco não permite esse tipo de pagamento com o cartão | Entre em contato com seu banco ou use outro cartão |
+| ... o limite foi excedido. Entre em contato com o emissor do seu cartão. | Você atingiu um limite definido pelo seu banco | Entre em contato com seu banco ou use outro cartão |
+| O número do seu cartão está incorreto. / Seu cartão expirou. | Os dados do cartão estão incorretos ou o cartão não é mais válido | Verifique os dados ou use outro cartão |
 
-Se você pagou um valor menor que o necessário, a assinatura ou o tráfego de proxy não será adicionado automaticamente. Você ainda pode concluir o pagamento usando o mesmo endereço de carteira do destinatário em até 60 minutos após o início do processo de pagamento. Verifique se o link de pagamento da Cryptomus ainda está ativo: se ele mostrar o valor atual do seu pagamento e solicitar pagamentos adicionais, você pode concluí-lo normalmente. Se o prazo de pagamento já tiver passado e a Cryptomus pedir que você entre em contato com a loja, entre em contato com o suporte da Gologin.
+O Gologin também pode mostrar uma mensagem própria: **Erro de pagamento. Tente mais tarde ou use outro cartão** ou **Falha no pagamento. Tente novamente ou entre em contato com a equipe de suporte para obter ajuda.**
 
-### Aparece "Seu pagamento está bloqueado" na página de pagamento depois de pagar com criptomoeda
+Se o cartão continuar falhando, pague com outro cartão, PayPal ou criptomoeda - veja [Formas de pagamento](/pt/general/account-and-billing/payment-methods). Cada tentativa de pagamento que falha conta para o limite de 10 tentativas por dia.
 
-Essa mensagem significa que sua transação foi sinalizada e bloqueada pelo nosso processador de pagamentos, a Cryptomus, antes de chegar até nós. A Gologin não recebeu seus fundos e não teve nenhuma participação na decisão de bloquear o pagamento.
+### O banco pede que eu confirme o pagamento (3D Secure)
 
-A Cryptomus segue seus próprios procedimentos de conformidade de forma independente, e não somos informados do motivo específico pelo qual uma transação é sinalizada. Entre em contato diretamente com o **suporte ao cliente da Cryptomus**: somente eles podem esclarecer o status do seu pagamento e orientar sobre os próximos passos, como a liberação ou o reembolso. Depois que o problema for resolvido por eles, fique à vontade para entrar em contato com o suporte da Gologin para confirmar que sua assinatura foi ativada.
+A maioria dos bancos pede que você confirme um pagamento online no aplicativo do banco ou com um código enviado por SMS. Confirme sem fechar a janela de pagamento.
+
+Se aparecer **3D Secure indisponível. Use outro cartão ou entre em contato com o suporte**, seu cartão não é compatível com essa verificação. Use outro cartão ou outra forma de pagamento.
+
+### O botão Pagar agora não responde, ou os planos ou a janela de pagamento não carregam
+
+Isso costuma acontecer em versões antigas do aplicativo para desktop.
+
+1. Feche a janela de pagamento e abra-a novamente.
+2. Feche completamente o Gologin pela bandeja do sistema e inicie-o novamente.
+3. Atualize o Gologin para a versão mais recente em [gologin.com/download](https://gologin.com/download).
+
+Você também pode pagar no aplicativo web em [app.gologin.com](https://app.gologin.com). Se a página não carregar corretamente, pressione **Ctrl+Shift+R** (**Cmd+Shift+R** no macOS) para recarregá-la sem cache.
+
+### Fiz o pagamento, mas meu plano ou meu tráfego não mudou
+
+1. Feche completamente o Gologin pela bandeja do sistema e inicie-o novamente. No aplicativo web, pressione **Ctrl+Shift+R** (**Cmd+Shift+R** no macOS).
+2. Verifique se você selecionou, no canto superior esquerdo, o workspace pelo qual pagou: uma assinatura pertence ao workspace para o qual foi comprada. Se você pagou pelo workspace errado, entre em contato com o suporte.
+3. Se você pagou com criptomoeda, aguarde até que a transação seja confirmada na blockchain. Se o plano ainda não tiver mudado, entre em contato com o suporte e envie o hash da transação, o endereço para o qual enviou os fundos e a rede.
+
+### Aparece o erro "Você atingiu o limite máximo de tentativas de pagamento (10)"
+
+Você tentou comprar uma assinatura 10 vezes, o pagamento não foi concluído e você ficou impedido de tentar novamente por 24 horas. Não podemos remover essa restrição. Nesse caso, tente comprar a assinatura novamente amanhã; usar outra forma de pagamento pode ajudar. Se for essencial continuar trabalhando com os perfis, entre em contato com o suporte.
+
+### Paguei menos do que o valor necessário com criptomoeda
+
+Se você pagou um valor menor, a assinatura ou o tráfego de proxy não serão adicionados automaticamente. Você ainda pode concluir o pagamento usando o mesmo endereço de carteira do destinatário em até 60 minutos após o início do processo de pagamento. Verifique se o link de pagamento da Cryptomus ainda está ativo: se ele mostrar o valor do seu pagamento atual e permitir novos pagamentos, você pode concluí-lo. Se o prazo de pagamento já passou e a Cryptomus pedir que você entre em contato com a loja, fale com o suporte do Gologin.
+
+### Aparece "Seu pagamento está bloqueado" na página de pagamento após pagar com criptomoeda
+
+Essa mensagem significa que sua transação foi sinalizada e bloqueada pelo nosso processador de pagamentos, a Cryptomus, antes de chegar até nós. O Gologin não recebeu seus fundos e não teve nenhuma participação na decisão de bloquear o pagamento.
+
+A Cryptomus segue seus próprios procedimentos de conformidade de forma independente, e não somos informados do motivo específico pelo qual uma transação é sinalizada. Entre em contato diretamente com o **suporte ao cliente da Cryptomus** - eles são os únicos que podem esclarecer o status do seu pagamento e orientar sobre os próximos passos, como a liberação ou o reembolso. Depois que o problema for resolvido por parte deles, entre em contato com o suporte do Gologin para confirmar que sua assinatura foi ativada.
+
+### Minha conta foi bloqueada depois que abri uma contestação com meu banco
+
+Quando uma contestação (chargeback) é aberta para um pagamento do Gologin, a conta é bloqueada até que a contestação seja encerrada. Sua conta não foi invadida. Para restaurar o acesso ou conversar sobre um reembolso, entre em contato com o suporte do Gologin.

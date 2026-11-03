@@ -1,9 +1,9 @@
 ---
 title: "AI Skills für Claude Code"
-description: "Plug-and-play-Skills, die Claude Code Agents über Gologin Web-Scraping, Browser-Automatisierung und lokale Orbita-Funktionen zur Verfügung stellen"
+description: "Sofort einsetzbare Skills, die Claude Code Agents über Gologin Web Scraping, Browser-Automatisierung und lokale Orbita-Funktionen bereitstellen"
 ---
 
-Gologin AI Skills sind Plug-and-play-Erweiterungen für [Claude Code](https://claude.ai/code), die KI-Agents Web-Scraping und Browser-Automatisierung ermöglichen. Jeder Skill kapselt ein Gologin-CLI-Tool und stellt es als Satz von Funktionen bereit, die der Agent aufrufen kann.
+Gologin AI Skills sind sofort einsetzbare Erweiterungen für [Claude Code](https://claude.ai/code), die KI-Agents Web Scraping und Browser-Automatisierung ermöglichen. Jeder Skill kapselt ein Gologin-CLI-Tool und stellt es als Satz von Funktionen bereit, die der Agent aufrufen kann.
 
 ```
 agent → skill → Gologin CLI → Web Unlocker API / Cloud Browser / Local Orbita
@@ -14,44 +14,45 @@ agent → skill → Gologin CLI → Web Unlocker API / Cloud Browser / Local Orb
 ## Verfügbare Skills
 
 <CardGroup cols={2}>
-  <Card title="Web Access Skill" icon="globe" href="https://github.com/GologinLabs/gologin-web-access-skill">
-    Standard-Skill zum Lesen und Extrahieren von Inhalten bekannter Websites, zum Crawlen, für Monitoring sowie für hybride Aufgaben (erst scrapen, dann im Browser arbeiten).
+  <Card title="Web Access Skill" icon="globe" href="https://github.com/GologinLabs/agent-skills/tree/main/gologin-web-access-skill">
+    Standard-Skill zum Lesen, Extrahieren, Crawlen und Überwachen bekannter Websites sowie für hybride Aufgaben, bei denen erst gescrapt und dann im Browser weitergearbeitet wird.
   </Card>
-  <Card title="Agent Browser Skill" icon="browser" href="https://github.com/GologinLabs/gologin-agent-browser-skill">
-    Reiner Browser-Skill für Live-Cloud-Sitzungen, Interaktion über Referenzen, Screenshots und PDFs.
+  <Card title="Agent Browser Skill" icon="browser" href="https://github.com/GologinLabs/agent-skills/tree/main/gologin-agent-browser-skill">
+    Live-Browsersitzungen in Gologin Cloud Browser oder lokal in Orbita: Interaktion über Referenzen, Screenshots, PDFs, Profil-Warmup und Runbooks.
   </Card>
-  <Card title="Scraping Skill" icon="code" href="https://github.com/GologinLabs/gologin-scraping-skill">
-    Reiner Scraping-Skill auf Basis des Web Unlocker SDK. Mit dem geringsten Platzbedarf.
-  </Card>
-  <Card title="Local Agent Browser Skill" icon="desktop" href="https://github.com/GologinLabs/gologin-local-agent-browser-skill">
-    Lokale Orbita-Automatisierung mit dauerhaften Profilen, Runbooks und Batch-Ausführung.
+  <Card title="Scraping Skill" icon="code" href="https://github.com/GologinLabs/agent-skills/tree/main/gologin-scraping-skill">
+    Reiner Scraping-Skill auf Basis des Web Unlocker SDK. Mit dem geringsten Ressourcenbedarf.
   </Card>
 </CardGroup>
+
+<Note>
+  Der Local Agent Browser Skill ist veraltet. Der Agent Browser Skill verarbeitet lokale Orbita-Profile jetzt über `gologin-agent-browser --runtime local`.
+</Note>
 
 ---
 
 ## Installation
 
+Alle Gologin Skills werden aus dem Repository [GologinLabs/agent-skills](https://github.com/GologinLabs/agent-skills) installiert:
+
 ```bash
 # install any skill
-npx skills add GologinLabs/gologin-web-access-skill
-npx skills add GologinLabs/gologin-agent-browser-skill
-npx skills add GologinLabs/gologin-scraping-skill
-npx skills add GologinLabs/gologin-local-agent-browser-skill
+npx skills add GologinLabs/agent-skills@gologin-web-access-skill
+npx skills add GologinLabs/agent-skills@gologin-agent-browser-skill
+npx skills add GologinLabs/agent-skills@gologin-scraping-skill
 ```
 
-Für jeden Skill muss das zugehörige CLI installiert sein:
+Für jeden Skill muss die zugrunde liegende CLI installiert sein:
 
-| Skill | Erforderliches CLI |
+| Skill | Erforderliche CLI |
 |---|---|
 | Web Access Skill | `npm i -g gologin-web-access` |
-| Agent Browser Skill | `npm i -g gologin-agent-browser-cli` |
+| Agent Browser Skill | `npm i -g gologin-agent-browser-cli` (Cloud- und lokale Runtimes) |
 | Scraping Skill | `npm i gologin-webunlocker` |
-| Local Agent Browser Skill | `npm i -g gologin-local-agent-browser-cli` |
 
 ---
 
-## Welcher Skill passt zu welcher Aufgabe
+## Welcher Skill passt zu welcher Aufgabe?
 
 | Aufgabe | Skill |
 |---|---|
@@ -61,22 +62,22 @@ Für jeden Skill muss das zugehörige CLI installiert sein:
 | Eine Website crawlen, URLs erfassen | Web Access |
 | Seitenänderungen überwachen | Web Access |
 | Eine Seite lesen und anschließend im Browser interagieren | Web Access (Hybridmodus) |
-| Eine Live-Cloud-Browser-Sitzung öffnen | Agent Browser |
+| Eine Live-Cloud-Browsersitzung öffnen | Agent Browser |
 | In ein Dashboard einloggen, Screenshots erstellen | Agent Browser |
 | Formulare ausfüllen, Abläufe durchklicken | Agent Browser |
 | Nur Scraping, kein Browser nötig, Node.js-App | Scraping |
-| Lokale Profile aufwärmen | Local Agent Browser |
-| Account-Logins mit dauerhaften Cookies | Local Agent Browser |
-| Social-Media- und Marktplatz-Aktionen in lokalem Orbita | Local Agent Browser |
-| Batch-Runbooks über viele lokale Profile | Local Agent Browser |
+| Lokale Profile aufwärmen | Agent Browser (lokale Runtime) |
+| Konto-Logins mit dauerhaften Cookies | Agent Browser (lokale Runtime) |
+| Social-Media- und Marktplatz-Aktionen in lokalem Orbita | Agent Browser (lokale Runtime) |
+| Batch-Runbooks über viele lokale Profile | Agent Browser (lokale Runtime) |
 
 ---
 
 ## Web Access Skill
 
-**Installation:** `npx skills add GologinLabs/gologin-web-access-skill`
+**Installation:** `npx skills add GologinLabs/agent-skills@gologin-web-access-skill`
 
-Der Standard-Skill und zugleich der vielseitigste. Er greift auf das CLI `gologin-web-access` zurück.
+Der Standard-Skill und zugleich der vielseitigste. Er delegiert an die CLI `gologin-web-access`.
 
 **Scraping-Tools:** `scrape_url`, `read_page`, `scrape_markdown`, `scrape_text`, `scrape_json`, `batch_scrape`, `batch_extract`, `search_web`, `map_site`, `crawl_site`, `crawl_site_async`, `extract_structured`, `track_changes`, `batch_track_changes`, `parse_document`
 
@@ -90,21 +91,23 @@ Alle Details zu den Befehlen finden Sie in der [Web Access CLI-Referenz](/de/cli
 
 ## Agent Browser Skill
 
-**Installation:** `npx skills add GologinLabs/gologin-agent-browser-skill`
+**Installation:** `npx skills add GologinLabs/agent-skills@gologin-agent-browser-skill`
 
-Reiner Browser-Skill für Live-Cloud-Sitzungen. Verwenden Sie ihn, wenn Sie interaktives Browsing ohne Scraping benötigen.
+Reiner Browser-Skill für Live-Sitzungen in Gologin Cloud Browser (Standard) oder in lokalen Orbita-Profilen mit `--runtime local`. Verwenden Sie ihn, wenn Sie interaktiv browsen möchten, ohne zu scrapen.
 
 **Funktionen:** `doctor`, `open`, `sessions`, `current`, `snapshot`, `click`, `type`, `fill`, `find`, `get`, `tabs`, `tabopen`, `tabfocus`, `tabclose`, `cookies`, `cookies-import`, `storage-export`, `storage-import`, `eval`, `back`, `forward`, `reload`, `upload`, `screenshot`, `pdf`
 
-Alle Details zu den Befehlen finden Sie in der [Agent Browser CLI-Referenz](/de/cli-tools/agent-browser).
+**Die lokale Runtime ergänzt:** Profilverwaltung (`profiles`, `profile-create`, `profile-import`, `profile-update`, `profile-sync`, `profile-delete`), Runbooks (`run`, `batch`), Jobs (`jobs`, `job`), Vorlagen für Anwendungsfälle (`linkedin`, `ads`, `smm`, `scraping`, `geo`) und Diagnose (`doctor --use-case --check-proxy`).
+
+Alle Details zu den Befehlen finden Sie in der [Agent Browser CLI-Referenz](/de/cli-tools/agent-browser) und unter [Lokale Runtime](/de/cli-tools/local-agent-browser).
 
 ---
 
 ## Scraping Skill
 
-**Installation:** `npx skills add GologinLabs/gologin-scraping-skill`
+**Installation:** `npx skills add GologinLabs/agent-skills@gologin-scraping-skill`
 
-Der kleinste Skill – Scraping ausschließlich über das Web Unlocker SDK. Keine Browser-Sitzung, kein Daemon.
+Der kleinste Skill – Scraping ausschließlich über das Web Unlocker SDK. Keine Browsersitzung, kein Daemon.
 
 **Funktionen:** Roh-HTML (`scrape`), Text (`text`), Markdown (`markdown`), strukturierte Metadaten (`json`). SDK-Methoden: `scrapeRaw()`, `scrape()`, `scrapeText()`, `scrapeMarkdown()`, `scrapeJSON()`, `batchScrape()`.
 
@@ -114,23 +117,15 @@ Details zur API finden Sie in der [Web Unlocker SDK-Referenz](/de/scraping-api-s
 
 ---
 
-## Local Agent Browser Skill
+## Local Agent Browser Skill (veraltet)
 
-**Installation:** `npx skills add GologinLabs/gologin-local-agent-browser-skill`
-
-Für dauerhafte lokale Orbita-Automatisierung – Warmup, Login-Abläufe, Social-Media- und Marktplatz-Aktionen.
-
-**Funktionen:** Alle Befehle zur Browser-Interaktion sowie Profilverwaltung (`profiles`, `profile-create`, `profile-import`, `profile-update`, `profile-sync`, `profile-delete`), Runbooks (`run`, `batch`), Jobs (`jobs`, `job`) und Diagnose (`doctor --use-case --check-proxy`).
-
-**Vorlagen für Anwendungsfälle:** `linkedin`, `ads`, `smm`, `scraping`, `geo`
-
-Alle Details zu den Befehlen finden Sie in der [Local Agent Browser CLI-Referenz](/de/cli-tools/local-agent-browser).
+Wenn Ihr Agent noch `gologin-local-agent-browser-skill` verwendet, verweist dieser Skill den Agent lediglich auf den Agent Browser Skill. Installieren Sie stattdessen `gologin-agent-browser-skill`: Er deckt lokale Orbita-Profile, Warmup, Login-Abläufe, Runbooks und Batch-Jobs ab.
 
 ---
 
 ## Was Sie Ihren Agent fragen können
 
-Sobald ein Skill installiert ist, sprechen Sie mit Claude Code in natürlicher Sprache. Das ermöglicht jeder Skill:
+Sobald ein Skill installiert ist, sprechen Sie mit Claude Code in natürlicher Sprache. Das ermöglichen die einzelnen Skills:
 
 ### Mit dem Web Access Skill
 
@@ -140,29 +135,29 @@ Sobald ein Skill installiert ist, sprechen Sie mit Claude Code in natürlicher S
 - „Suche nach ‚best CRM tools 2026‘ und scrape die Top-5-Ergebnisse“
 - „Prüfe, ob sich competitor.com/pricing seit gestern geändert hat“
 - „Extrahiere alle Blogartikel-Titel und URLs von dieser Website“
-- „Öffne example.com in einem Browser, melde dich mit diesen Zugangsdaten an und erstelle einen Screenshot des Dashboards“
+- „Öffne example.com in einem Browser, melde dich mit diesen Zugangsdaten an und mache einen Screenshot vom Dashboard“
 
 ### Mit dem Agent Browser Skill
 
-- „Öffne das Admin-Dashboard, gehe zu Settings und erstelle einen Screenshot der aktuellen Konfiguration“
+- „Öffne das Admin-Dashboard, gehe zu Settings und mache einen Screenshot der aktuellen Konfiguration“
 - „Melde dich in der Staging-Umgebung an und prüfe, ob das neue Feature bereitgestellt ist“
-- „Fülle das Registrierungsformular auf example.com mit diesen Testdaten aus“
-- „Gehe zur Berichtsseite, lade den Monatsexport herunter und erstelle einen Screenshot der Zusammenfassung“
+- „Fülle das Anmeldeformular auf example.com mit diesen Testdaten aus“
+- „Gehe zur Berichtsseite, lade den Monatsexport herunter und mache einen Screenshot der Zusammenfassung“
 - „Prüfe, was iphey.com für dieses Browserprofil anzeigt“
 
 ### Mit dem Scraping Skill
 
 - „Scrape diese URL und gib mir den Textinhalt“
 - „Hole Titel, Beschreibung und Überschriften von diesen 10 Seiten“
-- „Lade diese Seite als Markdown, damit ich sie analysieren kann“
+- „Rufe diese Seite als Markdown ab, damit ich sie analysieren kann“
 
-### Mit dem Local Agent Browser Skill
+### Mit dem Agent Browser Skill (lokale Runtime)
 
 - „Erstelle ein neues LinkedIn-Profil mit einem US-Proxy und wärme es auf“
-- „Öffne meinen Reddit-Account, scrolle durch den Feed und schließe ihn wieder“
+- „Öffne mein Reddit-Konto, scrolle durch den Feed und schließe es wieder“
 - „Führe das Warmup-Runbook für alle 20 Profile mit einer Parallelität von 5 aus“
 - „Prüfe den Proxy-Status meiner Facebook-Ads-Profile“
-- „Melde dich in diesem Marktplatz-Account an und erstelle einen Screenshot des Seller-Dashboards“
+- „Melde dich in diesem Marktplatz-Konto an und mache einen Screenshot vom Seller-Dashboard“
 
 ---
 
@@ -175,39 +170,39 @@ Sobald ein Skill installiert ist, sprechen Sie mit Claude Code in natürlicher S
 3. Der Agent scrapt wichtige Seiten im Batch: `batch_scrape(pricing, features, about)`
 4. Der Agent übergibt die Inhalte zur Analyse und zum Vergleich an Claude
 
-### Account-Warmup (Local Agent Browser Skill)
+### Konto-Warmup (Agent Browser Skill, lokale Runtime)
 
 1. Der Agent erstellt Profile: `profile-create "Account 1" --template linkedin`
 2. Der Agent führt das Warmup-Runbook aus: `batch ./warmup.json --targets ./profiles.json`
-3. Der Agent prüft die Job-Ergebnisse: `jobs --kind batch --status completed`
+3. Der Agent prüft die Job-Ergebnisse: `jobs --kind batch --status ok`
 4. Der Agent meldet, welche Profile bereit sind
 
 ### Dashboard-Monitoring (Agent Browser Skill)
 
 1. Der Agent öffnet das Dashboard: `open https://dashboard.example.com --profile saved_login`
 2. Der Agent liest die Seite: `snapshot`
-3. Der Agent navigiert zu den Kennzahlen: `click @e5` (Link „Reports“)
-4. Der Agent erstellt einen Screenshot des Berichts: `screenshot ./daily-metrics.png`
+3. Der Agent navigiert zu den Metriken: `click @e5` (Link „Reports“)
+4. Der Agent macht einen Screenshot des Berichts: `screenshot ./daily-metrics.png`
 5. Der Agent schließt die Sitzung: `close`
-6. Der Agent fasst die Kennzahlen aus den Snapshot-Daten zusammen
+6. Der Agent fasst die Metriken anhand der Snapshot-Daten zusammen
 
 ---
 
-## Verbindliche Vorabprüfung
+## Verbindlicher Preflight
 
 Bevor eine Aufgabe ausgeführt wird, ordnen die Skills die Arbeit ein:
 
 1. **Eine bekannte Website oder breit angelegte Recherche über mehrere Quellen?** – bestimmt, ob Scraping oder Suche nötig ist
-2. **Reine Datenextraktion, Monitoring oder interaktive Browser-Arbeit?** – bestimmt, ob Scraping oder Browser zum Einsatz kommt
+2. **Reine Extraktion, Monitoring oder interaktive Browser-Arbeit?** – bestimmt, ob Scraping oder Browser zum Einsatz kommt
 3. **Nur Web Unlocker oder sowohl Web Unlocker als auch Cloud Browser?** – bestimmt, welche Zugangsdaten benötigt werden
 4. **Geo-sensibel oder so stark blockiert, dass Gologin durchgängig nötig ist?** – bestimmt die Anforderungen an Proxy und Profil
 
 ---
 
-## Weiterführende Links
+## Verwandte Themen
 
 - [MCP Server](/de/api-reference/ai-integrations/mcp-server) – Gologin MCP Server für KI-Agents
-- [Web Access CLI](/de/cli-tools/web-access) – das zugrunde liegende einheitliche CLI
-- [Agent Browser CLI](/de/cli-tools/agent-browser) – das zugrunde liegende Cloud-Browser-CLI
-- [Local Agent Browser CLI](/de/cli-tools/local-agent-browser) – das zugrunde liegende CLI für lokales Orbita
-- [Web Unlocker SDK](/de/scraping-api-sdk-and-cli) – das zugrunde liegende TypeScript-SDK
+- [Web Access CLI](/de/cli-tools/web-access) – die zugrunde liegende einheitliche CLI
+- [Agent Browser CLI](/de/cli-tools/agent-browser) – die zugrunde liegende Browser-CLI, Cloud und lokal
+- [Lokale Runtime](/de/cli-tools/local-agent-browser) – lokale Orbita-Profile in der Agent Browser CLI
+- [Web Unlocker SDK](/de/scraping-api-sdk-and-cli) – das zugrunde liegende TypeScript SDK

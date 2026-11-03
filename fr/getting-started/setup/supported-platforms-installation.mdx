@@ -1,16 +1,16 @@
 ---
 title: "Plateformes prises en charge et installation"
-description: "Configuration système requise et procédure d'installation de Gologin"
+description: "Configuration système requise pour Gologin et procédure d'installation"
 ---
 
-Vous pouvez télécharger l'application Gologin pour n'importe quel système pris en charge en utilisant le lien ci-dessous :
+Vous pouvez télécharger l'application Gologin pour tout système pris en charge en utilisant le lien ci-dessous :
 
 👉 [**Télécharger Gologin**](https://gologin.com/download/)
 
 ## Configuration matérielle requise
 
-- **RAM :** 4GB minimum
-- **Espace disque libre :** au moins 1 GB
+- **RAM :** minimum 4 Go
+- **Espace disque libre :** au moins 1 Go
 
 ## Systèmes d'exploitation pris en charge
 
@@ -24,10 +24,10 @@ Vous pouvez télécharger l'application Gologin pour n'importe quel système pri
 
 - macOS 27 Golden Gate
 - macOS 26 Tahoe
-- macOS 15 Sequoia **(version du navigateur 122 et supérieure)**
+- macOS 15 Sequoia (version du navigateur 122 et supérieure)
 - macOS 14 Sonoma
 - macOS 13 Ventura
-- macOS 12 Monterey
+- macOS 12 Monterey (version du navigateur 150 et inférieure)
 
 ### Linux
 
@@ -37,7 +37,7 @@ Vous pouvez télécharger l'application Gologin pour n'importe quel système pri
 ### Android
 
 - Android 10.0 et supérieur
-- 3\+ GB de RAM
+- 3\+ Go de RAM
 
 ### iOS
 
@@ -59,9 +59,9 @@ Vous pouvez télécharger l'application Gologin pour n'importe quel système pri
 
 ### Linux, exemple avec Ubuntu
 
-Gologin pour Linux est fourni sous la forme d'un fichier **AppImage**. Il s'agit d'un fichier exécutable autonome qui ne nécessite pas d'installation classique. Vous pouvez toujours accéder à l'application grâce à ce fichier.
+Gologin pour Linux est fourni sous la forme d'une archive `.tar`. L'application qu'elle contient est autonome et ne nécessite pas d'installation classique : extrayez l'archive et lancez Gologin depuis le dossier extrait.
 
-1. Téléchargez le fichier AppImage via ce [lien](https://gologin.com/download)
+1. Téléchargez l'archive à l'aide de ce [lien](https://gologin.com/download)
 2. Ouvrez votre dossier **Téléchargements**
 3. Faites un clic droit sur `gologin.tar` \> **Extraire**
 4. Allez dans le dossier **gologin** \> lancez Gologin en double-cliquant dessus
@@ -79,14 +79,14 @@ Gologin pour Linux est fourni sous la forme d'un fichier **AppImage**. Il s'agit
   chmod +x <filename>
   ```
   remplacez `<filename>` par le nom réel du fichier
-- sur les systèmes récents, le paquet **libfuse2** peut être nécessaire. Collez ce qui suit dans le terminal, puis essayez de relancer l'application.
+- vous pourriez avoir besoin du paquet **libfuse2** sur les systèmes plus récents. Collez ce qui suit dans le terminal, puis essayez de relancer l'application.
   ```bash bash
     sudo apt install libfuse2
   ```
 
 **Si les profils ne se lancent pas lorsque vous cliquez sur Exécuter**
 
-- ouvrez le terminal et accédez au dossier du navigateur, par exemple la version Orbita 145
+- ouvrez le Terminal et accédez au dossier du navigateur, par exemple la version Orbita 145
 - définissez de nouvelles autorisations pour **chrome-sandbox**
   ```bash bash
   cd ~/.gologin/browser/orbita-browser-145
@@ -101,20 +101,20 @@ Pour utiliser Gologin sur Android, il vous suffit d'installer l'**application Go
 1. Ouvrez le **Google Play Store** sur votre téléphone
 2. Repérez la barre de recherche en haut et saisissez **Gologin** \> **installez l'application**
 
-Une fois l'application installée, vous pouvez l'utiliser immédiatement, le navigateur étant intégré.
+Une fois l'application installée, vous pouvez l'utiliser immédiatement avec le navigateur intégré.
 
 ## Configurations non prises en charge
 
 Gologin ne prend **pas** en charge les plateformes suivantes :
 
-- Les systèmes 32 bits
-- Windows 7, 8, 8.1, Server 2012 (toutes révisions) ou versions antérieures
-- macOS El Captain, Sierra, High-Sierra, Mojave, Catalina, Big Sur ou versions antérieures
+- Tout système 32 bits
+- Windows 7, 8, 8.1, Server 2012 (toute révision) ou version antérieure
+- macOS El Capitan, Sierra, High Sierra, Mojave, Catalina, Big Sur ou version antérieure
 - Chrome OS (vous pouvez utiliser la version [Gologin web](/fr/gologin-web-overview))
 
 ## Voir aussi
 
-- [Liste de vérification pour la première utilisation](https://gologin.com/docs/getting-started/setup/first-time-checklist)
-- [Gologin Web, Chrome OS](https://gologin.com/docs/general/gologin-web-and-mobile)
+- [Liste de vérification pour une première utilisation](https://gologin.com/docs/getting-started/setup/first-time-checklist)
+- [Gologin Web, Chrome OS](/fr/general/gologin-web-and-chrome-os)
 - [Concepts clés](https://gologin.com/docs/getting-started/introduction/key-concepts-profiles-fingerprints-proxies)
 - [Mettre à jour l'application Gologin](https://gologin.com/docs/general/updating-the-gologin-app)

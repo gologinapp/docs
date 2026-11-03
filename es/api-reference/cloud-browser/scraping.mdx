@@ -4,16 +4,16 @@ title: "Solución de scraping"
 
 ## Descripción general
 
-Gologin Cloud Browser puede utilizarse como un navegador remoto administrado para flujos de trabajo de scraping y extracción de datos. Tu código de automatización (Puppeteer) se conecta a una sesión de navegador remota mediante un endpoint WebSocket y después ejecuta la lógica estándar de navegación y extracción.
+Gologin Cloud Browser se puede utilizar como un navegador remoto administrado para flujos de trabajo de scraping y extracción de datos. Tu código de automatización (Puppeteer) se conecta a una sesión de navegador remota a través de un endpoint WebSocket y después ejecuta la lógica estándar de navegación y extracción.
 
-Cloud Browser es la capa de conexión y ejecución; la configuración de perfiles y proxies se administra mediante la REST API. Esta configuración puede reducir la carga de infraestructura y ayudar a disminuir los obstáculos al hacer scraping, pero los resultados dependen del comportamiento y los controles del sitio de destino.
+Cloud Browser es la capa de conexión y ejecución; la configuración de perfiles y proxies se administra mediante la REST API. Esta configuración puede reducir la carga de infraestructura y ayudar a disminuir los obstáculos en el scraping, pero los resultados dependen del comportamiento y de los controles del sitio de destino.
 
 ## Qué obtienes
 
 - Sesiones de navegador remotas para conexiones con Puppeteer.
 - Renderizado de JavaScript para páginas dinámicas.
 - Escalabilidad sin tener que mantener tu propia infraestructura de navegadores.
-- Configuración de perfiles y proxies administrada por API.
+- Configuración de perfiles y proxies administrada mediante API.
 - Un único endpoint de conexión canónico para iniciar sesiones.
 
 ## Flujo de trabajo típico
@@ -26,9 +26,9 @@ Cloud Browser es la capa de conexión y ejecución; la configuración de perfile
 
 ## Requisitos previos
 
-- Crea un token: https://app.gologin.com/personalArea/TokenApi
-- Profiles API (recomendada para una configuración controlada): https://gologin.com/docs/api-reference/profile
-- Proxy API: https://gologin.com/docs/api-reference/proxy
+- Crea un token: en la aplicación de Gologin, abre [API & MCP](https://app.gologin.com/personalArea/TokenApi) → **API** → **New Token**
+- Profiles API (recomendada para una configuración controlada): [Crear perfil](https://gologin.com/docs/api-reference/profile/create-profile-with-partial-parameters), [Actualizar perfil](https://gologin.com/docs/api-reference/profile/update-profile-with-partial-parameters)
+- Proxy API: [Añadir un proxy de Gologin a un perfil](https://gologin.com/docs/api-reference/proxy/create-gologin-high-quality-proxy), [Configurar tu propio proxy en los perfiles](https://gologin.com/docs/api-reference/profile/update-proxy-for-multiple-profiles)
 
 ## Un endpoint de conexión canónico
 
@@ -49,7 +49,7 @@ const puppeteer = require('puppeteer-core');
 
 
   const token = 'your_token_here';
-  const profileId = 'your_profile_id'; // Remove this line if you want to create a new profile
+  const profileId = 'your_profile_id'; // Set to '' to create a new profile for this session
   const cloudBrowserUrl = `https://cloudbrowser.gologin.com/connect?token=${token}${profileId ? `&profile=${profileId}` : ''}`;
   const browser = await puppeteer.connect({
   
@@ -71,17 +71,17 @@ const puppeteer = require('puppeteer-core');
 ## Siguientes pasos
 
 - Primeros pasos con Cloud Browser: https://gologin.com/docs/api-reference/cloud-browser/getting-started
-- Profiles API: https://gologin.com/docs/api-reference/profile
-- Proxy API: https://gologin.com/docs/api-reference/proxy
+- Profiles API: [Obtener todos los perfiles](https://gologin.com/docs/api-reference/profile/get-all-profiles), [Crear perfil](https://gologin.com/docs/api-reference/profile/create-profile-with-partial-parameters)
+- Proxy API: [Añadir un proxy de Gologin a un perfil](https://gologin.com/docs/api-reference/proxy/create-gologin-high-quality-proxy), [Obtener todos los proxies](https://gologin.com/docs/api-reference/proxy/get-list-of-all-proxies)
 
 ## Mejores prácticas
 
-- Prefiere esperas explícitas en lugar de pausas fijas.
-- Implementa lógica de reintentos con backoff limitado y jitter.
+- Prefiere las esperas explícitas a las pausas fijas.
+- Implementa lógica de reintentos con backoff acotado y jitter.
 - Guarda los resultados de la extracción de forma estructurada (URL, campos, marca de tiempo, estado).
 - Configura el perfil y el proxy antes de conectarte para garantizar la reproducibilidad.
 - Cierra siempre las sesiones y gestiona la limpieza cuando se produzcan errores.
-- Adapta el comportamiento de las solicitudes y las sesiones a las restricciones de cada sitio de destino.
+- Adapta el comportamiento de las solicitudes y de la sesión según las restricciones de cada sitio de destino.
 
 ## Límites y cuotas
 
@@ -95,7 +95,7 @@ No. El parámetro `profile` es opcional. Si se omite, se crea un nuevo perfil pa
 
 ### ¿Dónde configuro los proxies?
 
-Configura los proxies mediante la Proxy API (y los ajustes del perfil relacionados mediante la REST API): https://gologin.com/docs/api-reference/proxy
+Configura los proxies mediante la REST API: [añadir un proxy de Gologin a un perfil](https://gologin.com/docs/api-reference/proxy/create-gologin-high-quality-proxy) o [configurar tu propio proxy en los perfiles](https://gologin.com/docs/api-reference/profile/update-proxy-for-multiple-profiles).
 
 ### ¿Es diferente de Cloud Browser?
 

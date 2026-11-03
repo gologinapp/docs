@@ -2,9 +2,9 @@
 title: "Dodawanie proxy i zarządzanie nimi"
 ---
 
-W przeglądarce Gologin możesz podłączyć własne proxy na kilka sposobów. W tym artykule omówimy je wszystkie, od najprostszych po bardziej zaawansowane.
+W przeglądarce Gologin możesz podłączyć proxy na kilka sposobów. W tym artykule opisujemy je wszystkie, od najprostszych po bardziej zaawansowane.
 
-Zewnętrzni dostawcy proxy zazwyczaj udostępniają **IP, port, nazwę użytkownika i hasło** jako dane punktu końcowego do połączenia. Możesz wkleić te dane niemal w dowolnym miejscu w ustawieniach proxy, a nowe proxy zostanie dodane do Twojej listy proxy.
+Zewnętrzni dostawcy proxy zazwyczaj podają **IP, port, nazwę użytkownika i hasło** jako dane do połączenia. Możesz wkleić te dane niemal w dowolnym miejscu ustawień proxy, a nowe proxy zostanie dodane do Twojej listy proxy.
 
 Obsługujemy następujące formaty wklejania proxy:
 
@@ -22,18 +22,20 @@ Obsługujemy następujące formaty wklejania proxy:
 
 1. Na stronie **All profiles** znajdź kolumnę **Location** i kliknij przycisk **\+** przy profilu, do którego chcesz dodać proxy.
 2. W otwartym oknie kliknij **ikonę komputera** i wpisz **IP, port, nazwę użytkownika** oraz **hasło**. 
-   - Protokół HTTP lub SOCKS zostanie wybrany automatycznie na podstawie dostępności, możesz go później zmienić.
+   - Protokół HTTP lub SOCKS zostanie wybrany automatycznie na podstawie dostępności. Możesz go później zmienić.
 3. Kliknij **Connect** – proxy zostało dodane do Twojego profilu!
 4. Gologin od razu sprawdzi Twoje proxy. Jeśli proxy działa prawidłowo, zobaczysz zielony wskaźnik, a jeśli nie – czerwony.
 
 <Frame>
-  ![Add Proxy Simple](/images/add_proxy_simple.gif)
+  ![Proste dodawanie proxy](/images/add_proxy_simple.gif)
 </Frame>
 
-Na tej samej stronie możesz wklejać proxy pojedynczo lub hurtowo. Skopiuj kilka proxy i wklej je naraz do kolumny Location. Użyj **skrótów klawiszowych** systemu lub przycisku **Paste proxies**. Nowe proxy będziesz mógł później przenosić między profilami.
+Możesz też wkleić pełny ciąg proxy, na przykład `ip:port:login:password`, bezpośrednio do kolumny **Proxy & Location** w profilu – Gologin doda proxy wraz ze wszystkimi szczegółami. Pamiętaj, że pole **IP** w formularzu proxy przyjmuje wyłącznie adres IP, a nie pełny ciąg.
+
+Proxy możesz wklejać pojedynczo lub zbiorczo na tej samej stronie. Skopiuj kilka proxy i wklej je wszystkie naraz do kolumny Location. Użyj **skrótów klawiszowych** swojego systemu lub przycisku **Paste proxies**. Nowe proxy będziesz mógł później rozdzielić między profile.
 
 <Frame>
-  ![Adding Proxy](/images/adding_proxy-1.gif)
+  ![Dodawanie proxy](/images/adding_proxy-1.gif)
 </Frame>
 
 ## Inne sposoby dodawania jednego lub wielu proxy
@@ -43,7 +45,7 @@ Na tej samej stronie możesz wklejać proxy pojedynczo lub hurtowo. Skopiuj kilk
 Przejdź do strony **Proxies** w menu po lewej stronie \> **Import proxies** \> wklej proxy i kliknij **Import proxies**.
 
 <Frame>
-  ![Import Proxies Page](/images/import_proxies_page.gif)
+  ![Strona importu proxy](/images/import_proxies_page.gif)
 </Frame>
 
 ### Za pomocą zbiorczego zaznaczania profili
@@ -51,13 +53,27 @@ Przejdź do strony **Proxies** w menu po lewej stronie \> **Import proxies** \> 
 **Zaznacz kilka profili przeglądarki** \> kliknij **Proxy** w wierszu akcji zbiorczych \> **wpisz proxy** w nowym oknie \> kliknij **Update proxy.**
 
 <Frame>
-  ![Bulk Proxy Update](/images/bulk_proxy_update.gif)
+  ![Zbiorcza aktualizacja proxy](/images/bulk_proxy_update.gif)
 </Frame>
 
 ### W ustawieniach profilu
 
-Kliknij **3 kropki przy profilu** \> **Settings** \> **Proxy** \> **Your proxy**
+Kliknij **trzy kropki przy profilu** \> **Settings** \> **Proxy** \> **Your proxy**
 
 <Frame>
-  ![Proxy Profile Settings](/images/proxy_profile_settings.gif)
+  ![Ustawienia proxy w profilu](/images/proxy_profile_settings.gif)
 </Frame>
+
+## Zmiana IP za pomocą linku do zmiany IP
+
+Niektórzy zewnętrzni dostawcy, zwykle rotujących mobilnych proxy, udostępniają link, który zmienia adres IP proxy. Jeśli Twój dostawca daje taki link, dodaj go do ustawień proxy (formaty znajdziesz na początku tej strony). Następnie najedź kursorem na proxy w kolumnie **Proxy & Location** i kliknij **Change IP**.
+
+Proxy Gologin nie obsługują zmiany IP za pomocą linku.
+
+## Szybka naprawa proxy, które nie działa
+
+Jeśli zewnętrzne proxy nie przejdzie sprawdzenia podczas uruchamiania profilu, Gologin wyświetli komunikat **Proxy doesn't work** z przyciskiem **Quick fix**. Kliknij **Quick fix**, aby zastąpić swoje proxy proxy Gologin z tego samego kraju – dzięki temu profil będzie mógł działać. Proxy Gologin zużywają Twój transfer proxy, więc musisz mieć dostępny transfer.
+
+![Szybka naprawa proxy](/images/proxy_quick_fix.png "Szybka naprawa proxy")
+
+Jeśli chcesz nadal używać własnego proxy, kliknij **Not now**, a następnie napraw lub wymień proxy.

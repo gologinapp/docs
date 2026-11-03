@@ -3,10 +3,10 @@ title: "Premiers pas"
 keywords: ["cloud browser", "headless browser"]
 ---
 
-Gologin Cloud Browser vous permet d'exécuter une session de navigateur **dans le cloud** et de la piloter depuis votre outil d'automatisation (Puppeteer / Playwright) à l'aide d'une simple **URL de connexion**.
+Gologin Cloud Browser vous permet d'exécuter une session de navigateur **dans le cloud** et de la piloter depuis votre outil d'automatisation (Puppeteer / Playwright) à l'aide d'une seule **URL de connexion**.
 
 <Tip>
-  **Vous préférez une CLI ?** Utilisez la [Gologin Agent Browser CLI](/fr/cli-tools/agent-browser) pour contrôler Cloud Browser depuis le terminal sans écrire de code. Elle est conçue pour les agents IA, avec des snapshots, des références et un daemon persistant.
+  **Vous préférez une CLI ?** Utilisez la [Gologin Agent Browser CLI](/fr/cli-tools/agent-browser) pour piloter Cloud Browser depuis le shell sans écrire de code. Elle est conçue pour les agents IA, avec des snapshots, des références et un daemon persistant.
 </Tip>
 
 ## URL de connexion
@@ -19,20 +19,20 @@ https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}
 
 - `token` : votre **jeton de développeur** Gologin.
 - `profile` : **ID de profil** (facultatif) :
-  - s'il est renseigné, Gologin exécutera ce profil dans le cloud ;
+  - s'il est fourni, Gologin exécutera ce profil dans le cloud ;
   - s'il est omis, Gologin créera un nouveau profil pour la session.
 
-> Remarque : cette URL est utilisée comme **point de connexion WebSocket** par les bibliothèques d'automatisation (par exemple `browserWSEndpoint` dans Puppeteer).\
-> Générez votre jeton dans le tableau de bord Gologin : `Espace personnel → Jeton API`.
+> Remarque : cette URL est utilisée comme **point de terminaison de connexion WebSocket** par les bibliothèques d'automatisation (par exemple `browserWSEndpoint` dans Puppeteer).\
+> Créez votre jeton dans l'application Gologin : [API & MCP](https://app.gologin.com/personalArea/TokenApi) → **API** → **Nouveau jeton**.
 
 <Frame>
   ![Capture d'écran du 5 mars à 14:27:28](/images/ScreenshotatMar0514-27-28.png)
 </Frame>
 
-## Gérer les profils (proxy, empreinte, etc.)
+## Gestion des profils (proxy, empreinte, etc.)
 
 Cloud Browser n'est que la **couche de connexion** (session de navigateur distante).\
-Pour **créer ou modifier des profils**, associer des **proxys**, configurer l'**empreinte**, les étiquettes et les autres paramètres de profil, utilisez l'**API REST** de Gologin :
+Pour **créer ou mettre à jour des profils**, associer des **proxys**, configurer l'**empreinte**, les tags et les autres paramètres de profil, utilisez l'**API REST** de Gologin :
 
 - API des profils : https://gologin.com/docs/api-reference/profile
 - API des proxys : https://gologin.com/docs/api-reference/proxy

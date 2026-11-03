@@ -1,34 +1,34 @@
 ---
-title: "Giải pháp Scraping"
+title: "Giải pháp thu thập dữ liệu"
 ---
 
 ## Tổng quan
 
-Gologin Cloud Browser có thể được dùng như một trình duyệt từ xa được quản lý cho các quy trình scraping và trích xuất dữ liệu. Mã tự động hóa của bạn (Puppeteer) kết nối với một phiên trình duyệt từ xa thông qua endpoint WebSocket, sau đó chạy logic điều hướng và trích xuất dữ liệu thông thường.
+Gologin Cloud Browser có thể được dùng như một trình duyệt từ xa được quản lý cho các quy trình thu thập và trích xuất dữ liệu. Mã tự động hóa của bạn (Puppeteer) kết nối với một phiên trình duyệt từ xa thông qua endpoint WebSocket, sau đó chạy logic điều hướng và trích xuất dữ liệu theo cách thông thường.
 
-Cloud Browser là lớp kết nối/thực thi; các thiết lập hồ sơ/proxy được quản lý qua REST API. Cách thiết lập này có thể giảm chi phí hạ tầng và giúp hạn chế những trở ngại khi scraping, nhưng kết quả còn phụ thuộc vào hành vi và cơ chế kiểm soát của trang web mục tiêu.
+Cloud Browser là lớp kết nối/thực thi; các thiết lập profile/proxy được quản lý qua REST API. Cách thiết lập này có thể giảm chi phí hạ tầng và giúp hạn chế các trở ngại khi thu thập dữ liệu, nhưng kết quả còn phụ thuộc vào hành vi và các cơ chế kiểm soát của trang web đích.
 
 ## Bạn nhận được gì
 
-- Các phiên trình duyệt từ xa cho kết nối Puppeteer.
+- Các phiên trình duyệt từ xa dành cho kết nối Puppeteer.
 - Hiển thị JavaScript cho các trang động.
 - Mở rộng quy mô mà không cần tự vận hành hạ tầng trình duyệt.
-- Cấu hình hồ sơ và proxy được quản lý qua API.
-- Một endpoint kết nối chuẩn duy nhất để khởi động phiên.
+- Cấu hình profile và proxy được quản lý qua API.
+- Một endpoint kết nối chuẩn duy nhất để khởi tạo phiên.
 
 ## Quy trình thông thường
 
-1. Tạo token API.
-2. Tùy chọn tạo/cấu hình hồ sơ (và proxy) qua REST API.
+1. Tạo mã thông báo API.
+2. Tùy chọn tạo/cấu hình một profile (và proxy) qua REST API.
 3. Tạo URL kết nối với `token` và `profile` (không bắt buộc).
-4. Kết nối từ Puppeteer/Playwright và chạy trích xuất dữ liệu.
+4. Kết nối từ Puppeteer/Playwright và chạy quá trình trích xuất dữ liệu.
 5. Lưu kết quả đầu ra và đóng phiên trình duyệt.
 
 ## Điều kiện tiên quyết
 
-- Tạo token: https://app.gologin.com/personalArea/TokenApi
-- Profiles API (khuyến nghị để kiểm soát cấu hình): https://gologin.com/docs/api-reference/profile
-- Proxy API: https://gologin.com/docs/api-reference/proxy
+- Tạo mã thông báo: trong ứng dụng Gologin, mở [API & MCP](https://app.gologin.com/personalArea/TokenApi) → **API** → **Mã thông báo mới**
+- Profiles API (khuyến nghị để kiểm soát cấu hình): [Tạo profile](https://gologin.com/docs/api-reference/profile/create-profile-with-partial-parameters), [Cập nhật profile](https://gologin.com/docs/api-reference/profile/update-profile-with-partial-parameters)
+- Proxy API: [Thêm proxy Gologin vào profile](https://gologin.com/docs/api-reference/proxy/create-gologin-high-quality-proxy), [Đặt proxy của riêng bạn cho các profile](https://gologin.com/docs/api-reference/profile/update-proxy-for-multiple-profiles)
 
 ## Endpoint kết nối chuẩn
 
@@ -38,7 +38,7 @@ https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}
 
 - `token` là bắt buộc.
 - `profile` là không bắt buộc.
-- Nếu bỏ qua `profile`, một hồ sơ mới sẽ được tạo cho phiên.
+- Nếu bỏ qua `profile`, một profile mới sẽ được tạo cho phiên.
 
 ## Ví dụ Puppeteer tối giản
 
@@ -49,7 +49,7 @@ const puppeteer = require('puppeteer-core');
 
 
   const token = 'your_token_here';
-  const profileId = 'your_profile_id'; // Remove this line if you want to create a new profile
+  const profileId = 'your_profile_id'; // Set to '' to create a new profile for this session
   const cloudBrowserUrl = `https://cloudbrowser.gologin.com/connect?token=${token}${profileId ? `&profile=${profileId}` : ''}`;
   const browser = await puppeteer.connect({
   
@@ -71,17 +71,17 @@ const puppeteer = require('puppeteer-core');
 ## Các bước tiếp theo
 
 - Bắt đầu với Cloud Browser: https://gologin.com/docs/api-reference/cloud-browser/getting-started
-- Profiles API: https://gologin.com/docs/api-reference/profile
-- Proxy API: https://gologin.com/docs/api-reference/proxy
+- Profiles API: [Lấy tất cả profile](https://gologin.com/docs/api-reference/profile/get-all-profiles), [Tạo profile](https://gologin.com/docs/api-reference/profile/create-profile-with-partial-parameters)
+- Proxy API: [Thêm proxy Gologin vào profile](https://gologin.com/docs/api-reference/proxy/create-gologin-high-quality-proxy), [Lấy danh sách tất cả proxy](https://gologin.com/docs/api-reference/proxy/get-list-of-all-proxies)
 
-## Thực hành tốt nhất
+## Các phương pháp hay nhất
 
-- Ưu tiên dùng chờ tường minh thay vì thời gian chờ cố định.
-- Triển khai logic thử lại với backoff có giới hạn và jitter.
+- Ưu tiên chờ có điều kiện rõ ràng thay vì dùng thời gian chờ cố định.
+- Triển khai logic thử lại với độ trễ tăng dần có giới hạn và độ ngẫu nhiên (jitter).
 - Lưu kết quả trích xuất có cấu trúc (URL, các trường dữ liệu, dấu thời gian, trạng thái).
-- Cấu hình hồ sơ/proxy trước khi kết nối để đảm bảo khả năng tái lập.
+- Cấu hình profile/proxy trước khi kết nối để có thể tái lập kết quả.
 - Luôn đóng phiên và xử lý dọn dẹp khi xảy ra lỗi.
-- Điều chỉnh hành vi yêu cầu/phiên theo các ràng buộc của từng trang web mục tiêu.
+- Điều chỉnh hành vi yêu cầu/phiên theo các giới hạn của từng trang web đích.
 
 ## Giới hạn và hạn mức
 
@@ -89,14 +89,14 @@ Xem các giới hạn và hạn mức hiện tại: https://gologin.com/docs/api
 
 ## Câu hỏi thường gặp
 
-### Tôi có cần hồ sơ không?
+### Tôi có cần dùng profile không?
 
-Không. Tham số `profile` là không bắt buộc. Nếu bỏ qua, một hồ sơ mới sẽ được tạo cho phiên. Hãy dùng hồ sơ khi bạn cần cấu hình được kiểm soát và có thể lặp lại.
+Không. Tham số `profile` là không bắt buộc. Nếu bỏ qua, một profile mới sẽ được tạo cho phiên. Hãy dùng profile khi bạn cần cấu hình được kiểm soát và có thể lặp lại.
 
 ### Tôi cấu hình proxy ở đâu?
 
-Hãy cấu hình proxy thông qua Proxy API (và các thiết lập hồ sơ liên quan qua REST API): https://gologin.com/docs/api-reference/proxy
+Hãy cấu hình proxy thông qua REST API: [thêm proxy Gologin vào profile](https://gologin.com/docs/api-reference/proxy/create-gologin-high-quality-proxy) hoặc [đặt proxy của riêng bạn cho các profile](https://gologin.com/docs/api-reference/profile/update-proxy-for-multiple-profiles).
 
 ### Giải pháp này có khác với Cloud Browser không?
 
-Không. Đây là trang hướng dẫn sử dụng Cloud Browser cho scraping/trích xuất dữ liệu. Cloud Browser đảm nhiệm việc kết nối/thực thi, còn các thiết lập hồ sơ/proxy được quản lý qua REST API.
+Không. Đây là trang hướng dẫn sử dụng Cloud Browser cho việc thu thập/trích xuất dữ liệu. Cloud Browser đảm nhiệm việc kết nối/thực thi, còn các thiết lập profile/proxy được quản lý qua REST API.

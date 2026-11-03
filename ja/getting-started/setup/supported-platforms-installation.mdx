@@ -3,16 +3,16 @@ title: "対応プラットフォームとインストール"
 description: "Gologinのシステム要件とインストール手順"
 ---
 
-以下のリンクから、対応しているあらゆるシステム向けのGologinアプリをダウンロードできます。
+以下のリンクから、対応しているすべてのシステム向けのGologinアプリをダウンロードできます。
 
 👉 [**Gologinをダウンロード**](https://gologin.com/download/)
 
 ## ハードウェア要件
 
-- **RAM:** 最小4GB
-- **空きディスク容量:** 1 GB以上
+- **RAM:** 最低4GB
+- **ディスクの空き容量:** 1 GB以上
 
-## 対応オペレーティングシステム
+## 対応OS
 
 ### **Windows**
 
@@ -24,10 +24,10 @@ description: "Gologinのシステム要件とインストール手順"
 
 - macOS 27 Golden Gate
 - macOS 26 Tahoe
-- macOS 15 Sequoia **(ブラウザバージョン122以降)**
+- macOS 15 Sequoia（ブラウザバージョン122以降）
 - macOS 14 Sonoma
 - macOS 13 Ventura
-- macOS 12 Monterey
+- macOS 12 Monterey（ブラウザバージョン150以前）
 
 ### Linux
 
@@ -48,45 +48,45 @@ description: "Gologinのシステム要件とインストール手順"
 ### Windows
 
 1. [こちら](https://gologin.com/download/)からアプリのインストーラーをダウンロードします
-2. **ダウンロード**フォルダーを開きます
+2. **ダウンロード**フォルダを開きます
 3. ダウンロードしたファイルをダブルクリックし、画面の指示に従ってインストールします
 
 ### Mac OS
 
 1. [こちら](https://gologin.com/download/)からアプリのインストーラーをダウンロードします
-2. **ダウンロード**フォルダーを開きます
+2. **ダウンロード**フォルダを開きます
 3. ファイルをダブルクリックし、画面の指示に従います
 
 ### Linux（Ubuntuの例）
 
-Linux版のGologinは**AppImage**ファイルとして提供されます。これは、従来のインストールを必要としない、自己完結型の実行ファイルです。このファイルを使って、いつでもアプリを起動できます。
+Linux版Gologinは`.tar`アーカイブとして提供されます。アーカイブ内のアプリは単体で動作するため、従来のようなインストールは不要です。アーカイブを展開し、展開したフォルダからGologinを起動してください。
 
-1. この[リンク](https://gologin.com/download)からAppImageファイルをダウンロードします
-2. **ダウンロード**フォルダーを開きます
+1. この[リンク](https://gologin.com/download)からアーカイブをダウンロードします
+2. **ダウンロード**フォルダを開きます
 3. `gologin.tar`を右クリックし、\> **展開**を選択します
-4. **gologin**フォルダーを開き \> ダブルクリックでGologinを起動します
+4. **gologin**フォルダを開き、Gologinをダブルクリックして起動します
 
 **アプリが開かない場合**
 
-- システムがアプリをテキストファイルとして認識する場合は、ターミナルから--no-sandboxパラメータを付けて一度起動してください
+- システムがアプリをテキストファイルとして認識している場合は、ターミナルから--no-sandboxパラメータを付けて一度起動してください
   ```bash bash
   cd ~/Downloads/gologin
   ./<filename> --no-sandbox
   ```
-- ファイルに実行権限を付与する必要がある場合があります。ターミナルに次のコマンドを貼り付けてください。
+- ファイルに実行権限を付与する必要がある場合があります。ターミナルに次のコマンドを貼り付けてください:
   ```bash bash
   cd ~/Downloads/gologin
   chmod +x <filename>
   ```
   `<filename>`は実際のファイル名に置き換えてください
-- 新しいシステムでは**libfuse2**パッケージが必要になる場合があります。ターミナルに次のコマンドを貼り付けてから、もう一度アプリを起動してください。
+- 新しいシステムでは、**libfuse2**パッケージが必要になる場合があります。ターミナルに次のコマンドを貼り付けて、もう一度アプリを起動してみてください。
   ```bash bash
     sudo apt install libfuse2
   ```
 
 **実行をクリックしてもプロファイルが起動しない場合**
 
-- ターミナルを開き、ブラウザのフォルダー（例: Orbita 145バージョン）に移動します
+- ターミナルを開き、ブラウザのフォルダ（例: Orbita 145バージョン）に移動します
 - **chrome-sandbox**に新しい権限を設定します
   ```bash bash
   cd ~/.gologin/browser/orbita-browser-145
@@ -96,25 +96,25 @@ Linux版のGologinは**AppImage**ファイルとして提供されます。こ�
 
 ### Android
 
-AndroidでGologinを使用するには、**Google Playストア**から**Gologinアプリ**をインストールするだけです。
+AndroidでGologinを使うには、**Google Playストア**から**Gologinアプリ**をインストールするだけです。
 
 1. スマートフォンで**Google Playストア**を開きます
-2. 上部の検索バーに**Gologin**と入力し \> **アプリをインストール**します
+2. 上部の検索バーに**Gologin**と入力し、\> **アプリをインストール**します
 
-アプリのインストールが完了すれば、内蔵ブラウザをすぐに使用できます。
+アプリをインストールしたら、内蔵のブラウザですぐに使い始められます。
 
 ## 非対応の環境
 
-Gologinは以下のプラットフォームには**対応していません**。
+Gologinは、以下のプラットフォームには対応して**いません**:
 
 - すべての32ビットシステム
-- Windows 7、8、8.1、Server 2012（すべてのリビジョン）またはそれ以前のバージョン
-- macOS El Captain、Sierra、High-Sierra、Mojave、Catalina、Big Surまたはそれ以前のバージョン
-- Chrome OS（[Gologin Web](/ja/gologin-web-overview)版を使用できます）
+- Windows 7、8、8.1、Server 2012（すべてのリビジョン）またはそれ以前
+- macOS El Captain、Sierra、High-Sierra、Mojave、Catalina、Big Sur またはそれ以前
+- Chrome OS（[Gologin web](/ja/gologin-web-overview)版を利用できます）
 
 ## 関連ページ
 
 - [初回チェックリスト](https://gologin.com/docs/getting-started/setup/first-time-checklist)
-- [Gologin Web、Chrome OS](https://gologin.com/docs/general/gologin-web-and-mobile)
-- [主要な概念](https://gologin.com/docs/getting-started/introduction/key-concepts-profiles-fingerprints-proxies)
-- [Gologinアプリの更新](https://gologin.com/docs/general/updating-the-gologin-app)
+- [Gologin Web、Chrome OS](/ja/general/gologin-web-and-chrome-os)
+- [基本概念](https://gologin.com/docs/getting-started/introduction/key-concepts-profiles-fingerprints-proxies)
+- [Gologinアプリのアップデート](https://gologin.com/docs/general/updating-the-gologin-app)

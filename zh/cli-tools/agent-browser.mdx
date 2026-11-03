@@ -1,31 +1,32 @@
 ---
 title: "Gologin Agent Browser CLI"
-description: "专为 AI 智能体打造的云浏览器自动化 CLI，支持快照、引用（ref）和常驻守护进程"
+description: "面向 AI 智能体的浏览器自动化 CLI，可在 Cloud Browser 或本地 Orbita 中运行 Gologin 配置文件，支持快照、引用和持久化守护进程"
 ---
 
-Gologin Agent Browser CLI 将 Gologin Cloud Browser 变成适用于 AI 智能体的持久化、可脚本化运行环境。它提供精简的页面快照、基于 ref 的交互、会话记忆以及便于 Shell 使用的输出。
+Gologin Agent Browser CLI 将 Gologin 浏览器配置文件变成可供 AI 智能体使用的持久化、可脚本化运行环境。会话可以在 Gologin Cloud Browser 中运行，也可以在你自己机器上的 Orbita 中运行。它提供精简的页面快照、基于引用的交互、会话记忆，以及便于在 shell 中处理的输出。
 
-与从零开始编写 Puppeteer/Playwright 代码不同，这个 CLI 为智能体提供了一套现成的浏览器自动化命令，无需样板代码，也无需编写会话管理代码。
+与从零开始编写 Puppeteer/Playwright 代码不同，这个 CLI 为智能体提供了现成的浏览器自动化命令集，无需样板代码，也无需编写会话管理代码。
 
 ---
 
-## 为什么选择云浏览器
+## 云端或本地运行环境
 
-本地浏览器自动化在智能体工作流中存在明显的局限：
+CLI 有两种运行环境，命令完全相同。两者都使用 Gologin 配置文件、指纹和代理，并且由守护进程在多次 CLI 调用之间保持会话存活。
 
-- 本地浏览器更容易被检测
-- 没有基于配置文件的指纹
-- 没有持久化的云端浏览器配置文件
-- 没有内置的代理层
-- 难以在不同智能体和环境之间实现标准化
+| | `cloud`（默认） | `local` |
+|---|---|---|
+| 浏览器运行位置 | Gologin Cloud Browser | 你机器上的 Orbita |
+| 配置文件 ID | 可选：不提供时会创建临时云端配置文件 | 必填 |
+| 适用场景 | 并行会话、远程会话、不适合运行浏览器的机器 | 配置文件养号预热、首次登录、本地 Cookie 和配置文件状态、与你的操作系统保持一致 |
 
-Agent Browser CLI 采用了相反的思路：
+可以通过 `--runtime cloud|local|auto` 为每条命令选择运行环境，也可以一次性设置 `GOLOGIN_AGENT_BROWSER_RUNTIME`：
 
-- 使用云浏览器运行环境，而不是本地进程
-- 以 Gologin 配置文件作为会话身份层
-- 支持代理的会话
-- 继承 Gologin 的反检测能力
-- 常驻守护进程可在多次 CLI 调用之间保持会话不中断
+```bash
+gologin-agent-browser open https://example.com
+gologin-agent-browser open https://example.com --runtime local --profile your_profile_id
+```
+
+默认情况下（`auto`），配置文件、runbook 和任务相关命令在本地运行，其余命令在云端运行。打开本地会话后，后续命令也需要传入 `--runtime local`。有关要求和仅限本地的命令，请参阅[本地运行环境](/zh/cli-tools/local-agent-browser)。
 
 ---
 
@@ -35,24 +36,26 @@ Agent Browser CLI 采用了相反的思路：
 npm install -g gologin-agent-browser-cli
 ```
 
-或者无需全局安装，直接运行：
+或者无需全局安装直接运行：
 
 ```bash
 npx gologin-agent-browser-cli --help
 ```
 
-需要 Node.js >= 18。
+需要 Node.js >= 18。本地运行环境需要 Node.js 20 或更高版本。
 
 ---
 
 ## 凭据
 
-| 变量 | 是否必需 | 说明 |
+| 变量 | 是否必填 | 说明 |
 |---|---|---|
-| `GOLOGIN_TOKEN` | 是（用于 `open`） | Gologin API 令牌 |
+| `GOLOGIN_TOKEN` | 是（用于 `open` 和 API 命令） | Gologin API 令牌 |
 | `GOLOGIN_PROFILE_ID` | 可选 | 默认配置文件 ID |
-| `GOLOGIN_DAEMON_PORT` | 可选 | 守护进程端口（默认：`44777`） |
-| `GOLOGIN_CONNECT_BASE` | 可选 | Cloud Browser 端点 |
+| `GOLOGIN_AGENT_BROWSER_RUNTIME` | 可选 | 默认运行环境：`cloud`、`local` 或 `auto` |
+| `GOLOGIN_DAEMON_PORT` | 可选 | 守护进程端口（默认：云端为 `44777`，本地为 `44778`） |
+| `GOLOGIN_CONNECT_BASE` | 可选 | Cloud Browser 端点（默认：`https://cloudbrowser.gologin.com/connect`） |
+| `GOLOGIN_EXECUTABLE_PATH` | 可选 | 本地运行环境使用的 Orbita 可执行文件路径 |
 
 ### 获取令牌
 
@@ -76,20 +79,20 @@ export GOLOGIN_TOKEN='your_gologin_token'
 
 由两部分组成：
 
-1. **`gologin-agent-browser` CLI**：解析命令，自动启动守护进程，输出精简结果
-2. **常驻本地守护进程**：管理运行中的浏览器会话，通过 Playwright 的 `connectOverCDP` 连接到 Gologin Cloud Browser，在内存中保存当前活动页面，生成快照，解析 ref，并跟踪会话元数据
+1. **`gologin-agent-browser` CLI**：解析命令、选择运行环境、自动启动对应的守护进程，并输出精简结果
+2. **持久化本地守护进程**（每种运行环境一个）：持有运行中的浏览器会话，通过 Playwright `connectOverCDP` 连接到 Gologin Cloud Browser 或本地 Orbita，在内存中保留当前活动页面，生成快照、解析引用，并跟踪会话元数据
 
-传输方式仅限本地：
-- Unix socket，位于 `${TMPDIR:-/tmp}/gologin-agent-browser.sock`
-- 本地主机 HTTP，地址为 `127.0.0.1:${GOLOGIN_DAEMON_PORT:-44777}`
+传输仅限本地。云端守护进程监听：
+- 位于 `${TMPDIR:-/tmp}/gologin-agent-browser.sock` 的 Unix 套接字
+- 位于 `127.0.0.1:${GOLOGIN_DAEMON_PORT:-44777}` 的本地主机 HTTP
 
-如果不提供配置文件 ID，守护进程会通过 API 创建一个临时的 Gologin 云端配置文件。
+在云端运行环境中，如果你没有提供配置文件 ID，守护进程会通过 API 创建一个临时的 Gologin 云端配置文件。
 
 ---
 
-## ref 的工作方式
+## 引用的工作方式
 
-`snapshot` 会输出精简的页面视图，并为可交互元素分配 `@e1`、`@e2`、`@e3` 这样的 ref。你可以直接对它们进行操作：
+`snapshot` 会输出精简的页面视图，并为可交互元素分配 `@e1`、`@e2`、`@e3` 这样的引用。你可以直接对它们进行操作：
 
 ```bash
 gologin-agent-browser snapshot
@@ -100,7 +103,12 @@ gologin-agent-browser type @e5 "search query"
 gologin-agent-browser fill @e7 "username"
 ```
 
-ref 为尽力而为（best-effort）的机制，在页面导航或 DOM 发生重大变化后应重新生成。在动态页面上，通常使用 `find` 比使用已失效的 ref 更可靠。
+引用只是尽力而为，在页面跳转或 DOM 发生较大变化后应重新生成。命令也接受 CSS 选择器来代替引用。在动态页面上，`find` 通常比过期的引用更可靠：它会在实时页面上定位元素，并一步完成操作。
+
+```bash
+gologin-agent-browser find label "Email" fill "user@example.com"
+gologin-agent-browser find role button click --name "Submit"
+```
 
 ---
 
@@ -150,22 +158,22 @@ gologin-agent-browser close
 
 | 命令 | 说明 |
 |---|---|
-| `doctor` | 检查守护进程的运行状况和连接情况 |
+| `doctor` | 检查守护进程的健康状况和连接性 |
 
 ### 会话管理
 
 | 命令 | 说明 |
 |---|---|
-| `open <url>` | 在云浏览器会话中打开 URL |
-| `close` | 关闭当前会话 |
-| `sessions` | 列出活动会话 |
+| `open <url>` | 在浏览器会话中打开 URL |
+| `close` | 关闭当前会话（`--all` 会关闭此守护进程的所有会话） |
+| `sessions` | 列出活动会话（`--prune` 会移除失效会话） |
 | `current` | 显示当前会话信息 |
 
 ### 页面读取
 
 | 命令 | 说明 |
 |---|---|
-| `snapshot` | 带元素 ref 的精简文本快照 |
+| `snapshot` | 带元素引用的精简文本快照 |
 | `screenshot <path>` | 保存页面截图 |
 | `pdf <path>` | 将页面保存为 PDF |
 | `get <kind> [target]` | 获取页面属性 |
@@ -182,7 +190,7 @@ gologin-agent-browser close
 | `select <ref> <value>` | 选择下拉菜单的值 |
 | `check <ref>` / `uncheck <ref>` | 切换复选框 |
 | `focus <ref>` | 聚焦元素 |
-| `find ...` | 语义化元素搜索 |
+| `find <by> <locator> <action> [value]` | 通过 `role`、`text`、`label`、`placeholder`、`first`、`last` 或 `nth` 查找元素，并对其执行 `click`、`fill`、`type` 或 `hover`，或读取其 `text` |
 
 ### 键盘与滚动
 
@@ -228,6 +236,33 @@ gologin-agent-browser close
 | `eval <expression>` | 在页面中执行 JavaScript |
 | `upload <ref> <file...>` | 上传文件 |
 
+### 配置文件、代理和 Gologin API
+
+这些命令使用你的令牌调用 Gologin API，不需要浏览器守护进程。
+
+| 命令 | 说明 |
+|---|---|
+| `api <METHOD> <path>` | 调用任意 Gologin REST API 端点 |
+| `browser <action>` | 配置文件：列出、获取、创建、更新、删除、Cookie、代理、云端启动和停止、导入和导出 |
+| `proxy <action>` | 代理：列出、添加 Gologin 代理、更新、删除、流量 |
+| `workspace`, `folder`, `share`, `template` | 工作区和成员、文件夹、共享、配置文件模板 |
+| `user`, `deleted-profile` | 账户信息和开发者令牌、恢复已删除的配置文件 |
+| `cloud-usage` | 某个配置文件或工作区的 Cloud Browser 使用情况 |
+| `profile-cloud`, `profile-cookies`, `profile-fingerprint`, `profile-proxy`, `profile-ua` | 快捷命令：在云端启动或停止配置文件、导出或导入其 Cookie、刷新其指纹、添加代理、更新其 User Agent |
+
+```bash
+gologin-agent-browser browser list --page 1
+gologin-agent-browser proxy add-gologin your_profile_id --country us --type residential
+gologin-agent-browser cloud-usage --profile your_profile_id
+gologin-agent-browser api GET /browser/your_profile_id
+```
+
+在任意命令后添加 `--help` 可输出其用法。
+
+### 仅限本地运行环境
+
+`profiles`、`profile`、`profile-create`、`profile-update`、`profile-import`、`profile-sync`、`profile-delete`、`run`、`batch`、`jobs` 和 `job` 用于管理本地配置文件、runbook 和任务历史。请参阅[本地运行环境](/zh/cli-tools/local-agent-browser#profile-commands)。
+
 ### 别名
 
 | 别名 | 对应命令 |
@@ -254,7 +289,7 @@ gologin-agent-browser screenshot ./iphey-result.png
 gologin-agent-browser close
 ```
 
-### 登录 Web 应用并提取仪表盘数据
+### 登录网页应用并提取仪表板数据
 
 ```bash
 gologin-agent-browser open https://app.example.com/login
@@ -312,15 +347,14 @@ for profile in us_profile de_profile jp_profile; do
 done
 ```
 
-### 在阻止抓取的网站上搜索
+### 在屏蔽抓取的网站上搜索
 
-有些网站需要先执行 JavaScript、登录或进行交互，才会显示结果。可以使用浏览器进行搜索：
+有些网站需要先执行 JavaScript、登录或进行交互才会显示结果。可以使用浏览器进行搜索：
 
 ```bash
 gologin-agent-browser open https://protected-directory.com
 gologin-agent-browser snapshot
-gologin-agent-browser find "search input"
-gologin-agent-browser type @found "machine learning engineer San Francisco"
+gologin-agent-browser find placeholder "Search" fill "machine learning engineer San Francisco"
 gologin-agent-browser press Enter
 gologin-agent-browser wait 3000
 gologin-agent-browser snapshot     # agent reads search results
@@ -330,7 +364,7 @@ gologin-agent-browser close
 
 ### 保存和恢复会话状态
 
-导出 Cookie 和存储数据，以便在不同会话中重复使用：
+导出 Cookie 和存储数据，以便在不同会话中复用：
 
 ```bash
 # after logging in
@@ -350,23 +384,24 @@ gologin-agent-browser snapshot     # already logged in
 
 ## 并行会话
 
-对于相互独立的云端任务，请使用显式的 `--session` ID。可使用 `close --all` 或 `sessions --prune --older-than-ms` 进行清理。
+对于相互独立的云端任务，请使用明确的 `--session` ID。使用 `close --all` 或 `sessions --prune --older-than-ms` 进行清理。
 
 ---
 
 ## 代理规则
 
-- 预先配置的配置文件：代理通过 Gologin 控制台或 API 设置在配置文件上
-- 临时配置文件：支持不使用代理，或使用自定义代理主机/端口
-- `--proxy-country` 仅适用于预先配置的配置文件
+- 预先配置的配置文件：代理通过 Gologin 控制台或 API 设置在配置文件上，例如 `proxy add-gologin <profileId> --country us`
+- 临时云端配置文件：不使用代理，或使用你自己的代理，通过 `--proxy-host` 和 `--proxy-port` 设置（另可使用 `--proxy-mode http|socks4|socks5`、`--proxy-user`、`--proxy-pass`）
+- 在云端运行环境中，`open` 不接受 `--proxy-country`。如需使用某个国家的 Gologin 代理流量，请先为配置文件添加 Gologin 代理，然后使用 `--profile` 打开该配置文件
+- 在本地运行环境中，`open`、`profile-create` 和 `profile-update` 接受 `--proxy-country`
 
 ---
 
 ## 相关内容
 
 - [Gologin Web Access CLI](/zh/cli-tools/web-access)：统一 CLI（抓取 + 浏览器）
-- [Local Agent Browser CLI](/zh/cli-tools/local-agent-browser)：基于本地 Orbita 的替代方案
-- [Cloud Browser 入门](/zh/api-reference/cloud-browser/getting-started)：Puppeteer/Playwright 示例
+- [本地运行环境](/zh/cli-tools/local-agent-browser)：使用此 CLI 运行本地 Orbita 配置文件
+- [Cloud Browser 快速入门](/zh/api-reference/cloud-browser/getting-started)：Puppeteer/Playwright 示例
 - [AI Skills](/zh/api-reference/ai-integrations/ai-skills)：适用于 Claude Code 的即插即用技能
 
 <Card title="npm 包" icon="npm" href="https://www.npmjs.com/package/gologin-agent-browser-cli">

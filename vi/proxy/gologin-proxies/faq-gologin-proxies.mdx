@@ -11,7 +11,7 @@ description: "Các câu hỏi thường gặp về proxy của Gologin"
 
 ### Tôi cần bao nhiêu lưu lượng?
 
-Lượng lưu lượng cần thiết phụ thuộc vào cách bạn sử dụng. Nó chủ yếu thay đổi theo:
+Lượng lưu lượng cần thiết phụ thuộc vào cách bạn sử dụng. Con số này chủ yếu thay đổi dựa trên:
 
 - Tần suất bạn sử dụng các hồ sơ trình duyệt
 - Thời lượng mỗi phiên làm việc
@@ -19,39 +19,55 @@ Lượng lưu lượng cần thiết phụ thuộc vào cách bạn sử dụng.
 
 ### Điều gì xảy ra khi tôi dùng hết lưu lượng proxy? Tôi có bị phát hiện không?
 
-Nếu lưu lượng hết trong lúc đang sử dụng, Gologin sẽ ngắt kết nối internet của các hồ sơ và bạn sẽ không thể sử dụng chúng cho đến khi nạp thêm lưu lượng hoặc chuyển sang proxy của bên thứ ba. Bạn vẫn có thể đóng các hồ sơ mà không bị mất dữ liệu, vì việc đồng bộ hồ sơ không tiêu tốn lưu lượng proxy.
+Nếu lưu lượng hết giữa chừng khi đang sử dụng, Gologin sẽ ngắt kết nối internet của các hồ sơ và bạn sẽ không thể dùng chúng cho đến khi nạp thêm lưu lượng hoặc chuyển sang proxy của bên thứ ba. Bạn vẫn có thể đóng các hồ sơ mà không bị mất dữ liệu, vì quá trình đồng bộ hồ sơ không tiêu tốn lưu lượng proxy.
 
-### Nếu tôi dùng proxy của bên thứ ba, tôi có bị tính lưu lượng proxy của Gologin không?
+### Nếu tôi dùng proxy của bên thứ ba, tôi có bị tốn lưu lượng proxy của Gologin không?
 
-Tất nhiên là không! Bạn chỉ tốn lưu lượng proxy của Gologin khi sử dụng proxy do chúng tôi cung cấp.
+Hoàn toàn không! Bạn chỉ tốn lưu lượng proxy của Gologin khi sử dụng proxy của chúng tôi.
 
 ### Tôi có được tặng lưu lượng proxy Gologin dùng thử sau khi đăng ký gói dùng thử không?
 
-Hiện tại, Gologin không tặng lưu lượng dùng thử cho người dùng mới đăng ký. Bạn luôn có thể mua một ít lưu lượng để xem proxy của Gologin có phù hợp với nhu cầu của mình hay không.
+Hiện tại, Gologin không tặng lưu lượng dùng thử cho người dùng mới đăng ký. Bạn luôn có thể mua một ít lưu lượng và trải nghiệm xem proxy của Gologin có phù hợp với nhu cầu của mình không.
 
-### Tại sao một số cổng không hoạt động trên proxy của Gologin?
+### Một số cổng không hoạt động trên proxy của Gologin, tại sao vậy?
 
-Các cổng được đảm bảo hoạt động là 80 và 443. Đây là các cổng tiêu chuẩn cho lưu lượng truy cập web thông thường.
+Các cổng được đảm bảo hoạt động là 80 và 443. Đây là những cổng tiêu chuẩn cho lưu lượng truy cập website thông thường.
 
-Tất cả các cổng khác, vốn chủ yếu được dùng để gửi thư rác, tấn công DDoS và dò mật khẩu (brute-force), đều bị chặn.
+Tất cả các cổng khác, chủ yếu được dùng để gửi thư rác, tấn công DDoS hoặc brute-force, đều bị chặn.
+
+### Proxy của Gologin có cần tên đăng nhập và mật khẩu không?
+
+Có. Proxy của Gologin luôn yêu cầu tên đăng nhập và mật khẩu. Nếu bạn sao chép proxy của Gologin để dùng ở nơi khác, hãy sao chép đầy đủ thông tin xác thực, nếu không bước kiểm tra proxy sẽ thất bại.
+
+### Khi nào tôi có thể sử dụng lưu lượng đã mua?
+
+Ngay sau khi thanh toán hoàn tất.
+
+### Proxy của Gologin có hỗ trợ SOCKS5 không?
+
+Có. Hãy chọn giao thức trong phần cài đặt proxy của hồ sơ - xem [Chọn giao thức proxy](/vi/proxy/gologin-proxies/gologin-proxy-management/gologin-proxy-settings#choosing-the-proxy-protocol-http-or-socks5).
+
+### Tôi có thể dùng proxy của Gologin cho các website ngân hàng hoặc thanh toán không?
+
+Proxy tính theo lưu lượng của Gologin không hoạt động với các website ngân hàng và thanh toán, chẳng hạn như Stripe hoặc PayPal. Hãy dùng proxy của bên thứ ba có hỗ trợ các website này. Xem [Website ngân hàng và thanh toán](/vi/proxy/gologin-proxies/what-are-gologin-proxies#banking-and-payment-websites).
 
 ## IP chuyên dụng
 
-### Proxy ISP, proxy tĩnh và IP chuyên dụng khác nhau như thế nào?
+### ISP proxy, static proxy và IP chuyên dụng khác nhau như thế nào?
 
-Không khác nhau - đây là ba tên gọi của cùng một thứ. Bạn có thể thấy cả ba cách gọi này trên mạng. Trong Gologin, tính năng này được gọi là **IP chuyên dụng**.
+Không khác nhau - đây chỉ là ba tên gọi của cùng một thứ. Bạn có thể thấy cả ba tên này được dùng trên mạng. Trong Gologin, tính năng này được gọi là **IP chuyên dụng**.
 
 ### IP chuyên dụng là gì?
 
-Đó là một địa chỉ IP được dành riêng cho bạn và không ai khác sử dụng. Địa chỉ này đến từ một nhà cung cấp internet thực nhưng được đặt tại trung tâm dữ liệu, nên vừa có tốc độ và độ ổn định của proxy trung tâm dữ liệu, vừa trông giống kết nối internet gia đình thông thường đối với các website. IP này không bao giờ xoay vòng và không giới hạn lưu lượng.
+Đây là một địa chỉ IP riêng được dành cho bạn và không ai khác sử dụng. IP này đến từ một nhà cung cấp internet thực sự nhưng được đặt tại trung tâm dữ liệu, nên vừa có tốc độ và độ ổn định của proxy trung tâm dữ liệu, vừa trông giống một kết nối internet gia đình thông thường đối với các website. IP này không bao giờ xoay vòng và không giới hạn lưu lượng.
 
-### Tôi đang dùng gói năm. Tại sao tôi bị tính phí nhiều hơn \$5?
+### Tôi dùng gói thanh toán theo năm. Tại sao tôi bị tính phí hơn \$5?
 
-IP chuyên dụng gắn liền với gói đăng ký chính của bạn và luôn kết thúc cùng lúc với gói đó, vì vậy bạn trả tiền cho số tháng còn lại. Nếu gói năm của bạn còn 7 tháng, bạn sẽ bị tính trước \$35. Một tháng chưa trọn vẹn sẽ được tính như một tháng đầy đủ.
+IP chuyên dụng gắn liền với gói đăng ký chính của bạn và luôn kết thúc cùng lúc với gói đó, nên bạn trả phí cho số tháng còn lại. Nếu gói theo năm của bạn còn 7 tháng, bạn sẽ bị tính trước \$35. Tháng chưa trọn vẹn sẽ được tính như một tháng đầy đủ.
 
-### Tôi đã thanh toán nhưng không thấy proxy IP chuyên dụng ở đâu cả
+### Tôi đã thanh toán nhưng không thấy proxy IP chuyên dụng của mình ở đâu cả
 
-Hệ thống cần 5-7 phút để gán địa chỉ vào tài khoản của bạn và sẽ không có thông báo khi hoàn tất. Hãy đợi vài phút rồi làm mới trang **proxy** - địa chỉ sẽ xuất hiện ở đó.
+Hệ thống cần 5-7 phút để gán địa chỉ vào tài khoản của bạn và sẽ không có thông báo khi địa chỉ sẵn sàng. Hãy đợi vài phút rồi làm mới trang **proxy** - địa chỉ sẽ xuất hiện ở đó.
 
 ### IP chuyên dụng có tiêu tốn lưu lượng proxy của gói tôi đang dùng không?
 
@@ -59,12 +75,12 @@ Không. Lưu lượng qua IP chuyên dụng là không giới hạn và không t
 
 ### Nếu đã có IP chuyên dụng, tôi có còn cần lưu lượng proxy không?
 
-Chỉ cần cho những hồ sơ sử dụng proxy xoay vòng của chúng tôi. Nếu mọi hồ sơ bạn chạy đều dùng IP chuyên dụng, dung lượng lưu lượng của bạn sẽ đơn giản là không được sử dụng đến.
+Chỉ cần với các hồ sơ sử dụng proxy xoay vòng của chúng tôi. Nếu mọi hồ sơ bạn chạy đều dùng IP chuyên dụng, dung lượng lưu lượng của bạn sẽ không được dùng đến.
 
 ### IP của tôi có giữ nguyên khi dùng IP chuyên dụng không?
 
 Có. Miễn là gói đăng ký của bạn còn hiệu lực và được gia hạn, bạn sẽ giữ nguyên địa chỉ đó.
 
-### Tôi thanh toán bằng tiền điện tử - IP chuyên dụng của tôi có được gia hạn không?
+### Tôi thanh toán bằng tiền mã hóa - IP chuyên dụng của tôi có được gia hạn không?
 
-Không. Thanh toán bằng tiền điện tử không thể tự động gia hạn, vì vậy IP sẽ hoạt động trong khoảng thời gian bạn đã thanh toán rồi ngừng. Sau đó, bạn sẽ không thể lấy lại cùng địa chỉ đó. Nếu muốn giữ một địa chỉ lâu dài, hãy thanh toán bằng thẻ.
+Không. Thanh toán bằng tiền mã hóa không thể gia hạn tự động, nên IP sẽ hoạt động trong khoảng thời gian bạn đã thanh toán rồi ngừng. Sau đó bạn sẽ không thể lấy lại cùng địa chỉ đó. Nếu muốn giữ một địa chỉ lâu dài, hãy thanh toán bằng thẻ.

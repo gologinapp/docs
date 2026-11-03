@@ -20,15 +20,15 @@ Cloud Browser is the connection/execution layer; profile/proxy settings are mana
 
 1. Generate an API token.
 2. Optionally create/configure a profile (and proxy) via REST API.
-3. Build the connect URL with `token` an optional `profile`.
+3. Build the connect URL with `token` and an optional `profile`.
 4. Connect from Puppeteer/Playwright and run extraction.
 5. Store output and close the browser session.
 
 ## Prerequisites
 
-- Create a token: https://app.gologin.com/personalArea/TokenApi
-- Profiles API (recommended for controlled config): https://gologin.com/docs/api-reference/profile
-- Proxy API: https://gologin.com/docs/api-reference/proxy
+- Create a token: in the Gologin app, open [API & MCP](https://app.gologin.com/personalArea/TokenApi) → **API** → **New Token**
+- Profiles API (recommended for controlled config): [Create profile](https://gologin.com/docs/api-reference/profile/create-profile-with-partial-parameters), [Update profile](https://gologin.com/docs/api-reference/profile/update-profile-with-partial-parameters)
+- Proxy API: [Add a Gologin proxy to a profile](https://gologin.com/docs/api-reference/proxy/create-gologin-high-quality-proxy), [Set your own proxy on profiles](https://gologin.com/docs/api-reference/profile/update-proxy-for-multiple-profiles)
 
 ## A canonical connection endpoint
 
@@ -49,7 +49,7 @@ const puppeteer = require('puppeteer-core');
 
 
   const token = 'your_token_here';
-  const profileId = 'your_profile_id'; // Remove this line if you want to create a new profile
+  const profileId = 'your_profile_id'; // Set to '' to create a new profile for this session
   const cloudBrowserUrl = `https://cloudbrowser.gologin.com/connect?token=${token}${profileId ? `&profile=${profileId}` : ''}`;
   const browser = await puppeteer.connect({
   
@@ -71,8 +71,8 @@ const puppeteer = require('puppeteer-core');
 ## Next steps
 
 - Cloud Browser Getting Started: https://gologin.com/docs/api-reference/cloud-browser/getting-started
-- Profiles API: https://gologin.com/docs/api-reference/profile
-- Proxy API: https://gologin.com/docs/api-reference/proxy
+- Profiles API: [Get all profiles](https://gologin.com/docs/api-reference/profile/get-all-profiles), [Create profile](https://gologin.com/docs/api-reference/profile/create-profile-with-partial-parameters)
+- Proxy API: [Add a Gologin proxy to a profile](https://gologin.com/docs/api-reference/proxy/create-gologin-high-quality-proxy), [Get all proxies](https://gologin.com/docs/api-reference/proxy/get-list-of-all-proxies)
 
 ## Best practices
 
@@ -95,7 +95,7 @@ No. The `profile` parameter is optional. If omitted, a new profile is created fo
 
 ### Where do I configure proxies?
 
-Configure proxies through the Proxy API (and related profile settings via REST API): https://gologin.com/docs/api-reference/proxy
+Configure proxies through the REST API: [add a Gologin proxy to a profile](https://gologin.com/docs/api-reference/proxy/create-gologin-high-quality-proxy) or [set your own proxy on profiles](https://gologin.com/docs/api-reference/profile/update-proxy-for-multiple-profiles).
 
 ### Is this different from Cloud Browser?
 

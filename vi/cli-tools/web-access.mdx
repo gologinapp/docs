@@ -6,9 +6,9 @@ description: "CLI hợp nhất để đọc và tương tác với web bằng Go
 Gologin Web Access là một CLI hợp nhất, kết hợp hai sản phẩm của Gologin trong cùng một bộ lệnh:
 
 - **Web Unlocker** — đọc và trích xuất dữ liệu không lưu trạng thái. Phù hợp khi bạn muốn lấy nội dung trang nhanh chóng mà không cần duy trì phiên trình duyệt.
-- **Trình duyệt đám mây** — tương tác có lưu trạng thái. Phù hợp khi bạn cần điều hướng, nhấp chuột, nhập liệu, chụp ảnh màn hình hoặc các luồng nhiều bước được giữ nguyên giữa các lệnh.
+- **Trình duyệt đám mây** — tương tác có lưu trạng thái. Phù hợp khi bạn cần điều hướng, nhấp chuột, nhập văn bản, chụp ảnh màn hình hoặc chạy các quy trình nhiều bước được giữ nguyên giữa các lệnh.
 
-Cả hai chế độ dùng chung một mô hình cấu hình và một bộ thông tin xác thực. Bạn nên cấu hình sẵn cả hai loại thông tin xác thực ngay từ đầu để các agent không phải dừng lại giữa chừng để hỏi khóa còn thiếu.
+Cả hai chế độ dùng chung một mô hình cấu hình và một bộ thông tin xác thực. Bạn nên cấu hình sẵn cả hai loại thông tin xác thực ngay từ đầu để các agent không phải dừng lại hỏi khóa còn thiếu giữa chừng khi đang thực hiện tác vụ.
 
 ---
 
@@ -30,8 +30,8 @@ Hai loại thông tin xác thực khác nhau của Gologin vận hành hai chế
 |---|---|---|
 | `GOLOGIN_WEB_UNLOCKER_API_KEY` | Các lệnh Scraping / Read | Khóa API của Web Unlocker |
 | `GOLOGIN_TOKEN` | Các lệnh Browser / Interact | Token API của Gologin |
-| `GOLOGIN_DEFAULT_PROFILE_ID` | Không bắt buộc | Hồ sơ trình duyệt mặc định |
-| `GOLOGIN_DAEMON_PORT` | Không bắt buộc | Cổng daemon cục bộ |
+| `GOLOGIN_DEFAULT_PROFILE_ID` | Tùy chọn | Hồ sơ trình duyệt mặc định |
+| `GOLOGIN_DAEMON_PORT` | Tùy chọn | Cổng daemon cục bộ |
 
 ### Tệp cấu hình
 
@@ -46,11 +46,13 @@ Lưu thông tin xác thực trong `~/.gologin-web-access/config.json`:
 }
 ```
 
-Khởi tạo cấu hình theo cách tương tác:
+Hoặc tạo tệp bằng lệnh `config init`. Lệnh này không có chế độ tương tác: bạn truyền các khóa qua cờ, hoặc lệnh sẽ lấy chúng từ các biến môi trường ở trên. Sau đó lệnh sẽ kiểm tra các khóa với các API của Gologin:
 
 ```bash
 gologin-web-access config init --web-unlocker-api-key wu_... --token gl_...
 ```
+
+Thêm `--no-validate` để bỏ qua bước kiểm tra khóa. Nếu tệp cấu hình đã tồn tại, `config init` sẽ giữ nguyên tệp đó trừ khi bạn thêm `--force`.
 
 ---
 
@@ -96,18 +98,18 @@ gologin-web-access close
 
 ## Tham chiếu lệnh — scraping / read
 
-Các lệnh này sử dụng Web Unlocker. Chúng không lưu trạng thái — không có phiên trình duyệt nào được duy trì.
+Các lệnh này dùng Web Unlocker. Chúng không lưu trạng thái — không có phiên trình duyệt nào được duy trì.
 
-### Một trang
+### Một trang đơn
 
 | Lệnh | Mô tả |
 |---|---|
-| `scrape <url>` | HTML thô đã được render |
-| `read <url>` | Nội dung dễ đọc, có thể chọn định dạng |
+| `scrape <url>` | HTML đã render dạng thô |
+| `read <url>` | Nội dung dễ đọc, cho phép chọn định dạng |
 | `scrape-text <url>` | Trích xuất văn bản thuần |
-| `scrape-markdown <url>` | Trích xuất Markdown |
+| `scrape-markdown <url>` | Trích xuất dạng Markdown |
 | `scrape-json <url>` | Siêu dữ liệu có cấu trúc (tiêu đề, mô tả, các heading, liên kết) |
-| `extract <url> --schema <file>` | Trích xuất dữ liệu khớp với một JSON schema |
+| `extract <url> --schema <file>` | Trích xuất các trường bằng schema bộ chọn CSS |
 | `parse-document <url-or-path>` | Phân tích tệp PDF, DOCX, XLSX, HTML |
 
 **Tùy chọn chung:** `--format text|markdown|html`, `--source auto|unlocker|browser`, `--fallback none|browser`
@@ -120,9 +122,9 @@ Các lệnh này sử dụng Web Unlocker. Chúng không lưu trạng thái — 
 | `batch-extract <url...> --schema <file>` | Trích xuất dữ liệu có cấu trúc từ nhiều URL |
 | `batch-change-track <url...>` | Theo dõi thay đổi trên nhiều trang |
 
-**Tùy chọn cho thao tác hàng loạt:** `--format`, `--source`, `--only-main-content`, `--retry <n>`, `--backoff-ms <ms>`, `--summary`, `--output <path>`, `--strict`
+**Tùy chọn hàng loạt:** `--format`, `--source`, `--only-main-content`, `--retry <n>`, `--backoff-ms <ms>`, `--summary`, `--output <path>`, `--strict`
 
-Theo mặc định, `batch-scrape` trả về mã thoát 0 khi thành công một phần. Thêm `--strict` để lệnh báo lỗi khi có bất kỳ lỗi nào.
+Theo mặc định, `batch-scrape` trả về mã thoát 0 khi chỉ thành công một phần. Thêm `--strict` để lệnh báo lỗi khi có bất kỳ lỗi nào.
 
 ### Tìm kiếm và khám phá
 
@@ -141,7 +143,7 @@ Theo mặc định, `batch-scrape` trả về mã thoát 0 khi thành công mộ
 | `crawl-start <url> ...` | Bắt đầu một tác vụ crawl bất đồng bộ |
 | `crawl-status <jobId>` | Kiểm tra trạng thái tác vụ |
 | `crawl-result <jobId>` | Lấy kết quả crawl |
-| `crawl-errors <jobId>` | Lấy các lỗi crawl |
+| `crawl-errors <jobId>` | Lấy các lỗi của crawl |
 
 ### Theo dõi thay đổi
 
@@ -156,20 +158,20 @@ Theo mặc định, `batch-scrape` trả về mã thoát 0 khi thành công mộ
 |---|---|
 | `run <runbook.json>` | Thực thi một runbook (chuỗi các bước) |
 | `batch <runbook.json> --targets <file>` | Chạy một runbook trên nhiều mục tiêu |
-| `jobs` | Liệt kê các tác vụ đang chạy/đã hoàn thành |
-| `job <jobId>` | Xem chi tiết tác vụ |
+| `jobs` | Liệt kê các tác vụ đang chạy/đã hoàn tất |
+| `job <jobId>` | Xem chi tiết một tác vụ |
 
 ---
 
 ## Tham chiếu lệnh — browser / interact
 
-Các lệnh này sử dụng Trình duyệt đám mây. Chúng duy trì một phiên có lưu trạng thái thông qua một daemon cục bộ.
+Các lệnh này dùng Trình duyệt đám mây. Chúng duy trì một phiên có lưu trạng thái thông qua daemon cục bộ.
 
 ### Quản lý phiên
 
 | Lệnh | Mô tả |
 |---|---|
-| `open <url>` | Mở một URL trong phiên Trình duyệt đám mây |
+| `open <url>` | Mở một URL trong phiên trình duyệt đám mây |
 | `search-browser <query>` | Tìm kiếm và mở kết quả trong trình duyệt |
 | `close` | Đóng phiên hiện tại |
 | `sessions` | Liệt kê các phiên đang hoạt động |
@@ -182,7 +184,7 @@ Các lệnh này sử dụng Trình duyệt đám mây. Chúng duy trì một ph
 | Lệnh | Mô tả |
 |---|---|
 | `snapshot` | Ảnh chụp nhanh dạng văn bản gọn kèm tham chiếu phần tử |
-| `scrape-screenshot <url> [path]` | Chụp ảnh màn hình thông qua trình duyệt |
+| `scrape-screenshot <url> [path]` | Chụp ảnh màn hình qua trình duyệt |
 | `screenshot <path>` | Lưu ảnh chụp màn hình của trang hiện tại |
 | `pdf <path>` | Lưu trang dưới dạng PDF |
 | `get <kind> [target]` | Lấy các thuộc tính của trang |
@@ -198,7 +200,7 @@ Các lệnh này sử dụng Trình duyệt đám mây. Chúng duy trì một ph
 | `hover <ref>` | Di chuột lên một phần tử |
 | `select <ref> <value>` | Chọn một giá trị trong danh sách thả xuống |
 | `check <ref>` / `uncheck <ref>` | Bật/tắt hộp kiểm |
-| `focus <ref>` | Đưa tiêu điểm vào một phần tử |
+| `focus <ref>` | Đặt tiêu điểm vào một phần tử |
 | `press <key> [target]` | Nhấn một phím trên bàn phím |
 | `scroll <direction> [pixels]` | Cuộn trang |
 | `scrollintoview <ref>` | Cuộn để phần tử hiện trong vùng nhìn thấy |
@@ -222,7 +224,7 @@ Các lệnh này sử dụng Trình duyệt đám mây. Chúng duy trì một ph
 | `tabfocus <index>` | Chuyển sang một tab |
 | `tabclose [index]` | Đóng một tab |
 
-### Cookie và bộ nhớ
+### Cookie và bộ nhớ lưu trữ
 
 | Lệnh | Mô tả |
 |---|---|
@@ -237,12 +239,12 @@ Các lệnh này sử dụng Trình duyệt đám mây. Chúng duy trì một ph
 
 | Lệnh | Mô tả |
 |---|---|
-| `eval <expression>` | Thực thi JavaScript trong trang |
-| `upload <ref> <file...>` | Tải tệp lên một trường chọn tệp |
+| `eval <expression>` | Chạy JavaScript trong trang |
+| `upload <ref> <file...>` | Tải tệp lên một trường nhập tệp |
 
 ---
 
-## Trường hợp sử dụng và ví dụ
+## Các trường hợp sử dụng và ví dụ
 
 ### Scrape trang bảng giá của đối thủ
 
@@ -250,9 +252,9 @@ Các lệnh này sử dụng Trình duyệt đám mây. Chúng duy trì một ph
 gologin-web-access scrape-json https://competitor.com/pricing
 ```
 
-Trả về tiêu đề, mô tả, các heading và liên kết dưới dạng JSON có cấu trúc. Nếu trang nằm sau cookie wall hoặc bước thử thách (challenge), trường outcome sẽ cho bạn biết — và `nextActionHint` gợi ý chuyển sang chế độ trình duyệt.
+Lệnh trả về tiêu đề, mô tả, các heading và liên kết dưới dạng JSON có cấu trúc. Nếu trang nằm sau cookie wall hoặc thử thách xác minh, trường outcome sẽ cho bạn biết — và `nextActionHint` gợi ý chuyển sang chế độ trình duyệt.
 
-### Xây dựng kho dữ liệu nghiên cứu từ một trang tài liệu
+### Xây dựng bộ dữ liệu nghiên cứu từ một trang tài liệu
 
 ```bash
 # discover all pages
@@ -264,7 +266,7 @@ gologin-web-access crawl https://docs.example.com \
   --output ./corpus.json
 ```
 
-Đưa kết quả đầu ra vào một LLM để tóm tắt, hỏi đáp hoặc fine-tuning.
+Đưa kết quả đầu ra vào một LLM để tóm tắt, hỏi đáp hoặc tinh chỉnh (fine-tuning).
 
 ### Theo dõi thay đổi của các trang
 
@@ -280,30 +282,41 @@ gologin-web-access batch-change-track \
   --output ./changes.json
 ```
 
-Chạy hằng ngày bằng cron. So sánh các điểm khác biệt để phát hiện thay đổi về giá, tính năng mới hoặc nội dung bị gỡ bỏ.
+Chạy hằng ngày bằng cron. So sánh các điểm khác biệt để phát hiện thay đổi giá, tính năng mới hoặc nội dung bị gỡ bỏ.
 
 ### Trích xuất dữ liệu có cấu trúc bằng schema
 
-Định nghĩa dữ liệu bạn muốn trích xuất:
+Hãy xác định những gì bạn muốn trích xuất. Schema ánh xạ từng trường đầu ra với một bộ chọn CSS:
 
 ```json
 {
-  "type": "object",
-  "properties": {
-    "product_name": { "type": "string" },
-    "price": { "type": "string" },
-    "features": { "type": "array", "items": { "type": "string" } }
+  "product_name": "h1",
+  "price": ".price",
+  "features": { "selector": ".features li", "all": true },
+  "image": { "selector": "img.product-photo", "type": "attr", "attribute": "src" },
+  "reviews": {
+    "selector": ".review",
+    "all": true,
+    "fields": { "author": ".review-author", "text": ".review-text" }
   }
 }
 ```
 
-Sau đó thực hiện trích xuất:
+Một chuỗi thuần sẽ trả về văn bản của phần tử khớp đầu tiên. Một đối tượng có thể có các thuộc tính sau:
+
+- `selector` — bộ chọn CSS
+- `type` — `text` (mặc định), `html`, `attr` hoặc `exists`
+- `attribute` — tên thuộc tính khi `type` là `attr`
+- `all` — `true` trả về mọi kết quả khớp dưới dạng danh sách
+- `fields` — một schema lồng nhau được áp dụng bên trong từng kết quả khớp
+
+Sau đó, thực hiện trích xuất:
 
 ```bash
 gologin-web-access extract https://example.com/product/123 --schema ./product-schema.json
 ```
 
-Có thể áp dụng cho nhiều trang với `batch-extract`.
+Có thể dùng cho nhiều trang với `batch-extract`.
 
 ### Tìm kiếm trên web và scrape kết quả
 
@@ -317,7 +330,7 @@ gologin-web-access batch-scrape url1 url2 url3 --format text --only-main-content
 
 ### Đăng nhập vào một trang web và tương tác
 
-Khi scraping là chưa đủ — bạn cần nhấp chuột, nhập liệu, điều hướng:
+Khi scrape là chưa đủ — bạn cần nhấp chuột, nhập văn bản, điều hướng:
 
 ```bash
 export GOLOGIN_TOKEN="gl_..."
@@ -335,7 +348,7 @@ gologin-web-access close
 
 ### Phân tích tài liệu cục bộ
 
-Không chỉ các trang web — bạn còn có thể phân tích tệp PDF, Word và Excel:
+Không chỉ các trang web — bạn còn có thể phân tích tệp PDF, tài liệu Word, tệp Excel:
 
 ```bash
 gologin-web-access parse-document ./report.pdf
@@ -345,7 +358,7 @@ gologin-web-access parse-document ./contract.docx
 
 ### Tự động hóa quy trình nhiều bước bằng runbook
 
-Định nghĩa một chuỗi các bước trong JSON và chạy lại chúng:
+Xác định một chuỗi các bước trong JSON rồi chạy lại khi cần:
 
 ```json
 {
@@ -354,8 +367,7 @@ gologin-web-access parse-document ./contract.docx
     { "command": "open", "args": ["${url}"] },
     { "command": "wait", "args": [1000] },
     { "command": "snapshot" },
-    { "command": "find", "args": ["search input"] },
-    { "command": "type", "args": ["@found", "${query}"] },
+    { "command": "find", "args": ["placeholder", "Search", "fill", "${query}"] },
     { "command": "press", "args": ["Enter"] },
     { "command": "wait", "args": [2000] },
     { "command": "screenshot", "args": ["./result.png"] },
@@ -396,11 +408,11 @@ Các lệnh hỗ trợ `--source` có thể định tuyến qua các backend kh�
 
 ## Liên quan
 
-- [Web Unlocker SDK](/vi/scraping-api-sdk-and-cli) — SDK TypeScript để sử dụng theo kiểu lập trình
-- [Web Unlocker là gì](/vi/what-is-web-unlocker) — tổng quan về sản phẩm
-- [Agent Browser CLI](/vi/cli-tools/agent-browser) — CLI chỉ dành cho trình duyệt, dùng cho các AI agent
-- [Local Agent Browser CLI](/vi/cli-tools/local-agent-browser) — CLI Orbita cục bộ
-- [AI Skills](/vi/api-reference/ai-integrations/ai-skills) — các skill cắm là chạy cho Claude Code
+- [Web Unlocker SDK](/vi/scraping-api-sdk-and-cli) — SDK TypeScript dùng để lập trình
+- [Web Unlocker là gì](/vi/what-is-web-unlocker) — tổng quan sản phẩm
+- [Agent Browser CLI](/vi/cli-tools/agent-browser) — CLI chỉ dành cho trình duyệt, phục vụ các AI agent
+- [Môi trường chạy cục bộ](/vi/cli-tools/local-agent-browser) — Agent Browser CLI với các hồ sơ Orbita cục bộ
+- [AI Skills](/vi/api-reference/ai-integrations/ai-skills) — các skill cắm là chạy dành cho Claude Code
 
 <Card title="Gói npm" icon="npm" href="https://www.npmjs.com/package/gologin-web-access">
   gologin-web-access

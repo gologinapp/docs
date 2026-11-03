@@ -434,10 +434,10 @@
               "api-reference/cloud-browser/what-is-headless-browser",
               "api-reference/cloud-browser/getting-started",
               "api-reference/cloud-browser/scraping",
-              "api-reference/cloud-browser/untitled-page-1",
-              "api-reference/cloud-browser/untitled-page-2",
+              "api-reference/cloud-browser/using-a-browser-session",
+              "api-reference/cloud-browser/manage-a-browser-session",
               "api-reference/cloud-browser/live",
-              "api-reference/cloud-browser/untitled-page-3"
+              "api-reference/cloud-browser/using-proxies-with-cloud-browser"
             ]
           },
           {
@@ -684,6 +684,14 @@
                 ]
               },
               {
+                "group": "Cloud Android",
+                "icon": "mobile-screen-button",
+                "pages": [
+                  "de/cloud-android/overview",
+                  "de/cloud-android/faq"
+                ]
+              },
+              {
                 "group": "Gologin Android-App",
                 "icon": "mobile",
                 "pages": [
@@ -882,10 +890,10 @@
               "de/api-reference/cloud-browser/what-is-headless-browser",
               "de/api-reference/cloud-browser/getting-started",
               "de/api-reference/cloud-browser/scraping",
-              "de/api-reference/cloud-browser/untitled-page-1",
-              "de/api-reference/cloud-browser/untitled-page-2",
+              "de/api-reference/cloud-browser/using-a-browser-session",
+              "de/api-reference/cloud-browser/manage-a-browser-session",
               "de/api-reference/cloud-browser/live",
-              "de/api-reference/cloud-browser/untitled-page-3"
+              "de/api-reference/cloud-browser/using-proxies-with-cloud-browser"
             ]
           },
           {
@@ -895,6 +903,13 @@
                 "group": "Übersicht",
                 "pages": [
                   "de/ai/overview"
+                ]
+              },
+              {
+                "group": "KI-Assistent",
+                "pages": [
+                  "de/ai/ai-assistant",
+                  "de/ai/connected-accounts"
                 ]
               },
               {
@@ -1129,6 +1144,14 @@
                 ]
               },
               {
+                "group": "Cloud Android",
+                "icon": "mobile-screen-button",
+                "pages": [
+                  "es/cloud-android/overview",
+                  "es/cloud-android/faq"
+                ]
+              },
+              {
                 "group": "App de Gologin para Android",
                 "icon": "mobile",
                 "pages": [
@@ -1327,10 +1350,10 @@
               "es/api-reference/cloud-browser/what-is-headless-browser",
               "es/api-reference/cloud-browser/getting-started",
               "es/api-reference/cloud-browser/scraping",
-              "es/api-reference/cloud-browser/untitled-page-1",
-              "es/api-reference/cloud-browser/untitled-page-2",
+              "es/api-reference/cloud-browser/using-a-browser-session",
+              "es/api-reference/cloud-browser/manage-a-browser-session",
               "es/api-reference/cloud-browser/live",
-              "es/api-reference/cloud-browser/untitled-page-3"
+              "es/api-reference/cloud-browser/using-proxies-with-cloud-browser"
             ]
           },
           {
@@ -1340,6 +1363,13 @@
                 "group": "Resumen",
                 "pages": [
                   "es/ai/overview"
+                ]
+              },
+              {
+                "group": "Asistente de IA",
+                "pages": [
+                  "es/ai/ai-assistant",
+                  "es/ai/connected-accounts"
                 ]
               },
               {
@@ -1574,6 +1604,14 @@
                 ]
               },
               {
+                "group": "Cloud Android",
+                "icon": "mobile-screen-button",
+                "pages": [
+                  "fr/cloud-android/overview",
+                  "fr/cloud-android/faq"
+                ]
+              },
+              {
                 "group": "Application Android Gologin",
                 "icon": "mobile",
                 "pages": [
@@ -1772,10 +1810,10 @@
               "fr/api-reference/cloud-browser/what-is-headless-browser",
               "fr/api-reference/cloud-browser/getting-started",
               "fr/api-reference/cloud-browser/scraping",
-              "fr/api-reference/cloud-browser/untitled-page-1",
-              "fr/api-reference/cloud-browser/untitled-page-2",
+              "fr/api-reference/cloud-browser/using-a-browser-session",
+              "fr/api-reference/cloud-browser/manage-a-browser-session",
               "fr/api-reference/cloud-browser/live",
-              "fr/api-reference/cloud-browser/untitled-page-3"
+              "fr/api-reference/cloud-browser/using-proxies-with-cloud-browser"
             ]
           },
           {
@@ -1785,6 +1823,13 @@
                 "group": "Vue d'ensemble",
                 "pages": [
                   "fr/ai/overview"
+                ]
+              },
+              {
+                "group": "Assistant IA",
+                "pages": [
+                  "fr/ai/ai-assistant",
+                  "fr/ai/connected-accounts"
                 ]
               },
               {
@@ -2019,6 +2064,14 @@
                 ]
               },
               {
+                "group": "Cloud Android",
+                "icon": "mobile-screen-button",
+                "pages": [
+                  "ja/cloud-android/overview",
+                  "ja/cloud-android/faq"
+                ]
+              },
+              {
                 "group": "Gologin Androidアプリ",
                 "icon": "mobile",
                 "pages": [
@@ -2217,10 +2270,10 @@
               "ja/api-reference/cloud-browser/what-is-headless-browser",
               "ja/api-reference/cloud-browser/getting-started",
               "ja/api-reference/cloud-browser/scraping",
-              "ja/api-reference/cloud-browser/untitled-page-1",
-              "ja/api-reference/cloud-browser/untitled-page-2",
+              "ja/api-reference/cloud-browser/using-a-browser-session",
+              "ja/api-reference/cloud-browser/manage-a-browser-session",
               "ja/api-reference/cloud-browser/live",
-              "ja/api-reference/cloud-browser/untitled-page-3"
+              "ja/api-reference/cloud-browser/using-proxies-with-cloud-browser"
             ]
           },
           {
@@ -2230,6 +2283,13 @@
                 "group": "概要",
                 "pages": [
                   "ja/ai/overview"
+                ]
+              },
+              {
+                "group": "AIアシスタント",
+                "pages": [
+                  "ja/ai/ai-assistant",
+                  "ja/ai/connected-accounts"
                 ]
               },
               {
@@ -2464,6 +2524,14 @@
                 ]
               },
               {
+                "group": "Cloud Android",
+                "icon": "mobile-screen-button",
+                "pages": [
+                  "pl/cloud-android/overview",
+                  "pl/cloud-android/faq"
+                ]
+              },
+              {
                 "group": "Aplikacja Gologin na Android",
                 "icon": "mobile",
                 "pages": [
@@ -2662,10 +2730,10 @@
               "pl/api-reference/cloud-browser/what-is-headless-browser",
               "pl/api-reference/cloud-browser/getting-started",
               "pl/api-reference/cloud-browser/scraping",
-              "pl/api-reference/cloud-browser/untitled-page-1",
-              "pl/api-reference/cloud-browser/untitled-page-2",
+              "pl/api-reference/cloud-browser/using-a-browser-session",
+              "pl/api-reference/cloud-browser/manage-a-browser-session",
               "pl/api-reference/cloud-browser/live",
-              "pl/api-reference/cloud-browser/untitled-page-3"
+              "pl/api-reference/cloud-browser/using-proxies-with-cloud-browser"
             ]
           },
           {
@@ -2675,6 +2743,13 @@
                 "group": "Przegląd",
                 "pages": [
                   "pl/ai/overview"
+                ]
+              },
+              {
+                "group": "Asystent AI",
+                "pages": [
+                  "pl/ai/ai-assistant",
+                  "pl/ai/connected-accounts"
                 ]
               },
               {
@@ -2909,6 +2984,14 @@
                 ]
               },
               {
+                "group": "Cloud Android",
+                "icon": "mobile-screen-button",
+                "pages": [
+                  "pt/cloud-android/overview",
+                  "pt/cloud-android/faq"
+                ]
+              },
+              {
                 "group": "App Gologin para Android",
                 "icon": "mobile",
                 "pages": [
@@ -3107,10 +3190,10 @@
               "pt/api-reference/cloud-browser/what-is-headless-browser",
               "pt/api-reference/cloud-browser/getting-started",
               "pt/api-reference/cloud-browser/scraping",
-              "pt/api-reference/cloud-browser/untitled-page-1",
-              "pt/api-reference/cloud-browser/untitled-page-2",
+              "pt/api-reference/cloud-browser/using-a-browser-session",
+              "pt/api-reference/cloud-browser/manage-a-browser-session",
               "pt/api-reference/cloud-browser/live",
-              "pt/api-reference/cloud-browser/untitled-page-3"
+              "pt/api-reference/cloud-browser/using-proxies-with-cloud-browser"
             ]
           },
           {
@@ -3120,6 +3203,13 @@
                 "group": "Visão Geral",
                 "pages": [
                   "pt/ai/overview"
+                ]
+              },
+              {
+                "group": "Assistente de IA",
+                "pages": [
+                  "pt/ai/ai-assistant",
+                  "pt/ai/connected-accounts"
                 ]
               },
               {
@@ -3354,6 +3444,14 @@
                 ]
               },
               {
+                "group": "Cloud Android",
+                "icon": "mobile-screen-button",
+                "pages": [
+                  "ru/cloud-android/overview",
+                  "ru/cloud-android/faq"
+                ]
+              },
+              {
                 "group": "Приложение Gologin для Android",
                 "icon": "mobile",
                 "pages": [
@@ -3552,10 +3650,10 @@
               "ru/api-reference/cloud-browser/what-is-headless-browser",
               "ru/api-reference/cloud-browser/getting-started",
               "ru/api-reference/cloud-browser/scraping",
-              "ru/api-reference/cloud-browser/untitled-page-1",
-              "ru/api-reference/cloud-browser/untitled-page-2",
+              "ru/api-reference/cloud-browser/using-a-browser-session",
+              "ru/api-reference/cloud-browser/manage-a-browser-session",
               "ru/api-reference/cloud-browser/live",
-              "ru/api-reference/cloud-browser/untitled-page-3"
+              "ru/api-reference/cloud-browser/using-proxies-with-cloud-browser"
             ]
           },
           {
@@ -3565,6 +3663,13 @@
                 "group": "Обзор",
                 "pages": [
                   "ru/ai/overview"
+                ]
+              },
+              {
+                "group": "ИИ-ассистент",
+                "pages": [
+                  "ru/ai/ai-assistant",
+                  "ru/ai/connected-accounts"
                 ]
               },
               {
@@ -3799,6 +3904,14 @@
                 ]
               },
               {
+                "group": "Cloud Android",
+                "icon": "mobile-screen-button",
+                "pages": [
+                  "vi/cloud-android/overview",
+                  "vi/cloud-android/faq"
+                ]
+              },
+              {
                 "group": "Ứng dụng Gologin Android",
                 "icon": "mobile",
                 "pages": [
@@ -3997,10 +4110,10 @@
               "vi/api-reference/cloud-browser/what-is-headless-browser",
               "vi/api-reference/cloud-browser/getting-started",
               "vi/api-reference/cloud-browser/scraping",
-              "vi/api-reference/cloud-browser/untitled-page-1",
-              "vi/api-reference/cloud-browser/untitled-page-2",
+              "vi/api-reference/cloud-browser/using-a-browser-session",
+              "vi/api-reference/cloud-browser/manage-a-browser-session",
               "vi/api-reference/cloud-browser/live",
-              "vi/api-reference/cloud-browser/untitled-page-3"
+              "vi/api-reference/cloud-browser/using-proxies-with-cloud-browser"
             ]
           },
           {
@@ -4010,6 +4123,13 @@
                 "group": "Tổng quan",
                 "pages": [
                   "vi/ai/overview"
+                ]
+              },
+              {
+                "group": "Trợ lý AI",
+                "pages": [
+                  "vi/ai/ai-assistant",
+                  "vi/ai/connected-accounts"
                 ]
               },
               {
@@ -4244,6 +4364,14 @@
                 ]
               },
               {
+                "group": "Cloud Android",
+                "icon": "mobile-screen-button",
+                "pages": [
+                  "zh/cloud-android/overview",
+                  "zh/cloud-android/faq"
+                ]
+              },
+              {
                 "group": "Gologin Android 应用",
                 "icon": "mobile",
                 "pages": [
@@ -4442,10 +4570,10 @@
               "zh/api-reference/cloud-browser/what-is-headless-browser",
               "zh/api-reference/cloud-browser/getting-started",
               "zh/api-reference/cloud-browser/scraping",
-              "zh/api-reference/cloud-browser/untitled-page-1",
-              "zh/api-reference/cloud-browser/untitled-page-2",
+              "zh/api-reference/cloud-browser/using-a-browser-session",
+              "zh/api-reference/cloud-browser/manage-a-browser-session",
               "zh/api-reference/cloud-browser/live",
-              "zh/api-reference/cloud-browser/untitled-page-3"
+              "zh/api-reference/cloud-browser/using-proxies-with-cloud-browser"
             ]
           },
           {
@@ -4455,6 +4583,13 @@
                 "group": "概览",
                 "pages": [
                   "zh/ai/overview"
+                ]
+              },
+              {
+                "group": "AI 助手",
+                "pages": [
+                  "zh/ai/ai-assistant",
+                  "zh/ai/connected-accounts"
                 ]
               },
               {
@@ -4500,5 +4635,143 @@
     "gtm": {
       "tagId": "GTM-PCVDMBT"
     }
-  }
+  },
+  "redirects": [
+    {
+      "source": "/api-reference/cloud-browser/untitled-page-1",
+      "destination": "/api-reference/cloud-browser/using-a-browser-session"
+    },
+    {
+      "source": "/api-reference/cloud-browser/untitled-page-2",
+      "destination": "/api-reference/cloud-browser/manage-a-browser-session"
+    },
+    {
+      "source": "/api-reference/cloud-browser/untitled-page-3",
+      "destination": "/api-reference/cloud-browser/using-proxies-with-cloud-browser"
+    },
+    {
+      "source": "/de/api-reference/cloud-browser/untitled-page-1",
+      "destination": "/de/api-reference/cloud-browser/using-a-browser-session"
+    },
+    {
+      "source": "/de/api-reference/cloud-browser/untitled-page-2",
+      "destination": "/de/api-reference/cloud-browser/manage-a-browser-session"
+    },
+    {
+      "source": "/de/api-reference/cloud-browser/untitled-page-3",
+      "destination": "/de/api-reference/cloud-browser/using-proxies-with-cloud-browser"
+    },
+    {
+      "source": "/es/api-reference/cloud-browser/untitled-page-1",
+      "destination": "/es/api-reference/cloud-browser/using-a-browser-session"
+    },
+    {
+      "source": "/es/api-reference/cloud-browser/untitled-page-2",
+      "destination": "/es/api-reference/cloud-browser/manage-a-browser-session"
+    },
+    {
+      "source": "/es/api-reference/cloud-browser/untitled-page-3",
+      "destination": "/es/api-reference/cloud-browser/using-proxies-with-cloud-browser"
+    },
+    {
+      "source": "/fr/api-reference/cloud-browser/untitled-page-1",
+      "destination": "/fr/api-reference/cloud-browser/using-a-browser-session"
+    },
+    {
+      "source": "/fr/api-reference/cloud-browser/untitled-page-2",
+      "destination": "/fr/api-reference/cloud-browser/manage-a-browser-session"
+    },
+    {
+      "source": "/fr/api-reference/cloud-browser/untitled-page-3",
+      "destination": "/fr/api-reference/cloud-browser/using-proxies-with-cloud-browser"
+    },
+    {
+      "source": "/ja/api-reference/cloud-browser/untitled-page-1",
+      "destination": "/ja/api-reference/cloud-browser/using-a-browser-session"
+    },
+    {
+      "source": "/ja/api-reference/cloud-browser/untitled-page-2",
+      "destination": "/ja/api-reference/cloud-browser/manage-a-browser-session"
+    },
+    {
+      "source": "/ja/api-reference/cloud-browser/untitled-page-3",
+      "destination": "/ja/api-reference/cloud-browser/using-proxies-with-cloud-browser"
+    },
+    {
+      "source": "/pl/api-reference/cloud-browser/untitled-page-1",
+      "destination": "/pl/api-reference/cloud-browser/using-a-browser-session"
+    },
+    {
+      "source": "/pl/api-reference/cloud-browser/untitled-page-2",
+      "destination": "/pl/api-reference/cloud-browser/manage-a-browser-session"
+    },
+    {
+      "source": "/pl/api-reference/cloud-browser/untitled-page-3",
+      "destination": "/pl/api-reference/cloud-browser/using-proxies-with-cloud-browser"
+    },
+    {
+      "source": "/pt/api-reference/cloud-browser/untitled-page-1",
+      "destination": "/pt/api-reference/cloud-browser/using-a-browser-session"
+    },
+    {
+      "source": "/pt/api-reference/cloud-browser/untitled-page-2",
+      "destination": "/pt/api-reference/cloud-browser/manage-a-browser-session"
+    },
+    {
+      "source": "/pt/api-reference/cloud-browser/untitled-page-3",
+      "destination": "/pt/api-reference/cloud-browser/using-proxies-with-cloud-browser"
+    },
+    {
+      "source": "/ru/api-reference/cloud-browser/untitled-page-1",
+      "destination": "/ru/api-reference/cloud-browser/using-a-browser-session"
+    },
+    {
+      "source": "/ru/api-reference/cloud-browser/untitled-page-2",
+      "destination": "/ru/api-reference/cloud-browser/manage-a-browser-session"
+    },
+    {
+      "source": "/ru/api-reference/cloud-browser/untitled-page-3",
+      "destination": "/ru/api-reference/cloud-browser/using-proxies-with-cloud-browser"
+    },
+    {
+      "source": "/vi/api-reference/cloud-browser/untitled-page-1",
+      "destination": "/vi/api-reference/cloud-browser/using-a-browser-session"
+    },
+    {
+      "source": "/vi/api-reference/cloud-browser/untitled-page-2",
+      "destination": "/vi/api-reference/cloud-browser/manage-a-browser-session"
+    },
+    {
+      "source": "/vi/api-reference/cloud-browser/untitled-page-3",
+      "destination": "/vi/api-reference/cloud-browser/using-proxies-with-cloud-browser"
+    },
+    {
+      "source": "/zh/api-reference/cloud-browser/untitled-page-1",
+      "destination": "/zh/api-reference/cloud-browser/using-a-browser-session"
+    },
+    {
+      "source": "/zh/api-reference/cloud-browser/untitled-page-2",
+      "destination": "/zh/api-reference/cloud-browser/manage-a-browser-session"
+    },
+    {
+      "source": "/zh/api-reference/cloud-browser/untitled-page-3",
+      "destination": "/zh/api-reference/cloud-browser/using-proxies-with-cloud-browser"
+    },
+    {
+      "source": "/api-reference/quickstart",
+      "destination": "/api-reference/introduction/quickstart"
+    },
+    {
+      "source": "/general/gologin-web-and-mobile",
+      "destination": "/general/gologin-web-and-chrome-os"
+    },
+    {
+      "source": "/getting-started/introduction/untitled-page",
+      "destination": "/getting-started/introduction/extra-faq"
+    },
+    {
+      "source": "/proxy/gologin-proxies/gologin-proxy-management/view-and-top-up-proxy-traffic",
+      "destination": "/proxy/gologin-proxies/purchasing-gologin-proxies"
+    }
+  ]
 }

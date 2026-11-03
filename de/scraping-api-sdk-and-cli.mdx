@@ -2,16 +2,16 @@
 title: 'Scraping API SDK und CLI'
 ---
 
-Gologin Web Unlocker ist eine **Scraping API mit nur einem Endpoint** für JavaScript-lastige und geschützte Websites.
+Gologin Web Unlocker ist eine **Scraping API mit einem einzigen Endpoint** für JavaScript-lastige und geschützte Websites.
 
 Sie senden eine URL, erhalten den gerenderten HTML-Code bzw. Text der Seite und verarbeiten ihn in Ihrer eigenen Extraktions-Pipeline.
 
-## Warum als Scraping API verwenden
+## Warum als Scraping API nutzen
 
-- Ein Endpoint für jede Ziel-URL
+- Ein Endpoint für jede beliebige Ziel-URL
 - Authentifizierung per API-Key, keine Browser-Orchestrierung erforderlich
-- HTML-basierte Antwort, die sich in bestehende Parser einfügt
-- Gut geeignet für ETL, Monitoring, KI-Datenaufnahme und Datenpipelines
+- Standardmäßig HTML, auf Wunsch Markdown oder JSON, bereit für bestehende Parser
+- Passt gut zu ETL, Monitoring, KI-Datenaufnahme und Daten-Pipelines
 
 ## Endpoint
 
@@ -27,9 +27,10 @@ apikey: <API_KEY>
 
 ## Anfragemodell
 
-| Name | Ort | Typ | Erforderlich | Beschreibung |
+| Name | Position | Typ | Erforderlich | Beschreibung |
 |---|---|---|---|---|
-| `url` | query | Zeichenfolge (absolute URL) | ja | Ziel-URL für das Scraping |
+| `url` | query | string (absolute URL) | ja | Ziel-URL für das Scraping |
+| `format` | query | string | nein | Antwortformat: `html` (Standard), `markdown` oder `json` |
 
 ## Schnellstart
 
@@ -70,13 +71,27 @@ console.log(response.status, html.slice(0, 500));
 
 ## Antwortverhalten
 
-Der aktuelle Antworttext ist **rohes, gerendertes HTML bzw. Text**.
+Standardmäßig ist der Antwort-Body der **gerenderte Roh-HTML-Code** der Seite. Mit `format=markdown` ist der Body Markdown. Mit `format=json` ist der Body ein JSON-Objekt:
 
-- `200` -> Erfolg, der Body enthält den HTML-Code bzw. Text der Seite
-- `401` / `403` -> ungültiger oder fehlender API-Key
-- `422` -> ungültige oder fehlende `url`
-- `429` -> Rate Limit erreicht
-- `500+` -> temporärer serverseitiger Fehler
+```json
+{
+  "success": true,
+  "data": {
+    "url": "https://example.com",
+    "metadata": {
+      "response_time_ms": 297,
+      "status_code": 200
+    },
+    "html": "<!DOCTYPE html><html lang=\"en\">..."
+  }
+}
+```
+
+Statuscodes:
+
+- `200` -> Erfolg, der Body enthält die Seite im angeforderten Format
+- `400` -> fehlerhafte Anfrage, zum Beispiel fehlt `url`; Body: `{"success":false,"error":"Request failed"}`
+- `401` -> der Header `apikey` fehlt; Body: `{"message":"Missing API key in request"}`
 
 ## Hinweise zu Wiederholungsversuchen
 
@@ -84,10 +99,6 @@ Wiederholen Sie die Anfrage mit exponentiellem Backoff bei:
 
 - Netzwerkfehlern
 - `408`, `429`, `500`, `502`, `503`, `504`
-
-## Hinweis zum Funktionsumfang
-
-Der aktuelle öffentliche Endpoint ist HTML-basiert. Gehen Sie nicht davon aus, dass weitere Backend-Endpoints (z. B. Screenshot, Crawl, Suche oder Nutzung) verfügbar sind, sofern sie nicht ausdrücklich dokumentiert und für Ihr Konto aktiviert sind.
 
 ## Offizielles Node.js SDK
 
@@ -111,7 +122,7 @@ console.log(result.status);
 console.log(result.content.slice(0, 500));
 ```
 
-### Konstruktoroptionen
+### Konstruktor-Optionen
 
 ```ts
 new WebUnlocker({
@@ -125,16 +136,16 @@ new WebUnlocker({
 ### Zentrale SDK-Methoden
 
 - `scrape(url)` -> normalisiertes Antwortobjekt
-- `scrapeRaw(url)` -> natives `Response`
+- `scrapeRaw(url)` -> native `Response`
 - `buildScrapeUrl(url)` -> vollständige Anfrage-URL
 
 ### Im SDK abgeleitete Methoden (aus dem zurückgegebenen HTML)
 
-Dies sind **keine separaten Backend-Endpoints**, sondern Methoden, die im SDK aus dem von der API gelieferten HTML abgeleitet werden:
+Dies sind **keine separaten Backend-Endpoints**; sie werden im SDK aus dem HTML der API abgeleitet. Das SDK sendet nur den Parameter `url`, nicht `format`. Daher kann diese Ausgabe von der eigenen Antwort der API mit `format=markdown` oder `format=json` abweichen:
 
 - `scrapeText(url)` -> reiner Text
 - `scrapeMarkdown(url)` -> Markdown
-- `scrapeJSON(url)` -> strukturierte Metadaten (`title`, `meta`, `links`, `headings`)
+- `scrapeJSON(url)` -> strukturierte Metadaten (`title`, `description`, `canonical`, `meta`, `headings`, `links`)
 - `batchScrape(urls, { concurrency })` -> Hilfsmethode für mehrere Scrape-Aufrufe
 
 ### Typisierte Fehler
@@ -150,7 +161,7 @@ Zuordnung:
 
 - `401` / `403` -> `AuthenticationError`
 - `429` -> `RateLimitError`
-- `500+` -> `APIError`
+- `500+` und andere Nicht-2xx-Statuscodes (zum Beispiel `400`) -> `APIError`
 - Timeout/Abbruch -> `TimeoutError`
 - Fetch-/Netzwerkfehler -> `NetworkError`
 
@@ -162,7 +173,7 @@ gologin-webunlocker <command> <url> [options]
 
 Befehle:
 
-- `scrape` (rohes HTML/Text)
+- `scrape` (roher HTML-Code/Text)
 - `text` (abgeleiteter Text)
 - `markdown` (abgeleitetes Markdown)
 - `json` (abgeleitete Metadaten)
@@ -175,13 +186,13 @@ GOLOGIN_WEBUNLOCKER_API_KEY=wu_live_xxx gologin-webunlocker text https://example
 GOLOGIN_WEBUNLOCKER_API_KEY=wu_live_xxx gologin-webunlocker json https://example.com
 ```
 
-## Typische Scraping-Anwendungsfälle
+## Typische Anwendungsfälle für Scraping
 
 - Preis- und Katalogüberwachung
 - Anreicherung von Leads und Verzeichnissen
 - Pipelines für Marktanalysen
 - Content-Aggregation und Indexierung
-- Workflows für LLM-Datenaufnahme und -Extraktion
+- Workflows für LLM-Datenaufnahme und Extraktion
 
 ## Gologin Web Access CLI (einheitlich)
 

@@ -6,7 +6,7 @@ keywords: ["cloud browser", "headless browser"]
 Gologin Cloud Browser te permite ejecutar una sesión de navegador **en la nube** y controlarla desde tu herramienta de automatización (Puppeteer / Playwright) mediante una única **URL de conexión**.
 
 <Tip>
-  **¿Prefieres una CLI?** Usa la [Gologin Agent Browser CLI](/es/cli-tools/agent-browser) para controlar Cloud Browser desde la terminal sin escribir código. Está pensada para agentes de IA, con snapshots, refs y un daemon persistente.
+  **¿Prefieres usar una CLI?** Usa la [Gologin Agent Browser CLI](/es/cli-tools/agent-browser) para controlar Cloud Browser desde la terminal sin escribir código. Está diseñada para agentes de IA, con snapshots, refs y un daemon persistente.
 </Tip>
 
 ## URL de conexión
@@ -19,11 +19,11 @@ https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}
 
 - `token`: tu **dev token** de Gologin.
 - `profile`: **ID del perfil** (opcional):
-  - si se indica, Gologin ejecutará ese perfil en la nube;
-  - si se omite, Gologin creará un perfil nuevo para la sesión.
+  - si lo indicas, Gologin ejecutará ese perfil en la nube;
+  - si lo omites, Gologin creará un perfil nuevo para la sesión.
 
-> Nota: las librerías de automatización usan esta URL como **endpoint de conexión WebSocket** (por ejemplo, `browserWSEndpoint` en Puppeteer).\
-> Genera tu token en el panel de Gologin: `Personal Area → API Token`.
+> Nota: Las librerías de automatización usan esta URL como **endpoint de conexión WebSocket** (por ejemplo, `browserWSEndpoint` en Puppeteer).\
+> Crea tu token en la app de Gologin: [API & MCP](https://app.gologin.com/personalArea/TokenApi) → **API** → **New Token**.
 
 <Frame>
   ![Screenshotat Mar0514 27 28](/images/ScreenshotatMar0514-27-28.png)
@@ -31,7 +31,7 @@ https://cloudbrowser.gologin.com/connect?token=${token}&profile=${profileId}
 
 ## Gestión de perfiles (proxy, fingerprint, etc.)
 
-Cloud Browser es únicamente la **capa de conexión** (sesión de navegador remoto).\
+Cloud Browser es únicamente la **capa de conexión** (sesión de navegador remota).\
 Para **crear o actualizar perfiles**, asociar **proxies**, configurar el **fingerprint**, las etiquetas y otros ajustes del perfil, usa la **REST API** de Gologin:
 
 - Profiles API: https://gologin.com/docs/api-reference/profile

@@ -3,7 +3,7 @@ title: "Nền tảng được hỗ trợ & cài đặt"
 description: "Yêu cầu hệ thống và quy trình cài đặt Gologin"
 ---
 
-Bạn có thể tải ứng dụng Gologin cho bất kỳ hệ thống nào được hỗ trợ bằng liên kết bên dưới:
+Bạn có thể tải ứng dụng Gologin cho mọi hệ thống được hỗ trợ qua liên kết bên dưới:
 
 👉 [**Tải Gologin**](https://gologin.com/download/)
 
@@ -20,14 +20,14 @@ Bạn có thể tải ứng dụng Gologin cho bất kỳ hệ thống nào đư
 - Windows 10
 - Windows Server 2016
 
-### Mac OS (chip dòng M, Mac Neo và chip Intel)
+### Mac OS (chip dòng M, Mac Neo và Intel)
 
 - macOS 27 Golden Gate
 - macOS 26 Tahoe
-- macOS 15 Sequoia **(phiên bản trình duyệt 122 trở lên)**
+- macOS 15 Sequoia (phiên bản trình duyệt 122 trở lên)
 - macOS 14 Sonoma
 - macOS 13 Ventura
-- macOS 12 Monterey
+- macOS 12 Monterey (phiên bản trình duyệt 150 trở xuống)
 
 ### Linux
 
@@ -37,7 +37,7 @@ Bạn có thể tải ứng dụng Gologin cho bất kỳ hệ thống nào đư
 ### Android
 
 - Android 10.0 trở lên
-- RAM 3\+ GB
+- RAM từ 3\+ GB
 
 ### iOS
 
@@ -48,27 +48,27 @@ Bạn có thể tải ứng dụng Gologin cho bất kỳ hệ thống nào đư
 ### Windows
 
 1. Tải trình cài đặt ứng dụng từ [đây](https://gologin.com/download/)
-2. Mở thư mục **Downloads** (Tải xuống) của bạn
-3. Nhấp đúp vào tệp đã tải và làm theo hướng dẫn cài đặt
+2. Mở thư mục **Downloads** của bạn
+3. Nhấp đúp vào tệp đã tải xuống và làm theo hướng dẫn cài đặt
 
 ### Mac OS
 
 1. Tải trình cài đặt ứng dụng từ [đây](https://gologin.com/download/)
-2. Mở thư mục **Downloads** (Tải xuống) của bạn
+2. Mở thư mục **Downloads** của bạn
 3. Nhấp đúp vào tệp và làm theo hướng dẫn
 
 ### Linux, ví dụ với Ubuntu
 
-Gologin cho Linux được cung cấp dưới dạng tệp **AppImage**. Đây là một tệp thực thi độc lập, không cần cài đặt theo cách truyền thống. Bạn luôn có thể mở ứng dụng bằng tệp này.
+Gologin cho Linux được cung cấp dưới dạng kho lưu trữ `.tar`. Ứng dụng bên trong là bản độc lập và không cần cài đặt theo cách truyền thống: bạn chỉ cần giải nén kho lưu trữ rồi khởi chạy Gologin từ thư mục vừa giải nén.
 
-1. Tải tệp AppImage bằng [liên kết](https://gologin.com/download) này
-2. Mở thư mục **Downloads** (Tải xuống) của bạn
-3. Nhấp chuột phải vào `gologin.tar` \> **Extract** (Giải nén)
+1. Tải kho lưu trữ bằng [liên kết](https://gologin.com/download) này
+2. Mở thư mục **Downloads** của bạn
+3. Nhấp chuột phải vào `gologin.tar` \> **Extract**
 4. Vào thư mục **gologin** \> nhấp đúp để khởi chạy Gologin
 
-**Nếu ứng dụng không mở được**
+**Nếu ứng dụng không mở**
 
-- nếu hệ thống nhận diện ứng dụng như một tệp văn bản, hãy khởi chạy nó một lần qua terminal với tham số --no-sandbox
+- nếu hệ thống nhận diện ứng dụng là một tệp văn bản, hãy khởi chạy ứng dụng một lần qua terminal với tham số --no-sandbox
   ```bash bash
   cd ~/Downloads/gologin
   ./<filename> --no-sandbox
@@ -78,15 +78,15 @@ Gologin cho Linux được cung cấp dưới dạng tệp **AppImage**. Đây l
   cd ~/Downloads/gologin
   chmod +x <filename>
   ```
-  thay `<filename>` bằng tên tệp thực tế
+  hãy thay `<filename>` bằng tên tệp thực tế
 - trên các hệ thống mới hơn, bạn có thể cần gói **libfuse2**. Dán lệnh sau vào terminal rồi thử khởi chạy lại ứng dụng.
   ```bash bash
     sudo apt install libfuse2
   ```
 
-**Nếu hồ sơ không khởi chạy khi bạn nhấp vào Chạy**
+**Nếu hồ sơ không khởi chạy khi bạn nhấp Chạy**
 
-- mở Terminal và vào thư mục trình duyệt, ví dụ phiên bản Orbita 145
+- mở Terminal và truy cập thư mục trình duyệt, ví dụ phiên bản Orbita 145
 - đặt lại quyền cho **chrome-sandbox**
   ```bash bash
   cd ~/.gologin/browser/orbita-browser-145
@@ -103,7 +103,7 @@ Gologin cho Linux được cung cấp dưới dạng tệp **AppImage**. Đây l
 
 Sau khi cài đặt xong, bạn có thể sử dụng ngay với trình duyệt tích hợp sẵn.
 
-## Cấu hình không được hỗ trợ
+## Các thiết lập không được hỗ trợ
 
 Gologin **không** hỗ trợ các nền tảng sau:
 
@@ -115,6 +115,6 @@ Gologin **không** hỗ trợ các nền tảng sau:
 ## Xem thêm
 
 - [Danh sách kiểm tra cho lần đầu sử dụng](https://gologin.com/docs/getting-started/setup/first-time-checklist)
-- [Gologin Web, Chrome OS](https://gologin.com/docs/general/gologin-web-and-mobile)
+- [Gologin Web, Chrome OS](/vi/general/gologin-web-and-chrome-os)
 - [Các khái niệm chính](https://gologin.com/docs/getting-started/introduction/key-concepts-profiles-fingerprints-proxies)
 - [Cập nhật ứng dụng Gologin](https://gologin.com/docs/general/updating-the-gologin-app)

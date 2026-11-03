@@ -2,11 +2,23 @@
 title: "クイックスタート"
 ---
 
-このガイドでは、Gologin API を使い始めるために必要な準備を説明します。APIクライアントの使い方と、最初の API リクエストの送信方法を紹介します。また、強力な REST API を最大限に活用するために必要な情報の探し方もご案内します。
+このガイドでは、Gologin API を使い始めるために必要な準備を説明します。APIクライアントの使い方と最初のAPIリクエストの送信方法を紹介し、さらに強力なREST APIを最大限に活用するために必要な情報の探し方もご案内します。
 
 <Note>
-  Gologin API にリクエストを送信するには、ダッシュボードから API キーを取得する必要があります。API キーは [設定 » API](https://app.gologin.com/personalArea/TokenApi) で確認できます。
+  Gologin API にリクエストを送信するには、APIトークンが必要です。
+  Gologin アプリで [API & MCP](https://app.gologin.com/personalArea/TokenApi) を開き、**API** タブに移動して、**新しいトークン** をクリックします。
 </Note>
+
+## 最初のリクエストを送信する
+
+`https://api.gologin.com` へのすべてのリクエストで、`Authorization` ヘッダーにトークンを指定します。次のリクエストでは、アカウント内のプロファイルを一覧表示します。
+
+```bash
+curl https://api.gologin.com/browser/v2 \
+  -H "Authorization: Bearer YOUR_API_TOKEN"
+```
+
+レスポンスには、`profiles` 配列と、プロファイルの総数を表す `allProfilesCount` が含まれます。1ページあたり最大30件のプロファイルが返されます。次のページを取得するには、URLに `?page=2` を追加します。すべてのパラメータについては、[すべてのプロファイルを取得する](https://gologin.com/docs/api-reference/profile/get-all-profiles) をご覧ください。
 
 ## 最初の匿名スクレイピングリクエストを送信する
 
@@ -139,11 +151,11 @@ GL_API_TOKEN=[YOUR_GOLOGIN_API_TOKEN] python3 filename.py
 
 ## 次のステップ
 
-これで API クライアントの設定が完了し、API への最初のリクエストも送信できました。Gologin API をさらに活用するために、役立つリンクを以下にご紹介します。
+これでAPIクライアントのセットアップが完了し、最初のAPIリクエストも送信できました。Gologin API をさらに活用するために、次のリンクもぜひご覧ください。
 
-- [設定 \> API から API キーを取得する](https://app.gologin.com/personalArea/TokenApi)
-- [Gologin Web Access CLI](/ja/cli-tools/web-access) — スクレイピングとブラウザ自動化のための統合 CLI（コード不要）
-- [Agent Browser CLI](/ja/cli-tools/agent-browser) — AI エージェント向けに作られたクラウドブラウザ CLI
-- [Local Agent Browser CLI](/ja/cli-tools/local-agent-browser) — プロファイルとランブックを備えたローカルの Orbita CLI
+- [API & MCP でAPIトークンを作成する](https://app.gologin.com/personalArea/TokenApi)
+- [Gologin Web Access CLI](/ja/cli-tools/web-access) — スクレイピングとブラウザ自動化に対応した統合CLI（コード不要）
+- [Agent Browser CLI](/ja/cli-tools/agent-browser) — AIエージェント向けに作られたブラウザCLI。クラウドでもお使いのマシンでも利用できます
+- [Agent Browser CLI: ローカルランタイム](/ja/cli-tools/local-agent-browser) — ローカルの Orbita プロファイル、ランブック、バッチジョブに対応
 - [AI Skills](/ja/api-reference/ai-integrations/ai-skills) — Claude Code 向けのすぐに使えるスキル
-- [MCP Server](/ja/api-reference/ai-integrations/mcp-server) — AI との会話でプロファイルを管理
+- [MCP Server](/ja/api-reference/ai-integrations/mcp-server) — AIとの会話を通じてプロファイルを管理

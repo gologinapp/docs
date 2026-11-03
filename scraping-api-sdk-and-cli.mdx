@@ -10,7 +10,7 @@ You send a URL, receive rendered page HTML/text, and process it in your own extr
 
 - One endpoint for any target URL
 - API-key auth, no browser orchestration required
-- HTML-first response that plugs into existing parsers
+- HTML by default, or Markdown or JSON on request, ready for existing parsers
 - Easy fit for ETL, monitoring, AI ingestion, and data pipelines
 
 ## Endpoint
@@ -30,6 +30,7 @@ apikey: <API_KEY>
 | Name | In | Type | Required | Description |
 |---|---|---|---|---|
 | `url` | query | string (absolute URL) | yes | Target URL to scrape |
+| `format` | query | string | no | Response format: `html` (default), `markdown`, or `json` |
 
 ## Quickstart
 
@@ -70,13 +71,27 @@ console.log(response.status, html.slice(0, 500));
 
 ## Response behavior
 
-Current response body is **raw rendered HTML/text**.
+By default, the response body is the **raw rendered HTML** of the page. With `format=markdown`, the body is Markdown. With `format=json`, the body is a JSON object:
 
-- `200` -> success, body contains page HTML/text
-- `401` / `403` -> invalid or missing API key
-- `422` -> invalid or missing `url`
-- `429` -> rate limit
-- `500+` -> temporary server-side error
+```json
+{
+  "success": true,
+  "data": {
+    "url": "https://example.com",
+    "metadata": {
+      "response_time_ms": 297,
+      "status_code": 200
+    },
+    "html": "<!DOCTYPE html><html lang=\"en\">..."
+  }
+}
+```
+
+Status codes:
+
+- `200` -> success, body contains the page in the requested format
+- `400` -> bad request, for example `url` is missing; body: `{"success":false,"error":"Request failed"}`
+- `401` -> the `apikey` header is missing; body: `{"message":"Missing API key in request"}`
 
 ## Retry guidance
 
@@ -84,10 +99,6 @@ Retry with exponential backoff for:
 
 - network errors
 - `408`, `429`, `500`, `502`, `503`, `504`
-
-## Scope note
-
-Current public endpoint is HTML-first. Do not assume extra backend endpoints (for example screenshot/crawl/search/usage) unless explicitly documented and enabled for your account.
 
 ## Official Node.js SDK
 
@@ -130,11 +141,11 @@ new WebUnlocker({
 
 ### SDK-side derived methods (from returned HTML)
 
-These are **not separate backend endpoints**; they are derived from API HTML in the SDK:
+These are **not separate backend endpoints**; they are derived from API HTML in the SDK. The SDK sends only the `url` parameter, not `format`, so this output can differ from the API's own `format=markdown` or `format=json` response:
 
 - `scrapeText(url)` -> plain text
 - `scrapeMarkdown(url)` -> markdown
-- `scrapeJSON(url)` -> structured metadata (`title`, `meta`, `links`, `headings`)
+- `scrapeJSON(url)` -> structured metadata (`title`, `description`, `canonical`, `meta`, `headings`, `links`)
 - `batchScrape(urls, { concurrency })` -> helper for multiple scrape calls
 
 ### Typed errors
@@ -150,7 +161,7 @@ Mapping:
 
 - `401` / `403` -> `AuthenticationError`
 - `429` -> `RateLimitError`
-- `500+` -> `APIError`
+- `500+` and other non-2xx statuses (for example `400`) -> `APIError`
 - timeout/abort -> `TimeoutError`
 - fetch/network failure -> `NetworkError`
 

@@ -1,31 +1,32 @@
 ---
 title: "Gologin Agent Browser CLI"
-description: "CLI для автоматизации облачного браузера, созданный для ИИ-агентов: снимки страниц, ссылки-refs и постоянный демон"
+description: "CLI для автоматизации браузера для ИИ-агентов: запускает профили Gologin в Cloud Browser или в локальной Orbita, поддерживает снимки страниц, ссылки-refs и постоянный демон"
 ---
 
-Gologin Agent Browser CLI превращает Gologin Cloud Browser в постоянную среду выполнения для ИИ-агентов, которой можно управлять через скрипты. Она предоставляет компактные снимки страниц, взаимодействие через ссылки (refs), память сессий и вывод, удобный для использования в командной строке.
+Gologin Agent Browser CLI превращает профили браузера Gologin в постоянную среду выполнения со скриптовым управлением для ИИ-агентов. Сессии запускаются в Gologin Cloud Browser или в Orbita на вашем компьютере. CLI предоставляет компактные снимки страниц, взаимодействие через refs, память сессий и удобный для оболочки вывод.
 
 В отличие от написания кода на Puppeteer/Playwright с нуля, этот CLI даёт агентам готовый набор команд для автоматизации браузера — без шаблонного кода и без кода для управления сессиями.
 
 ---
 
-## Зачем нужен облачный браузер
+## Облачная или локальная среда выполнения
 
-У локальной автоматизации браузера есть жёсткие ограничения для сценариев с агентами:
+В CLI есть две среды выполнения с одинаковыми командами. Обе используют профили, отпечатки и прокси Gologin, а демон поддерживает сессии активными между вызовами CLI.
 
-- Локальные браузеры проще обнаружить
-- Нет подмены отпечатков на основе профилей
-- Нет постоянных облачных профилей браузера
-- Нет встроенного прокси-слоя
-- Сложно стандартизировать работу для разных агентов и окружений
+| | `cloud` (по умолчанию) | `local` |
+|---|---|---|
+| Где запускается браузер | Gologin Cloud Browser | Orbita на вашем компьютере |
+| ID профиля | Необязателен: без него создаётся временный облачный профиль | Обязателен |
+| Подходит для | Параллельных сессий, удалённых сессий, машин, на которых не должен работать браузер | Прогрева профилей, первых входов в аккаунты, локальных cookies и состояния профиля, соответствия вашей ОС |
 
-Agent Browser CLI использует противоположный подход:
+Выбирайте среду выполнения для каждой команды с помощью `--runtime cloud|local|auto` или один раз задайте `GOLOGIN_AGENT_BROWSER_RUNTIME`:
 
-- Облачный браузер вместо локального процесса
-- Профили Gologin как слой идентификации сессии
-- Сессии с поддержкой прокси
-- Антидетект-возможности, унаследованные от Gologin
-- Постоянный демон, который сохраняет сессии активными между вызовами CLI
+```bash
+gologin-agent-browser open https://example.com
+gologin-agent-browser open https://example.com --runtime local --profile your_profile_id
+```
+
+По умолчанию (`auto`) команды для профилей, ранбуков и задач выполняются локально, а все остальные — в облаке. После открытия локальной сессии передавайте `--runtime local` и в следующие команды. Требования и команды, доступные только в локальной среде, описаны в разделе [Локальная среда выполнения](/ru/cli-tools/local-agent-browser).
 
 ---
 
@@ -35,13 +36,13 @@ Agent Browser CLI использует противоположный подхо
 npm install -g gologin-agent-browser-cli
 ```
 
-Или запустите без глобальной установки:
+Или запуск без глобальной установки:
 
 ```bash
 npx gologin-agent-browser-cli --help
 ```
 
-Требуется Node.js >= 18.
+Требуется Node.js >= 18. Для локальной среды выполнения нужен Node.js 20 или новее.
 
 ---
 
@@ -49,18 +50,20 @@ npx gologin-agent-browser-cli --help
 
 | Переменная | Обязательна | Описание |
 |---|---|---|
-| `GOLOGIN_TOKEN` | Да (для `open`) | API-токен Gologin |
-| `GOLOGIN_PROFILE_ID` | Нет | ID профиля по умолчанию |
-| `GOLOGIN_DAEMON_PORT` | Нет | Порт демона (по умолчанию: `44777`) |
-| `GOLOGIN_CONNECT_BASE` | Нет | Эндпоинт Cloud Browser |
+| `GOLOGIN_TOKEN` | Да (для `open` и команд API) | API-токен Gologin |
+| `GOLOGIN_PROFILE_ID` | Необязательна | ID профиля по умолчанию |
+| `GOLOGIN_AGENT_BROWSER_RUNTIME` | Необязательна | Среда выполнения по умолчанию: `cloud`, `local` или `auto` |
+| `GOLOGIN_DAEMON_PORT` | Необязательна | Порт демона (по умолчанию: `44777` для cloud, `44778` для local) |
+| `GOLOGIN_CONNECT_BASE` | Необязательна | Эндпоинт Cloud Browser (по умолчанию: `https://cloudbrowser.gologin.com/connect`) |
+| `GOLOGIN_EXECUTABLE_PATH` | Необязательна | Путь к исполняемому файлу Orbita для локальной среды выполнения |
 
 ### Получение токена
 
 1. Зарегистрируйтесь или войдите на [gologin.com](https://gologin.com)
 2. Откройте раздел **API & MCP** в личном кабинете
-3. Откройте вкладку **API**
+3. Перейдите на вкладку **API**
 4. Нажмите **Новый токен**
-5. Скопируйте сгенерированный токен доступа
+5. Скопируйте созданный токен доступа
 
 ```bash
 export GOLOGIN_TOKEN='your_gologin_token'
@@ -76,20 +79,20 @@ export GOLOGIN_TOKEN='your_gologin_token'
 
 Система состоит из двух частей:
 
-1. **CLI `gologin-agent-browser`** — разбирает команды, автоматически запускает демон и выводит компактный результат
-2. **Постоянный локальный демон** — управляет активными сессиями браузера, подключается к Gologin Cloud Browser через Playwright `connectOverCDP`, хранит активную страницу в памяти, создаёт снимки, разрешает ссылки (refs) и отслеживает метаданные сессий
+1. **CLI `gologin-agent-browser`** — разбирает команды, выбирает среду выполнения, автоматически запускает соответствующий демон и выводит компактный результат
+2. **Постоянные локальные демоны**, по одному на каждую среду выполнения — управляют активными сессиями браузера, подключаются к Gologin Cloud Browser или локальной Orbita через Playwright `connectOverCDP`, хранят активную страницу в памяти, создают снимки, разрешают refs и отслеживают метаданные сессий
 
-Транспорт только локальный:
-- Unix-сокет по пути `${TMPDIR:-/tmp}/gologin-agent-browser.sock`
+Транспорт только локальный. Облачный демон слушает:
+- Unix-сокет `${TMPDIR:-/tmp}/gologin-agent-browser.sock`
 - Локальный HTTP на `127.0.0.1:${GOLOGIN_DAEMON_PORT:-44777}`
 
-Если вы не указали ID профиля, демон создаёт временный облачный профиль Gologin через API.
+В облачной среде выполнения, если вы не указали ID профиля, демон создаёт временный облачный профиль Gologin через API.
 
 ---
 
 ## Как работают refs
 
-Команда `snapshot` выводит компактное представление страницы и назначает интерактивным элементам ссылки вида `@e1`, `@e2`, `@e3`. С ними можно работать напрямую:
+Команда `snapshot` выводит компактное представление страницы и назначает интерактивным элементам refs вида `@e1`, `@e2`, `@e3`. С ними можно работать напрямую:
 
 ```bash
 gologin-agent-browser snapshot
@@ -100,7 +103,12 @@ gologin-agent-browser type @e5 "search query"
 gologin-agent-browser fill @e7 "username"
 ```
 
-Refs работают по принципу «по возможности» (best-effort), поэтому их следует получать заново после перехода на другую страницу или существенных изменений DOM. На динамических страницах вместо устаревших refs обычно лучше использовать `find`.
+Refs работают по принципу «наилучшей попытки», поэтому после перехода на другую страницу или существенных изменений DOM их нужно создавать заново. Вместо refs команды также принимают CSS-селекторы. На динамических страницах вместо устаревших refs обычно лучше использовать `find`: он находит элемент на живой странице и выполняет действие за один шаг.
+
+```bash
+gologin-agent-browser find label "Email" fill "user@example.com"
+gologin-agent-browser find role button click --name "Submit"
+```
 
 ---
 
@@ -156,9 +164,9 @@ gologin-agent-browser close
 
 | Команда | Описание |
 |---|---|
-| `open <url>` | Открыть URL в сессии облачного браузера |
-| `close` | Закрыть текущую сессию |
-| `sessions` | Показать список активных сессий |
+| `open <url>` | Открыть URL в сессии браузера |
+| `close` | Закрыть текущую сессию (`--all` закрывает все сессии этого демона) |
+| `sessions` | Показать список активных сессий (`--prune` удаляет устаревшие) |
 | `current` | Показать информацию о текущей сессии |
 
 ### Чтение страницы
@@ -180,9 +188,9 @@ gologin-agent-browser close
 | `fill <ref> <text>` | Заполнить поле (заменяет содержимое) |
 | `hover <ref>` | Навести курсор на элемент |
 | `select <ref> <value>` | Выбрать значение в выпадающем списке |
-| `check <ref>` / `uncheck <ref>` | Установить/снять флажок |
+| `check <ref>` / `uncheck <ref>` | Установить или снять флажок |
 | `focus <ref>` | Установить фокус на элемент |
-| `find ...` | Семантический поиск элементов |
+| `find <by> <locator> <action> [value]` | Найти элемент по `role`, `text`, `label`, `placeholder`, `first`, `last` или `nth` и выполнить над ним `click`, `fill`, `type` или `hover`, либо прочитать его `text` |
 
 ### Клавиатура и прокрутка
 
@@ -199,7 +207,7 @@ gologin-agent-browser close
 | `back` | Назад |
 | `forward` | Вперёд |
 | `reload` | Перезагрузить страницу |
-| `wait <target\|ms>` | Ждать элемент или истечения таймаута |
+| `wait <target\|ms>` | Ждать появления элемента или истечения времени |
 
 ### Вкладки
 
@@ -221,12 +229,39 @@ gologin-agent-browser close
 | `storage-import <file>` | Импортировать localStorage |
 | `storage-clear` | Очистить localStorage |
 
-### Дополнительно
+### Расширенные возможности
 
 | Команда | Описание |
 |---|---|
 | `eval <expression>` | Выполнить JavaScript на странице |
 | `upload <ref> <file...>` | Загрузить файлы |
+
+### Профили, прокси и API Gologin
+
+Эти команды обращаются к API Gologin с вашим токеном и не требуют демона браузера.
+
+| Команда | Описание |
+|---|---|
+| `api <METHOD> <path>` | Вызвать любой эндпоинт REST API Gologin |
+| `browser <action>` | Профили: список, получение, создание, обновление, удаление, cookies, прокси, запуск и остановка в облаке, импорт и экспорт |
+| `proxy <action>` | Прокси: список, добавление прокси Gologin, обновление, удаление, трафик |
+| `workspace`, `folder`, `share`, `template` | Рабочие пространства и участники, папки, предоставление доступа, шаблоны профилей |
+| `user`, `deleted-profile` | Информация об аккаунте и dev-токены, восстановление удалённых профилей |
+| `cloud-usage` | Использование Cloud Browser для профиля или рабочего пространства |
+| `profile-cloud`, `profile-cookies`, `profile-fingerprint`, `profile-proxy`, `profile-ua` | Сокращённые команды: запуск или остановка профиля в облаке, экспорт или импорт его cookies, обновление отпечатка, добавление прокси, обновление user agent |
+
+```bash
+gologin-agent-browser browser list --page 1
+gologin-agent-browser proxy add-gologin your_profile_id --country us --type residential
+gologin-agent-browser cloud-usage --profile your_profile_id
+gologin-agent-browser api GET /browser/your_profile_id
+```
+
+Добавьте `--help` к любой команде, чтобы вывести справку по её использованию.
+
+### Только для локальной среды выполнения
+
+Команды `profiles`, `profile`, `profile-create`, `profile-update`, `profile-import`, `profile-sync`, `profile-delete`, `run`, `batch`, `jobs` и `job` управляют локальными профилями, ранбуками и историей задач. См. [Локальная среда выполнения](/ru/cli-tools/local-agent-browser#profile-commands).
 
 ### Псевдонимы
 
@@ -244,7 +279,7 @@ gologin-agent-browser close
 
 ## Сценарии использования и примеры
 
-### Проверьте, проходит ли ваш сайт антидетект-тесты
+### Проверка, проходит ли ваш сайт антидетект-тесты
 
 ```bash
 gologin-agent-browser open https://iphey.com/ --profile your_profile_id
@@ -314,13 +349,12 @@ done
 
 ### Поиск на сайте, который блокирует скрапинг
 
-Некоторые сайты требуют выполнения JavaScript, входа в аккаунт или взаимодействия со страницей, прежде чем показать результаты. Используйте браузер для поиска:
+Некоторые сайты требуют выполнения JavaScript, входа в аккаунт или действий пользователя, прежде чем показать результаты. Используйте для поиска браузер:
 
 ```bash
 gologin-agent-browser open https://protected-directory.com
 gologin-agent-browser snapshot
-gologin-agent-browser find "search input"
-gologin-agent-browser type @found "machine learning engineer San Francisco"
+gologin-agent-browser find placeholder "Search" fill "machine learning engineer San Francisco"
 gologin-agent-browser press Enter
 gologin-agent-browser wait 3000
 gologin-agent-browser snapshot     # agent reads search results
@@ -330,7 +364,7 @@ gologin-agent-browser close
 
 ### Сохранение и восстановление состояния сессии
 
-Экспортируйте cookies и хранилище, чтобы использовать их в других сессиях:
+Экспортируйте cookies и хранилище, чтобы использовать их в следующих сессиях:
 
 ```bash
 # after logging in
@@ -350,24 +384,25 @@ gologin-agent-browser snapshot     # already logged in
 
 ## Параллельные сессии
 
-Для независимых облачных задач указывайте явные ID через `--session`. Для очистки используйте `close --all` или `sessions --prune --older-than-ms`.
+Для независимых облачных задач используйте явные ID `--session`. Для очистки применяйте `close --all` или `sessions --prune --older-than-ms`.
 
 ---
 
-## Правила работы с прокси
+## Правила для прокси
 
-- Предварительно настроенные профили: прокси задаётся в профиле через личный кабинет Gologin или API
-- Временные профили: поддерживается работа без прокси или с пользовательским прокси (хост/порт)
-- `--proxy-country` доступен только для предварительно настроенных профилей
+- Предварительно настроенные профили: прокси задаётся в самом профиле через личный кабинет Gologin или API, например `proxy add-gologin <profileId> --country us`
+- Временные облачные профили: без прокси или с вашим собственным прокси через `--proxy-host` и `--proxy-port` (а также `--proxy-mode http|socks4|socks5`, `--proxy-user`, `--proxy-pass`)
+- В облачной среде выполнения `open` не принимает `--proxy-country`. Чтобы использовать трафик прокси Gologin из нужной страны, добавьте прокси Gologin в профиль и откройте его с помощью `--profile`
+- В локальной среде выполнения `open`, `profile-create` и `profile-update` принимают `--proxy-country`
 
 ---
 
 ## См. также
 
 - [Gologin Web Access CLI](/ru/cli-tools/web-access) — единый CLI (скрапинг + браузер)
-- [Local Agent Browser CLI](/ru/cli-tools/local-agent-browser) — локальная альтернатива на основе Orbita
+- [Локальная среда выполнения](/ru/cli-tools/local-agent-browser) — запуск локальных профилей Orbita с помощью этого CLI
 - [Начало работы с Cloud Browser](/ru/api-reference/cloud-browser/getting-started) — примеры для Puppeteer/Playwright
-- [AI Skills](/ru/api-reference/ai-integrations/ai-skills) — готовые к использованию навыки для Claude Code
+- [AI Skills](/ru/api-reference/ai-integrations/ai-skills) — готовые навыки для Claude Code
 
 <Card title="Пакет npm" icon="npm" href="https://www.npmjs.com/package/gologin-agent-browser-cli">
   gologin-agent-browser-cli

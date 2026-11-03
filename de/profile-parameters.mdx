@@ -2,23 +2,23 @@
 title: "Profileinstellungen"
 ---
 
-Jedes Browserprofil in Gologin hat eigene Einstellungen, die bestimmen, wie es für Websites aussieht. Diese Einstellungen sind auf Tabs am oberen Rand des Profileditors verteilt.
+Jedes Browserprofil in Gologin hat eigene Einstellungen, die bestimmen, wie es für Websites aussieht. Diese Einstellungen sind oben im Profil-Editor auf mehrere Tabs verteilt.
 
-Die Profileinstellungen erreichen Sie über **3 dots on the profile** \> **Settings**.
+Die Profileinstellungen öffnen Sie über **3 dots on the profile** \> **Settings**.
 
 ## Overview
 
-Auf diesem Tab legen Sie fest, auf welchem Betriebssystem das Profil scheinbar läuft, und erzeugen den Kern-Fingerprint.
+In diesem Tab legen Sie fest, auf welchem Betriebssystem das Profil scheinbar läuft, und erzeugen den zentralen Fingerprint.
 
-**Operating system** – Wählen Sie zwischen Windows 10, Windows 11, Mac Intel, Mac ARM, Linux und Android. Damit wird festgelegt, welches Betriebssystem das Profil jeder besuchten Website meldet.
+**Operating system** - Wählen Sie zwischen Windows 10, Windows 11, Mac Intel, Mac ARM, Linux und Android. Damit wird festgelegt, welches Betriebssystem das Profil jeder besuchten Website meldet.
 
 <Warning>
-  Das Betriebssystem kann nur beim Erstellen eines Profils ausgewählt werden. Sobald ein Profil gespeichert ist, ist diese Option gesperrt und lässt sich nicht mehr ändern. Wenn Sie ein anderes Betriebssystem benötigen, erstellen Sie ein neues Profil.
+  Das Betriebssystem kann nur beim Erstellen eines Profils ausgewählt werden. Sobald das Profil gespeichert ist, ist diese Option gesperrt und lässt sich nicht mehr ändern. Wenn Sie ein anderes Betriebssystem benötigen, erstellen Sie ein neues Profil.
 </Warning>
 
-**New Fingerprint** – Ein Klick darauf erzeugt neue Fingerprint-Werte für das Profil, etwa Bildschirmauflösung, Schriftarten, Grafikdetails und weitere Signale, mit denen Websites Browser identifizieren. Nutzen Sie diese Option, wenn Sie die Identität des Profils zurücksetzen möchten. Das Betriebssystem bleibt unverändert, und Cookies oder andere Browserdaten werden nicht gelöscht.
+**New Fingerprint** - Mit einem Klick darauf werden neue Fingerprint-Werte für das Profil erzeugt, zum Beispiel Bildschirmauflösung, Schriftarten, Grafikdetails und weitere Signale, mit denen Websites Browser identifizieren. Nutzen Sie diese Funktion, wenn Sie die Identität des Profils zurücksetzen möchten. Das Betriebssystem bleibt dabei unverändert, und Cookies oder andere Browserdaten werden nicht gelöscht.
 
-Das Panel **Profile Summary** auf der rechten Seite wird bei jeder Änderung aktualisiert und zeigt Ihnen auf einen Blick den aktuellen Fingerprint des Profils.
+Das Panel **Profile Summary** auf der rechten Seite wird bei jeder Änderung aktualisiert und gibt Ihnen einen schnellen Überblick über den aktuellen Fingerprint des Profils.
 
 <Frame>
   ![Einstellungen – Overview](/images/settings_overview.png)
@@ -26,26 +26,26 @@ Das Panel **Profile Summary** auf der rechten Seite wird bei jeder Änderung akt
 
 ## Proxy
 
-Auf diesem Tab legen Sie fest, welchen Proxy das Profil beim Surfen verwendet.
+In diesem Tab legen Sie fest, welchen Proxy das Profil beim Surfen verwendet.
 
-- **Gologin proxy** – Verwenden Sie einen Proxy aus dem integrierten Proxy-Dienst von Gologin.
-- **Your proxy** – Fügen Sie Ihren eigenen Proxy eines externen Anbieters ein.
-- **Without proxy** – Das Profil nutzt Ihre echte Internetverbindung. Die für Websites sichtbare IP-Adresse ist dann Ihre tatsächliche IP.
+- **Gologin proxy** - Verwenden Sie einen Proxy aus dem integrierten Proxy-Dienst von Gologin.
+- **Your proxy** - Fügen Sie Ihren eigenen Proxy eines externen Anbieters ein.
+- **Without proxy** - Das Profil nutzt Ihre echte Internetverbindung. Die für Websites sichtbare IP-Adresse ist Ihre tatsächliche IP-Adresse.
 
 <Frame>
   ![Einstellungen – Proxy](/images/settings_proxy.png)
 </Frame>
 
-Der hier zugewiesene Proxy bestimmt die IP-Adresse, die Websites sehen, wenn dieses Profil läuft. Er wirkt sich auch auf Zeitzone und Geolokalisierung aus, wenn diese so eingestellt sind, dass sie automatisch der IP folgen.
+Der hier zugewiesene Proxy bestimmt die IP-Adresse, die Websites sehen, solange das Profil läuft. Er beeinflusst außerdem Zeitzone und Geolokalisierung, sofern diese automatisch der IP-Adresse folgen.
 
 ## Timezone
 
-Auf diesem Tab legen Sie die Zeitzone fest, die das Profil an Websites meldet.
+In diesem Tab legen Sie die Zeitzone fest, die das Profil an Websites meldet.
 
-Standardmäßig ist der Schalter **Fill timezone based on the external IP** aktiviert. Das Profil verwendet dann automatisch die Zeitzone, die zum Standort seines Proxys passt. So bleibt das Profil in sich stimmig: Ein Profil mit US-Proxy meldet eine US-Zeitzone, so wie es ein echter Nutzer an diesem Standort tun würde.
+Standardmäßig ist der Schalter **Fill timezone based on the external IP** aktiviert. Das Profil verwendet dann automatisch die Zeitzone, die zum Standort seines Proxys passt. So bleibt das Profil in sich stimmig: Ein Profil mit einem US-Proxy meldet eine US-Zeitzone, so wie es auch ein echter Nutzer an diesem Standort tun würde. Damit ein Profil aus einem bestimmten Land zu stammen scheint, fügen Sie einen Proxy aus diesem Land hinzu und lassen Zeitzone und Geolokalisierung auf der IP-Adresse basieren. Gologin gleicht sie automatisch mit dem Proxy-Standort ab.
 
 <Note>
-  Wir empfehlen, diese Einstellung auf automatisch zu belassen und nicht manuell zu ändern. Wenn die Zeitzone nicht zum Proxy-Standort passt, kann das auf Websites verdächtig wirken. Ändern Sie sie nur, wenn Sie einen bestimmten Grund dafür haben.
+  Es wird empfohlen, die automatische Einstellung beizubehalten und die Zeitzone nicht manuell zu ändern. Wenn die Zeitzone nicht zum Proxy-Standort passt, kann das auf Websites verdächtig wirken. Ändern Sie sie nur, wenn Sie einen bestimmten Grund dafür haben.
 </Note>
 
 <Frame>
@@ -54,7 +54,7 @@ Standardmäßig ist der Schalter **Fill timezone based on the external IP** akti
 
 ## Extensions
 
-Auf diesem Tab installieren Sie Browser-Erweiterungen im Profil. Jedes Profil verwaltet seine Erweiterungen separat – eine hier hinzugefügte Erweiterung wirkt sich nicht auf andere Profile aus.
+In diesem Tab installieren Sie Browser-Erweiterungen im Profil. Jedes Profil verwaltet seine Erweiterungen getrennt. Eine hier hinzugefügte Erweiterung wirkt sich nicht auf andere Profile aus.
 
 Klicken Sie auf **Add extensions**, um Erweiterungen für dieses Profil zu durchsuchen und zu installieren.
 
@@ -66,13 +66,13 @@ Eine ausführliche Anleitung zur Funktionsweise von Erweiterungen in Gologin-Pro
 
 ## Bookmarks
 
-Auf diesem Tab fügen Sie Lesezeichen zur Lesezeichenleiste des Profils hinzu. Fügen Sie sie in einem der folgenden Formate in das Textfeld ein:
+In diesem Tab fügen Sie der Lesezeichenleiste des Profils Lesezeichen hinzu. Fügen Sie sie in einem der folgenden Formate in das Textfeld ein:
 
-- `folder::name::url` – erstellt ein Lesezeichen in einem benannten Ordner
-- `name::url` – erstellt ein benanntes Lesezeichen direkt in der Leiste
-- `url` – fügt die URL ohne benutzerdefinierten Namen hinzu
+- `folder::name::url` - erstellt ein Lesezeichen in einem benannten Ordner
+- `name::url` - erstellt ein benanntes Lesezeichen direkt in der Leiste
+- `url` - fügt die URL ohne benutzerdefinierten Namen direkt hinzu
 
-Jede Zeile ist ein eigenes Lesezeichen. Die Lesezeichen erscheinen in der Lesezeichenleiste in Orbita, sobald das Profil läuft.
+Jede Zeile ist ein eigenes Lesezeichen. Die Lesezeichen erscheinen in der Lesezeichenleiste in Orbita, wenn das Profil läuft.
 
 <Frame>
   ![Einstellungen – Bookmarks](/images/settings_bookmarks.png)
@@ -80,18 +80,18 @@ Jede Zeile ist ein eigenes Lesezeichen. Die Lesezeichen erscheinen in der Leseze
 
 ## Geolocation
 
-Auf diesem Tab legen Sie fest, was passiert, wenn eine Website Ihren Standort abfragt, zum Beispiel wenn eine Karten-App fragt: „Allow this site to know your location?“
+In diesem Tab legen Sie fest, was passiert, wenn eine Website Ihren Standort abfragt, zum Beispiel eine Karten-App mit der Frage „Allow this site to know your location?“
 
 Es gibt drei Optionen:
 
-- **Prompt** – Der Browser fragt Sie bei jeder Standortanfrage einer Website. Dies ist die Standardeinstellung und entspricht dem Verhalten eines echten Browsers.
-- **Allow** – Der Standortzugriff wird jeder Website, die ihn anfordert, automatisch gewährt.
-- **Block** – Alle Standortanfragen werden stillschweigend abgelehnt.
+- **Prompt** - Der Browser fragt Sie jedes Mal, wenn eine Website auf den Standort zugreifen möchte. Dies ist die Standardeinstellung und entspricht dem Verhalten eines echten Browsers.
+- **Allow** - Der Standortzugriff wird jeder Website, die ihn anfordert, automatisch gewährt.
+- **Block** - Alle Standortanfragen werden stillschweigend abgelehnt.
 
-Der Schalter **Fill geolocation based on the external IP** ist standardmäßig aktiviert. Ist er eingeschaltet, setzt Gologin die gemeldeten Koordinaten des Profils automatisch passend zum Standort des Proxys.
+Der Schalter **Fill geolocation based on the external IP** ist standardmäßig aktiviert. Wenn er eingeschaltet ist, setzt Gologin die vom Profil gemeldeten Koordinaten automatisch passend zum Standort des Proxys.
 
 <Note>
-  Wir empfehlen, diesen Schalter eingeschaltet zu lassen. Wenn Sie ihn ausschalten und die Geolokalisierung nicht zur Proxy-IP passt, kann diese Abweichung für Erkennungssysteme ein Signal sein. Passen Sie die Einstellung nur manuell an, wenn Sie wissen, welche Koordinaten Sie verwenden möchten und warum.
+  Es wird empfohlen, diesen Schalter eingeschaltet zu lassen. Wenn Sie ihn ausschalten und die Geolokalisierung nicht zur Proxy-IP passt, kann diese Abweichung für Erkennungssysteme ein Warnsignal sein. Passen Sie die Einstellung nur manuell an, wenn Sie wissen, welche Koordinaten Sie verwenden möchten und warum.
 </Note>
 
 <Frame>

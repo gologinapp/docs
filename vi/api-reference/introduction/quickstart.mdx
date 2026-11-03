@@ -2,13 +2,25 @@
 title: "Bắt đầu nhanh"
 ---
 
-Hướng dẫn này giúp bạn thiết lập và sẵn sàng sử dụng Gologin API. Chúng tôi sẽ trình bày cách bắt đầu với một trong các API client của chúng tôi và cách thực hiện yêu cầu API đầu tiên. Chúng tôi cũng sẽ chỉ ra những nội dung nên xem tiếp theo để bạn tìm được mọi thông tin cần thiết và tận dụng tối đa REST API mạnh mẽ của chúng tôi.
+Hướng dẫn này giúp bạn thiết lập và sẵn sàng sử dụng Gologin API. Chúng tôi sẽ trình bày cách bắt đầu với một trong các API client của chúng tôi và cách gửi yêu cầu API đầu tiên. Chúng tôi cũng sẽ giới thiệu những nội dung nên xem tiếp theo để bạn tìm được mọi thông tin cần thiết và tận dụng tối đa REST API mạnh mẽ của chúng tôi.
 
 <Note>
-  Trước khi có thể gửi yêu cầu đến Gologin API, bạn cần lấy API key từ bảng điều khiển của mình. Bạn có thể tìm thấy key này tại [Cài đặt » API](https://app.gologin.com/personalArea/TokenApi).
+  Trước khi có thể gửi yêu cầu đến Gologin API, bạn cần có một mã thông báo API.
+  Trong ứng dụng Gologin, hãy mở [API & MCP](https://app.gologin.com/personalArea/TokenApi), chuyển đến tab **API**, rồi nhấp vào **Mã thông báo mới**.
 </Note>
 
-## Thực hiện yêu cầu scraping ẩn danh đầu tiên
+## Gửi yêu cầu đầu tiên
+
+Hãy gửi mã thông báo của bạn trong header `Authorization` của mọi yêu cầu đến `https://api.gologin.com`. Lệnh gọi này liệt kê các hồ sơ trong tài khoản của bạn:
+
+```bash
+curl https://api.gologin.com/browser/v2 \
+  -H "Authorization: Bearer YOUR_API_TOKEN"
+```
+
+Phản hồi chứa một mảng `profiles` và `allProfilesCount`, là tổng số hồ sơ. Mỗi trang trả về tối đa 30 hồ sơ: thêm `?page=2` vào URL để xem trang tiếp theo. Xem [Lấy tất cả hồ sơ](https://gologin.com/docs/api-reference/profile/get-all-profiles) để biết tất cả các tham số.
+
+## Gửi yêu cầu scraping ẩn danh đầu tiên
 
 <CodeGroup>
 
@@ -106,7 +118,7 @@ gl.stop()
 
 </CodeGroup>
 
-## Tự chạy mã trong Node.js
+## Tự chạy mã bằng Node.js
 
 <CodeGroup>
 
@@ -120,7 +132,7 @@ GL_API_TOKEN=[YOUR_GOLOGIN_API_TOKEN] node filename.js
 
 </CodeGroup>
 
-## Tự chạy mã trong Python
+## Tự chạy mã bằng Python
 
 <CodeGroup>
 
@@ -137,13 +149,13 @@ GL_API_TOKEN=[YOUR_GOLOGIN_API_TOKEN] python3 filename.py
 
 </CodeGroup>
 
-## Tiếp theo là gì?
+## Bước tiếp theo
 
-Tuyệt vời, bạn đã thiết lập xong API client và thực hiện yêu cầu đầu tiên tới API. Dưới đây là một số liên kết hữu ích khi bạn tìm hiểu sâu hơn về Gologin API:
+Tuyệt vời, bạn đã thiết lập xong API client và gửi yêu cầu đầu tiên đến API. Dưới đây là một số liên kết hữu ích khi bạn tìm hiểu sâu hơn về Gologin API:
 
-- [Lấy API key của bạn tại Cài đặt \> API](https://app.gologin.com/personalArea/TokenApi)
-- [Gologin Web Access CLI](/vi/cli-tools/web-access) — CLI thống nhất cho scraping và tự động hóa trình duyệt (không cần viết mã)
-- [Agent Browser CLI](/vi/cli-tools/agent-browser) — CLI trình duyệt đám mây được xây dựng cho các AI agent
-- [Local Agent Browser CLI](/vi/cli-tools/local-agent-browser) — CLI Orbita cục bộ với profile và runbook
+- [Tạo mã thông báo API trong API & MCP](https://app.gologin.com/personalArea/TokenApi)
+- [Gologin Web Access CLI](/vi/cli-tools/web-access) — CLI hợp nhất cho scraping và tự động hóa trình duyệt (không cần viết mã)
+- [Agent Browser CLI](/vi/cli-tools/agent-browser) — CLI trình duyệt dành cho AI agent, chạy trên đám mây hoặc trên máy của bạn
+- [Agent Browser CLI: môi trường chạy cục bộ](/vi/cli-tools/local-agent-browser) — hồ sơ Orbita cục bộ, runbook và tác vụ hàng loạt
 - [AI Skills](/vi/api-reference/ai-integrations/ai-skills) — các skill cắm là chạy dành cho Claude Code
-- [MCP Server](/vi/api-reference/ai-integrations/mcp-server) — quản lý profile thông qua các cuộc trò chuyện với AI
+- [MCP Server](/vi/api-reference/ai-integrations/mcp-server) — quản lý hồ sơ thông qua các cuộc trò chuyện với AI

@@ -1,31 +1,32 @@
 ---
 title: "Gologin Agent Browser CLI"
-description: "Cloud browser automation CLI built for AI agents with snapshots, refs, and a persistent daemon"
+description: "Browser automation CLI for AI agents that runs Gologin profiles in Cloud Browser or in local Orbita, with snapshots, refs, and a persistent daemon"
 ---
 
-Gologin Agent Browser CLI turns Gologin Cloud Browser into a persistent, scriptable runtime for AI agents. It provides compact page snapshots, ref-based interaction, session memory, and shell-friendly output.
+Gologin Agent Browser CLI turns Gologin browser profiles into a persistent, scriptable runtime for AI agents. Sessions run in Gologin Cloud Browser or in Orbita on your own machine. It provides compact page snapshots, ref-based interaction, session memory, and shell-friendly output.
 
 Unlike writing Puppeteer/Playwright code from scratch, this CLI gives agents a ready-made command surface for browser automation — no boilerplate, no session management code.
 
 ---
 
-## Why cloud browser
+## Cloud or local runtime
 
-Local browser automation has hard limits for agent workflows:
+The CLI has two runtimes with the same commands. Both use Gologin profiles, fingerprints, and proxies, and a daemon keeps sessions alive across CLI calls.
 
-- Local browsers are easier to detect
-- No profile-based fingerprinting
-- No persistent cloud browser profiles
-- No built-in proxy layer
-- Hard to standardize across agents and environments
+| | `cloud` (default) | `local` |
+|---|---|---|
+| Where the browser runs | Gologin Cloud Browser | Orbita on your machine |
+| Profile ID | Optional: without it, a temporary cloud profile is created | Required |
+| Good for | Parallel sessions, remote sessions, machines that shouldn't run a browser | Profile warmup, first logins, local cookies and profile state, matching your OS |
 
-Agent Browser CLI takes the opposite approach:
+Choose the runtime per command with `--runtime cloud|local|auto`, or set `GOLOGIN_AGENT_BROWSER_RUNTIME` once:
 
-- Cloud browser runtime instead of a local process
-- Gologin profiles as the session identity layer
-- Proxy-aware sessions
-- Anti-detect capabilities inherited from Gologin
-- A persistent daemon that keeps sessions alive across CLI calls
+```bash
+gologin-agent-browser open https://example.com
+gologin-agent-browser open https://example.com --runtime local --profile your_profile_id
+```
+
+By default (`auto`), profile, runbook, and job commands run locally and everything else runs in the cloud. Once you open a local session, pass `--runtime local` to the commands that follow too. See [Local runtime](/cli-tools/local-agent-browser) for requirements and local-only commands.
 
 ---
 
@@ -41,7 +42,7 @@ Or run without global install:
 npx gologin-agent-browser-cli --help
 ```
 
-Requires Node.js >= 18.
+Requires Node.js >= 18. The local runtime needs Node.js 20 or later.
 
 ---
 
@@ -49,10 +50,12 @@ Requires Node.js >= 18.
 
 | Variable | Required | Description |
 |---|---|---|
-| `GOLOGIN_TOKEN` | Yes (for `open`) | Gologin API token |
+| `GOLOGIN_TOKEN` | Yes (for `open` and API commands) | Gologin API token |
 | `GOLOGIN_PROFILE_ID` | Optional | Default profile ID |
-| `GOLOGIN_DAEMON_PORT` | Optional | Daemon port (default: `44777`) |
-| `GOLOGIN_CONNECT_BASE` | Optional | Cloud Browser endpoint |
+| `GOLOGIN_AGENT_BROWSER_RUNTIME` | Optional | Default runtime: `cloud`, `local`, or `auto` |
+| `GOLOGIN_DAEMON_PORT` | Optional | Daemon port (default: `44777` for cloud, `44778` for local) |
+| `GOLOGIN_CONNECT_BASE` | Optional | Cloud Browser endpoint (default: `https://cloudbrowser.gologin.com/connect`) |
+| `GOLOGIN_EXECUTABLE_PATH` | Optional | Path to the Orbita executable for the local runtime |
 
 ### Get a token
 
@@ -76,14 +79,14 @@ export GOLOGIN_TOKEN='your_gologin_token'
 
 Two parts:
 
-1. **`gologin-agent-browser` CLI** — parses commands, auto-starts daemon, prints compact output
-2. **Persistent local daemon** — owns live browser sessions, connects to Gologin Cloud Browser through Playwright `connectOverCDP`, keeps the active page in memory, builds snapshots, resolves refs, tracks session metadata
+1. **`gologin-agent-browser` CLI** — parses commands, picks the runtime, auto-starts the matching daemon, prints compact output
+2. **Persistent local daemons**, one per runtime — own live browser sessions, connect to Gologin Cloud Browser or local Orbita through Playwright `connectOverCDP`, keep the active page in memory, build snapshots, resolve refs, track session metadata
 
-Transport is local only:
+Transport is local only. The cloud daemon listens on:
 - Unix socket at `${TMPDIR:-/tmp}/gologin-agent-browser.sock`
 - Localhost HTTP on `127.0.0.1:${GOLOGIN_DAEMON_PORT:-44777}`
 
-If you do not provide a profile ID, the daemon creates a temporary Gologin cloud profile through the API.
+In the cloud runtime, if you do not provide a profile ID, the daemon creates a temporary Gologin cloud profile through the API.
 
 ---
 
@@ -100,7 +103,12 @@ gologin-agent-browser type @e5 "search query"
 gologin-agent-browser fill @e7 "username"
 ```
 
-Refs are best-effort and should be regenerated after navigation or major DOM changes. On dynamic pages, `find` is usually a better fallback than stale refs.
+Refs are best-effort and should be regenerated after navigation or major DOM changes. Commands also accept CSS selectors instead of refs. On dynamic pages, `find` is usually a better fallback than stale refs: it locates the element on the live page and acts on it in one step.
+
+```bash
+gologin-agent-browser find label "Email" fill "user@example.com"
+gologin-agent-browser find role button click --name "Submit"
+```
 
 ---
 
@@ -156,9 +164,9 @@ A typical AI agent loop:
 
 | Command | Description |
 |---|---|
-| `open <url>` | Open URL in a cloud browser session |
-| `close` | Close the current session |
-| `sessions` | List active sessions |
+| `open <url>` | Open URL in a browser session |
+| `close` | Close the current session (`--all` closes every session of this daemon) |
+| `sessions` | List active sessions (`--prune` removes stale ones) |
 | `current` | Show current session info |
 
 ### Page reading
@@ -182,7 +190,7 @@ A typical AI agent loop:
 | `select <ref> <value>` | Select dropdown value |
 | `check <ref>` / `uncheck <ref>` | Toggle checkbox |
 | `focus <ref>` | Focus an element |
-| `find ...` | Semantic element search |
+| `find <by> <locator> <action> [value]` | Find an element by `role`, `text`, `label`, `placeholder`, `first`, `last`, or `nth` and `click`, `fill`, `type`, or `hover` it, or read its `text` |
 
 ### Keyboard and scroll
 
@@ -227,6 +235,33 @@ A typical AI agent loop:
 |---|---|
 | `eval <expression>` | Evaluate JavaScript in page |
 | `upload <ref> <file...>` | Upload files |
+
+### Profiles, proxies, and the Gologin API
+
+These commands call the Gologin API with your token and don't need the browser daemon.
+
+| Command | Description |
+|---|---|
+| `api <METHOD> <path>` | Call any Gologin REST API endpoint |
+| `browser <action>` | Profiles: list, get, create, update, delete, cookies, proxy, cloud start and stop, import and export |
+| `proxy <action>` | Proxies: list, add a Gologin proxy, update, delete, traffic |
+| `workspace`, `folder`, `share`, `template` | Workspaces and members, folders, sharing, profile templates |
+| `user`, `deleted-profile` | Account info and dev tokens, restoring deleted profiles |
+| `cloud-usage` | Cloud Browser usage for a profile or workspace |
+| `profile-cloud`, `profile-cookies`, `profile-fingerprint`, `profile-proxy`, `profile-ua` | Shortcuts: start or stop a profile in the cloud, export or import its cookies, refresh its fingerprint, add a proxy, update its user agent |
+
+```bash
+gologin-agent-browser browser list --page 1
+gologin-agent-browser proxy add-gologin your_profile_id --country us --type residential
+gologin-agent-browser cloud-usage --profile your_profile_id
+gologin-agent-browser api GET /browser/your_profile_id
+```
+
+Add `--help` to any command to print its usage.
+
+### Local runtime only
+
+`profiles`, `profile`, `profile-create`, `profile-update`, `profile-import`, `profile-sync`, `profile-delete`, `run`, `batch`, `jobs`, and `job` manage local profiles, runbooks, and job history. See [Local runtime](/cli-tools/local-agent-browser#profile-commands).
 
 ### Aliases
 
@@ -319,8 +354,7 @@ Some sites require JavaScript execution, login, or interaction before showing re
 ```bash
 gologin-agent-browser open https://protected-directory.com
 gologin-agent-browser snapshot
-gologin-agent-browser find "search input"
-gologin-agent-browser type @found "machine learning engineer San Francisco"
+gologin-agent-browser find placeholder "Search" fill "machine learning engineer San Francisco"
 gologin-agent-browser press Enter
 gologin-agent-browser wait 3000
 gologin-agent-browser snapshot     # agent reads search results
@@ -356,16 +390,17 @@ Use explicit `--session` IDs for independent cloud tasks. Clean up with `close -
 
 ## Proxy rules
 
-- Preconfigured profiles: proxy is set on the profile via Gologin dashboard or API
-- Temporary profiles: support no proxy or custom proxy host/port
-- `--proxy-country` is only available for preconfigured profiles
+- Preconfigured profiles: proxy is set on the profile via Gologin dashboard or API, for example `proxy add-gologin <profileId> --country us`
+- Temporary cloud profiles: no proxy, or your own proxy with `--proxy-host` and `--proxy-port` (plus `--proxy-mode http|socks4|socks5`, `--proxy-user`, `--proxy-pass`)
+- In the cloud runtime, `open` doesn't accept `--proxy-country`. For Gologin proxy traffic from a country, add a Gologin proxy to a profile and open it with `--profile`
+- In the local runtime, `open`, `profile-create`, and `profile-update` accept `--proxy-country`
 
 ---
 
 ## Related
 
 - [Gologin Web Access CLI](/cli-tools/web-access) — unified CLI (scraping + browser)
-- [Local Agent Browser CLI](/cli-tools/local-agent-browser) — local Orbita alternative
+- [Local runtime](/cli-tools/local-agent-browser) — run local Orbita profiles with this CLI
 - [Cloud Browser Getting Started](/api-reference/cloud-browser/getting-started) — Puppeteer/Playwright examples
 - [AI Skills](/api-reference/ai-integrations/ai-skills) — plug-and-play skills for Claude Code
 

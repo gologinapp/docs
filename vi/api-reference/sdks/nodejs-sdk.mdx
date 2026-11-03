@@ -1,6 +1,6 @@
 ---
 title: "Node.js SDK"
-description: "Chạy profile Gologin bằng lập trình với Node.js SDK"
+description: "Chạy hồ sơ Gologin bằng lập trình với Node.js SDK"
 ---
 
 ### Cài đặt
@@ -8,6 +8,8 @@ description: "Chạy profile Gologin bằng lập trình với Node.js SDK"
 ```bash
 npm i gologin
 ```
+
+Yêu cầu Node.js 20 trở lên. SDK phiên bản 3 chỉ hỗ trợ ESM: hãy tải SDK bằng `import`, `require('gologin')` sẽ không hoạt động.
 
 ### Cách dùng cơ bản
 
@@ -25,47 +27,75 @@ const { status, wsUrl } = await GL.start();
 await GL.stop();
 ```
 
+### Khởi chạy bằng GologinApi
+
+`GologinApi` khởi chạy hồ sơ và tự động kết nối Puppeteer cho bạn. `launch()` trả về một `browser` của Puppeteer. Truyền `cloud: true` để chạy hồ sơ trên [Gologin Cloud Browser](/vi/api-reference/cloud-browser/what-is-gologin-cloud-browser) thay vì trình duyệt Orbita cục bộ:
+
+```javascript
+import { GologinApi } from 'gologin';
+
+const gologin = GologinApi({ token: 'your-api-token' });
+
+// local Orbita on this machine
+const { browser } = await gologin.launch({ profileId: 'your-profile-id' });
+
+// or Gologin Cloud Browser
+// const { browser } = await gologin.launch({ cloud: true, profileId: 'your-profile-id' });
+
+const page = await browser.newPage();
+await page.goto('https://example.com');
+
+// close the browser and stop the profile
+await gologin.exit();
+```
+
+Nếu không truyền `profileId`, `launch()` sẽ tạo một hồ sơ mới trước. `GologinApi` còn có các hàm hỗ trợ như `createProfileRandomFingerprint()`, `addGologinProxyToProfile()`, `addCookiesToProfile()` và `deleteProfile()`. Xem [Quickstart](/vi/api-reference/introduction/quickstart) để có ví dụ đầy đủ.
+
 ### Các tham số chính
 
 | Tham số | Mặc định | Mô tả |
 |---|---|---|
-| `token` | bắt buộc | API token Gologin của bạn |
-| `profile_id` | bắt buộc | ID của profile cần khởi chạy |
+| `token` | bắt buộc | Token API Gologin của bạn |
+| `profile_id` | bắt buộc | ID của hồ sơ cần khởi chạy |
 | `executablePath` | tự động | Đường dẫn đến tệp thực thi của trình duyệt Orbita |
-| `uploadCookiesToServer` | `false` | Tải cookie lên đám mây khi dừng profile. Đặt thành `true` nếu bạn cần giữ phiên đăng nhập trên nhiều thiết bị. |
-| `checkBrowserUpdate` | `true` | Kiểm tra bản cập nhật Orbita cho phiên bản của profile này khi khởi chạy. Đặt thành `false` để giữ nguyên phiên bản hiện tại. |
-| `autoUpdateBrowser` | `true` | Tự động tải về các phiên bản Orbita mới. Đặt thành `false` để tránh các bản cập nhật ngoài ý muốn. |
-| `extra_params` | `[]` | Các cờ Chromium bổ sung được truyền vào trình duyệt |
+| `uploadCookiesToServer` | `false` | Tải cookie lên đám mây khi dừng hồ sơ. Đặt thành `true` nếu bạn cần giữ phiên đăng nhập giữa nhiều thiết bị. |
+| `extra_params` | `[]` | Các cờ Chromium bổ sung được truyền cho trình duyệt |
 
-### Dừng profile
+### Dừng hồ sơ
 
 ```javascript
-// Stop and sync to cloud (default)
+// Stop and sync to cloud
 await GL.stop();
 
-// Stop without syncing any data to cloud
-await GL.stop({ posting: false });
+// Stop without syncing profile data to cloud
+await GL.stopLocal({ posting: false });
 ```
 
-Lưu ý: `posting: false` ngăn dữ liệu profile được tải lên máy chủ Gologin. Hãy dùng tùy chọn này khi chạy trên máy chủ mà bạn không muốn đồng bộ lên đám mây.
+Trước tiên hãy đóng trình duyệt trong công cụ tự động hóa của bạn, ví dụ bằng `browser.close()`. `stop()` không nhận tùy chọn nào và luôn tải hồ sơ lên Gologin. `stopLocal({ posting: false })` kết thúc phiên mà không tải dữ liệu hồ sơ lên. Hãy dùng cách này trên máy chủ nếu bạn không muốn đồng bộ lên đám mây. Cookie vẫn được tải lên nếu bạn đặt `uploadCookiesToServer: true`.
 
 ### Quản lý phiên bản trình duyệt Orbita
 
+Khi một hồ sơ khởi động, SDK sẽ kiểm tra phiên bản Orbita mà user agent của hồ sơ yêu cầu. Nếu phiên bản đó chưa có trong `~/.gologin/browser`, SDK sẽ tải xuống, nếu có rồi thì dùng lại bản đã cài. Để chạy một bản dựng cụ thể, hãy truyền `executablePath`. Các tùy chọn `autoUpdateBrowser` (mặc định là `false`) và `checkBrowserUpdate` vẫn được chấp nhận, nhưng trong SDK hiện tại (3.0.7) chúng không làm thay đổi hành vi này.
+
+Để tải Orbita trước, hãy gọi `checkAndDownloadBrowserByOpts()` trên một đối tượng `GoLogin`. Đây là một phương thức, không phải một export riêng:
+
 ```javascript
-import { checkAndDownloadBrowserByOpts } from 'gologin';
+import { GoLogin } from 'gologin';
+
+const GL = new GoLogin({ token: 'your-api-token' });
 
 // Pre-download the latest Orbita version
-await checkAndDownloadBrowserByOpts({ lastActualCount: 1 });
+await GL.checkAndDownloadBrowserByOpts({ lastActualCount: 1 });
 
 // Pre-download specific versions
-await checkAndDownloadBrowserByOpts({ majorVersions: [142, 143] });
+await GL.checkAndDownloadBrowserByOpts({ majorVersions: [142, 143] });
 ```
 
-Hãy dùng `checkAndDownloadBrowserByOpts` trước khi khởi chạy nhiều profile song song để tránh nhiều lượt tải xuống diễn ra cùng lúc.
+Nếu không truyền tùy chọn, hàm sẽ tải 5 phiên bản mới nhất. Hãy dùng hàm này trước khi khởi chạy song song nhiều hồ sơ để tránh nhiều lượt tải xuống cùng lúc.
 
-### Chạy hơn 100 profile song song
+### Chạy hơn 100 hồ sơ song song
 
-Khi chạy nhiều profile đồng thời trên máy chủ:
+Khi chạy đồng thời nhiều hồ sơ trên máy chủ:
 
 ```javascript
 // Use a queue to limit concurrent launches
@@ -95,12 +125,12 @@ async function processQueue() {
 }
 ```
 
-**Lưu ý quan trọng khi dùng máy chủ:**
-- Giới hạn số profile khởi chạy đồng thời (nên bắt đầu với 10-20)
+**Lưu ý quan trọng khi dùng trên máy chủ:**
+- Giới hạn số hồ sơ khởi chạy đồng thời (nên bắt đầu với 10-20)
 - Tải trước các phiên bản Orbita trước khi khởi chạy
 - Trên Linux: cài đặt Xvfb và đặt `DISPLAY=:99`
-- Tăng giới hạn file descriptor: `ulimit -n 65536`
-- Theo dõi RAM: mỗi profile sử dụng khoảng 300-500 MB
+- Tăng giới hạn số file descriptor: `ulimit -n 65536`
+- Theo dõi RAM: mỗi hồ sơ dùng khoảng 300-500 MB
 
 ### Gỡ lỗi
 
@@ -110,7 +140,7 @@ async function processQueue() {
 DEBUG=gologin node your-script.js
 ```
 
-### GitHub và Changelog
+### GitHub và Nhật ký thay đổi
 
 - Mã nguồn: https://github.com/gologinapp/gologin
-- [Changelog](/vi/api-reference/sdks/nodejs-changelog)
+- [Nhật ký thay đổi](/vi/api-reference/sdks/nodejs-changelog)

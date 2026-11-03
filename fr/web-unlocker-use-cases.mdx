@@ -2,7 +2,7 @@
 title: "Cas d'usage de Web Unlocker"
 ---
 
-Web Unlocker est une Scraping API : vous envoyez une URL, et elle renvoie le HTML entièrement rendu. Cette page présente les façons les plus courantes de l'utiliser.
+Web Unlocker est une API de scraping : vous envoyez une URL, et elle renvoie le HTML entièrement rendu. Cette page présente les façons les plus courantes de l'utiliser.
 
 ---
 
@@ -50,7 +50,11 @@ Pas de navigateur à lancer, pas de proxy à configurer, pas de Cloudflare à co
 
 ## Alimenter une IA avec du contenu
 
-Web Unlocker renvoie du HTML brut. Transmettez-le à un LLM pour extraire des données structurées, résumer du contenu ou répondre à des questions sur la page, sans avoir besoin d'écrire de logique d'analyse.
+Web Unlocker renvoie du HTML brut. Transmettez-le à un LLM pour extraire des données structurées, résumer du contenu ou répondre à des questions sur la page, sans aucune logique de parsing.
+
+<Tip>
+Pour envoyer moins de balisage au modèle, ajoutez `format=markdown` à la requête : vous obtiendrez la page en Markdown plutôt qu'en HTML.
+</Tip>
 
 ### Python \+ OpenAI
 
@@ -91,7 +95,7 @@ const html = await fetch(
 
 const client = new Anthropic();
 const message = await client.messages.create({
-  model: "claude-opus-4-5",
+  model: "claude-opus-5-5",
   max_tokens: 1024,
   messages: [
     {
@@ -107,7 +111,7 @@ console.log(message.content[0].text);
 **Idéal pour :**
 
 - Extraire des données structurées (prix, noms, dates) sans écrire de parseurs
-- Résumer des articles ou des fiches produit
+- Résumer des articles ou des pages produit
 - Comparer plusieurs pages et en tirer des conclusions
 - Créer des outils de recherche ou de veille basés sur l'IA
 
@@ -115,7 +119,7 @@ console.log(message.content[0].text);
 
 ## L'utiliser dans un agent IA
 
-Donnez à votre agent IA un outil `scrape` reposant sur Web Unlocker. L'agent peut alors naviguer sur le web de manière autonome : récupérer des pages, lire leur contenu et agir, sans que vous ayez à écrire la moindre logique de navigation.
+Donnez à votre agent IA un outil `scrape` reposant sur Web Unlocker. L'agent peut alors naviguer sur le web de manière autonome : récupérer des pages, lire leur contenu et agir en conséquence, sans que vous ayez à écrire de logique de navigation.
 
 ```python
 import requests
@@ -150,7 +154,7 @@ messages = [
 
 while True:
     response = client.messages.create(
-        model="claude-opus-4-5",
+        model="claude-opus-5-5",
         max_tokens=1024,
         tools=tools,
         messages=messages
@@ -174,20 +178,20 @@ while True:
     messages.append({"role": "user", "content": tool_results})
 ```
 
-L'agent décide quand scraper et quelle URL récupérer. Web Unlocker se charge de la récupération proprement dite.
+L'agent décide quand effectuer un scraping et quelle URL récupérer. Web Unlocker se charge de la récupération proprement dite.
 
 **Idéal pour :**
 
-- Les agents de recherche qui naviguent sur le web de manière autonome
-- Les bots de comparaison de prix ou de recherche de bonnes affaires
-- Les pipelines de veille concurrentielle
-- Tout agent qui a besoin de données web en temps réel
+- Des agents de recherche qui naviguent sur le web de façon autonome
+- Des bots de comparaison de prix ou de recherche de bonnes affaires
+- Des pipelines de veille concurrentielle
+- Tout agent ayant besoin de données web en temps réel
 
 ---
 
-## Scraper plusieurs pages à la fois
+## Scraper plusieurs pages en même temps
 
-Exécutez des requêtes simultanées pour collecter les données de plusieurs URL en parallèle.
+Lancez des requêtes en parallèle pour collecter des données depuis plusieurs URL simultanément.
 
 ```python
 import requests
@@ -219,20 +223,9 @@ for url, html in results:
 
 **Idéal pour :**
 
-- Scraper des catalogues de produits ou des pages de listes entiers
+- Scraper des catalogues de produits ou des pages de listes entières
 - Collecter des données en masse pour constituer des jeux de données d'entraînement
 - Surveiller de nombreuses pages simultanément
-
----
-
-## Résumé
-
-| Cas d'usage | Ce que vous faites | Ce que vous obtenez |
-| --- | --- | --- |
-| Scraper une seule page | GET avec le paramètre URL | HTML rendu |
-| Alimenter un LLM | Scraper → transmettre au modèle | Données extraites ou résumé |
-| Outil pour agent IA | L'agent l'appelle à la demande | Contenu web en temps réel |
-| Scraping en masse | Requêtes simultanées | HTML pour chaque URL |
 
 ---
 
@@ -268,11 +261,11 @@ Consultez [Web Access CLI](/fr/cli-tools/web-access) pour la référence complè
 
 ---
 
-## Résumé
+## Récapitulatif
 
 | Cas d'usage | Ce que vous faites | Ce que vous obtenez |
 | --- | --- | --- |
-| Scraper une seule page | GET avec le paramètre URL | HTML rendu |
+| Scraper une seule page | Requête GET avec le paramètre URL | HTML rendu |
 | Alimenter un LLM | Scraper → transmettre au modèle | Données extraites ou résumé |
 | Outil pour agent IA | L'agent l'appelle à la demande | Contenu web en temps réel |
 | Scraping en masse | Requêtes simultanées | HTML pour chaque URL |

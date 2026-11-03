@@ -2,13 +2,13 @@
 title: "Démarrage rapide"
 ---
 
-Ce guide vous montre comment extraire votre première URL avec Web Unlocker.
+Ce guide explique comment extraire les données de votre première URL avec Web Unlocker.
 
 ---
 
 ## Prérequis
 
-- Une clé API Web Unlocker (contactez **ermakova.t@gologin.com** pour en obtenir une)
+- Une clé API Web Unlocker. Obtenez-en une grâce au formulaire de la [page Web Unlocker](https://gologin.com/web-unlocker/#web_unlocker_form). La clé arrive sous un jour ouvré, avec des requêtes gratuites pour tester vos propres cibles. Aucune carte bancaire n'est nécessaire.
 - Python 3.x, Node.js ou n'importe quel client HTTP
 
 ---
@@ -21,7 +21,7 @@ Toutes les requêtes nécessitent votre clé API dans l'en-tête `apikey` :
 apikey: YOUR_API_KEY
 ```
 
-L'URL de base pour toutes les requêtes API est :
+L'URL de base de toutes les requêtes API est :
 
 ```
 https://parsing.webunlocker.gologin.com/v1
@@ -31,7 +31,7 @@ https://parsing.webunlocker.gologin.com/v1
 
 ## Envoyer votre première requête
 
-Envoyez une requête GET avec l'URL cible en paramètre de requête. La réponse correspond au code HTML entièrement rendu de la page.
+Envoyez une requête GET avec l'URL cible comme paramètre de requête. La réponse correspond au code HTML entièrement rendu de la page.
 
 ### cURL
 
@@ -69,9 +69,9 @@ console.log(html);
 
 ---
 
-## Ce que vous recevez en retour
+## Ce que vous recevez
 
-Le corps de la réponse est le code HTML brut rendu de la page, c'est-à-dire le même contenu que celui que vous verriez en ouvrant l'URL dans un navigateur. Il n'y a pas d'enveloppe JSON et aucun parsing n'est nécessaire.
+Le corps de la réponse est le code HTML brut rendu de la page, soit le même contenu que celui que vous verriez en ouvrant l'URL dans un navigateur. Il n'y a pas d'enveloppe JSON ni d'analyse à effectuer.
 
 ```html
 <!DOCTYPE html>
@@ -81,19 +81,48 @@ Le corps de la réponse est le code HTML brut rendu de la page, c'est-à-dire le
 </html>
 ```
 
+### Autres formats
+
+Ajoutez le paramètre de requête `format` pour obtenir la page dans un autre format :
+
+| `format` | Corps de la réponse |
+|---|---|
+| `html` | HTML de la page (valeur par défaut) |
+| `markdown` | Contenu de la page en Markdown |
+| `json` | Objet JSON contenant l'URL, les métadonnées de la requête et le HTML de la page |
+
+```bash
+curl "https://parsing.webunlocker.gologin.com/v1/scrape?url=https%3A%2F%2Fexample.com&format=json" \
+  -H "apikey: YOUR_API_KEY"
+```
+
+```json
+{
+  "success": true,
+  "data": {
+    "url": "https://example.com",
+    "metadata": {
+      "response_time_ms": 297,
+      "status_code": 200
+    },
+    "html": "<!DOCTYPE html><html lang=\"en\">..."
+  }
+}
+```
+
 ---
 
 ## Gestion des erreurs
 
-Vérifiez le code de statut HTTP avant de traiter la réponse :
+Vérifiez le code d'état HTTP avant de traiter la réponse :
 
-| Statut | Signification |
-|---|---|
-| `200` | Succès : le corps de la réponse est le code HTML de la page |
-| `401` | Clé API invalide ou manquante |
-| `422` | Paramètre URL invalide ou manquant |
-| `429` | Limite de requêtes dépassée |
-| `500` / `503` | Erreur serveur : réessayez avec un délai d'attente progressif (backoff) |
+| Statut | Signification | Corps de la réponse |
+|---|---|---|
+| `200` | Succès | La page dans le format demandé |
+| `400` | Requête incorrecte, par exemple si le paramètre `url` est manquant | `{"success":false,"error":"Request failed"}` |
+| `401` | L'en-tête `apikey` est manquant | `{"message":"Missing API key in request"}` |
+
+Si vous recevez un statut `429` ou `5xx`, réessayez avec un délai d'attente exponentiel (exponential backoff).
 
 ```python
 response = requests.get(
@@ -135,4 +164,4 @@ gologin-web-access scrape-json https://example.com
 gologin-web-access batch-scrape https://example.com/page/1 https://example.com/page/2 --format text
 ```
 
-Consultez [SDK et CLI Web Unlocker](/fr/scraping-api-sdk-and-cli) et [CLI Web Access](/fr/cli-tools/web-access) pour plus de détails.
+Consultez [Web Unlocker SDK et CLI](/fr/scraping-api-sdk-and-cli) et [CLI Web Access](/fr/cli-tools/web-access) pour plus de détails.

@@ -11,7 +11,7 @@ It works exactly like Chrome or Firefox, but runs on a server. No screen require
 
 Modern browsers expose a control protocol called **Chrome DevTools Protocol (CDP)**. Automation libraries like Playwright and Puppeteer use CDP to send commands to the browser: navigate to this URL, click this element, read this text, take a screenshot.
 
-GoLogin Cloud Browser is built on top of this same protocol — your Puppeteer or Playwright code connects to a remote browser over CDP and controls it the same way it would a local one.
+Gologin Cloud Browser is built on top of this same protocol — your Puppeteer or Playwright code connects to a remote browser over CDP and controls it the same way it would a local one.
 
 ## Why use a headless browser instead of a regular HTTP request?
 
@@ -35,9 +35,9 @@ Managing browser processes in production requires handling:
 - **Scaling** — traffic spikes require spinning up more instances on demand
 - **Memory leaks** — long-running browser sessions accumulate memory
 
-GoLogin Cloud Browser handles all of this infrastructure so you connect to a ready session via a single URL and focus on your automation logic.
+Gologin Cloud Browser handles all of this infrastructure so you connect to a ready session via a single URL and focus on your automation logic.
 
-## Why GoLogin specifically?
+## Why Gologin specifically?
 
 A standard headless Chrome is detectable. Websites use browser fingerprinting to identify automation — checking canvas rendering, WebGL parameters, font lists, timezone, screen size, and dozens of other signals.
 

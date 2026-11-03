@@ -3,17 +3,17 @@ title: "Utiliser Web Unlocker avec des agents IA"
 description: "Comment utiliser Gologin Web Unlocker comme outil de scraping pour les agents IA et les pipelines LLM"
 ---
 
-Gologin Web Unlocker est une API de scraping qui renvoie le HTML entièrement rendu de n'importe quelle URL. Pour les agents IA, cela signifie un accès web fiable sans orchestration de navigateur : un seul appel HTTP par page.
+Gologin Web Unlocker est une API de scraping qui renvoie le code HTML entièrement rendu de n'importe quelle URL. Pour les agents IA, cela signifie un accès fiable au web sans orchestration de navigateur : un seul appel HTTP par page.
 
 <Tip>
-  **Vous ne voulez pas écrire de code ?** Utilisez la [Web Access CLI](/fr/cli-tools/web-access) ou le [Scraping Skill](/fr/api-reference/ai-integrations/ai-skills) pour doter votre agent de capacités de scraping prêtes à l'emploi.
+  **Vous ne voulez pas écrire de code ?** Utilisez la [Web Access CLI](/fr/cli-tools/web-access) ou le [Scraping Skill](/fr/api-reference/ai-integrations/ai-skills) pour doter votre agent de capacités de scraping dès le départ.
 </Tip>
 
 ---
 
 ## Transmettre le contenu d'une page à un LLM
 
-Scrapez une page et transmettez le HTML à un modèle pour l'extraction, la synthèse ou l'analyse, sans aucune logique de parsing.
+Scrapez une page et transmettez le HTML à un modèle pour l'extraction, la synthèse ou l'analyse, sans aucune logique d'analyse syntaxique à écrire.
 
 ### Python + Claude
 
@@ -29,8 +29,8 @@ html = requests.get(
 
 client = anthropic.Anthropic()
 message = client.messages.create(
-    model="claude-sonnet-4-5-20250514",
-    max_tokens=1024,
+    model="claude-sonnet-5-5",
+    max_tokens=16000,
     messages=[
         {
             "role": "user",
@@ -39,7 +39,8 @@ message = client.messages.create(
     ]
 )
 
-print(message.content[0].text)
+# the response can also contain thinking blocks, so print only the text
+print("".join(block.text for block in message.content if block.type == "text"))
 ```
 
 ### JavaScript + Claude
@@ -55,8 +56,8 @@ const html = await fetch(
 
 const client = new Anthropic();
 const message = await client.messages.create({
-  model: "claude-sonnet-4-5-20250514",
-  max_tokens: 1024,
+  model: "claude-sonnet-5-5",
+  max_tokens: 16000,
   messages: [
     {
       role: "user",
@@ -65,7 +66,8 @@ const message = await client.messages.create({
   ],
 });
 
-console.log(message.content[0].text);
+// the response can also contain thinking blocks, so print only the text
+console.log(message.content.find((block) => block.type === "text")?.text);
 ```
 
 ---
@@ -107,14 +109,14 @@ messages = [
 
 while True:
     response = client.messages.create(
-        model="claude-sonnet-4-5-20250514",
-        max_tokens=1024,
+        model="claude-sonnet-5-5",
+        max_tokens=16000,
         tools=tools,
         messages=messages
     )
 
-    if response.stop_reason == "end_turn":
-        print(response.content[0].text)
+    if response.stop_reason != "tool_use":
+        print("".join(block.text for block in response.content if block.type == "text"))
         break
 
     tool_results = []
@@ -131,7 +133,7 @@ while True:
     messages.append({"role": "user", "content": tool_results})
 ```
 
-L'agent décide quand scraper et quelle URL récupérer. Web Unlocker se charge de la récupération : rendu JavaScript, contournement des protections anti-bot, rotation des proxys, résolution des CAPTCHA.
+L'agent décide quand scraper et quelle URL récupérer. Web Unlocker se charge de la récupération : rendu JavaScript, contournement des systèmes anti-bot, rotation des proxys, résolution des CAPTCHA.
 
 ---
 
@@ -189,15 +191,15 @@ Consultez la [référence de la Web Access CLI](/fr/cli-tools/web-access) pour l
 
 ---
 
-## Modèles d'usage courants pour les agents
+## Cas d'usage courants des agents
 
-| Modèle | Comment |
+| Cas d'usage | Méthode |
 |---|---|
 | Agent de recherche | L'agent appelle l'outil `scrape` → lit les pages → synthétise les résultats |
-| Suivi des prix | `batch-scrape` des pages produits selon un calendrier → comparaison avec l'exécution précédente |
+| Suivi des prix | `batch-scrape` des pages produits à intervalles réguliers → comparaison avec l'exécution précédente |
 | Veille concurrentielle | `crawl` des sites concurrents → transmission à un LLM pour analyse |
 | Enrichissement de leads | `scrape-json` des pages d'entreprise → extraction de données structurées |
-| Agrégation de contenu | `search` + `scrape-text` → création de flux de contenu sélectionné |
+| Agrégation de contenu | `search` + `scrape-text` → création de flux de contenus sélectionnés |
 
 ---
 

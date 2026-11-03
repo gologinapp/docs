@@ -2,9 +2,9 @@
 title: "Thêm và quản lý proxy"
 ---
 
-Có nhiều cách để kết nối proxy của bạn trong trình duyệt Gologin. Bài viết này sẽ hướng dẫn tất cả các cách đó, từ cách dễ thấy nhất đến những cách nâng cao hơn.
+Có nhiều cách để kết nối proxy của bạn trong trình duyệt Gologin. Bài viết này giới thiệu tất cả các cách đó, từ đơn giản nhất đến nâng cao hơn.
 
-Các nhà cung cấp proxy bên thứ ba thường cung cấp **IP, cổng, tên người dùng và mật khẩu** làm điểm kết nối. Bạn có thể dán các thông tin này ở hầu hết mọi nơi trong phần cài đặt proxy, và một proxy mới sẽ được thêm vào danh sách proxy của bạn.
+Các nhà cung cấp proxy bên thứ ba thường cung cấp **IP, cổng, tên người dùng và mật khẩu** làm điểm kết nối. Bạn có thể dán các thông tin này gần như ở bất kỳ đâu trong phần cài đặt proxy, và một proxy mới sẽ được thêm vào danh sách proxy của bạn.
 
 Chúng tôi hỗ trợ các định dạng dán proxy sau:
 
@@ -21,16 +21,18 @@ Chúng tôi hỗ trợ các định dạng dán proxy sau:
 ## Cách đơn giản nhất
 
 1. Tại trang **Tất cả hồ sơ**, tìm cột **Vị trí** và nhấp vào nút **\+** ở hồ sơ mà bạn muốn thêm proxy.
-2. Trong cửa sổ vừa mở, nhấp vào **biểu tượng máy tính** rồi nhập **IP, cổng, tên người dùng** và **Mật khẩu**. 
+2. Trong cửa sổ vừa mở, nhấp vào **biểu tượng máy tính** và nhập **IP, cổng, tên người dùng** và **Mật khẩu**.
    - Giao thức HTTP hoặc SOCKS sẽ được chọn tự động tùy theo khả năng khả dụng, bạn có thể thay đổi sau.
 3. Nhấp **Kết nối**, proxy đã được thêm vào hồ sơ của bạn!
-4. Gologin sẽ kiểm tra proxy của bạn ngay lập tức. Bạn sẽ thấy chỉ báo màu xanh lá nếu proxy hoạt động bình thường, hoặc màu đỏ nếu proxy không hoạt động.
+4. Gologin sẽ kiểm tra proxy của bạn ngay lập tức. Bạn sẽ thấy đèn báo màu xanh lá nếu proxy hoạt động bình thường, hoặc màu đỏ nếu proxy không hoạt động.
 
 <Frame>
   ![Thêm proxy đơn giản](/images/add_proxy_simple.gif)
 </Frame>
 
-Bạn có thể dán từng proxy một hoặc dán hàng loạt ngay tại trang này. Hãy sao chép nhiều proxy rồi dán tất cả cùng lúc vào cột Vị trí. Bạn có thể dùng **phím tắt** của hệ thống hoặc nút **Dán proxy**. Sau đó, bạn có thể sắp xếp lại các proxy mới giữa các hồ sơ.
+Bạn cũng có thể dán trực tiếp một chuỗi proxy đầy đủ, chẳng hạn `ip:port:login:password`, vào cột **Ủy quyền & Vị trí** của hồ sơ - Gologin sẽ thêm proxy cùng toàn bộ thông tin. Lưu ý rằng trường **IP** trong biểu mẫu proxy chỉ nhận địa chỉ IP, không nhận cả chuỗi đầy đủ.
+
+Bạn có thể dán proxy từng cái một hoặc hàng loạt ngay tại trang này. Hãy sao chép nhiều proxy và dán tất cả cùng lúc vào cột Vị trí. Sử dụng **phím tắt** của hệ thống hoặc nút **Dán proxy**. Sau đó, bạn có thể sắp xếp lại các proxy mới giữa các hồ sơ.
 
 <Frame>
   ![Thêm proxy](/images/adding_proxy-1.gif)
@@ -43,21 +45,35 @@ Bạn có thể dán từng proxy một hoặc dán hàng loạt ngay tại tran
 Vào trang **proxy** ở menu bên trái \> **Nhập khẩu proxy** \> Dán proxy và nhấp **Nhập khẩu proxy**.
 
 <Frame>
-  ![Trang nhập proxy](/images/import_proxies_page.gif)
+  ![Trang nhập khẩu proxy](/images/import_proxies_page.gif)
 </Frame>
 
-### Sử dụng tính năng chọn hàng loạt hồ sơ
+### Sử dụng chọn hàng loạt hồ sơ
 
-**Chọn một vài hồ sơ trình duyệt** \> nhấp **Ủy quyền** trong hàng thao tác hàng loạt \> **nhập proxy** trong cửa sổ mới \> nhấp **Cập nhật proxy.**
+**Chọn một vài hồ sơ trình duyệt** \> nhấp **Ủy quyền** trong hàng thao tác hàng loạt \> **nhập proxy** vào cửa sổ mới \> nhấp **Cập nhật proxy.**
 
 <Frame>
   ![Cập nhật proxy hàng loạt](/images/bulk_proxy_update.gif)
 </Frame>
 
-### Trong phần cài đặt hồ sơ
+### Trong cài đặt hồ sơ
 
-Nhấp **3 dấu chấm trên hồ sơ** \> **Cài đặt** \> **Ủy quyền** \> **Proxy của bạn**
+Nhấp vào **3 chấm trên hồ sơ** \> **Cài đặt** \> **Ủy quyền** \> **Proxy của bạn**
 
 <Frame>
   ![Cài đặt proxy của hồ sơ](/images/proxy_profile_settings.gif)
 </Frame>
+
+## Thay đổi IP bằng liên kết đổi IP
+
+Một số nhà cung cấp bên thứ ba, thường là proxy di động xoay vòng, cung cấp cho bạn một liên kết để thay đổi IP của proxy. Nếu nhà cung cấp của bạn có liên kết như vậy, hãy thêm nó vào cài đặt proxy (xem các định dạng ở đầu trang này). Sau đó di chuột qua proxy trong cột **Ủy quyền & Vị trí** và nhấp **Thay đổi IP**.
+
+Proxy của Gologin không hỗ trợ thay đổi IP bằng liên kết.
+
+## Sửa nhanh khi proxy không hoạt động
+
+Nếu proxy của bên thứ ba không vượt qua bước kiểm tra khi bạn khởi chạy hồ sơ, Gologin sẽ hiển thị **Proxy không hoạt động hoặc quá chậm** kèm nút **Sửa nhanh**. Nhấp **Sửa nhanh** để thay proxy của bạn bằng một proxy của Gologin cùng quốc gia, và hồ sơ sẽ có thể chạy. Proxy của Gologin sử dụng lưu lượng proxy của bạn, vì vậy bạn cần còn lưu lượng khả dụng.
+
+![Sửa nhanh proxy](/images/proxy_quick_fix.png "Sửa nhanh proxy")
+
+Nếu bạn muốn tiếp tục dùng proxy của mình, hãy nhấp **Để sau** rồi sửa hoặc thay thế proxy đó.

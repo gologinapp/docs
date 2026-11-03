@@ -3,17 +3,17 @@ title: "AIエージェントでWeb Unlockerを使う"
 description: "Gologin Web UnlockerをAIエージェントやLLMパイプラインのスクレイピングツールとして使う方法"
 ---
 
-Gologin Web Unlockerは、任意のURLについて完全にレンダリングされたHTMLを返すスクレイピングAPIです。AIエージェントにとっては、ブラウザの制御を組まなくても、ページごとにHTTPリクエストを1回送るだけで安定してWebにアクセスできるということです。
+Gologin Web Unlockerは、あらゆるURLについて完全にレンダリングされたHTMLを返すスクレイピングAPIです。AIエージェントにとっては、ブラウザを操作する仕組みを用意しなくても、1ページにつき1回のHTTPリクエストで安定してWebにアクセスできるということです。
 
 <Tip>
-  **コードを書きたくない場合は** [Web Access CLI](/ja/cli-tools/web-access) または [Scraping Skill](/ja/api-reference/ai-integrations/ai-skills) を使うと、エージェントにすぐスクレイピング機能を追加できます。
+  **コードを書きたくない場合は** [Web Access CLI](/ja/cli-tools/web-access) または [Scraping Skill](/ja/api-reference/ai-integrations/ai-skills) を使うと、エージェントにスクレイピング機能をすぐに追加できます。
 </Tip>
 
 ---
 
 ## ページの内容をLLMに渡す
 
-ページをスクレイピングし、取得したHTMLをモデルに渡して、情報の抽出、要約、分析を行います。パース処理を書く必要はありません。
+ページをスクレイピングし、そのHTMLをモデルに渡して、情報の抽出、要約、分析を行います。パース処理を自分で書く必要はありません。
 
 ### Python + Claude
 
@@ -29,8 +29,8 @@ html = requests.get(
 
 client = anthropic.Anthropic()
 message = client.messages.create(
-    model="claude-sonnet-4-5-20250514",
-    max_tokens=1024,
+    model="claude-sonnet-5-5",
+    max_tokens=16000,
     messages=[
         {
             "role": "user",
@@ -39,7 +39,8 @@ message = client.messages.create(
     ]
 )
 
-print(message.content[0].text)
+# the response can also contain thinking blocks, so print only the text
+print("".join(block.text for block in message.content if block.type == "text"))
 ```
 
 ### JavaScript + Claude
@@ -55,8 +56,8 @@ const html = await fetch(
 
 const client = new Anthropic();
 const message = await client.messages.create({
-  model: "claude-sonnet-4-5-20250514",
-  max_tokens: 1024,
+  model: "claude-sonnet-5-5",
+  max_tokens: 16000,
   messages: [
     {
       role: "user",
@@ -65,14 +66,15 @@ const message = await client.messages.create({
   ],
 });
 
-console.log(message.content[0].text);
+// the response can also contain thinking blocks, so print only the text
+console.log(message.content.find((block) => block.type === "text")?.text);
 ```
 
 ---
 
 ## エージェントにスクレイピングツールを持たせる
 
-Web Unlockerを利用する `scrape` ツールを定義します。どのタイミングでページを取得するか、どのURLをスクレイピングするかは、エージェントが判断します。
+Web Unlockerを利用する `scrape` ツールを定義します。ページを取得するタイミングや、スクレイピングするURLはエージェントが判断します。
 
 ```python
 import requests
@@ -107,14 +109,14 @@ messages = [
 
 while True:
     response = client.messages.create(
-        model="claude-sonnet-4-5-20250514",
-        max_tokens=1024,
+        model="claude-sonnet-5-5",
+        max_tokens=16000,
         tools=tools,
         messages=messages
     )
 
-    if response.stop_reason == "end_turn":
-        print(response.content[0].text)
+    if response.stop_reason != "tool_use":
+        print("".join(block.text for block in response.content if block.type == "text"))
         break
 
     tool_results = []
@@ -131,7 +133,7 @@ while True:
     messages.append({"role": "user", "content": tool_results})
 ```
 
-スクレイピングを行うタイミングや取得するURLはエージェントが判断し、Web Unlockerが取得処理を担当します。JavaScriptのレンダリング、ボット対策の回避、プロキシのローテーション、CAPTCHAの解決まで対応します。
+スクレイピングを行うタイミングと取得するURLはエージェントが判断し、ページの取得そのものはWeb Unlockerが担います。JavaScriptのレンダリング、ボット対策の回避、プロキシのローテーション、CAPTCHAの解決もすべて含まれます。
 
 ---
 
@@ -196,8 +198,8 @@ gologin-web-access extract https://example.com --schema ./schema.json
 | リサーチエージェント | エージェントが `scrape` ツールを呼び出す → ページを読む → 調査結果をまとめる |
 | 価格モニタリング | 商品ページを定期的に `batch-scrape` する → 前回の結果と比較する |
 | 競合調査 | 競合サイトを `crawl` する → LLMに渡して分析する |
-| リードエンリッチメント | 企業ページを `scrape-json` する → 構造化データを抽出する |
-| コンテンツ集約 | `search` + `scrape-text` → キュレーションされたフィードを作成する |
+| リードの情報補完 | 企業ページを `scrape-json` する → 構造化データを抽出する |
+| コンテンツの集約 | `search` と `scrape-text` を組み合わせる → キュレーションしたフィードを作成する |
 
 ---
 

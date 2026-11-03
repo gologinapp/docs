@@ -17,54 +17,70 @@ A quantidade necessária depende do seu caso de uso. Ela varia principalmente de
 - Quanto tempo duram suas sessões
 - Quanto conteúdo pesado (como vídeos, imagens ou áudio) você carrega enquanto trabalha
 
-### O que acontece quando eu gasto todo o meu tráfego de proxy? Vou ser detectado?
+### O que acontece quando eu gasto todo o meu tráfego de proxy? Serei detectado?
 
-Se o seu tráfego acabar durante o uso, o Gologin simplesmente desconecta seus perfis da internet e você não poderá usá-los até recarregar o tráfego ou trocar para um proxy de terceiros. Você poderá fechar os perfis sem perder dados, pois a sincronização do perfil não consome tráfego de proxy.
+Se o seu tráfego acabar durante o uso, o Gologin simplesmente desconecta seus perfis da internet e você não poderá usá-los até recarregar o tráfego ou trocar para um proxy de terceiros. Você poderá fechar os perfis sem perder dados, pois a sincronização do perfil não usa tráfego de proxy.
 
-### Se eu usar meus próprios proxies de terceiros, gasto tráfego de proxy do Gologin?
+### Se eu usar meus próprios proxies de terceiros, gasto o tráfego de proxy do Gologin?
 
-Claro que não! Você só gasta tráfego de proxy do Gologin se usar os nossos proxies.
+Claro que não! Você só gasta o tráfego de proxy do Gologin se usar os nossos proxies.
 
-### Recebo algum tráfego de proxy do Gologin gratuito para teste após me registrar no plano de teste?
+### Recebo algum tráfego de proxy do Gologin de teste gratuito após me registrar no plano de teste?
 
 Por enquanto, o Gologin não oferece tráfego de teste para usuários recém-registrados. Você sempre pode comprar um pouco de tráfego e ver se os proxies do Gologin atendem às suas necessidades.
 
 ### Algumas portas não funcionam nos proxies do Gologin. Por quê?
 
-As portas com funcionamento garantido são a 80 e a 443, que são as portas padrão para o tráfego comum de sites.
+As portas com funcionamento garantido são 80 e 443. Essas são as portas padrão para o tráfego comum de sites.
 
-Todas as outras portas, usadas principalmente para envio de spam, ataques DDoS e força bruta, são bloqueadas.
+Todas as outras portas, usadas principalmente para envio de spam, DDoS e ataques de força bruta, são bloqueadas.
+
+### Os proxies do Gologin precisam de login e senha?
+
+Sim. Os proxies do Gologin sempre usam login e senha. Se você copiar um proxy do Gologin para usar em outro lugar, copie todas as credenciais; caso contrário, a verificação do proxy falhará.
+
+### Quando posso usar o tráfego que comprei?
+
+Logo após a confirmação do pagamento.
+
+### Os proxies do Gologin são compatíveis com SOCKS5?
+
+Sim. Escolha o protocolo nas configurações de proxy do perfil - veja [Escolher o protocolo do proxy](/pt/proxy/gologin-proxies/gologin-proxy-management/gologin-proxy-settings#choosing-the-proxy-protocol-http-or-socks5).
+
+### Posso usar os proxies do Gologin em sites bancários ou de pagamento?
+
+Os proxies do Gologin baseados em tráfego não funcionam com sites bancários e de pagamento, como Stripe ou PayPal. Use um proxy de terceiros compatível com esses sites. Veja [Sites bancários e de pagamento](/pt/proxy/gologin-proxies/what-are-gologin-proxies#banking-and-payment-websites).
 
 ## IP dedicado
 
 ### Qual é a diferença entre proxies ISP, proxies estáticos e IP dedicado?
 
-Nenhuma: são três nomes para a mesma coisa. Você pode ver todos eles em uso pela internet. No Gologin, o recurso se chama **IP dedicado**.
+Nenhuma - são três nomes para a mesma coisa. Você pode ver todos eles sendo usados pela web. No Gologin, o recurso se chama **IP dedicado**.
 
 ### O que é um IP dedicado?
 
-É um único endereço IP reservado só para você e para mais ninguém. Ele vem de um provedor de internet real, mas fica hospedado em um data center, o que lhe dá a velocidade e a estabilidade de um proxy de data center, ao mesmo tempo em que parece uma conexão residencial comum para os sites. Ele nunca muda e não tem limite de tráfego.
+É um único endereço IP reservado só para você e para mais ninguém. Ele vem de um provedor de internet real, mas fica hospedado em um data center, o que lhe dá a velocidade e a estabilidade de um proxy de data center, enquanto parece uma conexão residencial comum para os sites. Ele nunca muda e não tem limite de tráfego.
 
 ### Estou em um plano anual. Por que fui cobrado mais de \$5?
 
-Um IP dedicado está vinculado à sua assinatura principal e sempre termina junto com ela, então você paga pelos meses que ainda restam. Se o seu plano anual tem 7 meses restantes, você é cobrado \$35 antecipadamente. Um mês incompleto é cobrado como um mês inteiro.
+Um IP dedicado está vinculado à sua assinatura principal e sempre termina quando ela termina, então você paga pelos meses restantes. Se o seu plano anual tem 7 meses restantes, você é cobrado \$35 antecipadamente. Um mês incompleto é cobrado como um mês inteiro.
 
 ### Eu paguei, mas não vejo meu proxy de IP dedicado em lugar nenhum
 
-O endereço leva de 5 a 7 minutos para ser atribuído à sua conta, e não há notificação quando ele fica pronto. Aguarde alguns minutos e atualize a página **Proxies**: ele estará lá.
+Leva de 5 a 7 minutos para o endereço ser atribuído à sua conta, e não há notificação quando ele fica pronto. Aguarde alguns minutos e atualize a página **Proxies** - ele estará lá.
 
 ### Um IP dedicado usa o tráfego de proxy do meu plano?
 
-Não. O tráfego por um IP dedicado é ilimitado e não consome sua franquia de GB. Mesmo que sua franquia acabe por completo, os perfis que usam um IP dedicado continuam funcionando.
+Não. O tráfego por um IP dedicado é ilimitado e não consome sua franquia de GB. Mesmo que sua franquia acabe completamente, os perfis com IP dedicado continuam funcionando.
 
-### Ainda preciso de tráfego de proxy se tenho um IP dedicado?
+### Ainda preciso de tráfego de proxy se eu tiver um IP dedicado?
 
-Apenas para os perfis que usam nossos proxies rotativos. Se todos os perfis que você usa estiverem em um IP dedicado, sua franquia de tráfego simplesmente ficará sem uso.
+Somente para os perfis que usam nossos proxies rotativos. Se todos os perfis que você executa usam um IP dedicado, sua franquia de tráfego simplesmente fica sem uso.
 
 ### Meu IP continuará o mesmo com um IP dedicado?
 
 Sim. Enquanto sua assinatura estiver ativa e sendo renovada, você mantém o mesmo endereço.
 
-### Paguei com criptomoeda. Meu IP dedicado será renovado?
+### Paguei com criptomoeda - meu IP dedicado será renovado?
 
-Não. Pagamentos em criptomoeda não podem ser renovados automaticamente, então o IP funciona pelo período que você pagou e depois para de funcionar. Depois disso, não será possível recuperar o mesmo endereço. Se quiser manter um endereço a longo prazo, pague com cartão.
+Não. Pagamentos em criptomoeda não podem ser renovados automaticamente, então o IP funciona durante o período que você pagou e depois para de funcionar. Depois disso, não será possível recuperar o mesmo endereço. Se quiser manter um endereço por longo prazo, pague com cartão.

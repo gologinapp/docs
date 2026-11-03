@@ -8,7 +8,7 @@ This guide shows how to scrape your first URL using Web Unlocker.
 
 ## Prerequisites
 
-- A Web Unlocker API key (contact **ermakova.t@gologin.com** to get one)
+- A Web Unlocker API key. Get one with the form on the [Web Unlocker page](https://gologin.com/web-unlocker/#web_unlocker_form). The key arrives within one business day, with free requests to test on your own targets. No card is needed.
 - Python 3.x, Node.js, or any HTTP client
 
 ---
@@ -81,19 +81,48 @@ The response body is the raw rendered HTML of the page — the same content you'
 </html>
 ```
 
+### Other formats
+
+Add the `format` query parameter to get the page in another format:
+
+| `format` | Response body |
+|---|---|
+| `html` | Page HTML (the default) |
+| `markdown` | Page content as Markdown |
+| `json` | JSON object with the URL, request metadata, and the page HTML |
+
+```bash
+curl "https://parsing.webunlocker.gologin.com/v1/scrape?url=https%3A%2F%2Fexample.com&format=json" \
+  -H "apikey: YOUR_API_KEY"
+```
+
+```json
+{
+  "success": true,
+  "data": {
+    "url": "https://example.com",
+    "metadata": {
+      "response_time_ms": 297,
+      "status_code": 200
+    },
+    "html": "<!DOCTYPE html><html lang=\"en\">..."
+  }
+}
+```
+
 ---
 
 ## Handling errors
 
 Check the HTTP status code before processing the response:
 
-| Status | Meaning |
-|---|---|
-| `200` | Success — response body is the page HTML |
-| `401` | Invalid or missing API key |
-| `422` | Invalid or missing URL parameter |
-| `429` | Rate limit exceeded |
-| `500` / `503` | Server error — retry with backoff |
+| Status | Meaning | Response body |
+|---|---|---|
+| `200` | Success | The page in the requested format |
+| `400` | Bad request, for example the `url` parameter is missing | `{"success":false,"error":"Request failed"}` |
+| `401` | The `apikey` header is missing | `{"message":"Missing API key in request"}` |
+
+If you get `429` or a `5xx` status, retry with exponential backoff.
 
 ```python
 response = requests.get(

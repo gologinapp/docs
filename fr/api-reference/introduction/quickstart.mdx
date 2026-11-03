@@ -2,12 +2,23 @@
 title: "Démarrage rapide"
 ---
 
-Ce guide vous permet de configurer et de commencer à utiliser l'API Gologin. Nous y verrons comment démarrer avec l'un de nos clients API et comment envoyer votre première requête. Nous vous indiquerons aussi où aller ensuite pour trouver toutes les informations dont vous avez besoin afin de tirer pleinement parti de notre puissante API REST.
+Ce guide vous aide à configurer et à utiliser l'API Gologin. Nous verrons comment démarrer avec l'un de nos clients d'API et comment envoyer votre première requête. Nous verrons également où trouver toutes les informations dont vous avez besoin pour tirer pleinement parti de notre puissante API REST.
 
 <Note>
-  Avant de pouvoir envoyer des requêtes à l'API Gologin, vous devez récupérer
-  votre clé API depuis votre tableau de bord. Vous la trouverez sous [Paramètres » API](https://app.gologin.com/personalArea/TokenApi).
+  Avant de pouvoir envoyer des requêtes à l'API Gologin, vous avez besoin d'un jeton d'API.
+  Dans l'application Gologin, ouvrez [API & MCP](https://app.gologin.com/personalArea/TokenApi), accédez à l'onglet **API**, puis cliquez sur **Nouveau jeton**.
 </Note>
+
+## Envoyer votre première requête
+
+Envoyez votre jeton dans l'en-tête `Authorization` de chaque requête adressée à `https://api.gologin.com`. Cet appel liste les profils de votre compte :
+
+```bash
+curl https://api.gologin.com/browser/v2 \
+  -H "Authorization: Bearer YOUR_API_TOKEN"
+```
+
+La réponse contient un tableau `profiles` et `allProfilesCount`, le nombre total de profils. Vous obtenez jusqu'à 30 profils par page : ajoutez `?page=2` à l'URL pour afficher la page suivante. Consultez [Obtenir tous les profils](https://gologin.com/docs/api-reference/profile/get-all-profiles) pour connaître tous les paramètres.
 
 ## Envoyer votre première requête de scraping anonyme
 
@@ -140,11 +151,11 @@ GL_API_TOKEN=[YOUR_GOLOGIN_API_TOKEN] python3 filename.py
 
 ## Et ensuite ?
 
-Parfait, votre client API est configuré et vous avez envoyé votre première requête à l'API. Voici quelques liens qui pourront vous être utiles pour aller plus loin avec l'API Gologin :
+Parfait, votre client d'API est configuré et vous avez envoyé votre première requête à l'API. Voici quelques liens utiles pour aller plus loin avec l'API Gologin :
 
-- [Récupérez votre clé API dans Paramètres \> API](https://app.gologin.com/personalArea/TokenApi)
-- [Gologin Web Access CLI](/fr/cli-tools/web-access) : une CLI unifiée pour le scraping et l'automatisation du navigateur (aucun code nécessaire)
-- [Agent Browser CLI](/fr/cli-tools/agent-browser) : une CLI de navigateur cloud conçue pour les agents IA
-- [Local Agent Browser CLI](/fr/cli-tools/local-agent-browser) : une CLI Orbita locale avec profils et runbooks
-- [AI Skills](/fr/api-reference/ai-integrations/ai-skills) : des skills prêts à l'emploi pour Claude Code
-- [MCP Server](/fr/api-reference/ai-integrations/mcp-server) : gérez vos profils via des conversations avec l'IA
+- [Créer un jeton d'API dans API & MCP](https://app.gologin.com/personalArea/TokenApi)
+- [Gologin Web Access CLI](/fr/cli-tools/web-access) — CLI unifiée pour le scraping et l'automatisation du navigateur (aucun code nécessaire)
+- [Agent Browser CLI](/fr/cli-tools/agent-browser) — CLI de navigateur conçue pour les agents IA, dans le cloud ou sur votre machine
+- [Agent Browser CLI : runtime local](/fr/cli-tools/local-agent-browser) — profils Orbita locaux, runbooks et tâches par lots
+- [AI Skills](/fr/api-reference/ai-integrations/ai-skills) — des skills prêts à l'emploi pour Claude Code
+- [MCP Server](/fr/api-reference/ai-integrations/mcp-server) — gérez vos profils au fil de conversations avec l'IA

@@ -1,6 +1,6 @@
 ---
 title: "Unterstützte Plattformen & Installation"
-description: "Systemanforderungen und Installationsprozess für Gologin"
+description: "Systemanforderungen und Installation von Gologin"
 ---
 
 Sie können die Gologin-App für jedes unterstützte System über den folgenden Link herunterladen:
@@ -9,7 +9,7 @@ Sie können die Gologin-App für jedes unterstützte System über den folgenden 
 
 ## Hardwareanforderungen
 
-- **RAM:** mindestens 4 GB
+- **RAM:** mindestens 4GB
 - **Freier Speicherplatz:** mindestens 1 GB
 
 ## Unterstützte Betriebssysteme
@@ -24,10 +24,10 @@ Sie können die Gologin-App für jedes unterstützte System über den folgenden 
 
 - macOS 27 Golden Gate
 - macOS 26 Tahoe
-- macOS 15 Sequoia **(Browserversion 122 und höher)**
+- macOS 15 Sequoia (Browserversion 122 und höher)
 - macOS 14 Sonoma
 - macOS 13 Ventura
-- macOS 12 Monterey
+- macOS 12 Monterey (Browserversion 150 und niedriger)
 
 ### Linux
 
@@ -43,7 +43,7 @@ Sie können die Gologin-App für jedes unterstützte System über den folgenden 
 
 - iPhone oder iPad mit iOS 17 und höher
 
-## Installationsprozess
+## Installation
 
 ### Windows
 
@@ -59,12 +59,12 @@ Sie können die Gologin-App für jedes unterstützte System über den folgenden 
 
 ### Linux, Beispiel Ubuntu
 
-Gologin für Linux wird als **AppImage**-Datei bereitgestellt. Das ist eine eigenständige ausführbare Datei, die keine herkömmliche Installation erfordert. Sie können die App jederzeit über diese Datei starten.
+Gologin für Linux wird als `.tar`-Archiv bereitgestellt. Die enthaltene App ist eigenständig und benötigt keine herkömmliche Installation: Entpacken Sie das Archiv und starten Sie Gologin aus dem entpackten Ordner.
 
-1. Laden Sie die AppImage-Datei über diesen [Link](https://gologin.com/download) herunter
+1. Laden Sie das Archiv über diesen [Link](https://gologin.com/download) herunter
 2. Öffnen Sie Ihren Ordner **Downloads**
 3. Klicken Sie mit der rechten Maustaste auf `gologin.tar` \> **Extract**
-4. Öffnen Sie den Ordner **gologin** \> starten Sie Gologin mit einem Doppelklick
+4. Öffnen Sie den Ordner **gologin** \> starten Sie Gologin per Doppelklick
 
 **Wenn sich die App nicht öffnet**
 
@@ -79,12 +79,12 @@ Gologin für Linux wird als **AppImage**-Datei bereitgestellt. Das ist eine eige
   chmod +x <filename>
   ```
   Ersetzen Sie `<filename>` durch den tatsächlichen Dateinamen
-- Auf neueren Systemen benötigen Sie eventuell das Paket **libfuse2**. Geben Sie Folgendes im Terminal ein und versuchen Sie dann erneut, die App zu starten.
+- Auf neueren Systemen benötigen Sie eventuell das Paket **libfuse2**. Geben Sie Folgendes im Terminal ein und versuchen Sie anschließend erneut, die App zu starten.
   ```bash bash
     sudo apt install libfuse2
   ```
 
-**Wenn Profile beim Klick auf Run nicht starten**
+**Wenn Profile beim Klicken auf Run nicht starten**
 
 - Öffnen Sie das Terminal und wechseln Sie in den Browserordner, zum Beispiel für die Orbita-Version 145
 - Legen Sie neue Berechtigungen für **chrome-sandbox** fest
@@ -108,13 +108,13 @@ Sobald die App installiert ist, können Sie sie sofort mit dem integrierten Brow
 Gologin unterstützt die folgenden Plattformen **nicht**:
 
 - Alle 32-Bit-Systeme
-- Windows 7, 8, 8.1, Server 2012 (jede Revision) oder älter
+- Windows 7, 8, 8.1, Server 2012 (jede Version) oder älter
 - macOS El Captain, Sierra, High-Sierra, Mojave, Catalina, Big Sur oder älter
 - Chrome OS (Sie können stattdessen die [Gologin-Webversion](/de/gologin-web-overview) nutzen)
 
 ## Siehe auch
 
 - [Checkliste für den Einstieg](https://gologin.com/docs/getting-started/setup/first-time-checklist)
-- [Gologin Web, Chrome OS](https://gologin.com/docs/general/gologin-web-and-mobile)
-- [Grundlegende Konzepte](https://gologin.com/docs/getting-started/introduction/key-concepts-profiles-fingerprints-proxies)
+- [Gologin Web, Chrome OS](/de/general/gologin-web-and-chrome-os)
+- [Grundkonzepte](https://gologin.com/docs/getting-started/introduction/key-concepts-profiles-fingerprints-proxies)
 - [Die Gologin-App aktualisieren](https://gologin.com/docs/general/updating-the-gologin-app)
