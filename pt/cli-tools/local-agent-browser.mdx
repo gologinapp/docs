@@ -26,7 +26,7 @@ A Agent Browser CLI tem dois runtimes com os mesmos comandos. O runtime `cloud` 
 ## Requisitos
 
 - Node.js 20 ou superior. O runtime local inicia o Orbita por meio do SDK Node.js do Gologin, que exige o Node.js 20.
-- Um token de API do Gologin em `GOLOGIN_TOKEN`. Veja [Obter um token](/pt/cli-tools/agent-browser#get-a-token).
+- Um token de API do Gologin em `GOLOGIN_TOKEN`. Veja [Obter um token](/pt/cli-tools/agent-browser#obtenha-um-token).
 - Um ID de perfil para cada sessão. Diferentemente do runtime cloud, o runtime local não cria perfis temporários.
 - Orbita. Se ele ainda não estiver instalado, o SDK do Gologin o baixa para `~/.gologin/browser` na primeira inicialização. Se o Orbita estiver em outro local, defina `GOLOGIN_EXECUTABLE_PATH`.
 
@@ -115,7 +115,7 @@ gologin-agent-browser close
 
 ## Comandos de navegador
 
-Os comandos de sessão são os mesmos do runtime cloud: `snapshot`, `click`, `type`, `fill`, `find`, `wait`, `press`, `scroll`, `tabs`, `cookies`, `storage-export`, `eval`, `screenshot`, `pdf`, `upload` e outros. Veja a [referência de comandos](/pt/cli-tools/agent-browser#full-command-reference). Por enquanto, `back`, `forward` e `reload` funcionam apenas no runtime cloud.
+Os comandos de sessão são os mesmos do runtime cloud: `snapshot`, `click`, `type`, `fill`, `find`, `wait`, `press`, `scroll`, `tabs`, `cookies`, `storage-export`, `eval`, `screenshot`, `pdf`, `upload` e outros. Veja a [referência de comandos](/pt/cli-tools/agent-browser#refer%C3%AAncia-completa-de-comandos). Por enquanto, `back`, `forward` e `reload` funcionam apenas no runtime cloud.
 
 `find` localiza um elemento na página ativa e age sobre ele em uma única etapa. Use-o quando as refs ficarem desatualizadas em páginas dinâmicas:
 

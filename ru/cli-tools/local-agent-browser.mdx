@@ -4,7 +4,7 @@ description: "Запускайте локальные профили Gologin Orb
 ---
 
 <Note>
-  Local Agent Browser CLI теперь входит в [Agent Browser CLI](/ru/cli-tools/agent-browser). Пакет npm `gologin-local-agent-browser-cli` устарел: установите `gologin-agent-browser-cli` и используйте `--runtime local`. Скрипты, которые вызывают `gologin-local-agent-browser`, продолжат работать, см. [Переход с Local Agent Browser CLI](#migrate-from-local-agent-browser-cli).
+  Local Agent Browser CLI теперь входит в [Agent Browser CLI](/ru/cli-tools/agent-browser). Пакет npm `gologin-local-agent-browser-cli` устарел: установите `gologin-agent-browser-cli` и используйте `--runtime local`. Скрипты, которые вызывают `gologin-local-agent-browser`, продолжат работать, см. [Переход с Local Agent Browser CLI](#%D0%BF%D0%B5%D1%80%D0%B5%D1%85%D0%BE%D0%B4-%D1%81-local-agent-browser-cli).
 </Note>
 
 В Agent Browser CLI есть два runtime с одинаковыми командами. Runtime `cloud` запускает сессии в Gologin Cloud Browser. Runtime `local` запускает их в Orbita, браузере Gologin, на вашем компьютере. На этой странице описан локальный runtime. Снимки страницы (snapshots), ссылки (refs) и остальные команды работают так, как описано на странице [Agent Browser CLI](/ru/cli-tools/agent-browser).
@@ -26,7 +26,7 @@ description: "Запускайте локальные профили Gologin Orb
 ## Требования
 
 - Node.js 20 или новее. Локальный runtime запускает Orbita через Gologin Node.js SDK, которому нужен Node.js 20.
-- Токен Gologin API в переменной `GOLOGIN_TOKEN`. См. [Получение токена](/ru/cli-tools/agent-browser#get-a-token).
+- Токен Gologin API в переменной `GOLOGIN_TOKEN`. См. [Получение токена](/ru/cli-tools/agent-browser#%D0%BF%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D1%82%D0%BE%D0%BA%D0%B5%D0%BD%D0%B0).
 - ID профиля для каждой сессии. В отличие от облачного runtime, локальный не создаёт временные профили.
 - Orbita. Если он ещё не установлен, Gologin SDK скачает его в `~/.gologin/browser` при первом запуске. Если Orbita находится в другом месте, задайте `GOLOGIN_EXECUTABLE_PATH`.
 
@@ -115,7 +115,7 @@ gologin-agent-browser close
 
 ## Команды браузера
 
-Команды сессии такие же, как в облачном runtime: `snapshot`, `click`, `type`, `fill`, `find`, `wait`, `press`, `scroll`, `tabs`, `cookies`, `storage-export`, `eval`, `screenshot`, `pdf`, `upload` и другие. См. [справочник команд](/ru/cli-tools/agent-browser#full-command-reference). Команды `back`, `forward` и `reload` пока работают только в облачном runtime.
+Команды сессии такие же, как в облачном runtime: `snapshot`, `click`, `type`, `fill`, `find`, `wait`, `press`, `scroll`, `tabs`, `cookies`, `storage-export`, `eval`, `screenshot`, `pdf`, `upload` и другие. См. [справочник команд](/ru/cli-tools/agent-browser#%D0%BF%D0%BE%D0%BB%D0%BD%D1%8B%D0%B9-%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%BE%D1%87%D0%BD%D0%B8%D0%BA-%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4). Команды `back`, `forward` и `reload` пока работают только в облачном runtime.
 
 `find` находит элемент на открытой странице и сразу выполняет с ним действие. Используйте её, когда ссылки (refs) устаревают на динамических страницах:
 

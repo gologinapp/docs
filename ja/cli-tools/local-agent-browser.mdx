@@ -4,7 +4,7 @@ description: "gologin-agent-browser --runtime local を使って、ローカル�
 ---
 
 <Note>
-  Local Agent Browser CLI は [Agent Browser CLI](/ja/cli-tools/agent-browser) に統合されました。npm パッケージ `gologin-local-agent-browser-cli` は非推奨です。`gologin-agent-browser-cli` をインストールし、`--runtime local` を使用してください。`gologin-local-agent-browser` を呼び出している既存のスクリプトは引き続き動作します。詳しくは [Local Agent Browser CLI からの移行](#migrate-from-local-agent-browser-cli) をご覧ください。
+  Local Agent Browser CLI は [Agent Browser CLI](/ja/cli-tools/agent-browser) に統合されました。npm パッケージ `gologin-local-agent-browser-cli` は非推奨です。`gologin-agent-browser-cli` をインストールし、`--runtime local` を使用してください。`gologin-local-agent-browser` を呼び出している既存のスクリプトは引き続き動作します。詳しくは [Local Agent Browser CLI からの移行](#local-agent-browser-cli-%E3%81%8B%E3%82%89%E3%81%AE%E7%A7%BB%E8%A1%8C) をご覧ください。
 </Note>
 
 Agent Browser CLI には、同じコマンドで使える 2 つのランタイムがあります。`cloud` ランタイムは、Gologin の Cloud Browser でセッションを実行します。`local` ランタイムは、Gologin のブラウザである Orbita をお使いのマシン上で実行します。このページでは、ローカルランタイムについて説明します。スナップショット、ref、その他のコマンドは、[Agent Browser CLI](/ja/cli-tools/agent-browser) のページで説明している内容と同じように動作します。
@@ -26,7 +26,7 @@ Agent Browser CLI には、同じコマンドで使える 2 つのランタイ�
 ## 要件
 
 - Node.js 20 以降。ローカルランタイムは Gologin Node.js SDK 経由で Orbita を起動するため、Node.js 20 が必要です。
-- `GOLOGIN_TOKEN` に設定した Gologin API トークン。[トークンを取得する](/ja/cli-tools/agent-browser#get-a-token)をご覧ください。
+- `GOLOGIN_TOKEN` に設定した Gologin API トークン。[トークンを取得する](/ja/cli-tools/agent-browser#%E3%83%88%E3%83%BC%E3%82%AF%E3%83%B3%E3%82%92%E5%8F%96%E5%BE%97%E3%81%99%E3%82%8B)をご覧ください。
 - すべてのセッションに必要なプロファイル ID。cloud ランタイムと異なり、ローカルランタイムでは一時プロファイルは作成されません。
 - Orbita。まだインストールされていない場合は、初回起動時に Gologin SDK が `~/.gologin/browser` にダウンロードします。Orbita が別の場所にある場合は、`GOLOGIN_EXECUTABLE_PATH` を設定してください。
 
@@ -115,7 +115,7 @@ gologin-agent-browser close
 
 ## ブラウザコマンド
 
-セッションコマンドは cloud ランタイムと同じです。`snapshot`、`click`、`type`、`fill`、`find`、`wait`、`press`、`scroll`、`tabs`、`cookies`、`storage-export`、`eval`、`screenshot`、`pdf`、`upload` などがあります。[コマンドリファレンス](/ja/cli-tools/agent-browser#full-command-reference)をご覧ください。`back`、`forward`、`reload` は、現時点では cloud ランタイムでのみ使用できます。
+セッションコマンドは cloud ランタイムと同じです。`snapshot`、`click`、`type`、`fill`、`find`、`wait`、`press`、`scroll`、`tabs`、`cookies`、`storage-export`、`eval`、`screenshot`、`pdf`、`upload` などがあります。[コマンドリファレンス](/ja/cli-tools/agent-browser#%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%83%AA%E3%83%95%E3%82%A1%E3%83%AC%E3%83%B3%E3%82%B9-%E5%85%A8%E4%B8%80%E8%A6%A7)をご覧ください。`back`、`forward`、`reload` は、現時点では cloud ランタイムでのみ使用できます。
 
 `find` は、表示中のページ上の要素を探し、そのまま操作まで 1 ステップで行います。動的なページで ref が古くなってしまう場合に使用してください。
 

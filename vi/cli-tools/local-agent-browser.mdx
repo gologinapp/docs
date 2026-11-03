@@ -4,7 +4,7 @@ description: "Chạy các profile Gologin Orbita trên máy của bạn bằng g
 ---
 
 <Note>
-  Local Agent Browser CLI nay đã trở thành một phần của [Agent Browser CLI](/vi/cli-tools/agent-browser). Gói npm `gologin-local-agent-browser-cli` đã bị đánh dấu là lỗi thời: hãy cài đặt `gologin-agent-browser-cli` và dùng `--runtime local`. Các script gọi `gologin-local-agent-browser` vẫn hoạt động bình thường, xem [Chuyển từ Local Agent Browser CLI](#migrate-from-local-agent-browser-cli).
+  Local Agent Browser CLI nay đã trở thành một phần của [Agent Browser CLI](/vi/cli-tools/agent-browser). Gói npm `gologin-local-agent-browser-cli` đã bị đánh dấu là lỗi thời: hãy cài đặt `gologin-agent-browser-cli` và dùng `--runtime local`. Các script gọi `gologin-local-agent-browser` vẫn hoạt động bình thường, xem [Chuyển từ Local Agent Browser CLI](#chuy%E1%BB%83n-t%E1%BB%AB-local-agent-browser-cli).
 </Note>
 
 Agent Browser CLI có hai runtime với cùng một bộ lệnh. Runtime `cloud` chạy các phiên trong Gologin Cloud Browser. Runtime `local` chạy các phiên trong Orbita, trình duyệt của Gologin, ngay trên máy của bạn. Trang này nói về runtime local. Snapshot, ref và các lệnh khác hoạt động như mô tả trong trang [Agent Browser CLI](/vi/cli-tools/agent-browser).
@@ -26,7 +26,7 @@ Agent Browser CLI có hai runtime với cùng một bộ lệnh. Runtime `cloud`
 ## Yêu cầu
 
 - Node.js 20 trở lên. Runtime local khởi chạy Orbita thông qua Gologin Node.js SDK, và SDK này cần Node.js 20.
-- Gologin API token trong `GOLOGIN_TOKEN`. Xem [Lấy token](/vi/cli-tools/agent-browser#get-a-token).
+- Gologin API token trong `GOLOGIN_TOKEN`. Xem [Lấy token](/vi/cli-tools/agent-browser#l%E1%BA%A5y-m%C3%A3-th%C3%B4ng-b%C3%A1o).
 - Một profile ID cho mỗi phiên. Khác với runtime cloud, runtime local không tạo profile tạm thời.
 - Orbita. Nếu chưa được cài đặt, Gologin SDK sẽ tải Orbita về `~/.gologin/browser` ở lần khởi chạy đầu tiên. Nếu Orbita nằm ở nơi khác, hãy đặt `GOLOGIN_EXECUTABLE_PATH`.
 
@@ -115,7 +115,7 @@ gologin-agent-browser close
 
 ## Lệnh trình duyệt
 
-Các lệnh phiên giống như trong runtime cloud: `snapshot`, `click`, `type`, `fill`, `find`, `wait`, `press`, `scroll`, `tabs`, `cookies`, `storage-export`, `eval`, `screenshot`, `pdf`, `upload` và nhiều lệnh khác. Xem [tài liệu tham khảo lệnh](/vi/cli-tools/agent-browser#full-command-reference). Hiện tại `back`, `forward` và `reload` chỉ hoạt động trong runtime cloud.
+Các lệnh phiên giống như trong runtime cloud: `snapshot`, `click`, `type`, `fill`, `find`, `wait`, `press`, `scroll`, `tabs`, `cookies`, `storage-export`, `eval`, `screenshot`, `pdf`, `upload` và nhiều lệnh khác. Xem [tài liệu tham khảo lệnh](/vi/cli-tools/agent-browser#tham-chi%E1%BA%BFu-%C4%91%E1%BA%A7y-%C4%91%E1%BB%A7-c%C3%A1c-l%E1%BB%87nh). Hiện tại `back`, `forward` và `reload` chỉ hoạt động trong runtime cloud.
 
 `find` xác định một phần tử trên trang đang mở và thao tác với nó chỉ trong một bước. Hãy dùng lệnh này khi ref bị lỗi thời trên các trang động:
 

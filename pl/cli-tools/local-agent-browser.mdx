@@ -4,7 +4,7 @@ description: "Uruchamiaj lokalne profile Gologin Orbita za pomocą gologin-agent
 ---
 
 <Note>
-  Local Agent Browser CLI jest teraz częścią [Agent Browser CLI](/pl/cli-tools/agent-browser). Pakiet npm `gologin-local-agent-browser-cli` jest przestarzały: zainstaluj `gologin-agent-browser-cli` i używaj `--runtime local`. Skrypty, które wywołują `gologin-local-agent-browser`, nadal działają, zobacz [Migracja z Local Agent Browser CLI](#migrate-from-local-agent-browser-cli).
+  Local Agent Browser CLI jest teraz częścią [Agent Browser CLI](/pl/cli-tools/agent-browser). Pakiet npm `gologin-local-agent-browser-cli` jest przestarzały: zainstaluj `gologin-agent-browser-cli` i używaj `--runtime local`. Skrypty, które wywołują `gologin-local-agent-browser`, nadal działają, zobacz [Migracja z Local Agent Browser CLI](#migracja-z-local-agent-browser-cli).
 </Note>
 
 Agent Browser CLI ma dwa środowiska uruchomieniowe z tymi samymi poleceniami. Środowisko `cloud` uruchamia sesje w Gologin Cloud Browser. Środowisko `local` uruchamia je w Orbita, przeglądarce Gologin, na Twoim komputerze. Ta strona opisuje środowisko lokalne. Snapshoty, odwołania (refs) i pozostałe polecenia działają tak, jak opisano na stronie [Agent Browser CLI](/pl/cli-tools/agent-browser).
@@ -26,7 +26,7 @@ Agent Browser CLI ma dwa środowiska uruchomieniowe z tymi samymi poleceniami. �
 ## Wymagania
 
 - Node.js 20 lub nowszy. Środowisko lokalne uruchamia Orbita przez Gologin Node.js SDK, który wymaga Node.js 20.
-- Token API Gologin w zmiennej `GOLOGIN_TOKEN`. Zobacz [Pobieranie tokena](/pl/cli-tools/agent-browser#get-a-token).
+- Token API Gologin w zmiennej `GOLOGIN_TOKEN`. Zobacz [Pobieranie tokena](/pl/cli-tools/agent-browser#jak-uzyska%C4%87-token).
 - ID profilu dla każdej sesji. W odróżnieniu od środowiska cloud środowisko lokalne nie tworzy profili tymczasowych.
 - Orbita. Jeśli nie jest jeszcze zainstalowana, Gologin SDK pobierze ją do `~/.gologin/browser` przy pierwszym uruchomieniu. Jeśli Orbita znajduje się w innym miejscu, ustaw `GOLOGIN_EXECUTABLE_PATH`.
 
@@ -115,7 +115,7 @@ gologin-agent-browser close
 
 ## Polecenia przeglądarki
 
-Polecenia sesji są takie same jak w środowisku cloud: `snapshot`, `click`, `type`, `fill`, `find`, `wait`, `press`, `scroll`, `tabs`, `cookies`, `storage-export`, `eval`, `screenshot`, `pdf`, `upload` i inne. Zobacz [opis wszystkich poleceń](/pl/cli-tools/agent-browser#full-command-reference). `back`, `forward` i `reload` na razie działają tylko w środowisku cloud.
+Polecenia sesji są takie same jak w środowisku cloud: `snapshot`, `click`, `type`, `fill`, `find`, `wait`, `press`, `scroll`, `tabs`, `cookies`, `storage-export`, `eval`, `screenshot`, `pdf`, `upload` i inne. Zobacz [opis wszystkich poleceń](/pl/cli-tools/agent-browser#pe%C5%82na-lista-polece%C5%84). `back`, `forward` i `reload` na razie działają tylko w środowisku cloud.
 
 `find` wyszukuje element na aktywnej stronie i wykonuje na nim akcję w jednym kroku. Używaj go, gdy odwołania (refs) tracą ważność na stronach dynamicznych:
 

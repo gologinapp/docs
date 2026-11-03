@@ -2,9 +2,9 @@
 title: "Exécutez avec Sync"
 ---
 
-Exécutez avec Sync lance plusieurs profils de navigateur simultanément et reproduit vos actions sur chacun d'eux en temps réel. Tout ce que vous faites dans la fenêtre principale — cliquer, saisir du texte, accéder à une URL — se répète automatiquement et en même temps dans tous les autres profils.
+Exécutez avec Sync lance plusieurs profils de navigateur simultanément et reproduit vos actions sur tous ces profils en temps réel. Tout ce que vous faites dans la fenêtre principale — cliquer, saisir du texte, accéder à une URL — se produit automatiquement et en même temps dans tous les autres profils.
 
-Cette fonctionnalité est utile pour le travail répétitif sur les comptes : réchauffer des comptes, effectuer la même action sur de nombreux profils ou remplir des formulaires identiques. Au lieu de passer d'une fenêtre à l'autre pour répéter les mêmes étapes, vous ne les effectuez qu'une seule fois.
+Cette fonctionnalité est utile pour les tâches répétitives liées aux comptes : réchauffer des comptes, effectuer la même action sur de nombreux profils ou remplir des formulaires identiques. Au lieu de passer d'une fenêtre à l'autre et de répéter les mêmes étapes, vous ne les effectuez qu'une seule fois.
 
 <Warning>
   Les sites web détectent les comportements identiques et simultanés sur plusieurs comptes. Utilisez Exécutez avec Sync uniquement pour les tâches où des actions identiques sont acceptables — réchauffement, configuration initiale, accès à une URL — et non pour publier, envoyer des messages ou toute activité pour laquelle un contenu identique paraîtrait suspect.
@@ -24,7 +24,7 @@ Tous les profils sélectionnés s'ouvrent dans des fenêtres de navigateur disti
 
 ### Étape 3 — Travailler dans la fenêtre principale (leader)
 
-Le premier profil de votre liste de sélection devient le leader. Toutes vos actions dans sa fenêtre — clics, saisie, navigation — sont reproduites en temps réel dans tous les autres profils ouverts. Les autres profils sont des followers : ils reproduisent les actions du leader, mais ne peuvent pas le contrôler.
+Le premier profil de votre liste de sélection devient le leader. Toutes vos actions dans sa fenêtre — clics, saisie, navigation — sont répliquées en temps réel dans tous les autres profils ouverts. Les autres profils sont des followers : ils reproduisent les actions du leader mais ne peuvent pas le contrôler.
 
 <Frame>
   ![0331(1)](/images/0331\(1\).gif)
@@ -32,21 +32,21 @@ Le premier profil de votre liste de sélection devient le leader. Toutes vos act
 
 ## Cas d'usage pratiques
 
-**Réchauffement de comptes :** ouvrez 10 à 20 nouveaux comptes et parcourez les mêmes pages en même temps. Chaque profil navigue de façon indépendante (empreinte différente, IP différente), alors que vous n'avez à naviguer qu'une seule fois.
+**Réchauffement de comptes :** ouvrez 10 à 20 nouveaux comptes et parcourez les mêmes pages ensemble. Chaque profil navigue de manière indépendante (empreinte différente, IP différente), alors que vous n'avez besoin de naviguer qu'une seule fois.
 
-**Configuration identique sur plusieurs comptes :** accédez aux pages de paramètres, activez ou désactivez les mêmes options, remplissez les mêmes champs d'informations de profil. Pratique pour configurer de nombreux comptes tout neufs avec une configuration de départ identique.
+**Configuration identique sur plusieurs comptes :** accédez aux pages de paramètres, changez l'état des mêmes options, remplissez les mêmes champs d'informations de profil. C'est pratique lorsque vous configurez de nombreux comptes neufs avec une configuration de départ identique.
 
-**Accéder à une URL de travail :** lorsque vous avez besoin que tous les profils ouvrent une page précise avant de commencer à les utiliser individuellement, naviguez une seule fois et tous les profils y arrivent simultanément.
+**Accéder à une URL de travail :** lorsque vous avez besoin que tous les profils ouvrent une page précise avant de travailler sur chacun individuellement, naviguez une seule fois et tous les profils y arrivent simultanément.
 
-**Tester le comportement des empreintes entre profils :** ouvrez des sites de vérification ([iphey.com](http://iphey.com), [pixelscan.net](http://pixelscan.net)) dans plusieurs profils à la fois pour comparer les résultats côte à côte.
+**Tester le comportement des empreintes entre profils :** ouvrez des sites de vérification ([iphey.com](http://iphey.com), [pixelscan.net](http://pixelscan.net)) sur plusieurs profils à la fois pour comparer les résultats côte à côte.
 
-## À éviter
+## Ce qu'il faut éviter
 
-**Publier un contenu identique :** si tous les profils publient le même texte, la même image ou le même lien en même temps, les plateformes relieront immédiatement les comptes. Utilisez Exécutez avec Sync uniquement pour des actions où un comportement identique est normal — navigation, clics, consultation — et non pour la création de contenu.
+**Publier un contenu identique :** si tous les profils publient le même texte, la même image ou le même lien en même temps, les plateformes relieront immédiatement les comptes. Utilisez Exécutez avec Sync uniquement pour les actions où un comportement identique est normal — navigation, clics, consultation de pages — et non pour la création de contenu.
 
 **Messagerie et prospection :** envoyer simultanément des messages identiques aux mêmes personnes depuis différents comptes est l'un des moyens les plus rapides de déclencher un bannissement automatique de tous ces comptes.
 
-**Processus de connexion avec des comptes neufs :** chaque profil peut présenter des demandes de 2FA, des CAPTCHA ou des étapes de vérification différentes lors de la connexion. Le synchroniseur reproduira votre saisie, mais ne peut pas gérer des états divergents — un profil peut se trouver sur un CAPTCHA alors qu'un autre est déjà connecté. Gérez les connexions individuellement avant d'activer le synchroniseur.
+**Connexion lorsque les comptes sont neufs :** chaque profil peut présenter des demandes d'authentification à deux facteurs, des CAPTCHA ou des étapes de vérification différentes lors de la connexion. Le synchroniseur reproduira votre saisie, mais ne peut pas gérer des états divergents — un profil peut être bloqué sur un CAPTCHA alors qu'un autre est déjà connecté. Gérez les connexions individuellement avant d'activer le synchroniseur.
 
 ## Arrêter les profils
 
@@ -65,15 +65,15 @@ Vous pouvez aussi fermer chaque fenêtre de navigateur individuellement. Gologin
   Attendez que chaque profil affiche le statut **prêt** dans l'application Gologin avant de fermer l'application elle-même. Fermer Gologin alors que des profils sont encore en cours de synchronisation entraînera une perte de données pour ces sessions.
 </Warning>
 
-## Différences avec l'exécution groupée classique (Exécuter)
+## Différences avec Exécuter (action groupée)
 
 |  | Exécuter (groupé) | Exécutez avec Sync |
 | :-- | :-- | :-- |
-| Les profils agissent de façon indépendante | ✅ | ❌ |
+| Les profils agissent indépendamment | ✅ | ❌ |
 | Les actions sont reproduites entre les fenêtres | ❌ | ✅ |
-| Idéal pour | Ouvrir des profils pour travailler séparément | Répéter les mêmes actions sur tous les profils |
+| Idéal pour | Ouvrir des profils afin de travailler séparément | Répéter les mêmes actions sur tous les profils |
 
-Utilisez l'option classique \*\*Exécuter \*\*lorsque vous souhaitez ouvrir de nombreux profils, puis travailler sur chacun individuellement. Utilisez **Exécutez avec Sync** lorsque vous voulez effectuer exactement les mêmes actions dans tous les profils en même temps.
+Utilisez **Exécuter** classique lorsque vous souhaitez ouvrir de nombreux profils puis travailler sur chacun individuellement. Utilisez **Exécutez avec Sync** lorsque vous souhaitez effectuer exactement les mêmes actions dans tous les profils à la fois.
 
 ## Voir aussi
 
@@ -81,8 +81,8 @@ Utilisez l'option classique \*\*Exécuter \*\*lorsque vous souhaitez ouvrir de n
 
 [Création de profils](https://gologin.com/docs/browser-profiles/profile-management/creating-and-launching-profiles) — comment créer et lancer des profils individuellement
 
-[Erreurs courantes à éviter](https://gologin.com/docs/common-mistakes-to-avoid) — comportements qui entraînent des bannissements par les plateformes
+[Erreurs courantes à éviter](https://gologin.com/docs/common-mistakes-to-avoid) — comportements qui déclenchent des bannissements par les plateformes
 
-[Maintenir le score de confiance](https://gologin.com/docs/maintaining-trust-score) — comment les plateformes évaluent l'activité des comptes
+[Maintenir le trust score](https://gologin.com/docs/maintaining-trust-score) — comment les plateformes évaluent l'activité des comptes
 
 [Cookie Bot ](https://gologin.com/docs/browser-profiles/profile-features/cookie-bot)— réchauffement automatisé des cookies pour les nouveaux profils

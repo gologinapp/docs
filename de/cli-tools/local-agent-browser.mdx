@@ -4,7 +4,7 @@ description: "Lokale Gologin-Orbita-Profile mit gologin-agent-browser --runtime 
 ---
 
 <Note>
-  Die Local Agent Browser CLI ist jetzt Teil der [Agent Browser CLI](/de/cli-tools/agent-browser). Das npm-Paket `gologin-local-agent-browser-cli` ist veraltet: Installieren Sie `gologin-agent-browser-cli` und verwenden Sie `--runtime local`. Skripte, die `gologin-local-agent-browser` aufrufen, funktionieren weiterhin, siehe [Von der Local Agent Browser CLI migrieren](#migrate-from-local-agent-browser-cli).
+  Die Local Agent Browser CLI ist jetzt Teil der [Agent Browser CLI](/de/cli-tools/agent-browser). Das npm-Paket `gologin-local-agent-browser-cli` ist veraltet: Installieren Sie `gologin-agent-browser-cli` und verwenden Sie `--runtime local`. Skripte, die `gologin-local-agent-browser` aufrufen, funktionieren weiterhin, siehe [Von der Local Agent Browser CLI migrieren](#von-der-local-agent-browser-cli-migrieren).
 </Note>
 
 Die Agent Browser CLI hat zwei Runtimes mit denselben Befehlen. Die Runtime `cloud` führt Sessions in Gologin Cloud Browser aus. Die Runtime `local` führt sie in Orbita, dem Gologin-Browser, auf Ihrem eigenen Rechner aus. Diese Seite behandelt die lokale Runtime. Snapshots, Refs und die übrigen Befehle funktionieren wie auf der Seite [Agent Browser CLI](/de/cli-tools/agent-browser) beschrieben.
@@ -26,7 +26,7 @@ Die Agent Browser CLI hat zwei Runtimes mit denselben Befehlen. Die Runtime `clo
 ## Voraussetzungen
 
 - Node.js 20 oder höher. Die lokale Runtime startet Orbita über das Gologin Node.js SDK, das Node.js 20 benötigt.
-- Ein Gologin-API-Token in `GOLOGIN_TOKEN`. Siehe [Token abrufen](/de/cli-tools/agent-browser#get-a-token).
+- Ein Gologin-API-Token in `GOLOGIN_TOKEN`. Siehe [Token abrufen](/de/cli-tools/agent-browser#token-abrufen).
 - Eine Profil-ID für jede Session. Anders als die Cloud-Runtime erstellt die lokale Runtime keine temporären Profile.
 - Orbita. Ist es noch nicht installiert, lädt das Gologin SDK es beim ersten Start nach `~/.gologin/browser` herunter. Befindet sich Orbita an einem anderen Ort, setzen Sie `GOLOGIN_EXECUTABLE_PATH`.
 
@@ -115,7 +115,7 @@ gologin-agent-browser close
 
 ## Browserbefehle
 
-Die Session-Befehle sind dieselben wie in der Cloud-Runtime: `snapshot`, `click`, `type`, `fill`, `find`, `wait`, `press`, `scroll`, `tabs`, `cookies`, `storage-export`, `eval`, `screenshot`, `pdf`, `upload` und weitere. Siehe die [Befehlsreferenz](/de/cli-tools/agent-browser#full-command-reference). `back`, `forward` und `reload` funktionieren derzeit nur in der Cloud-Runtime.
+Die Session-Befehle sind dieselben wie in der Cloud-Runtime: `snapshot`, `click`, `type`, `fill`, `find`, `wait`, `press`, `scroll`, `tabs`, `cookies`, `storage-export`, `eval`, `screenshot`, `pdf`, `upload` und weitere. Siehe die [Befehlsreferenz](/de/cli-tools/agent-browser#vollst%C3%A4ndige-befehlsreferenz). `back`, `forward` und `reload` funktionieren derzeit nur in der Cloud-Runtime.
 
 `find` sucht ein Element auf der aktuellen Seite und führt in einem Schritt eine Aktion darauf aus. Nutzen Sie es, wenn Refs auf dynamischen Seiten veralten:
 

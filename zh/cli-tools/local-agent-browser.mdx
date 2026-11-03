@@ -4,7 +4,7 @@ description: "使用 gologin-agent-browser --runtime local 运行本地 Gologin 
 ---
 
 <Note>
-  Local Agent Browser CLI 现已并入 [Agent Browser CLI](/zh/cli-tools/agent-browser)。`gologin-local-agent-browser-cli` npm 包已弃用：请安装 `gologin-agent-browser-cli` 并使用 `--runtime local`。调用 `gologin-local-agent-browser` 的脚本仍可继续使用，详见[从 Local Agent Browser CLI 迁移](#migrate-from-local-agent-browser-cli)。
+  Local Agent Browser CLI 现已并入 [Agent Browser CLI](/zh/cli-tools/agent-browser)。`gologin-local-agent-browser-cli` npm 包已弃用：请安装 `gologin-agent-browser-cli` 并使用 `--runtime local`。调用 `gologin-local-agent-browser` 的脚本仍可继续使用，详见[从 Local Agent Browser CLI 迁移](#%E4%BB%8E-local-agent-browser-cli-%E8%BF%81%E7%A7%BB)。
 </Note>
 
 Agent Browser CLI 提供两种运行时，命令完全相同。`cloud` 运行时在 Gologin Cloud Browser 中运行会话。`local` 运行时则在你自己的电脑上，通过 Gologin 浏览器 Orbita 运行会话。本页介绍本地运行时。快照、引用（refs）及其他命令的用法与 [Agent Browser CLI](/zh/cli-tools/agent-browser) 页面所述一致。
@@ -26,7 +26,7 @@ Agent Browser CLI 提供两种运行时，命令完全相同。`cloud` 运行时
 ## 要求
 
 - Node.js 20 或更高版本。本地运行时通过 Gologin Node.js SDK 启动 Orbita，而该 SDK 需要 Node.js 20。
-- 在 `GOLOGIN_TOKEN` 中设置 Gologin API 令牌。参见[获取令牌](/zh/cli-tools/agent-browser#get-a-token)。
+- 在 `GOLOGIN_TOKEN` 中设置 Gologin API 令牌。参见[获取令牌](/zh/cli-tools/agent-browser#%E8%8E%B7%E5%8F%96%E4%BB%A4%E7%89%8C)。
 - 每个会话都需要一个配置文件 ID。与云端运行时不同，本地运行时不会创建临时配置文件。
 - Orbita。如果尚未安装，Gologin SDK 会在首次启动时将其下载到 `~/.gologin/browser`。如果 Orbita 位于其他位置，请设置 `GOLOGIN_EXECUTABLE_PATH`。
 
@@ -115,7 +115,7 @@ gologin-agent-browser close
 
 ## 浏览器命令
 
-会话命令与云端运行时相同：`snapshot`、`click`、`type`、`fill`、`find`、`wait`、`press`、`scroll`、`tabs`、`cookies`、`storage-export`、`eval`、`screenshot`、`pdf`、`upload` 等。参见[命令参考](/zh/cli-tools/agent-browser#full-command-reference)。`back`、`forward` 和 `reload` 目前仅在云端运行时中可用。
+会话命令与云端运行时相同：`snapshot`、`click`、`type`、`fill`、`find`、`wait`、`press`、`scroll`、`tabs`、`cookies`、`storage-export`、`eval`、`screenshot`、`pdf`、`upload` 等。参见[命令参考](/zh/cli-tools/agent-browser#%E5%AE%8C%E6%95%B4%E5%91%BD%E4%BB%A4%E5%8F%82%E8%80%83)。`back`、`forward` 和 `reload` 目前仅在云端运行时中可用。
 
 `find` 可以在当前页面上定位元素并一步完成操作。在动态页面上引用（refs）失效时，可以使用它：
 
