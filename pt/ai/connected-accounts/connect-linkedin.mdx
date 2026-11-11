@@ -1,0 +1,66 @@
+---
+title: "Conectar uma conta do LinkedIn"
+description: "Conecte uma conta do LinkedIn com senha, cookies ou um perfil do Gologin, escolha o país do IP e passe pelas verificações do LinkedIn na mesma janela."
+---
+
+Você conecta cada conta do LinkedIn uma única vez. Depois disso, ela permanece conectada e funciona na nuvem.
+
+## Conectar uma conta
+
+1. Abra **Contas** e clique em **Conectar conta**.
+2. **Escolha a rede.** O LinkedIn está disponível agora.
+3. **Escolha de onde vem o IP:**
+   - **Um IP dedicado** em um dos países disponíveis: Brasil, França, Alemanha, Hong Kong, Índia, Indonésia, Romênia, Coreia do Sul, Turquia, Reino Unido ou Estados Unidos. A lista pode mudar.
+   - **Seu próprio proxy.** Informe o proxy, clique em **Verificar proxy** e depois em **Usar este proxy**.
+4. **Entre no LinkedIn** de uma de três maneiras:
+   - **Credenciais** - o e-mail e a senha da conta. A senha é armazenada de forma criptografada e é usada apenas para restaurar a sessão depois.
+   - **Biscoitos** - o cookie `li_at` de um navegador em que você está conectado ao LinkedIn. Você não precisa da senha.
+   - **Perfil do Gologin** - um perfil do Gologin que já está conectado ao LinkedIn. Não é necessário entrar novamente, e a conta usa o proxy do próprio perfil.
+5. Para trazer suas conversas existentes do LinkedIn, marque **Importar conversas existentes**. Caso contrário, apenas as conversas a partir do momento da conexão serão armazenadas.
+6. Clique em **Conectar-se**. O Gologin atribui um IP dedicado, cria um perfil de navegador para a conta e entra no LinkedIn.
+
+<Tip>
+  Para copiar o cookie `li_at`, abra o LinkedIn em um navegador em que você está conectado, pressione **F12**, vá para **Application** > **Cookies** > **https://www.linkedin.com** (no Firefox: **Armazenamento** > **Biscoitos**) e copie o valor de `li_at`.
+</Tip>
+
+## Passar pelas verificações do LinkedIn
+
+O LinkedIn pode pedir que você confirme que é você mesmo. Você faz isso na mesma janela:
+
+- **Código do e-mail** - digite o código que o LinkedIn enviou para o e-mail da conta.
+- **App autenticador** - digite o código do Google Authenticator ou de um app semelhante.
+- **Número de telefone** - informe um número de telefone. O LinkedIn geralmente envia um código para ele.
+- **App do LinkedIn** - confirme o acesso no app do LinkedIn no seu celular. A janela continua automaticamente.
+
+O CAPTCHA é resolvido automaticamente. Se o LinkedIn exibir uma verificação que não pode ser concluída automaticamente, uma janela do navegador é aberta para que você mesmo a conclua.
+
+Cada verificação aguarda até 10 minutos. Se o código não for informado ou o acesso não for confirmado a tempo, entre novamente.
+
+Se você vir **LinkedIn asked for an extra check we can't complete here, sign in with cookies instead**, conecte a conta com o cookie `li_at`.
+
+## Status da conta
+
+| Status | O que significa |
+| :-- | :-- |
+| **Ativa** | A conta está conectada e funcionando. |
+| **Requer ação** | Você precisa fazer algo: informar um código, confirmar o acesso, passar por uma verificação do LinkedIn ou entrar novamente. O motivo é exibido abaixo do status. |
+| **Restrita** | O LinkedIn restringiu a conta. Verifique-a em linkedin.com. |
+| **Pausado** | Você desconectou a conta. |
+
+Motivos comuns exibidos abaixo do status:
+
+| Motivo | O que fazer |
+| :-- | :-- |
+| Wrong password · retry login | Entre novamente com a senha correta ou use cookies. |
+| Session expired · log in again | O LinkedIn encerrou a sessão. Entre novamente com sua senha ou com cookies novos. |
+| LinkedIn asked for a checkpoint | Passe pela verificação em linkedin.com e depois entre novamente com cookies novos. |
+| Verification code expired | O código não foi informado em 10 minutos. Entre novamente e use o novo código. |
+| Not confirmed in the LinkedIn app in time | Entre novamente e confirme o acesso no app do LinkedIn. |
+| No dedicated IP available | Escolha outro país ou use seu próprio proxy. |
+| Already connected in this workspace | Esta conta do LinkedIn já está na sua lista. |
+| LinkedIn has restricted this account | Verifique a conta em linkedin.com. |
+
+## Desconectar ou excluir uma conta
+
+- **Desconectar.** As tarefas em execução a partir desta conta são interrompidas. Ela permanece na sua lista e mantém a vaga até que você a reconecte.
+- **Excluir.** A conta, seus chats e seu histórico são removidos permanentemente. As tarefas em execução a partir dela são interrompidas, e a vaga fica livre para outra conta.

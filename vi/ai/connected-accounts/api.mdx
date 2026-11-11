@@ -1,0 +1,136 @@
+---
+title: "API Tài khoản đã kết nối"
+description: "Vận hành các tài khoản LinkedIn đã kết nối từ mã của riêng bạn hoặc từ AI agent: kết nối tài khoản, tìm kiếm người dùng, gửi lời mời và tin nhắn, đọc hội thoại và nhận tin nhắn mới qua webhook."
+---
+
+API hoạt động với cùng các tài khoản, vị trí (seat) và giới hạn như trong ứng dụng. Bạn có thể dùng API từ mã của riêng mình, từ một pipeline hoặc từ AI agent như Claude Code, Codex hay Cursor.
+
+Tài liệu tham chiếu đầy đủ với mọi endpoint nằm trên [Swagger](https://ai.gologin.com/accounts-api/swagger). Tại đó bạn cũng có thể tải xuống tệp OpenAPI JSON và đưa cho AI agent của mình.
+
+## URL gốc và xác thực
+
+Mọi yêu cầu đều được gửi đến:
+
+```
+https://ai.gologin.com/accounts-api
+```
+
+Gửi mã thông báo API Gologin của bạn trong header `Authorization` của mỗi yêu cầu:
+
+```bash
+curl https://ai.gologin.com/accounts-api/accounts \
+  -H "Authorization: Bearer YOUR_API_TOKEN"
+```
+
+Lệnh gọi này liệt kê các tài khoản đã kết nối của bạn, mới nhất đứng đầu. Các tài khoản đã ngắt kết nối sẽ không được hiển thị. Nếu không có mã thông báo hợp lệ, API trả về `401`.
+
+Hãy tạo mã thông báo trong ứng dụng Gologin: [API & MCP](https://app.gologin.com/personalArea/TokenApi) > **API** > **Mã thông báo mới**, hoặc trong phần **API** thuộc mục **Connected accounts** của AI Assistant. Bạn có thể tạo mã thông báo khi dùng gói trả phí và đã bật xác thực hai yếu tố trong Gologin.
+
+## Mặc định, việc gửi chỉ là chạy thử (dry run)
+
+Lời mời, tin nhắn, bình luận và phản hồi chỉ được gửi đi khi bạn truyền `"send": true`. Nếu không có tham số này, yêu cầu chỉ là chạy thử: hệ thống kiểm tra đối tượng và cho bạn biết điều gì sẽ xảy ra - người nhận là ai, có thể gửi lời mời hay không, đã có hội thoại hay chưa - và không gửi gì cả. Hãy chạy thử trước, sau đó lặp lại yêu cầu với `"send": true`.
+
+Việc đăng bài, thả cảm xúc và chấp nhận lời mời dùng các cờ riêng: `publish`, `react` và `accept`.
+
+## Kết nối tài khoản
+
+1. Lấy ID workspace của bạn: `GET https://api.gologin.com/workspaces` với cùng mã thông báo sẽ trả về các workspace của bạn cùng `id` của chúng.
+2. Tạo tài khoản:
+
+```bash
+curl -X POST https://ai.gologin.com/accounts-api/accounts \
+  -H "Authorization: Bearer YOUR_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "provider": "linkedin",
+    "workspaceId": "YOUR_WORKSPACE_ID",
+    "proxyCountry": "us",
+    "cookies": [{ "name": "li_at", "value": "YOUR_LI_AT_COOKIE" }]
+  }'
+```
+
+- Để đăng nhập, hãy truyền một trong các giá trị sau: `credentials` (`login` và `password`), `cookies`, hoặc `browserProfileId` - một hồ sơ Gologin đã đăng nhập sẵn vào LinkedIn.
+- Với IP, hãy truyền `proxyCountry` (các mã lấy từ `GET /available-countries`) hoặc `proxy` của riêng bạn (`host`, `port`, và tùy chọn `protocol`, `username`, `password`). Hồ sơ Gologin được liên kết sẽ dùng proxy riêng của nó.
+- Để nhập các hội thoại hiện có, hãy thêm `"importHistory": true`.
+
+3. Tài khoản được trả về với trạng thái `pending` trong khi quá trình thiết lập đang chạy. Hãy kiểm tra `GET /accounts/{id}` cho đến khi `status` thay đổi:
+
+| `status` | Việc cần làm |
+| :-- | :-- |
+| `active` | Tài khoản đã đăng nhập. Có thể gọi `POST /accounts/{id}/warmup` để các lệnh gọi đầu tiên chạy nhanh. |
+| `email_code_required` | Gửi mã LinkedIn đã gửi qua email: `POST /accounts/{id}/auth/email-code` với `{"code": "123456"}`. |
+| `totp_code_required` | Gửi mã từ ứng dụng xác thực: `POST /accounts/{id}/auth/totp-code` với `{"code": "123456"}`. |
+| `phone_number_required` | Gửi `country` (một trong các giá trị của `statusReason.countries`) và `number` đến `POST /accounts/{id}/auth/phone-number`. LinkedIn thường sẽ gửi mã đến số đó. |
+| `app_approval_required` | Xác nhận đăng nhập trong ứng dụng LinkedIn và tiếp tục kiểm tra. Nếu có `statusReason.anotherWay`, `POST /accounts/{id}/auth/another-way` sẽ chuyển sang cách khác mà LinkedIn đề xuất. |
+| `challenge_required` | Chủ tài khoản đang vượt qua bước kiểm tra của LinkedIn trong ứng dụng. Tiếp tục kiểm tra. |
+| `auth_failed`, `manual_auth_required` | `statusReason.code` cho biết lý do. Hầu hết các trường hợp được khắc phục bằng `POST /accounts/{id}/auth/retry` kèm `credentials` hoặc `cookies` mới. |
+
+Mỗi bước chờ kéo dài tối đa 10 phút. Nếu mã chưa được gửi hoặc đăng nhập chưa được xác nhận, trạng thái sẽ chuyển thành `auth_failed`.
+
+## Tìm người và gửi lời mời
+
+1. **Tìm kiếm.** `GET /linkedin/people/search?accountId=ACCOUNT_ID&query=head%20of%20growth` trả về `profile_url` và `profile_id` của từng người. Thay cho `query`, bạn có thể truyền `url` - một liên kết tìm kiếm LinkedIn cùng các bộ lọc của nó.
+2. **Kiểm tra hồ sơ.** `GET /linkedin/profile?accountId=ACCOUNT_ID&profileUrl=PROFILE_URL` hiển thị `is_connected`, `is_pending` và `is_available_to_connect`.
+3. **Mời.** Hãy chạy thử trước:
+
+```bash
+curl -X POST https://ai.gologin.com/accounts-api/linkedin/invites/send \
+  -H "Authorization: Bearer YOUR_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "accountId": "ACCOUNT_ID",
+    "profileUrl": "https://www.linkedin.com/in/some-person/",
+    "note": "Hi! I liked your post about onboarding. Would love to connect."
+  }'
+```
+
+`connectable_dry_run` nghĩa là lời mời sẽ được gửi đi. `not_connectable` cho biết lý do không thể gửi: `already_connected`, `invite_pending` hoặc `connect_unavailable`. Hãy lặp lại yêu cầu với `"send": true`. `sent_verified` nghĩa là LinkedIn đã tạo lời mời.
+
+## Gửi tin nhắn
+
+`POST /linkedin/messages/send` nhận `accountId`, `message` và một trong các tham số sau:
+
+- `profileUrl` - để nhắn cho một người. Hệ thống sẽ tìm hội thoại với người đó, hoặc mở hội thoại mới nếu chưa có; phản hồi sẽ ghi `existing_conversation` hoặc `new_conversation`. Nếu chỉ có thể liên hệ người đó bằng InMail trả phí, bạn sẽ nhận được `not_messageable` kèm `paid_inmail_required`. Hệ thống không bao giờ tự động dùng InMail trả phí mà không báo trước.
+- `conversationId` - để tiếp tục một hội thoại: `conversation_id` từ `/linkedin/inbox`, ID luồng dạng `2-…` hoặc URL của luồng.
+
+Tin nhắn đã gửi trả về `sent_verified` cùng `message_id` và `conversation_id`.
+
+## Đọc hội thoại
+
+- `GET /linkedin/inbox?accountId=ACCOUNT_ID` liệt kê các hội thoại của tài khoản, mới nhất đứng đầu.
+- `GET /linkedin/messages/conversation?accountId=ACCOUNT_ID&conversationId=CONVERSATION_ID` trả về các tin nhắn, cũ nhất đứng đầu. `limit` chỉ giữ lại những tin nhắn gần đây nhất.
+- `GET /workspaces/{workspaceId}/conversations` liệt kê các hội thoại của mọi tài khoản trong workspace, và `GET /workspaces/{workspaceId}/inbox/unread` trả về số lượng tin nhắn chưa đọc.
+
+## Nhận tin nhắn mới qua webhook
+
+```bash
+curl -X PUT https://ai.gologin.com/accounts-api/workspaces/YOUR_WORKSPACE_ID/live-updates-webhook \
+  -H "Authorization: Bearer YOUR_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{ "url": "https://example.com/gologin-webhook" }'
+```
+
+Mọi cập nhật mới từ các tài khoản của workspace đều được gửi đến URL này dưới dạng JSON: `{ accountId, workspaceId, event }`. Hệ thống sẽ thử gửi lại khi có lỗi, và cùng một sự kiện có thể đến hai lần, vì vậy hãy loại bỏ trùng lặp theo `event.id`. Để xóa webhook, hãy gửi `{"url": null}`. Localhost và các địa chỉ nội bộ không được chấp nhận.
+
+## Giới hạn
+
+Các hành động qua API được tính vào cùng các [giới hạn](/vi/ai/connected-accounts/limits) như trong ứng dụng.
+
+- `GET /accounts/{id}/limits` trả về giai đoạn (stage) của tài khoản và mọi giới hạn: giá trị khuyến nghị, giá trị riêng của bạn, giá trị được áp dụng, mức đã dùng và `resetsAt` - thời điểm khung thời gian có chỗ cho thêm một hành động.
+- `PUT /accounts/{id}/limits` thay đổi `stage` hoặc các giá trị riêng của bạn trong `customLimits`. Giá trị `null` sẽ xóa giá trị riêng của bạn.
+- `DELETE /accounts/{id}/limits/custom` đặt lại toàn bộ giới hạn về mức khuyến nghị.
+- `GET /workspaces/{workspaceId}/accounts-usage` cho biết workspace của bạn có thể kết nối bao nhiêu tài khoản và đã dùng bao nhiêu vị trí (seat).
+
+## Các lỗi cần biết
+
+| Phản hồi | Ý nghĩa |
+| :-- | :-- |
+| `401` | Mã thông báo bị thiếu hoặc không hợp lệ. |
+| `403 account_limit_reached` | Tất cả vị trí (seat) trong workspace đã được sử dụng. Hãy xóa một tài khoản hoặc mua thêm vị trí. |
+| `404 target_not_found` | LinkedIn không có trang nào tại URL hồ sơ đó. Hãy kiểm tra lại URL: thử lại sẽ không giúp ích. |
+| `409 snapshot_unavailable` | Phiên của tài khoản cần được thiết lập lại. Hãy gọi `POST /accounts/{id}/warmup` rồi thử lại. Bản thân tài khoản vẫn bình thường. |
+| `502 page_shape_unrecognized` | LinkedIn trả về một trang mà chúng tôi không thể đọc được. Hãy báo cho bộ phận hỗ trợ. |
+
+## Làm nóng trước khi chạy hàng loạt
+
+Một phiên không được sử dụng sẽ dần cũ đi, và lệnh gọi đầu tiên sau đó mất vài giây. Hãy gọi `POST /accounts/{id}/warmup` trước một loạt lệnh gọi hoặc ngay sau khi đăng nhập lại. Tài khoản phải ở trạng thái `active`.

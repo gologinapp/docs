@@ -1,0 +1,50 @@
+---
+title: "Giới hạn và làm nóng tài khoản"
+description: "Giới hạn hành động hằng ngày và hằng tuần cho từng tài khoản LinkedIn đã kết nối, cách tài khoản chuyển từ Tuần 1 lên Đầy đủ và cách thay đổi các giới hạn."
+---
+
+Mỗi tài khoản được kết nối có giới hạn riêng cho từng loại hành động. Tài khoản mới bắt đầu với giới hạn thấp và tăng dần mỗi tuần, nhờ đó tài khoản được làm nóng giống như tài khoản của một người dùng thật.
+
+## Cách hoạt động của giới hạn
+
+- Giới hạn tính tất cả hành động từ tài khoản: từ các cuộc trò chuyện với AI Assistant, mẫu (template) và API.
+- Giới hạn hằng ngày tính các hành động trong 24 giờ gần nhất, giới hạn hằng tuần tính trong 7 ngày gần nhất, còn giới hạn lời mời kèm ghi chú tính trong 30 ngày gần nhất.
+- Khi đã dùng hết giới hạn, hành động sẽ chờ đến khoảng thời gian tiếp theo. Tác vụ không bị lỗi. API sẽ trả về giới hạn và thời điểm giới hạn được giải phóng.
+- Bạn có thể xem các giới hạn và mức đã dùng của từng giới hạn trong mục **Giới hạn hằng ngày**. Để thay đổi, hãy nhấp vào **Cài đặt giới hạn**.
+
+## Từ Tuần 1 đến Đầy đủ
+
+- Tài khoản mới bắt đầu ở **Tuần 1** và chuyển sang giai đoạn tiếp theo sau mỗi 7 ngày kể từ lần đăng nhập đầu tiên.
+- Sau **Tuần 4**, tài khoản chuyển sang **Đầy đủ** nếu trong 4 tuần này LinkedIn không hạn chế tài khoản, ít nhất 30% lời mời của tài khoản được chấp nhận và tài khoản có ít nhất 150 kết nối. Nếu không, việc kiểm tra sẽ được lặp lại sau 7 ngày.
+- Nếu LinkedIn hạn chế lời mời của một tài khoản, các lời mời của tài khoản đó sẽ dừng trong 7 ngày và Gologin sẽ đề xuất chuyển tài khoản về **Tuần 1**.
+
+## Giới hạn khuyến nghị
+
+| Hành động | Tuần 1 | Tuần 2 | Tuần 3 | Tuần 4 | Đầy đủ |
+| :-- | --: | --: | --: | --: | --: |
+| Lời mời mỗi ngày | 5 | 8 | 10 | 15 | 20 |
+| Lời mời mỗi 7 ngày | 30 | 50 | 60 | 80 | 100 |
+| Lời mời kèm ghi chú mỗi 30 ngày | 3 | 3 | 3 | 3 | 3 |
+| Độ dài ghi chú, ký tự | 200 | 200 | 200 | 200 | 200 |
+| Tin nhắn gửi đến kết nối mỗi ngày | 10 | 15 | 20 | 30 | 50 |
+| Lượt xem hồ sơ mỗi ngày | 50 | 80 | 100 | 150 | 200 |
+| Lượt xem hồ sơ mỗi 7 ngày | 300 | 500 | 600 | 800 | 1,000 |
+| Trang kết quả tìm kiếm người mỗi ngày | 3 | 3 | 5 | 5 | 10 |
+| Bài đăng mỗi ngày | 1 | 1 | 1 | 1 | 2 |
+| Bài đăng mỗi 7 ngày | 3 | 3 | 3 | 3 | 7 |
+| Bình luận mỗi ngày | 5 | 5 | 10 | 10 | 30 |
+| Bình luận mỗi 7 ngày | 30 | 30 | 50 | 50 | 150 |
+| Lượt phản ứng mỗi ngày | 10 | 20 | 30 | 30 | 100 |
+| Lượt phản ứng mỗi 7 ngày | 50 | 100 | 150 | 150 | 500 |
+
+Mỗi tài khoản cũng chỉ giữ tối đa 200 lời mời đang chờ (500 ở giai đoạn **Đầy đủ**). Lời mời ở trạng thái chờ quá 21 ngày sẽ bị thu hồi.
+
+## Thay đổi giới hạn
+
+Trong **Cài đặt giới hạn**, bạn có thể:
+
+- **Chọn một giai đoạn.** Ví dụ, chọn **Đầy đủ** cho tài khoản bạn đã sử dụng tích cực trong thời gian dài. Các giới hạn của giai đoạn đó có hiệu lực ngay lập tức.
+- **Đặt giá trị riêng** cho bất kỳ giới hạn nào. Giá trị của bạn sẽ ghi đè giai đoạn và được giữ nguyên khi giai đoạn thay đổi.
+- **Đặt lại về mức khuyến nghị** để xóa các giá trị riêng của bạn.
+
+Các cài đặt tương tự cũng có sẵn trong [API](/vi/ai/connected-accounts/api#gi%E1%BB%9Bi-h%E1%BA%A1n).

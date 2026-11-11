@@ -1,0 +1,136 @@
+---
+title: "API подключённых аккаунтов"
+description: "Управляйте подключёнными аккаунтами LinkedIn из собственного кода или ИИ-агента: подключайте аккаунты, ищите людей, отправляйте приглашения и сообщения, читайте переписки и получайте новые сообщения через вебхук."
+---
+
+API работает с теми же аккаунтами, местами и лимитами, что и приложение. Используйте его в собственном коде, в конвейере обработки данных или в ИИ-агенте, например Claude Code, Codex или Cursor.
+
+Полное описание всех эндпоинтов находится в [Swagger](https://ai.gologin.com/accounts-api/swagger). Там же можно скачать OpenAPI JSON и передать его своему ИИ-агенту.
+
+## Базовый URL и аутентификация
+
+Все запросы отправляются на адрес:
+
+```
+https://ai.gologin.com/accounts-api
+```
+
+Передавайте свой API-токен Gologin в заголовке `Authorization` каждого запроса:
+
+```bash
+curl https://ai.gologin.com/accounts-api/accounts \
+  -H "Authorization: Bearer YOUR_API_TOKEN"
+```
+
+Этот запрос возвращает список ваших подключённых аккаунтов, сначала самые новые. Отключённые аккаунты в список не входят. Если токен недействителен или отсутствует, API отвечает `401`.
+
+Создайте токен в приложении Gologin: [API & MCP](https://app.gologin.com/personalArea/TokenApi) > **API** > **Новый токен**, либо в разделе **API** в блоке **Connected accounts** в AI Assistant. Токен можно создать на платном тарифе при включённой двухфакторной аутентификации в Gologin.
+
+## По умолчанию отправка выполняется в режиме пробного запуска
+
+Приглашения, сообщения, комментарии и ответы отправляются, только если вы передаёте `"send": true`. Без этого параметра запрос выполняется как пробный запуск (dry run): он проверяет цель и сообщает, что произойдёт, то есть кто получатель, возможно ли приглашение и существует ли уже переписка, но ничего не отправляет. Сначала сделайте пробный запуск, затем повторите запрос с `"send": true`.
+
+Для публикации постов, реакций и принятия приглашений используются свои параметры: `publish`, `react` и `accept`.
+
+## Подключение аккаунта
+
+1. Узнайте ID рабочего пространства: запрос `GET https://api.gologin.com/workspaces` с тем же токеном вернёт ваши рабочие пространства и их `id`.
+2. Создайте аккаунт:
+
+```bash
+curl -X POST https://ai.gologin.com/accounts-api/accounts \
+  -H "Authorization: Bearer YOUR_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "provider": "linkedin",
+    "workspaceId": "YOUR_WORKSPACE_ID",
+    "proxyCountry": "us",
+    "cookies": [{ "name": "li_at", "value": "YOUR_LI_AT_COOKIE" }]
+  }'
+```
+
+- Для входа передайте один из вариантов: `credentials` (`login` и `password`), `cookies` или `browserProfileId` — профиль Gologin, в котором уже выполнен вход в LinkedIn.
+- Для IP-адреса передайте `proxyCountry` (коды можно получить через `GET /available-countries`) или собственный `proxy` (`host`, `port` и, при необходимости, `protocol`, `username`, `password`). Привязанный профиль Gologin использует свой прокси.
+- Чтобы импортировать существующие переписки, добавьте `"importHistory": true`.
+
+3. Пока идёт настройка, аккаунт возвращается со статусом `pending`. Проверяйте `GET /accounts/{id}`, пока `status` не изменится:
+
+| `status` | Что делать |
+| :-- | :-- |
+| `active` | Вход в аккаунт выполнен. При желании вызовите `POST /accounts/{id}/warmup`, чтобы первые вызовы выполнялись быстро. |
+| `email_code_required` | Отправьте код, который LinkedIn прислал на почту: `POST /accounts/{id}/auth/email-code` с `{"code": "123456"}`. |
+| `totp_code_required` | Отправьте код из приложения-аутентификатора: `POST /accounts/{id}/auth/totp-code` с `{"code": "123456"}`. |
+| `phone_number_required` | Отправьте `country` (одно из значений `statusReason.countries`) и `number` на `POST /accounts/{id}/auth/phone-number`. Обычно LinkedIn присылает код на этот номер. |
+| `app_approval_required` | Подтвердите вход в приложении LinkedIn и продолжайте проверять статус. Если есть `statusReason.anotherWay`, вызов `POST /accounts/{id}/auth/another-way` переключит на другой способ, который предлагает LinkedIn. |
+| `challenge_required` | Владелец проходит проверку LinkedIn в приложении. Продолжайте проверять статус. |
+| `auth_failed`, `manual_auth_required` | Причину указывает `statusReason.code`. В большинстве случаев помогает `POST /accounts/{id}/auth/retry` с новыми `credentials` или `cookies`. |
+
+Каждое ожидание длится до 10 минут. Если код не отправлен или вход не подтверждён, аккаунт получает статус `auth_failed`.
+
+## Поиск людей и отправка приглашения
+
+1. **Поиск.** `GET /linkedin/people/search?accountId=ACCOUNT_ID&query=head%20of%20growth` возвращает `profile_url` и `profile_id` для каждого человека. Вместо `query` можно передать `url` — ссылку на поиск LinkedIn с фильтрами.
+2. **Проверка профиля.** `GET /linkedin/profile?accountId=ACCOUNT_ID&profileUrl=PROFILE_URL` показывает `is_connected`, `is_pending` и `is_available_to_connect`.
+3. **Приглашение.** Сначала сделайте пробный запуск:
+
+```bash
+curl -X POST https://ai.gologin.com/accounts-api/linkedin/invites/send \
+  -H "Authorization: Bearer YOUR_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "accountId": "ACCOUNT_ID",
+    "profileUrl": "https://www.linkedin.com/in/some-person/",
+    "note": "Hi! I liked your post about onboarding. Would love to connect."
+  }'
+```
+
+Ответ `connectable_dry_run` означает, что приглашение будет отправлено. Ответ `not_connectable` объясняет причину: `already_connected`, `invite_pending` или `connect_unavailable`. Повторите запрос с `"send": true`. Ответ `sent_verified` означает, что LinkedIn создал приглашение.
+
+## Отправка сообщения
+
+`POST /linkedin/messages/send` принимает `accountId`, `message` и один из параметров:
+
+- `profileUrl` — чтобы написать человеку. Переписка с ним будет найдена или открыта, если её ещё нет; в ответе будет `existing_conversation` или `new_conversation`. Если связаться с человеком можно только через платный InMail, вы получите `not_messageable` с `paid_inmail_required`. Платный InMail никогда не тратится без вашего ведома.
+- `conversationId` — чтобы продолжить переписку: `conversation_id` из `/linkedin/inbox`, ID диалога вида `2-…` или URL диалога.
+
+Отправленное сообщение возвращает `sent_verified` вместе с `message_id` и `conversation_id`.
+
+## Чтение переписок
+
+- `GET /linkedin/inbox?accountId=ACCOUNT_ID` возвращает список переписок аккаунта, сначала самые новые.
+- `GET /linkedin/messages/conversation?accountId=ACCOUNT_ID&conversationId=CONVERSATION_ID` возвращает сообщения, сначала самые старые. Параметр `limit` оставляет только самые последние.
+- `GET /workspaces/{workspaceId}/conversations` возвращает переписки всех аккаунтов рабочего пространства, а `GET /workspaces/{workspaceId}/inbox/unread` — количество непрочитанных.
+
+## Получение новых сообщений через вебхук
+
+```bash
+curl -X PUT https://ai.gologin.com/accounts-api/workspaces/YOUR_WORKSPACE_ID/live-updates-webhook \
+  -H "Authorization: Bearer YOUR_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{ "url": "https://example.com/gologin-webhook" }'
+```
+
+Каждое новое обновление от аккаунтов рабочего пространства отправляется на этот URL в виде JSON: `{ accountId, workspaceId, event }`. При ошибках доставка повторяется, и одно и то же событие может прийти дважды, поэтому убирайте дубликаты по `event.id`. Чтобы удалить вебхук, отправьте `{"url": null}`. Localhost и внутренние адреса не принимаются.
+
+## Лимиты
+
+Действия через API учитываются в тех же [лимитах](/ru/ai/connected-accounts/limits), что и действия в приложении.
+
+- `GET /accounts/{id}/limits` возвращает этап аккаунта и все лимиты: рекомендуемое значение, ваше собственное значение, применяемое значение, сколько уже использовано, и `resetsAt` — момент, когда в окне появится место ещё для одного действия.
+- `PUT /accounts/{id}/limits` меняет `stage` или ваши собственные значения в `customLimits`. Значение `null` удаляет ваше собственное значение.
+- `DELETE /accounts/{id}/limits/custom` сбрасывает все лимиты до рекомендуемых.
+- `GET /workspaces/{workspaceId}/accounts-usage` показывает, сколько аккаунтов можно подключить в вашем рабочем пространстве и сколько мест занято.
+
+## Ошибки, о которых полезно знать
+
+| Ответ | Что это значит |
+| :-- | :-- |
+| `401` | Токен отсутствует или недействителен. |
+| `403 account_limit_reached` | Все места в рабочем пространстве заняты. Удалите аккаунт или получите больше мест. |
+| `404 target_not_found` | В LinkedIn нет страницы по этому URL профиля. Проверьте URL: повторная попытка не поможет. |
+| `409 snapshot_unavailable` | Нужно заново установить сессию аккаунта. Вызовите `POST /accounts/{id}/warmup` и повторите запрос. С самим аккаунтом всё в порядке. |
+| `502 page_shape_unrecognized` | LinkedIn вернул страницу, которую не удалось прочитать. Сообщите об этом в поддержку. |
+
+## Прогрев перед серией запросов
+
+Сессия, которая долго не используется, устаревает, и первый вызов после этого занимает несколько секунд. Вызывайте `POST /accounts/{id}/warmup` перед серией вызовов или сразу после повторного входа. Аккаунт должен иметь статус `active`.

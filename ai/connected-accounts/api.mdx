@@ -1,0 +1,136 @@
+---
+title: "Connected Accounts API"
+description: "Run connected LinkedIn accounts from your own code or AI agent: connect accounts, search people, send invitations and messages, read conversations and get new messages on a webhook."
+---
+
+The API works with the same accounts, seats and limits as the app. Use it from your own code, a pipeline, or an AI agent such as Claude Code, Codex or Cursor.
+
+The full reference with every endpoint is in [Swagger](https://ai.gologin.com/accounts-api/swagger). You can also download the OpenAPI JSON there and give it to your AI agent.
+
+## Base URL and authentication
+
+All requests go to:
+
+```
+https://ai.gologin.com/accounts-api
+```
+
+Send your Gologin API token in the `Authorization` header of every request:
+
+```bash
+curl https://ai.gologin.com/accounts-api/accounts \
+  -H "Authorization: Bearer YOUR_API_TOKEN"
+```
+
+This call lists your connected accounts, newest first. Disconnected accounts aren't included. Without a valid token, the API answers `401`.
+
+Create a token in the Gologin app: [API & MCP](https://app.gologin.com/personalArea/TokenApi) > **API** > **New Token**, or in the **API** section under **Connected accounts** in the AI Assistant. A token can be created on a paid plan with two-factor authentication turned on in Gologin.
+
+## Sends are dry runs by default
+
+Invitations, messages, comments and replies are sent only when you pass `"send": true`. Without it, the request is a dry run: it checks the target and tells you what would happen - who the recipient is, whether an invitation is possible, whether a conversation already exists - and sends nothing. Make the dry run first, then repeat the request with `"send": true`.
+
+Publishing posts, reactions and accepting invitations use their own flags: `publish`, `react` and `accept`.
+
+## Connect an account
+
+1. Get your workspace ID: `GET https://api.gologin.com/workspaces` with the same token returns your workspaces and their `id`.
+2. Create the account:
+
+```bash
+curl -X POST https://ai.gologin.com/accounts-api/accounts \
+  -H "Authorization: Bearer YOUR_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "provider": "linkedin",
+    "workspaceId": "YOUR_WORKSPACE_ID",
+    "proxyCountry": "us",
+    "cookies": [{ "name": "li_at", "value": "YOUR_LI_AT_COOKIE" }]
+  }'
+```
+
+- To sign in, pass one of: `credentials` (`login` and `password`), `cookies`, or `browserProfileId` - a Gologin profile that is already signed in to LinkedIn.
+- For the IP, pass `proxyCountry` (the codes come from `GET /available-countries`) or your own `proxy` (`host`, `port`, and optionally `protocol`, `username`, `password`). A linked Gologin profile uses its own proxy.
+- To import existing conversations, add `"importHistory": true`.
+
+3. The account comes back as `pending` while the setup runs. Check `GET /accounts/{id}` until `status` changes:
+
+| `status` | What to do |
+| :-- | :-- |
+| `active` | The account is signed in. Optionally call `POST /accounts/{id}/warmup` to make the first calls fast. |
+| `email_code_required` | Send the code LinkedIn emailed: `POST /accounts/{id}/auth/email-code` with `{"code": "123456"}`. |
+| `totp_code_required` | Send the code from the authenticator app: `POST /accounts/{id}/auth/totp-code` with `{"code": "123456"}`. |
+| `phone_number_required` | Send `country` (one of `statusReason.countries`) and `number` to `POST /accounts/{id}/auth/phone-number`. LinkedIn usually sends a code to that number. |
+| `app_approval_required` | Confirm the sign-in in the LinkedIn app and keep checking. If `statusReason.anotherWay` is present, `POST /accounts/{id}/auth/another-way` switches to the other way LinkedIn offers. |
+| `challenge_required` | The owner is passing a LinkedIn check in the app. Keep checking. |
+| `auth_failed`, `manual_auth_required` | `statusReason.code` says why. Most cases are fixed with `POST /accounts/{id}/auth/retry` and fresh `credentials` or `cookies`. |
+
+Each wait lasts up to 10 minutes. An unsent code or an unconfirmed sign-in then ends in `auth_failed`.
+
+## Find people and send an invitation
+
+1. **Search.** `GET /linkedin/people/search?accountId=ACCOUNT_ID&query=head%20of%20growth` returns `profile_url` and `profile_id` for each person. Instead of `query`, you can pass `url` - a LinkedIn search link with its filters.
+2. **Check the profile.** `GET /linkedin/profile?accountId=ACCOUNT_ID&profileUrl=PROFILE_URL` shows `is_connected`, `is_pending` and `is_available_to_connect`.
+3. **Invite.** Make a dry run first:
+
+```bash
+curl -X POST https://ai.gologin.com/accounts-api/linkedin/invites/send \
+  -H "Authorization: Bearer YOUR_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "accountId": "ACCOUNT_ID",
+    "profileUrl": "https://www.linkedin.com/in/some-person/",
+    "note": "Hi! I liked your post about onboarding. Would love to connect."
+  }'
+```
+
+`connectable_dry_run` means the invitation would go out. `not_connectable` says why not: `already_connected`, `invite_pending` or `connect_unavailable`. Repeat the request with `"send": true`. `sent_verified` means LinkedIn created the invitation.
+
+## Send a message
+
+`POST /linkedin/messages/send` takes `accountId`, `message` and one of:
+
+- `profileUrl` - to write to a person. The conversation with them is found, or opened if there isn't one; the answer says `existing_conversation` or `new_conversation`. If only a paid InMail can reach the person, you get `not_messageable` with `paid_inmail_required`. A paid InMail is never spent silently.
+- `conversationId` - to continue a conversation: the `conversation_id` from `/linkedin/inbox`, a `2-…` thread ID or a thread URL.
+
+A sent message returns `sent_verified` with `message_id` and `conversation_id`.
+
+## Read conversations
+
+- `GET /linkedin/inbox?accountId=ACCOUNT_ID` lists the account's conversations, newest first.
+- `GET /linkedin/messages/conversation?accountId=ACCOUNT_ID&conversationId=CONVERSATION_ID` returns the messages, oldest first. `limit` keeps the most recent ones.
+- `GET /workspaces/{workspaceId}/conversations` lists conversations of all accounts in the workspace, and `GET /workspaces/{workspaceId}/inbox/unread` returns the unread counts.
+
+## Get new messages on a webhook
+
+```bash
+curl -X PUT https://ai.gologin.com/accounts-api/workspaces/YOUR_WORKSPACE_ID/live-updates-webhook \
+  -H "Authorization: Bearer YOUR_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{ "url": "https://example.com/gologin-webhook" }'
+```
+
+Every new update from the workspace's accounts is sent to this URL as JSON: `{ accountId, workspaceId, event }`. Delivery is retried on errors, and the same event can arrive twice, so deduplicate by `event.id`. To remove the webhook, send `{"url": null}`. Localhost and internal addresses aren't accepted.
+
+## Limits
+
+API actions count toward the same [limits](/ai/connected-accounts/limits) as the app.
+
+- `GET /accounts/{id}/limits` returns the account's stage and every limit: the recommended value, your own value, the applied value, how much is used and `resetsAt` - when the window has room for one more action.
+- `PUT /accounts/{id}/limits` changes the `stage` or your own values in `customLimits`. A `null` value removes your own value.
+- `DELETE /accounts/{id}/limits/custom` resets all limits to the recommended ones.
+- `GET /workspaces/{workspaceId}/accounts-usage` shows how many accounts your workspace can connect and how many seats are taken.
+
+## Errors worth knowing
+
+| Response | What it means |
+| :-- | :-- |
+| `401` | The token is missing or invalid. |
+| `403 account_limit_reached` | All seats in the workspace are taken. Delete an account or get more seats. |
+| `404 target_not_found` | LinkedIn has no page at that profile URL. Check the URL: retrying won't help. |
+| `409 snapshot_unavailable` | The account's session needs to be re-established. Call `POST /accounts/{id}/warmup` and retry. The account itself is fine. |
+| `502 page_shape_unrecognized` | LinkedIn returned a page we couldn't read. Report it to support. |
+
+## Warm up before a batch
+
+A session that sits unused goes stale, and the first call after that takes seconds. Call `POST /accounts/{id}/warmup` before a batch of calls or right after signing in again. The account must be `active`.

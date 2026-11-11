@@ -1,26 +1,43 @@
 ---
-title: "已连接账号"
-description: "将 LinkedIn 账号连接到 Gologin 账号管理，并通过人工智能助理或 API 实现自动化外联。每个账号都拥有专属 IP 和指纹。"
+title: "Connected Accounts"
+description: "将 LinkedIn 账户连接到 Gologin,并通过人工智能助理或 API 使用这些账户开展外联。每个账户都有独立的浏览器配置文件、专用 IP,以及始终保持登录的会话。"
 ---
 
-**已连接账号**（应用中的 **账号** 版块）可让您将受支持平台上的账号连接到 Gologin，并在该账号中自动执行操作，而无需您自己在浏览器配置文件中打开该账号。
+**已连接账户**(应用中的**账户**部分)让您只需将 LinkedIn 账户连接到 Gologin 一次,之后即可通过这些账户开展外联:搜索人员、发送邀请和消息、回复消息、发布帖子和评论。
 
-已连接账号与浏览器配置文件不同。配置文件是一个独立的浏览器，由您或[人工智能助理](/zh/ai/ai-assistant)在其中工作。已连接账号则是与平台的直接集成：您只需下达任务，系统就会通过该账号执行相应操作。
+每个已连接的账户都会获得:
 
-![人工智能助理已连接账号](/images/ai_assistant_connected_accounts.png "人工智能助理已连接账号")
+- 独立的 Gologin 浏览器配置文件,并带有唯一的指纹;
+- 位于您所选国家/地区的专用 IP,或使用您自己的代理;
+- 始终保持登录的会话。账户在云端运行,因此即使您的电脑关机,任务也会继续执行。
 
-## 支持的平台
+已连接账户与浏览器配置文件不同。配置文件是一个独立的浏览器,由您或[人工智能助理](/zh/ai/ai-assistant)在其中操作。使用已连接账户时,您只需下达任务,Gologin 就会在该账户自己的配置文件中,通过该账户执行相应操作。
 
-目前已支持 **LinkedIn**。Twitter/X、Reddit 和 Instagram 即将推出。
+![Ai Assistant Connected Accounts](/images/ai_assistant_connected_accounts.png "Ai Assistant Connected Accounts")
 
-## 工作原理
+## 使用账户的方式
 
-1. **连接账号。** 点击 **连接账号**，使用密码或 Cookie 登录。密码会以加密方式存储。
-2. **选择 IP 所在地。** 为账号的专属 IP 地址选择一个国家。每个已连接账号还会获得自己独一无二的指纹。
-3. **开始使用。** 向人工智能助理下达任务，例如搜索用户、发送消息或管理人脉，也可以在自己的代码中使用 API。
+- **人工智能助理。** 用一句话描述任务,例如"邀请柏林 SaaS 公司的增长负责人"。助理会先展示计划,在您批准之前不会发送任何内容。请参阅[使用人工智能助理开展外联](/zh/ai/connected-accounts/assistant-and-inbox)。
+- **收件箱。** 所有账户收到的回复都会汇总在同一个列表中,每条回复都会从收到该消息的账户发出。
+- **API。** 在相同的限制范围内,通过您自己的代码或人工智能智能体运行这些账户。请参阅[已连接账户 API](/zh/ai/connected-accounts/api)。
 
-当助理使用已连接账号工作时，它会先制定计划，只有在您批准后才会发送消息。
+## 支持的网络
+
+目前支持 **LinkedIn**。Twitter/X、Reddit、Instagram、Gmail、WhatsApp 和 Telegram 即将推出。
+
+## 席位与抢先体验
+
+无论状态如何,每个已连接的账户都会占用您工作区中的一个席位。断开账户连接后,席位仍会保留。只有删除该账户,才能释放席位供其他账户使用。应用和 API 共用相同的席位。
+
+抢先体验期间,已连接账户功能免费:每个工作区最多可连接 3 个账户,无需绑定银行卡。如需测试更多账户,请在[已连接账户页面](https://gologin.com/connected-accounts/)预约演示。
 
 ## 在哪里找到
 
-点击左侧菜单中的 **账号**，或打开 **人工智能助理**，在 **已连接账号** 下使用 **账号**、**收件箱** 和 **API**。
+点击 Gologin 应用左侧菜单中的**账户**,或打开**人工智能助理**,然后在**已连接账户**下使用**账户**、**收件箱**和 **API**。
+
+## 后续步骤
+
+- [连接 LinkedIn 账户](/zh/ai/connected-accounts/connect-linkedin)
+- [使用人工智能助理开展外联](/zh/ai/connected-accounts/assistant-and-inbox)
+- [限制与预热](/zh/ai/connected-accounts/limits)
+- [已连接账户 API](/zh/ai/connected-accounts/api)

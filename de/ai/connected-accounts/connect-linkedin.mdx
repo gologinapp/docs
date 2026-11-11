@@ -1,0 +1,66 @@
+---
+title: "LinkedIn-Konto verbinden"
+description: "Verbinden Sie ein LinkedIn-Konto per Passwort, Cookies oder Gologin-Profil, wählen Sie das IP-Land und bestehen Sie die LinkedIn-Prüfungen im selben Fenster."
+---
+
+Sie verbinden jedes LinkedIn-Konto nur einmal. Danach bleibt es angemeldet und funktioniert in der Cloud.
+
+## Konto verbinden
+
+1. Öffnen Sie **Accounts** und klicken Sie auf **Connect account**.
+2. **Wählen Sie das Netzwerk.** LinkedIn ist derzeit verfügbar.
+3. **Wählen Sie, woher die IP-Adresse stammt:**
+   - **Eine dedizierte IP** in einem der verfügbaren Länder: Brasilien, Frankreich, Deutschland, Hongkong, Indien, Indonesien, Rumänien, Südkorea, Türkei, Vereinigtes Königreich oder USA. Die Liste kann sich ändern.
+   - **Ihr eigener Proxy.** Geben Sie ihn ein, klicken Sie auf **Check proxy** und dann auf **Use this proxy**.
+4. **Melden Sie sich bei LinkedIn an**, und zwar auf eine von drei Arten:
+   - **Credentials** - E-Mail-Adresse und Passwort des Kontos. Das Passwort wird verschlüsselt gespeichert und nur verwendet, um die Sitzung später wiederherzustellen.
+   - **Cookies** - das Cookie `li_at` aus einem Browser, in dem Sie bei LinkedIn angemeldet sind. Das Passwort brauchen Sie dafür nicht.
+   - **Gologin profile** - ein Gologin-Profil, das bereits bei LinkedIn angemeldet ist. Eine neue Anmeldung ist nicht nötig, und das Konto verwendet den Proxy des Profils.
+5. Wenn Sie Ihre bestehenden LinkedIn-Unterhaltungen übernehmen möchten, aktivieren Sie **Import existing conversations**. Andernfalls werden nur Unterhaltungen ab dem Zeitpunkt der Verbindung gespeichert.
+6. Klicken Sie auf **Login**. Gologin weist eine dedizierte IP zu, erstellt ein Browserprofil für das Konto und meldet sich bei LinkedIn an.
+
+<Tip>
+  So kopieren Sie das Cookie `li_at`: Öffnen Sie LinkedIn in einem Browser, in dem Sie angemeldet sind, drücken Sie **F12**, gehen Sie zu **Application** > **Cookies** > **https://www.linkedin.com** (in Firefox: **Storage** > **Cookies**) und kopieren Sie den Wert von `li_at`.
+</Tip>
+
+## LinkedIn-Prüfungen bestehen
+
+LinkedIn kann Sie auffordern, zu bestätigen, dass Sie es sind. Das erledigen Sie im selben Fenster:
+
+- **Code per E-Mail** - Geben Sie den Code ein, den LinkedIn an die E-Mail-Adresse des Kontos gesendet hat.
+- **Authenticator-App** - Geben Sie den Code aus Google Authenticator oder einer ähnlichen App ein.
+- **Telefonnummer** - Geben Sie eine Telefonnummer ein. LinkedIn sendet in der Regel einen Code an diese Nummer.
+- **LinkedIn-App** - Bestätigen Sie die Anmeldung in der LinkedIn-App auf Ihrem Smartphone. Das Fenster läuft anschließend automatisch weiter.
+
+CAPTCHAs werden automatisch gelöst. Zeigt LinkedIn eine Prüfung an, die sich nicht automatisch bestehen lässt, öffnet sich ein Browserfenster, in dem Sie die Prüfung selbst durchführen.
+
+Jede Prüfung wartet bis zu 10 Minuten. Wird der Code nicht rechtzeitig eingegeben oder die Anmeldung nicht rechtzeitig bestätigt, melden Sie sich erneut an.
+
+Wenn die Meldung **LinkedIn asked for an extra check we can't complete here, sign in with cookies instead** erscheint, verbinden Sie das Konto mit dem Cookie `li_at`.
+
+## Kontostatus
+
+| Status | Bedeutung |
+| :-- | :-- |
+| **Active** | Das Konto ist angemeldet und funktioniert. |
+| **Needs action** | Sie müssen etwas tun: einen Code eingeben, die Anmeldung bestätigen, eine LinkedIn-Prüfung bestehen oder sich erneut anmelden. Der Grund wird unter dem Status angezeigt. |
+| **Restricted** | LinkedIn hat das Konto eingeschränkt. Prüfen Sie es auf linkedin.com. |
+| **Paused** | Sie haben das Konto getrennt. |
+
+Häufige Gründe, die unter dem Status angezeigt werden:
+
+| Grund | Was zu tun ist |
+| :-- | :-- |
+| Wrong password · retry login | Melden Sie sich mit dem richtigen Passwort erneut an oder verwenden Sie Cookies. |
+| Session expired · log in again | LinkedIn hat die Sitzung beendet. Melden Sie sich erneut mit Ihrem Passwort oder mit neuen Cookies an. |
+| LinkedIn asked for a checkpoint | Bestehen Sie die Prüfung auf linkedin.com und melden Sie sich dann mit neuen Cookies erneut an. |
+| Verification code expired | Der Code wurde nicht innerhalb von 10 Minuten eingegeben. Melden Sie sich erneut an und verwenden Sie den neuen Code. |
+| Not confirmed in the LinkedIn app in time | Melden Sie sich erneut an und bestätigen Sie die Anmeldung in der LinkedIn-App. |
+| No dedicated IP available | Wählen Sie ein anderes Land oder verwenden Sie Ihren eigenen Proxy. |
+| Already connected in this workspace | Dieses LinkedIn-Konto befindet sich bereits in Ihrer Liste. |
+| LinkedIn has restricted this account | Prüfen Sie das Konto auf linkedin.com. |
+
+## Konto trennen oder löschen
+
+- **Disconnect.** Aufgaben, die von diesem Konto aus laufen, werden gestoppt. Das Konto bleibt in Ihrer Liste und behält seinen Platz, bis Sie es erneut verbinden.
+- **Delete.** Das Konto sowie seine Chats und sein Verlauf werden endgültig entfernt. Aufgaben, die von diesem Konto aus laufen, werden gestoppt, und sein Platz wird für ein anderes Konto frei.

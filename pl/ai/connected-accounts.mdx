@@ -1,26 +1,43 @@
 ---
 title: "Connected Accounts"
-description: "Połącz konto LinkedIn z Gologin Accounts i zautomatyzuj działania outreachowe za pomocą AI Assistant lub API. Każde konto otrzymuje dedykowany adres IP i fingerprint."
+description: "Połącz konta LinkedIn z Gologin i prowadź z nich działania outreach za pomocą AI Assistant lub API. Każde konto ma własny profil przeglądarki, dedykowany adres IP i sesję, która pozostaje zalogowana."
 ---
 
-Funkcja **Connected Accounts** (sekcja **Accounts** w aplikacji) umożliwia połączenie konta na obsługiwanej platformie z Gologin i automatyzację działań na tym koncie - bez konieczności samodzielnego otwierania go w profilu przeglądarki.
+**Connected Accounts** (sekcja **Accounts** w aplikacji) pozwala jednorazowo połączyć konta LinkedIn z Gologin, a następnie prowadzić z nich outreach: wyszukiwać osoby, wysyłać zaproszenia i wiadomości, odpowiadać na odpowiedzi, publikować posty i komentarze.
 
-Połączone konto to nie to samo co profil przeglądarki. Profil to odizolowana przeglądarka, w której pracujesz Ty lub [AI Assistant](/pl/ai/ai-assistant). Połączone konto to bezpośrednia integracja z platformą: zlecasz zadanie, a działania są wykonywane za pośrednictwem tego konta.
+Każde połączone konto otrzymuje:
+
+- własny profil przeglądarki Gologin z unikalnym fingerprintem;
+- dedykowany adres IP w wybranym kraju lub Twoje własne proxy;
+- sesję, która pozostaje zalogowana. Konta działają w chmurze, więc zadania są wykonywane nawet wtedy, gdy komputer jest wyłączony.
+
+Połączone konto to nie to samo co profil przeglądarki. Profil to izolowana przeglądarka, w której pracujesz Ty lub [AI Assistant](/pl/ai/ai-assistant). W przypadku połączonego konta zlecasz zadanie, a Gologin wykonuje działania przez to konto w jego własnym profilu.
 
 ![Ai Assistant Connected Accounts](/images/ai_assistant_connected_accounts.png "Ai Assistant Connected Accounts")
 
-## Obsługiwane platformy
+## Sposoby pracy z kontami
 
-**LinkedIn** jest już dostępny. Twitter/X, Reddit i Instagram pojawią się wkrótce.
+- **AI Assistant.** Opisz zadanie jednym zdaniem, na przykład „Zaproś osoby odpowiedzialne za growth w firmach SaaS w Berlinie". Asystent pokaże plan i nie wyśle niczego, dopóki go nie zatwierdzisz. Zobacz [Outreach z AI Assistant](/pl/ai/connected-accounts/assistant-and-inbox).
+- **Inbox.** Odpowiedzi ze wszystkich Twoich kont trafiają do jednej listy, a każda odpowiedź jest wysyłana z konta, na które przyszła wiadomość.
+- **API.** Obsługuj te same konta z własnego kodu lub agenta AI, w tych samych limitach. Zobacz [Connected Accounts API](/pl/ai/connected-accounts/api).
 
-## Jak to działa
+## Obsługiwane sieci
 
-1. **Połącz konto.** Kliknij **Connect account** i zaloguj się za pomocą hasła lub plików cookie. Hasła są przechowywane w postaci zaszyfrowanej.
-2. **Wybierz lokalizację IP.** Wybierz kraj dla dedykowanego adresu IP konta. Każde połączone konto otrzymuje też własny, unikalny fingerprint.
-3. **Zleć zadanie.** Przekaż AI Assistant zadanie - na przykład wyszukiwanie osób, wysyłanie wiadomości lub zarządzanie kontaktami - albo skorzystaj z API we własnym kodzie.
+**LinkedIn** jest dostępny już teraz. Twitter/X, Reddit, Instagram, Gmail, WhatsApp i Telegram będą dostępne wkrótce.
 
-Gdy asystent pracuje z połączonym kontem, najpierw przygotowuje plan, a wiadomości wysyła dopiero po Twoim zatwierdzeniu.
+## Miejsca i wczesny dostęp
+
+Każde połączone konto zajmuje jedno miejsce w Twoim workspace, niezależnie od statusu. Rozłączenie konta nie zwalnia jego miejsca. Miejsce zwalnia dopiero usunięcie konta, co pozwala dodać inne. Aplikacja i API korzystają z tych samych miejsc.
+
+Connected Accounts jest bezpłatne podczas wczesnego dostępu: możesz połączyć do 3 kont na workspace, bez karty płatniczej. Aby przetestować więcej kont, umów demo na [stronie Connected Accounts](https://gologin.com/connected-accounts/).
 
 ## Gdzie to znaleźć
 
-Kliknij **Accounts** w menu po lewej stronie lub otwórz **AI Assistant** i skorzystaj z opcji **Accounts**, **Inbox** oraz **API** w sekcji **Connected accounts**.
+Kliknij **Accounts** w lewym menu aplikacji Gologin lub otwórz **AI Assistant** i skorzystaj z opcji **Accounts**, **Inbox** i **API** w sekcji **Connected accounts**.
+
+## Następne kroki
+
+- [Połącz konto LinkedIn](/pl/ai/connected-accounts/connect-linkedin)
+- [Outreach z AI Assistant](/pl/ai/connected-accounts/assistant-and-inbox)
+- [Limity i rozgrzewanie konta](/pl/ai/connected-accounts/limits)
+- [Connected Accounts API](/pl/ai/connected-accounts/api)

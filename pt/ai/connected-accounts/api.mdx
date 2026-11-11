@@ -1,0 +1,136 @@
+---
+title: "API de Contas Conectadas"
+description: "Gerencie contas conectadas do LinkedIn a partir do seu próprio código ou de um agente de IA: conecte contas, busque pessoas, envie convites e mensagens, leia conversas e receba novas mensagens em um webhook."
+---
+
+A API funciona com as mesmas contas, vagas e limites do app. Use-a no seu próprio código, em um pipeline ou em um agente de IA, como Claude Code, Codex ou Cursor.
+
+A referência completa com todos os endpoints está no [Swagger](https://ai.gologin.com/accounts-api/swagger). Lá você também pode baixar o JSON do OpenAPI e entregá-lo ao seu agente de IA.
+
+## URL base e autenticação
+
+Todas as requisições vão para:
+
+```
+https://ai.gologin.com/accounts-api
+```
+
+Envie seu token de API do Gologin no cabeçalho `Authorization` de cada requisição:
+
+```bash
+curl https://ai.gologin.com/accounts-api/accounts \
+  -H "Authorization: Bearer YOUR_API_TOKEN"
+```
+
+Essa chamada lista suas contas conectadas, da mais recente para a mais antiga. Contas desconectadas não são incluídas. Sem um token válido, a API responde `401`.
+
+Crie um token no app do Gologin: [API & MCP](https://app.gologin.com/personalArea/TokenApi) > **API** > **Novo Token**, ou na seção **API** em **Contas conectadas** no Assistente de IA. Um token pode ser criado em um plano pago com a autenticação em duas etapas ativada no Gologin.
+
+## Os envios são simulações por padrão
+
+Convites, mensagens, comentários e respostas só são enviados quando você passa `"send": true`. Sem isso, a requisição é uma simulação (dry run): ela verifica o destino e informa o que aconteceria - quem é o destinatário, se é possível enviar um convite, se já existe uma conversa - e não envia nada. Faça primeiro a simulação e depois repita a requisição com `"send": true`.
+
+A publicação de posts, as reações e a aceitação de convites usam suas próprias flags: `publish`, `react` e `accept`.
+
+## Conectar uma conta
+
+1. Obtenha o ID do seu workspace: `GET https://api.gologin.com/workspaces` com o mesmo token retorna seus workspaces e o `id` de cada um.
+2. Crie a conta:
+
+```bash
+curl -X POST https://ai.gologin.com/accounts-api/accounts \
+  -H "Authorization: Bearer YOUR_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "provider": "linkedin",
+    "workspaceId": "YOUR_WORKSPACE_ID",
+    "proxyCountry": "us",
+    "cookies": [{ "name": "li_at", "value": "YOUR_LI_AT_COOKIE" }]
+  }'
+```
+
+- Para fazer login, passe um destes: `credentials` (`login` e `password`), `cookies` ou `browserProfileId` - um perfil do Gologin que já está conectado ao LinkedIn.
+- Para o IP, passe `proxyCountry` (os códigos vêm de `GET /available-countries`) ou seu próprio `proxy` (`host`, `port` e, opcionalmente, `protocol`, `username`, `password`). Um perfil do Gologin vinculado usa o próprio proxy.
+- Para importar conversas existentes, adicione `"importHistory": true`.
+
+3. A conta retorna como `pending` enquanto a configuração é executada. Consulte `GET /accounts/{id}` até que o `status` mude:
+
+| `status` | O que fazer |
+| :-- | :-- |
+| `active` | A conta está conectada. Opcionalmente, chame `POST /accounts/{id}/warmup` para deixar as primeiras chamadas rápidas. |
+| `email_code_required` | Envie o código que o LinkedIn enviou por e-mail: `POST /accounts/{id}/auth/email-code` com `{"code": "123456"}`. |
+| `totp_code_required` | Envie o código do app autenticador: `POST /accounts/{id}/auth/totp-code` com `{"code": "123456"}`. |
+| `phone_number_required` | Envie `country` (um dos valores de `statusReason.countries`) e `number` para `POST /accounts/{id}/auth/phone-number`. Normalmente, o LinkedIn envia um código para esse número. |
+| `app_approval_required` | Confirme o login no app do LinkedIn e continue consultando. Se `statusReason.anotherWay` estiver presente, `POST /accounts/{id}/auth/another-way` muda para a outra forma que o LinkedIn oferece. |
+| `challenge_required` | O proprietário está passando por uma verificação do LinkedIn no app. Continue consultando. |
+| `auth_failed`, `manual_auth_required` | `statusReason.code` indica o motivo. A maioria dos casos se resolve com `POST /accounts/{id}/auth/retry` e novos `credentials` ou `cookies`. |
+
+Cada espera dura até 10 minutos. Um código não enviado ou um login não confirmado termina então em `auth_failed`.
+
+## Encontrar pessoas e enviar um convite
+
+1. **Busque.** `GET /linkedin/people/search?accountId=ACCOUNT_ID&query=head%20of%20growth` retorna `profile_url` e `profile_id` de cada pessoa. Em vez de `query`, você pode passar `url` - um link de busca do LinkedIn com seus filtros.
+2. **Verifique o perfil.** `GET /linkedin/profile?accountId=ACCOUNT_ID&profileUrl=PROFILE_URL` mostra `is_connected`, `is_pending` e `is_available_to_connect`.
+3. **Convide.** Faça primeiro uma simulação:
+
+```bash
+curl -X POST https://ai.gologin.com/accounts-api/linkedin/invites/send \
+  -H "Authorization: Bearer YOUR_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "accountId": "ACCOUNT_ID",
+    "profileUrl": "https://www.linkedin.com/in/some-person/",
+    "note": "Hi! I liked your post about onboarding. Would love to connect."
+  }'
+```
+
+`connectable_dry_run` significa que o convite seria enviado. `not_connectable` informa o motivo: `already_connected`, `invite_pending` ou `connect_unavailable`. Repita a requisição com `"send": true`. `sent_verified` significa que o LinkedIn criou o convite.
+
+## Enviar uma mensagem
+
+`POST /linkedin/messages/send` recebe `accountId`, `message` e um destes:
+
+- `profileUrl` - para escrever a uma pessoa. A conversa com ela é localizada ou, se não existir, aberta; a resposta traz `existing_conversation` ou `new_conversation`. Se apenas um InMail pago puder alcançar a pessoa, você recebe `not_messageable` com `paid_inmail_required`. Um InMail pago nunca é gasto silenciosamente.
+- `conversationId` - para continuar uma conversa: o `conversation_id` de `/linkedin/inbox`, um ID de thread `2-…` ou uma URL de thread.
+
+Uma mensagem enviada retorna `sent_verified` com `message_id` e `conversation_id`.
+
+## Ler conversas
+
+- `GET /linkedin/inbox?accountId=ACCOUNT_ID` lista as conversas da conta, da mais recente para a mais antiga.
+- `GET /linkedin/messages/conversation?accountId=ACCOUNT_ID&conversationId=CONVERSATION_ID` retorna as mensagens, da mais antiga para a mais recente. `limit` mantém apenas as mais recentes.
+- `GET /workspaces/{workspaceId}/conversations` lista as conversas de todas as contas do workspace, e `GET /workspaces/{workspaceId}/inbox/unread` retorna as contagens de não lidas.
+
+## Receber novas mensagens em um webhook
+
+```bash
+curl -X PUT https://ai.gologin.com/accounts-api/workspaces/YOUR_WORKSPACE_ID/live-updates-webhook \
+  -H "Authorization: Bearer YOUR_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{ "url": "https://example.com/gologin-webhook" }'
+```
+
+Cada nova atualização das contas do workspace é enviada para essa URL como JSON: `{ accountId, workspaceId, event }`. A entrega é repetida em caso de erro e o mesmo evento pode chegar duas vezes, por isso remova duplicatas usando `event.id`. Para remover o webhook, envie `{"url": null}`. Localhost e endereços internos não são aceitos.
+
+## Limites
+
+As ações da API contam para os mesmos [limites](/pt/ai/connected-accounts/limits) do app.
+
+- `GET /accounts/{id}/limits` retorna o estágio da conta e todos os limites: o valor recomendado, o seu próprio valor, o valor aplicado, quanto já foi usado e `resetsAt` - quando a janela terá espaço para mais uma ação.
+- `PUT /accounts/{id}/limits` altera o `stage` ou os seus próprios valores em `customLimits`. Um valor `null` remove o seu próprio valor.
+- `DELETE /accounts/{id}/limits/custom` redefine todos os limites para os recomendados.
+- `GET /workspaces/{workspaceId}/accounts-usage` mostra quantas contas o seu workspace pode conectar e quantas vagas estão ocupadas.
+
+## Erros que vale conhecer
+
+| Resposta | O que significa |
+| :-- | :-- |
+| `401` | O token está ausente ou é inválido. |
+| `403 account_limit_reached` | Todas as vagas do workspace estão ocupadas. Exclua uma conta ou adquira mais vagas. |
+| `404 target_not_found` | O LinkedIn não tem nenhuma página nessa URL de perfil. Verifique a URL: tentar novamente não vai ajudar. |
+| `409 snapshot_unavailable` | A sessão da conta precisa ser restabelecida. Chame `POST /accounts/{id}/warmup` e tente novamente. A conta em si está bem. |
+| `502 page_shape_unrecognized` | O LinkedIn retornou uma página que não conseguimos ler. Informe o suporte. |
+
+## Aquecer a sessão antes de um lote
+
+Uma sessão que fica sem uso expira, e a primeira chamada depois disso leva alguns segundos. Chame `POST /accounts/{id}/warmup` antes de um lote de chamadas ou logo depois de fazer login novamente. A conta precisa estar `active`.

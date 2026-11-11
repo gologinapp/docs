@@ -1,0 +1,66 @@
+---
+title: "Kết nối tài khoản LinkedIn"
+description: "Kết nối tài khoản LinkedIn bằng mật khẩu, cookie hoặc hồ sơ Gologin, chọn quốc gia của IP và vượt qua các bước kiểm tra của LinkedIn ngay trong cùng một cửa sổ."
+---
+
+Bạn chỉ cần kết nối mỗi tài khoản LinkedIn một lần. Sau đó, tài khoản sẽ luôn ở trạng thái đã đăng nhập và hoạt động trên đám mây.
+
+## Kết nối tài khoản
+
+1. Mở **Tài khoản** và nhấp vào **Kết nối tài khoản**.
+2. **Chọn mạng xã hội.** Hiện đã hỗ trợ LinkedIn.
+3. **Chọn nguồn IP:**
+   - **IP riêng** ở một trong các quốc gia có sẵn: Brazil, Pháp, Đức, Hồng Kông, Ấn Độ, Indonesia, Romania, Hàn Quốc, Thổ Nhĩ Kỳ, Vương quốc Anh hoặc Hoa Kỳ. Danh sách này có thể thay đổi.
+   - **Proxy của riêng bạn.** Nhập proxy, nhấp vào **Kiểm tra proxy**, sau đó chọn **Dùng proxy này**.
+4. **Đăng nhập vào LinkedIn** theo một trong ba cách:
+   - **Thông tin đăng nhập** - email và mật khẩu của tài khoản. Mật khẩu được lưu ở dạng mã hóa và chỉ dùng để khôi phục phiên đăng nhập sau này.
+   - **Bánh quy** - cookie `li_at` lấy từ trình duyệt mà bạn đã đăng nhập LinkedIn. Bạn không cần mật khẩu.
+   - **Hồ sơ Gologin** - một hồ sơ Gologin đã đăng nhập sẵn vào LinkedIn. Không cần đăng nhập lại, và tài khoản sẽ dùng proxy của chính hồ sơ đó.
+5. Để đưa các cuộc trò chuyện LinkedIn hiện có vào, hãy chọn **Nhập các cuộc trò chuyện hiện có**. Nếu không, chỉ các cuộc trò chuyện từ thời điểm kết nối mới được lưu.
+6. Nhấp vào **Đăng nhập**. Gologin sẽ gán một IP riêng, tạo hồ sơ trình duyệt cho tài khoản và đăng nhập vào LinkedIn.
+
+<Tip>
+  Để sao chép cookie `li_at`, hãy mở LinkedIn trong trình duyệt mà bạn đã đăng nhập, nhấn **F12**, vào **Application** > **Cookies** > **https://www.linkedin.com** (trong Firefox: **Storage** > **Cookies**) rồi sao chép giá trị của `li_at`.
+</Tip>
+
+## Vượt qua các bước kiểm tra của LinkedIn
+
+LinkedIn có thể yêu cầu bạn xác nhận danh tính. Bạn thực hiện ngay trong cùng một cửa sổ:
+
+- **Mã từ email** - nhập mã LinkedIn đã gửi đến email của tài khoản.
+- **Ứng dụng xác thực** - nhập mã từ Google Authenticator hoặc ứng dụng tương tự.
+- **Số điện thoại** - nhập số điện thoại. LinkedIn thường gửi mã đến số này.
+- **Ứng dụng LinkedIn** - xác nhận đăng nhập trong ứng dụng LinkedIn trên điện thoại. Cửa sổ sẽ tự động tiếp tục.
+
+CAPTCHA được giải tự động. Nếu LinkedIn hiển thị một bước kiểm tra không thể vượt qua tự động, một cửa sổ trình duyệt sẽ mở ra để bạn tự thực hiện.
+
+Mỗi bước kiểm tra chờ tối đa 10 phút. Nếu mã không được nhập hoặc đăng nhập không được xác nhận kịp thời, hãy đăng nhập lại.
+
+Nếu bạn thấy thông báo **LinkedIn asked for an extra check we can't complete here, sign in with cookies instead**, hãy kết nối tài khoản bằng cookie `li_at`.
+
+## Trạng thái tài khoản
+
+| Trạng thái | Ý nghĩa |
+| :-- | :-- |
+| **Active** | Tài khoản đã đăng nhập và đang hoạt động. |
+| **Needs action** | Bạn cần thực hiện một thao tác: nhập mã, xác nhận đăng nhập, vượt qua bước kiểm tra của LinkedIn hoặc đăng nhập lại. Lý do được hiển thị bên dưới trạng thái. |
+| **Restricted** | LinkedIn đã hạn chế tài khoản. Hãy kiểm tra trên linkedin.com. |
+| **Đã tạm dừng** | Bạn đã ngắt kết nối tài khoản. |
+
+Các lý do thường gặp hiển thị bên dưới trạng thái:
+
+| Lý do | Cần làm gì |
+| :-- | :-- |
+| Wrong password · retry login | Đăng nhập lại bằng mật khẩu đúng, hoặc dùng cookie. |
+| Session expired · log in again | LinkedIn đã kết thúc phiên đăng nhập. Hãy đăng nhập lại bằng mật khẩu hoặc cookie mới. |
+| LinkedIn asked for a checkpoint | Vượt qua bước kiểm tra trên linkedin.com, sau đó đăng nhập lại bằng cookie mới. |
+| Verification code expired | Mã không được nhập trong vòng 10 phút. Hãy đăng nhập lại và dùng mã mới. |
+| Not confirmed in the LinkedIn app in time | Đăng nhập lại và xác nhận đăng nhập trong ứng dụng LinkedIn. |
+| No dedicated IP available | Chọn quốc gia khác hoặc dùng proxy của riêng bạn. |
+| Already connected in this workspace | Tài khoản LinkedIn này đã có trong danh sách của bạn. |
+| LinkedIn has restricted this account | Kiểm tra tài khoản trên linkedin.com. |
+
+## Ngắt kết nối hoặc xóa tài khoản
+
+- **Ngắt kết nối.** Các tác vụ đang chạy từ tài khoản này sẽ dừng lại. Tài khoản vẫn nằm trong danh sách và giữ chỗ của nó cho đến khi bạn kết nối lại.
+- **Xóa.** Tài khoản, các cuộc trò chuyện và lịch sử của nó sẽ bị xóa vĩnh viễn. Các tác vụ đang chạy từ tài khoản sẽ dừng lại, và chỗ của tài khoản được giải phóng cho tài khoản khác.

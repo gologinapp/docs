@@ -1,0 +1,66 @@
+---
+title: "Connect a LinkedIn account"
+description: "Connect a LinkedIn account with a password, cookies or a Gologin profile, choose the IP country and pass LinkedIn's checks in the same window."
+---
+
+You connect each LinkedIn account once. After that, it stays signed in and works in the cloud.
+
+## Connect an account
+
+1. Open **Accounts** and click **Connect account**.
+2. **Choose the network.** LinkedIn is available now.
+3. **Choose where the IP comes from:**
+   - **A dedicated IP** in one of the available countries: Brazil, France, Germany, Hong Kong, India, Indonesia, Romania, South Korea, Turkey, the United Kingdom or the United States. The list can change.
+   - **Your own proxy.** Enter it, click **Check proxy**, then **Use this proxy**.
+4. **Sign in to LinkedIn** in one of three ways:
+   - **Credentials** - the account's email and password. The password is stored encrypted and is used only to restore the session later.
+   - **Cookies** - the `li_at` cookie from a browser where you're signed in to LinkedIn. You don't need the password.
+   - **Gologin profile** - a Gologin profile that is already signed in to LinkedIn. No new sign-in is needed, and the account uses the profile's own proxy.
+5. To bring in your existing LinkedIn conversations, check **Import existing conversations**. Otherwise, only conversations from the moment of connection are stored.
+6. Click **Login**. Gologin assigns a dedicated IP, creates a browser profile for the account and signs in to LinkedIn.
+
+<Tip>
+  To copy the `li_at` cookie, open LinkedIn in a browser where you're signed in, press **F12**, go to **Application** > **Cookies** > **https://www.linkedin.com** (in Firefox: **Storage** > **Cookies**) and copy the value of `li_at`.
+</Tip>
+
+## Pass LinkedIn checks
+
+LinkedIn may ask you to confirm that it's you. You do it in the same window:
+
+- **Code from email** - enter the code LinkedIn sent to the account's email.
+- **Authenticator app** - enter the code from Google Authenticator or a similar app.
+- **Phone number** - enter a phone number. LinkedIn usually sends a code to it.
+- **LinkedIn app** - confirm the sign-in in the LinkedIn app on your phone. The window continues on its own.
+
+CAPTCHA is solved automatically. If LinkedIn shows a check that can't be passed automatically, a browser window opens so you can pass it yourself.
+
+Each check waits up to 10 minutes. If the code isn't entered or the sign-in isn't confirmed in time, sign in again.
+
+If you see **LinkedIn asked for an extra check we can't complete here, sign in with cookies instead**, connect the account with the `li_at` cookie.
+
+## Account statuses
+
+| Status | What it means |
+| :-- | :-- |
+| **Active** | The account is signed in and works. |
+| **Needs action** | You need to do something: enter a code, confirm the sign-in, pass a LinkedIn check or sign in again. The reason is shown under the status. |
+| **Restricted** | LinkedIn has restricted the account. Check it on linkedin.com. |
+| **Paused** | You disconnected the account. |
+
+Common reasons under the status:
+
+| Reason | What to do |
+| :-- | :-- |
+| Wrong password · retry login | Sign in again with the correct password, or use cookies. |
+| Session expired · log in again | LinkedIn ended the session. Sign in again with your password or fresh cookies. |
+| LinkedIn asked for a checkpoint | Pass the check on linkedin.com, then sign in again with fresh cookies. |
+| Verification code expired | The code wasn't entered within 10 minutes. Sign in again and use the new code. |
+| Not confirmed in the LinkedIn app in time | Sign in again and confirm the sign-in in the LinkedIn app. |
+| No dedicated IP available | Choose another country or use your own proxy. |
+| Already connected in this workspace | This LinkedIn account is already in your list. |
+| LinkedIn has restricted this account | Check the account on linkedin.com. |
+
+## Disconnect or delete an account
+
+- **Disconnect.** Tasks running from this account stop. It stays in your list and keeps its seat until you reconnect it.
+- **Delete.** The account, its chats and history are removed for good. Tasks running from it stop, and its seat becomes free for another account.

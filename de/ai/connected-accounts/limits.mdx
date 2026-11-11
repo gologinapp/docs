@@ -1,0 +1,50 @@
+---
+title: "Limits und Aufwärmphase"
+description: "Tägliche und wöchentliche Aktionslimits für jedes verbundene LinkedIn-Konto, wie ein Konto von Week 1 zu Full wechselt und wie Sie die Limits ändern."
+---
+
+Jedes verbundene Konto hat eigene Limits für jede Art von Aktion. Ein neues Konto startet mit niedrigen Limits, die jede Woche steigen. So wärmt sich das Konto auf, wie es auch ein Konto einer realen Person tun würde.
+
+## So funktionieren die Limits
+
+- Die Limits zählen alle Aktionen des Kontos: aus den Chats des AI Assistant, aus Vorlagen und über die API.
+- Tageslimits zählen die Aktionen der letzten 24 Stunden, Wochenlimits die der letzten 7 Tage, und das Limit für Einladungen mit Nachricht die der letzten 30 Tage.
+- Wenn ein Limit ausgeschöpft ist, wartet die Aktion auf das nächste Zeitfenster. Die Aufgabe schlägt nicht fehl. Die API antwortet mit dem Limit und dem Zeitpunkt, zu dem es wieder frei wird.
+- Die Limits und wie viel davon jeweils verbraucht ist, sehen Sie unter **Daily limits**. Um sie zu ändern, klicken Sie auf **Limit settings**.
+
+## Von Week 1 zu Full
+
+- Ein neues Konto startet bei **Week 1** und wechselt ab der ersten Anmeldung alle 7 Tage zur nächsten Stufe.
+- Nach **Week 4** wechselt das Konto zu **Full**, wenn LinkedIn es in diesen 4 Wochen nicht eingeschränkt hat, mindestens 30 % seiner Einladungen angenommen wurden und es mindestens 150 Kontakte hat. Andernfalls wird die Prüfung nach 7 Tagen wiederholt.
+- Wenn LinkedIn die Einladungen eines Kontos einschränkt, werden seine Einladungen für 7 Tage gestoppt, und Gologin schlägt vor, das Konto wieder auf **Week 1** zurückzusetzen.
+
+## Empfohlene Limits
+
+| Aktion | Week 1 | Week 2 | Week 3 | Week 4 | Full |
+| :-- | --: | --: | --: | --: | --: |
+| Einladungen pro Tag | 5 | 8 | 10 | 15 | 20 |
+| Einladungen pro 7 Tage | 30 | 50 | 60 | 80 | 100 |
+| Einladungen mit Nachricht pro 30 Tage | 3 | 3 | 3 | 3 | 3 |
+| Länge der Nachricht, Zeichen | 200 | 200 | 200 | 200 | 200 |
+| Nachrichten an Kontakte pro Tag | 10 | 15 | 20 | 30 | 50 |
+| Profilaufrufe pro Tag | 50 | 80 | 100 | 150 | 200 |
+| Profilaufrufe pro 7 Tage | 300 | 500 | 600 | 800 | 1,000 |
+| Seiten der Personensuche pro Tag | 3 | 3 | 5 | 5 | 10 |
+| Beiträge pro Tag | 1 | 1 | 1 | 1 | 2 |
+| Beiträge pro 7 Tage | 3 | 3 | 3 | 3 | 7 |
+| Kommentare pro Tag | 5 | 5 | 10 | 10 | 30 |
+| Kommentare pro 7 Tage | 30 | 30 | 50 | 50 | 150 |
+| Reaktionen pro Tag | 10 | 20 | 30 | 30 | 100 |
+| Reaktionen pro 7 Tage | 50 | 100 | 150 | 150 | 500 |
+
+Außerdem darf ein Konto höchstens 200 ausstehende Einladungen haben (500 bei **Full**). Eine Einladung, die 21 Tage lang aussteht, wird zurückgezogen.
+
+## Limits ändern
+
+In **Limit settings** haben Sie folgende Möglichkeiten:
+
+- **Eine Stufe wählen.** Wählen Sie zum Beispiel **Full** für ein Konto, das Sie schon lange aktiv nutzen. Die Limits dieser Stufe gelten sofort.
+- **Einen eigenen Wert festlegen** für jedes beliebige Limit. Ihre Werte haben Vorrang vor der Stufe und bleiben bestehen, wenn die Stufe wechselt.
+- **Reset to recommended**, um Ihre eigenen Werte zu entfernen.
+
+Dieselben Einstellungen sind auch in der [API](/de/ai/connected-accounts/api#limits) verfügbar.

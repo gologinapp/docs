@@ -1,0 +1,136 @@
+---
+title: "已连接账号 API"
+description: "通过你自己的代码或 AI 代理运行已连接的 LinkedIn 账号：连接账号、搜索人员、发送邀请和消息、读取对话，并通过 webhook 接收新消息。"
+---
+
+该 API 使用与应用相同的账号、席位和限制。你可以在自己的代码、数据管道中使用它，也可以通过 Claude Code、Codex 或 Cursor 等 AI 代理使用。
+
+包含所有接口的完整参考文档请见 [Swagger](https://ai.gologin.com/accounts-api/swagger)。你也可以在那里下载 OpenAPI JSON，并将其提供给你的 AI 代理。
+
+## 基础 URL 与身份验证
+
+所有请求都发送到：
+
+```
+https://ai.gologin.com/accounts-api
+```
+
+在每个请求的 `Authorization` 请求头中携带你的 Gologin API 令牌：
+
+```bash
+curl https://ai.gologin.com/accounts-api/accounts \
+  -H "Authorization: Bearer YOUR_API_TOKEN"
+```
+
+此调用会列出你已连接的账号，按最新优先排序。已断开连接的账号不会包含在内。如果没有有效的令牌，API 会返回 `401`。
+
+在 Gologin 应用中创建令牌：[API & MCP](https://app.gologin.com/personalArea/TokenApi) > **API** > **新代币**，或者在 AI 助手中的 **已连接账号** 下的 **API** 部分创建。令牌只能在付费套餐中创建，并且需要在 Gologin 中开启双重验证。
+
+## 默认情况下，发送操作只是试运行
+
+只有在传入 `"send": true` 时，才会真正发送邀请、消息、评论和回复。如果不传该参数，请求就是一次试运行：它会检查目标，并告诉你将会发生什么——收件人是谁、是否可以发送邀请、对话是否已经存在——但不会发送任何内容。请先进行试运行，然后再带上 `"send": true` 重复该请求。
+
+发布帖子、点赞互动和接受邀请使用各自的参数：`publish`、`react` 和 `accept`。
+
+## 连接账号
+
+1. 获取你的工作区 ID：使用同一个令牌调用 `GET https://api.gologin.com/workspaces`，即可返回你的工作区及其 `id`。
+2. 创建账号：
+
+```bash
+curl -X POST https://ai.gologin.com/accounts-api/accounts \
+  -H "Authorization: Bearer YOUR_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "provider": "linkedin",
+    "workspaceId": "YOUR_WORKSPACE_ID",
+    "proxyCountry": "us",
+    "cookies": [{ "name": "li_at", "value": "YOUR_LI_AT_COOKIE" }]
+  }'
+```
+
+- 登录时，请传入以下其中一项：`credentials`（`login` 和 `password`）、`cookies`，或 `browserProfileId`——即已登录 LinkedIn 的 Gologin 浏览器配置文件。
+- 对于 IP，请传入 `proxyCountry`（国家代码来自 `GET /available-countries`）或你自己的 `proxy`（`host`、`port`，以及可选的 `protocol`、`username`、`password`）。关联的 Gologin 配置文件会使用它自己的代理。
+- 如需导入已有对话，请添加 `"importHistory": true`。
+
+3. 在设置进行期间，账号会以 `pending` 状态返回。请持续检查 `GET /accounts/{id}`，直到 `status` 发生变化：
+
+| `status` | 处理方式 |
+| :-- | :-- |
+| `active` | 账号已登录。你也可以调用 `POST /accounts/{id}/warmup`，让首次调用更快。 |
+| `email_code_required` | 发送 LinkedIn 通过邮件发来的验证码：`POST /accounts/{id}/auth/email-code`，请求体为 `{"code": "123456"}`。 |
+| `totp_code_required` | 发送验证器应用中的验证码：`POST /accounts/{id}/auth/totp-code`，请求体为 `{"code": "123456"}`。 |
+| `phone_number_required` | 将 `country`（取自 `statusReason.countries` 之一）和 `number` 发送到 `POST /accounts/{id}/auth/phone-number`。LinkedIn 通常会向该号码发送验证码。 |
+| `app_approval_required` | 在 LinkedIn 应用中确认登录，并持续检查状态。如果存在 `statusReason.anotherWay`，可通过 `POST /accounts/{id}/auth/another-way` 切换到 LinkedIn 提供的其他验证方式。 |
+| `challenge_required` | 账号所有者正在应用中通过 LinkedIn 的验证。请持续检查状态。 |
+| `auth_failed`, `manual_auth_required` | `statusReason.code` 会说明原因。大多数情况下，可通过 `POST /accounts/{id}/auth/retry` 并提供新的 `credentials` 或 `cookies` 来解决。 |
+
+每次等待最长持续 10 分钟。如果验证码未发送或登录未确认，最终会变为 `auth_failed`。
+
+## 查找人员并发送邀请
+
+1. **搜索。** `GET /linkedin/people/search?accountId=ACCOUNT_ID&query=head%20of%20growth` 会返回每个人的 `profile_url` 和 `profile_id`。你也可以用 `url` 代替 `query`——即带有筛选条件的 LinkedIn 搜索链接。
+2. **检查个人资料。** `GET /linkedin/profile?accountId=ACCOUNT_ID&profileUrl=PROFILE_URL` 会显示 `is_connected`、`is_pending` 和 `is_available_to_connect`。
+3. **邀请。** 请先进行试运行：
+
+```bash
+curl -X POST https://ai.gologin.com/accounts-api/linkedin/invites/send \
+  -H "Authorization: Bearer YOUR_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "accountId": "ACCOUNT_ID",
+    "profileUrl": "https://www.linkedin.com/in/some-person/",
+    "note": "Hi! I liked your post about onboarding. Would love to connect."
+  }'
+```
+
+`connectable_dry_run` 表示邀请可以发出。`not_connectable` 会说明原因：`already_connected`、`invite_pending` 或 `connect_unavailable`。请带上 `"send": true` 重复该请求。`sent_verified` 表示 LinkedIn 已创建该邀请。
+
+## 发送消息
+
+`POST /linkedin/messages/send` 需要 `accountId`、`message`，以及以下其中一项：
+
+- `profileUrl`——用于给某个人发消息。系统会查找与对方的对话，如果没有则新建一个；返回结果会显示 `existing_conversation` 或 `new_conversation`。如果只有付费 InMail 才能联系到该人，你会收到 `not_messageable` 和 `paid_inmail_required`。系统绝不会在你不知情的情况下消耗付费 InMail。
+- `conversationId`——用于继续某个对话：可以是来自 `/linkedin/inbox` 的 `conversation_id`、`2-…` 格式的会话 ID，或会话 URL。
+
+消息发送成功后会返回 `sent_verified`，并附带 `message_id` 和 `conversation_id`。
+
+## 读取对话
+
+- `GET /linkedin/inbox?accountId=ACCOUNT_ID` 会列出该账号的对话，按最新优先排序。
+- `GET /linkedin/messages/conversation?accountId=ACCOUNT_ID&conversationId=CONVERSATION_ID` 会返回消息，按最早优先排序。`limit` 参数用于只保留最近的消息。
+- `GET /workspaces/{workspaceId}/conversations` 会列出工作区内所有账号的对话，`GET /workspaces/{workspaceId}/inbox/unread` 会返回未读数量。
+
+## 通过 webhook 接收新消息
+
+```bash
+curl -X PUT https://ai.gologin.com/accounts-api/workspaces/YOUR_WORKSPACE_ID/live-updates-webhook \
+  -H "Authorization: Bearer YOUR_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{ "url": "https://example.com/gologin-webhook" }'
+```
+
+工作区内各账号的每条新动态都会以 JSON 形式发送到该 URL：`{ accountId, workspaceId, event }`。出错时会重试投递，同一事件可能会收到两次，因此请按 `event.id` 去重。如需移除 webhook，请发送 `{"url": null}`。不接受 localhost 和内部地址。
+
+## 限制
+
+通过 API 执行的操作与应用内的操作计入相同的[限制](/zh/ai/connected-accounts/limits)。
+
+- `GET /accounts/{id}/limits` 会返回账号所处的阶段以及每项限制：推荐值、你自己设置的值、实际生效的值、已使用的数量，以及 `resetsAt`——即时间窗口可再容纳一次操作的时间。
+- `PUT /accounts/{id}/limits` 用于修改 `stage`，或修改 `customLimits` 中你自己设置的值。将值设为 `null` 即可移除你自己设置的值。
+- `DELETE /accounts/{id}/limits/custom` 会将所有限制重置为推荐值。
+- `GET /workspaces/{workspaceId}/accounts-usage` 会显示你的工作区可以连接多少个账号，以及已占用多少个席位。
+
+## 需要了解的常见错误
+
+| 响应 | 含义 |
+| :-- | :-- |
+| `401` | 令牌缺失或无效。 |
+| `403 account_limit_reached` | 工作区中的所有席位均已被占用。请删除一个账号或购买更多席位。 |
+| `404 target_not_found` | LinkedIn 上没有该个人资料 URL 对应的页面。请检查 URL：重试没有用。 |
+| `409 snapshot_unavailable` | 需要重新建立账号的会话。请调用 `POST /accounts/{id}/warmup` 后重试。账号本身没有问题。 |
+| `502 page_shape_unrecognized` | LinkedIn 返回了我们无法解析的页面。请向支持团队反馈。 |
+
+## 批量调用前先预热
+
+长时间闲置的会话会失效，之后的第一次调用会耗时数秒。请在批量调用之前，或在重新登录后立即调用 `POST /accounts/{id}/warmup`。账号必须处于 `active` 状态。

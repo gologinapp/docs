@@ -1,0 +1,136 @@
+---
+title: "連携アカウント API"
+description: "連携した LinkedIn アカウントを、ご自身のコードや AI エージェントから操作できます。アカウントの連携、人物の検索、招待やメッセージの送信、会話の読み取り、新着メッセージの Webhook 受信が可能です。"
+---
+
+この API は、アプリと同じアカウント、シート、制限で動作します。ご自身のコードやパイプライン、または Claude Code、Codex、Cursor などの AI エージェントから使用できます。
+
+すべてのエンドポイントを掲載した完全なリファレンスは [Swagger](https://ai.gologin.com/accounts-api/swagger) にあります。そこから OpenAPI JSON をダウンロードして、AI エージェントに渡すこともできます。
+
+## ベース URL と認証
+
+すべてのリクエストは次の URL に送信します。
+
+```
+https://ai.gologin.com/accounts-api
+```
+
+すべてのリクエストの `Authorization` ヘッダーに、Gologin の API トークンを指定します。
+
+```bash
+curl https://ai.gologin.com/accounts-api/accounts \
+  -H "Authorization: Bearer YOUR_API_TOKEN"
+```
+
+この呼び出しは、連携済みのアカウントを新しい順に一覧表示します。連携を解除したアカウントは含まれません。有効なトークンがない場合、API は `401` を返します。
+
+トークンは Gologin アプリで作成します。[API & MCP](https://app.gologin.com/personalArea/TokenApi) > **API** > **新しいトークン** の順に進むか、AI Assistant の **Connected accounts** にある **API** セクションから作成してください。トークンを作成するには、有料プランを利用していて、Gologin で二要素認証を有効にしている必要があります。
+
+## 送信はデフォルトでドライランになります
+
+招待、メッセージ、コメント、返信は、`"send": true` を指定した場合にのみ送信されます。指定しない場合、リクエストはドライランとして扱われます。ドライランでは送信先を確認し、受信者が誰か、招待が可能か、すでに会話が存在するかといった、実行した場合に起こることを知らせますが、何も送信されません。まずドライランを実行し、その後 `"send": true` を付けて同じリクエストをもう一度送信してください。
+
+投稿の公開、リアクション、招待の承諾には、それぞれ専用のフラグ `publish`、`react`、`accept` を使用します。
+
+## アカウントを連携する
+
+1. ワークスペース ID を取得します。同じトークンで `GET https://api.gologin.com/workspaces` を呼び出すと、ワークスペースとその `id` が返されます。
+2. アカウントを作成します。
+
+```bash
+curl -X POST https://ai.gologin.com/accounts-api/accounts \
+  -H "Authorization: Bearer YOUR_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "provider": "linkedin",
+    "workspaceId": "YOUR_WORKSPACE_ID",
+    "proxyCountry": "us",
+    "cookies": [{ "name": "li_at", "value": "YOUR_LI_AT_COOKIE" }]
+  }'
+```
+
+- サインインには、次のいずれかを指定します。`credentials`（`login` と `password`）、`cookies`、または `browserProfileId`（LinkedIn にすでにサインイン済みの Gologin プロファイル）です。
+- IP には、`proxyCountry`（コードは `GET /available-countries` で取得できます）か、独自の `proxy`（`host`、`port`、必要に応じて `protocol`、`username`、`password`）を指定します。Gologin プロファイルを紐付けた場合は、そのプロファイルのプロキシが使用されます。
+- 既存の会話をインポートするには、`"importHistory": true` を追加します。
+
+3. セットアップ中、アカウントは `pending` として返されます。`status` が変わるまで `GET /accounts/{id}` を確認してください。
+
+| `status` | 対処方法 |
+| :-- | :-- |
+| `active` | アカウントはサインイン済みです。必要に応じて `POST /accounts/{id}/warmup` を呼び出すと、最初の呼び出しが速くなります。 |
+| `email_code_required` | LinkedIn からメールで届いたコードを、`POST /accounts/{id}/auth/email-code` に `{"code": "123456"}` として送信します。 |
+| `totp_code_required` | 認証アプリのコードを、`POST /accounts/{id}/auth/totp-code` に `{"code": "123456"}` として送信します。 |
+| `phone_number_required` | `country`（`statusReason.countries` のいずれか）と `number` を `POST /accounts/{id}/auth/phone-number` に送信します。通常、LinkedIn はその番号にコードを送信します。 |
+| `app_approval_required` | LinkedIn アプリでサインインを承認し、引き続きステータスを確認します。`statusReason.anotherWay` がある場合は、`POST /accounts/{id}/auth/another-way` で LinkedIn が提示する別の方法に切り替えられます。 |
+| `challenge_required` | アカウントの所有者が、アプリで LinkedIn の確認を行っています。引き続きステータスを確認してください。 |
+| `auth_failed`、`manual_auth_required` | 理由は `statusReason.code` に示されます。多くの場合は、新しい `credentials` または `cookies` を指定して `POST /accounts/{id}/auth/retry` を呼び出すと解決します。 |
+
+各待機時間は最長 10 分です。コードを送信しなかった場合やサインインを承認しなかった場合は、その後 `auth_failed` になります。
+
+## 人物を検索して招待を送る
+
+1. **検索します。** `GET /linkedin/people/search?accountId=ACCOUNT_ID&query=head%20of%20growth` を呼び出すと、各人物の `profile_url` と `profile_id` が返されます。`query` の代わりに、フィルター付きの LinkedIn 検索リンクである `url` を指定することもできます。
+2. **プロフィールを確認します。** `GET /linkedin/profile?accountId=ACCOUNT_ID&profileUrl=PROFILE_URL` で、`is_connected`、`is_pending`、`is_available_to_connect` を確認できます。
+3. **招待します。** まずドライランを実行します。
+
+```bash
+curl -X POST https://ai.gologin.com/accounts-api/linkedin/invites/send \
+  -H "Authorization: Bearer YOUR_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "accountId": "ACCOUNT_ID",
+    "profileUrl": "https://www.linkedin.com/in/some-person/",
+    "note": "Hi! I liked your post about onboarding. Would love to connect."
+  }'
+```
+
+`connectable_dry_run` は、招待を送信できることを意味します。`not_connectable` は送信できない理由を示し、`already_connected`、`invite_pending`、`connect_unavailable` のいずれかが返されます。問題がなければ、`"send": true` を付けてリクエストを再送信してください。`sent_verified` は、LinkedIn が招待を作成したことを意味します。
+
+## メッセージを送る
+
+`POST /linkedin/messages/send` には、`accountId`、`message`、および次のいずれかを指定します。
+
+- `profileUrl` - 特定の人物にメッセージを送る場合に指定します。その人物との会話が見つかればそれを使用し、なければ新しく開始します。レスポンスには `existing_conversation` または `new_conversation` が示されます。有料の InMail でしか連絡できない相手の場合は、`paid_inmail_required` を伴う `not_messageable` が返されます。有料の InMail が自動的に消費されることはありません。
+- `conversationId` - 既存の会話を続ける場合に指定します。`/linkedin/inbox` の `conversation_id`、`2-…` 形式のスレッド ID、またはスレッドの URL を使用できます。
+
+メッセージが送信されると、`message_id` と `conversation_id` を含む `sent_verified` が返されます。
+
+## 会話を読み取る
+
+- `GET /linkedin/inbox?accountId=ACCOUNT_ID` は、アカウントの会話を新しい順に一覧表示します。
+- `GET /linkedin/messages/conversation?accountId=ACCOUNT_ID&conversationId=CONVERSATION_ID` は、メッセージを古い順に返します。`limit` を指定すると、直近のメッセージだけが対象になります。
+- `GET /workspaces/{workspaceId}/conversations` は、ワークスペース内のすべてのアカウントの会話を一覧表示します。`GET /workspaces/{workspaceId}/inbox/unread` は、未読件数を返します。
+
+## Webhook で新着メッセージを受信する
+
+```bash
+curl -X PUT https://ai.gologin.com/accounts-api/workspaces/YOUR_WORKSPACE_ID/live-updates-webhook \
+  -H "Authorization: Bearer YOUR_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{ "url": "https://example.com/gologin-webhook" }'
+```
+
+ワークスペース内のアカウントで新しい更新があるたびに、この URL へ `{ accountId, workspaceId, event }` という JSON が送信されます。エラーが発生した場合は再送され、同じイベントが 2 回届くことがあるため、`event.id` で重複を排除してください。Webhook を削除するには、`{"url": null}` を送信します。localhost や内部アドレスは指定できません。
+
+## 制限
+
+API での操作は、アプリと同じ[制限](/ja/ai/connected-accounts/limits)の対象としてカウントされます。
+
+- `GET /accounts/{id}/limits` は、アカウントのステージとすべての制限を返します。内容は、推奨値、ユーザーが設定した値、適用されている値、使用量、そして `resetsAt`（ウィンドウにあと 1 回分の余裕ができる時刻）です。
+- `PUT /accounts/{id}/limits` は、`stage` または `customLimits` 内のユーザー設定値を変更します。値を `null` にすると、ユーザー設定値が削除されます。
+- `DELETE /accounts/{id}/limits/custom` は、すべての制限を推奨値にリセットします。
+- `GET /workspaces/{workspaceId}/accounts-usage` は、ワークスペースで連携できるアカウント数と、使用中のシート数を表示します。
+
+## 知っておきたいエラー
+
+| レスポンス | 意味 |
+| :-- | :-- |
+| `401` | トークンがないか、無効です。 |
+| `403 account_limit_reached` | ワークスペースのシートがすべて使用されています。アカウントを削除するか、シートを追加してください。 |
+| `404 target_not_found` | 指定したプロフィール URL に対応する LinkedIn のページがありません。URL を確認してください。再試行しても解決しません。 |
+| `409 snapshot_unavailable` | アカウントのセッションを再確立する必要があります。`POST /accounts/{id}/warmup` を呼び出して再試行してください。アカウント自体に問題はありません。 |
+| `502 page_shape_unrecognized` | LinkedIn が、読み取れないページを返しました。サポートまでご連絡ください。 |
+
+## まとめて処理する前にウォームアップする
+
+長時間使用されていないセッションは古くなり、その後の最初の呼び出しに数秒かかります。まとめて呼び出す前、または再度サインインした直後に、`POST /accounts/{id}/warmup` を呼び出してください。アカウントは `active` である必要があります。

@@ -1,0 +1,50 @@
+---
+title: "Limites et période de préchauffage"
+description: "Limites d'actions quotidiennes et hebdomadaires pour chaque compte LinkedIn connecté, passage d'un compte de la Semaine 1 au niveau Full, et modification des limites."
+---
+
+Chaque compte connecté a ses propres limites pour chaque type d'action. Un nouveau compte démarre avec des limites basses qui augmentent chaque semaine, afin de se préchauffer comme le ferait le compte d'une vraie personne.
+
+## Fonctionnement des limites
+
+- Les limites comptabilisent toutes les actions du compte : celles des conversations avec l'assistant IA, des modèles et de l'API.
+- Les limites quotidiennes comptent les actions des dernières 24 heures, les limites hebdomadaires celles des 7 derniers jours, et la limite d'invitations avec note celles des 30 derniers jours.
+- Lorsqu'une limite est atteinte, l'action attend la fenêtre suivante. La tâche n'échoue pas. L'API répond en indiquant la limite et l'heure à laquelle elle se libère.
+- Vous pouvez consulter les limites et la part utilisée de chacune sous **Daily limits**. Pour les modifier, cliquez sur **Limit settings**.
+
+## De la Semaine 1 au niveau Full
+
+- Un nouveau compte démarre à **Week 1** et passe à l'étape suivante tous les 7 jours à partir de sa première connexion.
+- Après **Week 4**, le compte passe à **Full** si, pendant ces 4 semaines, LinkedIn ne l'a pas restreint, si au moins 30 % de ses invitations ont été acceptées et s'il compte au moins 150 relations. Sinon, la vérification est répétée 7 jours plus tard.
+- Si LinkedIn restreint les invitations d'un compte, ses invitations sont suspendues pendant 7 jours et Gologin vous propose de remettre le compte à **Week 1**.
+
+## Limites recommandées
+
+| Action | Week 1 | Week 2 | Week 3 | Week 4 | Full |
+| :-- | --: | --: | --: | --: | --: |
+| Invitations par jour | 5 | 8 | 10 | 15 | 20 |
+| Invitations par 7 jours | 30 | 50 | 60 | 80 | 100 |
+| Invitations avec note par 30 jours | 3 | 3 | 3 | 3 | 3 |
+| Longueur de la note, en caractères | 200 | 200 | 200 | 200 | 200 |
+| Messages aux relations par jour | 10 | 15 | 20 | 30 | 50 |
+| Consultations de profils par jour | 50 | 80 | 100 | 150 | 200 |
+| Consultations de profils par 7 jours | 300 | 500 | 600 | 800 | 1,000 |
+| Pages de recherche de personnes par jour | 3 | 3 | 5 | 5 | 10 |
+| Publications par jour | 1 | 1 | 1 | 1 | 2 |
+| Publications par 7 jours | 3 | 3 | 3 | 3 | 7 |
+| Commentaires par jour | 5 | 5 | 10 | 10 | 30 |
+| Commentaires par 7 jours | 30 | 30 | 50 | 50 | 150 |
+| Réactions par jour | 10 | 20 | 30 | 30 | 100 |
+| Réactions par 7 jours | 50 | 100 | 150 | 150 | 500 |
+
+Un compte ne peut également pas avoir plus de 200 invitations en attente (500 au niveau **Full**). Une invitation qui reste en attente pendant 21 jours est retirée.
+
+## Modifier les limites
+
+Dans **Limit settings**, vous pouvez :
+
+- **Choisir une étape.** Par exemple, choisissez **Full** pour un compte que vous utilisez activement depuis longtemps. Les limites de cette étape s'appliquent immédiatement.
+- **Définir votre propre valeur** pour n'importe quelle limite. Vos valeurs remplacent celles de l'étape et sont conservées lorsque l'étape change.
+- **Reset to recommended** pour supprimer vos valeurs personnalisées.
+
+Les mêmes paramètres sont disponibles dans l'[API](/fr/ai/connected-accounts/api#limites).

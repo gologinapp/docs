@@ -452,8 +452,17 @@
               {
                 "group": "AI Assistant",
                 "pages": [
-                  "ai/ai-assistant",
-                  "ai/connected-accounts"
+                  "ai/ai-assistant"
+                ]
+              },
+              {
+                "group": "Connected Accounts",
+                "pages": [
+                  "ai/connected-accounts",
+                  "ai/connected-accounts/connect-linkedin",
+                  "ai/connected-accounts/assistant-and-inbox",
+                  "ai/connected-accounts/limits",
+                  "ai/connected-accounts/api"
                 ]
               },
               {
@@ -908,8 +917,17 @@
               {
                 "group": "KI-Assistent",
                 "pages": [
-                  "de/ai/ai-assistant",
-                  "de/ai/connected-accounts"
+                  "de/ai/ai-assistant"
+                ]
+              },
+              {
+                "group": "Connected Accounts",
+                "pages": [
+                  "de/ai/connected-accounts",
+                  "de/ai/connected-accounts/connect-linkedin",
+                  "de/ai/connected-accounts/assistant-and-inbox",
+                  "de/ai/connected-accounts/limits",
+                  "de/ai/connected-accounts/api"
                 ]
               },
               {
@@ -1368,8 +1386,17 @@
               {
                 "group": "Asistente de IA",
                 "pages": [
-                  "es/ai/ai-assistant",
-                  "es/ai/connected-accounts"
+                  "es/ai/ai-assistant"
+                ]
+              },
+              {
+                "group": "Connected Accounts",
+                "pages": [
+                  "es/ai/connected-accounts",
+                  "es/ai/connected-accounts/connect-linkedin",
+                  "es/ai/connected-accounts/assistant-and-inbox",
+                  "es/ai/connected-accounts/limits",
+                  "es/ai/connected-accounts/api"
                 ]
               },
               {
@@ -1828,8 +1855,17 @@
               {
                 "group": "Assistant IA",
                 "pages": [
-                  "fr/ai/ai-assistant",
-                  "fr/ai/connected-accounts"
+                  "fr/ai/ai-assistant"
+                ]
+              },
+              {
+                "group": "Connected Accounts",
+                "pages": [
+                  "fr/ai/connected-accounts",
+                  "fr/ai/connected-accounts/connect-linkedin",
+                  "fr/ai/connected-accounts/assistant-and-inbox",
+                  "fr/ai/connected-accounts/limits",
+                  "fr/ai/connected-accounts/api"
                 ]
               },
               {
@@ -2288,8 +2324,17 @@
               {
                 "group": "AIアシスタント",
                 "pages": [
-                  "ja/ai/ai-assistant",
-                  "ja/ai/connected-accounts"
+                  "ja/ai/ai-assistant"
+                ]
+              },
+              {
+                "group": "Connected Accounts",
+                "pages": [
+                  "ja/ai/connected-accounts",
+                  "ja/ai/connected-accounts/connect-linkedin",
+                  "ja/ai/connected-accounts/assistant-and-inbox",
+                  "ja/ai/connected-accounts/limits",
+                  "ja/ai/connected-accounts/api"
                 ]
               },
               {
@@ -2748,8 +2793,17 @@
               {
                 "group": "Asystent AI",
                 "pages": [
-                  "pl/ai/ai-assistant",
-                  "pl/ai/connected-accounts"
+                  "pl/ai/ai-assistant"
+                ]
+              },
+              {
+                "group": "Connected Accounts",
+                "pages": [
+                  "pl/ai/connected-accounts",
+                  "pl/ai/connected-accounts/connect-linkedin",
+                  "pl/ai/connected-accounts/assistant-and-inbox",
+                  "pl/ai/connected-accounts/limits",
+                  "pl/ai/connected-accounts/api"
                 ]
               },
               {
@@ -3208,8 +3262,17 @@
               {
                 "group": "Assistente de IA",
                 "pages": [
-                  "pt/ai/ai-assistant",
-                  "pt/ai/connected-accounts"
+                  "pt/ai/ai-assistant"
+                ]
+              },
+              {
+                "group": "Connected Accounts",
+                "pages": [
+                  "pt/ai/connected-accounts",
+                  "pt/ai/connected-accounts/connect-linkedin",
+                  "pt/ai/connected-accounts/assistant-and-inbox",
+                  "pt/ai/connected-accounts/limits",
+                  "pt/ai/connected-accounts/api"
                 ]
               },
               {
@@ -3668,8 +3731,17 @@
               {
                 "group": "ИИ-ассистент",
                 "pages": [
-                  "ru/ai/ai-assistant",
-                  "ru/ai/connected-accounts"
+                  "ru/ai/ai-assistant"
+                ]
+              },
+              {
+                "group": "Connected Accounts",
+                "pages": [
+                  "ru/ai/connected-accounts",
+                  "ru/ai/connected-accounts/connect-linkedin",
+                  "ru/ai/connected-accounts/assistant-and-inbox",
+                  "ru/ai/connected-accounts/limits",
+                  "ru/ai/connected-accounts/api"
                 ]
               },
               {
@@ -4128,8 +4200,17 @@
               {
                 "group": "Trợ lý AI",
                 "pages": [
-                  "vi/ai/ai-assistant",
-                  "vi/ai/connected-accounts"
+                  "vi/ai/ai-assistant"
+                ]
+              },
+              {
+                "group": "Connected Accounts",
+                "pages": [
+                  "vi/ai/connected-accounts",
+                  "vi/ai/connected-accounts/connect-linkedin",
+                  "vi/ai/connected-accounts/assistant-and-inbox",
+                  "vi/ai/connected-accounts/limits",
+                  "vi/ai/connected-accounts/api"
                 ]
               },
               {
@@ -4588,8 +4669,17 @@
               {
                 "group": "AI 助手",
                 "pages": [
-                  "zh/ai/ai-assistant",
-                  "zh/ai/connected-accounts"
+                  "zh/ai/ai-assistant"
+                ]
+              },
+              {
+                "group": "Connected Accounts",
+                "pages": [
+                  "zh/ai/connected-accounts",
+                  "zh/ai/connected-accounts/connect-linkedin",
+                  "zh/ai/connected-accounts/assistant-and-inbox",
+                  "zh/ai/connected-accounts/limits",
+                  "zh/ai/connected-accounts/api"
                 ]
               },
               {

@@ -1,0 +1,66 @@
+---
+title: "Connecter un compte LinkedIn"
+description: "Connectez un compte LinkedIn avec un mot de passe, des cookies ou un profil Gologin, choisissez le pays de l'IP et passez les vérifications de LinkedIn dans la même fenêtre."
+---
+
+Vous connectez chaque compte LinkedIn une seule fois. Ensuite, il reste connecté et fonctionne dans le cloud.
+
+## Connecter un compte
+
+1. Ouvrez **Comptes** et cliquez sur **Connecter un compte**.
+2. **Choisissez le réseau.** LinkedIn est disponible actuellement.
+3. **Choisissez l'origine de l'IP :**
+   - **Une IP dédiée** dans l'un des pays disponibles : Brésil, France, Allemagne, Hong Kong, Inde, Indonésie, Roumanie, Corée du Sud, Turquie, Royaume-Uni ou États-Unis. La liste peut changer.
+   - **Votre propre proxy.** Saisissez-le, cliquez sur **Vérifier le proxy**, puis sur **Utiliser ce proxy**.
+4. **Connectez-vous à LinkedIn** de l'une des trois façons suivantes :
+   - **Identifiants** - l'adresse e-mail et le mot de passe du compte. Le mot de passe est stocké chiffré et sert uniquement à restaurer la session plus tard.
+   - **Cookies** - le cookie `li_at` d'un navigateur où vous êtes connecté à LinkedIn. Le mot de passe n'est pas nécessaire.
+   - **Profil Gologin** - un profil Gologin déjà connecté à LinkedIn. Aucune nouvelle connexion n'est nécessaire, et le compte utilise le proxy propre au profil.
+5. Pour importer vos conversations LinkedIn existantes, cochez **Importer les conversations existantes**. Sinon, seules les conversations à partir du moment de la connexion sont enregistrées.
+6. Cliquez sur **Connexion**. Gologin attribue une IP dédiée, crée un profil de navigateur pour le compte et se connecte à LinkedIn.
+
+<Tip>
+  Pour copier le cookie `li_at`, ouvrez LinkedIn dans un navigateur où vous êtes connecté, appuyez sur **F12**, allez dans **Application** > **Cookies** > **https://www.linkedin.com** (dans Firefox : **Stockage** > **Cookies**) et copiez la valeur de `li_at`.
+</Tip>
+
+## Passer les vérifications de LinkedIn
+
+LinkedIn peut vous demander de confirmer votre identité. Vous le faites dans la même fenêtre :
+
+- **Code reçu par e-mail** - saisissez le code que LinkedIn a envoyé à l'adresse e-mail du compte.
+- **Application d'authentification** - saisissez le code de Google Authenticator ou d'une application similaire.
+- **Numéro de téléphone** - saisissez un numéro de téléphone. LinkedIn y envoie généralement un code.
+- **Application LinkedIn** - confirmez la connexion dans l'application LinkedIn sur votre téléphone. La fenêtre continue automatiquement.
+
+Les CAPTCHA sont résolus automatiquement. Si LinkedIn affiche une vérification qui ne peut pas être passée automatiquement, une fenêtre de navigateur s'ouvre pour que vous la passiez vous-même.
+
+Chaque vérification attend jusqu'à 10 minutes. Si le code n'est pas saisi ou si la connexion n'est pas confirmée à temps, connectez-vous à nouveau.
+
+Si vous voyez **LinkedIn asked for an extra check we can't complete here, sign in with cookies instead**, connectez le compte avec le cookie `li_at`.
+
+## Statuts du compte
+
+| Statut | Signification |
+| :-- | :-- |
+| **Actif** | Le compte est connecté et fonctionne. |
+| **Action requise** | Vous devez agir : saisir un code, confirmer la connexion, passer une vérification LinkedIn ou vous reconnecter. Le motif est affiché sous le statut. |
+| **Restreint** | LinkedIn a restreint le compte. Vérifiez-le sur linkedin.com. |
+| **Pause** | Vous avez déconnecté le compte. |
+
+Motifs courants affichés sous le statut :
+
+| Motif | Que faire |
+| :-- | :-- |
+| Wrong password · retry login | Reconnectez-vous avec le bon mot de passe, ou utilisez des cookies. |
+| Session expired · log in again | LinkedIn a mis fin à la session. Reconnectez-vous avec votre mot de passe ou des cookies récents. |
+| LinkedIn asked for a checkpoint | Passez la vérification sur linkedin.com, puis reconnectez-vous avec des cookies récents. |
+| Verification code expired | Le code n'a pas été saisi dans les 10 minutes. Reconnectez-vous et utilisez le nouveau code. |
+| Not confirmed in the LinkedIn app in time | Reconnectez-vous et confirmez la connexion dans l'application LinkedIn. |
+| No dedicated IP available | Choisissez un autre pays ou utilisez votre propre proxy. |
+| Already connected in this workspace | Ce compte LinkedIn figure déjà dans votre liste. |
+| LinkedIn has restricted this account | Vérifiez le compte sur linkedin.com. |
+
+## Déconnecter ou supprimer un compte
+
+- **Déconnecter.** Les tâches exécutées depuis ce compte s'arrêtent. Le compte reste dans votre liste et conserve sa place jusqu'à ce que vous le reconnectiez.
+- **Supprimer.** Le compte, ses discussions et son historique sont définitivement supprimés. Les tâches exécutées depuis ce compte s'arrêtent, et sa place devient disponible pour un autre compte.

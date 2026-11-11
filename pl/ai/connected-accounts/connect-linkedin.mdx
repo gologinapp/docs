@@ -1,0 +1,66 @@
+---
+title: "Połącz konto LinkedIn"
+description: "Połącz konto LinkedIn za pomocą hasła, plików cookie lub profilu Gologin, wybierz kraj adresu IP i przejdź weryfikacje LinkedIn w tym samym oknie."
+---
+
+Każde konto LinkedIn łączysz tylko raz. Potem pozostaje zalogowane i działa w chmurze.
+
+## Połącz konto
+
+1. Otwórz **Accounts** i kliknij **Connect account**.
+2. **Wybierz sieć.** Obecnie dostępny jest LinkedIn.
+3. **Wybierz źródło adresu IP:**
+   - **Dedykowany adres IP** w jednym z dostępnych krajów: Brazylii, Francji, Niemczech, Hongkongu, Indiach, Indonezji, Rumunii, Korei Południowej, Turcji, Wielkiej Brytanii lub Stanach Zjednoczonych. Lista może się zmieniać.
+   - **Własne proxy.** Wprowadź je, kliknij **Check proxy**, a następnie **Use this proxy**.
+4. **Zaloguj się do LinkedIn** na jeden z trzech sposobów:
+   - **Credentials** - adres e-mail i hasło konta. Hasło jest przechowywane w formie zaszyfrowanej i służy wyłącznie do późniejszego przywrócenia sesji.
+   - **Cookies** - plik cookie `li_at` z przeglądarki, w której jesteś zalogowany do LinkedIn. Hasło nie jest potrzebne.
+   - **Gologin profile** - profil Gologin, który jest już zalogowany do LinkedIn. Nie musisz logować się ponownie, a konto korzysta z własnego proxy profilu.
+5. Aby zaimportować dotychczasowe rozmowy z LinkedIn, zaznacz **Import existing conversations**. W przeciwnym razie zapisywane są tylko rozmowy od momentu połączenia konta.
+6. Kliknij **Login**. Gologin przydziela dedykowany adres IP, tworzy profil przeglądarki dla konta i loguje się do LinkedIn.
+
+<Tip>
+  Aby skopiować plik cookie `li_at`, otwórz LinkedIn w przeglądarce, w której jesteś zalogowany, naciśnij **F12**, przejdź do **Application** > **Cookies** > **https://www.linkedin.com** (w Firefoksie: **Storage** > **Cookies**) i skopiuj wartość `li_at`.
+</Tip>
+
+## Przejdź weryfikacje LinkedIn
+
+LinkedIn może poprosić o potwierdzenie tożsamości. Robisz to w tym samym oknie:
+
+- **Code from email** - wpisz kod, który LinkedIn wysłał na adres e-mail konta.
+- **Authenticator app** - wpisz kod z aplikacji Google Authenticator lub podobnej.
+- **Phone number** - wpisz numer telefonu. LinkedIn zwykle wysyła na niego kod.
+- **LinkedIn app** - potwierdź logowanie w aplikacji LinkedIn na telefonie. Okno kontynuuje działanie samo.
+
+CAPTCHA jest rozwiązywana automatycznie. Jeśli LinkedIn wyświetli weryfikację, której nie da się przejść automatycznie, otworzy się okno przeglądarki, w którym możesz ją przejść samodzielnie.
+
+Każda weryfikacja trwa maksymalnie 10 minut. Jeśli kod nie zostanie wpisany lub logowanie nie zostanie potwierdzone na czas, zaloguj się ponownie.
+
+Jeśli zobaczysz komunikat **LinkedIn asked for an extra check we can't complete here, sign in with cookies instead**, połącz konto za pomocą pliku cookie `li_at`.
+
+## Statusy konta
+
+| Status | Co oznacza |
+| :-- | :-- |
+| **Active** | Konto jest zalogowane i działa. |
+| **Needs action** | Musisz coś zrobić: wpisać kod, potwierdzić logowanie, przejść weryfikację LinkedIn lub zalogować się ponownie. Przyczyna jest wyświetlana pod statusem. |
+| **Restricted** | LinkedIn ograniczył konto. Sprawdź je na linkedin.com. |
+| **Paused** | Konto zostało odłączone przez Ciebie. |
+
+Najczęstsze przyczyny wyświetlane pod statusem:
+
+| Przyczyna | Co zrobić |
+| :-- | :-- |
+| Wrong password · retry login | Zaloguj się ponownie, podając poprawne hasło, lub użyj plików cookie. |
+| Session expired · log in again | LinkedIn zakończył sesję. Zaloguj się ponownie za pomocą hasła lub świeżych plików cookie. |
+| LinkedIn asked for a checkpoint | Przejdź weryfikację na linkedin.com, a następnie zaloguj się ponownie za pomocą świeżych plików cookie. |
+| Verification code expired | Kod nie został wpisany w ciągu 10 minut. Zaloguj się ponownie i użyj nowego kodu. |
+| Not confirmed in the LinkedIn app in time | Zaloguj się ponownie i potwierdź logowanie w aplikacji LinkedIn. |
+| No dedicated IP available | Wybierz inny kraj lub użyj własnego proxy. |
+| Already connected in this workspace | To konto LinkedIn jest już na Twojej liście. |
+| LinkedIn has restricted this account | Sprawdź konto na linkedin.com. |
+
+## Odłącz lub usuń konto
+
+- **Disconnect.** Zadania uruchomione z tego konta zostaną zatrzymane. Konto pozostaje na Twojej liście i zajmuje miejsce do czasu ponownego połączenia.
+- **Delete.** Konto, jego czaty i historia zostają usunięte bezpowrotnie. Zadania uruchomione z tego konta zostaną zatrzymane, a jego miejsce zwolni się dla innego konta.
