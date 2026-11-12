@@ -1,4 +1,102 @@
 ---
-title: 'ドキュメント'
-url: "https://github.com/gologinapp/pygologin"
+title: "Python SDK"
+description: "PythonからGologinプロファイルをローカルまたはクラウドで実行し、Selenium、Playwright、Puppeteerを接続します。"
 ---
+
+Python SDKは、Gologinプロファイルの起動を代行します。プロファイルと必要なOrbitaブラウザのバージョンをダウンロードし、ブラウザを起動して、Selenium、Playwright、Puppeteerなどの自動化ツールを接続するためのアドレスを返します。パッケージはPyPIで `gologin` という名前で公開されており、ソースコードは [GitHubのpygologin](https://github.com/gologinapp/pygologin) にあります。
+
+## インストール
+
+```bash
+pip install gologin
+```
+
+以下のSeleniumの例では、`selenium` と `webdriver-manager` も必要です。
+
+## トークンを取得する
+
+Gologinアプリで APIトークンを作成します。[API & MCP](https://app.gologin.com/personalArea/TokenApi) > **API** > **新しいトークン** の順に進みます。また、実行したいプロファイルの名前ではなく、プロファイルIDが必要です。
+
+## Seleniumでプロファイルを実行する
+
+```python
+import time
+from gologin import GoLogin
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+
+gl = GoLogin({
+    "token": "YOUR_API_TOKEN",
+    "profile_id": "YOUR_PROFILE_ID",
+})
+
+# Start the profile and get the address to connect to
+debugger_address = gl.start()
+
+# Use the ChromeDriver that matches the Orbita version of the profile
+service = Service(ChromeDriverManager(driver_version=gl.get_chromium_version()).install())
+options = webdriver.ChromeOptions()
+options.add_experimental_option("debuggerAddress", debugger_address)
+driver = webdriver.Chrome(service=service, options=options)
+
+driver.get("https://www.python.org")
+time.sleep(10)
+
+driver.quit()
+gl.stop()  # closes the browser and saves the profile to Gologin
+```
+
+## クラウドでプロファイルを実行する
+
+`startRemote()` は、お使いのコンピュータではなく Gologin の [Cloud Browser](/ja/api-reference/cloud-browser/what-is-gologin-cloud-browser) でプロファイルを起動し、Playwright、Puppeteer、その他のCDPクライアント用のWebSocket URLを返します。`stopRemote()` で停止します。クラウドでの起動は、Cloud Browser の利用上限にカウントされます。
+
+```python
+gl = GoLogin({"token": "YOUR_API_TOKEN", "profile_id": "YOUR_PROFILE_ID"})
+
+result = gl.startRemote()
+if result["status"] == "success":
+    ws_url = result["wsUrl"]  # connect your CDP client here
+    # ...
+gl.stopRemote()
+```
+
+## オプション
+
+| オプション | デフォルト | 説明 |
+| :-- | :-- | :-- |
+| `token` | - | APIトークン。必須です。 |
+| `profile_id` | - | 実行するプロファイルのID。 |
+| `executable_path` | - | Orbita実行ファイルのパス。空の場合、SDKがプロファイルに必要なバージョンをダウンロードします。 |
+| `extra_params` | `[]` | ブラウザの追加フラグ。例: `["--headless"]` |
+| `port` | ランダム | ローカルブラウザのリモートデバッグポート。 |
+| `tmpdir` | システムの一時フォルダ | プロファイルの実行中に展開される場所。 |
+| `local` | `False` | `True` にすると、`stop()` でプロファイルがGologinにアップロードされないため、変更はこのコンピュータにのみ保存されます。 |
+| `uploadCookiesToServer` | `False` | プロファイルの停止時にCookieをGologinにアップロードします。後でAPI経由で取得できます。 |
+| `writeCookiesFromServer` | `True` | 起動時に、プロファイルに保存されたCookieをブラウザに読み込みます。 |
+| `headers` | `{}` | SDKからGologin APIへのリクエストに追加するHTTPヘッダー。 |
+
+## プロファイルを管理する
+
+以下のメソッドに必要なのはトークンのみです。`GoLogin({"token": "YOUR_API_TOKEN"})` でクライアントを作成してください。
+
+| メソッド | 説明 |
+| :-- | :-- |
+| `createProfileRandomFingerprint({"os": "win", "name": "My profile"})` | ランダムなフィンガープリントでプロファイルを作成します。`os` は `win`、`mac`、`lin` のいずれかです。実行するには、続けて `setProfileId(profile["id"])` を呼び出します。 |
+| `createProfileWithCustomParams({...})` | ユーザーエージェント、解像度、言語などを独自に指定してプロファイルを作成します。 |
+| `updateUserAgentToLatestBrowser(["PROFILE_ID"])` | プロファイルのユーザーエージェントを最新のブラウザバージョンに更新します。 |
+| `addGologinProxyToProfile("PROFILE_ID", "us")` | 指定した国のGologinプロキシをプロファイルに追加します。 |
+| `changeProfileProxy("PROFILE_ID", {"mode": "http", "host": "...", "port": 8080, "username": "...", "password": "..."})` | プロファイルに独自のプロキシを設定します。 |
+| `addCookiesToProfile("PROFILE_ID", [...])` | 起動時にブラウザがインポートするCookieを追加します。 |
+| `refreshProfilesFingerprint(["PROFILE_ID"])` | プロファイルに新しいフィンガープリントを割り当てます。 |
+| `delete("PROFILE_ID")` | プロファイルを削除します。 |
+
+## テレメトリー
+
+SDKは、不具合の修正に役立てるため、匿名のエラーレポートを送信します。無効にするには、環境変数 `DISABLE_TELEMETRY=true` を設定してください。
+
+## 関連情報
+
+- GitHubの [Seleniumの例](https://github.com/gologinapp/pygologin/blob/main/examples/selenium/one-time-use-profile.py) と [変更履歴](https://github.com/gologinapp/pygologin/blob/main/CHANGELOG.md)
+- [Node.js SDK](/ja/api-reference/sdks/nodejs-sdk)
+- [APIリファレンス](/api-reference/profile/get-all-profiles)

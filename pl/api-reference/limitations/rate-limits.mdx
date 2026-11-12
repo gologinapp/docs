@@ -1,30 +1,38 @@
 ---
 title: 'Limity zapytań'
 ---
-Nie pozwalamy użytkownikom wysyłać do naszego API nieograniczonej liczby zapytań. Jeśli przekroczysz nasze limity, musisz odczekać, aż zostaną zresetowane. <br />
-Nasze podstawowe limity:
-- Plany Free i próbne: 300 zapytań na 1 minutę
-- Pozostałe plany: 1200 zapytań na 1 minutę
+Gologin API ogranicza liczbę zapytań, które możesz wysłać w ciągu minuty. Jeśli przekroczysz limit, odczekaj, zanim wyślesz kolejne zapytania.
 
-### Unieważnienie tokenu po przekroczeniu limitu
+Limit zależy od Twojego planu:
+
+| Plan | Zapytania na minutę |
+| :-- | --: |
+| Professional | 300 |
+| Business | 500 |
+| Enterprise | 800 |
+| Custom | 1,200 |
+
+Plan próbny i plan Forever Free nie obejmują dostępu do API. Zobacz [Pricing](/pl/general/account-and-billing/pricing), aby sprawdzić, co zawiera każdy plan.
+
+### Unieważnienie tokena po przekroczeniu limitu
 
 <Warning>
-Gdy przekroczysz limit zapytań i otrzymasz odpowiedź HTTP 429, Twój token API zostanie automatycznie unieważniony. Oznacza to, że token stanie się trwale bezużyteczny i musisz wygenerować nowy.
+Jeśli przekroczysz limit zapytań i otrzymasz odpowiedź HTTP 429, Twój token API zostanie automatycznie unieważniony. Oznacza to, że token przestaje działać na stałe i musisz wygenerować nowy.
 
-To nie jest tymczasowa blokada — token zostaje cofnięty. Starannie planuj liczbę wysyłanych zapytań i zastosuj wykładniczy backoff (exponential backoff), aby tego uniknąć.
+To nie jest tymczasowa blokada — token zostaje odwołany. Zaplanuj starannie częstotliwość zapytań i wdróż wykładniczy backoff (exponential backoff), aby tego uniknąć.
 </Warning>
 
 ### Błędy ochrony Cloudflare
 
-Jeśli adres IP Twojego serwera wysyła zbyt wiele zapytań, sieć CDN Cloudflare używana przez Gologin może całkowicie zablokować ten adres IP. W takiej sytuacji odpowiedzi API będą stronami błędów HTML zamiast JSON, co powoduje błędy takie jak:
+Jeśli adres IP Twojego serwera wysyła zbyt wiele zapytań, sieć CDN Cloudflare używana przez Gologin może całkowicie zablokować ten adres IP. W takiej sytuacji zamiast JSON API zwraca strony błędów w formacie HTML, co powoduje błędy takie jak:
 
 ```
 SyntaxError: Unexpected token 'e', "error code: 1015" is not valid JSON
 ```
 
-To odpowiedź Cloudflare 1015 informująca o przekroczeniu limitu zapytań. Zwykle problem ustępuje samoczynnie w ciągu od kilku minut do kilku godzin. Aby go uniknąć:
-- Wprowadź w swoim kodzie ograniczanie liczby zapytań
-- Stosuj wykładniczy backoff przy błędach
+To odpowiedź Cloudflare 1015 informująca o przekroczeniu limitu zapytań. Zwykle problem ustępuje samoistnie w ciągu od kilku minut do kilku godzin. Aby go uniknąć:
+- Wprowadź w kodzie ograniczanie liczby zapytań
+- Stosuj wykładniczy backoff po nieudanych zapytaniach
 - Unikaj nagłych serii równoległych wywołań API
 
 ### Limity tworzenia profili

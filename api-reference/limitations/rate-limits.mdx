@@ -1,10 +1,18 @@
 ---
 title: 'Rate Limits'
 ---
-We don't allow user to send infinite quantity of requests to our API. So if you exceed our limitations - you need to cooldown <br />
-Our base limits:
-- Free and trial plans: 300 requests per 1 minute
-- Other plans: 1200 requests per 1 minute
+The Gologin API limits how many requests you can send per minute. If you go over the limit, wait before sending more requests.
+
+The limit depends on your plan:
+
+| Plan | Requests per minute |
+| :-- | --: |
+| Professional | 300 |
+| Business | 500 |
+| Enterprise | 800 |
+| Custom | 1,200 |
+
+The trial and Forever Free plans don't include API access. See [Pricing](/general/account-and-billing/pricing) for what each plan includes.
 
 ### Token invalidation on rate limit
 

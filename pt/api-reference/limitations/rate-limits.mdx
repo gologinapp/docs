@@ -1,32 +1,40 @@
 ---
 title: 'Limites de requisições'
 ---
-Não permitimos que usuários enviem uma quantidade infinita de requisições para a nossa API. Se você ultrapassar os limites, será necessário aguardar um período de espera. <br />
-Nossos limites básicos:
-- Planos gratuitos e de teste: 300 requisições por minuto
-- Demais planos: 1200 requisições por minuto
+A API do Gologin limita quantas requisições você pode enviar por minuto. Se você ultrapassar o limite, aguarde antes de enviar mais requisições.
+
+O limite depende do seu plano:
+
+| Plano | Requisições por minuto |
+| :-- | --: |
+| Professional | 300 |
+| Business | 500 |
+| Enterprise | 800 |
+| Custom | 1,200 |
+
+Os planos de teste e Forever Free não incluem acesso à API. Consulte [Preços](/pt/general/account-and-billing/pricing) para ver o que cada plano inclui.
 
 ### Invalidação do token ao atingir o limite
 
 <Warning>
-Quando você excede o limite de requisições e recebe uma resposta HTTP 429, o seu token de API é invalidado automaticamente. Isso significa que o token se torna permanentemente inutilizável e você precisa gerar um novo.
+Quando você excede o limite de requisições e recebe uma resposta HTTP 429, seu token de API é invalidado automaticamente. Isso significa que o token deixa de funcionar de forma permanente e você precisa gerar um novo.
 
-Isso não é um período de espera temporário: o token é revogado. Planeje com cuidado a taxa de requisições e implemente exponential backoff (espera exponencial entre tentativas) para evitar esse problema.
+Isso não é um bloqueio temporário: o token é revogado. Planeje com cuidado a taxa de requisições e implemente backoff exponencial para evitar essa situação.
 </Warning>
 
-### Erros de proteção da Cloudflare
+### Erros de proteção do Cloudflare
 
-Se o IP do seu servidor enviar requisições demais, a CDN da Cloudflare usada pelo Gologin pode bloquear totalmente o seu IP. Quando isso acontece, as respostas da API passam a ser páginas de erro em HTML em vez de JSON, causando erros como:
+Se o IP do seu servidor enviar requisições demais, a CDN Cloudflare do Gologin pode bloquear totalmente o seu IP. Quando isso acontece, as respostas da API são páginas de erro em HTML em vez de JSON, causando erros como:
 
 ```
 SyntaxError: Unexpected token 'e', "error code: 1015" is not valid JSON
 ```
 
-Essa é uma resposta de limite de requisições da Cloudflare (erro 1015). Normalmente ela se resolve sozinha em alguns minutos ou horas. Para evitá-la:
+Essa é uma resposta de limite de requisições do Cloudflare (erro 1015). Normalmente ela se resolve sozinha em minutos ou horas. Para evitá-la:
 - Implemente um controle de taxa de requisições no seu código
-- Use exponential backoff (espera exponencial entre tentativas) em caso de falhas
-- Evite picos de chamadas paralelas à API
+- Use backoff exponencial em caso de falhas
+- Evite picos de chamadas de API em paralelo
 
 ### Limites de criação de perfis
 
-Contas novas têm um limite de aproximadamente 300 perfis criados por dia. Esse limite pode variar de acordo com o plano. Se você precisar de limites maiores, entre em contato com o suporte.
+Contas novas têm um limite de aproximadamente 300 perfis criados por dia. Esse limite pode variar de acordo com o plano. Se precisar de limites maiores, entre em contato com o suporte.

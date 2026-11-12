@@ -1,32 +1,40 @@
 ---
 title: 'Rate Limits'
 ---
-Wir erlauben Nutzern nicht, unbegrenzt viele Anfragen an unsere API zu senden. Wenn Sie unsere Limits überschreiten, müssen Sie eine Abkühlphase abwarten. <br />
-Unsere Standardlimits:
-- Free- und Testpläne: 300 Anfragen pro Minute
-- Alle anderen Pläne: 1200 Anfragen pro Minute
+Die Gologin API begrenzt, wie viele Anfragen Sie pro Minute senden können. Wenn Sie das Limit überschreiten, warten Sie, bevor Sie weitere Anfragen senden.
 
-### Token-Ungültigkeit bei Überschreiten des Rate Limits
+Das Limit hängt von Ihrem Tarif ab:
+
+| Tarif | Anfragen pro Minute |
+| :-- | --: |
+| Professional | 300 |
+| Business | 500 |
+| Enterprise | 800 |
+| Custom | 1,200 |
+
+Die Testversion und der Forever Free-Tarif enthalten keinen API-Zugang. Was die einzelnen Tarife beinhalten, finden Sie unter [Pricing](/de/general/account-and-billing/pricing).
+
+### Token-Ungültigkeit bei Überschreitung des Limits
 
 <Warning>
-Wenn Sie das Rate Limit überschreiten und eine HTTP-429-Antwort erhalten, wird Ihr API-Token automatisch ungültig. Das bedeutet, dass Ihr Token dauerhaft unbrauchbar ist und Sie einen neuen Token erstellen müssen.
+Wenn Sie das Rate Limit überschreiten und eine HTTP-429-Antwort erhalten, wird Ihr API-Token automatisch ungültig. Das bedeutet, dass Ihr Token dauerhaft unbrauchbar wird und Sie ein neues generieren müssen.
 
-Das ist keine vorübergehende Abkühlphase – der Token wird widerrufen. Planen Sie Ihre Anfragerate daher sorgfältig und setzen Sie Exponential Backoff ein, um dies zu vermeiden.
+Das ist keine vorübergehende Sperre – der Token wird widerrufen. Planen Sie Ihre Anfragerate sorgfältig und setzen Sie Exponential Backoff ein, um dies zu vermeiden.
 </Warning>
 
-### Fehler durch den Cloudflare-Schutz
+### Cloudflare-Schutzfehler
 
-Wenn Ihre Server-IP zu viele Anfragen sendet, kann das Cloudflare-CDN von Gologin Ihre IP vollständig blockieren. In diesem Fall liefert die API statt JSON HTML-Fehlerseiten zurück, was zu Fehlern wie diesem führt:
+Wenn Ihre Server-IP zu viele Anfragen sendet, kann das Cloudflare CDN von Gologin Ihre IP vollständig blockieren. In diesem Fall liefert die API statt JSON HTML-Fehlerseiten zurück, was zu Fehlern wie diesem führt:
 
 ```
 SyntaxError: Unexpected token 'e', "error code: 1015" is not valid JSON
 ```
 
-Dies ist eine Cloudflare-1015-Antwort auf eine Überschreitung des Rate Limits. Sie löst sich in der Regel innerhalb von Minuten bis Stunden von selbst. So vermeiden Sie das Problem:
-- Begrenzen Sie die Anfragerate in Ihrem Code
+Dies ist eine Cloudflare-1015-Rate-Limit-Antwort. Sie löst sich in der Regel innerhalb von Minuten bis Stunden von selbst. So vermeiden Sie das Problem:
+- Implementieren Sie in Ihrem Code eine Begrenzung der Anfragerate
 - Verwenden Sie bei Fehlern Exponential Backoff
-- Vermeiden Sie Spitzen durch viele parallele API-Aufrufe
+- Vermeiden Sie Bursts paralleler API-Aufrufe
 
 ### Limits für die Profilerstellung
 
-Für neue Konten gilt ein Limit von etwa 300 erstellten Profilen pro Tag. Dieses Limit kann je nach Plan variieren. Wenn Sie höhere Limits benötigen, wenden Sie sich an den Support.
+Neue Konten haben ein Limit von etwa 300 erstellten Profilen pro Tag. Dieses Limit kann je nach Tarif variieren. Wenn Sie höhere Limits benötigen, wenden Sie sich an den Support.

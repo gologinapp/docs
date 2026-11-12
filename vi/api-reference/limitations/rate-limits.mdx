@@ -1,32 +1,40 @@
 ---
 title: 'Giới hạn tốc độ'
 ---
-Chúng tôi không cho phép người dùng gửi số lượng yêu cầu không giới hạn đến API. Vì vậy, nếu vượt quá giới hạn, bạn cần chờ một khoảng thời gian trước khi gửi tiếp. <br />
-Giới hạn cơ bản của chúng tôi:
-- Gói miễn phí và gói dùng thử: 300 yêu cầu mỗi 1 phút
-- Các gói khác: 1200 yêu cầu mỗi 1 phút
+API của Gologin giới hạn số yêu cầu bạn có thể gửi mỗi phút. Nếu vượt quá giới hạn, hãy chờ một lúc trước khi gửi thêm yêu cầu.
+
+Giới hạn phụ thuộc vào gói của bạn:
+
+| Gói | Số yêu cầu mỗi phút |
+| :-- | --: |
+| Professional | 300 |
+| Business | 500 |
+| Enterprise | 800 |
+| Custom | 1,200 |
+
+Gói dùng thử và Forever Free không bao gồm quyền truy cập API. Xem [Bảng giá](/vi/general/account-and-billing/pricing) để biết mỗi gói bao gồm những gì.
 
 ### Vô hiệu hóa token khi vượt giới hạn tốc độ
 
 <Warning>
-Khi bạn vượt quá giới hạn tốc độ và nhận được phản hồi HTTP 429, API token của bạn sẽ tự động bị vô hiệu hóa. Điều này có nghĩa là token không thể sử dụng được nữa và bạn phải tạo token mới.
+Khi bạn vượt quá giới hạn tốc độ và nhận được phản hồi HTTP 429, token API của bạn sẽ tự động bị vô hiệu hóa. Điều này có nghĩa là token không thể sử dụng lại được nữa và bạn phải tạo token mới.
 
-Đây không phải là thời gian chờ tạm thời — token đã bị thu hồi. Hãy lên kế hoạch cẩn thận cho tần suất gửi yêu cầu và áp dụng cơ chế exponential backoff (tăng dần thời gian chờ giữa các lần thử lại) để tránh tình trạng này.
+Đây không phải là thời gian chờ tạm thời — token đã bị thu hồi. Hãy lên kế hoạch tốc độ gửi yêu cầu cẩn thận và áp dụng exponential backoff (tăng dần thời gian chờ giữa các lần thử lại) để tránh tình trạng này.
 </Warning>
 
-### Lỗi do Cloudflare bảo vệ
+### Lỗi bảo vệ của Cloudflare
 
-Nếu IP máy chủ của bạn gửi quá nhiều yêu cầu, Cloudflare CDN của Gologin có thể chặn hoàn toàn IP của bạn. Khi đó, phản hồi từ API sẽ là các trang lỗi HTML thay vì JSON, gây ra các lỗi như:
+Nếu IP máy chủ của bạn gửi quá nhiều yêu cầu, Cloudflare CDN của Gologin có thể chặn hoàn toàn IP đó. Khi điều này xảy ra, phản hồi của API sẽ là các trang lỗi HTML thay vì JSON, gây ra các lỗi như:
 
 ```
 SyntaxError: Unexpected token 'e', "error code: 1015" is not valid JSON
 ```
 
-Đây là phản hồi giới hạn tốc độ Cloudflare 1015. Lỗi này thường tự khắc phục sau vài phút đến vài giờ. Để tránh lỗi này:
-- Áp dụng giới hạn tốc độ gửi yêu cầu trong mã của bạn
+Đây là phản hồi giới hạn tốc độ Cloudflare 1015. Lỗi này thường tự hết sau vài phút đến vài giờ. Để tránh lỗi này:
+- Áp dụng giới hạn tốc độ yêu cầu trong mã của bạn
 - Sử dụng exponential backoff khi yêu cầu thất bại
-- Tránh gửi hàng loạt các lệnh gọi API song song
+- Tránh gửi hàng loạt lệnh gọi API song song cùng lúc
 
 ### Giới hạn tạo profile
 
-Tài khoản mới có giới hạn khoảng 300 lượt tạo profile mỗi ngày. Giới hạn này có thể khác nhau tùy theo gói. Nếu bạn cần giới hạn cao hơn, hãy liên hệ bộ phận hỗ trợ.
+Tài khoản mới có giới hạn khoảng 300 profile được tạo mỗi ngày. Giới hạn này có thể khác nhau tùy theo gói. Nếu bạn cần giới hạn cao hơn, hãy liên hệ bộ phận hỗ trợ.

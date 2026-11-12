@@ -121,7 +121,7 @@
                       "profile-export-and-import"
                     ]
                   },
-                  "faq-profile-managment"
+                  "faq-profile-management"
                 ]
               },
               {
@@ -283,7 +283,7 @@
                   "general/account-and-billing/changing-your-email-and-pass",
                   "general/account-and-billing/two-factor-authentication",
                   "general/account-and-billing/affiliate-program",
-                  "general/account-and-billing/active-sessions-1",
+                  "general/account-and-billing/active-sessions",
                   "general/account-and-billing/cloud-browser-usage"
                 ]
               },
@@ -344,7 +344,7 @@
                   "maintaining-trust-score",
                   "profile-hygiene-checklist",
                   "common-mistakes-to-avoid",
-                  "facebook-meta-ads-1"
+                  "captcha-and-2fa-handling"
                 ]
               },
               {
@@ -590,7 +590,7 @@
                       "de/profile-export-and-import"
                     ]
                   },
-                  "de/faq-profile-managment"
+                  "de/faq-profile-management"
                 ]
               },
               {
@@ -752,7 +752,7 @@
                   "de/general/account-and-billing/changing-your-email-and-pass",
                   "de/general/account-and-billing/two-factor-authentication",
                   "de/general/account-and-billing/affiliate-program",
-                  "de/general/account-and-billing/active-sessions-1",
+                  "de/general/account-and-billing/active-sessions",
                   "de/general/account-and-billing/cloud-browser-usage"
                 ]
               },
@@ -813,7 +813,7 @@
                   "de/maintaining-trust-score",
                   "de/profile-hygiene-checklist",
                   "de/common-mistakes-to-avoid",
-                  "de/facebook-meta-ads-1"
+                  "de/captcha-and-2fa-handling"
                 ]
               },
               {
@@ -1059,7 +1059,7 @@
                       "es/profile-export-and-import"
                     ]
                   },
-                  "es/faq-profile-managment"
+                  "es/faq-profile-management"
                 ]
               },
               {
@@ -1221,7 +1221,7 @@
                   "es/general/account-and-billing/changing-your-email-and-pass",
                   "es/general/account-and-billing/two-factor-authentication",
                   "es/general/account-and-billing/affiliate-program",
-                  "es/general/account-and-billing/active-sessions-1",
+                  "es/general/account-and-billing/active-sessions",
                   "es/general/account-and-billing/cloud-browser-usage"
                 ]
               },
@@ -1282,7 +1282,7 @@
                   "es/maintaining-trust-score",
                   "es/profile-hygiene-checklist",
                   "es/common-mistakes-to-avoid",
-                  "es/facebook-meta-ads-1"
+                  "es/captcha-and-2fa-handling"
                 ]
               },
               {
@@ -1528,7 +1528,7 @@
                       "fr/profile-export-and-import"
                     ]
                   },
-                  "fr/faq-profile-managment"
+                  "fr/faq-profile-management"
                 ]
               },
               {
@@ -1690,7 +1690,7 @@
                   "fr/general/account-and-billing/changing-your-email-and-pass",
                   "fr/general/account-and-billing/two-factor-authentication",
                   "fr/general/account-and-billing/affiliate-program",
-                  "fr/general/account-and-billing/active-sessions-1",
+                  "fr/general/account-and-billing/active-sessions",
                   "fr/general/account-and-billing/cloud-browser-usage"
                 ]
               },
@@ -1751,7 +1751,7 @@
                   "fr/maintaining-trust-score",
                   "fr/profile-hygiene-checklist",
                   "fr/common-mistakes-to-avoid",
-                  "fr/facebook-meta-ads-1"
+                  "fr/captcha-and-2fa-handling"
                 ]
               },
               {
@@ -1997,7 +1997,7 @@
                       "ja/profile-export-and-import"
                     ]
                   },
-                  "ja/faq-profile-managment"
+                  "ja/faq-profile-management"
                 ]
               },
               {
@@ -2159,7 +2159,7 @@
                   "ja/general/account-and-billing/changing-your-email-and-pass",
                   "ja/general/account-and-billing/two-factor-authentication",
                   "ja/general/account-and-billing/affiliate-program",
-                  "ja/general/account-and-billing/active-sessions-1",
+                  "ja/general/account-and-billing/active-sessions",
                   "ja/general/account-and-billing/cloud-browser-usage"
                 ]
               },
@@ -2220,7 +2220,7 @@
                   "ja/maintaining-trust-score",
                   "ja/profile-hygiene-checklist",
                   "ja/common-mistakes-to-avoid",
-                  "ja/facebook-meta-ads-1"
+                  "ja/captcha-and-2fa-handling"
                 ]
               },
               {
@@ -2466,7 +2466,7 @@
                       "pl/profile-export-and-import"
                     ]
                   },
-                  "pl/faq-profile-managment"
+                  "pl/faq-profile-management"
                 ]
               },
               {
@@ -2628,7 +2628,7 @@
                   "pl/general/account-and-billing/changing-your-email-and-pass",
                   "pl/general/account-and-billing/two-factor-authentication",
                   "pl/general/account-and-billing/affiliate-program",
-                  "pl/general/account-and-billing/active-sessions-1",
+                  "pl/general/account-and-billing/active-sessions",
                   "pl/general/account-and-billing/cloud-browser-usage"
                 ]
               },
@@ -2689,7 +2689,7 @@
                   "pl/maintaining-trust-score",
                   "pl/profile-hygiene-checklist",
                   "pl/common-mistakes-to-avoid",
-                  "pl/facebook-meta-ads-1"
+                  "pl/captcha-and-2fa-handling"
                 ]
               },
               {
@@ -2935,7 +2935,7 @@
                       "pt/profile-export-and-import"
                     ]
                   },
-                  "pt/faq-profile-managment"
+                  "pt/faq-profile-management"
                 ]
               },
               {
@@ -3097,7 +3097,7 @@
                   "pt/general/account-and-billing/changing-your-email-and-pass",
                   "pt/general/account-and-billing/two-factor-authentication",
                   "pt/general/account-and-billing/affiliate-program",
-                  "pt/general/account-and-billing/active-sessions-1",
+                  "pt/general/account-and-billing/active-sessions",
                   "pt/general/account-and-billing/cloud-browser-usage"
                 ]
               },
@@ -3158,7 +3158,7 @@
                   "pt/maintaining-trust-score",
                   "pt/profile-hygiene-checklist",
                   "pt/common-mistakes-to-avoid",
-                  "pt/facebook-meta-ads-1"
+                  "pt/captcha-and-2fa-handling"
                 ]
               },
               {
@@ -3404,7 +3404,7 @@
                       "ru/profile-export-and-import"
                     ]
                   },
-                  "ru/faq-profile-managment"
+                  "ru/faq-profile-management"
                 ]
               },
               {
@@ -3566,7 +3566,7 @@
                   "ru/general/account-and-billing/changing-your-email-and-pass",
                   "ru/general/account-and-billing/two-factor-authentication",
                   "ru/general/account-and-billing/affiliate-program",
-                  "ru/general/account-and-billing/active-sessions-1",
+                  "ru/general/account-and-billing/active-sessions",
                   "ru/general/account-and-billing/cloud-browser-usage"
                 ]
               },
@@ -3627,7 +3627,7 @@
                   "ru/maintaining-trust-score",
                   "ru/profile-hygiene-checklist",
                   "ru/common-mistakes-to-avoid",
-                  "ru/facebook-meta-ads-1"
+                  "ru/captcha-and-2fa-handling"
                 ]
               },
               {
@@ -3873,7 +3873,7 @@
                       "vi/profile-export-and-import"
                     ]
                   },
-                  "vi/faq-profile-managment"
+                  "vi/faq-profile-management"
                 ]
               },
               {
@@ -4035,7 +4035,7 @@
                   "vi/general/account-and-billing/changing-your-email-and-pass",
                   "vi/general/account-and-billing/two-factor-authentication",
                   "vi/general/account-and-billing/affiliate-program",
-                  "vi/general/account-and-billing/active-sessions-1",
+                  "vi/general/account-and-billing/active-sessions",
                   "vi/general/account-and-billing/cloud-browser-usage"
                 ]
               },
@@ -4096,7 +4096,7 @@
                   "vi/maintaining-trust-score",
                   "vi/profile-hygiene-checklist",
                   "vi/common-mistakes-to-avoid",
-                  "vi/facebook-meta-ads-1"
+                  "vi/captcha-and-2fa-handling"
                 ]
               },
               {
@@ -4342,7 +4342,7 @@
                       "zh/profile-export-and-import"
                     ]
                   },
-                  "zh/faq-profile-managment"
+                  "zh/faq-profile-management"
                 ]
               },
               {
@@ -4504,7 +4504,7 @@
                   "zh/general/account-and-billing/changing-your-email-and-pass",
                   "zh/general/account-and-billing/two-factor-authentication",
                   "zh/general/account-and-billing/affiliate-program",
-                  "zh/general/account-and-billing/active-sessions-1",
+                  "zh/general/account-and-billing/active-sessions",
                   "zh/general/account-and-billing/cloud-browser-usage"
                 ]
               },
@@ -4565,7 +4565,7 @@
                   "zh/maintaining-trust-score",
                   "zh/profile-hygiene-checklist",
                   "zh/common-mistakes-to-avoid",
-                  "zh/facebook-meta-ads-1"
+                  "zh/captcha-and-2fa-handling"
                 ]
               },
               {
@@ -4862,6 +4862,126 @@
     {
       "source": "/proxy/gologin-proxies/gologin-proxy-management/view-and-top-up-proxy-traffic",
       "destination": "/proxy/gologin-proxies/purchasing-gologin-proxies"
+    },
+    {
+      "source": "/faq-profile-managment",
+      "destination": "/faq-profile-management"
+    },
+    {
+      "source": "/de/faq-profile-managment",
+      "destination": "/de/faq-profile-management"
+    },
+    {
+      "source": "/es/faq-profile-managment",
+      "destination": "/es/faq-profile-management"
+    },
+    {
+      "source": "/fr/faq-profile-managment",
+      "destination": "/fr/faq-profile-management"
+    },
+    {
+      "source": "/ja/faq-profile-managment",
+      "destination": "/ja/faq-profile-management"
+    },
+    {
+      "source": "/pl/faq-profile-managment",
+      "destination": "/pl/faq-profile-management"
+    },
+    {
+      "source": "/pt/faq-profile-managment",
+      "destination": "/pt/faq-profile-management"
+    },
+    {
+      "source": "/ru/faq-profile-managment",
+      "destination": "/ru/faq-profile-management"
+    },
+    {
+      "source": "/vi/faq-profile-managment",
+      "destination": "/vi/faq-profile-management"
+    },
+    {
+      "source": "/zh/faq-profile-managment",
+      "destination": "/zh/faq-profile-management"
+    },
+    {
+      "source": "/facebook-meta-ads-1",
+      "destination": "/captcha-and-2fa-handling"
+    },
+    {
+      "source": "/de/facebook-meta-ads-1",
+      "destination": "/de/captcha-and-2fa-handling"
+    },
+    {
+      "source": "/es/facebook-meta-ads-1",
+      "destination": "/es/captcha-and-2fa-handling"
+    },
+    {
+      "source": "/fr/facebook-meta-ads-1",
+      "destination": "/fr/captcha-and-2fa-handling"
+    },
+    {
+      "source": "/ja/facebook-meta-ads-1",
+      "destination": "/ja/captcha-and-2fa-handling"
+    },
+    {
+      "source": "/pl/facebook-meta-ads-1",
+      "destination": "/pl/captcha-and-2fa-handling"
+    },
+    {
+      "source": "/pt/facebook-meta-ads-1",
+      "destination": "/pt/captcha-and-2fa-handling"
+    },
+    {
+      "source": "/ru/facebook-meta-ads-1",
+      "destination": "/ru/captcha-and-2fa-handling"
+    },
+    {
+      "source": "/vi/facebook-meta-ads-1",
+      "destination": "/vi/captcha-and-2fa-handling"
+    },
+    {
+      "source": "/zh/facebook-meta-ads-1",
+      "destination": "/zh/captcha-and-2fa-handling"
+    },
+    {
+      "source": "/general/account-and-billing/active-sessions-1",
+      "destination": "/general/account-and-billing/active-sessions"
+    },
+    {
+      "source": "/de/general/account-and-billing/active-sessions-1",
+      "destination": "/de/general/account-and-billing/active-sessions"
+    },
+    {
+      "source": "/es/general/account-and-billing/active-sessions-1",
+      "destination": "/es/general/account-and-billing/active-sessions"
+    },
+    {
+      "source": "/fr/general/account-and-billing/active-sessions-1",
+      "destination": "/fr/general/account-and-billing/active-sessions"
+    },
+    {
+      "source": "/ja/general/account-and-billing/active-sessions-1",
+      "destination": "/ja/general/account-and-billing/active-sessions"
+    },
+    {
+      "source": "/pl/general/account-and-billing/active-sessions-1",
+      "destination": "/pl/general/account-and-billing/active-sessions"
+    },
+    {
+      "source": "/pt/general/account-and-billing/active-sessions-1",
+      "destination": "/pt/general/account-and-billing/active-sessions"
+    },
+    {
+      "source": "/ru/general/account-and-billing/active-sessions-1",
+      "destination": "/ru/general/account-and-billing/active-sessions"
+    },
+    {
+      "source": "/vi/general/account-and-billing/active-sessions-1",
+      "destination": "/vi/general/account-and-billing/active-sessions"
+    },
+    {
+      "source": "/zh/general/account-and-billing/active-sessions-1",
+      "destination": "/zh/general/account-and-billing/active-sessions"
     }
   ]
 }

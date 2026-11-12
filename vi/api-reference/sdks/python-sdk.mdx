@@ -1,4 +1,102 @@
 ---
-title: 'Tài liệu'
-url: "https://github.com/gologinapp/pygologin"
+title: "Python SDK"
+description: "Chạy hồ sơ Gologin từ Python, trên máy hoặc trên đám mây, và kết nối Selenium, Playwright hoặc Puppeteer với hồ sơ đó."
 ---
+
+Python SDK sẽ khởi chạy hồ sơ Gologin cho bạn: SDK tải về hồ sơ và phiên bản trình duyệt Orbita mà hồ sơ cần, khởi động trình duyệt và cung cấp địa chỉ để công cụ tự động hóa của bạn kết nối vào - Selenium, Playwright hoặc Puppeteer. Gói này có tên là `gologin` trên PyPI, mã nguồn nằm tại [pygologin trên GitHub](https://github.com/gologinapp/pygologin).
+
+## Cài đặt
+
+```bash
+pip install gologin
+```
+
+Ví dụ Selenium bên dưới cũng cần có `selenium` và `webdriver-manager`.
+
+## Lấy mã thông báo
+
+Tạo mã thông báo API trong ứng dụng Gologin: [API & MCP](https://app.gologin.com/personalArea/TokenApi) > **API** > **Mã thông báo mới**. Bạn cũng cần ID của hồ sơ muốn chạy, chứ không phải tên hồ sơ.
+
+## Chạy hồ sơ bằng Selenium
+
+```python
+import time
+from gologin import GoLogin
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+
+gl = GoLogin({
+    "token": "YOUR_API_TOKEN",
+    "profile_id": "YOUR_PROFILE_ID",
+})
+
+# Start the profile and get the address to connect to
+debugger_address = gl.start()
+
+# Use the ChromeDriver that matches the Orbita version of the profile
+service = Service(ChromeDriverManager(driver_version=gl.get_chromium_version()).install())
+options = webdriver.ChromeOptions()
+options.add_experimental_option("debuggerAddress", debugger_address)
+driver = webdriver.Chrome(service=service, options=options)
+
+driver.get("https://www.python.org")
+time.sleep(10)
+
+driver.quit()
+gl.stop()  # closes the browser and saves the profile to Gologin
+```
+
+## Chạy hồ sơ trên đám mây
+
+`startRemote()` khởi chạy hồ sơ trong [Cloud Browser](/vi/api-reference/cloud-browser/what-is-gologin-cloud-browser) của Gologin thay vì trên máy tính của bạn, đồng thời trả về một URL WebSocket dành cho Playwright, Puppeteer hoặc bất kỳ ứng dụng khách CDP nào khác. `stopRemote()` sẽ dừng hồ sơ. Các lượt chạy trên đám mây được tính vào giới hạn Cloud Browser của bạn.
+
+```python
+gl = GoLogin({"token": "YOUR_API_TOKEN", "profile_id": "YOUR_PROFILE_ID"})
+
+result = gl.startRemote()
+if result["status"] == "success":
+    ws_url = result["wsUrl"]  # connect your CDP client here
+    # ...
+gl.stopRemote()
+```
+
+## Tùy chọn
+
+| Tùy chọn | Mặc định | Chức năng |
+| :-- | :-- | :-- |
+| `token` | - | Mã thông báo API của bạn. Bắt buộc. |
+| `profile_id` | - | ID của hồ sơ cần chạy. |
+| `executable_path` | - | Đường dẫn đến tệp thực thi Orbita. Nếu để trống, SDK sẽ tải phiên bản mà hồ sơ cần. |
+| `extra_params` | `[]` | Các cờ bổ sung cho trình duyệt, ví dụ `["--headless"]`. |
+| `port` | ngẫu nhiên | Cổng gỡ lỗi từ xa của trình duyệt chạy trên máy. |
+| `tmpdir` | thư mục tạm của hệ thống | Nơi hồ sơ được giải nén trong lúc chạy. |
+| `local` | `False` | Với `True`, `stop()` sẽ không tải hồ sơ lên Gologin, nên các thay đổi chỉ được giữ trên máy tính này. |
+| `uploadCookiesToServer` | `False` | Tải cookie lên Gologin khi hồ sơ dừng, để sau này bạn có thể lấy chúng qua API. |
+| `writeCookiesFromServer` | `True` | Nạp cookie đã lưu của hồ sơ vào trình duyệt khi khởi động. |
+| `headers` | `{}` | Các tiêu đề HTTP bổ sung cho các yêu cầu của SDK gửi đến Gologin API. |
+
+## Quản lý hồ sơ
+
+Các phương thức này chỉ cần mã thông báo: hãy tạo ứng dụng khách bằng `GoLogin({"token": "YOUR_API_TOKEN"})`.
+
+| Phương thức | Chức năng |
+| :-- | :-- |
+| `createProfileRandomFingerprint({"os": "win", "name": "My profile"})` | Tạo hồ sơ với vân tay ngẫu nhiên. `os` là `win`, `mac` hoặc `lin`. Sau đó gọi `setProfileId(profile["id"])` để chạy hồ sơ. |
+| `createProfileWithCustomParams({...})` | Tạo hồ sơ với các tham số do bạn đặt, chẳng hạn user agent, độ phân giải và ngôn ngữ. |
+| `updateUserAgentToLatestBrowser(["PROFILE_ID"])` | Cập nhật user agent của các hồ sơ lên phiên bản trình duyệt mới nhất. |
+| `addGologinProxyToProfile("PROFILE_ID", "us")` | Thêm proxy Gologin của quốc gia đã chọn vào hồ sơ. |
+| `changeProfileProxy("PROFILE_ID", {"mode": "http", "host": "...", "port": 8080, "username": "...", "password": "..."})` | Đặt proxy riêng của bạn cho hồ sơ. |
+| `addCookiesToProfile("PROFILE_ID", [...])` | Thêm cookie để trình duyệt nhập vào khi khởi động. |
+| `refreshProfilesFingerprint(["PROFILE_ID"])` | Tạo vân tay mới cho các hồ sơ. |
+| `delete("PROFILE_ID")` | Xóa hồ sơ. |
+
+## Dữ liệu viễn trắc
+
+SDK gửi các báo cáo lỗi ẩn danh để giúp sửa lỗi. Để tắt tính năng này, hãy đặt biến môi trường `DISABLE_TELEMETRY=true`.
+
+## Xem thêm
+
+- [Ví dụ Selenium](https://github.com/gologinapp/pygologin/blob/main/examples/selenium/one-time-use-profile.py) và [nhật ký thay đổi](https://github.com/gologinapp/pygologin/blob/main/CHANGELOG.md) trên GitHub
+- [Node.js SDK](/vi/api-reference/sdks/nodejs-sdk)
+- [Tài liệu tham khảo API](/api-reference/profile/get-all-profiles)

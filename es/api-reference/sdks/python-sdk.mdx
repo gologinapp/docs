@@ -1,4 +1,102 @@
 ---
-title: 'Documentación'
-url: "https://github.com/gologinapp/pygologin"
+title: "SDK de Python"
+description: "Ejecuta perfiles de Gologin desde Python, en local o en la nube, y conecta Selenium, Playwright o Puppeteer a ellos."
 ---
+
+El SDK de Python inicia un perfil de Gologin por ti: descarga el perfil y la versión del navegador Orbita que necesita, inicia el navegador y te da la dirección para conectar tu herramienta de automatización: Selenium, Playwright o Puppeteer. El paquete se llama `gologin` en PyPI y el código fuente está en [pygologin en GitHub](https://github.com/gologinapp/pygologin).
+
+## Instalación
+
+```bash
+pip install gologin
+```
+
+El ejemplo de Selenium que aparece más abajo también necesita `selenium` y `webdriver-manager`.
+
+## Obtener un token
+
+Crea un token de API en la aplicación de Gologin: [API & MCP](https://app.gologin.com/personalArea/TokenApi) > **API** > **New Token**. También necesitas el ID del perfil que quieres ejecutar, no su nombre.
+
+## Ejecutar un perfil con Selenium
+
+```python
+import time
+from gologin import GoLogin
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+
+gl = GoLogin({
+    "token": "YOUR_API_TOKEN",
+    "profile_id": "YOUR_PROFILE_ID",
+})
+
+# Start the profile and get the address to connect to
+debugger_address = gl.start()
+
+# Use the ChromeDriver that matches the Orbita version of the profile
+service = Service(ChromeDriverManager(driver_version=gl.get_chromium_version()).install())
+options = webdriver.ChromeOptions()
+options.add_experimental_option("debuggerAddress", debugger_address)
+driver = webdriver.Chrome(service=service, options=options)
+
+driver.get("https://www.python.org")
+time.sleep(10)
+
+driver.quit()
+gl.stop()  # closes the browser and saves the profile to Gologin
+```
+
+## Ejecutar un perfil en la nube
+
+`startRemote()` inicia el perfil en el [Cloud Browser](/es/api-reference/cloud-browser/what-is-gologin-cloud-browser) de Gologin en lugar de en tu ordenador y devuelve una URL de WebSocket para Playwright, Puppeteer o cualquier otro cliente CDP. `stopRemote()` lo detiene. Los inicios en la nube cuentan para los límites de tu Cloud Browser.
+
+```python
+gl = GoLogin({"token": "YOUR_API_TOKEN", "profile_id": "YOUR_PROFILE_ID"})
+
+result = gl.startRemote()
+if result["status"] == "success":
+    ws_url = result["wsUrl"]  # connect your CDP client here
+    # ...
+gl.stopRemote()
+```
+
+## Opciones
+
+| Opción | Valor por defecto | Qué hace |
+| :-- | :-- | :-- |
+| `token` | - | Tu token de API. Obligatorio. |
+| `profile_id` | - | El ID del perfil que se va a ejecutar. |
+| `executable_path` | - | Ruta al ejecutable de Orbita. Si está vacía, el SDK descarga la versión que necesita el perfil. |
+| `extra_params` | `[]` | Flags adicionales del navegador, por ejemplo `["--headless"]`. |
+| `port` | aleatorio | El puerto de depuración remota del navegador local. |
+| `tmpdir` | carpeta temporal del sistema | Dónde se descomprime el perfil mientras se ejecuta. |
+| `local` | `False` | Con `True`, `stop()` no sube el perfil a Gologin, así que los cambios se quedan solo en este ordenador. |
+| `uploadCookiesToServer` | `False` | Sube las cookies a Gologin cuando el perfil se detiene, para poder obtenerlas más tarde mediante la API. |
+| `writeCookiesFromServer` | `True` | Carga en el navegador, al iniciar, las cookies guardadas del perfil. |
+| `headers` | `{}` | Encabezados HTTP adicionales para las solicitudes del SDK a la API de Gologin. |
+
+## Gestionar perfiles
+
+Estos métodos solo necesitan el token: crea el cliente con `GoLogin({"token": "YOUR_API_TOKEN"})`.
+
+| Método | Qué hace |
+| :-- | :-- |
+| `createProfileRandomFingerprint({"os": "win", "name": "My profile"})` | Crea un perfil con un fingerprint aleatorio. `os` puede ser `win`, `mac` o `lin`. Después llama a `setProfileId(profile["id"])` para ejecutarlo. |
+| `createProfileWithCustomParams({...})` | Crea un perfil con tus propios parámetros, como el user agent, la resolución y el idioma. |
+| `updateUserAgentToLatestBrowser(["PROFILE_ID"])` | Actualiza el user agent de los perfiles a la última versión del navegador. |
+| `addGologinProxyToProfile("PROFILE_ID", "us")` | Añade al perfil un proxy de Gologin del país indicado. |
+| `changeProfileProxy("PROFILE_ID", {"mode": "http", "host": "...", "port": 8080, "username": "...", "password": "..."})` | Configura tu propio proxy para el perfil. |
+| `addCookiesToProfile("PROFILE_ID", [...])` | Añade cookies que el navegador importa al iniciar. |
+| `refreshProfilesFingerprint(["PROFILE_ID"])` | Asigna un nuevo fingerprint a los perfiles. |
+| `delete("PROFILE_ID")` | Elimina el perfil. |
+
+## Telemetría
+
+El SDK envía informes de errores anónimos para ayudar a corregir fallos. Para desactivarlos, define la variable de entorno `DISABLE_TELEMETRY=true`.
+
+## Véase también
+
+- [Ejemplo de Selenium](https://github.com/gologinapp/pygologin/blob/main/examples/selenium/one-time-use-profile.py) y [registro de cambios](https://github.com/gologinapp/pygologin/blob/main/CHANGELOG.md) en GitHub
+- [SDK de Node.js](/es/api-reference/sdks/nodejs-sdk)
+- [Referencia de la API](/api-reference/profile/get-all-profiles)

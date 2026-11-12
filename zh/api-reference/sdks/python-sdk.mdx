@@ -1,4 +1,102 @@
 ---
-title: '文档'
-url: "https://github.com/gologinapp/pygologin"
+title: "Python SDK"
+description: "通过 Python 在本地或云端运行 Gologin 配置文件，并将 Selenium、Playwright 或 Puppeteer 连接到配置文件。"
 ---
+
+Python SDK 可以为你启动 Gologin 配置文件：它会下载配置文件以及所需的 Orbita 浏览器版本，启动浏览器，并提供用于连接自动化工具（Selenium、Playwright 或 Puppeteer）的地址。该软件包在 PyPI 上名为 `gologin`，源代码位于 [GitHub 上的 pygologin](https://github.com/gologinapp/pygologin)。
+
+## 安装
+
+```bash
+pip install gologin
+```
+
+下面的 Selenium 示例还需要安装 `selenium` 和 `webdriver-manager`。
+
+## 获取令牌
+
+在 Gologin 应用中创建 API 令牌：[API & MCP](https://app.gologin.com/personalArea/TokenApi) > **API** > **新代币**。你还需要待运行配置文件的 ID，而不是它的名称。
+
+## 使用 Selenium 运行配置文件
+
+```python
+import time
+from gologin import GoLogin
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+
+gl = GoLogin({
+    "token": "YOUR_API_TOKEN",
+    "profile_id": "YOUR_PROFILE_ID",
+})
+
+# Start the profile and get the address to connect to
+debugger_address = gl.start()
+
+# Use the ChromeDriver that matches the Orbita version of the profile
+service = Service(ChromeDriverManager(driver_version=gl.get_chromium_version()).install())
+options = webdriver.ChromeOptions()
+options.add_experimental_option("debuggerAddress", debugger_address)
+driver = webdriver.Chrome(service=service, options=options)
+
+driver.get("https://www.python.org")
+time.sleep(10)
+
+driver.quit()
+gl.stop()  # closes the browser and saves the profile to Gologin
+```
+
+## 在云端运行配置文件
+
+`startRemote()` 会在 Gologin [Cloud Browser](/zh/api-reference/cloud-browser/what-is-gologin-cloud-browser) 中启动配置文件，而不是在你的电脑上启动，并返回可供 Playwright、Puppeteer 或任何其他 CDP 客户端使用的 WebSocket URL。`stopRemote()` 用于停止配置文件。云端启动会计入你的 Cloud Browser 额度。
+
+```python
+gl = GoLogin({"token": "YOUR_API_TOKEN", "profile_id": "YOUR_PROFILE_ID"})
+
+result = gl.startRemote()
+if result["status"] == "success":
+    ws_url = result["wsUrl"]  # connect your CDP client here
+    # ...
+gl.stopRemote()
+```
+
+## 选项
+
+| 选项 | 默认值 | 作用 |
+| :-- | :-- | :-- |
+| `token` | - | 你的 API 令牌。必填。 |
+| `profile_id` | - | 要运行的配置文件的 ID。 |
+| `executable_path` | - | Orbita 可执行文件的路径。如果为空，SDK 会下载配置文件所需的版本。 |
+| `extra_params` | `[]` | 额外的浏览器启动参数，例如 `["--headless"]`。 |
+| `port` | 随机 | 本地浏览器的远程调试端口。 |
+| `tmpdir` | 系统临时文件夹 | 配置文件运行期间的解压位置。 |
+| `local` | `False` | 设为 `True` 时，`stop()` 不会将配置文件上传到 Gologin，因此更改仅保留在这台电脑上。 |
+| `uploadCookiesToServer` | `False` | 在配置文件停止时将 Cookie 上传到 Gologin，以便之后通过 API 获取。 |
+| `writeCookiesFromServer` | `True` | 启动时将配置文件已保存的 Cookie 加载到浏览器中。 |
+| `headers` | `{}` | SDK 向 Gologin API 发送请求时附加的 HTTP 标头。 |
+
+## 管理配置文件
+
+这些方法只需要令牌：使用 `GoLogin({"token": "YOUR_API_TOKEN"})` 创建客户端。
+
+| 方法 | 作用 |
+| :-- | :-- |
+| `createProfileRandomFingerprint({"os": "win", "name": "My profile"})` | 创建带有随机指纹的配置文件。`os` 可选 `win`、`mac` 或 `lin`。然后调用 `setProfileId(profile["id"])` 来运行它。 |
+| `createProfileWithCustomParams({...})` | 使用你自己的参数创建配置文件，例如用户代理、分辨率和语言。 |
+| `updateUserAgentToLatestBrowser(["PROFILE_ID"])` | 将配置文件的用户代理更新为最新的浏览器版本。 |
+| `addGologinProxyToProfile("PROFILE_ID", "us")` | 为配置文件添加来自指定国家/地区的 Gologin 代理。 |
+| `changeProfileProxy("PROFILE_ID", {"mode": "http", "host": "...", "port": 8080, "username": "...", "password": "..."})` | 为配置文件设置你自己的代理。 |
+| `addCookiesToProfile("PROFILE_ID", [...])` | 添加 Cookie，浏览器会在启动时导入。 |
+| `refreshProfilesFingerprint(["PROFILE_ID"])` | 为配置文件生成新的指纹。 |
+| `delete("PROFILE_ID")` | 删除配置文件。 |
+
+## 遥测
+
+SDK 会发送匿名错误报告以帮助修复问题。如需关闭，请设置环境变量 `DISABLE_TELEMETRY=true`。
+
+## 另请参阅
+
+- GitHub 上的 [Selenium 示例](https://github.com/gologinapp/pygologin/blob/main/examples/selenium/one-time-use-profile.py)和[更新日志](https://github.com/gologinapp/pygologin/blob/main/CHANGELOG.md)
+- [Node.js SDK](/zh/api-reference/sdks/nodejs-sdk)
+- [API 参考](/api-reference/profile/get-all-profiles)
