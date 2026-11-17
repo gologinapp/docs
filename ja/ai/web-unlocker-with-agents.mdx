@@ -1,19 +1,19 @@
 ---
 title: "AIエージェントでWeb Unlockerを使う"
-description: "Gologin Web UnlockerをAIエージェントやLLMパイプラインのスクレイピングツールとして使う方法"
+description: "Gologin Web Unlockerを、AIエージェントやLLMパイプライン向けのスクレイピングツールとして使う方法"
 ---
 
-Gologin Web Unlockerは、あらゆるURLについて完全にレンダリングされたHTMLを返すスクレイピングAPIです。AIエージェントにとっては、ブラウザを操作する仕組みを用意しなくても、1ページにつき1回のHTTPリクエストで安定してWebにアクセスできるということです。
+Gologin Web Unlockerは、あらゆるURLについて完全にレンダリングされたHTMLを返すスクレイピングAPIです。AIエージェントにとっては、ブラウザの制御を行わなくても、1ページにつきHTTPリクエスト1回で安定してWebにアクセスできるということです。
 
 <Tip>
-  **コードを書きたくない場合は** [Web Access CLI](/ja/cli-tools/web-access) または [Scraping Skill](/ja/api-reference/ai-integrations/ai-skills) を使うと、エージェントにスクレイピング機能をすぐに追加できます。
+  **コードを書きたくない場合は、** [Web Access CLI](/ja/cli-tools/web-access)または[Scraping Skill](/ja/api-reference/ai-integrations/ai-skills)を使えば、エージェントにすぐスクレイピング機能を追加できます。
 </Tip>
 
 ---
 
 ## ページの内容をLLMに渡す
 
-ページをスクレイピングし、そのHTMLをモデルに渡して、情報の抽出、要約、分析を行います。パース処理を自分で書く必要はありません。
+ページをスクレイピングし、そのHTMLをモデルに渡して、情報の抽出、要約、分析を行えます。パース用のロジックは不要です。
 
 ### Python + Claude
 
@@ -74,7 +74,7 @@ console.log(message.content.find((block) => block.type === "text")?.text);
 
 ## エージェントにスクレイピングツールを持たせる
 
-Web Unlockerを利用する `scrape` ツールを定義します。ページを取得するタイミングや、スクレイピングするURLはエージェントが判断します。
+Web Unlockerを利用する `scrape` ツールを定義します。ページを取得するタイミングやスクレイピングするURLは、エージェントが判断します。
 
 ```python
 import requests
@@ -133,13 +133,13 @@ while True:
     messages.append({"role": "user", "content": tool_results})
 ```
 
-スクレイピングを行うタイミングと取得するURLはエージェントが判断し、ページの取得そのものはWeb Unlockerが担います。JavaScriptのレンダリング、ボット対策の回避、プロキシのローテーション、CAPTCHAの解決もすべて含まれます。
+スクレイピングを行うタイミングと取得するURLは、エージェントが判断します。JavaScriptのレンダリングやプロキシのローテーションといった取得処理は、Web Unlockerが行います。
 
 ---
 
 ## Web Unlocker SDKを使う
 
-TypeScript/Node.jsのエージェント向けに、`gologin-webunlocker` SDKが型付きのメソッドを提供しています。
+TypeScript/Node.jsのエージェント向けには、`gologin-webunlocker` SDKが型付きのメソッドを提供しています。
 
 ```ts
 import { WebUnlocker } from "gologin-webunlocker";
@@ -198,14 +198,14 @@ gologin-web-access extract https://example.com --schema ./schema.json
 | リサーチエージェント | エージェントが `scrape` ツールを呼び出す → ページを読む → 調査結果をまとめる |
 | 価格モニタリング | 商品ページを定期的に `batch-scrape` する → 前回の結果と比較する |
 | 競合調査 | 競合サイトを `crawl` する → LLMに渡して分析する |
-| リードの情報補完 | 企業ページを `scrape-json` する → 構造化データを抽出する |
+| リードの情報補完 | 企業ページを `scrape-json` で取得する → 構造化データを抽出する |
 | コンテンツの集約 | `search` と `scrape-text` を組み合わせる → キュレーションしたフィードを作成する |
 
 ---
 
-## 関連ページ
+## 関連情報
 
-- [Web Unlockerとは](/ja/what-is-web-unlocker) — 製品の概要と料金
+- [Web Unlockerとは](/ja/what-is-web-unlocker) — 製品概要と料金
 - [Web Unlocker SDK](/ja/scraping-api-sdk-and-cli) — TypeScript SDKリファレンス
 - [Web Access CLI](/ja/cli-tools/web-access) — 統合CLI
-- [AI Skills](/ja/api-reference/ai-integrations/ai-skills) — Claude Code向けのすぐに使えるスキル
+- [AIスキル](/ja/api-reference/ai-integrations/ai-skills) — Claude Code向けのすぐに使えるスキル

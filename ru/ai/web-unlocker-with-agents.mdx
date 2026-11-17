@@ -1,19 +1,19 @@
 ---
 title: "Использование Web Unlocker с ИИ-агентами"
-description: "Как использовать Gologin Web Unlocker как инструмент скрейпинга для ИИ-агентов и LLM-пайплайнов"
+description: "Как использовать Gologin Web Unlocker как инструмент скрапинга для ИИ-агентов и LLM-пайплайнов"
 ---
 
-Gologin Web Unlocker — это API для скрейпинга, которое возвращает полностью отрендеренный HTML для любого URL. Для ИИ-агентов это означает надёжный доступ к вебу без управления браузером: один HTTP-запрос на страницу.
+Gologin Web Unlocker — это API для скрапинга, которое возвращает полностью отрендеренный HTML для любого URL. Для ИИ-агентов это означает надёжный доступ к вебу без управления браузером: один HTTP-запрос на страницу.
 
 <Tip>
-  **Не хотите писать код?** Используйте [Web Access CLI](/ru/cli-tools/web-access) или [Scraping Skill](/ru/api-reference/ai-integrations/ai-skills), чтобы ваш агент мог выполнять скрейпинг сразу из коробки.
+  **Не хотите писать код?** Используйте [Web Access CLI](/ru/cli-tools/web-access) или [Scraping Skill](/ru/api-reference/ai-integrations/ai-skills), чтобы сразу дать своему агенту возможности скрапинга.
 </Tip>
 
 ---
 
 ## Передача содержимого страницы в LLM
 
-Получите страницу и передайте HTML модели для извлечения данных, суммаризации или анализа — писать логику парсинга не нужно.
+Получите страницу и передайте HTML модели для извлечения данных, составления сводки или анализа — писать логику парсинга не нужно.
 
 ### Python + Claude
 
@@ -72,9 +72,9 @@ console.log(message.content.find((block) => block.type === "text")?.text);
 
 ---
 
-## Добавление инструмента scrape для агента
+## Дайте агенту инструмент scrape
 
-Определите инструмент `scrape` на основе Web Unlocker. Агент сам решает, когда загружать страницу и какой URL обрабатывать.
+Определите инструмент `scrape` на базе Web Unlocker. Агент сам решает, когда загрузить страницу и какой URL обработать.
 
 ```python
 import requests
@@ -133,11 +133,11 @@ while True:
     messages.append({"role": "user", "content": tool_results})
 ```
 
-Агент сам решает, когда выполнять скрейпинг и какой URL загружать. Web Unlocker берёт на себя получение страницы: рендеринг JavaScript, обход антибот-защиты, ротацию прокси и решение CAPTCHA.
+Агент сам решает, когда выполнять скрапинг и какой URL загружать. Web Unlocker берёт на себя получение страницы: рендеринг JavaScript и ротацию прокси.
 
 ---
 
-## Использование Web Unlocker SDK
+## Использование SDK Web Unlocker
 
 Для агентов на TypeScript/Node.js SDK `gologin-webunlocker` предоставляет типизированные методы:
 
@@ -162,13 +162,13 @@ const results = await client.batchScrape(
 );
 ```
 
-Все методы описаны в [справочнике по Web Unlocker SDK](/ru/scraping-api-sdk-and-cli).
+Все методы описаны в [справочнике по SDK Web Unlocker](/ru/scraping-api-sdk-and-cli).
 
 ---
 
 ## Использование CLI
 
-Для агентов, которые выполняют команды оболочки (например, Claude Code), CLI — самый простой вариант:
+Для агентов, которые вызывают команды оболочки (например, Claude Code), CLI — самый простой путь:
 
 ```bash
 # plain text — good for LLM context
@@ -191,9 +191,9 @@ gologin-web-access extract https://example.com --schema ./schema.json
 
 ---
 
-## Типичные сценарии для агентов
+## Типовые сценарии для агентов
 
-| Сценарий | Как реализовать |
+| Сценарий | Как это работает |
 |---|---|
 | Исследовательский агент | Агент вызывает инструмент `scrape` → читает страницы → обобщает результаты |
 | Мониторинг цен | `batch-scrape` страниц товаров по расписанию → сравнение с предыдущим запуском |
@@ -203,9 +203,9 @@ gologin-web-access extract https://example.com --schema ./schema.json
 
 ---
 
-## См. также
+## Связанные материалы
 
 - [Что такое Web Unlocker](/ru/what-is-web-unlocker) — обзор продукта и тарифы
-- [Web Unlocker SDK](/ru/scraping-api-sdk-and-cli) — справочник по TypeScript SDK
+- [SDK Web Unlocker](/ru/scraping-api-sdk-and-cli) — справочник по TypeScript SDK
 - [Web Access CLI](/ru/cli-tools/web-access) — единый CLI
 - [AI Skills](/ru/api-reference/ai-integrations/ai-skills) — готовые навыки для Claude Code

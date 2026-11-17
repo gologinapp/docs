@@ -1,89 +1,48 @@
 ---
-title: "Plateformes crypto et KYC"
+title: "Bourses de cryptomonnaies"
+description: "Comment sécuriser votre compte vérifié sur une bourse de cryptomonnaies avec Gologin : un proxy statique, un profil de navigateur stable et des premières semaines tranquilles."
 ---
 
-Les plateformes crypto se répartissent en deux catégories : les exchanges et portefeuilles (Binance, Coinbase, Kraken), où le KYC associe le compte à une personne réelle, et les plateformes d'airdrop/farming (Galxe, Zealy, Layer3, Premint), où l'objectif est de gérer plusieurs comptes sur différentes campagnes.
+Les bourses de cryptomonnaies et les portefeuilles (Binance, Coinbase, Kraken et autres) associent chaque compte à une personne réelle grâce à la vérification d'identité (KYC). Une fois la vérification effectuée, la plateforme surveille où et comment vous vous connectez : un changement soudain d'IP ou d'appareil peut donc déclencher un contrôle de sécurité, une vérification supplémentaire ou le gel du compte.
 
-## Liste de contrôle rapide
+<Warning>
+  Ne passez la vérification qu'avec vos propres documents d'identité. L'utilisation de l'identité ou des documents d'une autre personne est interdite par la [politique d'utilisation acceptable](https://gologin.com/acceptable-use-policy/).
+</Warning>
+
+## Checklist rapide
 
 - 1 compte = 1 profil de navigateur
 - 1 profil = 1 proxy résidentiel statique
-- Gardez une localisation de proxy cohérente, surtout après le KYC
+- Conservez toujours la même localisation de proxy, surtout après la vérification
 - Ne modifiez ni l'empreinte ni le proxy après la vérification d'identité
-- Pour le farming : considérez les comptes comme jetables et ne mélangez pas les comptes de farming avec vos vrais comptes d'exchange
 
-## Exchanges et plateformes KYC
+## Configuration du profil Gologin
 
-Après le KYC, la cohérence est essentielle. Une connexion depuis une nouvelle IP ou avec une empreinte modifiée déclenche un contrôle de sécurité, une vérification supplémentaire ou un gel du compte.
-
-### Configuration du profil Gologin
-
-- \*\*Proxy :\*\* résidentiel statique, avec la même IP à chaque session
-- \*\*Localisation du proxy :\*\* si possible, choisissez le pays indiqué sur vos documents d'identité
+- **Proxy :** résidentiel statique, la même IP pour chaque session
+- **Localisation du proxy :** le pays où vous vivez et qui figure sur vos documents
 
 <Warning>
-  Ne modifiez jamais le proxy d'un profil Gologin après avoir terminé le KYC sur un exchange crypto. L'exchange enregistre l'environnement de votre appareil au moment de la vérification. Une IP ou une empreinte différente lors de la connexion suivante est considérée comme une prise de contrôle du compte.
+  Ne changez pas le proxy du profil après avoir passé la vérification sur une bourse. La plateforme mémorise votre appareil et votre IP au moment de la vérification, et une IP ou une empreinte différente lors de la connexion suivante peut ressembler à une prise de contrôle du compte.
 </Warning>
 
-## Calendrier de warmup
+## Les premières semaines d'un nouveau compte
 
-| **Période** | **Objectif** | **Actions à effectuer** |
+| **Période** | **Objectif** | **Quoi faire** |
 | :-- | :-- | :-- |
-| Jour 0 | Inscription | Création du compte \+ vérification de l'e-mail |
-| Jours 1–3 | KYC | Envoyer les documents d'identité, terminer la vérification |
-| Jours 4–7 | Exploration | Parcourir la plateforme, explorer l'interface de trading |
-| Semaine 2 | Petites transactions | Déposer un petit montant, effectuer 1 à 2 trades |
+| Jour 0 | Inscription | Créez le compte et confirmez l'adresse e-mail |
+| Jours 1–3 | Vérification | Envoyez vos documents d'identité et terminez la vérification |
+| Jours 4–7 | Exploration | Parcourez la plateforme et l'interface de trading |
+| Semaine 2 | Petites transactions | Effectuez un petit dépôt, réalisez 1 à 2 transactions |
 | Semaine 3\+ | Utilisation normale | Activité de trading régulière |
 
-### Déclencheurs de bannissement courants — exchanges
+## Ce qui déclenche des contrôles de sécurité
 
-- Changement d'IP après le KYC (même pays, mais ville différente)
-- Empreinte d'appareil différente d'une session à l'autre
-- Dépôts importants juste après la création du compte
-- Plusieurs comptes avec le même moyen de paiement ou le même compte bancaire
-
-## Airdrop et farming de points (Galxe, Zealy, Premint, Layer3)
-
-Les campagnes Web3 (airdrops, quêtes, programmes de points) n'autorisent souvent qu'une participation par personne. Gologin sert ici à gérer plusieurs comptes légitimes (par exemple pour une équipe dont chaque membre participe séparément) tout en gardant ces comptes isolés les uns des autres sur le plan technique.
-
-### **Comment les plateformes détectent les comptes liés**
-
-Les plateformes s'appuient sur deux types de signaux :
-
-Signaux liés au navigateur et au réseau (ce que Gologin prend en charge) :
-
-- Même adresse IP sur plusieurs comptes
-- Même empreinte de navigateur
-- Comptes qui réalisent des tâches aux mêmes moments depuis le même environnement
-
-Signaux on-chain (hors du périmètre de Gologin) :
-
-- Les blockchains sont publiques : toutes les transactions restent visibles en permanence
-- Si plusieurs adresses de portefeuille reçoivent des fonds du même portefeuille source, elles sont liées on-chain de façon évidente
-- Les plateformes utilisent des outils comme Nansen ou Arkham pour analyser les relations entre portefeuilles avant de distribuer des tokens
-
-Gologin isole l'environnement du navigateur et l'IP. Les relations entre portefeuilles on-chain relèvent d'un autre sujet, que chaque utilisateur gère selon sa propre configuration et les règles de la plateforme.
-
-### Configuration de Gologin pour les campagnes multicomptes
-
-Si vous gérez des comptes pour le compte de plusieurs membres d'une équipe, chaque personne doit disposer de :
-
-- Un profil Gologin dédié
-- Un proxy résidentiel unique
-- Son propre portefeuille connecté, qui ne doit pas être alimenté depuis un portefeuille d'équipe commun
-
-### Gestion à grande échelle
-
-Pour les équipes qui gèrent 10 comptes ou plus sur différentes campagnes :
-
-- Organisez les profils dans des dossiers Gologin par campagne ou par membre de l'équipe
-- Utilisez des tags pour suivre le statut (actif, terminé, en attente)
-- Utilisez l'API de Gologin pour lancer et gérer les profils par programmation
-- Gardez une trace du profil correspondant à chaque membre de l'équipe et à chaque portefeuille
+- Un changement d'IP après la vérification, même dans le même pays
+- Une empreinte d'appareil différente d'une session à l'autre
+- Des dépôts importants juste après la création du compte
 
 ## Voir aussi
 
-- [Proxys statiques ou rotatifs](https://gologin.com/docs/static-vs-dynamic-proxies)
-- [Le meilleur proxy pour votre cas](https://gologin.com/docs/proxy/introduction/best-proxy-for-your-case)
-- [Maintenir le score de confiance](https://gologin.com/docs/maintaining-trust-score)
-- [Démarrage rapide de l’API](https://gologin.com/docs/api-reference/introduction/quickstart) : pour gérer par programmation un grand nombre de profils de farming
+- [Static vs Rotating proxies](https://gologin.com/docs/static-vs-dynamic-proxies)
+- [Best proxy for your case](https://gologin.com/docs/proxy/introduction/best-proxy-for-your-case)
+- [Maintaining trust score](https://gologin.com/docs/maintaining-trust-score)

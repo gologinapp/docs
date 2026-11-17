@@ -2,13 +2,13 @@
 title: "Cas d'usage de Web Unlocker"
 ---
 
-Web Unlocker est une API de scraping : vous envoyez une URL, et elle renvoie le HTML entièrement rendu. Cette page présente les façons les plus courantes de l'utiliser.
+Web Unlocker est une API de scraping : vous envoyez une URL, elle renvoie le HTML entièrement rendu. Cette page présente les façons les plus courantes de l'utiliser.
 
 ---
 
 ## Scraper une page vous-même
 
-Le cas d'usage le plus simple : vous avez besoin du contenu d'une page web qui bloque les requêtes HTTP classiques.
+Le cas le plus simple : vous avez besoin du contenu d'une page web qui bloque les requêtes HTTP classiques.
 
 ### Python
 
@@ -37,20 +37,20 @@ const html = await fetch(
 console.log(html);
 ```
 
-Pas de navigateur à lancer, pas de proxy à configurer, pas de Cloudflare à contourner. Un seul appel, et vous obtenez la page.
+Pas de navigateur à lancer, pas de proxy à configurer. Un seul appel, et vous obtenez la page.
 
 **Idéal pour :**
 
 - Vérifier les prix sur le site d'un concurrent
 - Récupérer des offres d'emploi, des avis ou des données produit
 - Surveiller les modifications de pages
-- Des scripts de collecte de données ponctuels
+- Créer des scripts de collecte de données ponctuels
 
 ---
 
 ## Alimenter une IA avec du contenu
 
-Web Unlocker renvoie du HTML brut. Transmettez-le à un LLM pour extraire des données structurées, résumer du contenu ou répondre à des questions sur la page, sans aucune logique de parsing.
+Web Unlocker renvoie du HTML brut. Transmettez-le à un LLM pour extraire des données structurées, résumer du contenu ou répondre à des questions sur la page, sans aucune logique d'analyse à écrire.
 
 <Tip>
 Pour envoyer moins de balisage au modèle, ajoutez `format=markdown` à la requête : vous obtiendrez la page en Markdown plutôt qu'en HTML.
@@ -111,7 +111,7 @@ console.log(message.content[0].text);
 **Idéal pour :**
 
 - Extraire des données structurées (prix, noms, dates) sans écrire de parseurs
-- Résumer des articles ou des pages produit
+- Résumer des articles ou des fiches produit
 - Comparer plusieurs pages et en tirer des conclusions
 - Créer des outils de recherche ou de veille basés sur l'IA
 
@@ -119,7 +119,7 @@ console.log(message.content[0].text);
 
 ## L'utiliser dans un agent IA
 
-Donnez à votre agent IA un outil `scrape` reposant sur Web Unlocker. L'agent peut alors naviguer sur le web de manière autonome : récupérer des pages, lire leur contenu et agir en conséquence, sans que vous ayez à écrire de logique de navigation.
+Donnez à votre agent IA un outil `scrape` reposant sur Web Unlocker. L'agent peut alors naviguer sur le web de façon autonome : récupérer des pages, lire leur contenu et agir, sans que vous ayez à écrire de logique de navigation.
 
 ```python
 import requests
@@ -178,20 +178,20 @@ while True:
     messages.append({"role": "user", "content": tool_results})
 ```
 
-L'agent décide quand effectuer un scraping et quelle URL récupérer. Web Unlocker se charge de la récupération proprement dite.
+L'agent décide quand scraper et quelle URL récupérer. Web Unlocker se charge de la récupération proprement dite.
 
 **Idéal pour :**
 
-- Des agents de recherche qui naviguent sur le web de façon autonome
-- Des bots de comparaison de prix ou de recherche de bonnes affaires
-- Des pipelines de veille concurrentielle
+- Les agents de recherche qui naviguent sur le web de manière autonome
+- Les bots de comparaison de prix ou de recherche de bonnes affaires
+- Les pipelines de veille concurrentielle
 - Tout agent ayant besoin de données web en temps réel
 
 ---
 
-## Scraper plusieurs pages en même temps
+## Scraper plusieurs pages à la fois
 
-Lancez des requêtes en parallèle pour collecter des données depuis plusieurs URL simultanément.
+Lancez des requêtes en parallèle pour collecter les données de plusieurs URL simultanément.
 
 ```python
 import requests
@@ -223,8 +223,8 @@ for url, html in results:
 
 **Idéal pour :**
 
-- Scraper des catalogues de produits ou des pages de listes entières
-- Collecter des données en masse pour constituer des jeux de données d'entraînement
+- Scraper des catalogues produits ou des pages de listing entiers
+- Collecter des données en masse pour constituer des jeux d'entraînement
 - Surveiller de nombreuses pages simultanément
 
 ---
@@ -269,6 +269,6 @@ Consultez [Web Access CLI](/fr/cli-tools/web-access) pour la référence complè
 | Alimenter un LLM | Scraper → transmettre au modèle | Données extraites ou résumé |
 | Outil pour agent IA | L'agent l'appelle à la demande | Contenu web en temps réel |
 | Scraping en masse | Requêtes simultanées | HTML pour chaque URL |
-| Workflows CLI | Commandes `gologin-web-access` | Texte, markdown, JSON, résultats par lot |
+| Workflows CLI | Commandes `gologin-web-access` | Texte, markdown, JSON, résultats par lots |
 
 Consultez le [Démarrage rapide](/fr/web-unlocker-quick-start) pour effectuer votre première requête.

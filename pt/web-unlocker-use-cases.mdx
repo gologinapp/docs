@@ -2,11 +2,11 @@
 title: "Casos de uso do Web Unlocker"
 ---
 
-O Web Unlocker é uma API de scraping: você envia uma URL e ele retorna o HTML totalmente renderizado. Esta página mostra as formas mais comuns de aproveitar esse recurso.
+O Web Unlocker é uma Scraping API: você envia uma URL e ele retorna o HTML totalmente renderizado. Esta página mostra as formas mais comuns de usar esse recurso.
 
 ---
 
-## Faça scraping de uma página por conta própria
+## Extraia uma página por conta própria
 
 O caso de uso mais simples: você precisa do conteúdo de uma página da web que bloqueia requisições HTTP comuns.
 
@@ -37,7 +37,7 @@ const html = await fetch(
 console.log(html);
 ```
 
-Sem navegador para abrir, sem proxy para configurar, sem Cloudflare para enfrentar. Uma única chamada e você recebe a página.
+Não é preciso abrir um navegador nem configurar um proxy. Com uma única chamada, você recebe a página.
 
 **Ideal para:**
 
@@ -50,7 +50,7 @@ Sem navegador para abrir, sem proxy para configurar, sem Cloudflare para enfrent
 
 ## Envie conteúdo para uma IA
 
-O Web Unlocker retorna HTML bruto. Passe esse HTML para um LLM para extrair dados estruturados, resumir conteúdo ou responder perguntas sobre a página, sem precisar escrever lógica de parsing.
+O Web Unlocker retorna HTML bruto. Passe esse HTML para um LLM para extrair dados estruturados, resumir conteúdo ou responder perguntas sobre a página, sem precisar de lógica de parsing.
 
 <Tip>
 Para enviar menos marcação ao modelo, adicione `format=markdown` à requisição e receba a página em Markdown em vez de HTML.
@@ -178,7 +178,7 @@ while True:
     messages.append({"role": "user", "content": tool_results})
 ```
 
-O agente decide quando fazer scraping e qual URL buscar. O Web Unlocker cuida da recuperação em si.
+O agente decide quando fazer o scraping e qual URL buscar. O Web Unlocker cuida da obtenção em si.
 
 **Ideal para:**
 
@@ -189,9 +189,9 @@ O agente decide quando fazer scraping e qual URL buscar. O Web Unlocker cuida da
 
 ---
 
-## Faça scraping de várias páginas ao mesmo tempo
+## Extraia várias páginas de uma vez
 
-Execute requisições de forma concorrente para coletar dados de várias URLs em paralelo.
+Execute requisições simultâneas para coletar dados de várias URLs em paralelo.
 
 ```python
 import requests
@@ -223,15 +223,15 @@ for url, html in results:
 
 **Ideal para:**
 
-- Fazer scraping de catálogos de produtos ou páginas de listagem inteiras
-- Coleta de dados em massa para conjuntos de dados de treinamento
+- Extrair catálogos de produtos inteiros ou páginas de listagem
+- Coletar dados em massa para conjuntos de dados de treinamento
 - Monitorar muitas páginas simultaneamente
 
 ---
 
 ## Use pela CLI
 
-Dispense a escrita de código: use a CLI Gologin Web Access para os fluxos de scraping mais comuns:
+Dispense a escrita de código: use a Gologin Web Access CLI para os fluxos de scraping mais comuns:
 
 ```bash
 npm install -g gologin-web-access
@@ -265,10 +265,10 @@ Consulte a [Web Access CLI](/pt/cli-tools/web-access) para ver a referência com
 
 | Caso de uso | O que você faz | O que você recebe |
 | --- | --- | --- |
-| Scraping de uma única página | GET com o parâmetro de URL | HTML renderizado |
-| Envio para um LLM | Scraping → passar para o modelo | Dados extraídos ou resumo |
-| Ferramenta para agente de IA | O agente faz a chamada sob demanda | Conteúdo da web em tempo real |
-| Scraping em massa | Requisições concorrentes | HTML de cada URL |
-| Fluxos de trabalho na CLI | Comandos `gologin-web-access` | Texto, markdown, JSON e resultados em lote |
+| Extrair uma única página | GET com o parâmetro de URL | HTML renderizado |
+| Enviar para um LLM | Extrair → passar ao modelo | Dados extraídos ou resumo |
+| Ferramenta de agente de IA | O agente faz a chamada sob demanda | Conteúdo da web em tempo real |
+| Scraping em massa | Requisições simultâneas | HTML de cada URL |
+| Fluxos de trabalho via CLI | Comandos `gologin-web-access` | Texto, Markdown, JSON e resultados em lote |
 
 Consulte o [Início rápido](/pt/web-unlocker-quick-start) para fazer sua primeira requisição.

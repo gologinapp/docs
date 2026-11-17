@@ -2,7 +2,7 @@
 title: "Cibles de web scraping"
 ---
 
-Gologin fonctionne comme un navigateur de scraping : au lieu d'un navigateur headless avec une empreinte générique, votre scraper s'exécute dans des profils isolés qui ressemblent à de vrais utilisateurs. Cela réduit considérablement les taux de détection sur les sites qui analysent l'empreinte des navigateurs et ne se contentent pas de bloquer les adresses IP.
+Gologin fonctionne comme un navigateur de scraping : au lieu d'un navigateur headless avec une empreinte générique, votre scraper s'exécute via des profils isolés qui ressemblent à de vrais utilisateurs. Cela réduit considérablement les taux de détection sur les sites qui analysent l'empreinte des navigateurs, et pas seulement l'adresse IP.
 
 ## Liste de contrôle rapide
 
@@ -10,41 +10,41 @@ Gologin fonctionne comme un navigateur de scraping : au lieu d'un navigateur hea
 - Choisissez le type de proxy en fonction du niveau de protection du site cible
 - Réutilisez les profils d'une session à l'autre pour conserver les cookies et l'état de la session
 - Contrôlez la vitesse des requêtes : les scrapers sont bloqués à cause de leur comportement, pas seulement de leur IP
-- Pour de gros volumes (50\+ sessions simultanées) : utilisez l'API Gologin, pas l'application de bureau
+- Pour de gros volumes (50\+ sessions simultanées) : utilisez l'API Gologin, et non l'application de bureau
 
 ## Choisir votre configuration
 
 ### Scraping manuel (application de bureau Gologin)
 
-Idéal pour : la collecte de données à petite échelle, les sites qui nécessitent une connexion, les workflows assistés manuellement. Ouvrez les profils depuis l'application Gologin et effectuez le scraping directement dans la fenêtre du navigateur.
+Idéal pour : la collecte de données à petite échelle, les sites qui nécessitent une connexion, les workflows semi-manuels. Ouvrez les profils depuis l'application Gologin et effectuez le scraping directement dans la fenêtre du navigateur.
 
 ### Scraping via l'API (Puppeteer / Playwright / Selenium)
 
-Idéal pour : les workflows automatisés, 10\+ sessions simultanées, le scraping planifié. Gologin lance le profil et renvoie un point de terminaison WebSocket auquel votre script d'automatisation se connecte.
+Idéal pour : les workflows automatisés, plus de 10 sessions simultanées, le scraping planifié. Gologin lance le profil et renvoie un point de terminaison WebSocket auquel votre script d'automatisation se connecte.
 
 Consultez le [Guide de démarrage rapide ](https://gologin.com/docs/api-reference/introduction/quickstart)de l'API pour la configuration complète.
 
-## Étape 1. Choisir la stratégie de proxy
+## Étape 1. Choisir sa stratégie de proxy
 
 | **Cible** | **Proxy recommandé** | **Remarques** |
 | :-- | :-- | :-- |
 | Sites peu protégés | Datacenter rotatif | Rapide et économique |
 | Sites moyennement protégés | Résidentiel rotatif | Meilleur score de confiance |
-| Sites très protégés (Cloudflare, PerimeterX) | Résidentiel rotatif | Indispensable |
-| Sites nécessitant une connexion / un état de compte | Résidentiel statique | Garde la session cohérente |
-| Comparateurs de prix, places de marché | Résidentiel rotatif | Une IP différente à chaque requête |
+| Sites très protégés | Résidentiel rotatif | Indispensable |
+| Sites nécessitant une connexion / un état de compte | Résidentiel statique | Maintient une session cohérente |
+| Comparaison de prix, places de marché | Résidentiel rotatif | Une IP différente par requête |
 
 ## Étape 2. Gérer les sessions et les cookies
 
-Les profils Gologin conservent automatiquement les cookies d'une session à l'autre : vous vous connectez une fois, et le profil reste authentifié. Évitez de supprimer les cookies après chaque exécution : cela rompt la continuité de la session et ressemble au comportement d'un bot.
+Les profils Gologin conservent automatiquement les cookies d'une session à l'autre : vous vous connectez une seule fois et le profil reste authentifié. Évitez de supprimer les cookies après chaque exécution : cela interrompt la continuité de la session et ressemble à un comportement de bot.
 
-## Étape 3. Contrôler les schémas de requêtes
+## Étape 3. Contrôler le rythme des requêtes
 
-La détection repose surtout sur le comportement, pas seulement sur l'IP. Voici quelques repères pratiques pour les délais :
+La détection repose surtout sur le comportement, pas seulement sur l'IP. Voici des repères pratiques pour le rythme :
 
 | **Intensité du scraping** | **Délai entre les requêtes** |
 | :-- | :-- |
-| Faible (pour éviter la détection) | 3–8 secondes, aléatoire |
+| Légère (pour éviter la détection) | 3–8 secondes, aléatoire |
 | Moyenne | 1–3 secondes, aléatoire |
 | Agressive (risque élevé de blocage) | 0,5–1 seconde |
 
@@ -52,33 +52,22 @@ Randomisez toujours les délais : un intervalle fixe est un signal de détection
 
 ## Étape 4. Passer à l'échelle avec plusieurs profils
 
-Pour un scraping en parallèle, lancez plusieurs profils simultanément via l'API. Consultez les limites de débit avant de lancer de nombreux profils : les limites de l'API s'appliquent.
+Pour un scraping en parallèle, lancez plusieurs profils simultanément via l'API. Vérifiez les limites de débit (Rate Limits) avant de lancer de nombreux profils : les limites de l'API s'appliquent.
 
-### **Limites pratiques selon le forfait**
+### **Limites pratiques selon l'offre**
 
-- Professional : jusqu'à ~10 profils simultanés sans difficulté
-- Business : jusqu'à ~30 profils simultanés
+- Professional : jusqu'à environ 10 profils simultanés sans difficulté
+- Business : jusqu'à environ 30 profils simultanés
 - Enterprise : 100\+ profils simultanés
 
-Le matériel est aussi une contrainte : chaque profil est une instance de navigateur. 10 profils simultanés nécessitent environ 8–16 Go de RAM.
-
-## Cloudflare et systèmes anti-bot
-
-Gologin gère les défis liés à l'empreinte du navigateur (Canvas, WebGL, empreinte TLS). Il ne résout pas automatiquement les CAPTCHA. Si un site cible utilise Cloudflare avec un CAPTCHA, intégrez un service de résolution de CAPTCHA (2captcha, CapSolver, Anti-Captcha) dans votre script de scraping.
-
-## Signaux de détection courants
-
-- Délais identiques entre les requêtes
-- Aucun événement de défilement ou de souris avant un clic
-- Navigation directe vers des URL profondes sans référent
-- Empreinte Canvas ou WebGL qui ne correspond pas au système d'exploitation ou au navigateur annoncé
+Le matériel est aussi un facteur limitant : chaque profil est une instance de navigateur. 10 profils simultanés nécessitent environ 8–16 Go de RAM.
 
 ## Voir aussi
 
 - [Démarrage rapide de l'API](https://gologin.com/docs/api-reference/introduction/quickstart)
 - [Mode headless](https://gologin.com/docs/api-reference/introduction/headless)
 - [Limites de débit](https://gologin.com/docs/api-reference/limitations/rate-limits)
-- [Le meilleur proxy selon votre cas](https://gologin.com/docs/proxy/introduction/best-proxy-for-your-case)
+- [Le meilleur proxy pour votre cas](https://gologin.com/docs/proxy/introduction/best-proxy-for-your-case)
 - [Proxys statiques vs rotatifs](https://gologin.com/docs/static-vs-dynamic-proxies)
 
 \

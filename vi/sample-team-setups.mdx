@@ -2,26 +2,26 @@
 title: "Mô hình thiết lập nhóm mẫu"
 ---
 
-Các mô hình thiết lập nhóm mẫu minh họa cách tổ chức workspace, vai trò và hồ sơ trình duyệt cho nhiều quy trình làm việc khác nhau.
+Các mô hình thiết lập nhóm mẫu minh họa cách tổ chức không gian làm việc, vai trò và hồ sơ trình duyệt cho nhiều quy trình làm việc khác nhau.
 
 Chúng giúp bạn xây dựng cấu trúc cộng tác nhóm, giảm rủi ro vận hành và đảm bảo môi trường nhất quán giữa nhiều người dùng.
 
-Bạn có thể điều chỉnh từng mô hình tùy theo quy mô nhóm, quy trình làm việc và yêu cầu của nền tảng.
+Mỗi mô hình đều có thể được điều chỉnh tùy theo quy mô nhóm, quy trình làm việc và yêu cầu của nền tảng.
 
-## Cách hoạt động của việc thiết lập nhóm
+## Cách hoạt động của các mô hình thiết lập nhóm
 
 Trong Gologin, nhóm được tổ chức thông qua:
 
-- workspace để tách biệt các dự án
+- không gian làm việc để tách biệt các dự án
 - vai trò và quyền hạn để kiểm soát truy cập
-- hồ sơ và thư mục được chia sẻ
+- hồ sơ và thư mục dùng chung
 - phân bổ proxy theo từng hồ sơ hoặc từng nhóm
 
 Một mô hình thiết lập có cấu trúc tốt giúp tránh:
 
 - xung đột tài khoản
 - môi trường không nhất quán
-- việc sử dụng hồ sơ sai mục đích do vô ý
+- sử dụng nhầm hồ sơ
 
 ## Mô hình cho người dùng cá nhân
 
@@ -29,11 +29,11 @@ Dành cho cá nhân quản lý nhiều tài khoản.
 
 **Cấu trúc:**
 
-- Một workspace duy nhất
+- Một không gian làm việc duy nhất
 - Tất cả hồ sơ do một người dùng quản lý
-- Mỗi hồ sơ có một proxy riêng
+- Mỗi hồ sơ dùng một proxy riêng
 
-**Phù hợp nhất cho:**
+**Phù hợp nhất với:**
 
 - freelancer
 - media buyer làm việc độc lập
@@ -42,30 +42,30 @@ Dành cho cá nhân quản lý nhiều tài khoản.
 **Thực hành chính:**
 
 - sắp xếp hồ sơ gọn gàng bằng thẻ hoặc thư mục
-- sử dụng proxy nhất quán
-- không trộn lẫn các quy trình làm việc khác nhau trong cùng một hồ sơ
+- duy trì việc sử dụng proxy nhất quán
+- tránh trộn lẫn các quy trình làm việc khác nhau trong một hồ sơ
 
 ## Mô hình cho nhóm nhỏ (2–5 người)
 
-Dành cho các nhóm nhỏ làm việc trên các dự án chung.
+Dành cho các nhóm nhỏ cùng làm việc trên các dự án chung.
 
 **Cấu trúc:**
 
-- Một hoặc nhiều workspace (theo từng khách hàng hoặc dự án)
-- Quyền truy cập chung vào một số hồ sơ được chọn
+- Một hoặc nhiều không gian làm việc (theo từng khách hàng hoặc dự án)
+- Quyền truy cập chung vào các hồ sơ được chọn
 - Phân quyền theo vai trò (quản trị viên / người dùng)
 
-**Phù hợp nhất cho:**
+**Phù hợp nhất với:**
 
-- agency quy mô nhỏ
+- agency nhỏ
 - nhóm affiliate
-- nhóm marketing của công ty khởi nghiệp
+- nhóm marketing của startup
 
 **Thực hành chính:**
 
-- tách workspace theo khách hàng hoặc lĩnh vực
+- tách không gian làm việc theo khách hàng hoặc lĩnh vực
 - phân công rõ người phụ trách từng hồ sơ
-- không để nhiều người dùng làm việc trong cùng một hồ sơ cùng lúc
+- tránh để nhiều người dùng làm việc trong cùng một hồ sơ cùng lúc
 
 ## Mô hình cho agency (5–20\+ người)
 
@@ -73,22 +73,21 @@ Dành cho các nhóm quản lý nhiều khách hàng hoặc số lượng lớn 
 
 **Cấu trúc:**
 
-- Mỗi khách hàng có một workspace riêng
+- Mỗi khách hàng một không gian làm việc riêng
 - Các nhóm hồ sơ được sắp xếp theo chiến dịch hoặc nền tảng
-- Phân cấp vai trò (quản trị viên / quản lý / nhân viên vận hành)
+- Phân cấp vai trò (quản trị viên / quản lý / người vận hành)
 
-**Phù hợp nhất cho:**
+**Phù hợp nhất với:**
 
 - agency performance marketing
-- nhóm nuôi tài khoản
 - hoạt động phục vụ nhiều khách hàng
 
 **Thực hành chính:**
 
 - tách biệt hoàn toàn môi trường của từng khách hàng
-- đặt quy tắc đặt tên cho hồ sơ và thư mục
+- dùng quy tắc đặt tên cho hồ sơ và thư mục
 - kiểm soát quyền truy cập vào các hồ sơ nhạy cảm
-- phân bổ proxy theo khách hàng hoặc dự án
+- phân bổ proxy theo từng khách hàng hoặc dự án
 
 ## Mô hình cho nhóm quảng cáo
 
@@ -96,20 +95,20 @@ Dành cho các nhóm tập trung vào nền tảng quảng cáo (Facebook, TikTo
 
 **Cấu trúc:**
 
-- Mỗi tài khoản quảng cáo hoặc khách hàng có một workspace riêng
+- Mỗi tài khoản quảng cáo hoặc khách hàng một không gian làm việc
 - Hồ sơ được gắn với từng tài khoản quảng cáo cụ thể
-- Chia sẻ quyền truy cập cho các media buyer
+- Quyền truy cập chung cho các media buyer
 
-**Phù hợp nhất cho:**
+**Phù hợp nhất với:**
 
 - nhóm media buying
-- chuyên viên chạy traffic trả phí
+- chuyên viên traffic trả phí
 
 **Thực hành chính:**
 
-- mỗi tài khoản quảng cáo dùng một hồ sơ
+- mỗi tài khoản quảng cáo một hồ sơ
 - mỗi tài khoản dùng một proxy cố định
-- không chuyển đổi môi trường giữa các chiến dịch
+- tránh chuyển đổi môi trường giữa các chiến dịch
 
 ## Mô hình mở rộng quy mô
 
@@ -117,19 +116,19 @@ Dành cho các hoạt động khối lượng lớn với nhiều tài khoản.
 
 **Cấu trúc:**
 
-- Nhiều workspace
+- Nhiều không gian làm việc
 - Hồ sơ được phân bổ cho các thành viên trong nhóm
 - Các nhóm proxy (proxy pool) được phân bổ theo từng nhóm
 
-**Phù hợp nhất cho:**
+**Phù hợp nhất với:**
 
-- các nhóm affiliate lớn
+- nhóm affiliate lớn
 - quy trình scraping hoặc tự động hóa
 - quản lý tài khoản quy mô lớn
 
 **Thực hành chính:**
 
-- phân bổ khối lượng công việc giữa các hồ sơ
+- phân chia khối lượng công việc giữa các hồ sơ
 - theo dõi việc sử dụng proxy
 - duy trì sự nhất quán nghiêm ngặt của môi trường
 
@@ -137,10 +136,10 @@ Dành cho các hoạt động khối lượng lớn với nhiều tài khoản.
 
 Hãy tránh những vấn đề phổ biến sau:
 
-- nhiều người dùng làm việc trong cùng một hồ sơ cùng lúc
+- nhiều người dùng làm việc trong cùng một hồ sơ cùng một lúc
 - dùng chung proxy cho các tài khoản không liên quan
-- trộn lẫn nhiều khách hàng trong một workspace
-- thiếu cấu trúc trong cách đặt tên và tổ chức hồ sơ
+- trộn lẫn nhiều khách hàng trong một không gian làm việc
+- thiếu cấu trúc trong việc đặt tên và tổ chức hồ sơ
 
 ## Điểm chính cần nhớ
 
@@ -148,6 +147,6 @@ Một cấu trúc nhóm rõ ràng giúp duy trì môi trường ổn định và
 
 Để làm việc hiệu quả:
 
-- tổ chức workspace theo dự án hoặc khách hàng
+- tổ chức không gian làm việc theo dự án hoặc khách hàng
 - phân công vai trò và trách nhiệm
-- giữ các hồ sơ tách biệt và các proxy tách biệt
+- giữ hồ sơ và proxy tách biệt

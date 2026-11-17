@@ -3,17 +3,17 @@ title: "Używanie Web Unlocker z agentami AI"
 description: "Jak używać Gologin Web Unlocker jako narzędzia do scrapingu dla agentów AI i potoków LLM"
 ---
 
-Gologin Web Unlocker to API do scrapingu, które zwraca w pełni wyrenderowany kod HTML dla dowolnego adresu URL. Dla agentów AI oznacza to niezawodny dostęp do internetu bez konieczności orkiestracji przeglądarki — jedno wywołanie HTTP na stronę.
+Gologin Web Unlocker to API do scrapingu, które zwraca w pełni wyrenderowany kod HTML dla dowolnego adresu URL. Dla agentów AI oznacza to niezawodny dostęp do sieci bez orkiestracji przeglądarki — jedno wywołanie HTTP na stronę.
 
 <Tip>
-  **Nie chcesz pisać kodu?** Skorzystaj z [Web Access CLI](/pl/cli-tools/web-access) lub [Scraping Skill](/pl/api-reference/ai-integrations/ai-skills), aby od razu dać swojemu agentowi możliwości scrapingu.
+  **Nie chcesz pisać kodu?** Skorzystaj z [Web Access CLI](/pl/cli-tools/web-access) lub [Scraping Skill](/pl/api-reference/ai-integrations/ai-skills), aby Twój agent od razu zyskał możliwości scrapingu.
 </Tip>
 
 ---
 
-## Przekazywanie treści stron do modelu LLM
+## Przekazywanie treści strony do LLM
 
-Pobierz stronę i przekaż jej kod HTML do modelu w celu wyodrębnienia danych, streszczenia lub analizy — bez potrzeby pisania logiki parsowania.
+Pobierz stronę i przekaż jej kod HTML do modelu w celu ekstrakcji danych, streszczenia lub analizy — bez potrzeby pisania logiki parsowania.
 
 ### Python + Claude
 
@@ -72,7 +72,7 @@ console.log(message.content.find((block) => block.type === "text")?.text);
 
 ---
 
-## Udostępnienie agentowi narzędzia do scrapingu
+## Dodanie do agenta narzędzia scrape
 
 Zdefiniuj narzędzie `scrape` oparte na Web Unlocker. Agent sam decyduje, kiedy pobrać stronę i jaki adres URL zescrapować.
 
@@ -133,7 +133,7 @@ while True:
     messages.append({"role": "user", "content": tool_results})
 ```
 
-Agent sam decyduje, kiedy wykonać scraping i jaki adres URL pobrać. Web Unlocker zajmuje się resztą — renderowaniem JavaScript, omijaniem zabezpieczeń anty-botowych, rotacją proxy i rozwiązywaniem CAPTCHA.
+Agent sam decyduje, kiedy wykonać scraping i jaki adres URL pobrać. Web Unlocker zajmuje się pobieraniem treści — renderowaniem JavaScript i rotacją proxy.
 
 ---
 
@@ -168,7 +168,7 @@ Wszystkie metody znajdziesz w [dokumentacji Web Unlocker SDK](/pl/scraping-api-s
 
 ## Korzystanie z CLI
 
-Dla agentów wywołujących polecenia powłoki (takich jak Claude Code) CLI to najprostsza droga:
+Dla agentów, które wywołują polecenia powłoki (takich jak Claude Code), CLI to najprostsza droga:
 
 ```bash
 # plain text — good for LLM context
@@ -191,14 +191,14 @@ Wszystkie polecenia znajdziesz w [dokumentacji Web Access CLI](/pl/cli-tools/web
 
 ---
 
-## Typowe scenariusze użycia agentów
+## Typowe wzorce użycia agentów
 
-| Scenariusz | Jak to zrobić |
+| Wzorzec | Jak to działa |
 |---|---|
 | Agent badawczy | Agent wywołuje narzędzie `scrape` → czyta strony → syntetyzuje wnioski |
-| Monitorowanie cen | `batch-scrape` stron produktów według harmonogramu → porównanie z poprzednim uruchomieniem |
-| Analiza konkurencji | `crawl` stron konkurencji → przekazanie do LLM w celu analizy |
-| Wzbogacanie danych o leadach | `scrape-json` stron firm → wyodrębnienie danych strukturalnych |
+| Monitorowanie cen | `batch-scrape` stron produktów według harmonogramu → porównanie z poprzednim przebiegiem |
+| Wywiad konkurencyjny | `crawl` stron konkurencji → przekazanie do LLM w celu analizy |
+| Wzbogacanie danych o leadach | `scrape-json` stron firmowych → ekstrakcja danych ustrukturyzowanych |
 | Agregacja treści | `search` + `scrape-text` → tworzenie wyselekcjonowanych kanałów treści |
 
 ---

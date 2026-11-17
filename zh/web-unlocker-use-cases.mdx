@@ -2,13 +2,13 @@
 title: "Web Unlocker 使用场景"
 ---
 
-Web Unlocker 是一个 Scraping API——你只需发送一个 URL，它就会返回完整渲染后的 HTML。本页介绍几种最常见的使用方式。
+Web Unlocker 是一个 Scraping API:你发送一个 URL,它会返回完整渲染后的 HTML。本页介绍几种最常见的使用方式。
 
 ---
 
 ## 自行抓取页面
 
-最简单的使用场景：你需要获取某个会拦截普通 HTTP 请求的网页内容。
+最简单的使用场景:你需要获取某个会拦截普通 HTTP 请求的网页内容。
 
 ### Python
 
@@ -37,23 +37,23 @@ const html = await fetch(
 console.log(html);
 ```
 
-无需启动浏览器，无需配置代理，也不必与 Cloudflare 周旋。一次调用，即可获得页面。
+无需启动浏览器,也无需配置代理。一次调用,即可获得页面内容。
 
-**适用于：**
+**适用于:**
 
 - 查看竞争对手网站上的价格
-- 获取招聘信息、评论或商品数据
+- 获取职位列表、评论或商品数据
 - 监控页面变化
-- 一次性的数据采集脚本
+- 一次性数据采集脚本
 
 ---
 
 ## 将内容输入 AI
 
-Web Unlocker 返回的是原始 HTML。你可以把它交给大语言模型（LLM），用来提取结构化数据、总结内容或回答与页面相关的问题，无需编写任何解析逻辑。
+Web Unlocker 返回的是原始 HTML。你可以把它传给大语言模型(LLM),用来提取结构化数据、总结内容或回答与页面相关的问题,无需编写任何解析逻辑。
 
 <Tip>
-如果想减少发送给模型的标记内容，可以在请求中添加 `format=markdown`，让页面以 Markdown 而不是 HTML 的形式返回。
+如果希望减少发送给模型的标记内容,可以在请求中添加 `format=markdown`,这样返回的是 Markdown 而不是 HTML。
 </Tip>
 
 ### Python \+ OpenAI
@@ -108,18 +108,18 @@ const message = await client.messages.create({
 console.log(message.content[0].text);
 ```
 
-**适用于：**
+**适用于:**
 
-- 无需编写解析器即可提取结构化数据（价格、名称、日期等）
+- 无需编写解析器即可提取结构化数据(价格、名称、日期等)
 - 总结文章或商品页面
 - 对比多个页面并得出结论
-- 构建由 AI 驱动的研究或监控工具
+- 构建由 AI 驱动的调研或监控工具
 
 ---
 
 ## 在 AI 智能体中使用
 
-为你的 AI 智能体提供一个由 Web Unlocker 支持的 `scrape` 工具。这样，智能体就可以自行浏览网页——获取页面、阅读内容并采取行动——而你无需编写任何浏览逻辑。
+为你的 AI 智能体提供一个由 Web Unlocker 支持的 `scrape` 工具。这样智能体就可以自主浏览网页:获取页面、阅读内容并采取行动,而你无需编写任何浏览逻辑。
 
 ```python
 import requests
@@ -178,20 +178,20 @@ while True:
     messages.append({"role": "user", "content": tool_results})
 ```
 
-智能体自行决定何时抓取以及抓取哪个 URL，而实际的获取工作由 Web Unlocker 完成。
+智能体自行决定何时抓取以及抓取哪个 URL,实际的获取工作由 Web Unlocker 完成。
 
-**适用于：**
+**适用于:**
 
-- 能自主浏览网页的研究型智能体
+- 自主浏览网页的调研型智能体
 - 比价或寻找优惠的机器人
-- 竞争情报流程
-- 任何需要实时网络数据的智能体
+- 竞争情报流水线
+- 任何需要实时网页数据的智能体
 
 ---
 
-## 同时抓取多个页面
+## 一次抓取多个页面
 
-并发发送请求，同时从多个 URL 采集数据。
+并发发送请求,同时从多个 URL 采集数据。
 
 ```python
 import requests
@@ -221,17 +221,17 @@ for url, html in results:
     print(f"{url}: {len(html)} chars")
 ```
 
-**适用于：**
+**适用于:**
 
 - 抓取完整的商品目录或列表页面
 - 为训练数据集批量采集数据
-- 同时监控大量页面
+- 同时监控多个页面
 
 ---
 
 ## 通过 CLI 使用
 
-完全无需编写代码——使用 Gologin Web Access CLI 即可完成常见的抓取工作流：
+完全无需编写代码,使用 Gologin Web Access CLI 即可完成常见的抓取工作流:
 
 ```bash
 npm install -g gologin-web-access
@@ -263,7 +263,7 @@ gologin-web-access search "best antidetect browser 2026" --limit 10
 
 ## 总结
 
-| 使用场景 | 操作方式 | 获得结果 |
+| 使用场景 | 你需要做什么 | 你会得到什么 |
 | --- | --- | --- |
 | 抓取单个页面 | 使用 URL 参数发送 GET 请求 | 渲染后的 HTML |
 | 输入 LLM | 抓取 → 传给模型 | 提取的数据或摘要 |
@@ -271,4 +271,4 @@ gologin-web-access search "best antidetect browser 2026" --limit 10
 | 批量抓取 | 并发请求 | 每个 URL 对应的 HTML |
 | CLI 工作流 | `gologin-web-access` 命令 | 文本、Markdown、JSON、批量结果 |
 
-请参阅[快速入门](/zh/web-unlocker-quick-start)，发送你的第一个请求。
+请参阅[快速入门](/zh/web-unlocker-quick-start)发送你的第一个请求。

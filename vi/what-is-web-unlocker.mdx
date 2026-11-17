@@ -2,43 +2,41 @@
 title: "Web Unlocker là gì?"
 ---
 
-Web Unlocker là một API scraping đa năng. Bạn chỉ cần gửi một URL bất kỳ và nhận lại HTML đã được hiển thị đầy đủ, hoặc trang dưới dạng Markdown hoặc JSON — không cần quản lý hạ tầng, không bị chặn, không có yêu cầu thất bại.
+Web Unlocker là một API thu thập dữ liệu đa năng. Bạn chỉ cần gửi một URL bất kỳ và nhận lại HTML đã được hiển thị đầy đủ, hoặc trang dưới dạng Markdown hay JSON, mà không phải quản lý trình duyệt hay proxy.
 
-Web Unlocker thay thế hoàn toàn bộ công cụ scraping của bạn: tự động hóa trình duyệt, quản lý proxy, tạo fingerprint, giải CAPTCHA — tất cả được xử lý chỉ trong một lệnh gọi API. Dù bạn scrape một trang tĩnh đơn giản hay một trang web dùng JavaScript và được bảo vệ chặt chẽ, cùng một endpoint vẫn xử lý được.
-
----
-
-## Web Unlocker giải quyết vấn đề gì
-
-Các website hiện đại rất khó scrape. Một lệnh gọi `curl` hoặc `requests` thông thường thường chỉ trả về trang xác minh, phản hồi trống hoặc HTML bị lỗi vì nội dung được tải bằng JavaScript. Web Unlocker tự động xử lý tất cả những vấn đề này:
-
-- **Hiển thị JavaScript** — trang được tải trong một trình duyệt thật và thực thi đầy đủ trước khi nội dung được thu thập
-- **Vượt cơ chế chống bot** — Cloudflare, DataDome, PerimeterX và các cơ chế bảo vệ tương tự được xử lý tự động
-- **Xoay IP thông minh** — yêu cầu được định tuyến qua các IP dân cư sạch với browser fingerprint giống thật
-- **Giải CAPTCHA** — các thử thách CAPTCHA phổ biến được giải quyết mà không cần can thiệp thủ công
-- **Chọn proxy theo mức giá** — định tuyến yêu cầu qua nhóm proxy phù hợp với website mục tiêu
+Web Unlocker thay thế phần trình duyệt và proxy trong hệ thống thu thập dữ liệu của bạn: việc hiển thị trang, quản lý proxy và vân tay trình duyệt đều được xử lý trong một lệnh gọi API duy nhất. Trang tĩnh và các trang web dùng nhiều JavaScript đều đi qua cùng một endpoint.
 
 ---
 
-## Dữ liệu bạn nhận được
+## Giải quyết vấn đề gì
 
-Một yêu cầu thành công sẽ trả về trang ở một định dạng. Bạn chọn định dạng bằng tham số truy vấn `format`:
+Các trang web hiện đại rất khó thu thập dữ liệu. Một lệnh gọi `curl` hoặc `requests` thông thường thường trả về phản hồi trống hoặc HTML bị lỗi vì nội dung được tải bằng JavaScript. Web Unlocker xử lý các việc sau:
+
+- **Hiển thị JavaScript** — trang được tải trong một trình duyệt thật và thực thi đầy đủ trước khi nội dung được ghi lại
+- **Xoay IP thông minh** — yêu cầu được chuyển qua các IP dân cư với vân tay trình duyệt chân thực
+- **Chọn theo mức giá** — chuyển yêu cầu qua nhóm proxy phù hợp với trang web đích
+
+---
+
+## Bạn nhận lại gì
+
+Một yêu cầu thành công trả về trang ở một định dạng. Bạn chọn định dạng bằng tham số truy vấn `format`:
 
 | `format` | Bạn nhận được |
 | --- | --- |
-| `html` (mặc định) | Toàn bộ DOM đã hiển thị của trang |
+| `html` (mặc định) | Toàn bộ DOM đã được hiển thị của trang |
 | `markdown` | Nội dung trang dưới dạng Markdown |
-| `json` | Một đối tượng JSON chứa URL của trang, metadata của yêu cầu và HTML |
+| `json` | Một đối tượng JSON chứa URL của trang, siêu dữ liệu yêu cầu và HTML |
 
 ---
 
 ## Giá
 
-Web Unlocker áp dụng **thanh toán theo yêu cầu thành công** — bạn chỉ bị tính phí khi yêu cầu thành công. Các lần thử thất bại hoàn toàn miễn phí.
+Web Unlocker áp dụng **tính phí theo kết quả thành công** — bạn chỉ bị tính phí khi yêu cầu thành công. Các lần thử thất bại là miễn phí.
 
-Giá giảm theo khối lượng sử dụng:
+Giá giảm dần theo khối lượng:
 
-| Gói | Giá cho mỗi 1.000 yêu cầu | Giá hàng tháng | Số yêu cầu đã bao gồm | Phí vượt mức cho mỗi 1.000 |
+| Gói | Giá mỗi 1.000 yêu cầu | Giá hằng tháng | Số yêu cầu đi kèm | Phí vượt mức mỗi 1.000 |
 | --- | --- | --- | --- | --- |
 | Growth | \$0.98 | \$49/tháng | 50,000 | \$1.20 |
 | Professional | \$0.75 | \$149/tháng | 200,000 | \$1.00 |
@@ -56,20 +54,18 @@ Tự vận hành hạ tầng proxy vừa tốn kém vừa dễ lỗi. Web Unlock
 |  | Web Unlocker | Proxy tự quản lý |
 | --- | --- | --- |
 | Thiết lập | Một lệnh gọi API | Nhiều tuần xây dựng hạ tầng |
-| Giải CAPTCHA | Tích hợp sẵn | Tự xây dựng hoặc mua riêng |
-| Browser fingerprint | Tích hợp sẵn | Tự xây dựng hoặc mua riêng |
+| Vân tay trình duyệt | Có sẵn | Tự xây dựng hoặc mua riêng |
 | Xoay IP | Tự động | Quản lý nhóm IP thủ công |
 | Bảo trì | Không cần | Liên tục |
-| Thanh toán | Theo yêu cầu thành công | Chi phí cố định dù thành công hay không |
+| Thanh toán | Theo mỗi yêu cầu thành công | Chi phí cố định dù thành công hay không |
 
 ---
 
 ## Các trường hợp sử dụng phổ biến
 
-- **Theo dõi giá** — scrape các website thương mại điện tử chặn yêu cầu tự động
-- **Tạo khách hàng tiềm năng** — trích xuất dữ liệu liên hệ từ danh bạ và danh sách doanh nghiệp
+- **Theo dõi giá** — theo dõi giá trên các trang thương mại điện tử
 - **Nghiên cứu thị trường** — thu thập dữ liệu sản phẩm, đánh giá hoặc tin tuyển dụng ở quy mô lớn
-- **Tổng hợp nội dung** — xây dựng nguồn tin tức hoặc dữ liệu từ các website không có API
+- **Tổng hợp nội dung** — xây dựng nguồn tin hoặc nguồn dữ liệu từ các trang không có API
 - **Pipeline AI** — đưa HTML đã hiển thị vào LLM để trích xuất hoặc tóm tắt
 
 ---
@@ -78,38 +74,37 @@ Tự vận hành hạ tầng proxy vừa tốn kém vừa dễ lỗi. Web Unlock
 
 Web Unlocker chạy một trình duyệt Chromium thật trên đám mây cho mỗi tác vụ. Khi bạn gửi một URL:
 
-1. Một trình duyệt được khởi chạy với IP dân cư và browser fingerprint giống thật
+1. Một trình duyệt được khởi chạy với IP dân cư và vân tay trình duyệt chân thực
 2. Trang được truy cập, JavaScript được thực thi và nội dung động được tải
-3. Các thử thách chống bot và CAPTCHA được xử lý tự động
-4. HTML đã hiển thị được trả về, hoặc Markdown hay JSON nếu bạn yêu cầu bằng `format`
+3. HTML đã hiển thị được trả về, hoặc Markdown hay JSON nếu bạn yêu cầu bằng `format`
 
-Bạn không cần quản lý hạ tầng. Không cần khởi chạy trình duyệt, không cần duy trì danh sách proxy và không cần xây dựng logic vượt chặn. Web Unlocker thay thế cả bộ công cụ scraping — framework tự động hóa trình duyệt, nhà cung cấp proxy, giải pháp chống bot — chỉ bằng một yêu cầu HTTP.
+Bạn không cần quản lý hạ tầng. Không cần khởi chạy trình duyệt, không cần duy trì danh sách proxy và không cần xây dựng logic hiển thị. Web Unlocker thay thế một framework tự động hóa trình duyệt và một nhà cung cấp proxy chỉ bằng một yêu cầu HTTP.
 
 ---
 
 ## Cách sử dụng
 
-Gửi một yêu cầu GET với URL mục tiêu làm tham số truy vấn. Phản hồi là HTML đã được hiển thị đầy đủ.
+Gửi một yêu cầu GET với URL đích làm tham số truy vấn. Phản hồi là HTML đã được hiển thị đầy đủ.
 
 ```bash
 curl "https://parsing.webunlocker.gologin.com/v1/scrape?url=https%3A%2F%2Fexample.com" \
   -H "apikey: YOUR_API_KEY"
 ```
 
-Để nhận Markdown hoặc JSON, hãy thêm `format=markdown` hoặc `format=json` vào truy vấn.
+Để nhận Markdown hoặc JSON thay thế, hãy thêm `format=markdown` hoặc `format=json` vào truy vấn.
 
-Xem [Hướng dẫn bắt đầu nhanh](/vi/web-unlocker-quick-start) để có ví dụ bằng Python và JavaScript cũng như [mã lỗi](/vi/web-unlocker-quick-start#x%E1%BB%AD-l%C3%BD-l%E1%BB%97i), hoặc [Các trường hợp sử dụng](/vi/web-unlocker-use-cases) để tìm hiểu các mẫu tích hợp phổ biến.
+Xem [Hướng dẫn nhanh](/vi/web-unlocker-quick-start) để có ví dụ bằng Python và JavaScript cũng như [mã lỗi](/vi/web-unlocker-quick-start#x%E1%BB%AD-l%C3%BD-l%E1%BB%97i), hoặc [Các trường hợp sử dụng](/vi/web-unlocker-use-cases) để biết các mẫu tích hợp phổ biến.
 
 ---
 
 ## CLI và SDK
 
-Ngoài HTTP API thuần, Gologin còn cung cấp các công cụ cấp cao hơn để làm việc với Web Unlocker:
+Ngoài API HTTP thuần, Gologin cung cấp các công cụ cấp cao hơn để làm việc với Web Unlocker:
 
-- [**Web Unlocker SDK và CLI**](/vi/scraping-api-sdk-and-cli) — SDK TypeScript tối giản (`gologin-webunlocker`) với các phương thức có kiểu dữ liệu và một CLI để scrape nhanh
-- [**Gologin Web Access CLI**](/vi/cli-tools/web-access) — CLI hợp nhất kết hợp Web Unlocker với Cloud Browser, bổ sung scrape hàng loạt, crawl, tìm kiếm, theo dõi thay đổi và trích xuất dữ liệu có cấu trúc
+- [**Web Unlocker SDK và CLI**](/vi/scraping-api-sdk-and-cli) — SDK TypeScript tối giản (`gologin-webunlocker`) với các phương thức có kiểu dữ liệu và một CLI để thu thập dữ liệu nhanh
+- [**Gologin Web Access CLI**](/vi/cli-tools/web-access) — CLI hợp nhất kết hợp Web Unlocker với Cloud Browser, bổ sung thu thập hàng loạt, crawl, tìm kiếm, theo dõi thay đổi và trích xuất dữ liệu có cấu trúc
 - [**AI Skills**](/vi/api-reference/ai-integrations/ai-skills) — các skill cắm là chạy dành cho agent Claude Code
 
 ## Nhận quyền truy cập
 
-Để nhận API key, hãy điền vào biểu mẫu trên [trang Web Unlocker](https://gologin.com/web-unlocker/#web_unlocker_form). Bạn sẽ nhận được key trong vòng một ngày làm việc, cùng với các yêu cầu miễn phí để thử nghiệm trên các mục tiêu của riêng bạn. Không cần thẻ.
+Để nhận khóa API, hãy điền vào biểu mẫu trên [trang Web Unlocker](https://gologin.com/web-unlocker/#web_unlocker_form). Bạn sẽ nhận được khóa trong vòng một ngày làm việc, kèm theo các yêu cầu miễn phí để thử nghiệm trên các mục tiêu của riêng bạn. Không cần thẻ.

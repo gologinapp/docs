@@ -2,20 +2,18 @@
 title: "What is web unlocker?"
 ---
 
-Web Unlocker is a universal scraping API. Send any URL, get back fully rendered HTML or the page as Markdown or JSON — no infrastructure to manage, no blocks, no failed requests.
+Web Unlocker is a universal scraping API. Send any URL, get back fully rendered HTML or the page as Markdown or JSON, with no browsers or proxies to manage.
 
-It works as a complete replacement for your scraping stack: browser automation, proxy management, fingerprinting, CAPTCHA solving — all handled in a single API call. Whether you're scraping a simple static page or a heavily protected JavaScript-rendered site, the same endpoint handles it.
+It replaces the browser and proxy part of your scraping stack: rendering, proxy management and browser fingerprints are handled in a single API call. Static pages and JavaScript-heavy sites go through the same endpoint.
 
 ---
 
 ## What it solves
 
-Modern websites are hard to scrape. A plain `curl` or `requests` call often returns a challenge page, a blank response, or broken HTML because the content is loaded by JavaScript. Web Unlocker handles all of this automatically:
+Modern websites are hard to scrape. A plain `curl` or `requests` call often returns a blank response or broken HTML because the content is loaded by JavaScript. Web Unlocker takes care of:
 
 - **JavaScript rendering** — pages are loaded in a real browser and fully executed before content is captured
-- **Anti-bot bypass** — Cloudflare, DataDome, PerimeterX and similar protections are handled automatically
-- **Smart IP rotation** — requests are routed through clean residential IPs with realistic browser fingerprints
-- **CAPTCHA solving** — common CAPTCHA challenges are resolved without manual intervention
+- **Smart IP rotation** — requests are routed through residential IPs with realistic browser fingerprints
 - **Price tier targeting** — routes requests through the appropriate proxy tier for the target site
 
 ---
@@ -56,7 +54,6 @@ Running your own proxy infrastructure is expensive and fragile. Web Unlocker han
 |  | Web Unlocker | Self-managed proxies |
 | --- | --- | --- |
 | Setup | One API call | Weeks of infrastructure work |
-| CAPTCHA solving | Built-in | Build or buy separately |
 | Browser fingerprinting | Built-in | Build or buy separately |
 | IP rotation | Automatic | Manual pool management |
 | Maintenance | None | Ongoing |
@@ -66,8 +63,7 @@ Running your own proxy infrastructure is expensive and fragile. Web Unlocker han
 
 ## Common use cases
 
-- **Price monitoring** — scrape e-commerce sites that block automated requests
-- **Lead generation** — extract contact data from directories and business listings
+- **Price monitoring** — track prices on e-commerce sites
 - **Market research** — collect product data, reviews, or job listings at scale
 - **Content aggregation** — build news or data feeds from sites without an API
 - **AI pipelines** — feed rendered HTML into LLMs for extraction or summarization
@@ -80,10 +76,9 @@ Web Unlocker runs a real Chromium browser in the cloud for each task. When you s
 
 1. A browser is launched with a residential IP and realistic browser fingerprint
 2. The page is navigated, JavaScript is executed, and dynamic content is loaded
-3. Anti-bot challenges and CAPTCHAs are handled automatically
-4. The rendered HTML is returned, or Markdown or JSON if you ask for it with `format`
+3. The rendered HTML is returned, or Markdown or JSON if you ask for it with `format`
 
-You never manage infrastructure. There are no browsers to spin up, no proxy lists to maintain, and no bypass logic to build. Web Unlocker effectively replaces an entire scraping stack — browser automation framework, proxy provider, anti-bot solution — with a single HTTP request.
+You never manage infrastructure. There are no browsers to spin up, no proxy lists to maintain, and no rendering logic to build. Web Unlocker replaces a browser automation framework and a proxy provider with a single HTTP request.
 
 ---
 

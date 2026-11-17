@@ -2,13 +2,13 @@
 title: "Przypadki użycia Web Unlocker"
 ---
 
-Web Unlocker to API do scrapingu — wysyłasz adres URL, a w odpowiedzi otrzymujesz w pełni wyrenderowany kod HTML. Ta strona pokazuje najczęstsze sposoby wykorzystania tego narzędzia.
+Web Unlocker to Scraping API — wysyłasz adres URL, a w odpowiedzi otrzymujesz w pełni wyrenderowany kod HTML. Ta strona pokazuje najpopularniejsze sposoby wykorzystania tego narzędzia.
 
 ---
 
 ## Samodzielne pobieranie strony
 
-Najprostszy przypadek: potrzebujesz treści strony internetowej, która blokuje zwykłe żądania HTTP.
+Najprostszy przypadek użycia: potrzebujesz zawartości strony internetowej, która blokuje zwykłe żądania HTTP.
 
 ### Python
 
@@ -37,7 +37,7 @@ const html = await fetch(
 console.log(html);
 ```
 
-Nie musisz uruchamiać przeglądarki, konfigurować proxy ani walczyć z Cloudflare. Jedno wywołanie i masz stronę.
+Nie musisz uruchamiać przeglądarki ani konfigurować proxy. Jedno wywołanie i masz stronę.
 
 **Sprawdza się w przypadku:**
 
@@ -50,10 +50,10 @@ Nie musisz uruchamiać przeglądarki, konfigurować proxy ani walczyć z Cloudfl
 
 ## Przekazywanie treści do AI
 
-Web Unlocker zwraca surowy kod HTML. Przekaż go do modelu LLM, aby wyodrębnić ustrukturyzowane dane, streścić treść lub odpowiedzieć na pytania o stronę — bez pisania logiki parsowania.
+Web Unlocker zwraca surowy kod HTML. Przekaż go do modelu LLM, aby wyodrębnić ustrukturyzowane dane, streścić treść lub odpowiedzieć na pytania dotyczące strony — bez pisania logiki parsowania.
 
 <Tip>
-Aby wysłać modelowi mniej znaczników, dodaj do żądania `format=markdown` i otrzymaj stronę w formacie Markdown zamiast HTML.
+Aby wysłać do modelu mniej znaczników, dodaj do żądania `format=markdown` — otrzymasz stronę w formacie Markdown zamiast HTML.
 </Tip>
 
 ### Python \+ OpenAI
@@ -113,13 +113,13 @@ console.log(message.content[0].text);
 - Wyodrębniania ustrukturyzowanych danych (cen, nazw, dat) bez pisania parserów
 - Streszczania artykułów lub stron produktów
 - Porównywania wielu stron i wyciągania wniosków
-- Tworzenia narzędzi badawczych i monitorujących opartych na AI
+- Tworzenia narzędzi badawczych lub monitorujących opartych na AI
 
 ---
 
-## Używanie w agencie AI
+## Użycie w agencie AI
 
-Daj swojemu agentowi AI narzędzie `scrape` oparte na Web Unlocker. Agent będzie mógł wtedy samodzielnie przeglądać internet — pobierać strony, czytać ich treść i podejmować działania — a Ty nie musisz pisać żadnej logiki przeglądania.
+Dodaj swojemu agentowi AI narzędzie `scrape` oparte na Web Unlocker. Agent będzie wtedy mógł samodzielnie przeglądać internet — pobierać strony, czytać ich treść i podejmować działania — bez pisania przez Ciebie jakiejkolwiek logiki przeglądania.
 
 ```python
 import requests
@@ -178,18 +178,18 @@ while True:
     messages.append({"role": "user", "content": tool_results})
 ```
 
-Agent sam decyduje, kiedy pobrać stronę i jaki adres URL otworzyć. Samo pobieranie realizuje Web Unlocker.
+Agent sam decyduje, kiedy pobrać stronę i jaki adres URL otworzyć. Samym pobieraniem zajmuje się Web Unlocker.
 
 **Sprawdza się w przypadku:**
 
 - Agentów badawczych, które samodzielnie przeglądają internet
-- Botów do porównywania cen i wyszukiwania okazji
-- Potoków analizy konkurencji
-- Każdego agenta, który potrzebuje danych z sieci w czasie rzeczywistym
+- Botów porównujących ceny lub wyszukujących okazje
+- Procesów analizy konkurencji
+- Każdego agenta, który potrzebuje danych z internetu w czasie rzeczywistym
 
 ---
 
-## Pobieranie wielu stron naraz
+## Pobieranie wielu stron jednocześnie
 
 Uruchamiaj żądania współbieżnie, aby zbierać dane z wielu adresów URL równolegle.
 
@@ -229,9 +229,9 @@ for url, html in results:
 
 ---
 
-## Używanie z poziomu CLI
+## Użycie z poziomu CLI
 
-Pomiń pisanie kodu — skorzystaj z Gologin Web Access CLI, aby realizować typowe zadania scrapingu:
+Możesz w ogóle nie pisać kodu — skorzystaj z Gologin Web Access CLI, aby realizować typowe zadania scrapingu:
 
 ```bash
 npm install -g gologin-web-access
@@ -267,8 +267,8 @@ Pełną listę poleceń znajdziesz w [Web Access CLI](/pl/cli-tools/web-access).
 | --- | --- | --- |
 | Pobranie pojedynczej strony | Żądanie GET z parametrem URL | Wyrenderowany kod HTML |
 | Przekazanie do LLM | Pobierasz stronę → przekazujesz do modelu | Wyodrębnione dane lub streszczenie |
-| Narzędzie agenta AI | Agent wywołuje je na żądanie | Treści z sieci w czasie rzeczywistym |
-| Masowe pobieranie | Współbieżne żądania | Kod HTML dla każdego adresu URL |
+| Narzędzie agenta AI | Agent wywołuje na żądanie | Treści z internetu w czasie rzeczywistym |
+| Masowy scraping | Żądania współbieżne | Kod HTML dla każdego adresu URL |
 | Zadania w CLI | Polecenia `gologin-web-access` | Tekst, Markdown, JSON, wyniki zbiorcze |
 
-Aby wykonać pierwsze żądanie, zobacz [Quickstart](/pl/web-unlocker-quick-start).
+Zobacz [Szybki start](/pl/web-unlocker-quick-start), aby wykonać swoje pierwsze żądanie.

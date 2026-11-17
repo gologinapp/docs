@@ -1,8 +1,8 @@
 ---
-title: "Anwendungsfälle für Web Unlocker"
+title: "Web-Unlocker-Anwendungsfälle"
 ---
 
-Web Unlocker ist eine Scraping API – Sie senden eine URL und erhalten das vollständig gerenderte HTML zurück. Diese Seite zeigt die häufigsten Einsatzmöglichkeiten.
+Web Unlocker ist eine Scraping API: Sie senden eine URL und erhalten das vollständig gerenderte HTML zurück. Diese Seite zeigt die gängigsten Einsatzmöglichkeiten.
 
 ---
 
@@ -37,9 +37,9 @@ const html = await fetch(
 console.log(html);
 ```
 
-Kein Browser, der gestartet werden muss, kein Proxy, der konfiguriert werden muss, kein Kampf gegen Cloudflare. Ein Aufruf genügt, und Sie erhalten die Seite.
+Kein Browser, der gestartet werden muss, kein Proxy, der konfiguriert werden muss. Ein Aufruf, und Sie erhalten die Seite.
 
-**Gut geeignet für:**
+**Geeignet für:**
 
 - Preise auf der Website eines Wettbewerbers prüfen
 - Stellenanzeigen, Bewertungen oder Produktdaten abrufen
@@ -48,9 +48,9 @@ Kein Browser, der gestartet werden muss, kein Proxy, der konfiguriert werden mus
 
 ---
 
-## Inhalte an eine KI übergeben
+## Inhalte an eine KI weitergeben
 
-Web Unlocker liefert rohes HTML. Übergeben Sie es an ein LLM, um strukturierte Daten zu extrahieren, Inhalte zusammenzufassen oder Fragen zur Seite zu beantworten – ganz ohne eigene Parsing-Logik.
+Web Unlocker liefert rohes HTML. Übergeben Sie dieses an ein LLM, um strukturierte Daten zu extrahieren, Inhalte zusammenzufassen oder Fragen zur Seite zu beantworten – ganz ohne Parsing-Logik.
 
 <Tip>
 Damit das Modell weniger Markup verarbeiten muss, fügen Sie der Anfrage `format=markdown` hinzu. Sie erhalten die Seite dann als Markdown statt als HTML.
@@ -108,18 +108,18 @@ const message = await client.messages.create({
 console.log(message.content[0].text);
 ```
 
-**Gut geeignet für:**
+**Geeignet für:**
 
-- Strukturierte Daten (Preise, Namen, Datumsangaben) extrahieren, ohne Parser zu schreiben
+- Strukturierte Daten (Preise, Namen, Daten) extrahieren, ohne Parser zu schreiben
 - Artikel oder Produktseiten zusammenfassen
-- Mehrere Seiten vergleichen und Schlussfolgerungen ziehen
+- Mehrere Seiten vergleichen und Schlüsse daraus ziehen
 - KI-gestützte Recherche- oder Monitoring-Tools entwickeln
 
 ---
 
 ## In einem KI-Agenten verwenden
 
-Geben Sie Ihrem KI-Agenten ein `scrape`-Tool, das auf Web Unlocker basiert. Der Agent kann dann selbstständig im Web surfen – Seiten abrufen, Inhalte lesen und Aktionen ausführen –, ohne dass Sie Browsing-Logik schreiben müssen.
+Geben Sie Ihrem KI-Agenten ein `scrape`-Tool, das auf Web Unlocker basiert. Der Agent kann dann selbstständig im Web unterwegs sein – Seiten abrufen, Inhalte lesen und Aktionen ausführen –, ohne dass Sie eine eigene Browsing-Logik schreiben müssen.
 
 ```python
 import requests
@@ -180,12 +180,12 @@ while True:
 
 Der Agent entscheidet selbst, wann er scrapt und welche URL er abruft. Web Unlocker übernimmt den eigentlichen Abruf.
 
-**Gut geeignet für:**
+**Geeignet für:**
 
-- Recherche-Agenten, die autonom im Web unterwegs sind
+- Recherche-Agenten, die autonom im Web surfen
 - Bots für Preisvergleiche oder die Suche nach Angeboten
 - Pipelines für Wettbewerbsanalysen
-- Jeden Agenten, der Echtzeit-Webdaten benötigt
+- Jeden Agenten, der Echtzeitdaten aus dem Web benötigt
 
 ---
 
@@ -221,7 +221,7 @@ for url, html in results:
     print(f"{url}: {len(html)} chars")
 ```
 
-**Gut geeignet für:**
+**Geeignet für:**
 
 - Komplette Produktkataloge oder Listenseiten scrapen
 - Massenhafte Datenerhebung für Trainingsdatensätze
@@ -231,7 +231,7 @@ for url, html in results:
 
 ## Über die CLI verwenden
 
-Sie müssen gar keinen Code schreiben – nutzen Sie die Gologin Web Access CLI für gängige Scraping-Workflows:
+Sie können komplett auf eigenen Code verzichten und stattdessen die Gologin Web Access CLI für gängige Scraping-Workflows nutzen:
 
 ```bash
 npm install -g gologin-web-access
@@ -271,4 +271,4 @@ Die vollständige Befehlsreferenz finden Sie unter [Web Access CLI](/de/cli-tool
 | Massen-Scraping | Parallele Anfragen | HTML für jede URL |
 | CLI-Workflows | `gologin-web-access`-Befehle | Text, Markdown, JSON, Batch-Ergebnisse |
 
-Informationen zur ersten Anfrage finden Sie in der [Kurzanleitung](/de/web-unlocker-quick-start).
+Wie Sie Ihre erste Anfrage senden, erfahren Sie in der [Schnellstartanleitung](/de/web-unlocker-quick-start).

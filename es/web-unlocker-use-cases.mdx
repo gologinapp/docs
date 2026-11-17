@@ -2,7 +2,7 @@
 title: "Casos de uso de Web Unlocker"
 ---
 
-Web Unlocker es una API de scraping: le envías una URL y te devuelve el HTML completamente renderizado. Esta página muestra las formas más habituales de aprovecharlo.
+Web Unlocker es una Scraping API: envías una URL y te devuelve el HTML completamente renderizado. Esta página muestra las formas más habituales de aprovecharlo.
 
 ---
 
@@ -37,20 +37,20 @@ const html = await fetch(
 console.log(html);
 ```
 
-No tienes que lanzar un navegador, configurar un proxy ni pelearte con Cloudflare. Con una sola llamada obtienes la página.
+Sin navegador que iniciar y sin proxy que configurar. Una sola llamada y obtienes la página.
 
 **Ideal para:**
 
-- Consultar los precios en el sitio de un competidor
+- Consultar precios en el sitio de un competidor
 - Obtener ofertas de empleo, reseñas o datos de productos
-- Supervisar cambios en páginas
-- Scripts puntuales de recopilación de datos
+- Monitorear cambios en páginas
+- Scripts de recopilación de datos puntuales
 
 ---
 
 ## Envía contenido a una IA
 
-Web Unlocker devuelve HTML sin procesar. Pásalo a un LLM para extraer datos estructurados, resumir contenido o responder preguntas sobre la página, sin necesidad de escribir lógica de análisis.
+Web Unlocker devuelve HTML sin procesar. Pásalo a un LLM para extraer datos estructurados, resumir contenido o responder preguntas sobre la página, sin necesidad de lógica de análisis.
 
 <Tip>
 Para enviar menos marcado al modelo, añade `format=markdown` a la solicitud y recibirás la página en Markdown en lugar de HTML.
@@ -110,7 +110,7 @@ console.log(message.content[0].text);
 
 **Ideal para:**
 
-- Extraer datos estructurados (precios, nombres, fechas) sin escribir parsers
+- Extraer datos estructurados (precios, nombres, fechas) sin escribir analizadores
 - Resumir artículos o páginas de productos
 - Comparar varias páginas y sacar conclusiones
 - Crear herramientas de investigación o monitoreo basadas en IA
@@ -119,7 +119,7 @@ console.log(message.content[0].text);
 
 ## Úsalo dentro de un agente de IA
 
-Dale a tu agente de IA una herramienta `scrape` respaldada por Web Unlocker. Así el agente podrá navegar por la web de forma autónoma (obtener páginas, leer su contenido y actuar en consecuencia) sin que tengas que escribir ninguna lógica de navegación.
+Dale a tu agente de IA una herramienta `scrape` respaldada por Web Unlocker. Así, el agente podrá navegar por la web por sí solo: obtener páginas, leer su contenido y actuar en consecuencia, sin que tengas que escribir ninguna lógica de navegación.
 
 ```python
 import requests
@@ -178,7 +178,7 @@ while True:
     messages.append({"role": "user", "content": tool_results})
 ```
 
-El agente decide cuándo hacer scraping y qué URL consultar. Web Unlocker se encarga de la obtención de los datos.
+El agente decide cuándo extraer datos y qué URL consultar. Web Unlocker se encarga de la obtención real de las páginas.
 
 **Ideal para:**
 
@@ -191,7 +191,7 @@ El agente decide cuándo hacer scraping y qué URL consultar. Web Unlocker se en
 
 ## Extrae muchas páginas a la vez
 
-Ejecuta las solicitudes de forma concurrente para recopilar datos de varias URL en paralelo.
+Ejecuta solicitudes de forma concurrente para recopilar datos de varias URL en paralelo.
 
 ```python
 import requests
@@ -223,15 +223,15 @@ for url, html in results:
 
 **Ideal para:**
 
-- Extraer catálogos completos de productos o páginas de listados
+- Extraer catálogos de productos completos o páginas de listados
 - Recopilación masiva de datos para conjuntos de entrenamiento
-- Supervisar muchas páginas al mismo tiempo
+- Monitorear muchas páginas a la vez
 
 ---
 
 ## Úsalo desde la CLI
 
-Olvídate de escribir código: usa la CLI de Gologin Web Access para los flujos de scraping más habituales:
+Olvídate de escribir código: usa la CLI de Gologin Web Access para los flujos de extracción más habituales:
 
 ```bash
 npm install -g gologin-web-access
@@ -266,9 +266,9 @@ Consulta [Web Access CLI](/es/cli-tools/web-access) para ver la referencia compl
 | Caso de uso | Qué haces | Qué obtienes |
 | --- | --- | --- |
 | Extraer una sola página | GET con el parámetro URL | HTML renderizado |
-| Enviar a un LLM | Extraes la página → la pasas al modelo | Datos extraídos o un resumen |
-| Herramienta para un agente de IA | El agente la llama cuando la necesita | Contenido web en tiempo real |
-| Scraping masivo | Solicitudes concurrentes | HTML de cada URL |
+| Enviar a un LLM | Extraes → pasas al modelo | Datos extraídos o resumen |
+| Herramienta para agentes de IA | El agente la llama cuando la necesita | Contenido web en tiempo real |
+| Extracción masiva | Solicitudes concurrentes | HTML de cada URL |
 | Flujos con la CLI | Comandos de `gologin-web-access` | Texto, markdown, JSON y resultados por lotes |
 
-Consulta el [Quickstart](/es/web-unlocker-quick-start) para hacer tu primera solicitud.
+Consulta [Quickstart](/es/web-unlocker-quick-start) para hacer tu primera solicitud.

@@ -2,21 +2,21 @@
 title: "Web-Scraping-Ziele"
 ---
 
-Gologin funktioniert als Scraping-Browser: Statt eines Headless-Browsers mit generischem Fingerprint läuft Ihr Scraper über isolierte Profile, die wie echte Nutzer wirken. Das senkt die Erkennungsrate auf Websites, die Browser per Fingerprint identifizieren und nicht nur IPs blockieren, erheblich.
+Gologin funktioniert als Scraping-Browser: Statt eines Headless-Browsers mit generischem Fingerprint läuft Ihr Scraper über isolierte Profile, die wie echte Nutzer aussehen. Das senkt die Erkennungsrate auf Websites, die Browser per Fingerprint identifizieren und nicht nur IPs blockieren, deutlich.
 
 ## Kurze Checkliste
 
 - 1 Scraping-Sitzung = 1 Browserprofil
 - Wählen Sie den Proxy-Typ passend zum Schutzniveau der Zielseite
-- Verwenden Sie Profile über mehrere Sitzungen hinweg wieder, um Cookies und den Sitzungsstatus zu erhalten
-- Steuern Sie die Anfragegeschwindigkeit – Scraper werden nicht nur wegen der IP, sondern auch wegen ihres Verhaltens blockiert
-- Für große Mengen (50\+ gleichzeitige Profile): Nutzen Sie die Gologin API statt der Desktop-App
+- Verwenden Sie Profile über mehrere Sitzungen hinweg wieder, um Cookies und Sitzungsstatus zu erhalten
+- Steuern Sie die Anfragegeschwindigkeit – Scraper werden aufgrund ihres Verhaltens blockiert, nicht nur wegen der IP
+- Für große Skalierung (50\+ gleichzeitige Sitzungen): Nutzen Sie die Gologin API statt der Desktop-App
 
 ## Das passende Setup wählen
 
 ### Manuelles Scraping (Gologin Desktop-App)
 
-Am besten geeignet für: Datenerhebung im kleinen Umfang, Websites mit Login-Pflicht und manuell unterstützte Workflows. Öffnen Sie Profile in der Gologin-App und scrapen Sie direkt im Browserfenster.
+Am besten geeignet für: Datenerfassung in kleinem Umfang, Websites mit Login-Pflicht und manuell unterstützte Workflows. Öffnen Sie Profile in der Gologin-App und scrapen Sie direkt im Browserfenster.
 
 ### API-basiertes Scraping (Puppeteer / Playwright / Selenium)
 
@@ -30,13 +30,13 @@ Die vollständige Einrichtung finden Sie im API [Quickstart ](https://gologin.co
 | :-- | :-- | :-- |
 | Websites mit geringem Schutz | Datacenter rotating | Schnell und günstig |
 | Websites mit mittlerem Schutz | Residential rotating | Besserer Trust Score |
-| Hoher Schutz (Cloudflare, PerimeterX) | Residential rotating | Erforderlich |
+| Websites mit hohem Schutz | Residential rotating | Erforderlich |
 | Websites mit Login / Kontostatus | Residential static | Hält die Sitzung konsistent |
-| Preisvergleich, Marktplätze | Residential rotating | Andere IP pro Anfrage |
+| Preisvergleiche, Marktplätze | Residential rotating | Andere IP pro Anfrage |
 
 ## Schritt 2. Sitzungen und Cookies verwalten
 
-Gologin-Profile speichern Cookies automatisch zwischen den Sitzungen: Sie melden sich einmal an, und das Profil bleibt angemeldet. Löschen Sie Cookies nicht nach jedem Durchlauf – das unterbricht die Sitzungskontinuität und wirkt wie Bot-Verhalten.
+Gologin-Profile speichern Cookies automatisch zwischen den Sitzungen: Sie melden sich einmal an, und das Profil bleibt angemeldet. Löschen Sie Cookies nicht nach jedem Durchlauf, da dies die Sitzungskontinuität unterbricht und wie Bot-Verhalten wirkt.
 
 ## Schritt 3. Anfragemuster steuern
 
@@ -44,34 +44,23 @@ Bei der Erkennung geht es vor allem um Verhalten, nicht nur um die IP. Praktisch
 
 | **Scraping-Intensität** | **Pause zwischen Anfragen** |
 | :-- | :-- |
-| Gering (Erkennung vermeiden) | 3–8 Sekunden, zufällig |
+| Leicht (Erkennung vermeiden) | 3–8 Sekunden, zufällig |
 | Mittel | 1–3 Sekunden, zufällig |
 | Aggressiv (hohes Blockierrisiko) | 0.5–1 Sekunde |
 
-Wählen Sie die Pausen immer zufällig – ein fester Takt ist ein Erkennungssignal.
+Randomisieren Sie die Pausen immer – ein fester Takt ist ein Erkennungssignal.
 
 ## Schritt 4. Mit mehreren Profilen skalieren
 
-Für paralleles Scraping starten Sie mehrere Profile gleichzeitig über die API. Prüfen Sie die Rate Limits, bevor Sie viele Profile starten – es gelten API-Limits.
+Für paralleles Scraping starten Sie mehrere Profile gleichzeitig über die API. Prüfen Sie die Rate Limits, bevor Sie viele Profile starten, denn es gelten API-Limits.
 
 ### **Praktische Limits je nach Tarif**
 
-- Professional: bis zu ca. 10 gleichzeitige Profile problemlos
-- Business: bis zu ca. 30 gleichzeitige Profile
+- Professional: bequem bis zu ~10 gleichzeitige Profile
+- Business: bis zu ~30 gleichzeitige Profile
 - Enterprise: 100\+ gleichzeitige Profile
 
-Auch die Hardware setzt Grenzen – jedes Profil ist eine eigene Browser-Instanz. 10 gleichzeitige Profile benötigen ca. 8–16 GB RAM.
-
-## Cloudflare und Anti-Bot-Systeme
-
-Gologin meistert Herausforderungen beim Browser-Fingerprint (Canvas, WebGL, TLS-Fingerprint). CAPTCHAs löst es nicht automatisch. Setzt eine Zielseite Cloudflare mit CAPTCHA ein, binden Sie einen CAPTCHA-Lösungsdienst (2captcha, CapSolver, Anti-Captcha) in Ihr Scraping-Skript ein.
-
-## Häufige Erkennungssignale
-
-- Identische Zeitabstände zwischen Anfragen
-- Keine Scroll- oder Mausereignisse vor dem Klicken
-- Direkter Aufruf tiefer URLs ohne Referrer
-- Canvas- oder WebGL-Fingerprint, der nicht zum angegebenen Betriebssystem bzw. Browser passt
+Auch die Hardware setzt Grenzen: Jedes Profil ist eine Browser-Instanz. 10 gleichzeitige Profile benötigen ~8–16 GB RAM.
 
 ## Siehe auch
 

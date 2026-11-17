@@ -1,12 +1,12 @@
 ---
 title: "在 AI 智能体中使用 Web Unlocker"
-description: "如何将 Gologin Web Unlocker 用作 AI 智能体和 LLM 流水线的抓取工具"
+description: "如何将 Gologin Web Unlocker 用作 AI 智能体和 LLM 流水线的网页抓取工具"
 ---
 
-Gologin Web Unlocker 是一个抓取 API，可以为任意 URL 返回完整渲染后的 HTML。对于 AI 智能体来说，这意味着无需编排浏览器即可稳定访问网页——每个页面只需一次 HTTP 调用。
+Gologin Web Unlocker 是一个抓取 API，可为任意 URL 返回完整渲染后的 HTML。对于 AI 智能体来说，这意味着无需编排浏览器，就能稳定地访问网页——每个页面只需一次 HTTP 调用。
 
 <Tip>
-  **不想写代码？** 使用 [Web Access CLI](/zh/cli-tools/web-access) 或 [Scraping Skill](/zh/api-reference/ai-integrations/ai-skills)，即可让你的智能体开箱即用地获得抓取能力。
+  **不想写代码？** 使用 [Web Access CLI](/zh/cli-tools/web-access) 或 [Scraping Skill](/zh/api-reference/ai-integrations/ai-skills)，让您的智能体开箱即用地具备抓取能力。
 </Tip>
 
 ---
@@ -74,7 +74,7 @@ console.log(message.content.find((block) => block.type === "text")?.text);
 
 ## 为智能体提供抓取工具
 
-定义一个由 Web Unlocker 支持的 `scrape` 工具。智能体会自行决定何时获取页面以及要抓取的 URL。
+定义一个由 Web Unlocker 支持的 `scrape` 工具。智能体会自行决定何时获取页面，以及抓取哪个 URL。
 
 ```python
 import requests
@@ -133,7 +133,7 @@ while True:
     messages.append({"role": "user", "content": tool_results})
 ```
 
-智能体会自行决定何时抓取以及抓取哪个 URL。Web Unlocker 负责完成页面获取——包括 JavaScript 渲染、反机器人检测绕过、代理轮换和验证码破解。
+智能体自行决定何时抓取以及抓取哪个 URL。Web Unlocker 负责页面获取，包括 JavaScript 渲染和代理轮换。
 
 ---
 
@@ -193,11 +193,11 @@ gologin-web-access extract https://example.com --schema ./schema.json
 
 ## 常见智能体模式
 
-| 模式 | 方式 |
+| 模式 | 实现方式 |
 |---|---|
-| 研究智能体 | 智能体调用 `scrape` 工具 → 阅读页面 → 综合整理发现 |
-| 价格监控 | 定时对商品页面执行 `batch-scrape` → 与上一次结果对比 |
-| 竞品情报 | `crawl` 竞争对手网站 → 交给 LLM 分析 |
+| 研究型智能体 | 智能体调用 `scrape` 工具 → 阅读页面 → 综合分析结果 |
+| 价格监控 | 按计划对商品页面执行 `batch-scrape` → 与上一次运行结果对比 |
+| 竞品情报 | 对竞争对手网站执行 `crawl` → 输入 LLM 进行分析 |
 | 线索补全 | 对公司页面执行 `scrape-json` → 提取结构化数据 |
 | 内容聚合 | `search` + `scrape-text` → 构建精选内容流 |
 
@@ -207,5 +207,5 @@ gologin-web-access extract https://example.com --schema ./schema.json
 
 - [什么是 Web Unlocker](/zh/what-is-web-unlocker) — 产品概览与定价
 - [Web Unlocker SDK](/zh/scraping-api-sdk-and-cli) — TypeScript SDK 参考
-- [Web Access CLI](/zh/cli-tools/web-access) — 统一的 CLI
+- [Web Access CLI](/zh/cli-tools/web-access) — 统一 CLI
 - [AI Skills](/zh/api-reference/ai-integrations/ai-skills) — 适用于 Claude Code 的即插即用技能

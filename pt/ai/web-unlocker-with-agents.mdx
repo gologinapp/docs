@@ -3,7 +3,7 @@ title: "Usando o Web Unlocker com agentes de IA"
 description: "Como usar o Web Unlocker da Gologin como ferramenta de scraping para agentes de IA e pipelines de LLM"
 ---
 
-O Web Unlocker da Gologin é uma API de scraping que retorna o HTML totalmente renderizado de qualquer URL. Para agentes de IA, isso significa acesso confiável à web sem orquestração de navegador — uma chamada HTTP por página.
+O Web Unlocker da Gologin é uma API de scraping que retorna o HTML totalmente renderizado de qualquer URL. Para agentes de IA, isso significa acesso confiável à web sem orquestração de navegador: uma chamada HTTP por página.
 
 <Tip>
   **Não quer escrever código?** Use a [Web Access CLI](/pt/cli-tools/web-access) ou a [Scraping Skill](/pt/api-reference/ai-integrations/ai-skills) para dar ao seu agente recursos de scraping prontos para uso.
@@ -13,7 +13,7 @@ O Web Unlocker da Gologin é uma API de scraping que retorna o HTML totalmente r
 
 ## Envie o conteúdo da página para um LLM
 
-Faça o scraping de uma página e passe o HTML para um modelo extrair informações, resumir ou analisar — sem precisar de lógica de parsing.
+Faça o scraping de uma página e passe o HTML para um modelo para extração, resumo ou análise, sem precisar de lógica de parsing.
 
 ### Python + Claude
 
@@ -133,7 +133,7 @@ while True:
     messages.append({"role": "user", "content": tool_results})
 ```
 
-O agente decide quando fazer o scraping e qual URL buscar. O Web Unlocker cuida da obtenção do conteúdo — renderização de JavaScript, bypass de proteções anti-bot, rotação de proxies e resolução de CAPTCHAs.
+O agente decide quando fazer o scraping e qual URL buscar. O Web Unlocker cuida da obtenção do conteúdo, incluindo renderização de JavaScript e rotação de proxies.
 
 ---
 
@@ -195,11 +195,11 @@ Consulte a [referência da Web Access CLI](/pt/cli-tools/web-access) para ver to
 
 | Padrão | Como |
 |---|---|
-| Agente de pesquisa | O agente chama a ferramenta `scrape` → lê as páginas → sintetiza os resultados |
-| Monitoramento de preços | `batch-scrape` das páginas de produtos em intervalos programados → comparação com a execução anterior |
-| Inteligência competitiva | `crawl` nos sites dos concorrentes → envio ao LLM para análise |
-| Enriquecimento de leads | `scrape-json` nas páginas de empresas → extração de dados estruturados |
-| Agregação de conteúdo | `search` + `scrape-text` → criação de feeds curados |
+| Agente de pesquisa | O agente chama a ferramenta `scrape` → lê as páginas → sintetiza as descobertas |
+| Monitoramento de preços | `batch-scrape` em páginas de produtos de forma agendada → comparação com a execução anterior |
+| Inteligência competitiva | `crawl` em sites de concorrentes → envio ao LLM para análise |
+| Enriquecimento de leads | `scrape-json` em páginas de empresas → extração de dados estruturados |
+| Agregação de conteúdo | `search` + `scrape-text` → criação de feeds selecionados |
 
 ---
 
@@ -208,4 +208,4 @@ Consulte a [referência da Web Access CLI](/pt/cli-tools/web-access) para ver to
 - [O que é o Web Unlocker](/pt/what-is-web-unlocker) — visão geral do produto e preços
 - [SDK do Web Unlocker](/pt/scraping-api-sdk-and-cli) — referência do SDK em TypeScript
 - [Web Access CLI](/pt/cli-tools/web-access) — CLI unificada
-- [AI Skills](/pt/api-reference/ai-integrations/ai-skills) — skills plug-and-play para o Claude Code
+- [AI Skills](/pt/api-reference/ai-integrations/ai-skills) — skills prontas para uso com o Claude Code

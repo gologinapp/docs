@@ -3,17 +3,17 @@ title: "Utiliser Web Unlocker avec des agents IA"
 description: "Comment utiliser Gologin Web Unlocker comme outil de scraping pour les agents IA et les pipelines LLM"
 ---
 
-Gologin Web Unlocker est une API de scraping qui renvoie le code HTML entièrement rendu de n'importe quelle URL. Pour les agents IA, cela signifie un accès fiable au web sans orchestration de navigateur : un seul appel HTTP par page.
+Gologin Web Unlocker est une API de scraping qui renvoie le HTML entièrement rendu de n'importe quelle URL. Pour les agents IA, cela signifie un accès web fiable sans orchestration de navigateur : un seul appel HTTP par page.
 
 <Tip>
-  **Vous ne voulez pas écrire de code ?** Utilisez la [Web Access CLI](/fr/cli-tools/web-access) ou le [Scraping Skill](/fr/api-reference/ai-integrations/ai-skills) pour doter votre agent de capacités de scraping dès le départ.
+  **Vous ne voulez pas écrire de code ?** Utilisez la [Web Access CLI](/fr/cli-tools/web-access) ou le [Scraping Skill](/fr/api-reference/ai-integrations/ai-skills) pour donner à votre agent des capacités de scraping prêtes à l'emploi.
 </Tip>
 
 ---
 
 ## Transmettre le contenu d'une page à un LLM
 
-Scrapez une page et transmettez le HTML à un modèle pour l'extraction, la synthèse ou l'analyse, sans aucune logique d'analyse syntaxique à écrire.
+Récupérez une page et transmettez son HTML à un modèle pour l'extraction, le résumé ou l'analyse, sans aucune logique de parsing.
 
 ### Python + Claude
 
@@ -72,7 +72,7 @@ console.log(message.content.find((block) => block.type === "text")?.text);
 
 ---
 
-## Donner un outil de scraping à votre agent
+## Donner à votre agent un outil de scraping
 
 Définissez un outil `scrape` reposant sur Web Unlocker. L'agent décide quand récupérer une page et quelle URL scraper.
 
@@ -133,13 +133,13 @@ while True:
     messages.append({"role": "user", "content": tool_results})
 ```
 
-L'agent décide quand scraper et quelle URL récupérer. Web Unlocker se charge de la récupération : rendu JavaScript, contournement des systèmes anti-bot, rotation des proxys, résolution des CAPTCHA.
+L'agent décide quand scraper et quelle URL récupérer. Web Unlocker se charge de la récupération : rendu JavaScript et rotation des proxys.
 
 ---
 
 ## Utiliser le SDK Web Unlocker
 
-Pour les agents TypeScript/Node.js, le SDK `gologin-webunlocker` propose des méthodes typées :
+Pour les agents TypeScript/Node.js, le SDK `gologin-webunlocker` fournit des méthodes typées :
 
 ```ts
 import { WebUnlocker } from "gologin-webunlocker";
@@ -191,15 +191,15 @@ Consultez la [référence de la Web Access CLI](/fr/cli-tools/web-access) pour l
 
 ---
 
-## Cas d'usage courants des agents
+## Schémas courants pour les agents
 
-| Cas d'usage | Méthode |
+| Schéma | Comment |
 |---|---|
 | Agent de recherche | L'agent appelle l'outil `scrape` → lit les pages → synthétise les résultats |
-| Suivi des prix | `batch-scrape` des pages produits à intervalles réguliers → comparaison avec l'exécution précédente |
+| Suivi des prix | `batch-scrape` des pages produit à intervalle régulier → comparaison avec l'exécution précédente |
 | Veille concurrentielle | `crawl` des sites concurrents → transmission à un LLM pour analyse |
 | Enrichissement de leads | `scrape-json` des pages d'entreprise → extraction de données structurées |
-| Agrégation de contenu | `search` + `scrape-text` → création de flux de contenus sélectionnés |
+| Agrégation de contenu | `search` + `scrape-text` → création de flux personnalisés |
 
 ---
 

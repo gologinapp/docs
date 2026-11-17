@@ -2,51 +2,51 @@
 title: "Cele web scrapingu"
 ---
 
-Gologin działa jak przeglądarka do scrapingu — zamiast przeglądarki headless z generycznym fingerprintem Twój scraper korzysta z izolowanych profili, które wyglądają jak prawdziwi użytkownicy. Znacząco zmniejsza to liczbę wykryć na stronach, które rozpoznają przeglądarki po fingerprincie, a nie tylko blokują adresy IP.
+Gologin działa jako przeglądarka do scrapingu — zamiast przeglądarki headless z generycznym odciskiem cyfrowym (fingerprint) Twój scraper korzysta z izolowanych profili, które wyglądają jak prawdziwi użytkownicy. Znacząco zmniejsza to ryzyko wykrycia na stronach, które rozpoznają przeglądarki po fingerprincie, a nie tylko blokują adresy IP.
 
 ## Szybka lista kontrolna
 
 - 1 sesja scrapingu = 1 profil przeglądarki
-- Wybierz typ proxy w zależności od poziomu ochrony docelowej strony
-- Używaj ponownie profili w kolejnych sesjach, aby zachować pliki cookie i stan sesji
-- Kontroluj tempo żądań — scrapery są blokowane za zachowanie, a nie tylko za adres IP
-- Przy dużej skali (50\+ jednoczesnych sesji): korzystaj z Gologin API, a nie z aplikacji desktopowej
+- Wybierz typ proxy w zależności od poziomu zabezpieczeń docelowej strony
+- Używaj profili wielokrotnie w kolejnych sesjach, aby zachować pliki cookie i stan sesji
+- Kontroluj tempo zapytań — scrapery są blokowane za zachowanie, a nie tylko za adres IP
+- Przy dużej skali (50\+ równoczesnych sesji): używaj API Gologin, a nie aplikacji desktopowej
 
 ## Wybór konfiguracji
 
 ### Ręczny scraping (aplikacja desktopowa Gologin)
 
-Najlepszy do: zbierania danych na małą skalę, stron wymagających logowania i procesów wspomaganych ręcznie. Otwieraj profile z poziomu aplikacji Gologin i zbieraj dane w oknie przeglądarki.
+Najlepsze do: zbierania danych na małą skalę, stron wymagających logowania, procesów wspomaganych ręcznie. Otwieraj profile w aplikacji Gologin i zbieraj dane w oknie przeglądarki.
 
 ### Scraping przez API (Puppeteer / Playwright / Selenium)
 
-Najlepszy do: zautomatyzowanych procesów, 10\+ jednoczesnych sesji i scrapingu według harmonogramu. Gologin uruchamia profil i zwraca punkt końcowy WebSocket, z którym łączy się Twój skrypt automatyzacji.
+Najlepsze do: zautomatyzowanych procesów, 10\+ równoczesnych sesji, scrapingu według harmonogramu. Gologin uruchamia profil i zwraca endpoint WebSocket, z którym łączy się Twój skrypt automatyzujący.
 
-Pełną konfigurację znajdziesz w [Quickstart ](https://gologin.com/docs/api-reference/introduction/quickstart)API.
+Pełną konfigurację znajdziesz w [Quickstart ](https://gologin.com/docs/api-reference/introduction/quickstart)do API.
 
 ## Krok 1. Wybierz strategię proxy
 
 | **Cel** | **Zalecane proxy** | **Uwagi** |
 | :-- | :-- | :-- |
-| Strony o niskim poziomie ochrony | Datacenter rotating | Szybkie i tanie |
-| Strony o średnim poziomie ochrony | Residential rotating | Wyższy wskaźnik zaufania |
-| Strony o wysokim poziomie ochrony (Cloudflare, PerimeterX) | Residential rotating | Wymagane |
-| Strony wymagające logowania / zachowania stanu konta | Residential static | Utrzymuje spójność sesji |
-| Porównywarki cen, marketplace'y | Residential rotating | Inny adres IP dla każdego żądania |
+| Strony o niskim poziomie zabezpieczeń | Datacenter rotating | Szybkie i tanie |
+| Strony o średnim poziomie zabezpieczeń | Residential rotating | Wyższy wskaźnik zaufania |
+| Strony o wysokim poziomie zabezpieczeń | Residential rotating | Wymagane |
+| Strony wymagające logowania / zachowania stanu konta | Residential static | Zapewnia spójność sesji |
+| Porównywarki cen, marketplace'y | Residential rotating | Inny adres IP dla każdego zapytania |
 
 ## Krok 2. Zarządzaj sesjami i plikami cookie
 
 Profile Gologin automatycznie zachowują pliki cookie między sesjami — logujesz się raz, a profil pozostaje zalogowany. Unikaj czyszczenia plików cookie po każdym uruchomieniu — przerywa to ciągłość sesji i wygląda jak zachowanie bota.
 
-## Krok 3. Kontroluj wzorce żądań
+## Krok 3. Kontroluj wzorce zapytań
 
-Wykrywanie dotyczy głównie zachowania, a nie tylko adresu IP. Praktyczne wskazówki dotyczące odstępów czasowych:
+Wykrywanie opiera się głównie na zachowaniu, a nie tylko na adresie IP. Praktyczne wytyczne dotyczące odstępów czasowych:
 
-| **Intensywność scrapingu** | **Opóźnienie między żądaniami** |
+| **Intensywność scrapingu** | **Opóźnienie między zapytaniami** |
 | :-- | :-- |
 | Niska (unikanie wykrycia) | 3–8 sekund, losowo |
 | Średnia | 1–3 sekundy, losowo |
-| Agresywna (wysokie ryzyko blokady) | 0,5–1 sekunda |
+| Agresywna (wysokie ryzyko blokady) | 0.5–1 sekunda |
 
 Zawsze losuj opóźnienia — stały odstęp jest sygnałem wykrycia.
 
@@ -56,22 +56,11 @@ Przy scrapingu równoległym uruchamiaj wiele profili jednocześnie przez API. P
 
 ### **Praktyczne limity w zależności od planu**
 
-- Professional: komfortowo do ok. 10 jednoczesnych profili
-- Business: do ok. 30 jednoczesnych profili
-- Enterprise: 100\+ jednoczesnych profili
+- Professional: komfortowo do ok. 10 równoczesnych profili
+- Business: do ok. 30 równoczesnych profili
+- Enterprise: 100\+ równoczesnych profili
 
-Ograniczeniem jest również sprzęt — każdy profil to osobna instancja przeglądarki. 10 jednoczesnych profili wymaga ok. 8–16 GB RAM.
-
-## Cloudflare i systemy antybotowe
-
-Gologin radzi sobie z wyzwaniami związanymi z fingerprintem przeglądarki (Canvas, WebGL, fingerprint TLS). Nie rozwiązuje automatycznie CAPTCHA. Jeśli docelowa strona używa Cloudflare z CAPTCHA, zintegruj ze swoim skryptem scrapingu usługę rozwiązującą CAPTCHA (2captcha, CapSolver, Anti-Captcha).
-
-## Typowe sygnały wykrycia
-
-- Identyczne odstępy czasowe między żądaniami
-- Brak zdarzeń przewijania lub ruchu myszy przed kliknięciem
-- Bezpośrednie przejście do głęboko zagnieżdżonych adresów URL bez referera
-- Fingerprint Canvas lub WebGL, który nie pasuje do deklarowanego systemu operacyjnego/przeglądarki
+Ograniczeniem jest też sprzęt — każdy profil to osobna instancja przeglądarki. 10 równoczesnych profili wymaga ok. 8–16 GB RAM.
 
 ## Zobacz także
 

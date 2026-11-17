@@ -1,19 +1,19 @@
 ---
 title: "Sử dụng Web Unlocker với AI Agent"
-description: "Cách sử dụng Gologin Web Unlocker làm công cụ thu thập dữ liệu cho AI Agent và các pipeline LLM"
+description: "Cách dùng Gologin Web Unlocker làm công cụ thu thập dữ liệu cho AI agent và các pipeline LLM"
 ---
 
-Gologin Web Unlocker là một API thu thập dữ liệu, trả về HTML đã được hiển thị đầy đủ cho bất kỳ URL nào. Đối với AI Agent, điều này có nghĩa là truy cập web ổn định mà không cần điều phối trình duyệt — chỉ một lệnh gọi HTTP cho mỗi trang.
+Gologin Web Unlocker là một scraping API trả về HTML đã được render đầy đủ cho bất kỳ URL nào. Với AI agent, điều này có nghĩa là truy cập web ổn định mà không cần điều phối trình duyệt: chỉ một lệnh gọi HTTP cho mỗi trang.
 
 <Tip>
-  **Không muốn viết code?** Hãy dùng [Web Access CLI](/vi/cli-tools/web-access) hoặc [Scraping Skill](/vi/api-reference/ai-integrations/ai-skills) để cung cấp ngay khả năng thu thập dữ liệu cho agent của bạn.
+  **Không muốn viết code?** Hãy dùng [Web Access CLI](/vi/cli-tools/web-access) hoặc [Scraping Skill](/vi/api-reference/ai-integrations/ai-skills) để trang bị ngay khả năng thu thập dữ liệu cho agent của bạn.
 </Tip>
 
 ---
 
 ## Đưa nội dung trang vào LLM
 
-Thu thập một trang rồi chuyển HTML cho mô hình để trích xuất, tóm tắt hoặc phân tích — không cần viết logic phân tích cú pháp.
+Thu thập một trang rồi chuyển HTML cho mô hình để trích xuất, tóm tắt hoặc phân tích, không cần viết logic phân tích cú pháp.
 
 ### Python + Claude
 
@@ -72,9 +72,9 @@ console.log(message.content.find((block) => block.type === "text")?.text);
 
 ---
 
-## Cung cấp công cụ scrape cho agent của bạn
+## Cung cấp công cụ scrape cho agent
 
-Định nghĩa một công cụ `scrape` dựa trên Web Unlocker. Agent sẽ tự quyết định khi nào cần tải một trang và URL nào cần thu thập.
+Hãy định nghĩa một công cụ `scrape` dựa trên Web Unlocker. Agent sẽ tự quyết định khi nào cần lấy một trang và URL nào cần thu thập.
 
 ```python
 import requests
@@ -133,7 +133,7 @@ while True:
     messages.append({"role": "user", "content": tool_results})
 ```
 
-Agent tự quyết định khi nào cần thu thập dữ liệu và URL nào cần tải. Web Unlocker đảm nhận việc truy xuất — hiển thị JavaScript, vượt cơ chế chống bot, xoay vòng proxy và giải CAPTCHA.
+Agent tự quyết định khi nào cần scrape và lấy URL nào. Web Unlocker đảm nhận việc truy xuất, bao gồm render JavaScript và xoay vòng proxy.
 
 ---
 
@@ -168,7 +168,7 @@ Xem [tài liệu tham khảo Web Unlocker SDK](/vi/scraping-api-sdk-and-cli) đ�
 
 ## Sử dụng CLI
 
-Với các agent gọi lệnh shell (như Claude Code), CLI là cách đơn giản nhất:
+Với các agent có thể chạy lệnh shell (như Claude Code), CLI là cách đơn giản nhất:
 
 ```bash
 # plain text — good for LLM context
@@ -191,15 +191,15 @@ Xem [tài liệu tham khảo Web Access CLI](/vi/cli-tools/web-access) để bi�
 
 ---
 
-## Các mẫu sử dụng phổ biến cho agent
+## Các mô hình agent phổ biến
 
-| Mẫu sử dụng | Cách thực hiện |
+| Mô hình | Cách thực hiện |
 |---|---|
 | Agent nghiên cứu | Agent gọi công cụ `scrape` → đọc các trang → tổng hợp kết quả |
 | Theo dõi giá | `batch-scrape` các trang sản phẩm theo lịch → so sánh với lần chạy trước |
-| Tình báo cạnh tranh | `crawl` các trang web đối thủ → đưa vào LLM để phân tích |
+| Tình báo cạnh tranh | `crawl` các trang web đối thủ → đưa cho LLM phân tích |
 | Làm giàu dữ liệu khách hàng tiềm năng | `scrape-json` các trang công ty → trích xuất dữ liệu có cấu trúc |
-| Tổng hợp nội dung | `search` + `scrape-text` → xây dựng các nguồn cấp nội dung được tuyển chọn |
+| Tổng hợp nội dung | `search` + `scrape-text` → xây dựng các nguồn tin được tuyển chọn |
 
 ---
 
@@ -208,4 +208,4 @@ Xem [tài liệu tham khảo Web Access CLI](/vi/cli-tools/web-access) để bi�
 - [Web Unlocker là gì](/vi/what-is-web-unlocker) — tổng quan sản phẩm và bảng giá
 - [Web Unlocker SDK](/vi/scraping-api-sdk-and-cli) — tài liệu tham khảo TypeScript SDK
 - [Web Access CLI](/vi/cli-tools/web-access) — CLI hợp nhất
-- [AI Skills](/vi/api-reference/ai-integrations/ai-skills) — các skill cắm là chạy cho Claude Code
+- [AI Skills](/vi/api-reference/ai-integrations/ai-skills) — các skill cắm là chạy dành cho Claude Code

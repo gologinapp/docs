@@ -6,14 +6,14 @@ description: "So nutzen Sie Gologin Web Unlocker als Scraping-Tool für KI-Agent
 Gologin Web Unlocker ist eine Scraping-API, die für jede beliebige URL vollständig gerendertes HTML zurückgibt. Für KI-Agenten bedeutet das zuverlässigen Webzugriff ohne Browser-Orchestrierung – ein HTTP-Aufruf pro Seite.
 
 <Tip>
-  **Sie möchten keinen Code schreiben?** Nutzen Sie die [Web Access CLI](/de/cli-tools/web-access) oder den [Scraping Skill](/de/api-reference/ai-integrations/ai-skills), um Ihrem Agenten Scraping-Funktionen sofort einsatzbereit bereitzustellen.
+  **Sie möchten keinen Code schreiben?** Nutzen Sie die [Web Access CLI](/de/cli-tools/web-access) oder den [Scraping Skill](/de/api-reference/ai-integrations/ai-skills), um Ihrem Agenten sofort Scraping-Funktionen zu geben.
 </Tip>
 
 ---
 
 ## Seiteninhalte an ein LLM übergeben
 
-Scrapen Sie eine Seite und übergeben Sie das HTML an ein Modell, um Daten zu extrahieren, Inhalte zusammenzufassen oder zu analysieren – ganz ohne eigene Parsing-Logik.
+Scrapen Sie eine Seite und übergeben Sie das HTML an ein Modell, um Daten zu extrahieren, zusammenzufassen oder zu analysieren – ganz ohne eigene Parsing-Logik.
 
 ### Python + Claude
 
@@ -74,7 +74,7 @@ console.log(message.content.find((block) => block.type === "text")?.text);
 
 ## Ihrem Agenten ein Scrape-Tool bereitstellen
 
-Definieren Sie ein `scrape`-Tool auf Basis von Web Unlocker. Der Agent entscheidet selbst, wann er eine Seite abruft und welche URL er scrapt.
+Definieren Sie ein `scrape`-Tool, das auf Web Unlocker basiert. Der Agent entscheidet selbst, wann er eine Seite abruft und welche URL er scrapt.
 
 ```python
 import requests
@@ -133,13 +133,13 @@ while True:
     messages.append({"role": "user", "content": tool_results})
 ```
 
-Der Agent entscheidet, wann er scrapt und welche URL er abruft. Web Unlocker übernimmt den Abruf – inklusive JavaScript-Rendering, Umgehung von Anti-Bot-Schutz, Proxy-Rotation und CAPTCHA-Lösung.
+Der Agent entscheidet, wann er scrapt und welche URL er abruft. Web Unlocker übernimmt den Abruf – einschließlich JavaScript-Rendering und Proxy-Rotation.
 
 ---
 
 ## Das Web Unlocker SDK verwenden
 
-Für TypeScript-/Node.js-Agenten bietet das SDK `gologin-webunlocker` typisierte Methoden:
+Für TypeScript-/Node.js-Agenten stellt das SDK `gologin-webunlocker` typisierte Methoden bereit:
 
 ```ts
 import { WebUnlocker } from "gologin-webunlocker";
@@ -168,7 +168,7 @@ Alle Methoden finden Sie in der [Web Unlocker SDK-Referenz](/de/scraping-api-sdk
 
 ## Die CLI verwenden
 
-Für Agenten, die Shell-Befehle ausführen (wie Claude Code), ist die CLI der einfachste Weg:
+Für Agenten, die Shell-Befehle ausführen (z. B. Claude Code), ist die CLI der einfachste Weg:
 
 ```bash
 # plain text — good for LLM context
@@ -195,9 +195,9 @@ Alle Befehle finden Sie in der [Web Access CLI-Referenz](/de/cli-tools/web-acces
 
 | Muster | Vorgehen |
 |---|---|
-| Recherche-Agent | Der Agent ruft das `scrape`-Tool auf → liest Seiten → fasst die Ergebnisse zusammen |
+| Recherche-Agent | Agent ruft das `scrape`-Tool auf → liest Seiten → fasst die Ergebnisse zusammen |
 | Preisüberwachung | `batch-scrape` für Produktseiten nach Zeitplan → Vergleich mit dem vorherigen Durchlauf |
-| Wettbewerbsanalyse | `crawl` von Websites der Konkurrenz → Übergabe an ein LLM zur Analyse |
+| Wettbewerbsanalyse | `crawl` von Wettbewerber-Websites → Übergabe an ein LLM zur Analyse |
 | Lead-Anreicherung | `scrape-json` für Unternehmensseiten → strukturierte Daten extrahieren |
 | Content-Aggregation | `search` + `scrape-text` → kuratierte Feeds erstellen |
 
@@ -205,7 +205,7 @@ Alle Befehle finden Sie in der [Web Access CLI-Referenz](/de/cli-tools/web-acces
 
 ## Weiterführende Links
 
-- [Was ist Web Unlocker](/de/what-is-web-unlocker) – Produktübersicht und Preise
+- [What is Web Unlocker](/de/what-is-web-unlocker) – Produktübersicht und Preise
 - [Web Unlocker SDK](/de/scraping-api-sdk-and-cli) – TypeScript-SDK-Referenz
 - [Web Access CLI](/de/cli-tools/web-access) – einheitliche CLI
-- [AI Skills](/de/api-reference/ai-integrations/ai-skills) – Plug-and-Play-Skills für Claude Code
+- [AI Skills](/de/api-reference/ai-integrations/ai-skills) – Plug-and-play-Skills für Claude Code
