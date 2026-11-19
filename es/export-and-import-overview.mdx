@@ -1,43 +1,46 @@
 ---
-title: "Descripción general de Export & Import"
+title: "Resumen de exportación e importación"
 ---
 
-La importación y exportación en CSV es una forma sencilla de gestionar varios perfiles de navegador a la vez. En lugar de configurarlo todo manualmente, puedes usar un archivo CSV para copiar configuraciones, crear perfiles de forma masiva, actualizar ajustes como los proxies y trasladar configuraciones entre workspaces. Es especialmente útil cuando trabajas a gran escala o quieres mantener la coherencia entre perfiles o miembros del equipo.
+La importación y exportación en CSV es una forma sencilla de gestionar varios perfiles de navegador a la vez. En lugar de configurarlo todo manualmente, puedes usar un archivo CSV para copiar configuraciones, crear perfiles en bloque, actualizar ajustes como los proxies y mover configuraciones entre workspaces. Es especialmente útil cuando trabajas a gran escala o quieres mantener la coherencia entre perfiles o miembros del equipo.
 
-Es importante entender que esta función solo trabaja con la **configuración del perfil**, no con los datos de navegación reales. Es decir, se incluyen elementos como el nombre del perfil, los proxies, las etiquetas, las carpetas y los ajustes básicos del entorno, pero no las cookies, las sesiones, el estado de inicio de sesión ni la identidad completa del fingerprint. Cualquier perfil creado a partir de un CSV se comportará como un entorno completamente nuevo, sin actividad previa.
+La exportación e importación en CSV transfiere la **configuración del perfil**: nombre, notas, proxy, cookies, marcadores, extensiones y ajustes de huella digital. Las carpetas, las etiquetas y el estado no se incluyen.
 
 ### Qué puedes hacer con CSV
 
 - Crear muchos perfiles de una sola vez
 - Copiar y reutilizar configuraciones de perfiles
-- Actualizar proxies y ajustes de forma masiva
+- Actualizar proxies y ajustes en bloque
 - Mantener la coherencia de las configuraciones del equipo
-- Trasladar configuraciones entre workspaces
+- Mover configuraciones entre workspaces
 
 ### Qué se incluye y qué no
 
 **Se incluye:**
 
-- Nombre del perfil
-- Ajustes de proxy
-- Carpetas y etiquetas
-- Ajustes básicos del entorno
+- Nombre y notas del perfil
+- Ajustes del proxy (incluidos el usuario y la contraseña del proxy)
+- Cookies
+- Marcadores y extensiones
+- URL de inicio
+- Ajustes de entorno y huella digital: sistema operativo, user agent, idioma, zona horaria, geolocalización, WebRTC, WebGL, Canvas, fuentes, resolución de pantalla, etc.
 
 **No se incluye:**
 
-- Cookies
-- Sesiones
-- Estado de inicio de sesión
-- Identidad completa del fingerprint
+- Carpetas, etiquetas y estado
+- Historial de navegación, almacenamiento local y contraseñas guardadas
 
 ### Aspectos importantes que debes tener en cuenta
 
-- Los perfiles creados mediante CSV comienzan como **entornos nuevos y limpios**
-- **No tienen la sesión iniciada** en ninguna cuenta
-- Las sesiones y la actividad anteriores **no se conservan**
-- La importación de CSV **no es un método de copia de seguridad**
-- Un formato incorrecto **puede interrumpir la importación o crear perfiles no válidos**
+- La importación crea **perfiles nuevos** con IDs nuevos; los perfiles originales no se modifican
+- Es posible que algunos sitios te pidan iniciar sesión de nuevo, porque el almacenamiento local y las contraseñas guardadas no se transfieren
+- La importación en CSV **no es un método de copia de seguridad completa**
+- Un formato incorrecto puede **interrumpir la importación o crear perfiles no válidos**
+
+<Warning>
+  El archivo CSV contiene las credenciales del proxy y las cookies en texto plano. No lo compartas con personas que no deban tener acceso a tus cuentas.
+</Warning>
 
 ### Conclusión clave
 
-La importación y exportación en CSV se utiliza mejor para **escalar y gestionar configuraciones de perfiles**, no para transferir perfiles, sesiones o identidades existentes.
+La importación y exportación en CSV se utiliza mejor para **escalar y gestionar configuraciones de perfiles**. No es una copia completa de un perfil: las carpetas, las etiquetas, el historial de navegación y el almacenamiento local no se transfieren.
