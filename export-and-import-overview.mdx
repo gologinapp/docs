@@ -4,7 +4,7 @@ title: "Export & Import overview"
 
 CSV import/export is a simple way to manage multiple browser profiles at once. Instead of setting everything up manually, you can use a CSV file to copy configurations, create profiles in bulk, update settings like proxies, and move setups between workspaces. It’s especially useful when you’re working at scale or want consistency across profiles or team members.
 
-It’s important to understand that this feature only works with **profile configuration**, not actual browsing data. That means things like profile name, proxies, tags, folders, and basic environment settings are included — but cookies, sessions, login state, and full fingerprint identity are not. Any profile created from a CSV will behave like a brand-new environment with no prior activity.
+CSV export and import transfers **profile configuration**: name, notes, proxy, cookies, bookmarks, extensions and fingerprint settings. Folders, tags and status aren't included.
 
 ### What you can do with CSV
 
@@ -18,26 +18,29 @@ It’s important to understand that this feature only works with **profile confi
 
 **Included:**
 
-- Profile name
-- Proxy settings
-- Folders and tags
-- Basic environment settings
+- Profile name and notes
+- Proxy settings (including proxy login and password)
+- Cookies
+- Bookmarks and extensions
+- Start URL
+- Environment and fingerprint settings: OS, user agent, language, timezone, geolocation, WebRTC, WebGL, Canvas, fonts, screen resolution, etc.
 
 **Not included:**
 
-- Cookies
-- Sessions
-- Login state
-- Full fingerprint identity
+- Folders, tags and status
+- Browsing history, local storage and saved passwords
 
 ### Important to keep in mind
 
-- Profiles created via CSV start as **new, clean environments**
-- They are **not logged into any accounts**
-- Previous sessions and activity are **not preserved**
-- CSV import is **not a backup method**
+- Import creates **new profiles** with new IDs, the original profiles stay unchanged
+- Some sites may ask you to log in again, because local storage and saved passwords aren't transferred
+- CSV import is **not a full backup method**
 - Incorrect formatting can **break the import or create invalid profiles**
+
+<Warning>
+  The CSV file contains proxy credentials and cookies in plain text. Don't share it with people who shouldn't have access to your accounts.
+</Warning>
 
 ### Key takeaway
 
-CSV import/export is best used for **scaling and managing profile setups**, not for transferring existing profiles, sessions, or identities.
+CSV import/export is best used for **scaling and managing profile setups**. It's not a full copy of a profile: folders, tags, browsing history and local storage aren't transferred.
