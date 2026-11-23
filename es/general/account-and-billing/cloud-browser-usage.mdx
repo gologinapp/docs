@@ -1,33 +1,37 @@
 ---
-title: "Uso de Cloud Browser"
-description: "Estadísticas, límites y clave de API de Cloud Browser. Compra más sesiones simultáneas en la nube y más horas de nube (tiempo de navegación)."
+title: "Panel de Cloud Browser"
+description: "Límites, estadísticas de uso y clave de API de Cloud Browser. Compra más sesiones simultáneas en la nube y más horas de nube (tiempo de navegación)."
 ---
 
-La página **Cloud Browser Usage** muestra cómo usas los perfiles de Cloud Browser (perfiles iniciados con **Run in Cloud**, en la aplicación web o mediante la API de Cloud Browser) y te permite comprar más límites de nube.
+El panel **Cloud Browser** muestra tus límites y el uso de Cloud Browser (perfiles iniciados con **Run in Cloud**, en la aplicación web o mediante la API de Cloud Browser) y te permite comprar más límites de nube.
 
-Para abrirla, haz clic en el **nombre de tu workspace** en la esquina superior izquierda > **Settings & Members** > **Cloud Browser Usage**.
+Para abrirlo, haz clic en **Cloud Browser** en el menú de la izquierda.
 
 ## Qué encontrarás
 
-- **API key**: el token para la API de Cloud Browser. Haz clic en **Reveal token** para verlo o en **Copy** para copiarlo.
-- **Total launches** y **Total hours** del período seleccionado
-- **Hours limit**: horas de nube disponibles al mes en tu plan
-- **Max parallel launches**: cuántos perfiles en la nube pueden ejecutarse al mismo tiempo
-- **Period usage**: horas utilizadas en el período actual y fecha de inicio del período
-- **Daily usage**: lanzamientos, horas y máximo de sesiones simultáneas por día. Usa **Export CSV** para descargarlo.
+En la parte superior de la página:
 
-![Cloud Browser Usage](/images/cloud_browser_usage-1.png "Cloud Browser Usage")
+- **Concurrent sessions limit**: cuántos perfiles en la nube pueden ejecutarse al mismo tiempo. Haz clic en **\+** para comprar más sesiones.
+- **Browser time**: horas de nube usadas este mes sobre tu límite mensual, por ejemplo **0 of 200 hours**. Haz clic en **\+** para comprar más horas o en **Usage** para ver las estadísticas.
+- **API key & documentation**: el token para la API de Cloud Browser. Haz clic en el icono de copiar para copiarlo o en **View docs** para abrir la documentación de la API.
+
+Si todavía no has ejecutado ningún perfil en la nube, la página muestra dos formas de empezar:
+
+- **Run from App**: haz clic en **Open Profiles** y luego en **Run in Cloud** en cualquier perfil.
+- **Use via API**: copia **Your API key** y haz clic en **View docs** para ver cómo usarla.
+
+### Estadísticas de uso
+
+Haz clic en **Usage** en el bloque **Browser time** para ver cuántas horas de nube has usado. Elige el período en la esquina superior derecha, por ejemplo **7 days**, y haz clic en **Download CSV** para descargar los datos.
 
 ## Comprar más límites de nube
 
-Haz clic en **Buy more limits** y elige lo que necesitas:
+Haz clic en **\+** junto a **Concurrent sessions limit** o **Browser time**. En la ventana **Upgrade Cloud Browsing Limits**, elige lo que necesitas:
 
 - **Concurrent sessions**: **\$2 por sesión al mes**. Define cuántos perfiles pueden ejecutarse en la nube al mismo tiempo.
 - **Browsing time**: horas de nube adicionales al mes. La tarifa por hora depende de tu plan: **\$0.09** en Professional, **\$0.08** en Business, **\$0.07** en Enterprise y **\$0.05** en los planes Custom.
 
-![Cloud Browser Limits](/images/cloud_browser_limits.png "Cloud Browser Limits")
-
-Haz clic en **Upgrade** para pagar. Los límites de nube adicionales solo se pueden pagar a través de **Stripe**; PayPal y las criptomonedas no están disponibles para ellos.
+La ventana muestra cuánto pagas ahora (**Initial payment**) y cuánto al mes (**Total per month**). Haz clic en **Upgrade** para pagar. Los límites de nube adicionales solo se pueden pagar a través de **Stripe**; PayPal y las criptomonedas no están disponibles para ellos.
 
 ### Cómo funciona la facturación de los límites adicionales
 

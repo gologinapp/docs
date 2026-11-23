@@ -1,33 +1,37 @@
 ---
-title: "Cloud Browser 使用情况"
-description: "Cloud Browser 统计数据、限额和 API 密钥。可购买更多并发云会话和云端小时数（浏览时间）。"
+title: "Cloud Browser 控制面板"
+description: "Cloud Browser 限额、使用统计和 API 密钥。可购买更多并发云会话和云端小时数（浏览时间）。"
 ---
 
-**Cloud Browser 使用情况**页面显示您使用云浏览器配置文件的情况（即通过网页版应用中的**在云端运行**或 Cloud Browser API 启动的配置文件），并可在此购买更多云端限额。
+**Cloud Browser** 控制面板显示您的云浏览器限额和使用情况（适用于通过网页版应用中的 **Run in Cloud** 或 Cloud Browser API 启动的配置文件），并可在此购买更多云端限额。
 
-打开方式：点击左上角的**工作区名称** > **设置和成员** > **Cloud Browser 使用情况**。
+打开方式：点击左侧菜单中的 **Cloud Browser**。
 
 ## 页面内容
 
-- **API 密钥** - Cloud Browser API 的令牌。点击**显示令牌**可查看，点击**复制**可复制。
-- 所选期间的**发射总数**和**总时数**
-- **小时限制** - 您的套餐每月可用的云端小时数
-- **最大并行发射次数** - 可同时运行的云端配置文件数量
-- **期间使用** - 当前期间已使用的小时数以及该期间的开始时间
-- **日常使用** - 每天的启动次数、小时数以及最大并发会话数。点击**导出 CSV**可下载。
+页面顶部包含：
 
-![Cloud Browser 使用情况](/images/cloud_browser_usage-1.png "Cloud Browser 使用情况")
+- **Concurrent sessions limit** - 可同时运行的云端配置文件数量。点击 **\+** 可购买更多会话。
+- **Browser time** - 本月已使用的云端小时数及每月限额，例如 **0 of 200 hours**。点击 **\+** 可购买更多小时数，点击 **Usage** 可查看统计数据。
+- **API key & documentation** - Cloud Browser API 的令牌。点击复制图标可复制令牌，点击 **View docs** 可打开 API 文档。
+
+如果您尚未运行过任何云端配置文件，页面会显示两种开始方式：
+
+- **Run from App** - 点击 **Open Profiles**，然后在任意配置文件上点击 **Run in Cloud**。
+- **Use via API** - 复制 **Your API key**，然后点击 **View docs** 查看使用方法。
+
+### 使用统计
+
+点击 **Browser time** 区块中的 **Usage**，即可查看已使用的云端小时数。在右上角选择期间，例如 **7 days**，然后点击 **Download CSV** 下载数据。
 
 ## 购买更多云端限额
 
-点击**购买更多限额**，然后选择所需内容：
+点击 **Concurrent sessions limit** 或 **Browser time** 旁边的 **\+**。在 **Upgrade Cloud Browsing Limits** 窗口中选择所需内容：
 
-- **并发会话** - **每个会话每月 \$2**。设置可同时在云端运行的配置文件数量。
-- **浏览时间** - 每月额外的云端小时数。每小时费率取决于您的套餐：Professional 为 **\$0.09**，Business 为 **\$0.08**，Enterprise 为 **\$0.07**，Custom 套餐为 **\$0.05**。
+- **Concurrent sessions** - **每个会话每月 \$2**。设置可同时在云端运行的配置文件数量。
+- **Browsing time** - 每月额外的云端小时数。每小时费率取决于您的套餐：Professional 为 **\$0.09**，Business 为 **\$0.08**，Enterprise 为 **\$0.07**，Custom 套餐为 **\$0.05**。
 
-![Cloud Browser 限额](/images/cloud_browser_limits.png "Cloud Browser 限额")
-
-点击**升级**进行支付。额外的云端限额只能通过 **Stripe** 支付，不支持 PayPal 和加密货币。
+窗口会显示您现在需要支付的金额（**Initial payment**）以及每月金额（**Total per month**）。点击 **Upgrade** 进行支付。额外的云端限额只能通过 **Stripe** 支付，不支持 PayPal 和加密货币。
 
 ### 额外限额的计费方式
 
